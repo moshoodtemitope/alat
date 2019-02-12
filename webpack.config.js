@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const { join, resolve } = require('path');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+// const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 
 var BUILD_DIR = resolve(__dirname, 'public');
@@ -29,12 +29,16 @@ module.exports = {
 
             },
             {
-                test: /\.css/,
-                use: ExtractTextPlugin.extract({
-                    use: 'css-loader',
-                    fallback: 'style-loader'
-                })
-            },
+                test: /\.css$/,
+                loader: 'style-loader!css-loader'
+            }
+            // {
+            //     test: /\.css/,
+            //     use: ExtractTextPlugin.extract({
+            //         use: 'css-loader',
+            //         fallback: 'style-loader'
+            //     })
+            // },
 
         ]
     },

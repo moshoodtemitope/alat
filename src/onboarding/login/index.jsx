@@ -8,6 +8,7 @@ import {Field, SubmissionError} from "redux-form";
 import {NavLink} from "react-router-dom";
 import OnboardingContainer from "../Container";
 import {userActions} from "../../_actions/user.actions";
+import {alertActions} from "../../_actions";
 
 // const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -17,9 +18,13 @@ import {userActions} from "../../_actions/user.actions";
           super(props);
           this.state = {
               email: '',
-              password: '',
-              error: ''
+              password: ''
           };
+          const { dispatch } = this.props;
+          history.listen((location, action) => {
+              dispatch(alertActions.clear());
+          });
+          dispatch(userActions.logout());
 
           this.handleChange = this.handleChange.bind(this);
           this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,11 +42,11 @@ import {userActions} from "../../_actions/user.actions";
           this.setState({ submitted: true });
           const { email, password, error } = this.state;
           const { dispatch } = this.props;
-          console.log(email);
-          console.log(password);
           if (email && password) {
               this.setState({ submitted: true });
               dispatch(userActions.login(email, password));
+
+              // console.log(this.props);
               /*
               let data = {
                   email: email,
@@ -77,8 +82,7 @@ import {userActions} from "../../_actions/user.actions";
 
       render(){
         const { email, password, submitted, error } = this.state;
-        const { loggingIn } = this.props;
-        console.log(this.props);
+        const { loggingIn, alert } = this.props;
         return (
             <OnboardingContainer>
                 <div className="row">
@@ -88,7 +92,9 @@ import {userActions} from "../../_actions/user.actions";
                 </div>
                 <div className="row">
                     <div className="col-12">
-
+                        {alert && alert.message &&
+                        <div className={`info-label ${alert.type}`}>{alert.message}</div>
+                        }
                         <form className="onboard-form" onSubmit={this.handleSubmit}>
                             {error && <div className="info-label error">{error}</div>}
                             <div className="input-ctn">
@@ -105,7 +111,7 @@ import {userActions} from "../../_actions/user.actions";
                                     <div className="text-danger">Password is required</div>
                                 }
                             </div>
-                            <button type="submit" disabled={submitted} className="btn-alat btn-block">{ submitted ? "Processing..." : "Login" }</button>
+                            <button type="submit" disabled={loggingIn} className="btn-alat btn-block">{ loggingIn ? "Processing..." : "Login" }</button>
                         </form>
                         <p className="text-center">Don't have an account? <NavLink to="/register">Sign up</NavLink></p>
                     </div>
@@ -116,14 +122,13 @@ import {userActions} from "../../_actions/user.actions";
 }
 
 function mapStateToProps(state) {
-    const { loggingIn } = state.authentication;
+      const { alert } = state;
+      const { loggingIn } = state.authentication;
+      // const { storage } = state.storage_reducer;
     return {
-        loggingIn
+        loggingIn,
+        alert
     };
 }
-//
-// const connectedLoginPage = connect(mapStateToProps)(Login);
-// export { connectedLoginPage as Login };
-//
 
 export default connect(mapStateToProps)(Login);

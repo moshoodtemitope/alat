@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { HashRouter } from 'react-router-dom';
+import {HashRouter, NavLink} from 'react-router-dom';
 import {history} from "../../_helpers";
 import {Router} from "react-router";
 
@@ -13,12 +13,15 @@ class MenuContainer extends React.Component{
                         <div className="row">
                             <div className="col-sm-12">
                                 <ul>
-                                    <li><a href="#" className="active clearfix"><i className="demo-icon icon-home" aria-hidden="true"></i>
-                                        <span>Dashboard</span></a></li>
-                                    <li><a href="#" className="clearfix"><i className="demo-icon icon-send-money" aria-hidden="true"></i>
+                                    <li>
+                                        <NavLink to="/dashboard" className="active clearfix"><i className="demo-icon icon-home" aria-hidden="true"></i><span>Dashboard</span></NavLink>
+                                    </li>
+                                    <li><a className="clearfix"><i className="demo-icon icon-send-money" aria-hidden="true"></i>
                                         <span>Transfer</span></a>
                                         <ul>
-                                            <li><a href="#">To Wema Account</a></li>
+                                            <li>
+                                                <NavLink to="/transfer/new-transfer">To Wema Account</NavLink>
+                                            </li>
                                             <li><a href="#">To Other Banks</a></li>
                                             <li><a href="#">ATM Cardless Withdrawal</a></li>
                                             <li><a href="#">To Email / Phone No</a></li>

@@ -14,10 +14,10 @@ import InnerRoute from "./innerRoute";
 
 const MainRoute = props => (
     <Router history={history}>
-        <div>
+        <Switch>
             <Route exact path="/" component={Login} />
             <InnerRoute />
-        </div>
+        </Switch>
     </Router>
 );
 

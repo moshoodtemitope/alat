@@ -8,6 +8,7 @@ import Login from "../onboarding/login";
 import Signup from "../onboarding/signup";
 import Bvn from "../onboarding/signup/bvn";
 import Dashboard from "../dashboard";
+import TransferComponent from "../transfer/TransferComponent";
 // import { Route} from 'react-router-dom'
 
 
@@ -26,9 +27,10 @@ import Dashboard from "../dashboard";
 
 const InnerRoute = props => (
     <Router history={history}>
-        <div>
+        <Switch>
             <Route exact path="/dashboard" component={Dashboard} />
-        </div>
+            <Route exact path="/transfer" component={TransferComponent} />
+        </Switch>
     </Router>
 );
 

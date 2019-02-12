@@ -2,6 +2,7 @@ import * as React from "react";
 import {Redirect} from "react-router";
 import {Observable} from "rxjs";
 import {history} from "../_helpers";
+import {userActions} from "../_actions";
 
 const axios = require('axios');
 
@@ -27,7 +28,32 @@ export class ApiService {
         //
         // options = new RequestOptions({ headers: header });
         if (type.toLowerCase() === 'get') {
-            service = httpService.get(url, options);
+            // service = httpService.get(url, options);
+            axios.defaults.headers.common['alat-client-apiKey'] = 'ERTojertoijertoijert';
+            axios.defaults.headers.common['Content-Type'] = 'application/json';
+            if(headers){
+                for (let [key, value] of Object.entries(headers)) {
+                    axios.defaults.headers.common[key] = value;
+                }
+            }
+            service = axios.get(url, bodyData);
+            return service.then(function (response) {
+                return service;
+            }).catch(function (error) {
+                console.log(error);
+                // return service;
+                if (error.response.status === 401 && error.response.statusText.toLowerCase().includes('token not valid')) {
+                    // const { dispatch } = this.props;
+                    console.error("We wanna log out out");
+                    // dispatch(userActions.logout());
+                    history.push('/logout')
+                    // localStorage.removeItem("user");
+                    // history.push('/');
+                } else {
+                    return service;
+                }
+            });
+
         } else {
             axios.defaults.headers.common['alat-client-apiKey'] = 'ERTojertoijertoijert';
             axios.defaults.headers.common['Content-Type'] = 'application/json';
@@ -41,13 +67,13 @@ export class ApiService {
                 console.log(service);
                 return service;
             }).catch(function (error) {
-
-                console.log(error.response);
-                console.log(service);
                 // return service;
                 if (error.response.status === 401 && error.response.statusText.toLowerCase().includes('token not valid')) {
-                    localStorage.removeItem("user");
-                    history.push('/');
+                    // const { dispatch } = this.props;
+                    console.error("We wanna log out out");
+                    history.push('/logout')
+                    // localStorage.removeItem("user");
+                    // history.push('/');
                 } else {
                     return service;
                     // let requestError = error.response.status !== 0 ? error._body : '{ \"message\": \"Could not connect to server\" }';

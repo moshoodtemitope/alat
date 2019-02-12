@@ -9,6 +9,7 @@ import MainRoute from "../shared/routes";
 
 class OnboardingContainer extends React.Component {
     render() {
+        // console.log(this.props);
         return (
             <Router history={history}>
                 <div>

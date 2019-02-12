@@ -8,6 +8,7 @@ import { Route} from 'react-router-dom'
 import { history } from '../_helpers';
 import {Router} from "react-router";
 import OnboardingContainer from "./Container";
+import Logout from "./Logout";
 
 
 const OnboardingRoute = props => (
@@ -16,6 +17,7 @@ const OnboardingRoute = props => (
         <div>
 
             <Route exact path="/login" component={Login} />
+            <Route exact path="/logout" component={Logout} />
             {/*<Route path="/login" component={Login} />*/}
             <Route exact path="/register" component={Signup}/>
             <Route exact path="/register/bvn" component={Bvn}/>
