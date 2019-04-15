@@ -1,13 +1,14 @@
 import * as React from 'react';
 import {HashRouter, NavLink} from 'react-router-dom';
-import {history} from "../../_helpers";
+// import {history} from "../../_helpers";
 import {Router} from "react-router";
+import {Fragment} from "react";
 
 
 class MenuContainer extends React.Component{
     render() {
         return (
-            <Router history={history}>
+            <Fragment>
                 <div className="hr-nav-header">
                     <div className="container">
                         <div className="row">
@@ -20,7 +21,7 @@ class MenuContainer extends React.Component{
                                         <span>Transfer</span></a>
                                         <ul>
                                             <li>
-                                                <NavLink to="/transfer/new-transfer">To Wema Account</NavLink>
+                                                <NavLink to="/transfer">Bank Transfer</NavLink>
                                             </li>
                                             <li><a href="#">To Other Banks</a></li>
                                             <li><a href="#">ATM Cardless Withdrawal</a></li>
@@ -44,7 +45,7 @@ class MenuContainer extends React.Component{
                         </div>
                     </div>
                 </div>
-            </Router>
+            </Fragment>
         );
     }
 }

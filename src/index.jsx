@@ -1,51 +1,39 @@
-// import * as React from 'react';
-// import ReactDOM from 'react-dom';
-// import './index.css';
-// // import App from './App';
-// import * as serviceWorker from './serviceWorker';
-
-
-// ReactDOM.render(<OnboardingContainer />, document.getElementById('root'));
-//
-// // If you want your app to work offline and load faster, you can change
-// // unregister() to register() below. Note this comes with some pitfalls.
-// // Learn more about service workers: http://bit.ly/CRA-PWA
-// serviceWorker.unregister();
-
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import { combineReducers } from 'redux';
-import { Provider } from 'react-redux';
-// import { reducer as formReducer } from 'redux-form';
-// import * as serviceWorker from './serviceWorker';
-// import {BrowserRouter} from "react-router-dom";
+import './index.css';
+// import App from './App';
+import * as serviceWorker from './serviceWorker';
+import {store} from "./_helpers/store";
+import { Provider } from "react-redux";
+import IndexedRoute from "./components/routes";
+import './assets/css/bootstrap.css';
+import './assets/css/font-awesome/font-awesome.css';
+import './assets/css/fontello/css/fontello.css';
+import './assets/css/app.css';
+import './assets/css/datepicker.min.css';
+import './assets/css/common.css';
+import './assets/css/dashboard.css';
+import {Redirect, Route} from "react-router";
+import App from "./App";
 
-
-import { store } from './_helpers';
-import Login from "./onboarding/login";
-import OnboardingContainer from "./onboarding/Container";
-import MainContainer from "./shared/mainContainer";
-// import createHistory from "shared/history";
 //
-// const rootReducer = combineReducers({
-//     form: formReducer
-// });
-
-// const store = createStore(rootReducer);
-
-
-// render(
-//     <Provider store={store}>
-//         <OnboardingContainer />
-//     </Provider>,
-//     document.getElementById('root')
-// );
-//
-
+// import './assets/js/jquery.min';
+// import './assets/js/matchHeight';
+// import './assets/js/jquery.bxslider';
+// import './assets/js/datepicker.min';
+// import './assets/js//i18n/datepicker.en';
+// ReactDOM.render(<App />, document.getElementById('root'));
 
 ReactDOM.render(
     <Provider store={store}>
-            <MainContainer/>
-    </Provider>
-    ,document.getElementById('root'));
-// serviceWorker.unregister();
+        {/*<IndexedRoute />*/}
+        <App />
+    </Provider>,
+    document.getElementById('root')
+);
+
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.unregister();

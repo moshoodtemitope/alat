@@ -1,7 +1,33 @@
 {
-  "presets": [
-    "react",
-    "env",
-    "stage-0"
-  ]
+    "presets": [
+        "@babel/preset-react",
+        [
+            "@babel/preset-env",
+            {
+                "targets": {
+                    "browsers": "last 2 versions"
+                },
+                "modules": false,
+                "loose": false
+            }
+        ]
+    ],
+    "plugins": [
+        "transform-class-properties",
+        // "syntax-dynamic-import",
+        [
+            "@babel/plugin-transform-runtime",
+            {
+                // "polyfill": true,
+                "regenerator": true
+            }
+        ]
+    ],
+    "env": {
+        "test": {
+            "plugins": [
+                "transform-es2015-modules-commonjs"
+            ]
+        }
+    }
 }

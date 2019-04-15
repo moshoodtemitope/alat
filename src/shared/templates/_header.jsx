@@ -1,14 +1,20 @@
 import * as React from 'react';
-import {HashRouter, NavLink} from 'react-router-dom';
-import {history} from "../../_helpers";
-import {Router} from "react-router";
+import { NavLink} from 'react-router-dom';
+import {history} from "../../_helpers/history";
 import { connect } from 'react-redux';
-import {alertActions, userActions} from "../../_actions";
+// import {alertActions} from "../../redux/actions/alert.actions";
 import $ from 'jquery';
+import {Fragment} from "react";
+import {userActions} from "../../redux/actions/onboarding/user.actions";
+import whitelogo from "../../assets/img/white-logo.svg";
+import profileImage from "../../assets/img/10.jpg";
 
 class HeaderContainer extends React.Component{
     constructor(props) {
         super(props);
+        this.state = {
+            miniNavToggle: false
+        };
         const { dispatch } = this.props;
 
         $('#nav-icon1').click(function(){
@@ -18,8 +24,10 @@ class HeaderContainer extends React.Component{
         });
 
         $('.user-name-circle').click(function(){
+            console.log("Image clicked");
             $('.mini-nav').fadeToggle(300);
         });
+        this.toggleMiniNav = this.toggleMiniNav.bind(this);
     }
 
 
@@ -28,6 +36,41 @@ class HeaderContainer extends React.Component{
         dispatch(userActions.logout());
         localStorage.removeItem("user");
         history.push('/');
+    }
+
+    toggleMiniNav(){
+        this.setState({ miniNavToggle: !this.state.miniNavToggle })
+    }
+
+    renderMiniNav(){
+        if(this.state.miniNavToggle){
+            return(
+                <div className="mini-nav" style={{display: 'block'}}>
+                    <ul>
+                        <li><a href="#">Profile</a></li>
+                        <li>
+                            {/*<NavLink to="/logout">Logout</NavLink>*/}
+                            <a onClick={this.logout.bind(this)}>Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            )
+        }
+
+        else{
+            return(
+                <div className="mini-nav">
+                    <ul>
+                        <li><a href="#">Profile</a></li>
+                        <li>
+                            <NavLink to="/logout">Logout</NavLink>
+                            {/*<a onClick={this.logout.bind(this)}>Logout</a>*/}
+                        </li>
+                    </ul>
+                </div>
+            )
+        }
+
     }
 
     componentDidMount() {
@@ -40,7 +83,7 @@ class HeaderContainer extends React.Component{
         const user = JSON.parse(localStorage.getItem("user"));
 
         return (
-            <Router history={history}>
+            <Fragment>
                 <div className="db2-fixed-header">
                     <div className="container">
                         <div className="row">
@@ -51,27 +94,17 @@ class HeaderContainer extends React.Component{
                                     <span></span>
                                 </div>
                                 <a href="/">
-                                    <img src="/public/assets/img/white-logo.svg" />
+                                    <img src={whitelogo} />
                                 </a>
                             </div>
                             <div className="col-xs-8 col-sm-8">
-                                <div className="user-name-circle clearfix">
+                                <div className="user-name-circle clearfix" onClick={ this.toggleMiniNav }>
                                     <div className="circle-image">
-                                        <img src="/public/assets/img/10.jpg" />
+                                        <img src="../../assets/img/10.jpg" />
                                     </div>
                                     <p className="name">{user.fullName}</p>
                                 </div>
-
-                                <div className="mini-nav">
-                                    <ul>
-                                        <li><a href="#">Profile</a></li>
-                                        <li>
-                                            <NavLink to="/logout">Logout</NavLink>
-                                            {/*<a onClick={this.logout.bind(this)}>Logout</a>*/}
-                                        </li>
-                                    </ul>
-                                </div>
-
+                                { this.renderMiniNav() }
                                 <span className="notification-top"><i className="demo-icon icon-alert-active"></i></span>
                             </div>
 
@@ -79,7 +112,7 @@ class HeaderContainer extends React.Component{
                         </div>
                     </div>
                 </div>
-            </Router>
+            </Fragment>
         );
     }
 }
@@ -94,20 +127,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(HeaderContainer);
-
-
-//
-// function mapStateToProps(state) {
-//     const { users, authentication } = state;
-//     const { user } = authentication;
-//     return {
-//         user,
-//         users
-//     };
-// }
-//
-// const connectedHomePage = connect(mapStateToProps)(HeaderContainer);
-// export { connectedHomePage as HeaderContainer };
-
-
-// export default HeaderContainer;
