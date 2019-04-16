@@ -55,18 +55,19 @@ class IndexedRoute extends React.Component {
     }
 
     render() {
-        console.error(this.props);
         return (
             <Router history={history}>
-                <Fragment>
-                    {/*<OnboardingRoute />*/}
+                <Switch>
+                    <OnboardingRoute />
                     {/*<AuthenticatedRoutes />*/}
 
-                    <Route exact path="/" component={Login} />
+                    {/*<Route exact path="/" component={Login} />*/}
                     {/*<Route exact path="/" component={Login} />*/}
                     {/*<Route exact path="/logout" component={Logout} />*/}
-                    <Route path="/register" component={Signup}/>
-                    <Route path="/register/bvn" component={Bvn}/>
+                    {/*<Route exact path="/register" component={Signup}/>*/}
+                    {/*<Route path="/register/bvn" component={Bvn}/>*/}
+
+
                     <PrivateRoute path='/dashboard' component={Dashboard} authed={this.props.user} />
                     <PrivateRoute path="/transfer" component={TransferHome} authed={this.props.user} />
                     {/*<PrivateRoute path="/transfer/new-transfer" component={NewTransfer} authed={this.props.user} />*/}
@@ -75,7 +76,7 @@ class IndexedRoute extends React.Component {
                     {/*<MainRoute/>*/}
                     {/*<TransferRoute/>*/}
                     {/*<AccountsRoute/>*/}
-                </Fragment>
+                </Switch>
             </Router>
         );
     }

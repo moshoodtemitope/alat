@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { NavLink} from "react-router-dom";
+import OnboardingContainer from "../Container";
 
 class Bvn extends React.Component{
     render(){
         return (
-            <div>
+            <OnboardingContainer>
                 <div className="row">
                     <div className="col-12">
                         <h3>Link your BVN<span></span></h3>
@@ -30,7 +31,7 @@ class Bvn extends React.Component{
                         <p className="text-center"><NavLink to="/">Skip BVN</NavLink></p>
                     </div>
                 </div>
-            </div>
+            </OnboardingContainer>
         );
     }
 }
