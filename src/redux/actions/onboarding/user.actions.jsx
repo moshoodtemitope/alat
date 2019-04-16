@@ -2,7 +2,7 @@ import {ApiService} from "../../../services/apiService";
 import {routes} from "../../../services/urls";
 import {alertActions} from "../alert.actions";
 import {history} from './../../../_helpers/history';
-import {userConstants} from "../../constants/onboarding/user.constants";
+import {USER_REGISTER_FETCH, USER_REGISTER_SAVE, userConstants} from "../../constants/onboarding/user.constants";
 
 export const userActions = {
     login,
@@ -64,25 +64,25 @@ function logout() {
     return { type: userConstants.LOGOUT };
 }
 
-function register(user) {
-    return dispatch => {
-        dispatch(request(user));
 
-        // userService.register(user)
-        //     .then(
-        //         user => {
-        //             dispatch(success());
-        //             history.push('/login');
-        //             dispatch(alertActions.success('Registration successful'));
-        //         },
-        //         error => {
-        //             dispatch(failure(error.toString()));
-        //             dispatch(alertActions.error(error.toString()));
-        //         }
-        //     );
-    };
 
-    function request(user) { return { type: userConstants.REGISTER_REQUEST, user } }
-    function success(user) { return { type: userConstants.REGISTER_SUCCESS, user } }
-    function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
+function register(user, action) {
+    switch(action){
+        case USER_REGISTER_FETCH:
+            return dispatch => {
+                dispatch(fetch(user));
+            };
+        case USER_REGISTER_SAVE:
+            return dispatch => {
+                dispatch(save(user));
+            };
+        default:
+            return dispatch => {
+                dispatch(pending(user));
+            };
+    }
+
+    function pending(user) { return null }
+    function fetch(user) { return { type: USER_REGISTER_FETCH, user } }
+    function save(user) { return { type: USER_REGISTER_SAVE, user } }
 }
