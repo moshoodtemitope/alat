@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {Router} from "react-router";
-import history from "./../../_helpers/history";
 import logo from "./../../assets/img/logo.svg";
 import {Fragment} from "react";
+import {connect} from "react-redux";
 
 class OnboardingContainer extends React.Component {
     render() {
@@ -28,4 +27,9 @@ class OnboardingContainer extends React.Component {
     }
 }
 
-export default OnboardingContainer;
+
+function mapStateToProps(state){
+    return state.onboarding_user_details;
+}
+
+export default connect(mapStateToProps)(OnboardingContainer);

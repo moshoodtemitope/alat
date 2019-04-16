@@ -1,4 +1,4 @@
-/* This style is used to override input select phone number from react */
+/* This style is used to override input from react-telephone-input */
 .react-tel-input{
   width: 100% !important;
 }
@@ -15,4 +15,5 @@
 }
 .react-tel-input input[type='tel'] {
   padding-left: 60px !important;
+  box-shadow: none !important;
 }

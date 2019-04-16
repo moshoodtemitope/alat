@@ -1,10 +1,7 @@
 import * as React from 'react';
 import {BrowserRouter, NavLink} from "react-router-dom";
-// import {ApiService} from "../../shared/apiService";
-// import {routes} from "../../shared/urls";
 import {history} from "./../../../_helpers/history";
 import {SubmissionError} from "redux-form";
-// import {userActions} from "../../_actions";
 import OnboardingContainer from "../Container";
 import {ApiService} from "../../../services/apiService";
 import {routes} from "../../../services/urls";
@@ -16,6 +13,10 @@ import {FETCH_BANK_FAILURE, FETCH_BANK_PENDING, FETCH_BANK_SUCCESS} from "../../
 import flags from "./../../../assets/img/flags.png";
 import {ReactTelephoneInput} from "react-telephone-input";
 import "./../onboarding.scss";
+import {userActions} from "../../../redux/actions/onboarding/user.actions";
+import {USER_REGISTER_SAVE} from "../../../redux/constants/onboarding/user.constants";
+import {connect} from "react-redux";
+import Modal from 'react-responsive-modal';
 
 require('react-telephone-input/lib/withStyles');
 // const ReactTelInput = require('react-telephone-input');
@@ -29,127 +30,120 @@ class Signup extends React.Component{
             phone: '',
             error: '',
             formError: '',
+            openModal: false
+            // international_code: ''
         };
-        this.renderDropdown = this.renderDropdown.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleInputBlur = this.handleInputBlur.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
 
     }
 
+    onOpenModal = () => {
+        this.setState({ openModal: true });
+    };
+
+    onCloseModal = () => {
+        this.setState({ submitted: false });
+        this.setState({ openModal: false });
+    };
+
     handleChange(e) {
-        // const { name, value } = e.target;
+        const { name, value } = e.target;
+        e.preventDefault();
         const re = /^[0-9\b]+$/;
         // this.setState({ [name]: value });
-        if (e.target.value === '' || re.test(e.target.value)) {
-            this.setState({phone: e.target.value});
-        }
+        this.setState({ [name]: value });
+        // if (e.target.value === '' || re.test(e.target.value)) {
+        //     this.setState({phone: e.target.value});
+        // }
 
+    }
+
+    formatPhone(phone){
+        let ph = phone.replace(/[^a-zA-Z0-9]/g, '');
+        let countryCode = ph.substring(0,3);
+        if(countryCode === '234'){
+            console.log(ph.substr(3));
+            return '0' + ph.substr(3);
+        }
+        else{
+            return phone.replace(/[^a-zA-Z0-9]/g, '');
+        }
     }
 
     handleSubmit(e) {
         e.preventDefault();
-
         this.setState({ submitted: true });
-        const { phone, error, formError } = this.state;
+        let { phone, error, formError } = this.state;
         const { dispatch } = this.props;
-        console.log(phone);
-        if(!phone || phone.length < 11){
-            console.log("in here");
+        phone = this.formatPhone(phone);
+        console.log(phone.length);
+
+        if(!phone || phone.length < 10 || phone.length > 20){
             this.setState({ formError: true });
-            console.log(this.state);
             this.setState({ submitted: false });
             return;
         }
         if (phone) {
-            let data = {
-                PhoneNo: phone,
-                channelId: 2
-            };
+            this.setState({phoneInputted: phone});
+            this.onOpenModal();
 
-            let consume = ApiService.request(routes.SIGNUP_PHONE, "POST", data);
-            return consume.then(function (response){
-                console.log(response);
-                history.push('/register/bvn');
-            }).catch(err => {
-                // console.log(err.response.data.message);
-                console.log(err.response);
-                this.setState({ submitted: false, error: err.response.data.message});
-                // throw new SubmissionError({ _error: err.response.data.message});
-            });
+            // let data = {
+            //     PhoneNo: phone,
+            //     channelId: 2
+            // };
+            //this.submitData(data);
+            //
+            // let consume = ApiService.request(routes.SIGNUP_PHONE, "POST", data);
+            // return consume.then(function (response){
+            //     console.log(response);
+            //     dispatch(userActions.register({phone: phone}, USER_REGISTER_SAVE));
+            //     history.push('/register/bvn');
+            // }).catch(err => {
+            //     // console.log(err.response.data.message);
+            //     console.log(err.response);
+            //     this.setState({ submitted: false, error: err.response.data.message});
+            //     // throw new SubmissionError({ _error: err.response.data.message});
+            // });
         }
     }
 
-    renderDropdown(){
-        // console.error(props);
-        var countriesData = require('../countries.json');
-        //console.log(countriesData);
-        for(let i of countriesData){
-            console.log(i);
-        }
+    submitData = () => {
+        const { dispatch } = this.props;
+        let data = {
+            PhoneNo: this.state.phoneInputted,
+            channelId: 2
+        };
+        let consume = ApiService.request(routes.SIGNUP_PHONE, "POST", data);
+        return consume.then(function (response){
+            dispatch(userActions.register({phone: data.PhoneNo}, USER_REGISTER_SAVE));
+            history.push('/register/bvn');
+        }).catch(err => {
+            this.onCloseModal();
+            this.setState({ submitted: false, error: err.response.data.message});
+        });
+    };
 
-        // axios.get('../countries.json')
-        //     .then((response) => {
-        //         console.log(response);
-        //     })
-        //     .catch((err) => {
-        //         //dispatch({type:'SIGNUP_COUNTRIES_FAILURE', payload:err});
-        //     })
-
-
-
-
-        // let consume = ApiService.request('../countries.json', "GET", null);
-        // return consume.then(function (response){
-        //     console.log(response);
-        //
-        // }).catch(err => {
-        //     console.log(err.response);
-        // });
-
-
-        // switch(banksStatus){
-        //     case FETCH_BANK_PENDING:
-        //         return (
-        //             <select disabled>
-        //                 <option>Fetching Banks...</option>
-        //             </select>
-        //         );
-        //     case FETCH_BANK_SUCCESS:
-        //         let banksList = props.bankList.banks_data.response;
-        //         for(var bank in banksList){
-        //             options.push({value: banksList[bank].BankCode, label: banksList[bank].BankName});
-        //         }
-        //         const { selectedBank } = this.state;
-        //         return(
-        //             <Select
-        //                 value={selectedBank}
-        //                 options={options}
-        //             />
-        //             /*<select>
-        //                 {banksList.map(function(bank, code){
-        //                     return(
-        //                         <option key={code} value={bank.BankCode}>{bank.BankName}</option>
-        //                     );
-        //                 })}
-        //             </select>
-        //             */
-        //         );
-        //     case FETCH_BANK_FAILURE:
-        //         this.showRetry();
-        //         return(
-        //             <select disabled>
-        //                 <option>Unable to load banks</option>
-        //             </select>
-        //         );
-        // }
-    }
 
     handleInputChange(telNumber, selectedCountry) {
-        console.log('input changed. number: ', telNumber, 'selected country: ', selectedCountry);
+        //console.log('input changed. number: ', telNumber, 'selected country: ', selectedCountry);
+        // this.setState({international_code: telNumber});
+    }
+
+    handleInputBlur(telNumber, selectedCountry) {
+        // console.log(
+        //     'Focus off the ReactTelephoneInput component. Tel number entered is: ',
+        //     telNumber,
+        //     ' selected country is: ',
+        //     selectedCountry
+        // );
+        this.setState({phone: telNumber});
     }
 
     render(){
-        const { phone, submitted, error, formError } = this.state;
+        const { phone, international_code, submitted, error, formError, openModal } = this.state;
         let props = this.props;
         // var countriesData = require('../countries.json');
 
@@ -166,41 +160,47 @@ class Signup extends React.Component{
                     <div className="col-12">
                         <form className="onboard-form" onSubmit={this.handleSubmit}>
                             {error && <div className="info-label error">{error}</div>}
-                            <div className="input-ctn">
-                                <label>Select your Country</label>
-                                <ReactTelephoneInput
-                                    value="ng"
-                                    defaultCountry="ng"
-                                    flagsImagePath={flags}
-                                    onChange={this.handleInputChange}
-                                />
-                                {/*<Select*/}
-                                    {/*value=""*/}
-                                    {/*options={countriesData}*/}
-                                {/*/>*/}
-                            </div>
-
                             <div className={ !formError ? "input-ctn" : "input-ctn form-error" }>
                                 <label>Please enter your phone number</label>
-                                <input type="text" pattern="\d*" maxLength="20" name="phone" value={phone} onChange={this.handleChange} placeholder="08123456789" />
+                                <ReactTelephoneInput
+                                    maxLength="16"
+                                    defaultCountry="ng"
+                                    flagsImagePath="/public/images/flags.png"
+                                    onBlur={this.handleInputBlur}
+                                    onChange={this.handleInputChange}
+                                />
                                 {formError &&
-                                    <div className="text-danger">A Valid phone Number is required</div>
+                                <div className="text-danger">A Valid phone Number is required</div>
                                 }
+
                             </div>
+
+                            {/*<div className={ !formError ? "input-ctn" : "input-ctn form-error" }>*/}
+                                {/*<label>Please enter your phone number</label>*/}
+                                {/*<input type="text" pattern="\d*" maxLength="16" name="phone" value={phone} onChange={this.handleChange} placeholder="8123456789" />*/}
+                                {/*{formError &&*/}
+                                    {/*<div className="text-danger">A Valid phone Number is required</div>*/}
+                                {/*}*/}
+                            {/*</div>*/}
                             <button type="submit" disabled={submitted} className="btn-alat btn-block">{ submitted ? "Processing..." : "Get Started" }</button>
                         </form>
                         <p className="text-center">Already have an account? <NavLink to="/">Login</NavLink></p>
                     </div>
                 </div>
+                <Modal open={openModal} onClose={this.onCloseModal} center>
+                    <h2>Your Phone Number is: {this.state.phoneInputted}</h2>
+                    <a href="#" onClick={this.onCloseModal}>Back</a>
+                    <button type="button" className="btn-alat btn-block" onClick={this.submitData}>
+                        Proceed
+                    </button>
+                </Modal>
             </OnboardingContainer>
         );
     }
 }
 
-export default Signup
+function mapStateToProps(state){
+    return state.onboarding_user_details;
+}
 
-//
-// ReactDom.render(
-//     <Signup />,
-//     document.getElementById('root')
-// );
+export default connect(mapStateToProps)(Signup);
