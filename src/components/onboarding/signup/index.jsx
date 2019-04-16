@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NavLink} from "react-router-dom";
+import {BrowserRouter, NavLink} from "react-router-dom";
 // import {ApiService} from "../../shared/apiService";
 // import {routes} from "../../shared/urls";
 import {history} from "./../../../_helpers/history";
@@ -8,6 +8,18 @@ import {SubmissionError} from "redux-form";
 import OnboardingContainer from "../Container";
 import {ApiService} from "../../../services/apiService";
 import {routes} from "../../../services/urls";
+import {Route, Switch} from "react-router";
+import Bvn from "./bvn";
+import {Fragment} from "react";
+import {Select} from "react-select";
+import {FETCH_BANK_FAILURE, FETCH_BANK_PENDING, FETCH_BANK_SUCCESS} from "../../../redux/constants/transfer.constants";
+import flags from "./../../../assets/img/flags.png";
+import {ReactTelephoneInput} from "react-telephone-input";
+import "./../onboarding.scss";
+
+require('react-telephone-input/lib/withStyles');
+// const ReactTelInput = require('react-telephone-input');
+const axios = require('axios');
 
 class Signup extends React.Component{
 
@@ -18,9 +30,10 @@ class Signup extends React.Component{
             error: '',
             formError: '',
         };
-
+        this.renderDropdown = this.renderDropdown.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
     }
 
     handleChange(e) {
@@ -54,10 +67,9 @@ class Signup extends React.Component{
             };
 
             let consume = ApiService.request(routes.SIGNUP_PHONE, "POST", data);
-            console.log(consume);
             return consume.then(function (response){
                 console.log(response);
-                history.push('/onboarding/bvn');
+                history.push('/register/bvn');
             }).catch(err => {
                 // console.log(err.response.data.message);
                 console.log(err.response);
@@ -65,13 +77,85 @@ class Signup extends React.Component{
                 // throw new SubmissionError({ _error: err.response.data.message});
             });
         }
+    }
 
+    renderDropdown(){
+        // console.error(props);
+        var countriesData = require('../countries.json');
+        //console.log(countriesData);
+        for(let i of countriesData){
+            console.log(i);
+        }
+
+        // axios.get('../countries.json')
+        //     .then((response) => {
+        //         console.log(response);
+        //     })
+        //     .catch((err) => {
+        //         //dispatch({type:'SIGNUP_COUNTRIES_FAILURE', payload:err});
+        //     })
+
+
+
+
+        // let consume = ApiService.request('../countries.json', "GET", null);
+        // return consume.then(function (response){
+        //     console.log(response);
+        //
+        // }).catch(err => {
+        //     console.log(err.response);
+        // });
+
+
+        // switch(banksStatus){
+        //     case FETCH_BANK_PENDING:
+        //         return (
+        //             <select disabled>
+        //                 <option>Fetching Banks...</option>
+        //             </select>
+        //         );
+        //     case FETCH_BANK_SUCCESS:
+        //         let banksList = props.bankList.banks_data.response;
+        //         for(var bank in banksList){
+        //             options.push({value: banksList[bank].BankCode, label: banksList[bank].BankName});
+        //         }
+        //         const { selectedBank } = this.state;
+        //         return(
+        //             <Select
+        //                 value={selectedBank}
+        //                 options={options}
+        //             />
+        //             /*<select>
+        //                 {banksList.map(function(bank, code){
+        //                     return(
+        //                         <option key={code} value={bank.BankCode}>{bank.BankName}</option>
+        //                     );
+        //                 })}
+        //             </select>
+        //             */
+        //         );
+        //     case FETCH_BANK_FAILURE:
+        //         this.showRetry();
+        //         return(
+        //             <select disabled>
+        //                 <option>Unable to load banks</option>
+        //             </select>
+        //         );
+        // }
+    }
+
+    handleInputChange(telNumber, selectedCountry) {
+        console.log('input changed. number: ', telNumber, 'selected country: ', selectedCountry);
     }
 
     render(){
         const { phone, submitted, error, formError } = this.state;
+        let props = this.props;
+        // var countriesData = require('../countries.json');
+
         return (
             <OnboardingContainer>
+
                 <div className="row">
                     <div className="col-12">
                         <h3>Hello there!<span></span></h3>
@@ -82,6 +166,20 @@ class Signup extends React.Component{
                     <div className="col-12">
                         <form className="onboard-form" onSubmit={this.handleSubmit}>
                             {error && <div className="info-label error">{error}</div>}
+                            <div className="input-ctn">
+                                <label>Select your Country</label>
+                                <ReactTelephoneInput
+                                    value="ng"
+                                    defaultCountry="ng"
+                                    flagsImagePath={flags}
+                                    onChange={this.handleInputChange}
+                                />
+                                {/*<Select*/}
+                                    {/*value=""*/}
+                                    {/*options={countriesData}*/}
+                                {/*/>*/}
+                            </div>
+
                             <div className={ !formError ? "input-ctn" : "input-ctn form-error" }>
                                 <label>Please enter your phone number</label>
                                 <input type="text" pattern="\d*" maxLength="20" name="phone" value={phone} onChange={this.handleChange} placeholder="08123456789" />
@@ -91,7 +189,7 @@ class Signup extends React.Component{
                             </div>
                             <button type="submit" disabled={submitted} className="btn-alat btn-block">{ submitted ? "Processing..." : "Get Started" }</button>
                         </form>
-                        <p className="text-center">Already have an account? <NavLink to="/login">Login</NavLink></p>
+                        <p className="text-center">Already have an account? <NavLink to="/">Login</NavLink></p>
                     </div>
                 </div>
             </OnboardingContainer>

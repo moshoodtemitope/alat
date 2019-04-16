@@ -38,7 +38,7 @@ const OnboardingRoute = props => (
             {/*<Route exact path="/" component={Login} />*/}
             {/*<Route exact path="/logout" component={Logout} />*/}
             <Route exact path="/register" component={Signup}/>
-            <Route exact path="/register/bvn" component={Bvn}/>
+            <Route path="/register/bvn" component={Bvn}/>
             <PrivateRoute fakeAuth={fakeAuth} exact path='/dashboard' component={Dashboard} />
             {/*<Route component={Error404} />*/}
         </Fragment>
