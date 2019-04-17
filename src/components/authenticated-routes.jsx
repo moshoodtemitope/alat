@@ -1,7 +1,6 @@
 import * as React from 'react';
 // import { Route } from 'react-router'
 import {Route, Switch} from "react-router-dom";
-// import OnboardingRoute from "../onboarding/routes";
 import {Redirect, Router} from "react-router";
 import {history} from "../_helpers/history";
 // import Login from "../onboarding/login";
@@ -9,6 +8,10 @@ import {history} from "../_helpers/history";
 // import Bvn from "../onboarding/signup/bvn";
 import Dashboard from "../components/dashboard";
 import TransferRoute from "./transfer/routes";
+import {Fragment} from "react";
+import Login from "./onboarding/login";
+import Signup from "./onboarding/signup";
+import Bvn from "./onboarding/signup/bvn";
 // import TransferComponent from "../transfer/TransferComponent";
 // import { Route} from 'react-router-dom'
 
@@ -34,15 +37,31 @@ function PrivateRoute ({component: Component, authed, ...rest}) {
     )
 }
 
-const AuthenticatedRoutes = props => (
-    <Router history={history}>
-        <Switch>
-            <PrivateRoute authed={this.state.authed} exact path='/dashboard' component={Dashboard} />
-            {/*<Route exact path="/dashboard" component={Dashboard} />*/}
-            {/*<TransferRoute />*/}
-            {/*<Route exact path="/transfer" component={TransferComponent} />*/}
-        </Switch>
-    </Router>
-);
+// const AuthenticatedRoutes = props => (
+//     <Router history={history}>
+//         <Switch>
+//             <PrivateRoute authed={this.state.authed} exact path='/dashboard' component={Dashboard} />
+//             {/*<Route exact path="/dashboard" component={Dashboard} />*/}
+//             {/*<TransferRoute />*/}
+//             {/*<Route exact path="/transfer" component={TransferComponent} />*/}
+//         </Switch>
+//     </Router>
+// );
+
+class AuthenticatedRoutes extends React.Component{
+    render(){
+        return(
+            <Router history={history}>
+                <Switch>
+                    {/*<PrivateRoute authed={this.state.authed} exact path='/dashboard' component={Dashboard} />*/}
+                    <Route path="/dashboard" component={Dashboard} />
+                    {/*<TransferRoute />*/}
+                    {/*<Route exact path="/transfer" component={TransferComponent} />*/}
+                </Switch>
+            </Router>
+        )
+    }
+}
+
 
 export default AuthenticatedRoutes;
