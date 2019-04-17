@@ -30,19 +30,37 @@ function PrivateRoute ({component: Component, authed, ...rest}) {
     )
 }
 
-const OnboardingRoute = props => (
+// const OnboardingRoute = props => (
+//
+//     <Router history={history}>
+//         <Fragment>
+//             <Route exact path="/" component={Login} render={props => (<Login fakeAuth={fakeAuth} {...props} />)} />
+//             {/*<Route exact path="/" component={Login} />*/}
+//             {/*<Route exact path="/logout" component={Logout} />*/}
+//             <Route exact path="/register" component={Signup}/>
+//             <Route path="/register/bvn" component={Bvn}/>
+//             <PrivateRoute fakeAuth={fakeAuth} exact path='/dashboard' component={Dashboard} />
+//             {/*<Route component={Error404} />*/}
+//         </Fragment>
+//     </Router>
+// );
 
-    <Router history={history}>
-        <Fragment>
-            <Route exact path="/" component={Login} render={props => (<Login fakeAuth={fakeAuth} {...props} />)} />
-            {/*<Route exact path="/" component={Login} />*/}
-            {/*<Route exact path="/logout" component={Logout} />*/}
-            <Route exact path="/register" component={Signup}/>
-            <Route path="/register/bvn" component={Bvn}/>
-            <PrivateRoute fakeAuth={fakeAuth} exact path='/dashboard' component={Dashboard} />
-            {/*<Route component={Error404} />*/}
-        </Fragment>
-    </Router>
-);
+class OnboardingRoute extends React.Component{
+    render(){
+        return(
+            <Router history={history}>
+                <Fragment>
+                    <Route exact path="/" component={Login} render={props => (<Login fakeAuth={fakeAuth} {...props} />)} />
+                    {/*<Route exact path="/" component={Login} />*/}
+                    {/*<Route exact path="/logout" component={Logout} />*/}
+                    <Route exact path="/register" component={Signup}/>
+                    <Route path="/register/bvn" component={Bvn}/>
+                    <PrivateRoute fakeAuth={fakeAuth} exact path='/dashboard' component={Dashboard} />
+                    {/*<Route component={Error404} />*/}
+                </Fragment>
+            </Router>
+        )
+    }
+}
 
 export default OnboardingRoute;

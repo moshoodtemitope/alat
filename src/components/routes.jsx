@@ -58,8 +58,9 @@ class IndexedRoute extends React.Component {
         return (
             <Router history={history}>
                 <Switch>
+                    <PrivateRoute path='/dashboard' component={Dashboard} authed={this.props.user} />
                     <OnboardingRoute />
-                    {/*<AuthenticatedRoutes />*/}
+                    <AuthenticatedRoutes />
 
                     {/*<Route exact path="/" component={Login} />*/}
                     {/*<Route exact path="/" component={Login} />*/}
@@ -68,12 +69,9 @@ class IndexedRoute extends React.Component {
                     {/*<Route path="/register/bvn" component={Bvn}/>*/}
 
 
-                    <PrivateRoute path='/dashboard' component={Dashboard} authed={this.props.user} />
+
                     <PrivateRoute path="/transfer" component={TransferHome} authed={this.props.user} />
                     {/*<PrivateRoute path="/transfer/new-transfer" component={NewTransfer} authed={this.props.user} />*/}
-
-
-                    {/*<MainRoute/>*/}
                     {/*<TransferRoute/>*/}
                     {/*<AccountsRoute/>*/}
                 </Switch>
@@ -82,9 +80,6 @@ class IndexedRoute extends React.Component {
     }
 }
 
-// export default IndexedRoute;
-// const mapStateToProps = state => ({ currentUser: state.user });
-//
 function mapStateToProps(state) {
     const { authentication } = state;
     const { user } = authentication;
