@@ -46,8 +46,9 @@ class VerifyBvn extends React.Component{
         this.setState({ submitted: true });
         
         const {otpValue} = this.state;
-        console.log('Submitted', otpValue);
-
+        // console.log('Submitted', otpValue);
+        let props = this.props;
+        console.log('Phone number', props.phone);
         let data = {
             phoneNo: '08137835331',
             otp: this.state.otpValue
@@ -56,8 +57,8 @@ class VerifyBvn extends React.Component{
         return consume.then(function(response){
            console.log('Succeeded');
         })
-        .catch(function(err){
-            
+        .catch(err=>{
+            console.log('dsdsds', props.phone);
             this.setState({ submitted: false, error: err.response.data.message })
         })
     }
@@ -70,6 +71,7 @@ class VerifyBvn extends React.Component{
         let userState = this.props.onboarding_user_details;
         let phone = '';
         let state = this.state;
+
         const {otpValue, error,submitted} = this.state;
         return (
             <OnboardingContainer>
