@@ -2,12 +2,13 @@ import {ApiService} from "../../../services/apiService";
 import {routes} from "../../../services/urls";
 import {alertActions} from "../alert.actions";
 import {history} from './../../../_helpers/history';
-import {USER_REGISTER_FETCH, USER_REGISTER_SAVE, userConstants} from "../../constants/onboarding/user.constants";
+import {USER_REGISTER_FETCH, USER_REGISTER_SAVE, userConstants, BVN_VERIFICATION_PENDING, BVN_VERIFICATION_SUCCESS, BVN_VERIFICATION_FAILURE} from "../../constants/onboarding/user.constants";
 
 export const userActions = {
     login,
     logout,
     register,
+    bvnVerify
 };
 
 function login(email, password) {
@@ -40,7 +41,7 @@ function login(email, password) {
                 history.push('/dashboard');
             }).catch(error => {
                 // console.log(err.response.data.message);
-                console.log(error);
+               
                 // submitting = false;
                 // throw new SubmissionError({ _error: err.response.data.message});
                 dispatch(failure(error.response.data.message.toString()));
@@ -57,13 +58,37 @@ function login(email, password) {
 
 function logout() {
     // userService.logout();
-    console.error("We are logging you out...");
+    //console.error("We are logging you out...");
     localStorage.clear();
     history.push('/');
     // window.location.reload();
     return { type: userConstants.LOGOUT };
 }
 
+function bvnVerify (bvnDetails){
+    
+    return dispatch =>{
+        let data = {
+            bvn: bvnDetails.bvn,
+            dob: bvnDetails.dob,
+            phoneNo : bvnDetails.phone,
+            isOnboarding: true,
+            channelId: 2
+          };
+        let consume= ApiService.request(routes.BVN_VERIFICATION, "POST", data);
+        dispatch (request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response.data));
+                history.push('/register/verify-bvn');
+            }).catch(error => {
+                dispatch(alertActions.error(error.response.data.message.toString()));
+            });
+    };
+    function request(request) { return { type:BVN_VERIFICATION_PENDING, request} }
+    function success(response) { return {type:BVN_VERIFICATION_SUCCESS, response} }
+    function failure(error) { return {type:BVN_VERIFICATION_FAILURE, error} }
+}
 
 
 function register(user, action) {

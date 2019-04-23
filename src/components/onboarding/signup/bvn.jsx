@@ -1,18 +1,103 @@
 import * as React from 'react';
+//import DatePicker from 'react-bootstrap-date-picker';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+import  "../../../assets/scss/datepicker.scss"
 import { NavLink} from "react-router-dom";
 import OnboardingContainer from "../Container";
 import {connect} from "react-redux";
+
 import {USER_REGISTER_FETCH, USER_REGISTER_SAVE} from "../../../redux/constants/onboarding/user.constants";
 import {userActions} from "../../../redux/actions/onboarding/user.actions";
 import {history} from "../../../_helpers/history";
 
-class Bvn extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state = {
+//var DatePicker = require("react-bootstrap-date-picker");
 
+class Bvn extends React.Component{
+
+    constructor(props){
+        super(props);
+        this.state={
+            bvn: '',
+            dob: null,
+            bvnIvalid: false,
+            dobInvalid: false,
+            formInvalid: true
         };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDatePicker = this.handleDatePicker.bind(this);
     }
+    
+    handleChange(e){
+        const name = e.target.name;
+        if(name == 'bvn'){
+            this.setState({bvn: e.target.value.replace(/\D/,'')})
+            this.validateBvn(0);
+        }
+        else
+        e.preventDefault();
+    }
+
+    handleDatePicker=(dob)=>{
+        this.setState ({dob : dob});
+    }
+    
+    formValidation=()=>{
+        
+        if(this.validateBvn(1) == false & this.validateDob() == false)
+        {
+            this.setState({formInvalid: false});
+            return false;
+        }
+        else {
+            this.setState({formInvalid: true});
+            return true;
+        }
+    }
+
+    validateBvn=(zeroIndex)=>{
+        if( (this.state.bvn.length - zeroIndex) == 10){
+             this.setState({bvnIvalid: false});
+             return false;
+        }
+       else {
+           this.setState({bvnIvalid : true});
+           return true;
+        }
+    }
+
+    validateDob=()=>{
+        if(this.state.dob == null){
+            this.setState({dobInvalid: true});
+            return true;
+        }
+            else {this.setState({dobInvalid : false});
+        return false;
+        }
+    }
+
+    handleSubmit(e){
+        e.preventDefault();
+         
+        //console.log(this.formValidation());
+        if(this.formValidation() == false)
+        {
+            this.verifyBvn();
+        }
+        else {
+            
+        }
+    }
+
+    verifyBvn(){
+        const { dispatch } = this.props;
+        dispatch(userActions.bvnVerify(this.state));
+       // console.error(this.state);
+    }
+
 
     getRegistrationDetails(){
         const { dispatch } = this.props;
@@ -23,7 +108,7 @@ class Bvn extends React.Component{
             userData =  props.registration_data.user;
             this.setState({userData: userData});
             this.setState({phone: userData.phone});
-            console.log(userData)
+          
         }
     }
 
@@ -32,6 +117,8 @@ class Bvn extends React.Component{
     }
 
     render(){
+        const {bvn, dob, bvnIvalid, dobInvalid, formInvalid} = this.state;
+        let props = this.props;
         let userState = this.props.onboarding_user_details;
         let phone = '';
         let state = this.state;
@@ -47,19 +134,37 @@ class Bvn extends React.Component{
                 </div>
                 <div className="row">
                     <div className="col-12">
-                        <form className="onboard-form">
-                            <div className="input-ctn">
+                    
+                        <form className="onboard-form" onSubmit={this.handleSubmit}>
+                            {props.alert && props.alert.message &&
+                             <div className={`info-label ${props.alert.type}`}>{props.alert.message}</div>
+                            }
+                           <div className={!bvnIvalid ? "input-ctn" : "input-ctn form-error" }>
                                 <label>Enter your BVN</label>
-                                <input type="number"/>
+                                <input type="text" onChange={this.handleChange} maxLength="11" name="bvn" value={bvn} placeholder="249087653214"/>
+                                {bvnIvalid &&
+                                <div className="text-danger">A valid bvn is 11 digits</div>
+                                }
                             </div>
 
-                            <div className="input-ctn">
+                            <div className={ !dobInvalid ? "input-ctn" : "input-ctn form-error" }>
                                 <label>Your Date of Birth</label>
-                                <input type='text' className="datepicker-here" data-position='top left'
-                                       data-language='en'/>
+                                {/* <input type='text' name="dob" value={dob} className="datepicker-here" data-position='top left'
+                                       data-language="en" onSelect={this.handleChange} /> */}
+                                 <DatePicker placeholderText="06/19/1992" selected={dob} 
+                                 onChange={this.handleDatePicker}
+                                 onChangeRaw={(e)=>this.handleChange(e)}
+                                 peekNextMonth
+                                 showMonthDropdown
+                                 showYearDropdown
+                                 dropdownMode="select"
+                                 maxDate={new Date()}
+                                 />
+                                 {dobInvalid &&
+                                <div className="text-danger">select a valid date</div>
+                                }
                             </div>
-
-                            <input type="submit" value="Continue" className="btn-alat btn-block"/>
+                            <input type="submit" value="Continue" disabled={props.bvn.bvn_verification_status == "BVN_VERIFICATION_PENDING"} className="btn-alat btn-block"/>
                         </form>
                         <p className="text-center"><NavLink to="/">Skip BVN</NavLink></p>
                     </div>
@@ -71,7 +176,13 @@ class Bvn extends React.Component{
 
 
 function mapStateToProps(state){
-    return state.onboarding_user_details;
+    //console.error(state);
+    return {
+        phone: state.onboarding_user_details,
+        bvn: state.onboarding_bvn_details,
+        alert: state.alert
+    } 
+    //state.onboarding_user_details;
 }
 
 export default connect(mapStateToProps)(Bvn);
