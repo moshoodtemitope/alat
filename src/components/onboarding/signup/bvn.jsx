@@ -82,7 +82,7 @@ class Bvn extends React.Component{
     handleSubmit(e){
         e.preventDefault();
          
-        console.log(this.formValidation());
+        //console.log(this.formValidation());
         if(this.formValidation() == false)
         {
             this.verifyBvn();
@@ -95,7 +95,7 @@ class Bvn extends React.Component{
     verifyBvn(){
         const { dispatch } = this.props;
         dispatch(userActions.bvnVerify(this.state));
-        console.error(this.state);
+       // console.error(this.state);
     }
 
 
@@ -122,8 +122,6 @@ class Bvn extends React.Component{
         let userState = this.props.onboarding_user_details;
         let phone = '';
         let state = this.state;
-        console.log("Rendering state in render method");
-        console.error(props);
 
         return (
             <OnboardingContainer>
@@ -178,7 +176,7 @@ class Bvn extends React.Component{
 
 
 function mapStateToProps(state){
-    console.error(state);
+    //console.error(state);
     return {
         phone: state.onboarding_user_details,
         bvn: state.onboarding_bvn_details,
