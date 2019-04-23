@@ -10,6 +10,7 @@ export const routes = {
     //registration
     SIGNUP_IMAGES: BASEURL + '/RegistrationApi',
     SIGNUP_PHONE: BASEURL + '/RegistrationApi/api/registration/SavePhoneNumber',
+    BVN_VERIFICATION: BASEURL + '/RegistrationApi/api/registration/CallBvnService',
     SKIPBVNOTP: BASEURL + '/RegistrationApi/api/registration/RequestOtpForOnBoarding',
 
     //user security
