@@ -42,6 +42,7 @@ class Bvn extends React.Component{
     }
 
     handleDatePicker=(dob)=>{
+        dob.setHours( dob.getHours() + 1 );
         this.setState ({dob : dob});
     }
     
