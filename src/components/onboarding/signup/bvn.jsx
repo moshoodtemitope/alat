@@ -83,7 +83,7 @@ class Bvn extends React.Component{
         e.preventDefault();
          
         //console.log(this.formValidation());
-        if(this.formValidation() == false)
+        if(this.formValidation() == false)  
         {
             this.verifyBvn();
         }
