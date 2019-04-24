@@ -9,11 +9,19 @@
   z-index: 13;
   position: relative;
   width: 50px !important;
-  min-height: 45px !important;
-  padding: 0 0 0 8px;
+  min-height: 40px !important;
+  padding: 0 0 0 16px !important;
   border-radius: 3px 0 0 3px;
+  border: none;
+  background: none;
+  padding-left: 16px !important;
+  outline: none;
 }
 .react-tel-input input[type='tel'] {
   padding-left: 60px !important;
   box-shadow: none !important;
+}
+
+.react-tel-input .country-list {
+  top: 50px !important;
 }

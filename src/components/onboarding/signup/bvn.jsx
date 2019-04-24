@@ -42,6 +42,7 @@ class Bvn extends React.Component{
     }
 
     handleDatePicker=(dob)=>{
+        dob.setHours( dob.getHours() + 1 );
         this.setState ({dob : dob});
     }
     
@@ -83,7 +84,7 @@ class Bvn extends React.Component{
         e.preventDefault();
          
         //console.log(this.formValidation());
-        if(this.formValidation() == false)
+        if(this.formValidation() == false)  
         {
             this.verifyBvn();
         }
