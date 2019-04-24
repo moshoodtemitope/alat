@@ -75,7 +75,7 @@ class Signup extends React.Component{
 
     handleSubmit(e) {
         e.preventDefault();
-        this.setState({ submitted: true });
+        // this.setState({ submitted: true });
         let { phone, error, formError } = this.state;
         const { dispatch } = this.props;
         phone = this.formatPhone(phone);
@@ -83,7 +83,7 @@ class Signup extends React.Component{
 
         if(!phone || phone.length < 10 || phone.length > 20){
             this.setState({ formError: true });
-            this.setState({ submitted: false });
+            // this.setState({ submitted: false });
             return;
         }
         if (phone) {
@@ -111,6 +111,7 @@ class Signup extends React.Component{
     }
 
     submitData = () => {
+        this.setState({ submitted: true });
         const { dispatch } = this.props;
         let data = {
             PhoneNo: this.state.phoneInputted,
@@ -190,8 +191,8 @@ class Signup extends React.Component{
                 <Modal open={openModal} onClose={this.onCloseModal} center>
                     <h2>Your Phone Number is: {this.state.phoneInputted}</h2>
                     <a href="#" onClick={this.onCloseModal}>Back</a>
-                    <button type="button" className="btn-alat btn-block" onClick={this.submitData}>
-                        Proceed
+                    <button disabled={submitted} type="button" className="btn-alat btn-block" onClick={this.submitData}>
+                        { submitted ? "Processing..." : "Proceed" }
                     </button>
                 </Modal>
             </OnboardingContainer>

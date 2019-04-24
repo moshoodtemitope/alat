@@ -12,18 +12,7 @@ import Bvn from "./onboarding/signup/bvn";
 import Dashboard from "./dashboard";
 import TransferHome from "./transfer/transfer-home";
 import NewTransfer from "./transfer/cash-transfer/new-transfer";
-// import ReactDOM from 'react-dom';
-// import { BrowserRouter, Route } from 'react-router-dom'
-
-export const fakeAuth = {
-    isAuthenticated: false,
-    authenticate() {
-        return (this.isAuthenticated = true);
-    },
-    logout() {
-        return (this.isAuthenticated = false);
-    }
-};
+import TransferRoute from "./transfer/routes";
 
 // function PrivateRoute ({component: Component, authed, ...rest}) {
 //     console.error(authed);
@@ -56,26 +45,28 @@ class IndexedRoute extends React.Component {
 
     render() {
         return (
-            <Router history={history}>
-                <Switch>
-                    <PrivateRoute path='/dashboard' component={Dashboard} authed={this.props.user} />
-                    <OnboardingRoute />
-                    <AuthenticatedRoutes />
-
-                    {/*<Route exact path="/" component={Login} />*/}
-                    {/*<Route exact path="/" component={Login} />*/}
-                    {/*<Route exact path="/logout" component={Logout} />*/}
-                    {/*<Route exact path="/register" component={Signup}/>*/}
-                    {/*<Route path="/register/bvn" component={Bvn}/>*/}
-
-
-
-                    <PrivateRoute path="/transfer" component={TransferHome} authed={this.props.user} />
-                    {/*<PrivateRoute path="/transfer/new-transfer" component={NewTransfer} authed={this.props.user} />*/}
-                    {/*<TransferRoute/>*/}
-                    {/*<AccountsRoute/>*/}
-                </Switch>
-            </Router>
+            <div>
+                <OnboardingRoute />
+                <AuthenticatedRoutes />
+            </div>
+            // <Router history={history}>
+            //     <Switch>
+            //         <PrivateRoute path='/dashboard' component={Dashboard} authed={this.props.user} />
+            //         <OnboardingRoute />
+            //         <AuthenticatedRoutes />
+            //
+            //         {/*<Route exact path="/" component={Login} />*/}
+            //         {/*<Route exact path="/" component={Login} />*/}
+            //         {/*<Route exact path="/logout" component={Logout} />*/}
+            //         {/*<Route exact path="/register" component={Signup}/>*/}
+            //         {/*<Route path="/register/bvn" component={Bvn}/>*/}
+            //
+            //         {/*<PrivateRoute path="/transfer" component={TransferHome} authed={this.props.user} />*/}
+            //         {/*<PrivateRoute path="/transfer/new-transfer" component={NewTransfer} authed={this.props.user} />*/}
+            //         {/*<TransferRoute/>*/}
+            //         {/*<AccountsRoute/>*/}
+            //     </Switch>
+            // </Router>
         );
     }
 }

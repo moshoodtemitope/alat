@@ -49,18 +49,16 @@ function PrivateRoute ({component: Component, authed, ...rest}) {
 class OnboardingRoute extends React.Component{
     render(){
         return(
-            <Router history={history}>
-                <Fragment>
-                    <Route exact path="/" component={Login} render={props => (<Login fakeAuth={fakeAuth} {...props} />)} />
-                    {/*<Route exact path="/" component={Login} />*/}
-                    {/*<Route exact path="/logout" component={Logout} />*/}
-                    <Route exact path="/register" component={Signup}/>
-                    <Route path="/register/bvn" component={Bvn}/>
-                    <Route path="/register/verify-bvn" component={VerifyBvn}/>
-                    <PrivateRoute fakeAuth={fakeAuth} exact path='/dashboard' component={Dashboard} />
-                    {/*<Route component={Error404} />*/}
-                </Fragment>
-            </Router>
+            <div>
+                <Route exact path="/" component={Login} render={props => (<Login fakeAuth={fakeAuth} {...props} />)} />
+                {/*<Route exact path="/" component={Login} />*/}
+                {/*<Route exact path="/logout" component={Logout} />*/}
+                <Route exact path="/register" component={Signup}/>
+                <Route path="/register/bvn" component={Bvn}/>
+                <Route path="/register/verify-bvn" component={VerifyBvn}/>
+                {/* <PrivateRoute fakeAuth={fakeAuth} exact path='/dashboard' component={Dashboard} />*/}
+                {/*<Route component={Error404} />*/}
+            </div>
         )
     }
 }

@@ -4,11 +4,17 @@ import OnboardingContainer from "../Container";
 import {connect} from "react-redux";
 import {ApiService} from "../../../services/apiService";
 import {routes} from "../../../services/urls";
-import {USER_REGISTER_FETCH, USER_REGISTER_SAVE} from "../../../redux/constants/onboarding/user.constants";
+import {
+    BVN_VERIFICATION_SUCCESS,
+    USER_REGISTER_FETCH,
+    USER_REGISTER_SAVE
+} from "../../../redux/constants/onboarding/user.constants";
 import {userActions} from "../../../redux/actions/onboarding/user.actions";
 import {history} from "../../../_helpers/history";
 
 import {Textbox} from "react-inputs-validation";
+import {alertActions} from "../../../redux/actions/alert.actions";
+import {modelStateErrorHandler} from "../../../shared/utils";
 
 class VerifyBvn extends React.Component{
     constructor(props) {
@@ -17,11 +23,14 @@ class VerifyBvn extends React.Component{
             phone: '',
             error: '',
             otpValue: '',
-            formError: ''
+            formError: '',
+            // resendingOtp: false,
+            // resendStatus: ""
         };
 
         this.handleInputBlur = this.handleInputBlur.bind(this);
         this.submitOtp = this.submitOtp.bind(this);
+        this.resendCode = this.resendCode.bind(this);
     }
 
     getRegistrationDetails(){
@@ -37,8 +46,44 @@ class VerifyBvn extends React.Component{
         }
     }
 
+    getBvnDetails(){
+        const { dispatch } = this.props;
+        let bvnDetails = this.props.bvn_details;
+        let bvnStatus = bvnDetails.bvn_verification_status;
+        let phoneEmail = "";
+        if(bvnStatus === BVN_VERIFICATION_SUCCESS){
+            let resp = bvnDetails.bvn_verification_data.response;
+            this.setState({bvnPhoneNo: resp.bvnPhoneNo, phoneNo: resp.phoneNo});
+        }
+        else{
+            history.push('/register');
+        }
+        //dispatch(alertActions.success(this.props.response.data.message.toString()));
+    }
+
+    resendCode(){
+        this.setState({resendingOtp: true});
+        let data = {
+            phoneNo: this.state.phoneNo,
+            otpType: null,
+            imei: '123456789012345'
+        },
+        consume = ApiService.request(routes.RESENDOTP, "POST", data);
+        return consume.then(function(response){
+            console.log("Success 🌚🌚");
+            console.log(response);
+            return (this.setState({resendingOtp: false, resendStatus: "OPT sent!"}));
+            // this.setState({resendStatus: "OPT sent!"})
+        })
+        .catch(err=>{
+            console.log(err);
+            return(this.setState({resendingOtp: false, resendStatus: err.message}));
+        })
+    }
+
     componentDidMount() {
         this.getRegistrationDetails();
+        this.getBvnDetails();
     }
 
     submitOtp(e){
@@ -50,16 +95,18 @@ class VerifyBvn extends React.Component{
         let props = this.props;
         console.log('Phone number', props.phone);
         let data = {
-            phoneNo: '08137835331',
+            phoneNo: this.state.phoneNo,
             otp: this.state.otpValue
         },
         consume = ApiService.request(routes.VERIFYBVNOTP, "POST", data);
         return consume.then(function(response){
            console.log('Succeeded');
+            this.setState({ submitted: false });
+            history.push('/bvn-customer-details');
         })
         .catch(err=>{
-            console.log('dsdsds', props.phone);
             this.setState({ submitted: false, error: err.response.data.message })
+            // this.setState({ submitted: false, error: modelStateErrorHandler(err, 'value.Otp')})
         })
     }
 
@@ -71,6 +118,8 @@ class VerifyBvn extends React.Component{
         let userState = this.props.onboarding_user_details;
         let phone = '';
         let state = this.state;
+        state.resendingOtp = false;
+        state.resendStatus = "";
 
         const {otpValue, error,submitted} = this.state;
         return (
@@ -78,7 +127,10 @@ class VerifyBvn extends React.Component{
                 <div className="row">
                     <div className="col-12">
                         <h3>BVN verification<span></span></h3>
-                        <p>We have sent a verification code to the phone number ( {state.phone} ) registered to your BVN</p>
+                        <div className="info-label success">
+                            We have sent a verification code to ( {state.bvnPhoneNo} )<br/>
+                            Type the code you received below
+                        </div>
                     </div>
                 </div>
 
@@ -121,7 +173,16 @@ class VerifyBvn extends React.Component{
 
                         <p>
                             <span className="text-left pull-left">
-                                <a href="#">Resend code</a>
+                                {state.resendingOtp === false && state.resendStatus === "" &&
+                                    <a onClick={this.resendCode}>Resend code</a>
+                                }
+                                {state.resendingOtp === true &&
+                                    <span>Resend code</span>
+                                }
+                                {state.resendingOtp === false && state.resendStatus !== "" &&
+                                    <span>{state.resendStatus}</span>
+                                }
+
                             </span>
                             <span className="text-right pull-right">
                                 <a href="#">Call my phone</a>
@@ -136,7 +197,11 @@ class VerifyBvn extends React.Component{
 
 
 function mapStateToProps(state){
-    return state.onboarding_user_details;
+    return {
+        user_details: state.onboarding_user_details,
+        bvn_details: state.onboarding_bvn_details,
+        alert: state.alert
+    }
 }
 
 export default connect(mapStateToProps)(VerifyBvn);

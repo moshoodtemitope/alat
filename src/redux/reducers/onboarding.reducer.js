@@ -5,16 +5,20 @@ export function userRegistrationRequest(state=[], action) {
         case USER_REGISTER_SAVE:
             return {
                 registration_status: USER_REGISTER_SAVE,
-                registration_data: action
+                registration_data: action,
+                registration_step: 1
             };
         case USER_REGISTER_FETCH:
             return {
                 registration_status: USER_REGISTER_FETCH,
-                registration_data: action
+                registration_data: action,
+                registration_step: 1
             };
 
         default:
-            return {};
+            return {
+                registration_step: 1
+            };
     }
 }
 
@@ -24,15 +28,19 @@ export function bvnDetailsReducer(state=[], action) {
             return {
                 bvn_verification_status: BVN_VERIFICATION_PENDING,
                 bvn_verification_data: action,
+                registration_step: 2
 
             };
         case BVN_VERIFICATION_SUCCESS:
             return {
                 bvn_verification_status: BVN_VERIFICATION_SUCCESS,
-                bvn_verification_data: action
+                bvn_verification_data: action,
+                registration_step: 2
             };
 
         default:
-            return {};
+            return {
+                registration_step: 2
+            };
     }
 }

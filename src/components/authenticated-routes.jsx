@@ -1,67 +1,67 @@
 import * as React from 'react';
-// import { Route } from 'react-router'
 import {Route, Switch} from "react-router-dom";
 import {Redirect, Router} from "react-router";
 import {history} from "../_helpers/history";
-// import Login from "../onboarding/login";
-// import Signup from "../onboarding/signup";
-// import Bvn from "../onboarding/signup/bvn";
 import Dashboard from "../components/dashboard";
 import TransferRoute from "./transfer/routes";
 import {Fragment} from "react";
 import Login from "./onboarding/login";
 import Signup from "./onboarding/signup";
 import Bvn from "./onboarding/signup/bvn";
-// import TransferComponent from "../transfer/TransferComponent";
-// import { Route} from 'react-router-dom'
+import connect from "react-redux/es/connect/connect";
 
-
-export const fakeAuth = {
-    isAuthenticated: false,
-    authenticate() {
-        return (this.isAuthenticated = true);
-    },
-    logout() {
-        return (this.isAuthenticated = false);
-    }
-};
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
     return (
         <Route
             {...rest}
-            render={(props) => authed === true
-                ? <Component {...props} />
+            render={(props) => authed ? <Component {...props} />
                 : <Redirect to={{pathname: '/', state: {from: props.location}}} />}
         />
     )
 }
 
-// const AuthenticatedRoutes = props => (
-//     <Router history={history}>
-//         <Switch>
-//             <PrivateRoute authed={this.state.authed} exact path='/dashboard' component={Dashboard} />
-//             {/*<Route exact path="/dashboard" component={Dashboard} />*/}
-//             {/*<TransferRoute />*/}
-//             {/*<Route exact path="/transfer" component={TransferComponent} />*/}
-//         </Switch>
-//     </Router>
-// );
-
 class AuthenticatedRoutes extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        };
+    }
+
     render(){
+        if(this.props.user){
+            let timerId = setInterval(() => console.log("Do refresh token"), 5000);
+            // after 5 seconds stop
+            // setTimeout(() => { clearInterval(timerId); alert('stop'); }, 5000);
+        }
+
+
         return(
             <Router history={history}>
                 <Switch>
-                    {/*<PrivateRoute authed={this.state.authed} exact path='/dashboard' component={Dashboard} />*/}
-                    <Route path="/dashboard" component={Dashboard} />
-                    {/*<TransferRoute />*/}
-                    {/*<Route exact path="/transfer" component={TransferComponent} />*/}
+                    {/*<Route path="/dashboard" component={Dashboard} />*/}
+                    <PrivateRoute path='/dashboard' authed={this.props.user} component={Dashboard} />
                 </Switch>
             </Router>
+            // <Router history={history}>
+            //     <Switch>
+            //         {/*<PrivateRoute authed={this.state.authed} exact path='/dashboard' component={Dashboard} />*/}
+            //         <Route path="/dashboard" component={Dashboard} />
+            //         {/*<TransferRoute />*/}
+            //         {/*<Route exact path="/transfer" component={TransferComponent} />*/}
+            //     </Switch>
+            // </Router>
         )
     }
 }
 
+function mapStateToProps(state) {
+    const { authentication } = state;
+    const { user } = authentication;
+    return {
+        user
+    }
+}
 
-export default AuthenticatedRoutes;
+export default connect(mapStateToProps)(AuthenticatedRoutes);

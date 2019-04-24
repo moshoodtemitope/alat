@@ -103,12 +103,14 @@ class Bvn extends React.Component{
         const { dispatch } = this.props;
         let props = this.props;
         let userData;
-        let registrationStatus = props.registration_status;
-        if(registrationStatus === USER_REGISTER_SAVE){
-            userData =  props.registration_data.user;
+        let userDetails = props.user_details;
+        if('registration_status' in userDetails && userDetails.registration_status === USER_REGISTER_SAVE){
+            userData =  userDetails.registration_data.user;
             this.setState({userData: userData});
             this.setState({phone: userData.phone});
-          
+        }
+        else{
+            history.push('/register');
         }
     }
 
@@ -119,9 +121,12 @@ class Bvn extends React.Component{
     render(){
         const {bvn, dob, bvnIvalid, dobInvalid, formInvalid} = this.state;
         let props = this.props;
-        let userState = this.props.onboarding_user_details;
+
         let phone = '';
         let state = this.state;
+        let userDetails = props.user_details;
+
+        // phone =
 
         return (
             <OnboardingContainer>
@@ -164,9 +169,10 @@ class Bvn extends React.Component{
                                 <div className="text-danger">select a valid date</div>
                                 }
                             </div>
-                            <input type="submit" value="Continue" disabled={props.bvn.bvn_verification_status == "BVN_VERIFICATION_PENDING"} className="btn-alat btn-block"/>
+                            <input type="submit" value="Continue" disabled={props.bvn_details.bvn_verification_status == "BVN_VERIFICATION_PENDING"} className="btn-alat btn-block"/>
                         </form>
                         <p className="text-center"><NavLink to="/">Skip BVN</NavLink></p>
+                        <p className="text-center"><NavLink to="/register">Go Back</NavLink></p>
                     </div>
                 </div>
             </OnboardingContainer>
@@ -178,8 +184,8 @@ class Bvn extends React.Component{
 function mapStateToProps(state){
     //console.error(state);
     return {
-        phone: state.onboarding_user_details,
-        bvn: state.onboarding_bvn_details,
+        user_details: state.onboarding_user_details,
+        bvn_details: state.onboarding_bvn_details,
         alert: state.alert
     } 
     //state.onboarding_user_details;
