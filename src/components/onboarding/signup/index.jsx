@@ -16,6 +16,7 @@ import "./../onboarding.scss";
 import {userActions} from "../../../redux/actions/onboarding/user.actions";
 import {USER_REGISTER_SAVE} from "../../../redux/constants/onboarding/user.constants";
 import {connect} from "react-redux";
+import {phoneimage} from "../../../assets/img/phone-bvn.svg"
 import Modal from 'react-responsive-modal';
 
 require('react-telephone-input/lib/withStyles');
@@ -188,12 +189,25 @@ class Signup extends React.Component{
                     </div>
                 </div>
                 <Modal open={openModal} onClose={this.onCloseModal} center>
-                    <h2>Your Phone Number is: {this.state.phoneInputted}</h2>
+                    {/* <h2>Your Phone Number is: {this.state.phoneInputted}</h2>
                     <a href="#" onClick={this.onCloseModal}>Back</a>
                     <button type="button" className="btn-alat btn-block" onClick={this.submitData}>
                         Proceed
-                    </button>
+                    </button> */}
+                    <div class="">
+                    <div class="div-modal">
+                        <img src={phoneimage}/>
+
+                        <h3>Your phone number is <span>{this.state.phoneInputted}</span>. Do you want to proceed?</h3>
+
+                    <div class="btn-opt">
+                        <button onClick={this.onCloseModal} class="border-btn">Back</button>
+                        <button onClick={this.submitData} class="btn-alat">Proceed</button>
+                    </div>
+                    </div>
+                </div>
                 </Modal>
+                
             </OnboardingContainer>
         );
     }
