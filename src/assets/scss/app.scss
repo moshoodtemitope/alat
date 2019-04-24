@@ -89,6 +89,52 @@ body {
   }
 }
 
+.overlay {
+  background: rgba(0,0,0,0.6);
+  height: 100%;
+  width: 100%;
+  position: fixed;
+}
+
+
+.div-modal {
+      background: #fff;
+    max-width: 400px;
+    box-shadow: 1px 1px 4px #00000057;
+    border-radius: 4px;
+    margin: 0 auto;
+    padding: 40px 30px;
+    margin-top: 10%;
+    text-align: center;
+
+    h3 {
+      font-size: em(18);
+      margin-bottom: 30px;
+      font-family: $regular;
+      line-height: 1.5;
+    }
+
+    img {
+      margin-bottom: 20px;
+    }
+}
+
+.btn-opt {
+  margin-top: 20px;
+  button {
+    width: 45%;
+    margin-bottom: 20px;
+    margin: 0 5px;
+
+    &.border-btn {
+      border-radius: 3px;
+    }
+
+    &.btn-alat {
+      min-width: inherit;
+    }
+  }
+
 .pw-hint {
   font-size: em(12);
   margin-top: 10px;
