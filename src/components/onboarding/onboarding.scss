@@ -5,6 +5,44 @@
 [type='tel']{
   height: initial !important;
 }
+.cta-link{
+  color: #AB2656;
+  &:hover{
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+.btn-alat.disabled-btn, button:disabled { 
+  background: #DADADA;
+  color: #9c9c9c;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.error-text{
+  display: none;
+}
+.form-error {
+  input, input[type='number'] {
+    border: 1px solid #AB2656!important;
+  }
+  .error-text{
+    color: #AB2656;
+    display: block;
+  }
+
+  label {
+    color: #AB2656;
+  }
+
+  span.error {
+    display: block;
+    color: #AB2656;
+    font-size: em(14);
+    margin-top: 10px;
+  }
+}
+
 .react-tel-input .selected-flag {
   z-index: 13;
   position: relative;

@@ -83,12 +83,14 @@ class VerifyBvn extends React.Component{
 
     componentDidMount() {
         this.getRegistrationDetails();
-        this.getBvnDetails();
+        // this.getBvnDetails();
     }
 
     submitOtp(e){
         e.preventDefault();
         this.setState({ submitted: true });
+
+        this.setState({submitDisabled : true})
         
         const {otpValue} = this.state;
         // console.log('Submitted', otpValue);
@@ -106,6 +108,8 @@ class VerifyBvn extends React.Component{
         })
         .catch(err=>{
             this.setState({ submitted: false, error: err.response.data.message })
+
+            this.setState({submitDisabled : false})
             // this.setState({ submitted: false, error: modelStateErrorHandler(err, 'value.Otp')})
         })
     }
@@ -121,7 +125,7 @@ class VerifyBvn extends React.Component{
         state.resendingOtp = false;
         state.resendStatus = "";
 
-        const {otpValue, error,submitted} = this.state;
+        const {otpValue, error,submitted, emptyOtp, submitDisabled} = this.state;
         return (
             <OnboardingContainer>
                 <div className="row">
@@ -138,7 +142,7 @@ class VerifyBvn extends React.Component{
                     <div className="col-12">
                         <form className="onboard-form" onSubmit={this.submitOtp}>
                         {error && <div className="info-label error">{error}</div>}
-                            <div className="input-ctn">
+                            <div className="input-ctn OtpTextVal">
                                 <label>Enter OTP code</label>
                                 <Textbox
                                     tabIndex="2"
@@ -150,31 +154,33 @@ class VerifyBvn extends React.Component{
                                     placeholder= "Enter code sent to your phone"
                                     onChange={(otpValue, e) => {
                                         this.setState({ otpValue });
+                                        if(otpValue.length < 6){
+                                            this.setState({emptyOtp: true});
+                                            this.setState({submitDisabled: true});
+                                            document.querySelector('.OtpTextVal').classList.add('form-error');
+                                        }else{
+                                            this.setState({emptyOtp: false});
+                                            this.setState({submitDisabled: false});
+                                            document.querySelector('.OtpTextVal').classList.remove('form-error')
+                                        }
+                                        console.log('length is', );
                                     }}
                                     
-                                    validationCallback={res =>
-                                        this.setState({ hasOtpError: res, validate: false })
-                                    }
-                                    validationOption={{
-                                        name: 'OTP',
-                                        check: true,
-                                        type: 'number',
-                                        min: 6,
-                                        msgOnError: 'Six-digit OTP code required',
-                                        required: true
-                                    }}
+                                    
+                                    
                                 />
+                                <small className="error-text">Six-digit OTP code required</small>
                                 {/* <input type="number" onBlur={this.handleInputBlur}/> */}
                             </div>
 
-                            <button type="submit" disabled={submitted} className="btn-alat btn-block">{ submitted ? "Verifying..." : "Continue" }</button>
+                            <button type="submit" disabled={submitDisabled} className={"btn-alat btn-block "}>{ submitted ? "Verifying..." : "Continue" }</button>
 
                         </form>
 
                         <p>
-                            <span className="text-left pull-left">
+                            <span className="text-left pull-right cta-link">
                                 {state.resendingOtp === false && state.resendStatus === "" &&
-                                    <a onClick={this.resendCode}>Resend code</a>
+                                    <a className="cta-link" onClick={this.resendCode}>Resend code</a>
                                 }
                                 {state.resendingOtp === true &&
                                     <span>Resend code</span>
@@ -184,9 +190,9 @@ class VerifyBvn extends React.Component{
                                 }
 
                             </span>
-                            <span className="text-right pull-right">
+                            {/* <span className="text-right pull-right cta-link">
                                 <a href="#">Call my phone</a>
-                            </span>
+                            </span> */}
                         </p>
                     </div>
                 </div>
