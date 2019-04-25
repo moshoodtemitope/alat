@@ -2,13 +2,15 @@ import {ApiService} from "../../../services/apiService";
 import {routes} from "../../../services/urls";
 import {alertActions} from "../alert.actions";
 import {history} from './../../../_helpers/history';
-import {USER_REGISTER_FETCH, USER_REGISTER_SAVE, userConstants, BVN_VERIFICATION_PENDING, BVN_VERIFICATION_SUCCESS, BVN_VERIFICATION_FAILURE} from "../../constants/onboarding/user.constants";
+import {USER_REGISTER_FETCH, USER_REGISTER_SAVE, userConstants, BVN_VERIFICATION_PENDING, 
+    BVN_VERIFICATION_SUCCESS, BVN_VERIFICATION_FAILURE, SKIP_BVN_PENDING, SKIP_BVN_SUCCESS} from "../../constants/onboarding/user.constants";
 
 export const userActions = {
     login,
     logout,
     register,
-    bvnVerify
+    bvnVerify,
+    skipBvn
 };
 
 function login(email, password) {
@@ -63,6 +65,27 @@ function logout() {
     history.push('/');
     // window.location.reload();
     return { type: userConstants.LOGOUT };
+}
+
+function skipBvn(bvnDetails){
+    return dispatch =>{
+        let data = {
+            imei: "354553073954109",
+            phoneNo : bvnDetails.phone,
+          };
+        let consume= ApiService.request(routes.SKIPBVNOTP, "POST", data);
+        dispatch (request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response.data));
+                history.push('/register/verify-bvn');
+            }).catch(error => {
+                dispatch(alertActions.error(error.response.data.message.toString()));
+            });
+    };
+    function request(request) { return { type:SKIP_BVN_PENDING, request} }
+    function success(response) { return {type:SKIP_BVN_SUCCESS, response} }
+    //function failure(error) { return {type:BVN_VERIFICATION_FAILURE, error} }
 }
 
 function bvnVerify (bvnDetails){

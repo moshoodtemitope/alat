@@ -56,7 +56,7 @@ class VerifyBvn extends React.Component{
             this.setState({bvnPhoneNo: resp.bvnPhoneNo, phoneNo: resp.phoneNo});
         }
         else{
-            history.push('/register');
+           //   history.push('/register');
         }
         //dispatch(alertActions.success(this.props.response.data.message.toString()));
     }
