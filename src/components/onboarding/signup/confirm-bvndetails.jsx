@@ -12,11 +12,10 @@ import {
 import {userActions} from "../../../redux/actions/onboarding/user.actions";
 import {history} from "../../../_helpers/history";
 
-import {Textbox} from "react-inputs-validation";
 import {alertActions} from "../../../redux/actions/alert.actions";
 import {modelStateErrorHandler} from "../../../shared/utils";
 
-class VerifyBvn extends React.Component{
+class ConfirmBvnDetails extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -113,7 +112,7 @@ class VerifyBvn extends React.Component{
         return consume.then(function(response){
            console.log('Succeeded');
             this.setState({ submitted: false });
-            history.push('/bvn-customer-details');
+            history.push('/confirm-bvndetails');
         })
         .catch(err=>{
             this.setState({ submitted: false, error: err.response.data.message })
@@ -232,4 +231,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps)(VerifyBvn);
+export default connect(mapStateToProps)(ConfirmBvnDetails);
