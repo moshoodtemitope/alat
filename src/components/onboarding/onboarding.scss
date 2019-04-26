@@ -11,13 +11,17 @@
     text-decoration: underline;
     cursor: pointer;
   }
+  span{
+    color: #9c9c9c
+  }
 }
 
 .btn-alat.disabled-btn, button:disabled { 
-  background: #DADADA;
-  color: #9c9c9c;
+  // background: #DADADA;
+  // color: #9c9c9c;
   cursor: not-allowed;
   pointer-events: none;
+  opacity: 0.7;
 }
 .error-text{
   display: none;

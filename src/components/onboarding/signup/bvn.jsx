@@ -106,6 +106,7 @@ class Bvn extends React.Component{
     submitSkipBVN(){
         this.toggleModal();
         const {dispatch} = this.props;
+        
         dispatch(userActions.skipBvn(this.state));
     }
 
@@ -119,6 +120,7 @@ class Bvn extends React.Component{
             userData =  userDetails.registration_data.user;
             this.setState({userData: userData});
             this.setState({phone: userData.phone});
+            
         }
         else{
             history.push('/register');
@@ -126,6 +128,7 @@ class Bvn extends React.Component{
     }
 
     componentDidMount() {
+        
         this.getRegistrationDetails();
     }
     
@@ -164,7 +167,7 @@ class Bvn extends React.Component{
                             }
                            <div className={!bvnIvalid ? "input-ctn" : "input-ctn form-error" }>
                                 <label>Enter your BVN</label>
-                                <input type="text" onChange={this.handleChange} maxLength="11" name="bvn" value={bvn} placeholder="249087653214"/>
+                                <input type="text" onChange={this.handleChange} maxLength="11" name="bvn" value={bvn} placeholder="Enter your BVN"/>
                                 {bvnIvalid &&
                                 <div className="text-danger">A valid bvn is 11 digits</div>
                                 }
