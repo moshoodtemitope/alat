@@ -4,6 +4,7 @@ import Signup from "./signup";
 import Bvn from "./signup/bvn";
 import VerifyBvn from "./signup/verify-bvn";
 import ConfirmBvnDetails from "./signup/confirm-bvndetails";
+import SecurityQuestions from "./signup/security-questions";
 import { Route} from 'react-router-dom'
 import {history} from './../../_helpers/history';
 import {Redirect, Router} from "react-router";
@@ -58,6 +59,7 @@ class OnboardingRoute extends React.Component{
                 <Route path="/register/bvn" component={Bvn}/>
                 <Route path="/register/verify-bvn" component={VerifyBvn}/>
                 <Route path="/register/confirm-bvndetails" component={ConfirmBvnDetails}/>
+                <Route path="/register/security-questions" component={SecurityQuestions}/>
                 {/* <PrivateRoute fakeAuth={fakeAuth} exact path='/dashboard' component={Dashboard} />*/}
                 {/*<Route component={Error404} />*/}
             </div>

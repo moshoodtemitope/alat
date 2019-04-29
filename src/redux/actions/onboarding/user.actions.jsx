@@ -3,14 +3,17 @@ import {routes} from "../../../services/urls";
 import {alertActions} from "../alert.actions";
 import {history} from './../../../_helpers/history';
 import {USER_REGISTER_FETCH, USER_REGISTER_SAVE, userConstants, BVN_VERIFICATION_PENDING, 
-    BVN_VERIFICATION_SUCCESS, BVN_VERIFICATION_FAILURE, SKIP_BVN_PENDING, SKIP_BVN_SUCCESS} from "../../constants/onboarding/user.constants";
+    BVN_VERIFICATION_SUCCESS, BVN_VERIFICATION_FAILURE, SKIP_BVN_PENDING, SKIP_BVN_SUCCESS,
+    OTP_VERIFICATION_PENDING, OTP_VERIFICATION_FAILURE, DATA_FROM_BVN, SAVE_BVN_INFO} from "../../constants/onboarding/user.constants";
 
 export const userActions = {
     login,
     logout,
     register,
     bvnVerify,
-    skipBvn
+    skipBvn,
+    saveBvnInfo,
+    saveBvnData
 };
 
 function login(email, password) {
@@ -113,6 +116,45 @@ function bvnVerify (bvnDetails){
     function failure(error) { return {type:BVN_VERIFICATION_FAILURE, error} }
 }
 
+function saveBvnInfo(otpData){
+    return dispatch =>{
+        let consume = ApiService.request(routes.VERIFYBVNOTP, "POST", otpData);
+        dispatch(request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response.data));
+                history.push('/register/confirm-bvndetails')
+            }).catch(error =>{
+                dispatch(failure(error.response.data.message.toString()));
+                dispatch(alertActions.error(error.response.data.message.toString()));
+            });
+        
+    }
+
+    function request(request) { return { type:OTP_VERIFICATION_PENDING, request} }
+    function success(response) { return {type:DATA_FROM_BVN, response} }
+    function failure(error) { return {type:OTP_VERIFICATION_FAILURE, error} }
+}
+
+function saveBvnData(otpData, action){
+    switch(action){
+        case SAVE_BVN_INFO:
+            return dispatch => {
+                dispatch(save(otpData));
+            };
+        case OTP_VERIFICATION_PENDING:
+            return dispatch => {
+                dispatch(pending(otpData));
+            };
+        default:
+            return dispatch => {
+                dispatch(pending(otpData));
+            };
+    }
+    function pending(otpData) { return null }
+    function save(otpData) { return { type: SAVE_BVN_INFO, otpData } }
+}
+
 
 function register(user, action) {
     switch(action){
@@ -134,3 +176,5 @@ function register(user, action) {
     function fetch(user) { return { type: USER_REGISTER_FETCH, user } }
     function save(user) { return { type: USER_REGISTER_SAVE, user } }
 }
+
+
