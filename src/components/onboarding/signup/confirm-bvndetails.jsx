@@ -27,9 +27,7 @@ class ConfirmBvnDetails extends React.Component{
             // resendStatus: ""
         };
 
-        this.handleInputBlur = this.handleInputBlur.bind(this);
-        this.submitOtp = this.submitOtp.bind(this);
-        this.resendCode = this.resendCode.bind(this);
+        // this.handleInputBlur = this.handleInputBlur.bind(this);
     }
 
     getRegistrationDetails(){
@@ -41,180 +39,94 @@ class ConfirmBvnDetails extends React.Component{
             userData =  props.registration_data.user;
             this.setState({userData: userData});
             this.setState({phone: userData.phone});
-            console.log(userData)
+            console.log('user data is ---', userData);
         }
     }
 
     getBvnDetails(){
         const { dispatch } = this.props;
-        let bvnDetails = this.props.bvn_details;
+        let bvnDetails = this.props.customer_bvn_info;
         console.log('bvn details', bvnDetails);
-        let bvnStatus = bvnDetails.bvn_verification_status;
-        let phoneEmail = "";
-        if(bvnStatus === BVN_VERIFICATION_SUCCESS){
-            let resp = bvnDetails.bvn_verification_data.response;
-            this.setState({bvnPhoneNo: resp.bvnPhoneNo, phoneNo: resp.phoneNo});
-            this.setState({otpSent: true});
+        if(bvnDetails){
+            
+            let bvnStatus = bvnDetails.bvn_verification_status;
+            let phoneEmail = "";
+            if(bvnStatus === BVN_VERIFICATION_SUCCESS){
+                let resp = bvnDetails.bvn_verification_data.response;
+                this.setState({bvnPhoneNo: resp.bvnPhoneNo, phoneNo: resp.phoneNo});
+                this.setState({otpSent: true});
+            }
+            else{
+                console.log('here only');
+                // history.push('/register');
+            }
         }
         else{
-             history.push('/register');
+            // history.push('/register');
+            console.log('no bvn details');
         }
-        //dispatch(alertActions.success(this.props.response.data.message.toString()));
+        
     }
 
-    resendCode(){
-        this.setState({resendingOtp: true});
-        this.setState({error: ''});
-        let data = {
-            phoneNo: this.state.phoneNo,
-            otpType: null,
-            imei: '123456789012345'
-        },
-        consume = ApiService.request(routes.RESENDOTP, "POST", data);
-        return consume.then((response)=>{
-            console.log("Success 🌚🌚");
-            console.log(response);
-            // return (this.setState({resendingOtp: false, otpSent: true,  resendStatus: "OPT sent!"}));
-            
-            this.setState({resendingOtp: false, otpSent: true,  resendStatus: "OPT sent!"})
-            console.log('sent is', this.state.otpSent);
-        })
-        .catch((err)=>{
-            console.log(err,'state is ', this.state.otpSent);
-            //new
-            this.setState({resendingOtp: false, otpSent: false, resendStatus: err.message});
-            console.log('sent is', this.state.otpSent);
-            // return(this.setState({resendingOtp: false, otpSent: false, resendStatus: err.message}));
-        })
-    }
+    
 
     componentDidMount() {
         this.getRegistrationDetails();
         this.getBvnDetails();
     }
 
-    submitOtp(e){
-        e.preventDefault();
-        this.setState({ submitted: true });
-        
-        this.setState({submitDisabled : true})
-        
-        const {otpValue} = this.state;
-        // console.log('Submitted', otpValue);
-        let props = this.props;
-        console.log('Phone number', props.phone);
-        let data = {
-            phoneNo: this.state.phoneNo,
-            phoneNo: this.state.phoneNo,
-            otp: this.state.otpValue
-        },
-        consume = ApiService.request(routes.VERIFYBVNOTP, "POST", data);
-        return consume.then(function(response){
-           console.log('Succeeded');
-            this.setState({ submitted: false });
-            history.push('/confirm-bvndetails');
-        })
-        .catch(err=>{
-            this.setState({ submitted: false, error: err.response.data.message })
+    
 
-            this.setState({submitDisabled : false})
-            // this.setState({ submitted: false, error: modelStateErrorHandler(err, 'value.Otp')})
-        })
-    }
-
-    handleInputBlur(OtpValue){
-        this.setState({otpValue: OtpValue});
-    }
+   
 
     render(){
-        let userState = this.props.onboarding_user_details;
-        let phone = '';
-        let state = this.state;
-        state.resendingOtp = false;
-        state.resendStatus = "";
-        state.otpSent = true;
+        // let userState = this.props.onboarding_user_details;
+        // // let phone = '';
+        // let state = this.state;
         
-        const {otpValue, error,submitted, emptyOtp, submitDisabled} = this.state;
+        // const {otpValue, error,submitted, emptyOtp, submitDisabled} = this.state;
         return (
             <OnboardingContainer>
                 <div className="row">
-                    <div className="col-12">
-                        <h3>BVN verification<span></span></h3>
-                        {state.otpSent===true &&
-                            <div className="info-label success">
-                                We have sent a verification code to ( {state.bvnPhoneNo} )<br/>
-                                Type the code you received below
-                            </div>
-                        }
-
-                        {state.otpSent===false &&
-                            <div className="info-label error">
-                               {state.resendStatus}
-                            </div>
-                        }
-                        {/* {otpSent==false &&
-                            
-                        } */}
-                    </div>
+                    <h3>Verify BVN details<span></span></h3>
+                    <p>Kindly verify if the details below are correct.</p>
                 </div>
 
                 <div className="row">
                     <div className="col-12">
-                        <form className="onboard-form" onSubmit={this.submitOtp}>
-                        {error && <div className="info-label error">{error}</div>}
-                            <div className="input-ctn OtpTextVal">
-                                <label>Enter OTP code</label>
-                                <Textbox
-                                    tabIndex="2"
-                                    id={'otpValue'}
-                                    name="otpValue"
-                                    type="number"
-                                    maxLength="6"
-                                    value={otpValue}
-                                    placeholder= "Enter code sent to your phone"
-                                    onChange={(otpValue, e) => {
-                                        this.setState({ otpValue });
-                                        this.setState({error: ''});
-                                        if(otpValue.length < 6){
-                                            this.setState({emptyOtp: true});
-                                            this.setState({submitDisabled: true});
-                                            document.querySelector('.OtpTextVal').classList.add('form-error');
-                                        }else{
-                                            this.setState({emptyOtp: false});
-                                            this.setState({submitDisabled: false});
-                                            document.querySelector('.OtpTextVal').classList.remove('form-error')
-                                        }
-                                        console.log('length is', );
-                                    }}
-                                    
-                                    
-                                    
-                                />
-                                <small className="error-text">Six-digit OTP code required</small>
-                                {/* <input type="number" onBlur={this.handleInputBlur}/> */}
+                        <div className="details-container">
+                            <div className="row mb-4">
+                                <div className="col-6">
+                                    <span className="label">First Name</span><br/>
+                                    <span>John</span>
+                                </div>
+                                <div className="col-6">
+                                    <span className="label">Last Name</span><br/>
+                                    <span>Doe</span>
+                                </div>
                             </div>
-
-                            <button type="submit" disabled={submitDisabled} className={"btn-alat btn-block "}>{ submitted ? "Verifying..." : "Continue" }</button>
-
-                        </form>
-
-                        <p>
-                            <span className="text-left pull-right cta-link">
-                                {state.resendingOtp === false && state.resendStatus === "" &&
-                                    <a className="cta-link" onClick={this.resendCode}>Resend code</a>
-                                }
-                                {state.resendingOtp === true &&
-                                    <span>Resend code</span>
-                                }
-                                {state.resendingOtp === false && state.resendStatus !== "" &&
-                                    <span>{state.resendStatus}</span>
-                                }
-
-                            </span>
-                            {/* <span className="text-right pull-right cta-link">
-                                <a href="#">Call my phone</a>
-                            </span> */}
-                        </p>
+                            <div className="row mb-4">
+                                <div className="col-6">
+                                    <span className="label">Phone Number</span><br/>
+                                    <span>08020675432</span>
+                                </div>
+                                <div className="col-6">
+                                    <span className="label">Date of Birth</span><br/>
+                                    <span>19/12/1989</span>
+                                </div>
+                            </div>
+                            <div className="row mb-4">
+                                <div className="col-6">
+                                    <span className="label">Gender</span><br/>
+                                    <span>Male</span>
+                                </div>
+                                <div className="col-6">
+                                    <span className="label">BVN</span><br/>
+                                    <span>2234789090</span>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#" className="btn-alat btn-block">Confirm Details</a>
                     </div>
                 </div>
             </OnboardingContainer>
@@ -224,10 +136,14 @@ class ConfirmBvnDetails extends React.Component{
 
 
 function mapStateToProps(state){
+    // return {
+    //     user_details: state.onboarding_user_details,
+    //     bvn_details: state.onboarding_bvn_details,
+    //     alert: state.alert
+    // }
+
     return {
-        user_details: state.onboarding_user_details,
-        bvn_details: state.onboarding_bvn_details,
-        alert: state.alert
+        customer_bvn_info: state.onboarding_dataFrom_bvn,
     }
 }
 

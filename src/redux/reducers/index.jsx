@@ -12,6 +12,8 @@ const rootReducer = combineReducers({
     alert,
     onboarding_user_details: onboarding.userRegistrationRequest,
     onboarding_bvn_details: onboarding.bvnDetailsReducer,
+    onboarding_bvnskip_details: onboarding.bvnSkipReducer,
+    onboarding_dataFrom_bvn: onboarding.bvnCustomerDetailsReducer,
     dashboard_accounts: dashboard.accountFetch,
     dashboard_accounts_history: dashboard.accountHistoryReducer,
     dashboard_userGoals: dashboard.userGoalsReducer,

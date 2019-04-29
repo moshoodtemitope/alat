@@ -7,7 +7,11 @@ import {routes} from "../../../services/urls";
 import {
     BVN_VERIFICATION_SUCCESS,
     USER_REGISTER_FETCH,
-    USER_REGISTER_SAVE
+    USER_REGISTER_SAVE,
+    OTP_VERIFICATION_FAILURE,
+    DATA_FROM_BVN,
+    SKIP_BVN_SUCCESS,
+    OTP_VERIFICATION_PENDING
 } from "../../../redux/constants/onboarding/user.constants";
 import {userActions} from "../../../redux/actions/onboarding/user.actions";
 import {history} from "../../../_helpers/history";
@@ -42,23 +46,32 @@ class VerifyBvn extends React.Component{
             userData =  props.registration_data.user;
             this.setState({userData: userData});
             this.setState({phone: userData.phone});
-            console.log(userData)
+            
         }
     }
 
     getBvnDetails(){
         const { dispatch } = this.props;
-        let bvnDetails = this.props.bvn_details;
-        console.log('bvn details', bvnDetails);
+        let bvnDetails = this.props.customer_bvnverification_details;
+        let bvnSkipDetails = this.props.customer_bvnskip_details;
+        let bvnSkipStatus = bvnSkipDetails.bvn_verification_status;
+        // console.log('verifypage', bvnDetails);
+        // console.log('skip details', bvnSkipDetails);
+        console.log('user details', this.props.user_details);
         let bvnStatus = bvnDetails.bvn_verification_status;
         let phoneEmail = "";
         if(bvnStatus === BVN_VERIFICATION_SUCCESS){
             let resp = bvnDetails.bvn_verification_data.response;
-            this.setState({bvnPhoneNo: resp.bvnPhoneNo, phoneNo: resp.phoneNo});
-            this.setState({otpSent: true});
+            this.setState({otpSent: true, bvnPhoneNo: resp.bvnPhoneNo, phoneNo: resp.phoneNo});
+        }
+        else if(bvnSkipStatus ===SKIP_BVN_SUCCESS){
+            let resp = bvnSkipDetails.bvn_verification_data.response;
+            this.setState({otpSent: true,phoneNo: resp.phoneNo});
         }
         else{
+            this.setState({otpSent: false});
              history.push('/register');
+             
         }
         //dispatch(alertActions.success(this.props.response.data.message.toString()));
     }
@@ -73,19 +86,19 @@ class VerifyBvn extends React.Component{
         },
         consume = ApiService.request(routes.RESENDOTP, "POST", data);
         return consume.then((response)=>{
-            console.log("Success 🌚🌚");
-            console.log(response);
             // return (this.setState({resendingOtp: false, otpSent: true,  resendStatus: "OPT sent!"}));
             
             this.setState({resendingOtp: false, otpSent: true,  resendStatus: "OPT sent!"})
-            console.log('sent is', this.state.otpSent);
+            
         })
-        .catch((err)=>{
-            console.log(err,'state is ', this.state.otpSent);
+        .catch(err=>{
             //new
-            this.setState({resendingOtp: false, otpSent: false, resendStatus: err.message});
-            console.log('sent is', this.state.otpSent);
-            // return(this.setState({resendingOtp: false, otpSent: false, resendStatus: err.message}));
+            // console.log('error mes',modelStateErrorHandler(err.response.data));
+            this.setState({resendingOtp: false, otpSent: false, otpStatusMessage: modelStateErrorHandler(err.response.data)});
+            // this.setState({resendingOtp: false, otpSent: false, otpStatusMessage: modelStateErrorHandler(err.response.data)});
+            // this.setState({resendingOtp: false, otpSent: false, otpStatusMessage: err.modelState['bvn.PhoneNo'][0]});
+            // return(this.setState({resendingOtp: false, otpSent: false, otpStatusMessage: err.response.data.message.toString()}));
+           
         })
     }
 
@@ -96,31 +109,60 @@ class VerifyBvn extends React.Component{
 
     submitOtp(e){
         e.preventDefault();
-        this.setState({ submitted: true });
+        if(document.querySelector('#otpValue').value.length < 6){
+            this.setState({submitDisabled: true});
+            document.querySelector('.OtpTextVal').classList.add('form-error');
+        }else{
+            // this.setState({emptyOtp: false});
+            
+            // this.setState({submitDisabled: false});
+            if(document.querySelector('.OtpTextVal').classList.contains('form-error')){
+                document.querySelector('.OtpTextVal').classList.remove('form-error')
+            }
         
-        this.setState({submitDisabled : true})
         
-        const {otpValue} = this.state;
-        // console.log('Submitted', otpValue);
-        let props = this.props;
-        console.log('Phone number', props.phone);
-        let data = {
-            phoneNo: this.state.phoneNo,
-            phoneNo: this.state.phoneNo,
-            otp: this.state.otpValue
-        },
-        consume = ApiService.request(routes.VERIFYBVNOTP, "POST", data);
-        return consume.then(function(response){
-           console.log('Succeeded');
-            this.setState({ submitted: false });
-            history.push('/bvn-customer-details');
-        })
-        .catch(err=>{
-            this.setState({ submitted: false, error: err.response.data.message })
+            this.setState({otpStatusMessage: '',otpSent:false, submitted: true, submitDisabled : true, failedVerfication: false});
+        
+            const {otpValue} = this.state;
+            let props = this.props;
+            const { dispatch } = this.props;
+            let data = {
+                phoneNo: this.state.phoneNo,
+                otp: this.state.otpValue
+            };
+            
+            if(!data.phoneNo){
+                this.setState({ submitted: false,submitDisabled : true, failedVerfication:true, otpStatusMessage: 'This action is not allowed'})
+                 setTimeout(()=>history.push('/register'), 2000);
+            }else{
+                let consume = ApiService.request(routes.VERIFYBVNOTP, "POST", data);
+                return consume.then(function(response){
+                    dispatch(userActions.saveBvnData(response, SAVE_BVN_INFO));
+                    history.push('/register/confirm-bvndetails');
+                })
+                .catch(err=>{
+                    this.setState({ submitted: false,submitDisabled : false, failedVerfication:true, otpStatusMessage: modelStateErrorHandler(err.response.data), error: err.response.data.message })
+                    
+                    // history.push('/register/confirm-bvndetails');
+                    
+                })
+            }
 
-            this.setState({submitDisabled : false})
-            // this.setState({ submitted: false, error: modelStateErrorHandler(err, 'value.Otp')})
-        })
+            // dispatch(userActions.saveBvnInfo(data));
+
+            // return consume.then(function(response){
+            
+            //     this.setState({ submitted: false });
+            //     history.push('/register/confirm-bvndetails');
+            // })
+            // .catch(err=>{
+            //     this.setState({ submitted: false, error: err.response.data.message })
+
+            //     this.setState({submitDisabled : false})
+            //     history.push('/register/confirm-bvndetails');
+                
+            // })
+        }
     }
 
     handleInputBlur(OtpValue){
@@ -131,10 +173,11 @@ class VerifyBvn extends React.Component{
         let userState = this.props.onboarding_user_details;
         let phone = '';
         let state = this.state;
+        let props = this.props;
         state.resendingOtp = false;
         state.resendStatus = "";
-        state.otpSent = true;
         
+        // console.log('test', state.otpSent);
         const {otpValue, error,submitted, emptyOtp, submitDisabled} = this.state;
         return (
             <OnboardingContainer>
@@ -143,16 +186,21 @@ class VerifyBvn extends React.Component{
                         <h3>BVN verification<span></span></h3>
                         {state.otpSent===true &&
                             <div className="info-label success">
-                                We have sent a verification code to ( {state.bvnPhoneNo} )<br/>
+                                We have sent a verification code to ( {(state.bvnPhoneNo) && state.bvnPhoneNo} {(!state.bvnPhoneNo) && state.phoneNo} )<br/>
                                 Type the code you received below
                             </div>
                         }
 
-                        {state.otpSent===false &&
+                        {(state.otpSent===false || state.failedVerfication ===true ) && (state.otpStatusMessage!=="" && state.otpStatusMessage!==undefined) &&
                             <div className="info-label error">
-                               {state.resendStatus}
+                               {state.otpStatusMessage}
                             </div>
                         }
+
+                            {/* {props.alert && props.alert.message &&
+                                <div className={`info-label ${props.alert.type}`}>{props.alert.message}</div>
+                            } */}
+
                         {/* {otpSent==false &&
                             
                         } */}
@@ -162,7 +210,7 @@ class VerifyBvn extends React.Component{
                 <div className="row">
                     <div className="col-12">
                         <form className="onboard-form" onSubmit={this.submitOtp}>
-                        {error && <div className="info-label error">{error}</div>}
+                        {/* {error && <div className="info-label error">{error}</div>} */}
                             <div className="input-ctn OtpTextVal">
                                 <label>Enter OTP code</label>
                                 <Textbox
@@ -174,18 +222,15 @@ class VerifyBvn extends React.Component{
                                     value={otpValue}
                                     placeholder= "Enter code sent to your phone"
                                     onChange={(otpValue, e) => {
-                                        this.setState({ otpValue });
-                                        this.setState({error: ''});
+                                        this.setState({ otpValue, error: '', otpStatusMessage: '' });
                                         if(otpValue.length < 6){
-                                            this.setState({emptyOtp: true});
-                                            this.setState({submitDisabled: true});
+                                            this.setState({submitDisabled: true, emptyOtp: true });
                                             document.querySelector('.OtpTextVal').classList.add('form-error');
                                         }else{
-                                            this.setState({emptyOtp: false});
-                                            this.setState({submitDisabled: false});
+                                            this.setState({emptyOtp: false, submitDisabled: false});
                                             document.querySelector('.OtpTextVal').classList.remove('form-error')
                                         }
-                                        console.log('length is', );
+                                        
                                     }}
                                     
                                     
@@ -227,7 +272,8 @@ class VerifyBvn extends React.Component{
 function mapStateToProps(state){
     return {
         user_details: state.onboarding_user_details,
-        bvn_details: state.onboarding_bvn_details,
+        customer_bvnverification_details: state.onboarding_bvn_details,
+        customer_bvnskip_details: state.onboarding_bvnskip_details,
         alert: state.alert
     }
 }
