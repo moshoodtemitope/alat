@@ -99,7 +99,14 @@ class Bvn extends React.Component{
 
     verifyBvn(){
         const { dispatch } = this.props;
-        dispatch(userActions.bvnVerify(this.state));
+        let data = {
+            bvn: this.state.bvn,
+            dob: this.state.dob,
+            phoneNo : this.state.phone,
+            isOnboarding: true,
+            channelId: 2
+          };
+        dispatch(userActions.bvnVerify(data));
        // console.error(this.state);
     }
 
@@ -198,11 +205,11 @@ class Bvn extends React.Component{
                 </div>
                 <Modal open={openModal} onClose={this.toggleModal} center>
                   <div>
-                  <div class="div-modal">
+                  <div className="div-modal">
                         <h3>Do you actually want to skip BVN?</h3>
-                    <div class="btn-opt">
-                        <button onClick={this.onCloseModal} class="border-btn">Back</button>
-                        <button onClick={this.submitSkipBVN} class="btn-alat">Proceed</button>
+                    <div className="btn-opt">
+                        <button onClick={this.onCloseModal} className="border-btn">Back</button>
+                        <button onClick={this.submitSkipBVN} className="btn-alat">Proceed</button>
                     </div>
                     </div>
                   </div>
