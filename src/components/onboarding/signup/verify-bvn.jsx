@@ -134,7 +134,8 @@ class VerifyBvn extends React.Component{
         state.resendingOtp = false;
         state.resendStatus = "";
         state.otpSent = true;
-        
+
+       
         const {otpValue, error,submitted, emptyOtp, submitDisabled} = this.state;
         return (
             <OnboardingContainer>
