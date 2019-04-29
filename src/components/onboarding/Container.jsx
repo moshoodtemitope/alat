@@ -14,7 +14,7 @@ class OnboardingContainer extends React.Component {
     render() {
         let step = this.props.registration_step;
         console.log(this.props.location);
-
+        console.log('step is ', step);
         return (
             <Fragment>
                 <div>
@@ -25,14 +25,16 @@ class OnboardingContainer extends React.Component {
                                     <div className="col-4">
                                         <img src={logo} alt="ALAT Logo" />
                                     </div>
-                                    <div className="col-sm-8 col-8 text-right pull-right">
-                                        <i className={"fa fa-circle bullet " + (step > 0 ? 'active' : 'inactive')}></i>&nbsp;
-                                        <i className={"fa fa-circle bullet " + (step > 1 ? 'active' : 'inactive')}></i>&nbsp;
-                                        <i className={"fa fa-circle bullet " + (step > 2 ? 'active' : 'inactive')}></i>&nbsp;
-                                        <i className={"fa fa-circle bullet " + (step > 3 ? 'active' : 'inactive')}></i>&nbsp;
-                                        <i className={"fa fa-circle bullet " + (step > 4 ? 'active' : 'inactive')}></i>&nbsp;
-                                        <i className={"fa fa-circle bullet " + (step > 5 ? 'active' : 'inactive')}></i>
-                                    </div>
+                                    {(step > 0)?
+                                        <div className="col-sm-8 col-8 text-right pull-right">
+                                            <i className={"fa fa-circle bullet " + (step > 0 ? 'active' : 'inactive')}></i>&nbsp;
+                                            <i className={"fa fa-circle bullet " + (step > 1 ? 'active' : 'inactive')}></i>&nbsp;
+                                            <i className={"fa fa-circle bullet " + (step > 2 ? 'active' : 'inactive')}></i>&nbsp;
+                                            <i className={"fa fa-circle bullet " + (step > 3 ? 'active' : 'inactive')}></i>&nbsp;
+                                            <i className={"fa fa-circle bullet " + (step > 4 ? 'active' : 'inactive')}></i>&nbsp;
+                                            <i className={"fa fa-circle bullet " + (step > 5 ? 'active' : 'inactive')}></i>
+                                        </div>:''
+                                    }
                                 </div>
                                 {this.props.children}
                             </div>
