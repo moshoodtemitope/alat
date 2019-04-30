@@ -134,6 +134,7 @@ class VerifyBvn extends React.Component{
             }else{
                 let consume = ApiService.request(routes.VERIFYBVNOTP, "POST", data);
                 return consume.then(function(response){
+                    console.log(response);
                     dispatch(userActions.saveBvnData(response, SAVE_BVN_INFO));
                     history.push('/register/confirm-bvndetails');
                 })

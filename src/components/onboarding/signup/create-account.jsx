@@ -36,16 +36,17 @@ class CreateAccount extends React.Component{
     getRegistrationDetails(){
         const { dispatch } = this.props;
         let props = this.props;
-        let userData;
-        let userDetails = props.user_details;
-        if('registration_status' in userDetails && userDetails.registration_status === USER_REGISTER_SAVE){
-            userData =  userDetails.registration_data.user;
-            this.setState({userData: userData});
-            this.setState({phone: userData.phone});
-        }
-        else{
-            history.push('/register');
-        }
+        console.log(props);
+        // let userData;
+        // let userDetails = props.user_details;
+        // if('registration_status' in userDetails && userDetails.registration_status === USER_REGISTER_SAVE){
+        //     userData =  userDetails.registration_data.user;
+        //     this.setState({userData: userData});
+        //     this.setState({phone: userData.phone});
+        // }
+        // else{
+        //     history.push('/register');
+        // }
     }
 
     handleInputChange(e){
@@ -77,10 +78,10 @@ class CreateAccount extends React.Component{
           e.preventDefault();
           if(this.validateForm())
           {
-              const {dispatch} = this.props;
-              dispatch(userActions.register({phone: data.PhoneNo,
-                                             email: this.state.email,
-                                             password: this.state.password}, USER_REGISTER_SAVE));
+            //   const {dispatch} = this.props;
+            //   dispatch(userActions.register({phone: data.PhoneNo,
+            //                                  email: this.state.email,
+            //                                  password: this.state.password}, USER_REGISTER_SAVE));
               history.push('/register/security-questions');
           }
       }
@@ -203,7 +204,7 @@ class CreateAccount extends React.Component{
 }
 
 function mapStateToProps(state){
-
+    console.log(state);
     return {
          user_details: state.onboarding_user_details,
         // bvn_details: state.onboarding_bvn_details,
