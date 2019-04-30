@@ -197,7 +197,8 @@ class Bvn extends React.Component{
                                 <div className="text-danger">select a valid date</div>
                                 }
                             </div>
-                            <input type="submit" value="Continue" disabled={props.bvn_details.bvn_verification_status == "BVN_VERIFICATION_PENDING"} className="btn-alat btn-block"/>
+                            <button type="submit" disabled={props.bvn_details.bvn_verification_status == "BVN_VERIFICATION_PENDING"} className="btn-alat btn-block">
+                            { props.bvn_details.bvn_verification_status == "BVN_VERIFICATION_PENDING" ? "Processing..." : "Continue"}</button>
                         </form>
                         <p className="text-right pull-right"><a href="#" onClick={this.toggleModal}>Skip BVN</a></p>
                         <p className="text-left pull-left"><NavLink to="/register">Go Back</NavLink></p>
@@ -208,7 +209,7 @@ class Bvn extends React.Component{
                   <div className="div-modal">
                         <h3>Do you actually want to skip BVN?</h3>
                     <div className="btn-opt">
-                        <button onClick={this.onCloseModal} className="border-btn">Back</button>
+                        <button onClick={this.toggleModal} className="border-btn">Back</button>
                         <button onClick={this.submitSkipBVN} className="btn-alat">Proceed</button>
                     </div>
                     </div>

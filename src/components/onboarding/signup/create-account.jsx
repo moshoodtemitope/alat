@@ -31,6 +31,8 @@ class CreateAccount extends React.Component{
             this.checkPwd = this.checkPwd.bind(this);
             this.handleSubmit = this.handleSubmit.bind(this);
             this.validateForm = this.validateForm.bind(this);
+            this.valConfirmPasswordValid = this.valConfirmPasswordValid.bind(this);
+            this.ValConfirmEmail = this.ValConfirmEmail.bind(this);
     }
     
     getRegistrationDetails(){
@@ -49,6 +51,29 @@ class CreateAccount extends React.Component{
         // }
     }
 
+    valConfirmPasswordValid(){
+        if(this.state.password == this.state.confirmPassword){
+            this.setState({confirmPasswordValid : true});
+            return true;
+        }
+        else{
+            this.setState({confirmPasswordValid : false});
+            return false;
+        }
+    }
+
+    ValConfirmEmail(){
+        if(this.state.email == this.state.confirmEmail) 
+        {
+            this.setState({ confirmEmailValid : true});
+            return true;
+        }
+        else {
+            this.setState({confirmEmailValid : false})
+            return false;
+        }
+    }
+
     handleInputChange(e){
       let name = e.currentTarget.name;
       this.setState({[name]:e.currentTarget.value})
@@ -56,8 +81,8 @@ class CreateAccount extends React.Component{
 
       validateForm(){
         
-        if(this.validateEmail() && this.state.confirmEmailValid &&
-            this.checkPwd() && this.state.confirmPasswordValid)
+        if(this.validateEmail() && this.valConfirmPasswordValid() &&
+            this.checkPwd() && this.ValConfirmEmail())
           {
               //console.log(this.state.confirmEmail);
               if(this.state.confirmEmail!='' && this.state.confirmPassword != '')
@@ -173,8 +198,7 @@ class CreateAccount extends React.Component{
                         </div>
                         <div className={confirmEmailValid ? "input-ctn" : "input-ctn form-error" }>
                             <label>Confirm Email Address</label>
-                            <input onChange={this.handleInputChange} type="email" onBlur={()=>{if(email == confirmEmail) {this.setState({ confirmEmailValid : true});} else 
-                            this.setState({confirmEmailValid : false})}} name="confirmEmail" value={confirmEmail}/>
+                            <input onChange={this.handleInputChange} type="email" onBlur={this.ValConfirmEmail} name="confirmEmail" value={confirmEmail}/>
                             {!confirmEmailValid &&
                                 <div className="text-danger">email mis-match</div>
                                 }
@@ -189,7 +213,7 @@ class CreateAccount extends React.Component{
                         </div>
                         <div className={confirmPasswordValid ? "input-ctn" : "input-ctn form-error" }>
                             <label>Confirm Password</label>
-                            <input onChange={this.handleInputChange} type="password" onBlur={()=>{if(password == confirmPassword ) {this.setState({ confirmPasswordValid : true});} else this.setState({confirmPasswordValid:false});}} name="confirmPassword" value={confirmPassword} />
+                            <input onChange={this.handleInputChange} type="password" onBlur={this.valConfirmPasswordValid} name="confirmPassword" value={confirmPassword} />
                             {!confirmPasswordValid &&
                                 <div className="text-danger">password mis-match</div>
                                 }
