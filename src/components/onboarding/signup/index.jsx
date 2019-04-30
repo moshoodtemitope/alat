@@ -147,7 +147,7 @@ class Signup extends React.Component{
     }
 
     handleInputBlur(telNumber, selectedCountry) {
-        console.log(telNumber);
+        //console.log(telNumber);
         // console.log(
         //     'Focus off the ReactTelephoneInput component. Tel number entered is: ',
         //     telNumber,
@@ -204,14 +204,14 @@ class Signup extends React.Component{
                     </div>
                 </div>
                 <Modal open={openModal} onClose={this.onCloseModal} center>
-                    <div class="div-modal">
+                    <div className="div-modal">
                         <img src={phoneimage}/>
 
                         <h3>Your phone number is <span>{this.state.phoneInputted}</span>. Do you want to proceed?</h3>
 
-                    <div class="btn-opt">
-                        <button onClick={this.onCloseModal} class="border-btn">Back</button>
-                        <button onClick={this.submitData} class="btn-alat">Proceed</button>
+                    <div className="btn-opt">
+                        <button onClick={this.onCloseModal} className="border-btn">Back</button>
+                        <button onClick={this.submitData} className="btn-alat">Proceed</button>
                     </div>
                     </div>
                 </Modal>

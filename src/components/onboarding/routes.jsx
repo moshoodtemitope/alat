@@ -3,6 +3,7 @@ import Login from "./login";
 import Signup from "./signup";
 import Bvn from "./signup/bvn";
 import VerifyBvn from "./signup/verify-bvn";
+import CreateAccount from "./signup/create-account";
 import ConfirmBvnDetails from "./signup/confirm-bvndetails";
 import SecurityQuestions from "./signup/security-questions";
 import { Route} from 'react-router-dom'
@@ -58,6 +59,7 @@ class OnboardingRoute extends React.Component{
                 <Route exact path="/register" component={Signup}/>
                 <Route path="/register/bvn" component={Bvn}/>
                 <Route path="/register/verify-bvn" component={VerifyBvn}/>
+                <Route path="/register/create-account" component={CreateAccount}/>
                 <Route path="/register/confirm-bvndetails" component={ConfirmBvnDetails}/>
                 <Route path="/register/security-questions" component={SecurityQuestions}/>
                 {/* <PrivateRoute fakeAuth={fakeAuth} exact path='/dashboard' component={Dashboard} />*/}

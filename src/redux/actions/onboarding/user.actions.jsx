@@ -94,14 +94,14 @@ function skipBvn(bvnDetails){
 function bvnVerify (bvnDetails){
     
     return dispatch =>{
-        let data = {
-            bvn: bvnDetails.bvn,
-            dob: bvnDetails.dob,
-            phoneNo : bvnDetails.phone,
-            isOnboarding: true,
-            channelId: 2
-          };
-        let consume= ApiService.request(routes.BVN_VERIFICATION, "POST", data);
+        // let data = {
+        //     bvn: bvnDetails.bvn,
+        //     dob: bvnDetails.dob,
+        //     phoneNo : bvnDetails.phone,
+        //     isOnboarding: true,
+        //     channelId: 2
+        //   };
+        let consume= ApiService.request(routes.BVN_VERIFICATION, "POST", bvnDetails);
         dispatch (request(consume));
         return consume
             .then(response =>{
