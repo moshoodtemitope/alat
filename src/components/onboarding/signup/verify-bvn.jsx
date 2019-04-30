@@ -11,6 +11,7 @@ import {
     OTP_VERIFICATION_FAILURE,
     DATA_FROM_BVN,
     SKIP_BVN_SUCCESS,
+    SAVE_BVN_INFO,
     OTP_VERIFICATION_PENDING
 } from "../../../redux/constants/onboarding/user.constants";
 import {userActions} from "../../../redux/actions/onboarding/user.actions";
@@ -93,11 +94,9 @@ class VerifyBvn extends React.Component{
         })
         .catch(err=>{
             //new
-            // console.log('error mes',modelStateErrorHandler(err.response.data));
+           
             this.setState({resendingOtp: false, otpSent: false, otpStatusMessage: modelStateErrorHandler(err.response.data)});
-            // this.setState({resendingOtp: false, otpSent: false, otpStatusMessage: modelStateErrorHandler(err.response.data)});
-            // this.setState({resendingOtp: false, otpSent: false, otpStatusMessage: err.modelState['bvn.PhoneNo'][0]});
-            // return(this.setState({resendingOtp: false, otpSent: false, otpStatusMessage: err.response.data.message.toString()}));
+           
            
         })
     }
@@ -141,6 +140,7 @@ class VerifyBvn extends React.Component{
                     history.push('/register/confirm-bvndetails');
                 })
                 .catch(err=>{
+                    console.log('error msg is ', err);
                     this.setState({ submitted: false,submitDisabled : false, failedVerfication:true, otpStatusMessage: modelStateErrorHandler(err.response.data), error: err.response.data.message })
                     
                     // history.push('/register/confirm-bvndetails');

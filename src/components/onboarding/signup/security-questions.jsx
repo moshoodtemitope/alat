@@ -21,34 +21,47 @@ import {alertActions} from "../../../redux/actions/alert.actions";
 import {modelStateErrorHandler} from "../../../shared/utils";
 
 function EachQuestion(props){
+    
     return(
         <option value={props.questionObj.id}>{props.questionObj.question}</option>
     );
 }
 
-function EachQuestionWrap(props) {
-    let getQuestions = props.questions,
-        questionsToDisplay;
-        console.log('questions are', getQuestions);
-        questionsToDisplay = getQuestions.map((question)=>{
-            <EachQuestion questionObj={question} key={'question'+question.id} />;
-        })
+function QuestionWrap(props) {
+    let getQuestions,
+        questionsToDisplay = [];
+
+        getQuestions = props.questions;
+        for(let i=0;   i<getQuestions.length;  i++){
+            questionsToDisplay.push(<EachQuestion key={'question-'+i}  questionObj={getQuestions[i]}/>)
+        }
+
+            
 
     return (
         <div className="each-question">
             <div className="input-ctn">
                 <label>Question {props.questionNumber.toString()} </label>
-                <select>
+                <select id={'question_'+props.questionNumber}>
                     <option>Please Select</option>
-                    {/* {questionsToDisplay} */}
-                    {/* <option>What is your grandmother's name</option>
-                    <option>What is your grandfather's name</option> */}
+                    {questionsToDisplay}
                 </select>
             </div>
-            <div className="input-ctn form-error">
-                <label>Answer</label>
-                <input type="text" />
-                <span className="error">Your answer was incorrect</span>
+            <div className="input-ctn">
+                <label>Answer to question {props.questionNumber.toString()}</label>
+                <Textbox
+                    id={'question-'+props.questionNumber+'answer'}
+                    name={'question-'+props.questionNumber+'answer'}
+                    type="text"
+                    placeholder= "Your answer"
+                    onChange={(value, e) => {
+                        
+                        
+                    }}
+                    
+                />
+                {/* <input type="text"  /> */}
+                {/* <span className="error">Your answer was incorrect</span> */}
             </div>
         </div>
     );
@@ -62,8 +75,6 @@ class SecurityQuestions extends React.Component{
             error: '',
             formError: '',
             numberOfQuestions: 3
-            // resendingOtp: false,
-            // resendStatus: ""
         };
 
         this.handleInputBlur = this.handleInputBlur.bind(this);
@@ -112,8 +123,7 @@ class SecurityQuestions extends React.Component{
     getSecurityQuestions(){
         let consume = ApiService.request(routes.GETALLQUESTIONS, "GET");
             return consume.then(response=>{
-                console.log('security questions', response.data);
-                this.setState({allQuestions: response.data});
+                this.setState({allQuestions: response.data, questionsAvailable: true});
             })
             .catch(error=>{
                 console.error('error messages', error);
@@ -136,11 +146,17 @@ class SecurityQuestions extends React.Component{
 
     render(){
         let userState = this.props.onboarding_user_details,
-            questionsWrap = [];
-        
-            for(var questionCount= 0; questionCount < this.state.numberOfQuestions; questionCount++ ){
-                questionsWrap.push(<EachQuestionWrap questions={this.state.allQuestions} key={questionCount+1} questionNumber={questionCount+1} />)
+            state = this.state,
+            allQuestionsWrap = [];
+
+            if(state.questionsAvailable===true){
+                for(var questionCount= 0; questionCount < this.state.numberOfQuestions; questionCount++ ){
+                    allQuestionsWrap.push(<QuestionWrap questions={state.allQuestions} key={questionCount+1} questionNumber={questionCount+1} />)
+                    
+                }
+               
             }
+            
         
         
         return (
@@ -157,10 +173,11 @@ class SecurityQuestions extends React.Component{
                 <div className="row">
                     <div className="col-12">
                         <form className="onboard-form">
-                            <div className="info-label success">
+                            <div className="info-label error">
                                 An error occured while processing your request
                             </div>
-                            {questionsWrap}
+                            
+                            {state.questionsAvailable===true && allQuestionsWrap}
                             <p>
                                 By clicking "Create Account" you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
                             </p>

@@ -5,16 +5,19 @@ import {connect} from "react-redux";
 import {ApiService} from "../../../services/apiService";
 import {routes} from "../../../services/urls";
 import {
-    BVN_VERIFICATION_SUCCESS,
+    OTP_VERIFICATION_SUCCESS,
     USER_REGISTER_FETCH,
-    USER_REGISTER_SAVE
+    USER_REGISTER_SAVE,
+    SAVE_BVN_INFO
 } from "../../../redux/constants/onboarding/user.constants";
 import {userActions} from "../../../redux/actions/onboarding/user.actions";
 import {history} from "../../../_helpers/history";
 
 import {alertActions} from "../../../redux/actions/alert.actions";
 import {modelStateErrorHandler} from "../../../shared/utils";
+import { type } from 'os';
 
+var myGlobal = {};
 class ConfirmBvnDetails extends React.Component{
     constructor(props) {
         super(props);
@@ -26,7 +29,7 @@ class ConfirmBvnDetails extends React.Component{
             // resendingOtp: false,
             // resendStatus: ""
         };
-
+        
         // this.handleInputBlur = this.handleInputBlur.bind(this);
     }
 
@@ -49,12 +52,18 @@ class ConfirmBvnDetails extends React.Component{
         console.log('bvn details', bvnDetails);
         if(bvnDetails){
             
-            let bvnStatus = bvnDetails.bvn_verification_status;
+            let bvnStatus = bvnDetails.otp_confirmation_status;
             let phoneEmail = "";
-            if(bvnStatus === BVN_VERIFICATION_SUCCESS){
-                let resp = bvnDetails.bvn_verification_data.response;
-                this.setState({bvnPhoneNo: resp.bvnPhoneNo, phoneNo: resp.phoneNo});
-                this.setState({otpSent: true});
+            if(bvnStatus === OTP_VERIFICATION_SUCCESS){
+                let resp = bvnDetails.otp_data_returned.otpData.data;
+                myGlobal = resp;
+                console.log('otp data is', resp);
+                console.log(myGlobal, "-----");
+                this.setState({bvnPhoneNo: resp.bvnPhoneNo,customerBvnData:resp, phoneNo: resp.phoneNo}, 
+                    ()=>{
+                        return this.state;
+                    });
+                
             }
             else{
                 console.log('here only');
@@ -82,8 +91,26 @@ class ConfirmBvnDetails extends React.Component{
     render(){
         // let userState = this.props.onboarding_user_details;
         // // let phone = '';
-        // let state = this.state;
+        let state = this.state;
         
+
+        
+            const bvnInfo = state.customerBvnData;
+            myGlobal = state.customerBvnData;
+            
+            var req = Object.assign({}, myGlobal);
+             
+            // console.log('there data', bvnInfo);
+            console.log(req.dob);
+            // console.log('dob data', dob);
+        
+            
+        let dateObj = new Date(req.dob),
+            day = dateObj.getDate(),
+            month = dateObj.Month()+1,
+            year = dateObj.getFullYear(),
+            fullDob = day+'/'+month+'/'+year;
+            
         // const {otpValue, error,submitted, emptyOtp, submitDisabled} = this.state;
         return (
             <OnboardingContainer>
@@ -98,31 +125,31 @@ class ConfirmBvnDetails extends React.Component{
                             <div className="row mb-4">
                                 <div className="col-6">
                                     <span className="label">First Name</span><br/>
-                                    <span>John</span>
+                                    <span>{req.firstName}</span>
                                 </div>
                                 <div className="col-6">
                                     <span className="label">Last Name</span><br/>
-                                    <span>Doe</span>
+                                    <span>{req.lastName}</span>
                                 </div>
                             </div>
                             <div className="row mb-4">
                                 <div className="col-6">
                                     <span className="label">Phone Number</span><br/>
-                                    <span>08020675432</span>
+                                    <span>{req.phoneNumber}</span>
                                 </div>
                                 <div className="col-6">
                                     <span className="label">Date of Birth</span><br/>
-                                    <span>19/12/1989</span>
+                                    <span>{fullDob}</span>
                                 </div>
                             </div>
                             <div className="row mb-4">
                                 <div className="col-6">
                                     <span className="label">Gender</span><br/>
-                                    <span>Male</span>
+                                    <span>{req.gender}</span>
                                 </div>
                                 <div className="col-6">
                                     <span className="label">BVN</span><br/>
-                                    <span>2234789090</span>
+                                    <span>{req.bvn}</span>
                                 </div>
                             </div>
                         </div>
