@@ -30,7 +30,7 @@ class ConfirmBvnDetails extends React.Component{
             // resendStatus: ""
         };
         
-        // this.handleInputBlur = this.handleInputBlur.bind(this);
+        this.confirmDetails = this.confirmDetails.bind(this);
     }
 
     getRegistrationDetails(){
@@ -49,7 +49,9 @@ class ConfirmBvnDetails extends React.Component{
     getBvnDetails(){
         const { dispatch } = this.props;
         let bvnDetails = this.props.customer_bvn_info;
-        console.log('bvn details', bvnDetails);
+        let bvndatainfo = this.props.bvn_details;
+
+        console.log('bvn details', bvndatainfo);
         if(bvnDetails){
             
             let bvnStatus = bvnDetails.otp_confirmation_status;
@@ -67,7 +69,7 @@ class ConfirmBvnDetails extends React.Component{
             }
             else{
                 console.log('here only');
-                // history.push('/register');
+                history.push('/register');
             }
         }
         else{
@@ -75,6 +77,10 @@ class ConfirmBvnDetails extends React.Component{
             console.log('no bvn details');
         }
         
+    }
+
+    confirmDetails(){
+        history.push('/register/create-account');
     }
 
     
@@ -107,7 +113,7 @@ class ConfirmBvnDetails extends React.Component{
             
         let dateObj = new Date(req.dob),
             day = dateObj.getDate(),
-            month = dateObj.Month()+1,
+            month = dateObj.getMonth()+1,
             year = dateObj.getFullYear(),
             fullDob = day+'/'+month+'/'+year;
             
@@ -153,7 +159,7 @@ class ConfirmBvnDetails extends React.Component{
                                 </div>
                             </div>
                         </div>
-                        <a href="#" className="btn-alat btn-block">Confirm Details</a>
+                        <a href="#" className="btn-alat btn-block" onClick={this.confirmDetails} >Confirm Details</a>
                     </div>
                 </div>
             </OnboardingContainer>
@@ -170,6 +176,7 @@ function mapStateToProps(state){
     // }
 
     return {
+        bvn_details: state.onboarding_bvn_details,
         customer_bvn_info: state.onboarding_dataFrom_bvn,
     }
 }

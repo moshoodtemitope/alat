@@ -56,9 +56,7 @@ class VerifyBvn extends React.Component{
         let bvnDetails = this.props.customer_bvnverification_details;
         let bvnSkipDetails = this.props.customer_bvnskip_details;
         let bvnSkipStatus = bvnSkipDetails.bvn_verification_status;
-        // console.log('verifypage', bvnDetails);
-        // console.log('skip details', bvnSkipDetails);
-        console.log('user details', this.props.user_details);
+        console.log('verifypage', bvnDetails);
         let bvnStatus = bvnDetails.bvn_verification_status;
         let phoneEmail = "";
         if(bvnStatus === BVN_VERIFICATION_SUCCESS){
