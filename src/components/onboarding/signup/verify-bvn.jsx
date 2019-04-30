@@ -11,6 +11,7 @@ import {
     OTP_VERIFICATION_FAILURE,
     DATA_FROM_BVN,
     SKIP_BVN_SUCCESS,
+    SAVE_BVN_INFO,
     OTP_VERIFICATION_PENDING
 } from "../../../redux/constants/onboarding/user.constants";
 import {userActions} from "../../../redux/actions/onboarding/user.actions";
@@ -55,9 +56,7 @@ class VerifyBvn extends React.Component{
         let bvnDetails = this.props.customer_bvnverification_details;
         let bvnSkipDetails = this.props.customer_bvnskip_details;
         let bvnSkipStatus = bvnSkipDetails.bvn_verification_status;
-        // console.log('verifypage', bvnDetails);
-        // console.log('skip details', bvnSkipDetails);
-        console.log('user details', this.props.user_details);
+        console.log('verifypage', bvnDetails);
         let bvnStatus = bvnDetails.bvn_verification_status;
         let phoneEmail = "";
         if(bvnStatus === BVN_VERIFICATION_SUCCESS){
@@ -93,11 +92,9 @@ class VerifyBvn extends React.Component{
         })
         .catch(err=>{
             //new
-            // console.log('error mes',modelStateErrorHandler(err.response.data));
+           
             this.setState({resendingOtp: false, otpSent: false, otpStatusMessage: modelStateErrorHandler(err.response.data)});
-            // this.setState({resendingOtp: false, otpSent: false, otpStatusMessage: modelStateErrorHandler(err.response.data)});
-            // this.setState({resendingOtp: false, otpSent: false, otpStatusMessage: err.modelState['bvn.PhoneNo'][0]});
-            // return(this.setState({resendingOtp: false, otpSent: false, otpStatusMessage: err.response.data.message.toString()}));
+           
            
         })
     }
@@ -142,6 +139,7 @@ class VerifyBvn extends React.Component{
                     history.push('/register/confirm-bvndetails');
                 })
                 .catch(err=>{
+                    console.log('error msg is ', err);
                     this.setState({ submitted: false,submitDisabled : false, failedVerfication:true, otpStatusMessage: modelStateErrorHandler(err.response.data), error: err.response.data.message })
                     
                     // history.push('/register/confirm-bvndetails');
