@@ -137,6 +137,9 @@ class SecurityQuestions extends React.Component{
                     channelId: 2,
                     ReferralCode: '',
                     imei: '354553073954109',
+                    phoneNo: this.state.userPhone,
+                    email: this.state.userEmail,
+                    password: this.state.userPassword,
                     deviceName: 'string-5',
                     securityQuestions: questionAndAnswersList,
                     deviceOs: 'string-6',
@@ -146,10 +149,10 @@ class SecurityQuestions extends React.Component{
 
                 consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", payload);
                 return consume.then((response)=>{
-                    
+                    console.log('success');
                 })
                 .catch(error=>{
-
+                    console.log('error', error);
                 });
 
                 console.log('all dne', payload);
@@ -167,29 +170,31 @@ class SecurityQuestions extends React.Component{
 
     getBvnDetails(){
         const { dispatch } = this.props;
-        let bvnDetails = this.props.customer_bvnverification_details;
-        let bvnSkipDetails = this.props.customer_bvnskip_details;
-        let bvnSkipStatus = bvnSkipDetails.bvn_verification_status;
-        // console.log('verifypage', bvnDetails);
-        // console.log('skip details', bvnSkipDetails);
-        
-        let bvnStatus = bvnDetails.bvn_verification_status;
-        let phoneEmail = "";
-        if(bvnStatus === BVN_VERIFICATION_SUCCESS){
-            let resp = bvnDetails.bvn_verification_data.response;
-            this.setState({otpSent: true, bvnPhoneNo: resp.bvnPhoneNo, phoneNo: resp.phoneNo});
-        }
-        else if(bvnSkipStatus ===SKIP_BVN_SUCCESS){
-            let resp = bvnSkipDetails.bvn_verification_data.response;
-            this.setState({otpSent: true,phoneNo: resp.phoneNo});
-        }
-        else{
-            this.setState({otpSent: false});
-             history.push('/register');
+        let props = this.props;
+        // let bvnDetails = this.props.customer_bvnverification_details;
+        // let bvnSkipDetails = this.props.customer_bvnskip_details;
+        // let bvnSkipStatus = bvnSkipDetails.bvn_verification_status;
+        let userDetails = props.user_details.registration_data;
+        console.log('user details', userDetails);
+        this.setState({userPhone: userDetails.user.phone, userEmail:userDetails.user.email, userPassword:userDetails.user.password});
+        // let bvnStatus = bvnDetails.bvn_verification_status;
+        // let phoneEmail = "";
+        // if(bvnStatus === BVN_VERIFICATION_SUCCESS){
+        //     let resp = bvnDetails.bvn_verification_data.response;
+        //     this.setState({otpSent: true, bvnPhoneNo: resp.bvnPhoneNo, phoneNo: resp.phoneNo});
+        // }
+        // else if(bvnSkipStatus ===SKIP_BVN_SUCCESS){
+        //     let resp = bvnSkipDetails.bvn_verification_data.response;
+        //     this.setState({otpSent: true,phoneNo: resp.phoneNo});
+        // }
+        // else{
+        //     this.setState({otpSent: false});
+        //      history.push('/register');
              
-        }
+        // }
         //dispatch(alertActions.success(this.props.response.data.message.toString()));
     }
+    
 
     handleInputChange(event){
         if(event.target.value!==''){
@@ -244,7 +249,7 @@ class SecurityQuestions extends React.Component{
 
     componentDidMount() {
         // this.getRegistrationDetails();
-        // this.getBvnDetails();
+        this.getBvnDetails();
         this.getSecurityQuestions();
     }
 

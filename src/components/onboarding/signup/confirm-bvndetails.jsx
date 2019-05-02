@@ -81,7 +81,7 @@ class ConfirmBvnDetails extends React.Component{
     }
 
     confirmDetails(){
-        history.push('/register/create-account', {userPhone:props.location.state.userPhone});
+        history.push('/register/create-account');
     }
 
     
