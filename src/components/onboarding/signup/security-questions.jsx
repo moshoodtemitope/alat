@@ -145,11 +145,12 @@ class SecurityQuestions extends React.Component{
                     deviceOs: 'string-6',
                     gcmRegId: 'string-8',
                     deviceCode: 'string-10'
-                }
+                },
 
                 consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", payload);
                 return consume.then((response)=>{
                     console.log('success');
+                    history.push('/register/doc-upload');
                 })
                 .catch(error=>{
                     console.log('error', error);
