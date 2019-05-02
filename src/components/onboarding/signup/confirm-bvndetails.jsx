@@ -52,6 +52,7 @@ class ConfirmBvnDetails extends React.Component{
         let bvndatainfo = this.props.bvn_details;
 
         console.log('bvn details', bvndatainfo);
+        console.log('props data', this.props);
         if(bvnDetails){
             
             let bvnStatus = bvnDetails.otp_confirmation_status;
@@ -80,7 +81,7 @@ class ConfirmBvnDetails extends React.Component{
     }
 
     confirmDetails(){
-        history.push('/register/create-account');
+        history.push('/register/create-account', {userPhone:props.location.state.userPhone});
     }
 
     

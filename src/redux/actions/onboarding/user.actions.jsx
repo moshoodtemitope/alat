@@ -106,7 +106,9 @@ function bvnVerify (bvnDetails){
         return consume
             .then(response =>{
                 dispatch(success(response.data));
-                history.push('/register/verify-bvn');
+                // this.props.history.push('/register/verify-bvn');
+                
+                history.push('/register/verify-bvn', {userPhone: bvnDetails.phoneNo});
             }).catch(error => {
                 dispatch(alertActions.error(error.response.data.message.toString()));
             });

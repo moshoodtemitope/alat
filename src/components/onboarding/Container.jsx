@@ -13,8 +13,8 @@ class OnboardingContainer extends React.Component {
 
     render() {
         let step = this.props.registration_step;
-        console.log(this.props.location);
-        console.log('step is ', step);
+        // console.log(this.props.location);
+        // console.log('step is ', step);
         return (
             <Fragment>
                 <div>

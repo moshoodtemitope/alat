@@ -106,8 +106,9 @@ class Bvn extends React.Component{
             isOnboarding: true,
             channelId: 2
           };
+        dispatch(userActions.register({phone: data.phoneNo}, USER_REGISTER_SAVE));
         dispatch(userActions.bvnVerify(data));
-       // console.error(this.state);
+       
     }
 
     submitSkipBVN(){
@@ -123,11 +124,12 @@ class Bvn extends React.Component{
         let props = this.props;
         let userData;
         let userDetails = props.user_details;
+        console.log('screen 1 data', userDetails);
         if('registration_status' in userDetails && userDetails.registration_status === USER_REGISTER_SAVE){
             userData =  userDetails.registration_data.user;
             this.setState({userData: userData});
             this.setState({phone: userData.phone});
-            
+            console.info('log this', this.props);
         }
         else{
             history.push('/register');
