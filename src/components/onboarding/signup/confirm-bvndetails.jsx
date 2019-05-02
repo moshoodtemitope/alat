@@ -169,13 +169,9 @@ class ConfirmBvnDetails extends React.Component{
 
 
 function mapStateToProps(state){
-    // return {
-    //     user_details: state.onboarding_user_details,
-    //     bvn_details: state.onboarding_bvn_details,
-    //     alert: state.alert
-    // }
 
     return {
+        user_details: state.onboarding_user_details,
         bvn_details: state.onboarding_bvn_details,
         customer_bvn_info: state.onboarding_dataFrom_bvn,
     }
