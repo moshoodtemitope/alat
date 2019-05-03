@@ -26,8 +26,13 @@
 .error-text{
   display: none;
 }
+.loading-text{
+  color: #AB2656;
+  text-align: center;
+  margin-top: 30px;
+}
 .form-error {
-  input, input[type='number'] {
+  input, input[type='number'], select {
     border: 1px solid #AB2656!important;
   }
   .error-text{

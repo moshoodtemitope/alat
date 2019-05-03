@@ -124,6 +124,7 @@ class Bvn extends React.Component{
         let props = this.props;
         let userData;
         let userDetails = props.user_details;
+        console.log('screen 1 data', userDetails);
         if('registration_status' in userDetails && userDetails.registration_status === USER_REGISTER_SAVE){
             if(userDetails.registration_data.user !== undefined){
             userData =  userDetails.registration_data.user;

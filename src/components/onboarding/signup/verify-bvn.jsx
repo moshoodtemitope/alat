@@ -57,6 +57,8 @@ class VerifyBvn extends React.Component{
         let bvnSkipDetails = this.props.customer_bvnskip_details;
         let bvnSkipStatus = bvnSkipDetails.bvn_verification_status;
         console.log('verifypage', bvnDetails);
+
+        console.log('test 2222222', this.props);
         let bvnStatus = bvnDetails.bvn_verification_status;
         let phoneEmail = "";
         if(bvnStatus === BVN_VERIFICATION_SUCCESS){
@@ -65,14 +67,14 @@ class VerifyBvn extends React.Component{
         }
         else if(bvnSkipStatus ===SKIP_BVN_SUCCESS){
             let resp = bvnSkipDetails.bvn_verification_data.response;
-            this.setState({otpSent: true,phoneNo: resp.phoneNo});
+            this.setState({otpSent: true,phoneNo: resp.phoneNo, maskedPhoneNo:resp.maskedPhoneNo});
         }
         else{
             this.setState({otpSent: false});
              history.push('/register');
              
         }
-        //dispatch(alertActions.success(this.props.response.data.message.toString()));
+        
     }
 
     resendCode(){
@@ -136,7 +138,8 @@ class VerifyBvn extends React.Component{
                 return consume.then(function(response){
                     console.log(response);
                     dispatch(userActions.saveBvnData(response, SAVE_BVN_INFO));
-                    history.push('/register/confirm-bvndetails');
+                    history.push('/register/confirm-bvndetails', 
+                    {userPhone:props.location.state.userPhone});
                 })
                 .catch(err=>{
                     console.log('error msg is ', err);
@@ -176,7 +179,7 @@ class VerifyBvn extends React.Component{
         state.resendingOtp = false;
         state.resendStatus = "";
         
-        // console.log('test', state.otpSent);
+        
         const {otpValue, error,submitted, emptyOtp, submitDisabled} = this.state;
         return (
             <OnboardingContainer>
@@ -185,7 +188,7 @@ class VerifyBvn extends React.Component{
                         <h3>BVN verification<span></span></h3>
                         {state.otpSent===true &&
                             <div className="info-label success">
-                                We have sent a verification code to ( {(state.bvnPhoneNo) && state.bvnPhoneNo} {(!state.bvnPhoneNo) && state.phoneNo} )<br/>
+                                We have sent a verification code to ( {(state.bvnPhoneNo) && state.bvnPhoneNo} {(!state.bvnPhoneNo && state.maskedPhoneNo) && state.maskedPhoneNo} )<br/>
                                 Type the code you received below
                             </div>
                         }
@@ -216,7 +219,7 @@ class VerifyBvn extends React.Component{
                                     tabIndex="2"
                                     id={'otpValue'}
                                     name="otpValue"
-                                    type="number"
+                                    type="password"
                                     maxLength="6"
                                     value={otpValue}
                                     placeholder= "Enter code sent to your phone"

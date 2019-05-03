@@ -42,24 +42,20 @@ function QuestionWrap(props) {
         <div className="each-question">
             <div className="input-ctn">
                 <label>Question {props.questionNumber.toString()} </label>
-                <select id={'question_'+props.questionNumber}>
-                    <option>Please Select</option>
+                <select className="selectQuestion" onChange={props.handleQuestionChange} id={'question_'+props.questionNumber}>
+                    <option value="">Please Select</option>
                     {questionsToDisplay}
                 </select>
             </div>
             <div className="input-ctn">
                 <label>Answer to question {props.questionNumber.toString()}</label>
-                <Textbox
+                <input onChange={props.handleAnswerChange} className="questionResponse" disabled id={'question-'+props.questionNumber+'answer'} type="text"/>
+                {/* <Textbox
+                    tabIndex={props.questionNumber}
                     id={'question-'+props.questionNumber+'answer'}
-                    name={'question-'+props.questionNumber+'answer'}
                     type="text"
                     placeholder= "Your answer"
-                    onChange={(value, e) => {
-                        
-                        
-                    }}
-                    
-                />
+                /> */}
                 {/* <input type="text"  /> */}
                 {/* <span className="error">Your answer was incorrect</span> */}
             </div>
@@ -74,11 +70,14 @@ class SecurityQuestions extends React.Component{
             phone: '',
             error: '',
             formError: '',
+            questionsAvailable: false,
             numberOfQuestions: 3
         };
 
         this.handleInputBlur = this.handleInputBlur.bind(this);
-        
+        this.submitQuestions =  this.submitQuestions.bind(this);
+        this.handleSelectChange = this.handleSelectChange.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     getRegistrationDetails(){
@@ -94,30 +93,147 @@ class SecurityQuestions extends React.Component{
         }
     }
 
+    submitQuestions(e){
+        e.preventDefault();
+        let getAllQuestionsField = document.querySelectorAll('.selectQuestion'),
+            getAllAnswersField = document.querySelectorAll('.questionResponse'),
+            getAllQuestionsWrap = document.querySelectorAll('.each-question'),
+            questionsList = [],
+            answersList = [],
+            questionAndAnswersList = [],
+            numberofAsweredQuestions,
+            noEmptyQuestions;
+
+
+
+            getAllQuestionsWrap.forEach(eachQuestionWrap=>{
+                let questionField = eachQuestionWrap.querySelector('.selectQuestion'),
+                    answerField= eachQuestionWrap.querySelector('.questionResponse');
+
+                if(questionField.value!=='' && answerField.value!=='' ){
+                    questionAndAnswersList.push({
+                        'Question':questionField.value,
+                        'Answer':answerField.value,
+                    });
+                    
+                }else{
+                    if(questionField.value==''){
+                        questionField.parentNode.classList.add('form-error');
+                    }
+                    if(answerField.value==''){
+                        answerField.parentNode.classList.add('form-error');
+                    }
+                }
+               
+            })
+
+            console.log('Count is', questionAndAnswersList.length);
+            numberofAsweredQuestions = questionAndAnswersList.length;
+
+            if(this.state.numberOfQuestions == numberofAsweredQuestions){
+                noEmptyQuestions = true;
+
+                let payload = {
+                    channelId: 2,
+                    ReferralCode: '',
+                    imei: '354553073954109',
+                    phoneNo: this.state.userPhone,
+                    email: this.state.userEmail,
+                    password: this.state.userPassword,
+                    deviceName: 'string-5',
+                    securityQuestions: questionAndAnswersList,
+                    deviceOs: 'string-6',
+                    gcmRegId: 'string-8',
+                    deviceCode: 'string-10'
+                },
+
+                consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", payload);
+                return consume.then((response)=>{
+                    console.log('success');
+                    history.push('/register/doc-upload');
+                })
+                .catch(error=>{
+                    console.log('error', error);
+                });
+
+                console.log('all dne', payload);
+            }
+            else{
+                noEmptyQuestions = false;
+            }
+
+            
+    }
+
+    postQuestions(questionAndAnswers){
+        
+    }
+
     getBvnDetails(){
         const { dispatch } = this.props;
-        let bvnDetails = this.props.customer_bvnverification_details;
-        let bvnSkipDetails = this.props.customer_bvnskip_details;
-        let bvnSkipStatus = bvnSkipDetails.bvn_verification_status;
-        // console.log('verifypage', bvnDetails);
-        // console.log('skip details', bvnSkipDetails);
-        
-        let bvnStatus = bvnDetails.bvn_verification_status;
-        let phoneEmail = "";
-        if(bvnStatus === BVN_VERIFICATION_SUCCESS){
-            let resp = bvnDetails.bvn_verification_data.response;
-            this.setState({otpSent: true, bvnPhoneNo: resp.bvnPhoneNo, phoneNo: resp.phoneNo});
-        }
-        else if(bvnSkipStatus ===SKIP_BVN_SUCCESS){
-            let resp = bvnSkipDetails.bvn_verification_data.response;
-            this.setState({otpSent: true,phoneNo: resp.phoneNo});
-        }
-        else{
-            this.setState({otpSent: false});
-             history.push('/register');
+        let props = this.props;
+        // let bvnDetails = this.props.customer_bvnverification_details;
+        // let bvnSkipDetails = this.props.customer_bvnskip_details;
+        // let bvnSkipStatus = bvnSkipDetails.bvn_verification_status;
+        let userDetails = props.user_details.registration_data;
+        console.log('user details', userDetails);
+        this.setState({userPhone: userDetails.user.phone, userEmail:userDetails.user.email, userPassword:userDetails.user.password});
+        // let bvnStatus = bvnDetails.bvn_verification_status;
+        // let phoneEmail = "";
+        // if(bvnStatus === BVN_VERIFICATION_SUCCESS){
+        //     let resp = bvnDetails.bvn_verification_data.response;
+        //     this.setState({otpSent: true, bvnPhoneNo: resp.bvnPhoneNo, phoneNo: resp.phoneNo});
+        // }
+        // else if(bvnSkipStatus ===SKIP_BVN_SUCCESS){
+        //     let resp = bvnSkipDetails.bvn_verification_data.response;
+        //     this.setState({otpSent: true,phoneNo: resp.phoneNo});
+        // }
+        // else{
+        //     this.setState({otpSent: false});
+        //      history.push('/register');
              
-        }
+        // }
         //dispatch(alertActions.success(this.props.response.data.message.toString()));
+    }
+    
+
+    handleInputChange(event){
+        if(event.target.value!==''){
+            this.setState({submitDisabled: false});
+            if(event.target.parentNode.classList.contains('form-error')){
+                event.target.parentNode.classList.remove('form-error');
+            }
+        }else{
+            event.target.parentNode.classList.add('form-error');
+            this.setState({submitDisabled: true});
+        }
+    }
+    handleSelectChange(event){
+        // console.log('sample', event.target.parentNode.parentNode);
+        
+        if(event.target.value !==''){
+            event.target
+            .parentNode
+            .parentNode.querySelector('input')
+            .parentNode.classList.add('form-error');
+
+            event.target.parentNode.parentNode.querySelector('input').removeAttribute('disabled');
+
+        }else{
+            if(event.target
+                .parentNode
+                .parentNode.querySelector('input')
+                .parentNode.classList.contains('form-error')){
+                event.target.parentNode.parentNode.querySelector('input').parentNode.classList.remove('form-error');
+                event.target.parentNode.parentNode.querySelector('input').setAttribute('disabled', true);
+                
+            }
+
+        }
+        if(event.target.value !=='' && event.target.parentNode.classList.contains('form-error')){
+            event.target.parentNode.classList.remove('form-error');
+        }
+        event.target.parentNode.parentNode.querySelector('input').value = '';
     }
 
     getSecurityQuestions(){
@@ -134,7 +250,7 @@ class SecurityQuestions extends React.Component{
 
     componentDidMount() {
         // this.getRegistrationDetails();
-        // this.getBvnDetails();
+        this.getBvnDetails();
         this.getSecurityQuestions();
     }
 
@@ -148,10 +264,12 @@ class SecurityQuestions extends React.Component{
         let userState = this.props.onboarding_user_details,
             state = this.state,
             allQuestionsWrap = [];
+        
+        const {submitDisabled, numberOfQuestions} = state;
 
             if(state.questionsAvailable===true){
                 for(var questionCount= 0; questionCount < this.state.numberOfQuestions; questionCount++ ){
-                    allQuestionsWrap.push(<QuestionWrap questions={state.allQuestions} key={questionCount+1} questionNumber={questionCount+1} />)
+                    allQuestionsWrap.push(<QuestionWrap handleAnswerChange={this.handleInputChange} handleQuestionChange={this.handleSelectChange} questions={state.allQuestions} key={questionCount+1} questionNumber={questionCount+1} />)
                     
                 }
                
@@ -172,17 +290,20 @@ class SecurityQuestions extends React.Component{
                 </div>
                 <div className="row">
                     <div className="col-12">
-                        <form className="onboard-form">
-                            <div className="info-label error">
+                    {state.questionsAvailable===false && <h5 className="loading-text">Loading security questions ...</h5>}
+
+                    {state.questionsAvailable===true &&
+                        <form className="onboard-form" onSubmit={this.submitQuestions}>
+                            {/* <div className="info-label error hide">
                                 An error occured while processing your request
-                            </div>
-                            
-                            {state.questionsAvailable===true && allQuestionsWrap}
+                            </div> */}
+                             {allQuestionsWrap}
                             <p>
                                 By clicking "Create Account" you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
                             </p>
-                            <input type="submit" value="Create Account" className="btn-alat btn-block"/>
+                            <button type="submit" disabled={submitDisabled} className="btn-alat btn-block">Create Account</button>
                         </form>
+                        }
                     </div>
                 </div>
             </OnboardingContainer>
