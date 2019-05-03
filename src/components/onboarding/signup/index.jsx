@@ -14,7 +14,7 @@ import flags from "../../../assets/img/flags.png";
 import {ReactTelephoneInput} from "react-telephone-input";
 import "./../onboarding.scss";
 import {userActions} from "../../../redux/actions/onboarding/user.actions";
-import {USER_REGISTER_SAVE} from "../../../redux/constants/onboarding/user.constants";
+import {USER_REGISTER_SAVE, USER_REGISTER_FETCH} from "../../../redux/constants/onboarding/user.constants";
 import {connect} from "react-redux";
 import phoneimage from "../../../assets/img/phone-bvn.svg"
 import Modal from 'react-responsive-modal';
@@ -122,6 +122,7 @@ class Signup extends React.Component{
             PhoneNo: this.state.phoneInputted,
             channelId: 2
         };
+        dispatch(userActions.register({phone : data.PhoneNo}, USER_REGISTER_FETCH));
         let consume = ApiService.request(routes.SIGNUP_PHONE, "POST", data);
         return consume.then(function (response){
             dispatch(userActions.register({phone: data.PhoneNo}, USER_REGISTER_SAVE));
@@ -160,6 +161,7 @@ class Signup extends React.Component{
     render(){
         const { phone, international_code, submitted, error, formError, openModal } = this.state;
         let props = this.props;
+       
         // var countriesData = require('../countries.json');
 
         return (
@@ -211,7 +213,8 @@ class Signup extends React.Component{
 
                     <div className="btn-opt">
                         <button onClick={this.onCloseModal} className="border-btn">Back</button>
-                        <button onClick={this.submitData} className="btn-alat">Proceed</button>
+                        <button onClick={this.submitData} disabled={submitted}
+                         className="btn-alat">{ submitted ? "Processing..." : "Proceed"}</button>
                     </div>
                     </div>
                 </Modal>
