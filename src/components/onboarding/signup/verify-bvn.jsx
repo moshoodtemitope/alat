@@ -89,7 +89,7 @@ class VerifyBvn extends React.Component{
         return consume.then((response)=>{
             // return (this.setState({resendingOtp: false, otpSent: true,  resendStatus: "OPT sent!"}));
             
-            this.setState({resendingOtp: false, otpSent: true,  resendStatus: "OPT sent!"})
+            this.setState({resendingOtp: false, otpSent: true, failedVerfication:false,  resendStatus: "OPT sent!"})
             
         })
         .catch(err=>{
