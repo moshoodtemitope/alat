@@ -10,12 +10,13 @@ import Bvn from "./bvn";
 import {Fragment} from "react";
 import {Select} from "react-select";
 import {FETCH_BANK_FAILURE, FETCH_BANK_PENDING, FETCH_BANK_SUCCESS} from "../../../redux/constants/transfer.constants";
-import flags from "./../../../assets/img/flags.png";
+import flags from "../../../assets/img/flags.png";
 import {ReactTelephoneInput} from "react-telephone-input";
 import "./../onboarding.scss";
 import {userActions} from "../../../redux/actions/onboarding/user.actions";
 import {USER_REGISTER_SAVE} from "../../../redux/constants/onboarding/user.constants";
 import {connect} from "react-redux";
+import phoneimage from "../../../assets/img/phone-bvn.svg"
 import Modal from 'react-responsive-modal';
 
 require('react-telephone-input/lib/withStyles');
@@ -30,7 +31,11 @@ class Signup extends React.Component{
             phone: '',
             error: '',
             formError: '',
-            openModal: false
+            openModal: false,
+            inputProps :{
+             maxLength:20,
+             onInput : this.handleInputChange
+            }
             // international_code: ''
         };
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -75,7 +80,7 @@ class Signup extends React.Component{
 
     handleSubmit(e) {
         e.preventDefault();
-        this.setState({ submitted: true });
+        // this.setState({ submitted: true });
         let { phone, error, formError } = this.state;
         const { dispatch } = this.props;
         phone = this.formatPhone(phone);
@@ -83,7 +88,7 @@ class Signup extends React.Component{
 
         if(!phone || phone.length < 10 || phone.length > 20){
             this.setState({ formError: true });
-            this.setState({ submitted: false });
+            // this.setState({ submitted: false });
             return;
         }
         if (phone) {
@@ -111,6 +116,7 @@ class Signup extends React.Component{
     }
 
     submitData = () => {
+        this.setState({ submitted: true });
         const { dispatch } = this.props;
         let data = {
             PhoneNo: this.state.phoneInputted,
@@ -127,12 +133,21 @@ class Signup extends React.Component{
     };
 
 
-    handleInputChange(telNumber, selectedCountry) {
+    handleInputChange(e) {
+        // console.log(e.currentTarget.value)
+        //  let s = e.currentTarget.value; 
+        //  console.log(s.replace(/\D/g, '').length);
+        // if(s.replace(/\D/g, '').length >=13){
+        //     console.log("in here");
+        //  e.setAttribute("value","");
+        // }
+        //e.preventDefault();
         //console.log('input changed. number: ', telNumber, 'selected country: ', selectedCountry);
         // this.setState({international_code: telNumber});
     }
 
     handleInputBlur(telNumber, selectedCountry) {
+        //console.log(telNumber);
         // console.log(
         //     'Focus off the ReactTelephoneInput component. Tel number entered is: ',
         //     telNumber,
@@ -163,11 +178,12 @@ class Signup extends React.Component{
                             <div className={ !formError ? "input-ctn" : "input-ctn form-error" }>
                                 <label>Please enter your phone number</label>
                                 <ReactTelephoneInput
-                                    maxLength="16"
+                                    inputProps = {this.state.inputProps}
                                     defaultCountry="ng"
-                                    flagsImagePath="/public/images/flags.png"
+                                    flagsImagePath={flags}
                                     onBlur={this.handleInputBlur}
-                                    onChange={this.handleInputChange}
+                                    //onChange={this.handleInputChange}
+                                    id="phoneInput"
                                 />
                                 {formError &&
                                 <div className="text-danger">A Valid phone Number is required</div>
@@ -188,11 +204,16 @@ class Signup extends React.Component{
                     </div>
                 </div>
                 <Modal open={openModal} onClose={this.onCloseModal} center>
-                    <h2>Your Phone Number is: {this.state.phoneInputted}</h2>
-                    <a href="#" onClick={this.onCloseModal}>Back</a>
-                    <button type="button" className="btn-alat btn-block" onClick={this.submitData}>
-                        Proceed
-                    </button>
+                    <div className="div-modal">
+                        <img src={phoneimage}/>
+
+                        <h3>Your phone number is <span>{this.state.phoneInputted}</span>. Do you want to proceed?</h3>
+
+                    <div className="btn-opt">
+                        <button onClick={this.onCloseModal} className="border-btn">Back</button>
+                        <button onClick={this.submitData} className="btn-alat">Proceed</button>
+                    </div>
+                    </div>
                 </Modal>
             </OnboardingContainer>
         );

@@ -14,9 +14,11 @@ import IndexedRoute from "./components/routes";
 {/*<PrivateRoute authed={this.state.authed} path='/dashboard' component={Dashboard} />*/}
 
 
-
 class App extends Component {
+
+
   render() {
+
     return (
         <Router history={history}>
             <Switch>

@@ -1,4 +1,4 @@
-import {userRegistrationRequest, bvnDetailsReducer} from "./onboarding.reducer";
+import {userRegistrationRequest, bvnDetailsReducer,bvnSkipReducer, bvnCustomerDetailsReducer} from "./onboarding.reducer";
 import {
     accountFetch,
     accountHistoryReducer,
@@ -11,7 +11,9 @@ import {bankListRequest, beneficiariesRequest, fetchAccountDetailsRequest} from 
 
 export const onboarding = {
     userRegistrationRequest,
-    bvnDetailsReducer
+    bvnDetailsReducer,
+    bvnSkipReducer,
+    bvnCustomerDetailsReducer
 };
 
 export const dashboard = {

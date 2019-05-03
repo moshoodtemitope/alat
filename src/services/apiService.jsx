@@ -44,7 +44,7 @@ export class ApiService {
                 // return service;
                 if (error.response.status === 401 && error.response.statusText.toLowerCase().includes('token not valid')) {
                     // const { dispatch } = this.props;
-                    console.error("We wanna log out out");
+                    // console.error("We wanna log out out");
                     // dispatch(userActions.logout());
                     // history.push('/logout')
                     // localStorage.removeItem("user");
@@ -71,7 +71,7 @@ export class ApiService {
                 // return service;
                 if (error.response.status === 401 && error.response.statusText.toLowerCase().includes('token not valid')) {
                     // const { dispatch } = this.props;
-                    console.error("We wanna log out out");
+                    // console.error("We wanna log out out");
                     // history.push('/logout')
                     // localStorage.removeItem("user");
                     history.push('/');

@@ -1035,6 +1035,41 @@ body {
       color: rgba(0, 0, 0, 0.6);
       font-size: 1em; }
 
+      .overlay {
+        background: rgba(0, 0, 0, 0.6);
+        height: 100%;
+        width: 100%;
+        position: fixed; }
+      
+      .div-modal {
+        background: #fff;
+        max-width: 400px;
+        -webkit-box-shadow: 1px 1px 4px #00000057;
+        box-shadow: 1px 1px 4px #00000057;
+        border-radius: 4px;
+        margin: 0 auto;
+        padding: 40px 30px;
+        margin-top: 10%;
+        text-align: center; }
+        .div-modal h3 {
+          font-size: 1.28571em;
+          margin-bottom: 30px;
+          font-family: "proxima_novaregular", sans-serif;
+          line-height: 1.5; }
+        .div-modal img {
+          margin-bottom: 20px; }
+      
+      .btn-opt {
+        margin-top: 20px; }
+        .btn-opt button {
+          width: 45%;
+          margin-bottom: 20px;
+          margin: 0 5px; }
+          .btn-opt button.border-btn {
+            border-radius: 3px; }
+          .btn-opt button.btn-alat {
+            min-width: inherit; }
+
 .pw-hint {
   font-size: 0.85714em;
   margin-top: 10px; }

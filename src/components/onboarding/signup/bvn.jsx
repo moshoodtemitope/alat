@@ -11,6 +11,7 @@ import {connect} from "react-redux";
 import {USER_REGISTER_FETCH, USER_REGISTER_SAVE} from "../../../redux/constants/onboarding/user.constants";
 import {userActions} from "../../../redux/actions/onboarding/user.actions";
 import {history} from "../../../_helpers/history";
+import Modal from 'react-responsive-modal';
 
 //var DatePicker = require("react-bootstrap-date-picker");
 
@@ -23,18 +24,21 @@ class Bvn extends React.Component{
             dob: null,
             bvnIvalid: false,
             dobInvalid: false,
+            openModal: false,
             formInvalid: true
         };
-
+        this.toggleModal = this.toggleModal.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleDatePicker = this.handleDatePicker.bind(this);
+        this.submitSkipBVN = this.submitSkipBVN.bind(this);
     }
     
     handleChange(e){
         const name = e.target.name;
         if(name == 'bvn'){
             this.setState({bvn: e.target.value.replace(/\D/,'')})
+            if(this.state.bvn.length == 10)
             this.validateBvn(0);
         }
         else
@@ -42,6 +46,7 @@ class Bvn extends React.Component{
     }
 
     handleDatePicker=(dob)=>{
+        dob.setHours( dob.getHours() + 1 );
         this.setState ({dob : dob});
     }
     
@@ -83,7 +88,7 @@ class Bvn extends React.Component{
         e.preventDefault();
          
         //console.log(this.formValidation());
-        if(this.formValidation() == false)
+        if(this.formValidation() == false)  
         {
             this.verifyBvn();
         }
@@ -94,8 +99,23 @@ class Bvn extends React.Component{
 
     verifyBvn(){
         const { dispatch } = this.props;
-        dispatch(userActions.bvnVerify(this.state));
+        let data = {
+            bvn: this.state.bvn,
+            dob: this.state.dob,
+            phoneNo : this.state.phone,
+            isOnboarding: true,
+            channelId: 2
+          };
+       this.props.dispatch(userActions.bvnVerify(data));
+      // userActions.bvnVerify(data);
        // console.error(this.state);
+    }
+
+    submitSkipBVN(){
+        this.toggleModal();
+        const {dispatch} = this.props;
+        
+        dispatch(userActions.skipBvn(this.state));
     }
 
 
@@ -103,25 +123,43 @@ class Bvn extends React.Component{
         const { dispatch } = this.props;
         let props = this.props;
         let userData;
-        let registrationStatus = props.registration_status;
-        if(registrationStatus === USER_REGISTER_SAVE){
-            userData =  props.registration_data.user;
+        let userDetails = props.user_details;
+        if('registration_status' in userDetails && userDetails.registration_status === USER_REGISTER_SAVE){
+            if(userDetails.registration_data.user !== undefined){
+            userData =  userDetails.registration_data.user;
             this.setState({userData: userData});
             this.setState({phone: userData.phone});
-          
+            }
+            else {
+                history.push('/register');
+            }
+        }
+        else{
+            history.push('/register');
         }
     }
 
     componentDidMount() {
+        
         this.getRegistrationDetails();
+    }
+    
+    toggleModal(){
+        if(this.state.openModal == false)
+         this.setState({openModal : true});
+         else if(this.state.openModal == true)
+         this.setState({openModal : false});
     }
 
     render(){
-        const {bvn, dob, bvnIvalid, dobInvalid, formInvalid} = this.state;
+        const {bvn, dob, bvnIvalid, dobInvalid, formInvalid, openModal, imei} = this.state;
         let props = this.props;
-        let userState = this.props.onboarding_user_details;
+
         let phone = '';
         let state = this.state;
+        let userDetails = props.user_details;
+
+        // phone =
 
         return (
             <OnboardingContainer>
@@ -141,7 +179,7 @@ class Bvn extends React.Component{
                             }
                            <div className={!bvnIvalid ? "input-ctn" : "input-ctn form-error" }>
                                 <label>Enter your BVN</label>
-                                <input type="text" onChange={this.handleChange} maxLength="11" name="bvn" value={bvn} placeholder="249087653214"/>
+                                <input type="text" onChange={this.handleChange} maxLength="11" name="bvn" value={bvn} placeholder="Enter your BVN"/>
                                 {bvnIvalid &&
                                 <div className="text-danger">A valid bvn is 11 digits</div>
                                 }
@@ -164,11 +202,24 @@ class Bvn extends React.Component{
                                 <div className="text-danger">select a valid date</div>
                                 }
                             </div>
-                            <input type="submit" value="Continue" disabled={props.bvn.bvn_verification_status == "BVN_VERIFICATION_PENDING"} className="btn-alat btn-block"/>
+                            <button type="submit" disabled={props.bvn_details.bvn_verification_status == "BVN_VERIFICATION_PENDING"} className="btn-alat btn-block">
+                            { props.bvn_details.bvn_verification_status == "BVN_VERIFICATION_PENDING" ? "Processing..." : "Continue"}</button>
                         </form>
-                        <p className="text-center"><NavLink to="/">Skip BVN</NavLink></p>
+                        <p className="text-right pull-right"><a href="#" onClick={this.toggleModal}>Skip BVN</a></p>
+                        <p className="text-left pull-left"><NavLink to="/register">Go Back</NavLink></p>
                     </div>
                 </div>
+                <Modal open={openModal} onClose={this.toggleModal} center>
+                  <div>
+                  <div className="div-modal">
+                        <h3>Do you actually want to skip BVN?</h3>
+                    <div className="btn-opt">
+                        <button onClick={this.toggleModal} className="border-btn">Back</button>
+                        <button onClick={this.submitSkipBVN} className="btn-alat">Proceed</button>
+                    </div>
+                    </div>
+                  </div>
+                </Modal>
             </OnboardingContainer>
         );
     }
@@ -177,11 +228,13 @@ class Bvn extends React.Component{
 
 function mapStateToProps(state){
     //console.error(state);
+    
     return {
-        phone: state.onboarding_user_details,
-        bvn: state.onboarding_bvn_details,
+        user_details: state.onboarding_user_details,
+        bvn_details: state.onboarding_bvn_details,
         alert: state.alert
-    } 
+    }
+    
     //state.onboarding_user_details;
 }
 

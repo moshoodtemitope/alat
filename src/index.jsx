@@ -16,13 +16,19 @@ import './assets/css/dashboard.css';
 import {Redirect, Route} from "react-router";
 import App from "./App";
 
+
+// import {createStore} from "redux";
+// import rootReducer from "./redux/reducers";
+// import StateLoader from "./_helpers/state.loader";
 //
-// import './assets/js/jquery.min';
-// import './assets/js/matchHeight';
-// import './assets/js/jquery.bxslider';
-// import './assets/js/datepicker.min';
-// import './assets/js//i18n/datepicker.en';
-// ReactDOM.render(<App />, document.getElementById('root'));
+// const stateLoader = new StateLoader();
+//
+// let ss = createStore(rootReducer, stateLoader.loadState());
+//
+// ss.subscribe(() => {
+//     stateLoader.saveState(ss.getState());
+// });
+
 
 ReactDOM.render(
     <Provider store={store}>
@@ -31,6 +37,7 @@ ReactDOM.render(
     </Provider>,
     document.getElementById('root')
 );
+
 
 
 // If you want your app to work offline and load faster, you can change

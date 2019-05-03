@@ -3,6 +3,10 @@ import Login from "./login";
 import Signup from "./signup";
 import Bvn from "./signup/bvn";
 import VerifyBvn from "./signup/verify-bvn";
+import CreateAccount from "./signup/create-account";
+import ConfirmBvnDetails from "./signup/confirm-bvndetails";
+import SecurityQuestions from "./signup/security-questions";
+import DocumentUplaod from "./signup/doc-upload";
 import { Route} from 'react-router-dom'
 import {history} from './../../_helpers/history';
 import {Redirect, Router} from "react-router";
@@ -49,18 +53,20 @@ function PrivateRoute ({component: Component, authed, ...rest}) {
 class OnboardingRoute extends React.Component{
     render(){
         return(
-            <Router history={history}>
-                <Fragment>
-                    <Route exact path="/" component={Login} render={props => (<Login fakeAuth={fakeAuth} {...props} />)} />
-                    {/*<Route exact path="/" component={Login} />*/}
-                    {/*<Route exact path="/logout" component={Logout} />*/}
-                    <Route exact path="/register" component={Signup}/>
-                    <Route path="/register/bvn" component={Bvn}/>
-                    <Route path="/register/verify-bvn" component={VerifyBvn}/>
-                    <PrivateRoute fakeAuth={fakeAuth} exact path='/dashboard' component={Dashboard} />
-                    {/*<Route component={Error404} />*/}
-                </Fragment>
-            </Router>
+            <div>
+                <Route exact path="/" component={Login} render={props => (<Login fakeAuth={fakeAuth} {...props} />)} />
+                {/*<Route exact path="/" component={Login} />*/}
+                {/*<Route exact path="/logout" component={Logout} />*/}
+                <Route exact path="/register" component={Signup}/>
+                <Route path="/register/bvn" component={Bvn}/>
+                <Route path="/register/verify-bvn" component={VerifyBvn}/>
+                <Route path="/register/create-account" component={CreateAccount}/>
+                <Route path="/register/confirm-bvndetails" component={ConfirmBvnDetails}/>
+                <Route path="/register/security-questions" component={SecurityQuestions}/>
+                <Route path="/register/doc-upload" component={DocumentUplaod}/>
+                {/* <PrivateRoute fakeAuth={fakeAuth} exact path='/dashboard' component={Dashboard} />*/}
+                {/*<Route component={Error404} />*/}
+            </div>
         )
     }
 }

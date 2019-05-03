@@ -1,6 +1,6 @@
 // const URL = 'https://api.alat.ng';
-// const URL = 'https://196.43.215.170';
-const URL = 'http://196.43.215.157';
+ const URL = 'https://196.43.215.170';
+// const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
 
@@ -14,7 +14,8 @@ export const routes = {
     SKIPBVNOTP: BASEURL + '/RegistrationApi/api/registration/RequestOtpForOnBoarding',
     VERIFYBVNOTP: BASEURL + '/RegistrationApi/api/registration/VerifyOtpForBvn',
     RESENDOTP: BASEURL + '/RegistrationApi/api/registration/ResendOtp',
-
+    GETALLQUESTIONS: BASEURL + '/UserSecurityApi/api/v1/Account/AllQuestions',
+   
     //user security
     ONBOARDING_PRIORITY: BASEURL + '/UserSecurityApi/api/v1/Account/GetOnboardingPriority',
     ANNOUNCEMENT: BASEURL + '/UserSecurityapi/api/v1/Account/GetNewsFeeds',
