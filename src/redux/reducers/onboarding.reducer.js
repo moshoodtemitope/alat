@@ -3,7 +3,7 @@ import {USER_REGISTER_SAVE, USER_REGISTER_FETCH, BVN_VERIFICATION_SUCCESS,
     OTP_VERIFICATION_PENDING,OTP_VERIFICATION_SUCCESS,SAVE_BVN_INFO,  OTP_VERIFICATION_FAILURE, DATA_FROM_BVN
 } from "../constants/onboarding/user.constants"
 
-export function userRegistrationRequest(state, action) {
+export function userRegistrationRequest(state={}, action) {
     switch (action.type) {
         case USER_REGISTER_SAVE:
             return {

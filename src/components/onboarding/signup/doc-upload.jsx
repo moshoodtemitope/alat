@@ -1,8 +1,13 @@
 import * as React from 'react';
+import ImageUploader from 'react-images-upload';
+
+import "../../../assets/css/docupload/doc-upload.scss";
 
 import { NavLink} from "react-router-dom";
 import OnboardingContainer from "../Container";
 import {connect} from "react-redux";
+
+
 
 import {USER_REGISTER_FETCH, USER_REGISTER_SAVE} from "../../../redux/constants/onboarding/user.constants";
 import {userActions} from "../../../redux/actions/onboarding/user.actions";
@@ -14,18 +19,41 @@ class DocumentUplaod extends React.Component{
     constructor(props){
         super(props);
             this.state={
-                
+                pictures: [],
+                profileUp: '',
+                signUp:''
             };
-
+            this.onSignClick = this.onSignClick.bind(this);
+            this.onProfileUpload = this.onProfileUpload.bind(this);
     }
     
     componentDidMount() {
         //this.getRegistrationDetails();
     }
     
- 
+    onSignClick(picture) {
+        this.getBase64(picture[0], (result) => {
+                this.setState({signUp: result});
+         });
+    }
 
-   
+    onProfileUpload(picture) {
+        this.getBase64(picture[0], (result) => {
+          this.setState({profileUp: result});
+       });
+    }
+
+    getBase64(file, cb) {
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            cb(reader.result)
+        };
+        reader.onerror = function (error) {
+            console.log('Error: ', error);
+        };
+    }
+
  
 
     render(){
@@ -49,7 +77,17 @@ class DocumentUplaod extends React.Component{
                                 <div className="upload-div">
                                     <p className="bold-text">Picture Upload</p>
                                     <div className="upload-box">
-                                        <input type="file" id="input-file-now" className="dropify" data-height="150"/>
+                                        {/* <input type="file" id="input-file-now" className="dropify" data-height="150"/> */}
+                                        <ImageUploader
+                                            withIcon={true}
+                                            singleImage = {true}
+                                            withPreview={true}
+                                            label=''
+                                            buttonText='Choose image'
+                                            onChange={this.onProfileUpload}
+                                            imgExtension={['.jpg', '.png']}
+                                            maxFileSize={5242880}
+                                            />
                                     </div>
                                 </div>
                             </div>
@@ -58,7 +96,17 @@ class DocumentUplaod extends React.Component{
                                 <div className="upload-div">
                                     <p className="bold-text">Signature Upload</p>
                                     <div className="upload-box">
-                                        <input type="file" id="input-file-now" className="dropify" data-height="150"/>
+                                        {/* <input type="file" id="input-file-now" className="dropify" data-height="150"/> */}
+                                        <ImageUploader
+                                            withIcon={true}
+                                            singleImage = {true}
+                                            withPreview={true}
+                                            label=''
+                                            buttonText='Choose image'
+                                            onChange={this.onSignClick}
+                                            imgExtension={['.jpg', '.png']}
+                                            maxFileSize={5242880}
+                                            />
                                     </div>
                                 </div>
                             </div>
