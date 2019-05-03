@@ -44,9 +44,9 @@ class CreateAccount extends React.Component{
         
         if('registration_status' in userDetails && userDetails.registration_status === USER_REGISTER_SAVE){
             if(userDetails.registration_data.user !== undefined){
-            userData =  userDetails.registration_data.user;
-            this.setState({userData: userData});
-            this.setState({phone: userData.phone});
+                userData =  userDetails.registration_data.user;
+                this.setState({userData: userData});
+                this.setState({phone: userData.phone});
             }
             else {
                 history.push('/register');
@@ -114,7 +114,7 @@ class CreateAccount extends React.Component{
                                               email: this.state.email,
                                               password: this.state.password,
                                             phone:this.state.phone}, USER_REGISTER_SAVE));
-              history.push('/register/security-questions');
+              history.push('/register/doc-upload');
           }
       }
 

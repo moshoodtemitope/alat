@@ -51,8 +51,6 @@ class ConfirmBvnDetails extends React.Component{
         let bvnDetails = this.props.customer_bvn_info;
         let bvndatainfo = this.props.bvn_details;
 
-        console.log('bvn details', bvndatainfo);
-        console.log('props data', this.props);
         if(bvnDetails){
             
             let bvnStatus = bvnDetails.otp_confirmation_status;
@@ -62,10 +60,9 @@ class ConfirmBvnDetails extends React.Component{
                 myGlobal = resp;
                 console.log('otp data is', resp);
                 console.log(myGlobal, "-----");
-                this.setState({bvnPhoneNo: resp.bvnPhoneNo,customerBvnData:resp, phoneNo: resp.phoneNo}, 
-                    ()=>{
-                        return this.state;
-                    });
+                
+
+                    this.setState({bvnPhoneNo: resp.bvnPhoneNo,customerBvnData:resp});
                 
             }
             else{

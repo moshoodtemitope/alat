@@ -80,7 +80,8 @@ function skipBvn(bvnDetails){
         dispatch (request(consume));
         return consume
             .then(response =>{
-                dispatch(success(response.data));
+                data.maskedPhoneNo = response.data.phoneNo;
+                dispatch(success(data));
                 history.push('/register/verify-bvn');
             }).catch(error => {
                 dispatch(alertActions.error(error.response.data.message.toString()));

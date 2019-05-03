@@ -67,7 +67,7 @@ class VerifyBvn extends React.Component{
         }
         else if(bvnSkipStatus ===SKIP_BVN_SUCCESS){
             let resp = bvnSkipDetails.bvn_verification_data.response;
-            this.setState({otpSent: true,phoneNo: resp.phoneNo});
+            this.setState({otpSent: true,phoneNo: resp.phoneNo, maskedPhoneNo:resp.maskedPhoneNo});
         }
         else{
             this.setState({otpSent: false});
@@ -188,7 +188,7 @@ class VerifyBvn extends React.Component{
                         <h3>BVN verification<span></span></h3>
                         {state.otpSent===true &&
                             <div className="info-label success">
-                                We have sent a verification code to ( {(state.bvnPhoneNo) && state.bvnPhoneNo} {(!state.bvnPhoneNo) && state.phoneNo} )<br/>
+                                We have sent a verification code to ( {(state.bvnPhoneNo) && state.bvnPhoneNo} {(!state.bvnPhoneNo && state.maskedPhoneNo) && state.maskedPhoneNo} )<br/>
                                 Type the code you received below
                             </div>
                         }
