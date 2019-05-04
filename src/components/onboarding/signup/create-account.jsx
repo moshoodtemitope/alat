@@ -55,7 +55,7 @@ class CreateAccount extends React.Component{
             }
         }
         else{
-            onsole.log('left page');
+            
             history.push('/register');
         }
     }
