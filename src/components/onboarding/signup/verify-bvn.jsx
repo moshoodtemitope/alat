@@ -45,9 +45,7 @@ class VerifyBvn extends React.Component{
         let registrationStatus = props.registration_status;
         if(registrationStatus === USER_REGISTER_SAVE){
             userData =  props.registration_data.user;
-            this.setState({userData: userData});
-            this.setState({phone: userData.phone});
-            
+            this.setState({userData: userData, phone: userData.phone});
         }
     }
 
@@ -56,9 +54,7 @@ class VerifyBvn extends React.Component{
         let bvnDetails = this.props.customer_bvnverification_details;
         let bvnSkipDetails = this.props.customer_bvnskip_details;
         let bvnSkipStatus = bvnSkipDetails.bvn_verification_status;
-        console.log('verifypage', bvnDetails);
-
-        console.log('test 2222222', this.props);
+        
         let bvnStatus = bvnDetails.bvn_verification_status;
         let phoneEmail = "";
         if(bvnStatus === BVN_VERIFICATION_SUCCESS){

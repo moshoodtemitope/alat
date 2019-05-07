@@ -3,6 +3,20 @@ export const formatAmount = (amount)=>{
     return amount.toLocaleString(navigator.language, { minimumFractionDigits: 2 });
 };
 
+export const canvasToFile = (dataURL) =>{
+    let byteString;
+    byteString = atob(dataURL.split(',')[1]);
+
+    const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
+
+    const ia = new Uint8Array(byteString.length);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([ia], { type: mimeString });
+  };
+
 export const modelStateErrorHandler = (error, field) => {
    if ("modelState" in error && error.message.toLowerCase().indexOf('the request is invalid.')>-1){
        //This is a model state error, process each model state object

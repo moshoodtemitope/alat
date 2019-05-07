@@ -28,7 +28,7 @@ export function userRegistrationRequest(state={}, action) {
     }
 }
 
-export function bvnDetailsReducer(state=[], action) {
+export function bvnDetailsReducer(state={}, action) {
     switch (action.type) {
         case BVN_VERIFICATION_PENDING:
             return {
@@ -46,6 +46,7 @@ export function bvnDetailsReducer(state=[], action) {
 
         default:
             return {
+                state,
                registration_step: 2
             };
     }

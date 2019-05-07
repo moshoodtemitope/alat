@@ -104,18 +104,16 @@ class DocumentUplaod extends React.Component{
     onSubmit(e){
         e.preventDefault();
         let {dispatch} = this.props;
-        if(this.state.profileUp.length > 5 )
-        {
-           if(this.state.signUp.length > 5){
-            dispatch(userActions.register(this.state, USER_REGISTER_SAVE));
-             history.push('/register/security-questions');
-             return;
-           }else {
-            dispatch(alertActions.error("You need to upload your signature"));
-            return;
+        if(this.state.profileUp.length > 5 ){
+            if(this.state.signUp.length > 5){
+                dispatch(userActions.register(this.state, USER_REGISTER_SAVE));
+                history.push('/register/security-questions');
+                return;
+            }else {
+                dispatch(alertActions.error("You need to upload your signature"));
+                return;
            }
-        }else
-        {
+        }else{
             dispatch(alertActions.error("You need to upload a selfie"))
             return;
         }
@@ -182,7 +180,7 @@ class DocumentUplaod extends React.Component{
                                             label=''
                                             buttonText='Choose image'
                                             onChange={this.onSignClick}
-                                            imgExtension={['.jpg', '.png']}
+                                            imgExtension={['.jpg', '.png', '.jpeg']}
                                             maxFileSize={5242880}
                                             />
                                     </div>
