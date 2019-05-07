@@ -35,6 +35,22 @@ class DocumentUplaod extends React.Component{
     
     componentDidMount() {
         this.getRegistrationDetails();
+        this.attachEvent();
+    }
+
+    attachEvent(){
+        var elementList = document.getElementsByClassName("chooseFileButton");
+        for(var i=0; i< elementList.length; i++ ){
+        elementList[i].nextSibling.addEventListener("change", this.clicked.bind(elementList[i]));
+        }
+    }
+
+    clicked(element){
+       var previewFrame =element.target.nextSibling.firstChild;
+       if(previewFrame.childNodes.length >=1)
+       {
+        previewFrame.removeChild(previewFrame.firstChild); 
+       }
     }
     
     getRegistrationDetails(){
@@ -54,7 +70,7 @@ class DocumentUplaod extends React.Component{
             }
         }
         else{
-            history.push('/register');
+           history.push('/register');
         }
     }
 
@@ -68,7 +84,7 @@ class DocumentUplaod extends React.Component{
     onSignClick(picture) {
         if(picture.length>=1){
             this.props.dispatch(alertActions.clear());
-            this.getBase64(picture[0], (result) => {
+            this.getBase64(picture[picture.length-1], (result) => {
                     this.setState({signUp: result});
              });
         }
@@ -79,12 +95,14 @@ class DocumentUplaod extends React.Component{
     }
 
     onProfileUpload(picture) {
+        console.log(picture[picture.length-1]);
         if(picture.length>=1){
             this.props.dispatch(alertActions.clear());
-            this.getBase64(picture[0], (result) => {
+            this.getBase64(picture[picture.length-1], (result) => {
               this.setState({profileUp: result});
            });
-        }else {
+        }
+        else {
             this.setState({profileUp: ''});
             this.props.dispatch(alertActions.error("You need to add a selfie"));
         }
@@ -161,9 +179,10 @@ class DocumentUplaod extends React.Component{
                                             singleImage = {true}
                                             withPreview={true}
                                             label=''
+                                            className ="selfieBtn"
                                             buttonText='Choose image'
                                             onChange={this.onProfileUpload}
-                                            imgExtension={['.jpg', '.png']}
+                                            imgExtension={['.jpg', '.png', '.jpeg']}
                                             maxFileSize={5242880}
                                             />
                                     </div>
@@ -181,8 +200,8 @@ class DocumentUplaod extends React.Component{
                                             withPreview={true}
                                             label=''
                                             buttonText='Choose image'
-                                            onChange={this.onSignClick}
-                                            imgExtension={['.jpg', '.png']}
+                                            onChange={(e)=>{this.onSignClick(e)}}
+                                            imgExtension={['.jpg', '.png', '.jpeg']}
                                             maxFileSize={5242880}
                                             />
                                     </div>

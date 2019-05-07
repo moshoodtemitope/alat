@@ -126,7 +126,7 @@ class CreateAccount extends React.Component{
     }
     
     validateEmail() {
-        let re = /^[a-z][a-zA-Z0-9_.]*(\.[a-zA-Z][a-zA-Z0-9_.]*)?@[a-z][a-zA-Z-0-9]*\.[a-z]+(\.[a-z]+)?$/;
+        let re = /^[a-zA-Z][a-zA-Z0-9_.]*(\.[a-zA-Z][a-zA-Z0-9_.]*)?@[a-zA-Z][a-zA-Z-0-9]*\.[a-zA-Z]+(\.[a-zA-Z]+)?$/;
         let result = re.test(this.state.email);
         this.setState({emailValid : result}); 
         return result;
