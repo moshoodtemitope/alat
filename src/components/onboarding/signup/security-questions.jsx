@@ -3,6 +3,7 @@ import { NavLink} from "react-router-dom";
 import OnboardingContainer from "../Container";
 import {connect} from "react-redux";
 import {ApiService} from "../../../services/apiService";
+import {SystemConstant} from "../../../shared/constants";
 import {routes} from "../../../services/urls";
 import {
     BVN_VERIFICATION_SUCCESS,
@@ -18,8 +19,8 @@ import {history} from "../../../_helpers/history";
 
 import {Textbox} from "react-inputs-validation";
 import {alertActions} from "../../../redux/actions/alert.actions";
-import {modelStateErrorHandler} from "../../../shared/utils";
-
+// import {modelStateErrorHandler} from "../../../shared/utils";
+import * as utils from "../../../shared/utils";
 function EachQuestion(props){
     
     return(
@@ -149,20 +150,48 @@ class SecurityQuestions extends React.Component{
 
                 consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", payload);
                 return consume.then((response)=>{
-                    console.log('success');
-                    history.push('/register/doc-upload');
+                    console.log('security questions sent');
+                    this.submitUploads();
+                    // history.push('/register/doc-upload');
                 })
                 .catch(error=>{
                     console.log('error', error);
                 });
 
-                console.log('all dne', payload);
+                
             }
             else{
                 noEmptyQuestions = false;
             }
 
             
+    }
+
+    getImageToUpload(uploadType, imageToUpload){
+        const imageFile = new FormData();
+
+        if(uploadType ==='dp'){
+            imageFile.append('DocumentType', SystemConstant.DOCUMENT_TYPE.passport);
+        }
+
+        if(uploadType ==='userSignature'){
+            imageFile.append('DocumentType', SystemConstant.DOCUMENT_TYPE.signature);
+        }
+        imageFile.append('File', utils.canvasToFile(imageToUpload.file), imageToUpload.name)
+        console.log('Image is', imageFile);
+        return imageFile;
+    }
+
+    submitUploads(){
+        let consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", getImageToUpload('dp', this.state.passportPhoto), SystemConstant.HEADER, true);
+        return consume.then((response)=>{
+            console.log('DP uploaded');
+            consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", getImageToUpload('userSignature', this.state.signaturePhoto), SystemConstant.HEADER, true);
+            // history.push('/register/doc-upload');
+            return consume.then((response2)=>{
+                console.log('signature uploaded');
+            })
+        })
     }
 
     postQuestions(questionAndAnswers){
@@ -175,9 +204,12 @@ class SecurityQuestions extends React.Component{
         // let bvnDetails = this.props.customer_bvnverification_details;
         // let bvnSkipDetails = this.props.customer_bvnskip_details;
         // let bvnSkipStatus = bvnSkipDetails.bvn_verification_status;
-        let userDetails = props.user_details.registration_data;
+        let userDetails = props.user_details.registration_data.user;
         console.log('user details', userDetails);
-        this.setState({userPhone: userDetails.user.phone, userEmail:userDetails.user.email, userPassword:userDetails.user.password});
+        this.setState({userPhone: userDetails.phone, userEmail:userDetails.email, userPassword:userDetails.password});
+        if(userDetails.profileUp && userDetails.signUp){
+            this.setState({passportPhoto:userDetails.profileUp, signaturePhoto: userDetails.signUp})
+        }
         // let bvnStatus = bvnDetails.bvn_verification_status;
         // let phoneEmail = "";
         // if(bvnStatus === BVN_VERIFICATION_SUCCESS){
@@ -195,6 +227,8 @@ class SecurityQuestions extends React.Component{
         // }
         //dispatch(alertActions.success(this.props.response.data.message.toString()));
     }
+
+    
     
 
     handleInputChange(event){
