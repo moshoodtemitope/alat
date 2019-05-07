@@ -47,15 +47,15 @@ class CreateAccount extends React.Component{
                 userData =  userDetails.registration_data.user;
                 this.setState({userData: userData});
                 this.setState({phone: userData.phone});
-                console.log('on page');
+                // console.log('on page');
             }
             else {
-                console.log('leaving page');
+                // console.log('leaving page');
                 history.push('/register');
             }
         }
         else{
-            onsole.log('left page');
+            // onsole.log('left page');
             history.push('/register');
         }
     }

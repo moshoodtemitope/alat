@@ -30,6 +30,7 @@ class DocumentUplaod extends React.Component{
             this.onProfileUpload = this.onProfileUpload.bind(this);
             this.onSubmit = this.onSubmit.bind(this);
             this.toggleModal = this.toggleModal.bind(this);
+            this.submitSkipUpload = this.submitSkipUpload.bind(this);
     }
     
     componentDidMount() {
@@ -119,6 +120,13 @@ class DocumentUplaod extends React.Component{
             return;
         }
     }
+
+    submitSkipUpload(){
+        //send null when user skips profile upload.
+        this.setState({profileUp: null, signUp: null});
+        this.props.dispatch(userActions.register(this.state, USER_REGISTER_SAVE));
+        history.push('/register/security-questions');
+    }
     
  
 
@@ -193,7 +201,7 @@ class DocumentUplaod extends React.Component{
                         <h3>By skipping this step, your new account won’t be operational till you have uploaded these documents.</h3>
                     <div className="btn-opt">
                         <button onClick={this.toggleModal} className="border-btn">Cancel</button>
-                        <button onClick={this.submitSkipBVN} className="btn-alat">Proceed</button>
+                        <button onClick={this.submitSkipUpload} className="btn-alat">Proceed</button>
                     </div>
                     </div>
                   </div>
