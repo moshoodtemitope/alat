@@ -50,7 +50,7 @@ class ConfirmBvnDetails extends React.Component{
         const { dispatch } = this.props;
         let bvnDetails = this.props.customer_bvn_info;
         let bvndatainfo = this.props.bvn_details;
-
+        
         if(bvnDetails){
             
             let bvnStatus = bvnDetails.otp_confirmation_status;
@@ -58,26 +58,21 @@ class ConfirmBvnDetails extends React.Component{
             if(bvnStatus === OTP_VERIFICATION_SUCCESS){
                 let resp = bvnDetails.otp_data_returned.otpData.data;
                 myGlobal = resp;
-                console.log('otp data is', resp);
-                console.log(myGlobal, "-----");
-                
-
                     this.setState({bvnPhoneNo: resp.bvnPhoneNo,customerBvnData:resp});
                 
             }
             else{
-                console.log('here only');
                 history.push('/register');
             }
         }
         else{
-            // history.push('/register');
             console.log('no bvn details');
         }
         
     }
 
     confirmDetails(){
+        // console.log('fiancle email status', this.state.customerBvnData);
         history.push('/register/create-account');
     }
 
@@ -93,23 +88,16 @@ class ConfirmBvnDetails extends React.Component{
    
 
     render(){
-        // let userState = this.props.onboarding_user_details;
-        // // let phone = '';
         let state = this.state;
-        
-
         
             const bvnInfo = state.customerBvnData;
             myGlobal = state.customerBvnData;
             
-            var req = Object.assign({}, myGlobal);
+            var customerData = Object.assign({}, myGlobal);
              
-            // console.log('there data', bvnInfo);
-            console.log(req.dob);
-            // console.log('dob data', dob);
-        
+           
             
-        let dateObj = new Date(req.dob),
+        let dateObj = new Date(customerData.dob),
             day = dateObj.getDate(),
             month = dateObj.getMonth()+1,
             year = dateObj.getFullYear(),
@@ -129,17 +117,17 @@ class ConfirmBvnDetails extends React.Component{
                             <div className="row mb-4">
                                 <div className="col-6">
                                     <span className="label">First Name</span><br/>
-                                    <span>{req.firstName}</span>
+                                    <span>{customerData.firstName}</span>
                                 </div>
                                 <div className="col-6">
                                     <span className="label">Last Name</span><br/>
-                                    <span>{req.lastName}</span>
+                                    <span>{customerData.lastName}</span>
                                 </div>
                             </div>
                             <div className="row mb-4">
                                 <div className="col-6">
                                     <span className="label">Phone Number</span><br/>
-                                    <span>{req.phoneNumber}</span>
+                                    <span>{customerData.phoneNumber}</span>
                                 </div>
                                 <div className="col-6">
                                     <span className="label">Date of Birth</span><br/>
@@ -149,11 +137,11 @@ class ConfirmBvnDetails extends React.Component{
                             <div className="row mb-4">
                                 <div className="col-6">
                                     <span className="label">Gender</span><br/>
-                                    <span>{req.gender}</span>
+                                    <span>{customerData.gender}</span>
                                 </div>
                                 <div className="col-6">
                                     <span className="label">BVN</span><br/>
-                                    <span>{req.bvn}</span>
+                                    <span>{customerData.bvn}</span>
                                 </div>
                             </div>
                         </div>
