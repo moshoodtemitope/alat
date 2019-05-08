@@ -51,12 +51,12 @@ class CreateAccount extends React.Component{
                 this.setState({userData: userData, phone: userData.phone, isExistingCustomer:bvnVerificationData.isExistingCustomer,  finacleEmail: bvnVerificationData.finacleEmail });
             }
             else {
-                history.push('/register');
+               // history.push('/register');
             }
         }
         else{
             
-            history.push('/register');
+            //history.push('/register');
         }
     }
 

@@ -49,7 +49,7 @@ class DocumentUplaod extends React.Component{
        var previewFrame =element.target.nextSibling.firstChild;
        if(previewFrame.childNodes.length >=1)
        {
-        previewFrame.removeChild(previewFrame.firstChild); 
+         previewFrame.removeChild(previewFrame.firstChild); 
        }
     }
     
@@ -66,11 +66,11 @@ class DocumentUplaod extends React.Component{
                 password: userData.password });
             }
             else {
-                history.push('/register');
+               // history.push('/register');
             }
         }
         else{
-           history.push('/register');
+          // history.push('/register');
         }
     }
 
@@ -198,11 +198,7 @@ class DocumentUplaod extends React.Component{
                                             withPreview={true}
                                             label=''
                                             buttonText='Choose image'
-<<<<<<< HEAD
-                                            onChange={(e)=>{this.onSignClick(e)}}
-=======
                                             onChange={this.onSignClick}
->>>>>>> onboarding-master
                                             imgExtension={['.jpg', '.png', '.jpeg']}
                                             maxFileSize={5242880}
                                             />
