@@ -79,6 +79,7 @@ class SecurityQuestions extends React.Component{
         this.submitQuestions =  this.submitQuestions.bind(this);
         this.handleSelectChange = this.handleSelectChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.getImageToUpload = this.getImageToUpload.bind(this);
     }
 
     getRegistrationDetails(){
@@ -118,10 +119,10 @@ class SecurityQuestions extends React.Component{
                     });
                     
                 }else{
-                    if(questionField.value==''){
+                    if(questionField.value===''){
                         questionField.parentNode.classList.add('form-error');
                     }
-                    if(answerField.value==''){
+                    if(answerField.value===''){
                         answerField.parentNode.classList.add('form-error');
                     }
                 }
@@ -131,7 +132,7 @@ class SecurityQuestions extends React.Component{
             console.log('Count is', questionAndAnswersList.length);
             numberofAsweredQuestions = questionAndAnswersList.length;
 
-            if(this.state.numberOfQuestions == numberofAsweredQuestions){
+            if(this.state.numberOfQuestions === numberofAsweredQuestions){
                 noEmptyQuestions = true;
 
                 let payload = {
@@ -183,10 +184,10 @@ class SecurityQuestions extends React.Component{
     }
 
     submitUploads(){
-        let consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", getImageToUpload('dp', this.state.passportPhoto), SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", this.getImageToUpload('dp', this.state.passportPhoto), SystemConstant.HEADER, true);
         return consume.then((response)=>{
             console.log('DP uploaded');
-            consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", getImageToUpload('userSignature', this.state.signaturePhoto), SystemConstant.HEADER, true);
+            consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", this.getImageToUpload('userSignature', this.state.signaturePhoto), SystemConstant.HEADER, true);
             // history.push('/register/doc-upload');
             return consume.then((response2)=>{
                 console.log('signature uploaded');
@@ -210,6 +211,12 @@ class SecurityQuestions extends React.Component{
         if(userDetails.profileUp && userDetails.signUp){
             this.setState({passportPhoto:userDetails.profileUp, signaturePhoto: userDetails.signUp})
         }
+
+        // if(bvnStatus === BVN_VERIFICATION_SUCCESS){
+        //     let resp = bvnDetails.bvn_verification_data.response;
+        //     this.setState({otpSent: true, bvnPhoneNo: resp.bvnPhoneNo, phoneNo: resp.phoneNo});
+        // }
+
         // let bvnStatus = bvnDetails.bvn_verification_status;
         // let phoneEmail = "";
         // if(bvnStatus === BVN_VERIFICATION_SUCCESS){

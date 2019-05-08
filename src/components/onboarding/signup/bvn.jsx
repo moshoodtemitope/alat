@@ -36,9 +36,9 @@ class Bvn extends React.Component{
     
     handleChange(e){
         const name = e.target.name;
-        if(name == 'bvn'){
+        if(name === 'bvn'){
             this.setState({bvn: e.target.value.replace(/\D/,'')})
-            if(this.state.bvn.length == 10)
+            if(this.state.bvn.length === 10)
             this.validateBvn(0);
         }
         else
@@ -52,7 +52,7 @@ class Bvn extends React.Component{
     
     formValidation=()=>{
         
-        if(this.validateBvn(1) == false & this.validateDob() == false)
+        if(this.validateBvn(1) === false & this.validateDob() === false)
         {
             this.setState({formInvalid: false});
             return false;
@@ -64,7 +64,7 @@ class Bvn extends React.Component{
     }
 
     validateBvn=(zeroIndex)=>{
-        if( (this.state.bvn.length - zeroIndex) == 10){
+        if( (this.state.bvn.length - zeroIndex) === 10){
              this.setState({bvnIvalid: false});
              return false;
         }
@@ -88,7 +88,7 @@ class Bvn extends React.Component{
         e.preventDefault();
          
         //console.log(this.formValidation());
-        if(this.formValidation() == false)  
+        if(this.formValidation() === false)  
         {
             this.verifyBvn();
         }
@@ -145,9 +145,9 @@ class Bvn extends React.Component{
     }
     
     toggleModal(){
-        if(this.state.openModal == false)
+        if(this.state.openModal === false)
          this.setState({openModal : true});
-         else if(this.state.openModal == true)
+         else if(this.state.openModal === true)
          this.setState({openModal : false});
     }
 
@@ -202,8 +202,8 @@ class Bvn extends React.Component{
                                 <div className="text-danger">select a valid date</div>
                                 }
                             </div>
-                            <button type="submit" disabled={props.bvn_details.bvn_verification_status == "BVN_VERIFICATION_PENDING"} className="btn-alat btn-block">
-                            { props.bvn_details.bvn_verification_status == "BVN_VERIFICATION_PENDING" ? "Processing..." : "Continue"}</button>
+                            <button type="submit" disabled={props.bvn_details.bvn_verification_status === "BVN_VERIFICATION_PENDING"} className="btn-alat btn-block">
+                            { props.bvn_details.bvn_verification_status === "BVN_VERIFICATION_PENDING" ? "Processing..." : "Continue"}</button>
                         </form>
                         <p className="text-right pull-right"><a href="#" onClick={this.toggleModal}>Skip BVN</a></p>
                         <p className="text-left pull-left"><NavLink to="/register">Go Back</NavLink></p>

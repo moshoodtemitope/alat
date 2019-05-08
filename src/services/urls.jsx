@@ -13,6 +13,7 @@ export const routes = {
     BVN_VERIFICATION: BASEURL + '/RegistrationApi/api/registration/CallBvnService',
     SKIPBVNOTP: BASEURL + '/RegistrationApi/api/registration/RequestOtpForOnBoarding',
     VERIFYBVNOTP: BASEURL + '/RegistrationApi/api/registration/VerifyOtpForBvn',
+    VERIFYSKIPOTPURL: BASEURL + '/RegistrationApi/api/registration/VerifyOtpForAll',
     RESENDOTP: BASEURL + '/RegistrationApi/api/registration/ResendOtp',
     GETALLQUESTIONS: BASEURL + '/UserSecurityApi/api/v1/Account/AllQuestions',
     REGISTRATIONURLV2: BASEURL + '/UserSecurityApi/api/v1/Account/RegistrationV2',
