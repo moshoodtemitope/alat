@@ -21,7 +21,8 @@ class DocumentUplaod extends React.Component{
     constructor(props){
         super(props);
             this.state={
-                pictures: [],
+                profilePicCount:0,
+                SignupPicCount:0,
                 profileUp: '',
                 signUp:'',
                 openModal : false
@@ -66,11 +67,11 @@ class DocumentUplaod extends React.Component{
                 password: userData.password });
             }
             else {
-               // history.push('/register');
+                history.push('/register');
             }
         }
         else{
-          // history.push('/register');
+           history.push('/register');
         }
     }
 
@@ -82,6 +83,7 @@ class DocumentUplaod extends React.Component{
     }
 
     onSignClick(picture) {
+        if(picture.length > this.state.SignupPicCount){
         if(picture.length>=1){
             this.props.dispatch(alertActions.clear());
             this.getBase64(picture[picture.length-1], (result) => {
@@ -92,10 +94,17 @@ class DocumentUplaod extends React.Component{
             this.setState({signUp: ''});
             this.props.dispatch(alertActions.error("You need to add a signature"));
         }
+      }else if(picture.length <= this.state.SignupPicCount){
+        this.setState({signUp: ''});
+        this.props.dispatch(alertActions.error("You need to add a signature"));
+      }
+      this.setState({SignupPicCount : picture.length});
     }
 
     onProfileUpload(picture) {
-        console.log(picture[picture.length-1]);
+        
+        //cheking if picture was deleted
+        if(picture.length > this.state.profilePicCount){
         if(picture.length>=1){
             this.props.dispatch(alertActions.clear());
             this.getBase64(picture[picture.length-1], (result) => {
@@ -106,6 +115,11 @@ class DocumentUplaod extends React.Component{
             this.setState({profileUp: ''});
             this.props.dispatch(alertActions.error("You need to add a selfie"));
         }
+      }else if(picture.length <= this.state.profilePicCount){
+        this.setState({profileUp: ''});
+        this.props.dispatch(alertActions.error("You need to add a selfie"));
+      }
+      this.setState({profilePicCount : picture.length});
     }
 
     getBase64(file, cb) {

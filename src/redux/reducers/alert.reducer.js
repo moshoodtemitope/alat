@@ -13,7 +13,7 @@ export function alert(state = {}, action) {
         message: action.message
       };
     case alertConstants.CLEAR:
-      return {};
+      return { };
     default:
       return {};
   }
