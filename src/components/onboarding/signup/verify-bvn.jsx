@@ -104,6 +104,16 @@ class VerifyBvn extends React.Component{
 
     submitOtp(e){
         e.preventDefault();
+        let otpUrl;
+
+        if(this.props.customer_bvnskip_details.bvn_verification_status === SKIP_BVN_SUCCESS){
+            otpUrl = routes.VERIFYSKIPOTPURL; 
+        }
+
+        if(this.props.customer_bvnverification_details.bvn_verification_status === BVN_VERIFICATION_SUCCESS){
+            otpUrl = routes.VERIFYBVNOTP; 
+        }
+
         if(document.querySelector('#otpValue').value.length < 6){
             this.setState({submitDisabled: true});
             document.querySelector('.OtpTextVal').classList.add('form-error');
@@ -130,12 +140,24 @@ class VerifyBvn extends React.Component{
                 this.setState({ submitted: false,submitDisabled : true, failedVerfication:true, otpStatusMessage: 'This action is not allowed'})
                  setTimeout(()=>history.push('/register'), 2000);
             }else{
-                let consume = ApiService.request(routes.VERIFYBVNOTP, "POST", data);
-                return consume.then(function(response){
+                let consume = ApiService.request(otpUrl, "POST", data);
+                return consume.then((response)=>{
                     console.log(response);
-                    dispatch(userActions.saveBvnData(response, SAVE_BVN_INFO));
-                    history.push('/register/confirm-bvndetails', 
-                    {userPhone:props.location.state.userPhone});
+                    
+                    if(this.props.customer_bvnskip_details.bvn_verification_status === SKIP_BVN_SUCCESS){
+                       dispatch(userActions.saveBvnData(null, SAVE_BVN_INFO))
+                    //   dispatch(userActions.bvnVerify())
+                        history.push('/register/create-account');
+                    }
+
+                    if(this.props.customer_bvnverification_details.bvn_verification_status === BVN_VERIFICATION_SUCCESS){
+                        dispatch(userActions.saveBvnData(response, SAVE_BVN_INFO));
+                        
+                        history.push('/register/confirm-bvndetails', 
+                                {userPhone:props.location.state.userPhone});
+                    }
+
+                    
                 })
                 .catch(err=>{
                     console.log('error msg is ', err);

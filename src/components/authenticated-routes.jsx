@@ -31,7 +31,7 @@ class AuthenticatedRoutes extends React.Component{
 
     render(){
         if(this.props.user){
-            let timerId = setInterval(() => console.log("Do refresh token"), 5000);
+            // let timerId = setInterval(() => console.log("Do refresh token"), 5000);
             // after 5 seconds stop
             // setTimeout(() => { clearInterval(timerId); alert('stop'); }, 5000);
         }
