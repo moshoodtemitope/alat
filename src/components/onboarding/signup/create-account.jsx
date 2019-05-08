@@ -39,16 +39,25 @@ class CreateAccount extends React.Component{
     getRegistrationDetails(){
         const { dispatch } = this.props;
         let props = this.props;
-        console.log(props);
+        
+        console.log('bvn verification data', props.bvn_details);
          let userData,
             userDetails = props.user_details,
-            bvnVerificationData = props.bvn_details.state.bvn_verification_data.response;
+            bvnVerificationData = props.bvn_details.state.hasOwnProperty('bvn_verification_data')? props.bvn_details.state.bvn_verification_data.response: null;
+            // bvnVerificationData = props.bvn_details.state.bvn_verification_data.response;
         
-         console.log('bvn verification data', bvnVerificationData);
+        
+        
+        //  console.log('user data', props.user_details);
         if('registration_status' in userDetails && userDetails.registration_status === USER_REGISTER_SAVE){
             if(userDetails.registration_data.user !== undefined){
                 userData =  userDetails.registration_data.user;
-                this.setState({userData: userData, phone: userData.phone, isExistingCustomer:bvnVerificationData.isExistingCustomer,  finacleEmail: bvnVerificationData.finacleEmail });
+                if(bvnVerificationData ==null){
+                    this.setState({userData: userData, phone: userData.phone});
+                }else{
+                    this.setState({userData: userData, phone: userData.phone, isExistingCustomer:bvnVerificationData.isExistingCustomer,  finacleEmail: bvnVerificationData.finacleEmail });
+                }
+                
             }
             else {
                // history.push('/register');
@@ -61,7 +70,7 @@ class CreateAccount extends React.Component{
     }
 
     valConfirmPasswordValid(){
-        if(this.state.password == this.state.confirmPassword){
+        if(this.state.password === this.state.confirmPassword){
             this.setState({confirmPasswordValid : true});
             return true;
         }
@@ -72,7 +81,8 @@ class CreateAccount extends React.Component{
     }
 
     ValConfirmEmail(){
-        if(this.state.email.toLowerCase() == this.state.confirmEmail.toLowerCase()){
+        if(this.state.email.toLowerCase() === this.state.confirmEmail.toLowerCase()){
+            this.setState({confirmEmailValid : true})
             console.log('right');
            return true; 
             
@@ -95,16 +105,16 @@ class CreateAccount extends React.Component{
         if(this.validateEmail() && this.valConfirmPasswordValid() &&
             this.checkPwd() && this.ValConfirmEmail()){
                 
-            if(this.state.confirmEmail!='' && this.state.confirmPassword != ''){
-                console.log('great');
+            if(this.state.confirmEmail!=='' && this.state.confirmPassword !== ''){
+                
                 return true;
             }else{ 
                 this.setState({confirmEmailValid: false, confirmPasswordValid: false})
-                console.log('issue');
+               
                 return false
             }
         }else { 
-            console.log('failed');
+            
             return false;
         }
     }
@@ -135,28 +145,28 @@ class CreateAccount extends React.Component{
         // this.ValConfirmEmail()
         if(result){
              //Has existing wema account before and provided is equal to email from BVN
-            if((this.state.isExistingCustomer==true && this.state.finacleEmail!== null && this.state.finacleEmail!=='')
-                && (this.state.email === this.state.finacleEmail)){
+            if((this.state.isExistingCustomer===true && this.state.finacleEmail!== null && this.state.finacleEmail!=='')
+                && (this.state.email.toLowerCase() === this.state.finacleEmail.toLowerCase())){
                 
                 this.setState({ emailValid : true});
                 return true;
             }
 
             //Has existing wema account and email provided is not equal to email from BVN
-            if((this.state.isExistingCustomer==true && this.state.finacleEmail!== null && this.state.finacleEmail!=='')
-                && (this.state.email !== this.state.finacleEmail)){
+            if((this.state.isExistingCustomer===true && this.state.finacleEmail!== null && this.state.finacleEmail!=='')
+                && (this.state.email.toLowerCase() !== this.state.finacleEmail.toLowerCase())){
                 
                 this.setState({ emailValid : false, emailErrorMsg: 'Please, enter the email tied to your Wema account'});
                 return false;
             }
 
             //Has a wema account before and BVN email is empty
-            if((this.state.isExistingCustomer==true && (this.state.finacleEmail == null || this.state.finacleEmail ==''))){
+            if((this.state.isExistingCustomer===true && (this.state.finacleEmail == null || this.state.finacleEmail ==''))){
                 this.setState({ emailValid : false, emailErrorMsg: 'Please visit the nearest Wema bank branch to update your email on your BVN'});
                 return false;
             }
 
-            if(this.state.isExistingCustomer==false){
+            if(this.state.isExistingCustomer===false){
                 this.setState({ emailValid : true});
                 return true;
             }
@@ -175,7 +185,6 @@ class CreateAccount extends React.Component{
 
     checkPwd (){
         let str = this.state.password;
-        //console.log(str);
         var digitEx = new RegExp(/\d/);
         var lowerEx = new RegExp(/[a-z]/);
         var upperCase = new RegExp(/[A-Z]/);
@@ -200,7 +209,7 @@ class CreateAccount extends React.Component{
             condition = false;
         }
 
-        if(condition == false)
+        if(condition === false)
        { this.setState({passwordValid : false, passwordInvalidMessage : message});
           return false;
          }
@@ -227,7 +236,7 @@ class CreateAccount extends React.Component{
             let props = this.props;
             let state =  this.state;
             let userDetails = props.userDetails;
-            console.log(props.userDetails);
+            
 
         return (
             <OnboardingContainer>
