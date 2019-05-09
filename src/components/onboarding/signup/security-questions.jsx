@@ -114,8 +114,9 @@ class SecurityQuestions extends React.Component{
 
                 if(questionField.value!=='' && answerField.value!=='' ){
                     questionAndAnswersList.push({
-                        'Question':questionField.value,
-                        'Answer':answerField.value,
+                        'id':questionField.value,
+                        'question':questionField.options[questionField.selectedIndex].text,
+                        'answer':answerField.value,
                     });
                     
                 }else{

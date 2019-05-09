@@ -60,12 +60,12 @@ class CreateAccount extends React.Component{
                 
             }
             else {
-                history.push('/register');
+               // history.push('/register');
             }
         }
         else{
             
-            history.push('/register');
+            //history.push('/register');
         }
     }
 

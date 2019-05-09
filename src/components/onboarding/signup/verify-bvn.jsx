@@ -102,15 +102,20 @@ class VerifyBvn extends React.Component{
         this.getBvnDetails();
     }
 
-    submitOtp(e){
+    submitOtp=(e)=>{
+        
         e.preventDefault();
-        let otpUrl;
-
-        console.log('log issues', this.props.customer_bvnskip_details);
+        const {otpValue} = this.state;
+        let props = this.props;
+        const { dispatch } = this.props;
+        let otpUrl='';
+        console.log(this);
+        console.log(props.customer_bvnskip_details.bvn_verification_status);
         if(this.props.customer_bvnskip_details.bvn_verification_status === SKIP_BVN_SUCCESS){
             otpUrl = routes.VERIFYSKIPOTPURL; 
         }
-
+         
+        console.log(props.customer_bvnverification_details.bvn_verification_status);
         if(this.props.customer_bvnverification_details.bvn_verification_status === BVN_VERIFICATION_SUCCESS){
             otpUrl = routes.VERIFYBVNOTP; 
         }
@@ -129,9 +134,7 @@ class VerifyBvn extends React.Component{
         
             this.setState({otpStatusMessage: '',otpSent:false, submitted: true, submitDisabled : true, failedVerfication: false});
         
-            const {otpValue} = this.state;
-            let props = this.props;
-            const { dispatch } = this.props;
+           
             let data = {
                 phoneNo: this.state.phoneNo,
                 otp: this.state.otpValue

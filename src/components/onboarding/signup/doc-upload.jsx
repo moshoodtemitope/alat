@@ -21,7 +21,8 @@ class DocumentUplaod extends React.Component{
     constructor(props){
         super(props);
             this.state={
-                pictures: [],
+                profilePicCount:0,
+                SignupPicCount:0,
                 profileUp: '',
                 signUp:'',
                 openModal : false
@@ -35,6 +36,22 @@ class DocumentUplaod extends React.Component{
     
     componentDidMount() {
         this.getRegistrationDetails();
+        this.attachEvent();
+    }
+
+    attachEvent(){
+        var elementList = document.getElementsByClassName("chooseFileButton");
+        for(var i=0; i< elementList.length; i++ ){
+        elementList[i].nextSibling.addEventListener("change", this.clicked.bind(elementList[i]));
+        }
+    }
+
+    clicked(element){
+       var previewFrame =element.target.nextSibling.firstChild;
+       if(previewFrame.childNodes.length >=1)
+       {
+         previewFrame.removeChild(previewFrame.firstChild); 
+       }
     }
     
     getRegistrationDetails(){
@@ -54,7 +71,7 @@ class DocumentUplaod extends React.Component{
             }
         }
         else{
-            history.push('/register');
+           history.push('/register');
         }
     }
 
@@ -66,9 +83,10 @@ class DocumentUplaod extends React.Component{
     }
 
     onSignClick(picture) {
+        if(picture.length > this.state.SignupPicCount){
         if(picture.length>=1){
             this.props.dispatch(alertActions.clear());
-            this.getBase64(picture[0], (result) => {
+            this.getBase64(picture[picture.length-1], (result) => {
                     this.setState({signUp: result});
              });
         }
@@ -76,18 +94,32 @@ class DocumentUplaod extends React.Component{
             this.setState({signUp: ''});
             this.props.dispatch(alertActions.error("You need to add a signature"));
         }
+      }else if(picture.length <= this.state.SignupPicCount){
+        this.setState({signUp: ''});
+        this.props.dispatch(alertActions.error("You need to add a signature"));
+      }
+      this.setState({SignupPicCount : picture.length});
     }
 
     onProfileUpload(picture) {
+        
+        //cheking if picture was deleted
+        if(picture.length > this.state.profilePicCount){
         if(picture.length>=1){
             this.props.dispatch(alertActions.clear());
-            this.getBase64(picture[0], (result) => {
+            this.getBase64(picture[picture.length-1], (result) => {
               this.setState({profileUp: result});
            });
-        }else {
+        }
+        else {
             this.setState({profileUp: ''});
             this.props.dispatch(alertActions.error("You need to add a selfie"));
         }
+      }else if(picture.length <= this.state.profilePicCount){
+        this.setState({profileUp: ''});
+        this.props.dispatch(alertActions.error("You need to add a selfie"));
+      }
+      this.setState({profilePicCount : picture.length});
     }
 
     getBase64(file, cb) {
@@ -159,9 +191,10 @@ class DocumentUplaod extends React.Component{
                                             singleImage = {true}
                                             withPreview={true}
                                             label=''
+                                            className ="selfieBtn"
                                             buttonText='Choose image'
                                             onChange={this.onProfileUpload}
-                                            imgExtension={['.jpg', '.png']}
+                                            imgExtension={['.jpg', '.png', '.jpeg']}
                                             maxFileSize={5242880}
                                             />
                                     </div>
