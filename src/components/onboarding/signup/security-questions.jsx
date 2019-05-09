@@ -97,6 +97,7 @@ class SecurityQuestions extends React.Component{
 
     submitQuestions(e){
         e.preventDefault();
+
         let getAllQuestionsField = document.querySelectorAll('.selectQuestion'),
             getAllAnswersField = document.querySelectorAll('.questionResponse'),
             getAllQuestionsWrap = document.querySelectorAll('.each-question'),
@@ -148,19 +149,19 @@ class SecurityQuestions extends React.Component{
                     deviceOs: 'string-6',
                     gcmRegId: 'string-8',
                     deviceCode: 'string-10'
-                },
-
-                consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", payload);
-                return consume.then((response)=>{
-                    console.log('security questions sent');
-                    this.submitUploads();
-                    // history.push('/register/doc-upload');
-                })
-                .catch(error=>{
-                    console.log('error', error);
-                });
-
-                
+                }
+                 
+                this.props.dispatch(userActions.register(payload, USER_REGISTER_SAVE));
+                history.push('/register/doc-upload');
+                // consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", payload);
+                // return consume.then((response)=>{
+                //     console.log('security questions sent');
+                //     this.submitUploads();
+                // history.push('/register/doc-upload');
+                // })
+                // .catch(error=>{
+                //     console.log('error', error);
+                // });
             }
             else{
                 noEmptyQuestions = false;

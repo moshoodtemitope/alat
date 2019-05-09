@@ -45,7 +45,7 @@ class CreateAccount extends React.Component{
             userDetails = props.user_details,
             bvnVerificationData = props.bvn_details.state.hasOwnProperty('bvn_verification_data')? props.bvn_details.state.bvn_verification_data.response: null;
             // bvnVerificationData = props.bvn_details.state.bvn_verification_data.response;
-        
+           
         
         
         //  console.log('user data', props.user_details);
@@ -60,12 +60,11 @@ class CreateAccount extends React.Component{
                 
             }
             else {
-               // history.push('/register');
+                history.push('/register');
             }
         }
         else{
-            
-            //history.push('/register');
+            history.push('/register');
         }
     }
 
@@ -128,7 +127,7 @@ class CreateAccount extends React.Component{
                                             email: this.state.email,
                                             password: this.state.password,
                                         phone:this.state.phone}, USER_REGISTER_SAVE));
-            history.push('/register/doc-upload');
+            history.push('/register/security-questions');
         }
     }
 
@@ -289,12 +288,22 @@ class CreateAccount extends React.Component{
 }
 
 function mapStateToProps(state){
-    
-    return {
-         user_details: state.onboarding_user_details.state.state.state,
-        bvn_details: state.onboarding_bvn_details,
-         alert: state.alert
+    //test to know if the data to return and redirect the user 
+    if('registration_status' in state.onboarding_user_details.state)
+    {
+        return{
+            user_details: state.onboarding_user_details.state.state.state,
+            bvn_details: state.onboarding_bvn_details,
+            alert: state.alert
+        }
     }
+     else{
+        return {
+            user_details: state.onboarding_user_details.state.state.state,
+            bvn_details: state.onboarding_bvn_details,
+            alert: state.alert
+        }
+     }
 }
 
 export default connect(mapStateToProps)(CreateAccount);
