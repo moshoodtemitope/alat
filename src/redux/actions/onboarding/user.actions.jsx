@@ -46,7 +46,7 @@ function login(email, password) {
                 history.push('/dashboard');
             }).catch(error => {
                 // console.log(err.response.data.message);
-               
+               console.log('error message', error);
                 // submitting = false;
                 // throw new SubmissionError({ _error: err.response.data.message});
                 dispatch(failure(error.response.data.message.toString()));

@@ -142,15 +142,15 @@ class VerifyBvn extends React.Component{
                 this.setState({ submitted: false,submitDisabled : true, failedVerfication:true, otpStatusMessage: 'This action is not allowed'})
                  setTimeout(()=>history.push('/register'), 2000);
             }else{
+                
                 let consume = ApiService.request(otpUrl, "POST", data);
                 return consume.then((response)=>{
                    
-                    
                     if(this.props.customer_bvnskip_details.bvn_verification_status === SKIP_BVN_SUCCESS){
                        dispatch(userActions.saveBvnData(null, SAVE_BVN_INFO))
                     //   dispatch(userActions.bvnVerify())
                         history.push('/register/create-account');
-                    }
+                    } 
 
                     if(this.props.customer_bvnverification_details.bvn_verification_status === BVN_VERIFICATION_SUCCESS){
                         dispatch(userActions.saveBvnData(response, SAVE_BVN_INFO));
@@ -291,6 +291,7 @@ class VerifyBvn extends React.Component{
 
 
 function mapStateToProps(state){
+    console.log('state passsed is', state);
     return {
         user_details: state.onboarding_user_details,
         customer_bvnverification_details: state.onboarding_bvn_details,
