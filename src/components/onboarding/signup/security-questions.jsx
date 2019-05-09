@@ -97,6 +97,7 @@ class SecurityQuestions extends React.Component{
 
     submitQuestions(e){
         e.preventDefault();
+
         let getAllQuestionsField = document.querySelectorAll('.selectQuestion'),
             getAllAnswersField = document.querySelectorAll('.questionResponse'),
             getAllQuestionsWrap = document.querySelectorAll('.each-question'),
@@ -148,7 +149,7 @@ class SecurityQuestions extends React.Component{
                     deviceOs: 'string-6',
                     gcmRegId: 'string-8',
                     deviceCode: 'string-10'
-                },
+                }
                  
                 this.props.dispatch(userActions.register(payload, USER_REGISTER_SAVE));
                 history.push('/register/doc-upload');

@@ -253,9 +253,6 @@ class VerifyBvn extends React.Component{
                                         }
                                         
                                     }}
-                                    
-                                    
-                                    
                                 />
                                 <small className="error-text">Six-digit OTP code required</small>
                                 {/* <input type="number" onBlur={this.handleInputBlur}/> */}
