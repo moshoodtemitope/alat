@@ -109,13 +109,11 @@ class VerifyBvn extends React.Component{
         let props = this.props;
         const { dispatch } = this.props;
         let otpUrl='';
-        console.log(this);
-        console.log(props.customer_bvnskip_details.bvn_verification_status);
+        
         if(this.props.customer_bvnskip_details.bvn_verification_status === SKIP_BVN_SUCCESS){
             otpUrl = routes.VERIFYSKIPOTPURL; 
         }
          
-        console.log(props.customer_bvnverification_details.bvn_verification_status);
         if(this.props.customer_bvnverification_details.bvn_verification_status === BVN_VERIFICATION_SUCCESS){
             otpUrl = routes.VERIFYBVNOTP; 
         }
@@ -146,7 +144,7 @@ class VerifyBvn extends React.Component{
             }else{
                 let consume = ApiService.request(otpUrl, "POST", data);
                 return consume.then((response)=>{
-                    console.log(response);
+                   
                     
                     if(this.props.customer_bvnskip_details.bvn_verification_status === SKIP_BVN_SUCCESS){
                        dispatch(userActions.saveBvnData(null, SAVE_BVN_INFO))
@@ -161,7 +159,6 @@ class VerifyBvn extends React.Component{
                                 {userPhone:props.location.state.userPhone});
                     }
 
-                    
                 })
                 .catch(err=>{
                     console.log('error msg is ', err);

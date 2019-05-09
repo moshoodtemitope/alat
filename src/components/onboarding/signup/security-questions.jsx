@@ -148,18 +148,18 @@ class SecurityQuestions extends React.Component{
                     gcmRegId: 'string-8',
                     deviceCode: 'string-10'
                 },
-
-                consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", payload);
-                return consume.then((response)=>{
-                    console.log('security questions sent');
-                    this.submitUploads();
-                    // history.push('/register/doc-upload');
-                })
-                .catch(error=>{
-                    console.log('error', error);
-                });
-
-                
+                 
+                this.props.dispatch(userActions.register(payload, USER_REGISTER_SAVE));
+                history.push('/register/doc-upload');
+                // consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", payload);
+                // return consume.then((response)=>{
+                //     console.log('security questions sent');
+                //     this.submitUploads();
+                // history.push('/register/doc-upload');
+                // })
+                // .catch(error=>{
+                //     console.log('error', error);
+                // });
             }
             else{
                 noEmptyQuestions = false;
