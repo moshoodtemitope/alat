@@ -45,7 +45,7 @@ class DocumentUplaod extends React.Component{
         elementList[i].nextSibling.addEventListener("change", this.clicked.bind(elementList[i]));
         }
     }
-
+   
     clicked(element){
        var previewFrame =element.target.nextSibling.firstChild;
        if(previewFrame.childNodes.length >=1)
