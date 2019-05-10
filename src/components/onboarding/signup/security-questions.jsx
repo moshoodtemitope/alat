@@ -80,6 +80,7 @@ class SecurityQuestions extends React.Component{
         this.handleSelectChange = this.handleSelectChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.getImageToUpload = this.getImageToUpload.bind(this);
+        this.handleAutoLogin = this.handleAutoLogin.bind(this);
     }
 
     getRegistrationDetails(){
@@ -137,7 +138,7 @@ class SecurityQuestions extends React.Component{
             if(this.state.numberOfQuestions === numberofAsweredQuestions){
                 noEmptyQuestions = true;
 
-                let payload = {
+                let userDetailsPayload = {
                     channelId: 2,
                     ReferralCode: '',
                     imei: '354553073954109',
@@ -149,25 +150,36 @@ class SecurityQuestions extends React.Component{
                     deviceOs: 'string-6',
                     gcmRegId: 'string-8',
                     deviceCode: 'string-10'
-                }
+                };
                  
-                this.props.dispatch(userActions.register(payload, USER_REGISTER_SAVE));
-                history.push('/register/doc-upload');
-                // consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", payload);
-                // return consume.then((response)=>{
-                //     console.log('security questions sent');
-                //     this.submitUploads();
-                // history.push('/register/doc-upload');
-                // })
-                // .catch(error=>{
-                //     console.log('error', error);
-                // });
+                //If user provided BVN info save userDetails and go to Documents upload page
+                if(this.state.bvnVerificationStatus !==null){
+                    this.props.dispatch(userActions.register(userDetailsPayload, USER_REGISTER_SAVE));
+                    history.push('/register/doc-upload');
+                }else{
+                //If user didnt provided BVN info POST userDetails and auto login user
+                    let consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", userDetailsPayload);
+                        return consume.then((loginData)=>{
+                            console.log('response is', loginData);
+                            //call AutoLogin functionality
+                            this.handleAutoLogin(loginData);
+                        })
+                        .catch(error=>{
+                            console.log('error', error);
+                        });
+                }
+                
             }
             else{
                 noEmptyQuestions = false;
             }
 
             
+    }
+
+    handleAutoLogin(loginInfo){
+        localStorage.setItem("user", JSON.stringify(loginInfo));
+        history.push('/dashboard');
     }
 
     getImageToUpload(uploadType, imageToUpload){
@@ -207,9 +219,11 @@ class SecurityQuestions extends React.Component{
         // let bvnDetails = this.props.customer_bvnverification_details;
         // let bvnSkipDetails = this.props.customer_bvnskip_details;
         // let bvnSkipStatus = bvnSkipDetails.bvn_verification_status;
+
+        let bvnVerificationStatus = props.customer_bvnverification_details.hasOwnProperty('bvn_verification_data')? BVN_VERIFICATION_SUCCESS: null;
         let userDetails = props.user_details.registration_data.user;
         console.log('user details', userDetails);
-        this.setState({userPhone: userDetails.phone, userEmail:userDetails.email, userPassword:userDetails.password});
+        this.setState({userPhone: userDetails.phone,bvnVerificationStatus, userEmail:userDetails.email, userPassword:userDetails.password});
         if(userDetails.profileUp && userDetails.signUp){
             this.setState({passportPhoto:userDetails.profileUp, signaturePhoto: userDetails.signUp})
         }
