@@ -153,28 +153,26 @@ class SecurityQuestions extends React.Component{
                 };
                  
                 //If user provided BVN info save userDetails and go to Documents upload page
-                if(this.state.bvnVerificationStatus !==null){
+               // if(this.state.bvnVerificationStatus !==null){
                     this.props.dispatch(userActions.register(userDetailsPayload, USER_REGISTER_SAVE));
                     history.push('/register/doc-upload');
-                }else{
+               // }else{
                 //If user didnt provided BVN info POST userDetails and auto login user
-                    let consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", userDetailsPayload);
-                        return consume.then((loginData)=>{
-                            console.log('response is', loginData);
-                            //call AutoLogin functionality
-                            this.handleAutoLogin(loginData);
-                        })
-                        .catch(error=>{
-                            console.log('error', error);
-                        });
-                }
+                    // let consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", userDetailsPayload);
+                    //     return consume.then((loginData)=>{
+                    //         console.log('response is', loginData);
+                    //         //call AutoLogin functionality
+                    //         this.handleAutoLogin(loginData);
+                    //     })
+                    //     .catch(error=>{
+                    //         console.log('error', error);
+                    //     });
+               // }
                 
             }
             else{
                 noEmptyQuestions = false;
             }
-
-            
     }
 
     handleAutoLogin(loginInfo){

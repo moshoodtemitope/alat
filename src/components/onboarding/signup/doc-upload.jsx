@@ -25,8 +25,8 @@ class DocumentUplaod extends React.Component{
             this.state={
                 profilePicCount:0,
                 SignupPicCount:0,
-                profileUp: '',
-                signUp:'',
+                profileUp: { file:'', name:'name word'},
+                signUp: {file: '', name: ''},
                 ctaStatus: false,
                 openModal : false
             };
@@ -35,11 +35,13 @@ class DocumentUplaod extends React.Component{
             this.onSubmit = this.onSubmit.bind(this);
             this.toggleModal = this.toggleModal.bind(this);
             this.submitSkipUpload = this.submitSkipUpload.bind(this);
+            
     }
     
     componentDidMount() {
         this.getRegistrationDetails();
         this.attachEvent();
+      //  this.setState({profileUp : { file: 'file', name: this.state.profileUp.name }},()=>{ console.log(this.state.profileUp)});
     }
 
     attachEvent(){
@@ -70,11 +72,11 @@ class DocumentUplaod extends React.Component{
                 password: userData.password });
             }
             else {
-                history.push('/register');
+                //history.push('/register');
             }
         }
         else{
-           history.push('/register');
+           //history.push('/register');
         }
     }
 
@@ -89,9 +91,9 @@ class DocumentUplaod extends React.Component{
         if(picture.length > this.state.SignupPicCount){
         if(picture.length>=1){
             // this.props.dispatch(alertActions.clear());
-            console.log('picture is', picture);
+            //console.log('picture is', picture);
             this.getBase64(picture[picture.length-1], (result) => {
-                    this.setState({signUp: result});
+                    this.setState({signUp: {file: result, name:picture[picture.length-1].name}});
              });
         }
         else {
@@ -123,9 +125,10 @@ class DocumentUplaod extends React.Component{
         if(picture.length > this.state.profilePicCount){
         if(picture.length>=1){
             // this.props.dispatch(alertActions.clear());
-            console.log('profile image', picture[picture.length-1]);
             this.getBase64(picture[picture.length-1], (result) => {
-              this.setState({profileUp: result});
+              this.setState({profileUp: { file: result, name: picture[picture.length-1].name} },()=>{
+                  console.log(this.state.profileUp);
+               });
            });
         }
         else {
@@ -140,12 +143,15 @@ class DocumentUplaod extends React.Component{
     }
 
     submitUserDetails(userDetails){
+        console.log("getImageToUpload",this.getImageToUpload('dp', this.state.profileUp));
         let payload = this.props.user_details.registration_data.user,
             consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", payload);
             return  consume.then((response)=>{
-                        if(this.state.profileUp !==null){
-                            this.submitUploads();
-                        }
+                        //if(this.state.profileUp !==null){
+                            
+                           this.submitUploads(response);
+                          
+                       // } 
                         // history.push('/register/doc-upload');
                     })
                     .catch(error=>{
@@ -153,15 +159,29 @@ class DocumentUplaod extends React.Component{
                     });
     }
 
-    submitUploads(){
-        console.log('state is ', this.state);
-        let consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", this.getImageToUpload('dp', this.state.profileUp), SystemConstant.HEADER, true);
+    submitUploads(loginResult){
+        console.log(loginResult);
+        
+        const requestHeaders =  Object.assign({},SystemConstant.HEADER);
+        console.log('requestHeaders',requestHeaders);
+        console.log('SystemConstant.HEADER',SystemConstant.HEADER );
+    delete requestHeaders['Content-Type'];
+    delete requestHeaders['Accept'];
+
+    requestHeaders['alat-token'] = loginResult.data.token;
+        console.log('request header', requestHeaders);
+        console.log('system constant header', SystemConstant.HEADER);
+
+        console.log("getImageToUpload", this.getImageToUpload('dp', this.state.profileUp));
+
+        let consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", this.getImageToUpload('dp', this.state.profileUp), requestHeaders, true);
         return consume.then((response)=>{
-            console.log('DP uploaded');
-            consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", this.getImageToUpload('userSignature', this.state.signUp), SystemConstant.HEADER, true);
+            console.log('DP uploaded', response);
+            console.log('Header sent', requestHeaders);
+            consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", this.getImageToUpload('userSignature', this.state.signUp), requestHeaders, true);
             // history.push('/register/doc-upload');
             return consume.then((response2)=>{
-                console.log('signature uploaded');
+                console.log('signature uploaded', response2);
             })
         })
     }
@@ -176,7 +196,8 @@ class DocumentUplaod extends React.Component{
         if(uploadType ==='userSignature'){
             imageFile.append('DocumentType', SystemConstant.DOCUMENT_TYPE.signature);
         }
-        console.log('file is ',imageToUpload.file);
+        
+        // console.log('file is ',imageFile);
         imageFile.append('File', utils.canvasToFile(imageToUpload.file), imageToUpload.name)
         console.log('Image is', imageFile);
         return imageFile;
@@ -187,8 +208,8 @@ class DocumentUplaod extends React.Component{
     onSubmit(e){
         e.preventDefault();
         let {dispatch} = this.props;
-        if(this.state.profileUp.length > 5 ){
-            if(this.state.signUp.length > 5){
+        if(this.state.profileUp.file.length > 5 ){
+            if(this.state.signUp.file.length > 5){
                 // dispatch(userActions.register(this.state, USER_REGISTER_SAVE));
                 // history.push('/register/security-questions');
                 this.submitUserDetails();
