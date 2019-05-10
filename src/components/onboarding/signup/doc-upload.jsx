@@ -7,8 +7,10 @@ import { NavLink} from "react-router-dom";
 import OnboardingContainer from "../Container";
 import {connect} from "react-redux";
 
-
-
+import {ApiService} from "../../../services/apiService";
+import {SystemConstant} from "../../../shared/constants";
+import {routes} from "../../../services/urls";
+import * as utils from "../../../shared/utils";
 import {USER_REGISTER_FETCH, USER_REGISTER_SAVE} from "../../../redux/constants/onboarding/user.constants";
 import {userActions} from "../../../redux/actions/onboarding/user.actions";
 import {history} from "../../../_helpers/history";
@@ -25,6 +27,7 @@ class DocumentUplaod extends React.Component{
                 SignupPicCount:0,
                 profileUp: '',
                 signUp:'',
+                ctaStatus: false,
                 openModal : false
             };
             this.onSignClick = this.onSignClick.bind(this);
@@ -85,7 +88,8 @@ class DocumentUplaod extends React.Component{
     onSignClick(picture) {
         if(picture.length > this.state.SignupPicCount){
         if(picture.length>=1){
-            this.props.dispatch(alertActions.clear());
+            // this.props.dispatch(alertActions.clear());
+            console.log('picture is', picture);
             this.getBase64(picture[picture.length-1], (result) => {
                     this.setState({signUp: result});
              });
@@ -101,12 +105,25 @@ class DocumentUplaod extends React.Component{
       this.setState({SignupPicCount : picture.length});
     }
 
+
+    getBase64(file, cb) {
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            cb(reader.result)
+        };
+        reader.onerror = function (error) {
+           
+        };
+    }
+
     onProfileUpload(picture) {
         
         //cheking if picture was deleted
         if(picture.length > this.state.profilePicCount){
         if(picture.length>=1){
-            this.props.dispatch(alertActions.clear());
+            // this.props.dispatch(alertActions.clear());
+            console.log('profile image', picture[picture.length-1]);
             this.getBase64(picture[picture.length-1], (result) => {
               this.setState({profileUp: result});
            });
@@ -122,24 +139,59 @@ class DocumentUplaod extends React.Component{
       this.setState({profilePicCount : picture.length});
     }
 
-    getBase64(file, cb) {
-        let reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = function () {
-            cb(reader.result)
-        };
-        reader.onerror = function (error) {
-           
-        };
+    submitUserDetails(userDetails){
+        let payload = this.props.user_details.registration_data.user,
+            consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", payload);
+            return  consume.then((response)=>{
+                        if(this.state.profileUp !==null){
+                            this.submitUploads();
+                        }
+                        // history.push('/register/doc-upload');
+                    })
+                    .catch(error=>{
+                        console.log('error', error);
+                    });
     }
+
+    submitUploads(){
+        console.log('state is ', this.state);
+        let consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", this.getImageToUpload('dp', this.state.profileUp), SystemConstant.HEADER, true);
+        return consume.then((response)=>{
+            console.log('DP uploaded');
+            consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", this.getImageToUpload('userSignature', this.state.signUp), SystemConstant.HEADER, true);
+            // history.push('/register/doc-upload');
+            return consume.then((response2)=>{
+                console.log('signature uploaded');
+            })
+        })
+    }
+
+    getImageToUpload(uploadType, imageToUpload){
+        const imageFile = new FormData();
+
+        if(uploadType ==='dp'){
+            imageFile.append('DocumentType', SystemConstant.DOCUMENT_TYPE.passport);
+        }
+
+        if(uploadType ==='userSignature'){
+            imageFile.append('DocumentType', SystemConstant.DOCUMENT_TYPE.signature);
+        }
+        console.log('file is ',imageToUpload.file);
+        imageFile.append('File', utils.canvasToFile(imageToUpload.file), imageToUpload.name)
+        console.log('Image is', imageFile);
+        return imageFile;
+    }
+
+    
 
     onSubmit(e){
         e.preventDefault();
         let {dispatch} = this.props;
         if(this.state.profileUp.length > 5 ){
             if(this.state.signUp.length > 5){
-                dispatch(userActions.register(this.state, USER_REGISTER_SAVE));
-                history.push('/register/security-questions');
+                // dispatch(userActions.register(this.state, USER_REGISTER_SAVE));
+                // history.push('/register/security-questions');
+                this.submitUserDetails();
                 return;
             }else {
                 dispatch(alertActions.error("You need to upload your signature"));
@@ -153,7 +205,9 @@ class DocumentUplaod extends React.Component{
 
     submitSkipUpload(){
         //send null when user skips profile upload.
-        this.setState({profileUp: null, signUp: null});
+        this.setState({profileUp: null, signUp: null, ctaStatus:true},()=>{
+            this.submitUserDetails();
+        });
         this.props.dispatch(userActions.register(this.state, USER_REGISTER_SAVE));
         history.push('/register/security-questions');
     }
@@ -231,8 +285,8 @@ class DocumentUplaod extends React.Component{
                   <div className="div-modal">
                         <h3>By skipping this step, your new account won’t be operational till you have uploaded these documents.</h3>
                     <div className="btn-opt">
-                        <button onClick={this.toggleModal} className="border-btn">Cancel</button>
-                        <button onClick={this.submitSkipUpload} className="btn-alat">Proceed</button>
+                        <button onClick={this.toggleModal} disabled={this.state.ctaStatus} className="border-btn">Cancel</button>
+                        <button onClick={this.submitSkipUpload} disabled={this.state.ctaStatus} className="btn-alat">Proceed</button>
                     </div>
                     </div>
                   </div>
