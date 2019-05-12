@@ -162,7 +162,7 @@ class SecurityQuestions extends React.Component{
                         return consume.then((loginData)=>{
                             console.log('response is', loginData);
                             //call AutoLogin functionality
-                            this.handleAutoLogin(loginData);
+                            this.props.dispatch(userActions.loginAfterOnboarding(loginData.data));
                         })
                         .catch(error=>{
                             console.log('error', error);
@@ -178,6 +178,14 @@ class SecurityQuestions extends React.Component{
     }
 
     handleAutoLogin(loginInfo){
+        // const requestHeaders = SystemConstant.HEADER;
+        
+        // delete requestHeaders['Content-Type'];
+        // delete requestHeaders['Accept'];
+        // requestHeaders['alat-token'] = loginResult.token;
+        
+
+
         localStorage.setItem("user", JSON.stringify(loginInfo));
         history.push('/dashboard');
     }

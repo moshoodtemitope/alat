@@ -46,7 +46,7 @@ export function bvnDetailsReducer(state={}, action) {
 
         default:
             return {
-                state,
+                ...state,
                registration_step: 2
             };
     }
