@@ -16,6 +16,7 @@ import {userActions} from "../../../redux/actions/onboarding/user.actions";
 import {history} from "../../../_helpers/history";
 import { alertActions } from '../../../redux/actions/alert.actions';
 import Modal from 'react-responsive-modal';
+import { error } from 'util';
 
 
 class DocumentUplaod extends React.Component{
@@ -93,7 +94,10 @@ class DocumentUplaod extends React.Component{
             // this.props.dispatch(alertActions.clear());
             //console.log('picture is', picture);
             this.getBase64(picture[picture.length-1], (result) => {
-                    this.setState({signUp: {file: result, name:picture[picture.length-1].name}});
+                    debugger
+                    this.setState({signUp: {file: result, name:picture[picture.length-1].name}}, ()=>{
+                        console.log('signature photo', this.state.profileUp);
+                    });
              });
         }
         else {
@@ -110,13 +114,21 @@ class DocumentUplaod extends React.Component{
 
     getBase64(file, cb) {
         let reader = new FileReader();
-        reader.readAsDataURL(file);
+        // reader.readAsDataURL(file);
         reader.onload = function () {
             cb(reader.result)
         };
+        reader.readAsDataURL(file);
         reader.onerror = function (error) {
            
         };
+    }
+
+    readFile(file, reader, cb) {
+        reader.onload = () => {
+            cb(reader.result);
+        };
+        reader.readAsDataURL(file);
     }
 
     onProfileUpload(picture) {
@@ -127,7 +139,7 @@ class DocumentUplaod extends React.Component{
             // this.props.dispatch(alertActions.clear());
             this.getBase64(picture[picture.length-1], (result) => {
               this.setState({profileUp: { file: result, name: picture[picture.length-1].name} },()=>{
-                  console.log(this.state.profileUp);
+                  console.log('profile photo', this.state.profileUp);
                });
            });
         }
@@ -143,36 +155,37 @@ class DocumentUplaod extends React.Component{
     }
 
     submitUserDetails(userDetails){
-        console.log("getImageToUpload",this.getImageToUpload('dp', this.state.profileUp));
-        let payload = this.props.user_details.registration_data.user,
-            consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", payload);
-            return  consume.then((response)=>{
+        // console.log("getImageToUpload",this.getImageToUpload('dp', this.state.profileUp));
+        // let payload = this.props.user_details.registration_data.user,
+        //     consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", payload);
+        //     return  consume.then((response)=>{
                         //if(this.state.profileUp !==null){
                             
-                           this.submitUploads(response);
+                           this.submitUploads();
                           
                        // } 
                         // history.push('/register/doc-upload');
-                    })
-                    .catch(error=>{
-                        console.log('error', error);
-                    });
+                    // })
+                    // .catch(error=>{
+                    //     console.log('error', error);
+                    // });
     }
 
-    submitUploads(loginResult){
-        console.log(loginResult);
+    submitUploads(){
+       // console.log(loginResult);
         
         const requestHeaders =  Object.assign({},SystemConstant.HEADER);
-        console.log('requestHeaders',requestHeaders);
-        console.log('SystemConstant.HEADER',SystemConstant.HEADER );
+        // console.log('requestHeaders',requestHeaders);
+        // console.log('SystemConstant.HEADER',SystemConstant.HEADER );
     delete requestHeaders['Content-Type'];
     delete requestHeaders['Accept'];
 
-    requestHeaders['alat-token'] = loginResult.data.token;
-        console.log('request header', requestHeaders);
-        console.log('system constant header', SystemConstant.HEADER);
+    requestHeaders['alat-token'] = "";//loginResult.data.token;
+        // console.log('request header', requestHeaders);
+        // console.log('system constant header', SystemConstant.HEADER);
 
         console.log("getImageToUpload", this.getImageToUpload('dp', this.state.profileUp));
+        console.log("Image object",  this.state.profileUp);
 
         let consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", this.getImageToUpload('dp', this.state.profileUp), requestHeaders, true);
         return consume.then((response)=>{
@@ -184,10 +197,13 @@ class DocumentUplaod extends React.Component{
                 console.log('signature uploaded', response2);
             })
         })
+        .catch(errorMessage=>{
+            console.log('error on user img upload', errorMessage);
+        })
     }
 
     getImageToUpload(uploadType, imageToUpload){
-        const imageFile = new FormData();
+        var imageFile = new FormData();
 
         if(uploadType ==='dp'){
             imageFile.append('DocumentType', SystemConstant.DOCUMENT_TYPE.passport);
@@ -199,6 +215,12 @@ class DocumentUplaod extends React.Component{
         
         // console.log('file is ',imageFile);
         imageFile.append('File', utils.canvasToFile(imageToUpload.file), imageToUpload.name)
+       // imageFile.append('File', imageToUpload.file, imageToUpload.name)
+
+       var formEntries = imageFile.entries();
+       do {
+        console.log(formEntries.next().value);
+      } while (!formKeys.next().done)
         console.log('Image is', imageFile);
         return imageFile;
     }

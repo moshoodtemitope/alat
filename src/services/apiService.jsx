@@ -78,10 +78,7 @@ export class ApiService {
             }).catch(function (error) {
                 // return service;
                 if (error.response.status === 401 && error.response.statusText.toLowerCase().includes('token not valid')) {
-                    // const { dispatch } = this.props;
-                    // console.error("We wanna log out out");
-                    // history.push('/logout')
-                    // localStorage.removeItem("user");
+                    
                     history.push('/');
                 } else {
                     return service;
