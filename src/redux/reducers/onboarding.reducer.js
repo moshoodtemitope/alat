@@ -20,7 +20,7 @@ export function userRegistrationRequest(state={}, action) {
 
         default:
             return {
-                 state,
+                 ...state,
                 // registration_status: USER_REGISTER_SAVE,
                 // registration_data: action,
                 // registration_step: 1
@@ -46,7 +46,7 @@ export function bvnDetailsReducer(state={}, action) {
 
         default:
             return {
-                state,
+                ...state,
                registration_step: 2
             };
     }

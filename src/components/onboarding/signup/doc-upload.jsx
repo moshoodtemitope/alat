@@ -94,9 +94,9 @@ class DocumentUplaod extends React.Component{
             // this.props.dispatch(alertActions.clear());
             //console.log('picture is', picture);
             this.getBase64(picture[picture.length-1], (result) => {
-                    debugger
+                    //debugger
                     this.setState({signUp: {file: result, name:picture[picture.length-1].name}}, ()=>{
-                        console.log('signature photo', this.state.profileUp);
+                        console.log('signature photo', this.state.signUp);
                     });
              });
         }
@@ -177,17 +177,20 @@ class DocumentUplaod extends React.Component{
         const requestHeaders =  Object.assign({},SystemConstant.HEADER);
         // console.log('requestHeaders',requestHeaders);
         // console.log('SystemConstant.HEADER',SystemConstant.HEADER );
-    delete requestHeaders['Content-Type'];
+    requestHeaders['Content-Type'] = "multipart/form-data";
     delete requestHeaders['Accept'];
 
     requestHeaders['alat-token'] = "";//loginResult.data.token;
+    requestHeaders['']
         // console.log('request header', requestHeaders);
         // console.log('system constant header', SystemConstant.HEADER);
 
-        console.log("getImageToUpload", this.getImageToUpload('dp', this.state.profileUp));
-        console.log("Image object",  this.state.profileUp);
+        // console.log("getImageToUpload", this.getImageToUpload('dp', this.state.profileUp));
+        // console.log("Image object",  this.state.profileUp);
+        var formData = this.getImageToUpload('dp', this.state.profileUp);
+        this.doAdelay();
 
-        let consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", this.getImageToUpload('dp', this.state.profileUp), requestHeaders, true);
+        let consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", formData, requestHeaders, true);
         return consume.then((response)=>{
             console.log('DP uploaded', response);
             console.log('Header sent', requestHeaders);
@@ -202,26 +205,33 @@ class DocumentUplaod extends React.Component{
         })
     }
 
+    doAdelay(){
+        setTimeout(function(){return true;},30000);
+    }
+
     getImageToUpload(uploadType, imageToUpload){
         var imageFile = new FormData();
 
         if(uploadType ==='dp'){
-            imageFile.append('DocumentType', SystemConstant.DOCUMENT_TYPE.passport);
+            imageFile.set('DocumentType', SystemConstant.DOCUMENT_TYPE.passport);
         }
 
         if(uploadType ==='userSignature'){
-            imageFile.append('DocumentType', SystemConstant.DOCUMENT_TYPE.signature);
+            imageFile.set('DocumentType', SystemConstant.DOCUMENT_TYPE.signature);
         }
         
-        // console.log('file is ',imageFile);
-        imageFile.append('File', utils.canvasToFile(imageToUpload.file), imageToUpload.name)
+        // console.log('file is ',imageFile);  utils.canvasToFile(imageToUpload.file)
+        //imageFile.append('File', this.state.signUp.name);
        // imageFile.append('File', imageToUpload.file, imageToUpload.name)
-
+    //    for (var key of imageFile.entries()) {
+    //     console.log(key[0] + ', ' + JSON.stringify(key[1]));
+    // }
+      
        var formEntries = imageFile.entries();
        do {
         console.log(formEntries.next().value);
-      } while (!formKeys.next().done)
-        console.log('Image is', imageFile);
+      } while (!formEntries.next().done)
+    //     console.log('Image is', imageFile);
         return imageFile;
     }
 

@@ -43,7 +43,7 @@ class CreateAccount extends React.Component{
         console.log('bvn verification data', props.bvn_details);
          let userData,
             userDetails = props.user_details,
-            bvnVerificationData = props.bvn_details.state.hasOwnProperty('bvn_verification_data')? props.bvn_details.state.bvn_verification_data.response: null;
+            bvnVerificationData = props.bvn_details.hasOwnProperty('bvn_verification_data')? props.bvn_details.state.bvn_verification_data.response: null;
             // bvnVerificationData = props.bvn_details.state.bvn_verification_data.response;
            
         
@@ -289,21 +289,21 @@ class CreateAccount extends React.Component{
 
 function mapStateToProps(state){
     //test to know if the data to return and redirect the user 
-    if('registration_status' in state.onboarding_user_details.state)
-    {
-        return{
-            user_details: state.onboarding_user_details.state.state.state,
-            bvn_details: state.onboarding_bvn_details,
-            alert: state.alert
-        }
-    }
-     else{
+    // if('registration_status' in state.onboarding_user_details)
+    // {
+    //     return{
+    //         user_details: state.onboarding_user_details.state.state.state,
+    //         bvn_details: state.onboarding_bvn_details,
+    //         alert: state.alert
+    //     }
+    // }
+    //  else{
         return {
-            user_details: state.onboarding_user_details.state.state.state,
+            user_details: state.onboarding_user_details,//.state.state.state,
             bvn_details: state.onboarding_bvn_details,
             alert: state.alert
         }
-     }
+     // }
 }
 
 export default connect(mapStateToProps)(CreateAccount);

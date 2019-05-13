@@ -6,7 +6,7 @@ export const formatAmount = (amount)=>{
 export const canvasToFile = (dataURL) =>{
     let byteString;
     byteString = atob(dataURL.split(',')[1]);
-    console.log(byteString);
+    
     const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
 
     const ia = new Uint8Array(byteString.length);
