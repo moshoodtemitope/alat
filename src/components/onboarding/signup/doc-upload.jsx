@@ -99,15 +99,8 @@ class DocumentUplaod extends React.Component{
         if(picture.length>=1){
            
             this.getBase64(picture[picture.length-1], (result) => {
-<<<<<<< HEAD
-                    //debugger
-                    this.setState({signUp: {file: result, name:picture[picture.length-1].name}}, ()=>{
-                        console.log('signature photo', this.state.signUp);
-                    });
-=======
                     debugger
                     this.setState({signUp: {file: result, name:picture[picture.length-1].name}});
->>>>>>> onboarding-verifybtn
              });
         }
         else {
@@ -211,29 +204,12 @@ sendDocumentUploads(loginData){
       
         
         const requestHeaders =  Object.assign({},SystemConstant.HEADER);
-<<<<<<< HEAD
-        // console.log('requestHeaders',requestHeaders);
-        // console.log('SystemConstant.HEADER',SystemConstant.HEADER );
-    requestHeaders['Content-Type'] = "multipart/form-data";
-    delete requestHeaders['Accept'];
-
-    requestHeaders['alat-token'] = "";//loginResult.data.token;
-    requestHeaders['']
-        // console.log('request header', requestHeaders);
-        // console.log('system constant header', SystemConstant.HEADER);
-
-        // console.log("getImageToUpload", this.getImageToUpload('dp', this.state.profileUp));
-        // console.log("Image object",  this.state.profileUp);
-        var formData = this.getImageToUpload('dp', this.state.profileUp);
-        this.doAdelay();
-=======
        
     delete requestHeaders['Content-Type'];
     delete requestHeaders['Accept'];
 
     requestHeaders['alat-token'] = "";//loginResult.data.token;
        
->>>>>>> onboarding-verifybtn
 
         let consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", formData, requestHeaders, true);
         return consume.then((response)=>{
@@ -264,24 +240,9 @@ sendDocumentUploads(loginData){
             imageFile.set('DocumentType', SystemConstant.DOCUMENT_TYPE.signature);
         }
         
-<<<<<<< HEAD
-        // console.log('file is ',imageFile);  utils.canvasToFile(imageToUpload.file)
-        //imageFile.append('File', this.state.signUp.name);
-       // imageFile.append('File', imageToUpload.file, imageToUpload.name)
-    //    for (var key of imageFile.entries()) {
-    //     console.log(key[0] + ', ' + JSON.stringify(key[1]));
-    // }
-      
-       var formEntries = imageFile.entries();
-       do {
-        console.log(formEntries.next().value);
-      } while (!formEntries.next().done)
-    //     console.log('Image is', imageFile);
-=======
         
         imageFile.append('File', utils.canvasToFile(imageToUpload.file), imageToUpload.name)
        
->>>>>>> onboarding-verifybtn
         return imageFile;
     }
 
