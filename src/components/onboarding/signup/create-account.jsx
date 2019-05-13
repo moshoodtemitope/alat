@@ -40,7 +40,10 @@ class CreateAccount extends React.Component{
         const { dispatch } = this.props;
         let props = this.props;
         
-        console.log('bvn verification data', props.bvn_details);
+        if(props.user_details.registration_data==null || props.user_details.registration_data==undefined || props.user_details.registration_data =='undefined'){
+            history.push('/register');
+            return;
+        }
          let userData,
             userDetails = props.user_details,
             bvnVerificationData = props.bvn_details.hasOwnProperty('bvn_verification_data')? props.bvn_details.state.bvn_verification_data.response: null;

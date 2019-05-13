@@ -13,7 +13,8 @@ export const userActions = {
     bvnVerify,
     skipBvn,
     saveBvnInfo,
-    saveBvnData
+    saveBvnData,
+    loginAfterOnboarding
 };
 
 function login(email, password) {
@@ -56,6 +57,18 @@ function login(email, password) {
 
     };
 
+    function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
+    function success(response) { return { type: userConstants.LOGIN_SUCCESS, response } }
+    function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+}
+
+function loginAfterOnboarding(loginData){
+    return dispatch =>{
+        localStorage.setItem("user", JSON.stringify(loginData));
+
+        dispatch(success(loginData));
+        history.push('/dashboard');
+    }
     function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
     function success(response) { return { type: userConstants.LOGIN_SUCCESS, response } }
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
@@ -157,6 +170,7 @@ function saveBvnData(otpData, action){
     function pending(otpData) { return null }
     function save(otpData) { return { type: SAVE_BVN_INFO, otpData } }
 }
+
 
 
 function register(user, action) {

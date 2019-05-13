@@ -42,7 +42,7 @@ class DocumentUplaod extends React.Component{
     componentDidMount() {
         this.getRegistrationDetails();
         this.attachEvent();
-      //  this.setState({profileUp : { file: 'file', name: this.state.profileUp.name }},()=>{ console.log(this.state.profileUp)});
+      
     }
 
     attachEvent(){
@@ -65,6 +65,12 @@ class DocumentUplaod extends React.Component{
         let props = this.props;
         let userData;
         let userDetails = props.user_details;
+
+        if(props.user_details.registration_data==null || props.user_details.registration_data==undefined || props.user_details.registration_data =='undefined'){
+            history.push('/register');
+            return;
+        }
+
         if('registration_status' in userDetails && userDetails.registration_status === USER_REGISTER_SAVE){
             if(userDetails.registration_data.user !== undefined){
             userData =  userDetails.registration_data.user;
@@ -91,13 +97,17 @@ class DocumentUplaod extends React.Component{
     onSignClick(picture) {
         if(picture.length > this.state.SignupPicCount){
         if(picture.length>=1){
-            // this.props.dispatch(alertActions.clear());
-            //console.log('picture is', picture);
+           
             this.getBase64(picture[picture.length-1], (result) => {
+<<<<<<< HEAD
                     //debugger
                     this.setState({signUp: {file: result, name:picture[picture.length-1].name}}, ()=>{
                         console.log('signature photo', this.state.signUp);
                     });
+=======
+                    debugger
+                    this.setState({signUp: {file: result, name:picture[picture.length-1].name}});
+>>>>>>> onboarding-verifybtn
              });
         }
         else {
@@ -138,9 +148,7 @@ class DocumentUplaod extends React.Component{
         if(picture.length>=1){
             // this.props.dispatch(alertActions.clear());
             this.getBase64(picture[picture.length-1], (result) => {
-              this.setState({profileUp: { file: result, name: picture[picture.length-1].name} },()=>{
-                  console.log('profile photo', this.state.profileUp);
-               });
+              this.setState({profileUp: { file: result, name: picture[picture.length-1].name}});
            });
         }
         else {
@@ -155,26 +163,55 @@ class DocumentUplaod extends React.Component{
     }
 
     submitUserDetails(userDetails){
-        // console.log("getImageToUpload",this.getImageToUpload('dp', this.state.profileUp));
-        // let payload = this.props.user_details.registration_data.user,
-        //     consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", payload);
-        //     return  consume.then((response)=>{
-                        //if(this.state.profileUp !==null){
+     
+        
+        let payload = this.props.user_details.registration_data.user,
+            consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", payload);
+            return  consume.then((loginData)=>{
                             
-                           this.submitUploads();
-                          
-                       // } 
-                        // history.push('/register/doc-upload');
-                    // })
-                    // .catch(error=>{
-                    //     console.log('error', error);
-                    // });
+                           this.sendDocumentUploads(loginData.data);
+                         
+                    })
+                    .catch(error=>{
+                        
+                    });
     }
 
+
+sendDocumentUploads(loginData){
+    const requestHeaders =  Object.assign({},SystemConstant.HEADER);
+   
+
+    delete  requestHeaders['Content-Type'];
+    delete requestHeaders['Accept'];  
+    requestHeaders['alat-token'] =  loginData.token;
+    requestHeaders['Content-Type'] =  false;
+    let profileDoc = this.state.profileUp,
+        signatureDoc = this.state.signUp;
+    let consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", this.getImageToUpload('dp', profileDoc), requestHeaders, false);
+        return consume.then((response)=>{
+            
+            consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", this.getImageToUpload('userSignature', signatureDoc), requestHeaders, false);
+            // history.push('/register/doc-upload');
+            return consume.then((response2)=>{
+                this.props.dispatch(userActions.loginAfterOnboarding(loginData));
+            })
+            .catch(signaturUploadError=>{
+                this.props.dispatch(userActions.loginAfterOnboarding(loginData));
+            })
+        })
+        .catch(photoUploadError=>{
+            this.props.dispatch(userActions.loginAfterOnboarding(loginData));
+        })
+}
+
+
+//Old upload handler to be deleted
     submitUploads(){
-       // console.log(loginResult);
+      
         
         const requestHeaders =  Object.assign({},SystemConstant.HEADER);
+<<<<<<< HEAD
         // console.log('requestHeaders',requestHeaders);
         // console.log('SystemConstant.HEADER',SystemConstant.HEADER );
     requestHeaders['Content-Type'] = "multipart/form-data";
@@ -189,19 +226,26 @@ class DocumentUplaod extends React.Component{
         // console.log("Image object",  this.state.profileUp);
         var formData = this.getImageToUpload('dp', this.state.profileUp);
         this.doAdelay();
+=======
+       
+    delete requestHeaders['Content-Type'];
+    delete requestHeaders['Accept'];
+
+    requestHeaders['alat-token'] = "";//loginResult.data.token;
+       
+>>>>>>> onboarding-verifybtn
 
         let consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", formData, requestHeaders, true);
         return consume.then((response)=>{
-            console.log('DP uploaded', response);
-            console.log('Header sent', requestHeaders);
+            
             consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", this.getImageToUpload('userSignature', this.state.signUp), requestHeaders, true);
             // history.push('/register/doc-upload');
             return consume.then((response2)=>{
-                console.log('signature uploaded', response2);
+               
             })
         })
         .catch(errorMessage=>{
-            console.log('error on user img upload', errorMessage);
+            
         })
     }
 
@@ -220,6 +264,7 @@ class DocumentUplaod extends React.Component{
             imageFile.set('DocumentType', SystemConstant.DOCUMENT_TYPE.signature);
         }
         
+<<<<<<< HEAD
         // console.log('file is ',imageFile);  utils.canvasToFile(imageToUpload.file)
         //imageFile.append('File', this.state.signUp.name);
        // imageFile.append('File', imageToUpload.file, imageToUpload.name)
@@ -232,6 +277,11 @@ class DocumentUplaod extends React.Component{
         console.log(formEntries.next().value);
       } while (!formEntries.next().done)
     //     console.log('Image is', imageFile);
+=======
+        
+        imageFile.append('File', utils.canvasToFile(imageToUpload.file), imageToUpload.name)
+       
+>>>>>>> onboarding-verifybtn
         return imageFile;
     }
 
