@@ -1,6 +1,6 @@
 import {USER_REGISTER_SAVE, USER_REGISTER_FETCH, BVN_VERIFICATION_SUCCESS, 
     BVN_VERIFICATION_PENDING, SKIP_BVN_PENDING, SKIP_BVN_SUCCESS,
-    OTP_VERIFICATION_PENDING,OTP_VERIFICATION_SUCCESS,SAVE_BVN_INFO,  OTP_VERIFICATION_FAILURE, DATA_FROM_BVN
+    OTP_VERIFICATION_PENDING,OTP_VERIFICATION_SUCCESS,SAVE_BVN_INFO,  OTP_VERIFICATION_FAILURE, DATA_FROM_BVN, BVN_VERIFICATION_FAILURE
 } from "../constants/onboarding/user.constants"
 
 export function userRegistrationRequest(state={}, action) {
@@ -20,7 +20,7 @@ export function userRegistrationRequest(state={}, action) {
 
         default:
             return {
-                 state,
+                 ...state,
                 // registration_status: USER_REGISTER_SAVE,
                 // registration_data: action,
                 // registration_step: 1
@@ -43,7 +43,11 @@ export function bvnDetailsReducer(state={}, action) {
                 bvn_verification_data: action,
                 // registration_step: 2
             };
-
+        case BVN_VERIFICATION_FAILURE:
+            return {
+                bvn_verification_status: BVN_VERIFICATION_FAILURE,
+                bvn_verification_data: action,
+            };
         default:
             return {
                 ...state,
@@ -69,6 +73,7 @@ export function bvnSkipReducer(state=[], action) {
 
         default:
             return {
+                ...state
                // registration_step: 2
             };
     }

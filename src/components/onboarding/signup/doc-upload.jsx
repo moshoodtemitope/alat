@@ -42,6 +42,7 @@ class DocumentUplaod extends React.Component{
     componentDidMount() {
         this.getRegistrationDetails();
         this.attachEvent();
+      
     }
 
     attachEvent(){
@@ -98,16 +99,15 @@ class DocumentUplaod extends React.Component{
         if(picture.length>=1){
            
             this.getBase64(picture[picture.length-1], (result) => {
-                    debugger
                     this.setState({signUp: {file: result, name:picture[picture.length-1].name}});
              });
         }
         else {
-            this.setState({signUp: ''});
+            this.setState({signUp: { file: '', name: ''}});
             this.props.dispatch(alertActions.error("You need to add a signature"));
         }
       }else if(picture.length <= this.state.SignupPicCount){
-        this.setState({signUp: ''});
+        this.setState({signUp: { file: '', name: ''}});
         this.props.dispatch(alertActions.error("You need to add a signature"));
       }
       this.setState({SignupPicCount : picture.length});
@@ -136,21 +136,21 @@ class DocumentUplaod extends React.Component{
     onProfileUpload(picture) {
         
         //cheking if picture was deleted
-        if (picture.length > this.state.profilePicCount) {
-            if (picture.length >= 1) {
-                // this.props.dispatch(alertActions.clear());
-                this.getBase64(picture[picture.length - 1], (result) => {
-                    this.setState({ profileUp: { file: result, name: picture[picture.length - 1].name } });
-                });
-            }
-            else {
-                this.setState({ profileUp: '' });
-                this.props.dispatch(alertActions.error("You need to add a selfie"));
-            }
-        } else if (picture.length <= this.state.profilePicCount) {
-            this.setState({ profileUp: '' });
+        if(picture.length > this.state.profilePicCount){
+        if(picture.length>=1){
+            // this.props.dispatch(alertActions.clear());
+            this.getBase64(picture[picture.length-1], (result) => {
+              this.setState({profileUp: { file: result, name: picture[picture.length-1].name}});
+           });
+        }
+        else {
+            this.setState({profileUp: { file: '', name: ''}});
             this.props.dispatch(alertActions.error("You need to add a selfie"));
         }
+      }else if(picture.length <= this.state.profilePicCount){
+        this.setState({profileUp: { file: '', name: ''}});
+        this.props.dispatch(alertActions.error("You need to add a selfie"));
+      }
       this.setState({profilePicCount : picture.length});
     }
 
@@ -160,12 +160,12 @@ class DocumentUplaod extends React.Component{
         let payload = this.props.user_details.registration_data.user,
             consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", payload);
             return  consume.then((loginData)=>{
-                            
+                            if(this.state.profileUp !== null){
                            this.sendDocumentUploads(loginData.data);
-                         
+                            }
                     })
                     .catch(error=>{
-                        
+                        this.props.dispatch(alertActions.error(error.response.data.message.toString()));
                     });
     }
 
@@ -199,40 +199,41 @@ sendDocumentUploads(loginData){
 
 
 //Old upload handler to be deleted
-    submitUploads(){
+    // submitUploads(){
       
         
-        const requestHeaders =  Object.assign({},SystemConstant.HEADER);
+    //     const requestHeaders =  Object.assign({},SystemConstant.HEADER);
        
-    delete requestHeaders['Content-Type'];
-    delete requestHeaders['Accept'];
+    // delete requestHeaders['Content-Type'];
+    // delete requestHeaders['Accept'];
 
-    requestHeaders['alat-token'] = "";//loginResult.data.token;
+    // requestHeaders['alat-token'] = "";//loginResult.data.token;
        
 
-        let consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", this.getImageToUpload('dp', this.state.profileUp), requestHeaders, true);
-        return consume.then((response)=>{
+    //     let consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", formData, requestHeaders, true);
+    //     return consume.then((response)=>{
             
-            consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", this.getImageToUpload('userSignature', this.state.signUp), requestHeaders, true);
-            // history.push('/register/doc-upload');
-            return consume.then((response2)=>{
+    //         consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", this.getImageToUpload('userSignature', this.state.signUp), requestHeaders, true);
+    //         // history.push('/register/doc-upload');
+    //         return consume.then((response2)=>{
                
-            })
-        })
-        .catch(errorMessage=>{
+    //         })
+    //     })
+    //     .catch(errorMessage=>{
             
-        })
-    }
+    //     })
+    // }
+
 
     getImageToUpload(uploadType, imageToUpload){
         var imageFile = new FormData();
 
         if(uploadType ==='dp'){
-            imageFile.append('DocumentType', SystemConstant.DOCUMENT_TYPE.passport);
+            imageFile.set('DocumentType', SystemConstant.DOCUMENT_TYPE.passport);
         }
 
         if(uploadType ==='userSignature'){
-            imageFile.append('DocumentType', SystemConstant.DOCUMENT_TYPE.signature);
+            imageFile.set('DocumentType', SystemConstant.DOCUMENT_TYPE.signature);
         }
         
         
@@ -246,7 +247,8 @@ sendDocumentUploads(loginData){
     onSubmit(e){
         e.preventDefault();
         let {dispatch} = this.props;
-        if(this.state.profileUp.file.length > 5 ){
+        if(this.state.profileUp.file.length > 5)
+        {
             if(this.state.signUp.file.length > 5){
                 // dispatch(userActions.register(this.state, USER_REGISTER_SAVE));
                 // history.push('/register/security-questions');
@@ -267,8 +269,6 @@ sendDocumentUploads(loginData){
         this.setState({profileUp: null, signUp: null, ctaStatus:true},()=>{
             this.submitUserDetails();
         });
-        this.props.dispatch(userActions.register(this.state, USER_REGISTER_SAVE));
-        history.push('/register/security-questions');
     }
     
  

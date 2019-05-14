@@ -5,7 +5,7 @@ import OnboardingContainer from "../Container";
 import {connect} from "react-redux";
 import {SystemConstant} from "../../../shared/constants";
 
-import {USER_REGISTER_FETCH, USER_REGISTER_SAVE} from "../../../redux/constants/onboarding/user.constants";
+import {USER_REGISTER_FETCH, USER_REGISTER_SAVE, SKIP_BVN_SUCCESS, BVN_VERIFICATION_SUCCESS} from "../../../redux/constants/onboarding/user.constants";
 import {userActions} from "../../../redux/actions/onboarding/user.actions";
 import {history} from "../../../_helpers/history";
 
@@ -46,10 +46,9 @@ class CreateAccount extends React.Component{
         }
          let userData,
             userDetails = props.user_details,
-            bvnVerificationData = props.bvn_details.state.hasOwnProperty('bvn_verification_data')? props.bvn_details.state.bvn_verification_data.response: null;
+            bvnVerificationData = props.bvn_details.hasOwnProperty('bvn_verification_data')? props.bvn_details.bvn_verification_data.response: null;
             // bvnVerificationData = props.bvn_details.state.bvn_verification_data.response;
-           
-        
+                 
         
         //  console.log('user data', props.user_details);
         if('registration_status' in userDetails && userDetails.registration_status === USER_REGISTER_SAVE){
@@ -85,12 +84,10 @@ class CreateAccount extends React.Component{
     ValConfirmEmail(){
         if(this.state.email.toLowerCase() === this.state.confirmEmail.toLowerCase()){
             this.setState({confirmEmailValid : true})
-            console.log('right');
            return true; 
             
         }else{
             this.setState({confirmEmailValid : false})
-            console.log('wrong');
             return false;
         }
 
@@ -126,11 +123,14 @@ class CreateAccount extends React.Component{
         if(this.validateForm())
         {
             const {dispatch} = this.props;
-            dispatch(userActions.register({
-                                            email: this.state.email,
-                                            password: this.state.password,
-                                        phone:this.state.phone}, USER_REGISTER_SAVE));
+
+            // if(this.props.bvn_details.bvn_verification_status == BVN_VERIFICATION_SUCCESS.toString()){
+                dispatch(userActions.register({
+                    email: this.state.email.toLowerCase(),
+                    password: this.state.password,
+                phone:this.state.phone}, USER_REGISTER_SAVE));
             history.push('/register/security-questions');
+            //}
         }
     }
 
@@ -292,21 +292,22 @@ class CreateAccount extends React.Component{
 
 function mapStateToProps(state){
     //test to know if the data to return and redirect the user 
-    if('registration_status' in state.onboarding_user_details.state)
-    {
-        return{
-            user_details: state.onboarding_user_details.state.state.state,
-            bvn_details: state.onboarding_bvn_details,
-            alert: state.alert
-        }
-    }
-     else{
+    // if('registration_status' in state.onboarding_user_details)
+    // {
+    //     return{
+    //         user_details: state.onboarding_user_details.state.state.state,
+    //         bvn_details: state.onboarding_bvn_details,
+    //         alert: state.alert
+    //     }
+    // }
+    //  else{
         return {
-            user_details: state.onboarding_user_details.state.state.state,
+            user_details: state.onboarding_user_details,//.state.state.state,
             bvn_details: state.onboarding_bvn_details,
+            skip_bvn_details: state.onboarding_bvnskip_details,
             alert: state.alert
         }
-     }
+     // }
 }
 
 export default connect(mapStateToProps)(CreateAccount);

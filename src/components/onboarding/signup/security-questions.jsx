@@ -65,7 +65,8 @@ class SecurityQuestions extends React.Component{
             error: '',
             formError: '',
             questionsAvailable: false,
-            numberOfQuestions: 3
+            numberOfQuestions: 3,
+            submitted : false
         };
 
         this.handleInputBlur = this.handleInputBlur.bind(this);
@@ -166,6 +167,10 @@ class SecurityQuestions extends React.Component{
 
                }else{
                 //If user didnt provided BVN info POST userDetails and auto login user
+<<<<<<< HEAD
+=======
+                this.setState({submitted : true, submitDisabled: true});
+>>>>>>> 327fb21cf7203b21ba423f5b6eb1defa9bdb3f6b
                     let consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", userDetailsPayload);
                         return consume.then((loginData)=>{
                             
@@ -173,7 +178,12 @@ class SecurityQuestions extends React.Component{
                             this.props.dispatch(userActions.loginAfterOnboarding(loginData.data));
                         })
                         .catch(error=>{
+<<<<<<< HEAD
                             
+=======
+                            this.setState({submitted : false, submitDisabled: false});
+                            this.props.dispatch(alertActions.error(error.response.data.message.toString()));
+>>>>>>> 327fb21cf7203b21ba423f5b6eb1defa9bdb3f6b
                         });
                 }
                 
@@ -311,7 +321,7 @@ class SecurityQuestions extends React.Component{
             state = this.state,
             allQuestionsWrap = [];
         
-        const {submitDisabled, numberOfQuestions} = state;
+        const {submitDisabled, submitted, numberOfQuestions} = state;
 
             if(state.questionsAvailable===true){
                 for(var questionCount= 0; questionCount < this.state.numberOfQuestions; questionCount++ ){
@@ -343,11 +353,13 @@ class SecurityQuestions extends React.Component{
                             {/* <div className="info-label error hide">
                                 An error occured while processing your request
                             </div> */}
-                             {allQuestionsWrap}
+                            {this.props.alert && this.props.alert.message &&
+                             <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>}
+                              {allQuestionsWrap}
                             <p>
                                 By clicking "Create Account" you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
                             </p>
-                            <button type="submit" disabled={submitDisabled} className="btn-alat btn-block">Create Account</button>
+                            <button type="submit" disabled={submitDisabled} className="btn-alat btn-block">{ submitted ? "Processing..." : "Create Account" }</button>
                         </form>
                         }
                     </div>

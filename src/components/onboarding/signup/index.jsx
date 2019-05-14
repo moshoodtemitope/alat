@@ -209,7 +209,7 @@ class Signup extends React.Component{
                     <div className="div-modal">
                         <img src={phoneimage}/>
 
-                        <h3>Your phone number is <span>{this.state.phoneInputted}</span>. Do you want to proceed?</h3>
+                        <h3>Your phone number is <strong><span>{this.state.phoneInputted}</span></strong>. Do you want to proceed?</h3>
 
                     <div className="btn-opt">
                         <button onClick={this.onCloseModal} className="border-btn">Back</button>
