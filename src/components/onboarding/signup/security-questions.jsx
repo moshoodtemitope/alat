@@ -51,14 +51,7 @@ function QuestionWrap(props) {
             <div className="input-ctn">
                 <label>Answer to question {props.questionNumber.toString()}</label>
                 <input onChange={props.handleAnswerChange} className="questionResponse" disabled id={'question-'+props.questionNumber+'answer'} type="text"/>
-                {/* <Textbox
-                    tabIndex={props.questionNumber}
-                    id={'question-'+props.questionNumber+'answer'}
-                    type="text"
-                    placeholder= "Your answer"
-                /> */}
-                {/* <input type="text"  /> */}
-                {/* <span className="error">Your answer was incorrect</span> */}
+                
             </div>
         </div>
     );
@@ -72,14 +65,14 @@ class SecurityQuestions extends React.Component{
             error: '',
             formError: '',
             questionsAvailable: false,
-            numberOfQuestions: 3
+            numberOfQuestions: 3,
+            submitted : false
         };
 
         this.handleInputBlur = this.handleInputBlur.bind(this);
         this.submitQuestions =  this.submitQuestions.bind(this);
         this.handleSelectChange = this.handleSelectChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.getImageToUpload = this.getImageToUpload.bind(this);
         this.handleAutoLogin = this.handleAutoLogin.bind(this);
     }
 
@@ -132,7 +125,7 @@ class SecurityQuestions extends React.Component{
                
             })
 
-            console.log('Count is', questionAndAnswersList.length);
+            
             numberofAsweredQuestions = questionAndAnswersList.length;
 
             if(this.state.numberOfQuestions === numberofAsweredQuestions){
@@ -151,21 +144,39 @@ class SecurityQuestions extends React.Component{
                     gcmRegId: 'string-8',
                     deviceCode: 'string-10'
                 };
+
+                // Test DATA
+                // let userDetailsPayload = {
+                //     channelId: 2,
+                //     ReferralCode: '',
+                //     imei: '354553073954109',
+                //     phoneNo: '08131562233',
+                //     email: 'tester212344@gmail.com',
+                //     password: 'Test123$',
+                //     deviceName: 'string-5',
+                //     securityQuestions: questionAndAnswersList,
+                //     deviceOs: 'string-6',
+                //     gcmRegId: 'string-8',
+                //     deviceCode: 'string-10'
+                // };
                  
                 //If user provided BVN info save userDetails and go to Documents upload page
-                if(this.state.bvnVerificationStatus !==null){
+               if(this.state.bvnVerificationStatus !==null){
                     this.props.dispatch(userActions.register(userDetailsPayload, USER_REGISTER_SAVE));
                     history.push('/register/doc-upload');
-                }else{
+
+               }else{
                 //If user didnt provided BVN info POST userDetails and auto login user
+                this.setState({submitted : true, submitDisabled: true});
                     let consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", userDetailsPayload);
                         return consume.then((loginData)=>{
-                            console.log('response is', loginData);
+                            
                             //call AutoLogin functionality
-                            this.handleAutoLogin(loginData);
+                            this.props.dispatch(userActions.loginAfterOnboarding(loginData.data));
                         })
                         .catch(error=>{
-                            console.log('error', error);
+                            this.setState({submitted : false, submitDisabled: false});
+                            this.props.dispatch(alertActions.error(error.response.data.message.toString()));
                         });
                 }
                 
@@ -173,8 +184,6 @@ class SecurityQuestions extends React.Component{
             else{
                 noEmptyQuestions = false;
             }
-
-            
     }
 
     handleAutoLogin(loginInfo){
@@ -182,51 +191,31 @@ class SecurityQuestions extends React.Component{
         history.push('/dashboard');
     }
 
-    getImageToUpload(uploadType, imageToUpload){
-        const imageFile = new FormData();
-
-        if(uploadType ==='dp'){
-            imageFile.append('DocumentType', SystemConstant.DOCUMENT_TYPE.passport);
-        }
-
-        if(uploadType ==='userSignature'){
-            imageFile.append('DocumentType', SystemConstant.DOCUMENT_TYPE.signature);
-        }
-        imageFile.append('File', utils.canvasToFile(imageToUpload.file), imageToUpload.name)
-        console.log('Image is', imageFile);
-        return imageFile;
-    }
-
-    submitUploads(){
-        let consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", this.getImageToUpload('dp', this.state.passportPhoto), SystemConstant.HEADER, true);
-        return consume.then((response)=>{
-            console.log('DP uploaded');
-            consume = ApiService.request(routes.DOCUMENT_UPLOAD, "POST", this.getImageToUpload('userSignature', this.state.signaturePhoto), SystemConstant.HEADER, true);
-            // history.push('/register/doc-upload');
-            return consume.then((response2)=>{
-                console.log('signature uploaded');
-            })
-        })
-    }
-
-    postQuestions(questionAndAnswers){
-        
-    }
 
     getBvnDetails(){
         const { dispatch } = this.props;
-        let props = this.props;
+        let props = this.props,
+            userDetails;
         // let bvnDetails = this.props.customer_bvnverification_details;
         // let bvnSkipDetails = this.props.customer_bvnskip_details;
         // let bvnSkipStatus = bvnSkipDetails.bvn_verification_status;
+       
+        if(props.user_details.registration_data==null || props.user_details.registration_data==undefined || props.user_details.registration_data =='undefined'){
+            history.push('/register');
+            return;
+        }
+        
+        userDetails = props.user_details.registration_data.user;
+        
+        
 
         let bvnVerificationStatus = props.customer_bvnverification_details.hasOwnProperty('bvn_verification_data')? BVN_VERIFICATION_SUCCESS: null;
-        let userDetails = props.user_details.registration_data.user;
-        console.log('user details', userDetails);
+        
+       
         this.setState({userPhone: userDetails.phone,bvnVerificationStatus, userEmail:userDetails.email, userPassword:userDetails.password});
-        if(userDetails.profileUp && userDetails.signUp){
-            this.setState({passportPhoto:userDetails.profileUp, signaturePhoto: userDetails.signUp})
-        }
+        // if(userDetails.profileUp && userDetails.signUp){
+        //     this.setState({passportPhoto:userDetails.profileUp, signaturePhoto: userDetails.signUp})
+        // }
 
         // if(bvnStatus === BVN_VERIFICATION_SUCCESS){
         //     let resp = bvnDetails.bvn_verification_data.response;
@@ -248,6 +237,8 @@ class SecurityQuestions extends React.Component{
         //      history.push('/register');
              
         // }
+
+        
         //dispatch(alertActions.success(this.props.response.data.message.toString()));
     }
 
@@ -265,8 +256,9 @@ class SecurityQuestions extends React.Component{
             this.setState({submitDisabled: true});
         }
     }
+
     handleSelectChange(event){
-        // console.log('sample', event.target.parentNode.parentNode);
+        
         
         if(event.target.value !==''){
             event.target
@@ -299,7 +291,7 @@ class SecurityQuestions extends React.Component{
                 this.setState({allQuestions: response.data, questionsAvailable: true});
             })
             .catch(error=>{
-                console.error('error messages', error);
+                
             })
     }
 
@@ -322,7 +314,7 @@ class SecurityQuestions extends React.Component{
             state = this.state,
             allQuestionsWrap = [];
         
-        const {submitDisabled, numberOfQuestions} = state;
+        const {submitDisabled, submitted, numberOfQuestions} = state;
 
             if(state.questionsAvailable===true){
                 for(var questionCount= 0; questionCount < this.state.numberOfQuestions; questionCount++ ){
@@ -354,11 +346,13 @@ class SecurityQuestions extends React.Component{
                             {/* <div className="info-label error hide">
                                 An error occured while processing your request
                             </div> */}
-                             {allQuestionsWrap}
+                            {this.props.alert && this.props.alert.message &&
+                             <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>}
+                              {allQuestionsWrap}
                             <p>
                                 By clicking "Create Account" you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
                             </p>
-                            <button type="submit" disabled={submitDisabled} className="btn-alat btn-block">Create Account</button>
+                            <button type="submit" disabled={submitDisabled} className="btn-alat btn-block">{ submitted ? "Processing..." : "Create Account" }</button>
                         </form>
                         }
                     </div>

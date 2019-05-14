@@ -13,7 +13,8 @@ export const userActions = {
     bvnVerify,
     skipBvn,
     saveBvnInfo,
-    saveBvnData
+    saveBvnData,
+    loginAfterOnboarding
 };
 
 function login(email, password) {
@@ -61,6 +62,18 @@ function login(email, password) {
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
+function loginAfterOnboarding(loginData){
+    return dispatch =>{
+        localStorage.setItem("user", JSON.stringify(loginData));
+
+        dispatch(success(loginData));
+        history.push('/dashboard');
+    }
+    function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
+    function success(response) { return { type: userConstants.LOGIN_SUCCESS, response } }
+    function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+}
+
 function logout() {
     // userService.logout();
     //console.error("We are logging you out...");
@@ -89,7 +102,7 @@ function skipBvn(bvnDetails){
     };
     function request(request) { return { type:SKIP_BVN_PENDING, request} }
     function success(response) { return {type:SKIP_BVN_SUCCESS, response} }
-    //function failure(error) { return {type:BVN_VERIFICATION_FAILURE, error} }
+    function failure(error) { return {type:BVN_VERIFICATION_FAILURE, error} }
 }
 
 function bvnVerify (bvnDetails){
@@ -111,6 +124,7 @@ function bvnVerify (bvnDetails){
                 
                 history.push('/register/verify-bvn', {userPhone: bvnDetails.phoneNo});
             }).catch(error => {
+                dispatch(failure(error));
                 dispatch(alertActions.error(error.response.data.message.toString()));
             });
     };
@@ -157,6 +171,7 @@ function saveBvnData(otpData, action){
     function pending(otpData) { return null }
     function save(otpData) { return { type: SAVE_BVN_INFO, otpData } }
 }
+
 
 
 function register(user, action) {
