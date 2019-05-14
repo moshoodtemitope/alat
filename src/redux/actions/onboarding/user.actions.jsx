@@ -102,7 +102,7 @@ function skipBvn(bvnDetails){
     };
     function request(request) { return { type:SKIP_BVN_PENDING, request} }
     function success(response) { return {type:SKIP_BVN_SUCCESS, response} }
-    //function failure(error) { return {type:BVN_VERIFICATION_FAILURE, error} }
+    function failure(error) { return {type:BVN_VERIFICATION_FAILURE, error} }
 }
 
 function bvnVerify (bvnDetails){
@@ -124,6 +124,7 @@ function bvnVerify (bvnDetails){
                 
                 history.push('/register/verify-bvn', {userPhone: bvnDetails.phoneNo});
             }).catch(error => {
+                dispatch(failure(error));
                 dispatch(alertActions.error(error.response.data.message.toString()));
             });
     };

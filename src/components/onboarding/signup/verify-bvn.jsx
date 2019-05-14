@@ -29,6 +29,7 @@ class VerifyBvn extends React.Component{
             error: '',
             otpValue: '',
             formError: '',
+            pageHeader:'BVN Verification',
             // resendingOtp: false,
             // resendStatus: ""
         };
@@ -59,11 +60,11 @@ class VerifyBvn extends React.Component{
         let phoneEmail = "";
         if(bvnStatus === BVN_VERIFICATION_SUCCESS){
             let resp = bvnDetails.bvn_verification_data.response;
-            this.setState({otpSent: true, bvnPhoneNo: resp.bvnPhoneNo, phoneNo: resp.phoneNo});
+            this.setState({otpSent: true, bvnPhoneNo: resp.bvnPhoneNo, phoneNo: resp.phoneNo, pageHeader: 'BVN Verification'});
         }
         else if(bvnSkipStatus ===SKIP_BVN_SUCCESS){
             let resp = bvnSkipDetails.bvn_verification_data.response;
-            this.setState({otpSent: true,phoneNo: resp.phoneNo, maskedPhoneNo:resp.maskedPhoneNo});
+            this.setState({otpSent: true,phoneNo: resp.phoneNo, maskedPhoneNo:resp.maskedPhoneNo, pageHeader:'Phone Number Verification'});
         }
         else{
             this.setState({otpSent: false});
@@ -162,7 +163,7 @@ class VerifyBvn extends React.Component{
                 })
                 .catch(err=>{
                     console.log('error msg is ', err);
-                    this.setState({ submitted: false,submitDisabled : false, failedVerfication:true, otpStatusMessage: modelStateErrorHandler(err.response.data), error: err.response.data.message })
+                    this.setState({ submitted: false, submitDisabled : false, failedVerfication:true, otpStatusMessage: modelStateErrorHandler(err.response.data), error: err.response.data.message })
                     
                     // history.push('/register/confirm-bvndetails');
                     
@@ -204,7 +205,7 @@ class VerifyBvn extends React.Component{
             <OnboardingContainer>
                 <div className="row">
                     <div className="col-12">
-                        <h3>BVN verification<span></span></h3>
+                        <h3>{this.state.pageHeader}<span></span></h3>
                         {state.otpSent===true &&
                             <div className="info-label success">
                                 We have sent a verification code to ( {(state.bvnPhoneNo) && state.bvnPhoneNo} {(!state.bvnPhoneNo && state.maskedPhoneNo) && state.maskedPhoneNo} )<br/>
