@@ -42,7 +42,6 @@ class DocumentUplaod extends React.Component{
     componentDidMount() {
         this.getRegistrationDetails();
         this.attachEvent();
-      
     }
 
     attachEvent(){
@@ -137,21 +136,21 @@ class DocumentUplaod extends React.Component{
     onProfileUpload(picture) {
         
         //cheking if picture was deleted
-        if(picture.length > this.state.profilePicCount){
-        if(picture.length>=1){
-            // this.props.dispatch(alertActions.clear());
-            this.getBase64(picture[picture.length-1], (result) => {
-              this.setState({profileUp: { file: result, name: picture[picture.length-1].name}});
-           });
-        }
-        else {
-            this.setState({profileUp: ''});
+        if (picture.length > this.state.profilePicCount) {
+            if (picture.length >= 1) {
+                // this.props.dispatch(alertActions.clear());
+                this.getBase64(picture[picture.length - 1], (result) => {
+                    this.setState({ profileUp: { file: result, name: picture[picture.length - 1].name } });
+                });
+            }
+            else {
+                this.setState({ profileUp: '' });
+                this.props.dispatch(alertActions.error("You need to add a selfie"));
+            }
+        } else if (picture.length <= this.state.profilePicCount) {
+            this.setState({ profileUp: '' });
             this.props.dispatch(alertActions.error("You need to add a selfie"));
         }
-      }else if(picture.length <= this.state.profilePicCount){
-        this.setState({profileUp: ''});
-        this.props.dispatch(alertActions.error("You need to add a selfie"));
-      }
       this.setState({profilePicCount : picture.length});
     }
 
