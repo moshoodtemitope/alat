@@ -167,10 +167,7 @@ class SecurityQuestions extends React.Component{
 
                }else{
                 //If user didnt provided BVN info POST userDetails and auto login user
-<<<<<<< HEAD
-=======
                 this.setState({submitted : true, submitDisabled: true});
->>>>>>> 327fb21cf7203b21ba423f5b6eb1defa9bdb3f6b
                     let consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", userDetailsPayload);
                         return consume.then((loginData)=>{
                             
@@ -178,12 +175,8 @@ class SecurityQuestions extends React.Component{
                             this.props.dispatch(userActions.loginAfterOnboarding(loginData.data));
                         })
                         .catch(error=>{
-<<<<<<< HEAD
-                            
-=======
                             this.setState({submitted : false, submitDisabled: false});
                             this.props.dispatch(alertActions.error(error.response.data.message.toString()));
->>>>>>> 327fb21cf7203b21ba423f5b6eb1defa9bdb3f6b
                         });
                 }
                 

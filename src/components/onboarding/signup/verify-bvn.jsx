@@ -29,6 +29,7 @@ class VerifyBvn extends React.Component{
             error: '',
             otpValue: '',
             formError: '',
+            resentCount:0,
             pageHeader:'BVN Verification',
             // resendingOtp: false,
             // resendStatus: ""
@@ -82,16 +83,18 @@ class VerifyBvn extends React.Component{
             otpType: null,
             imei: '123456789012345'
         },
+        {resentCount} = this.state;
         consume = ApiService.request(routes.RESENDOTP, "POST", data);
         return consume.then((response)=>{
             // return (this.setState({resendingOtp: false, otpSent: true,  resendStatus: "OPT sent!"}));
-            
-            this.setState({resendingOtp: false, otpSent: true, failedVerfication:false,  resendStatus: "OPT sent!"})
+            resentCount ++;
+            // if(resentCount>=2){
+
+            // }
+            this.setState({resendingOtp: false,resentCount, otpSent: true, failedVerfication:false,  resendStatus: "OPT sent!"})
             
         })
         .catch(err=>{
-            //new
-           
             this.setState({resendingOtp: false, otpSent: false, otpStatusMessage: modelStateErrorHandler(err.response.data)});
            
            
@@ -265,10 +268,10 @@ class VerifyBvn extends React.Component{
 
                         <p>
                             <span className="text-left pull-right cta-link">
-                                {state.resendingOtp === false && state.resendStatus === "" &&
+                                {state.resendingOtp === false && state.resendStatus === "" && state.resentCount< 2 &&
                                     <a className="cta-link" onClick={this.resendCode}>Resend code</a>
                                 }
-                                {state.resendingOtp === true &&
+                                {state.resendingOtp === true || state.resentCount<= 2 &&
                                     <span>Resend code</span>
                                 }
                                 {state.resendingOtp === false && state.resendStatus !== "" &&
