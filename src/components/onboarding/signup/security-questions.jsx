@@ -313,7 +313,7 @@ class SecurityQuestions extends React.Component{
 
     componentDidMount() {
         // this.getRegistrationDetails();
-        // this.getBvnDetails();
+        this.getBvnDetails();
         this.getSecurityQuestions();
     }
 
