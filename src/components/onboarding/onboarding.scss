@@ -11,10 +11,16 @@
     text-decoration: underline;
     cursor: pointer;
   }
-  span{
-    color: #9c9c9c
-  }
+  // span{
+  //   color: #9c9c9c
+  // }
+  
 }
+.grayed-cta-link{
+  color: #9c9c9c;
+  cursor: not-allowed;
+}
+
 
 .btn-alat.disabled-btn, button:disabled { 
   // background: #DADADA;
