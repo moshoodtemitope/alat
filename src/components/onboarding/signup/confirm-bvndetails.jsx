@@ -66,7 +66,7 @@ class ConfirmBvnDetails extends React.Component{
             }
         }
         else{
-            console.log('no bvn details');
+           // console.log('no bvn details');
         }
         
     }

@@ -36,8 +36,7 @@ function QuestionWrap(props) {
         for(let i=0;   i<getQuestions.length;  i++){
             questionsToDisplay.push(<EachQuestion key={'question-'+i}  questionObj={getQuestions[i]}/>)
         }
-
-            
+      
 
     return (
         <div className="each-question">
@@ -50,8 +49,7 @@ function QuestionWrap(props) {
             </div>
             <div className="input-ctn">
                 <label>Answer to question {props.questionNumber.toString()}</label>
-                <input onChange={props.handleAnswerChange} className="questionResponse" disabled id={'question-'+props.questionNumber+'answer'} type="text"/>
-                
+                <input onChange={props.handleAnswerChange} className="questionResponse" disabled id={'question-'+props.questionNumber+'answer'} type="text"/>             
             </div>
         </div>
     );
@@ -176,7 +174,7 @@ class SecurityQuestions extends React.Component{
                         })
                         .catch(error=>{
                             this.setState({submitted : false, submitDisabled: false});
-                            this.props.dispatch(alertActions.error(error.response.data.message.toString()));
+                            this.props.dispatch(alertActions.error(utils.modelStateErrorHandler(error)));
                         });
                 }
                 
@@ -291,7 +289,7 @@ class SecurityQuestions extends React.Component{
                 this.setState({allQuestions: response.data, questionsAvailable: true});
             })
             .catch(error=>{
-                
+                this.props.dispatch(alertActions.error(utils.modelStateErrorHandler(error)));
             })
     }
 
