@@ -83,7 +83,7 @@ class VerifyBvn extends React.Component{
             otpType: null,
             imei: '123456789012345'
         },
-        {resentCount} = this.state;
+        {resentCount} = this.state,
         consume = ApiService.request(routes.RESENDOTP, "POST", data);
         return consume.then((response)=>{
             // return (this.setState({resendingOtp: false, otpSent: true,  resendStatus: "OPT sent!"}));
@@ -91,6 +91,7 @@ class VerifyBvn extends React.Component{
             // if(resentCount>=2){
 
             // }
+            console.log('count is', resentCount);
             this.setState({resendingOtp: false,resentCount, otpSent: true, failedVerfication:false,  resendStatus: "OPT sent!"})
             
         })
@@ -267,18 +268,28 @@ class VerifyBvn extends React.Component{
                         </form>
 
                         <p>
-                            <span className="text-left pull-right cta-link">
+                                {state.resendingOtp === false && state.resendStatus === "" && state.resentCount< 2 &&
+                                     <span className="text-left pull-right cta-link"><a className="cta-link" onClick={this.resendCode}>Resend code</a></span>
+                                }
+                                {state.resendingOtp === true || state.resentCount>= 2 &&
+                                    <span className="grayed-cta-link text-left pull-right">Resend code</span>
+                                }
+                                {state.resendingOtp === false && state.resendStatus !== "" &&
+                                    <span className="grayed-cta-link text-left pull-right">{state.resendStatus}</span>
+                                }
+                            {/* <span className="text-left pull-right cta-link">
                                 {state.resendingOtp === false && state.resendStatus === "" && state.resentCount< 2 &&
                                     <a className="cta-link" onClick={this.resendCode}>Resend code</a>
                                 }
-                                {state.resendingOtp === true || state.resentCount<= 2 &&
-                                    <span>Resend code</span>
+                                {state.resendingOtp === true || state.resentCount>= 2 &&
+                                    <span className="grayed-cta-link">Resend code</span>
                                 }
                                 {state.resendingOtp === false && state.resendStatus !== "" &&
-                                    <span>{state.resendStatus}</span>
+                                    <span className="grayed-cta-link">{state.resendStatus}</span>
                                 }
 
-                            </span>
+                            </span> */}
+
                             {/* <span className="text-right pull-right cta-link">
                                 <a href="#">Call my phone</a>
                             </span> */}

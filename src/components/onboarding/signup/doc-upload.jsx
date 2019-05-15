@@ -29,12 +29,14 @@ class DocumentUplaod extends React.Component{
                 profileUp: { file:'', name:'name word'},
                 signUp: {file: '', name: ''},
                 ctaStatus: false,
-                openModal : false
+                openModal : false,
+                openFailedUploadModal: false
             };
             this.onSignClick = this.onSignClick.bind(this);
             this.onProfileUpload = this.onProfileUpload.bind(this);
             this.onSubmit = this.onSubmit.bind(this);
             this.toggleModal = this.toggleModal.bind(this);
+            this.toggleUploadFailedModal = this.toggleUploadFailedModal.bind(this);
             this.submitSkipUpload = this.submitSkipUpload.bind(this);
             
     }
@@ -88,10 +90,21 @@ class DocumentUplaod extends React.Component{
     }
 
     toggleModal(){
-        if(this.state.openModal == false)
-         this.setState({openModal : true});
-         else if(this.state.openModal == true)
-         this.setState({openModal : false});
+        if(this.state.openModal == false){
+            this.setState({openModal : true});
+        }
+        else if(this.state.openModal == true){
+            this.setState({openModal : false});
+        }
+    }
+
+    toggleUploadFailedModal(){
+        if(this.state.openFailedUploadModal == false){
+            this.setState({openFailedUploadModal : true});
+        }
+        else if(this.state.openFailedUploadModal == true){
+            this.setState({openFailedUploadModal : false});
+        }
     }
 
     onSignClick(picture) {
@@ -189,10 +202,12 @@ sendDocumentUploads(loginData){
                 this.props.dispatch(userActions.loginAfterOnboarding(loginData));
             })
             .catch(signaturUploadError=>{
+                this.toggleUploadFailedModal();
                 this.props.dispatch(userActions.loginAfterOnboarding(loginData));
             })
         })
         .catch(photoUploadError=>{
+            this.toggleUploadFailedModal();
             this.props.dispatch(userActions.loginAfterOnboarding(loginData));
         })
 }
@@ -274,7 +289,7 @@ sendDocumentUploads(loginData){
  
 
     render(){
-        const {openModal} = this.state;
+        const {openModal, openFailedUploadModal} = this.state;
         let props= this.props;
         return (
             <OnboardingContainer>
@@ -350,6 +365,16 @@ sendDocumentUploads(loginData){
                     </div>
                   </div>
                 </Modal>
+            <Modal open={openFailedUploadModal} onClose={this.toggleUploadFailedModal} center>
+                <div>
+                    <div className="div-modal">
+                        <h3>Document upload failed. We are redirecting you to your dashboard to re-upload.</h3>
+                        <div className="btn-opt">
+                            <button onClick={()=>{history.push('/register');}} className="btn-alat">Proceed</button>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
             </OnboardingContainer>
         );
     }
