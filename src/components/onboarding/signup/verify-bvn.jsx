@@ -19,7 +19,7 @@ import {history} from "../../../_helpers/history";
 
 import {Textbox} from "react-inputs-validation";
 import {alertActions} from "../../../redux/actions/alert.actions";
-import {modelStateErrorHandler} from "../../../shared/utils";
+import {modelStateErrorHandler, handleError} from "../../../shared/utils";
 
 class VerifyBvn extends React.Component{
     constructor(props) {
@@ -96,7 +96,13 @@ class VerifyBvn extends React.Component{
             
         })
         .catch(err=>{
+<<<<<<< HEAD
             this.setState({resendingOtp: false, otpSent: false, otpStatusMessage: modelStateErrorHandler(err.response.data)});
+=======
+            //new
+           
+            this.setState({resendingOtp: false, otpSent: false, otpStatusMessage: modelStateErrorHandler(err)});
+>>>>>>> 5fdbade11512b9694f4272722a33c200830ce8d4
            
            
         })
@@ -166,8 +172,9 @@ class VerifyBvn extends React.Component{
 
                 })
                 .catch(err=>{
-                    console.log('error msg is ', err);
-                    this.setState({ submitted: false, submitDisabled : false, failedVerfication:true, otpStatusMessage: modelStateErrorHandler(err.response.data), error: err.response.data.message })
+                    //console.log('error msg is ', err); 
+                   
+                    this.setState({ submitted: false, submitDisabled : false, failedVerfication:true, otpStatusMessage: modelStateErrorHandler(err), error: modelStateErrorHandler(err)});
                     
                     // history.push('/register/confirm-bvndetails');
                     
@@ -303,7 +310,7 @@ class VerifyBvn extends React.Component{
 
 
 function mapStateToProps(state){
-    console.log('state passsed is', state);
+   
     return {
         user_details: state.onboarding_user_details,
         customer_bvnverification_details: state.onboarding_bvn_details,

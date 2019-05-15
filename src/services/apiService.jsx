@@ -43,18 +43,23 @@ export class ApiService {
             return service.then(function (response) {
                 return service;
             }).catch(function (error) {
-                console.log(error);
+                
                 // return service;
-                if (error.response.status === 401 && error.response.statusText.toLowerCase().includes('token not valid')) {
-                    // const { dispatch } = this.props;
-                    // console.error("We wanna log out out");
-                    // dispatch(userActions.logout());
-                    // history.push('/logout')
-                    // localStorage.removeItem("user");
-                    history.push('/');
-                } else {
-                    return service;
-                }
+                if (error.response) {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    // console.log(error.response.data);
+                    // console.log(error.response.status);
+                    // console.log(error.response.headers);
+                     if (error.response.status === 401 && error.response.statusText.toLowerCase().includes('token not valid')) {
+                            
+                            history.push('/');
+                        }else {
+                            return service;
+                        }
+                      
+                } 
+                return  service;
             });
 
         } else {
@@ -74,25 +79,25 @@ export class ApiService {
             console.log("after",axios.defaults.headers )
             service = axios.post(url, bodyData);
             return service.then(function (response) {
-                console.log(service);
+                // console.log("successful");
                 return service;
             }).catch(function (error) {
-                // return service;
-                if (error.response.status === 401 && error.response.statusText.toLowerCase().includes('token not valid')) {
-                    
-                    history.push('/');
-                } else {
-                    return service;
-                    // let requestError = error.response.status !== 0 ? error._body : '{ \"message\": \"Could not connect to server\" }';
-                    // console.log(requestError);
-                    // try {
-                    //     requestError = JSON.parse(requestError);
-                    // } catch (e) {
-                    //     requestError = 'Sorry, an error occured';
-                    // }
-                    // console.log(requestError);
-                    // return Observable.throw(requestError || 'Server error');
-                }
+               
+              if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                // console.log(error.response.data);
+                // console.log(error.response.status);
+                // console.log(error.response.headers);
+                 if (error.response.status === 401 && error.response.statusText.toLowerCase().includes('token not valid')) {
+                        
+                        history.push('/');
+                    }else {
+                        return service;
+                    }
+                  
+            } 
+            return  service;
             });
         }
     }

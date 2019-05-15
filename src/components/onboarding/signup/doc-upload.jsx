@@ -105,6 +105,9 @@ class DocumentUplaod extends React.Component{
         else if(this.state.openFailedUploadModal == true){
             this.setState({openFailedUploadModal : false});
         }
+        setTimeout(()=>{
+            this.props.dispatch(userActions.loginAfterOnboarding(loginData));
+        }, 5000);
     }
 
     onSignClick(picture) {
@@ -178,7 +181,7 @@ class DocumentUplaod extends React.Component{
                             }
                     })
                     .catch(error=>{
-                        this.props.dispatch(alertActions.error(error.response.data.message.toString()));
+                        this.props.dispatch(alertActions.error(utils.modelStateErrorHandler(error)));
                     });
     }
 
@@ -203,12 +206,14 @@ sendDocumentUploads(loginData){
             })
             .catch(signaturUploadError=>{
                 this.toggleUploadFailedModal();
-                this.props.dispatch(userActions.loginAfterOnboarding(loginData));
+                // this.props.dispatch(alertActions.error(utils.modelStateErrorHandler(signaturUploadError)));
+                
             })
         })
         .catch(photoUploadError=>{
             this.toggleUploadFailedModal();
-            this.props.dispatch(userActions.loginAfterOnboarding(loginData));
+            // this.props.dispatch(alertActions.error(utils.modelStateErrorHandler(photoUploadError)));
+            // this.props.dispatch(userActions.loginAfterOnboarding(loginData));
         })
 }
 
