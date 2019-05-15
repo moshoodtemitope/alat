@@ -166,7 +166,7 @@ class DocumentUplaod extends React.Component{
                             }
                     })
                     .catch(error=>{
-                        this.props.dispatch(alertActions.error(error.response.data.message.toString()));
+                        this.props.dispatch(alertActions.error(utils.modelStateErrorHandler(error)));
                     });
     }
 
@@ -190,10 +190,12 @@ sendDocumentUploads(loginData){
                 this.props.dispatch(userActions.loginAfterOnboarding(loginData));
             })
             .catch(signaturUploadError=>{
+                this.props.dispatch(alertActions.error(utils.modelStateErrorHandler(signaturUploadError)));
                 this.props.dispatch(userActions.loginAfterOnboarding(loginData));
             })
         })
         .catch(photoUploadError=>{
+            this.props.dispatch(alertActions.error(utils.modelStateErrorHandler(photoUploadError)));
             this.props.dispatch(userActions.loginAfterOnboarding(loginData));
         })
 }

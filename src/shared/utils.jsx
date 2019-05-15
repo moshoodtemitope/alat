@@ -46,7 +46,36 @@ export const modelStateErrorHandler = (error, field) => {
    }
    else{
     //    console.log('here');
-       return error.message || error.Message;
-
+    //   return error.message || error.Message;
+  
+       return handleError(error);  //Check for the exact error code to know what to return
    }
+};
+
+export const handleError =(error)=>{
+    var message = '';
+    if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        // console.log(error.response.data);
+        // console.log(error.response.status);
+        // console.log(error.response.headers);
+        if(error.response.status >=500 && error.response.status < 600){
+            message = 'something went wrong, try again please.';
+        }else {
+            message = error.response.data.message;
+        }
+        
+    } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        //console.log(error.request);
+        message = error.message
+    } else {
+        // Something happened in setting up the request that triggered an Error
+        //console.log('Error', error.message);
+        message = error.message;
+    }
+  return message;
 };
