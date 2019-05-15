@@ -96,13 +96,9 @@ class VerifyBvn extends React.Component{
             
         })
         .catch(err=>{
-<<<<<<< HEAD
-            this.setState({resendingOtp: false, otpSent: false, otpStatusMessage: modelStateErrorHandler(err.response.data)});
-=======
             //new
            
             this.setState({resendingOtp: false, otpSent: false, otpStatusMessage: modelStateErrorHandler(err)});
->>>>>>> 5fdbade11512b9694f4272722a33c200830ce8d4
            
            
         })
