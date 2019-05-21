@@ -25,6 +25,7 @@ class CreateAccount extends React.Component{
                 passwordInvalidMessage: '',
                 confirmPasswordValid: true,
                 formValid: false,
+                refferalCode:''
             };
 
             this.handleInputChange = this.handleInputChange.bind(this);
@@ -128,7 +129,8 @@ class CreateAccount extends React.Component{
                 dispatch(userActions.register({
                     email: this.state.email.toLowerCase(),
                     password: this.state.password,
-                phone:this.state.phone}, USER_REGISTER_SAVE));
+                phone:this.state.phone,
+                refferalCode: this.state.refferalCode}, USER_REGISTER_SAVE));
             history.push('/register/security-questions');
             //}
         }
@@ -139,7 +141,7 @@ class CreateAccount extends React.Component{
     }
     
     validateEmail() {
-        let re = /^[a-zA-Z][a-zA-Z0-9_.]*(\.[a-zA-Z][a-zA-Z0-9_.]*)?@[a-zA-Z][a-zA-Z-0-9]*\.[a-zA-Z]+(\.[a-zA-Z]+)?$/;
+        let re = /^[a-zA-Z][a-zA-Z0-9_\-.]*(\.[a-zA-Z][a-zA-Z0-9_\-.]*)?@[a-zA-Z][a-zA-Z-0-9]*\.[a-zA-Z]+(\.[a-zA-Z]+)?$/;
         
         // let result = SystemConstant.EMAILREGEX.test(this.state.email);
         let result = re.test(this.state.email.toLowerCase());
@@ -233,6 +235,7 @@ class CreateAccount extends React.Component{
                 password,
                 confirmEmail,
                 confirmPassword,
+                refferalCode
             } = this.state;
 
             let props = this.props;
@@ -280,6 +283,13 @@ class CreateAccount extends React.Component{
                         {!confirmPasswordValid &&
                             <div className="text-danger">password mis-match</div>
                             }
+                    </div>
+                    <div className="input-ctn">
+                        <label>Refferal Code</label>
+                        <input onChange={this.handleInputChange} placeholder="" type="text" name="refferalCode" value={refferalCode} maxLength="8" />
+                        {/* {!confirmPasswordValid &&
+                            <div className="text-danger">password mis-match</div>
+                            } */}
                     </div>
                         <input type="submit" onClick={this.handleSubmit} value="Next" className="btn-alat btn-block"/>
                     </form>

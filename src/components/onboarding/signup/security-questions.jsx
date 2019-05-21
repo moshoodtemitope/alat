@@ -83,7 +83,6 @@ class SecurityQuestions extends React.Component{
             userData =  props.registration_data.user;
             this.setState({userData: userData});
             this.setState({phone: userData.phone});
-            
         }
     }
 
@@ -131,7 +130,7 @@ class SecurityQuestions extends React.Component{
 
                 let userDetailsPayload = {
                     channelId: 2,
-                    ReferralCode: '',
+                    ReferralCode: this.state.refferalCode,
                     imei: '354553073954109',
                     phoneNo: this.state.userPhone,
                     email: this.state.userEmail,
@@ -140,7 +139,8 @@ class SecurityQuestions extends React.Component{
                     securityQuestions: questionAndAnswersList,
                     deviceOs: 'string-6',
                     gcmRegId: 'string-8',
-                    deviceCode: 'string-10'
+                    deviceCode: 'string-10',
+
                 };
 
                 // Test DATA
@@ -211,7 +211,8 @@ class SecurityQuestions extends React.Component{
         let bvnVerificationStatus = props.customer_bvnverification_details.hasOwnProperty('bvn_verification_data')? BVN_VERIFICATION_SUCCESS: null;
         
        
-        this.setState({userPhone: userDetails.phone,bvnVerificationStatus, userEmail:userDetails.email, userPassword:userDetails.password});
+        this.setState({userPhone: userDetails.phone,bvnVerificationStatus, userEmail:userDetails.email, 
+                       userPassword:userDetails.password, refferalCode: userDetails.refferalCode});
         // if(userDetails.profileUp && userDetails.signUp){
         //     this.setState({passportPhoto:userDetails.profileUp, signaturePhoto: userDetails.signUp})
         // }
@@ -332,7 +333,7 @@ class SecurityQuestions extends React.Component{
                     <div className="col-12">
                         <h3>Security Questions<span></span></h3>
                         <p>
-                            We’re so glad you’re ready to come onboard. Let’s start by getting to know you better.
+                            We’re so glad you’re ready to come onboard. Let’s start by getting to know you better. <br/> ANSWERS ARE CASE SENSITIVE
                         </p>
                     </div>
                 </div>

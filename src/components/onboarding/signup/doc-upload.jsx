@@ -78,14 +78,16 @@ class DocumentUplaod extends React.Component{
             userData =  userDetails.registration_data.user;
             this.setState({phone: userData.phone, 
                 email: userData.email,
-                password: userData.password });
+                password: userData.password,
+                refferalCode: userData.refferalCode
+             });
             }
             else {
-                //history.push('/register');
+                history.push('/register');
             }
         }
         else{
-           //history.push('/register');
+           history.push('/register');
         }
     }
 
@@ -98,7 +100,7 @@ class DocumentUplaod extends React.Component{
         }
     }
 
-    toggleUploadFailedModal(){
+    toggleUploadFailedModal(loginData){
         if(this.state.openFailedUploadModal == false){
             this.setState({openFailedUploadModal : true});
         }
@@ -207,13 +209,13 @@ sendDocumentUploads(loginData){
                 this.props.dispatch(userActions.loginAfterOnboarding(loginData));
             })
             .catch(signaturUploadError=>{
-                this.toggleUploadFailedModal();
+                this.toggleUploadFailedModal(loginData);
                 // this.props.dispatch(alertActions.error(utils.modelStateErrorHandler(signaturUploadError)));
                 
             })
         })
         .catch(photoUploadError=>{
-            this.toggleUploadFailedModal();
+            this.toggleUploadFailedModal(loginData);
             // this.props.dispatch(alertActions.error(utils.modelStateErrorHandler(photoUploadError)));
             // this.props.dispatch(userActions.loginAfterOnboarding(loginData));
         })

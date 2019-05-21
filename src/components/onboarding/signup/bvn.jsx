@@ -189,9 +189,10 @@ class Bvn extends React.Component{
                                 <label>Your Date of Birth</label>
                                 {/* <input type='text' name="dob" value={dob} className="datepicker-here" data-position='top left'
                                        data-language="en" onSelect={this.handleChange} /> */}
-                                 <DatePicker placeholderText="06/19/1992" selected={dob} 
+                                 <DatePicker placeholderText="19 June, 1992" selected={dob} 
                                  onChange={this.handleDatePicker}
                                  onChangeRaw={(e)=>this.handleChange(e)}
+                                 dateFormat="d MMMM, yyyy"
                                  peekNextMonth
                                  showMonthDropdown
                                  showYearDropdown

@@ -35,7 +35,8 @@ class Signup extends React.Component{
             openModal: false,
             inputProps :{
              maxLength:20,
-             onInput : this.handleInputChange
+             onInput : this.handleInputChange,
+             tabIndex : 1
             }
             // international_code: ''
         };
@@ -75,7 +76,7 @@ class Signup extends React.Component{
             return '0' + ph.substr(3);
         }
         else{
-            return phone.replace(/[^a-zA-Z0-9]/g, '');
+            return phone;//.replace(/[^a-zA-Z0-9]/g, '');
         }
     }
 
@@ -93,6 +94,7 @@ class Signup extends React.Component{
             return;
         }
         if (phone) {
+           
             this.setState({phoneInputted: phone});
             this.onOpenModal();
 
@@ -120,7 +122,7 @@ class Signup extends React.Component{
         this.setState({ submitted: true });
         const { dispatch } = this.props;
         let data = {
-            PhoneNo: this.state.phoneInputted,
+            PhoneNo: this.state.phoneInputted.replace(/[^a-zA-Z0-9]/g, ''),
             channelId: 2
         };
         dispatch(userActions.register({phone : data.PhoneNo}, USER_REGISTER_FETCH));
@@ -179,13 +181,13 @@ class Signup extends React.Component{
                         <form className="onboard-form" onSubmit={this.handleSubmit}>
                             {error && <div className="info-label error">{error}</div>}
                             <div className={ !formError ? "input-ctn" : "input-ctn form-error" }>
-                                <label>Please enter your phone number</label>
+                                <label>Please enter your phone number (e.g +234-xxx-xxx-xxxx)</label>
                                 <ReactTelephoneInput
                                     inputProps = {this.state.inputProps}
                                     defaultCountry="ng"
                                     flagsImagePath={flags}
-                                    onBlur={this.handleInputBlur}
-                                    //onChange={this.handleInputChange}
+                                    //onBlur={this.handleInputBlur}
+                                    onChange={this.handleInputBlur}
                                     id="phoneInput"
                                 />
                                 {formError &&
@@ -210,7 +212,7 @@ class Signup extends React.Component{
                     <div className="div-modal">
                         <img src={phoneimage}/>
 
-                        <h3>Your phone number is <strong><span>{this.state.phoneInputted}</span></strong>. Do you want to proceed?</h3>
+                        <h3>Your phone number is <br/><strong><span>{this.state.phoneInputted}</span></strong>.<br/> Do you want to proceed?</h3>
 
                     <div className="btn-opt">
                         <button onClick={this.onCloseModal} className="border-btn">Back</button>
