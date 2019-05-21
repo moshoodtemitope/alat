@@ -106,7 +106,7 @@ class DocumentUplaod extends React.Component{
             this.setState({openFailedUploadModal : false});
         }
         setTimeout(()=>{
-            this.props.dispatch(userActions.loginAfterOnboarding(loginData));
+            this.props.dispatch(userActions.loginAfterOnboarding(this.state.loginData));
         }, 5000);
     }
 
@@ -177,7 +177,9 @@ class DocumentUplaod extends React.Component{
             consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", payload);
             return  consume.then((loginData)=>{
                             if(this.state.profileUp !== null){
-                           this.sendDocumentUploads(loginData.data);
+                                this.setState({loginData: loginData.data});
+                                this.sendDocumentUploads(loginData.data);
+                           
                             }
                     })
                     .catch(error=>{
