@@ -49,11 +49,11 @@ function login(email, password) {
             }).catch(error => {
                 
                 // console.log(err.response.data.message);
-               console.log(error);
+                // console.log(error);
                 // submitting = false;
                 // throw new SubmissionError({ _error: err.response.data.message});
-                dispatch(failure(error.response.data.message.toString()));
-                dispatch(alertActions.error(error.response.data.message.toString()));
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
 
 

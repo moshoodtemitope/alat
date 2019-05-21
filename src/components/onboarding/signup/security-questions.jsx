@@ -125,73 +125,58 @@ class SecurityQuestions extends React.Component{
 
             
             numberofAsweredQuestions = questionAndAnswersList.length;
-            
-            questionsList = questionAndAnswersList.map(chosenQuestion=>chosenQuestion.id);
-            console.log('all questions are', questionsList);
-            let uniqueQuestions = questionsList.filter(function (item, i, questionsList) {// array of unique elements
-                return i == questionsList.indexOf(item);
-            });
 
-
-            // return;
             if(this.state.numberOfQuestions === numberofAsweredQuestions){
-                if(questionsList.length > uniqueQuestions.length){
-                    console.log('ahahahha');
-                    this.props.dispatch(alertActions.error('Please select different questions'));
-                }else{
-                    noEmptyQuestions = true;
+                noEmptyQuestions = true;
 
-                    
-                    let userDetailsPayload = {
-                        channelId: 2,
-                        ReferralCode: '',
-                        imei: '354553073954109',
-                        phoneNo: this.state.userPhone,
-                        email: this.state.userEmail,
-                        password: this.state.userPassword,
-                        deviceName: 'string-5',
-                        securityQuestions: questionAndAnswersList,
-                        deviceOs: 'string-6',
-                        gcmRegId: 'string-8',
-                        deviceCode: 'string-10'
-                    };
+                let userDetailsPayload = {
+                    channelId: 2,
+                    ReferralCode: '',
+                    imei: '354553073954109',
+                    phoneNo: this.state.userPhone,
+                    email: this.state.userEmail,
+                    password: this.state.userPassword,
+                    deviceName: 'string-5',
+                    securityQuestions: questionAndAnswersList,
+                    deviceOs: 'string-6',
+                    gcmRegId: 'string-8',
+                    deviceCode: 'string-10'
+                };
 
-                    // Test DATA
-                    // let userDetailsPayload = {
-                    //     channelId: 2,
-                    //     ReferralCode: '',
-                    //     imei: '354553073954109',
-                    //     phoneNo: '08131562233',
-                    //     email: 'tester212344@gmail.com',
-                    //     password: 'Test123$',
-                    //     deviceName: 'string-5',
-                    //     securityQuestions: questionAndAnswersList,
-                    //     deviceOs: 'string-6',
-                    //     gcmRegId: 'string-8',
-                    //     deviceCode: 'string-10'
-                    // };
-                    
-                    //If user provided BVN info save userDetails and go to Documents upload page
-                    if(this.state.bvnVerificationStatus !==null){
-                            this.props.dispatch(userActions.register(userDetailsPayload, USER_REGISTER_SAVE));
-                            history.push('/register/doc-upload');
+                // Test DATA
+                // let userDetailsPayload = {
+                //     channelId: 2,
+                //     ReferralCode: '',
+                //     imei: '354553073954109',
+                //     phoneNo: '08131562233',
+                //     email: 'tester212344@gmail.com',
+                //     password: 'Test123$',
+                //     deviceName: 'string-5',
+                //     securityQuestions: questionAndAnswersList,
+                //     deviceOs: 'string-6',
+                //     gcmRegId: 'string-8',
+                //     deviceCode: 'string-10'
+                // };
+                 
+                //If user provided BVN info save userDetails and go to Documents upload page
+               // this.props.customer_bvnverification_details.bvn_verification_status === BVN_VERIFICATION_SUCCESS
+               if(this.props.customer_bvnverification_details.bvn_verification_status === BVN_VERIFICATION_SUCCESS.toString()){
+                    this.props.dispatch(userActions.register(userDetailsPayload, USER_REGISTER_SAVE));
+                    history.push('/register/doc-upload');
 
-                    }
-                    else{
-                        //If user didnt provided BVN info POST userDetails and auto login user
-                        this.setState({submitted : true, submitDisabled: true});
-                            let consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", userDetailsPayload);
-                                return consume.then((loginData)=>{
-                                    
-                                    //call AutoLogin functionality
-                                    this.props.dispatch(userActions.loginAfterOnboarding(loginData.data));
-                                })
-                                .catch(error=>{
-                                    this.setState({submitted : false, submitDisabled: false});
-                                    this.props.dispatch(alertActions.error(utils.modelStateErrorHandler(error)));
-                                    // this.props.dispatch(alertActions.error(error.response.data.message.toString()));
-                                });
-                    }
+               }else{
+                //If user didnt provided BVN info POST userDetails and auto login user
+                this.setState({submitted : true, submitDisabled: true});
+                    let consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", userDetailsPayload);
+                        return consume.then((loginData)=>{
+                            
+                            //call AutoLogin functionality
+                            this.props.dispatch(userActions.loginAfterOnboarding(loginData.data));
+                        })
+                        .catch(error=>{
+                            this.setState({submitted : false, submitDisabled: false});
+                            this.props.dispatch(alertActions.error(utils.modelStateErrorHandler(error)));
+                        });
                 }
                 
             }

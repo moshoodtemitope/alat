@@ -8,6 +8,8 @@ import {ApiService} from "../../../services/apiService";
 import {routes} from "../../../services/urls";
 import {dashboardConstants as userConstants} from "../../constants/dashboard/dashboard.constants";
 import {SystemConstant} from "../../../shared/constants";
+import { modelStateErrorHandler } from "../../../shared/utils";
+import { alertActions } from "../alert.actions";
 
 const user = JSON.parse(localStorage.getItem("user"));
 //
@@ -57,7 +59,8 @@ export const getAccounts = (token) => {
                 dispatch(success(response.data));
             })
             .catch(error => {
-                dispatch(failure(error.response.data.message.toString()));
+                dispatch(failure(modelStateErrorHandler(error)));
+               // dispatch(alertActions.error(modelStateErrorHandler(error)));
                 // throw(error);
             });
     };
@@ -121,7 +124,7 @@ export const getOnboardingPriority = (token) => {
                 dispatch(success(response.data));
             })
             .catch(error => {
-                return error.response.data.message.toString();
+                return modelStateErrorHandler(error); //error.response.data.message.toString();
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
