@@ -140,35 +140,35 @@ class SecurityQuestions extends React.Component{
                 if(this.state.numberOfQuestions === numberofAsweredQuestions){
                     noEmptyQuestions = true;
 
-                    // let userDetailsPayload = {
-                    //     channelId: 2,
-                    //     ReferralCode: this.state.refferalCode,
-                    //     imei: '354553073954109',
-                    //     phoneNo: this.state.userPhone,
-                    //     email: this.state.userEmail,
-                    //     password: this.state.userPassword,
-                    //     deviceName: 'string-5',
-                    //     securityQuestions: questionAndAnswersList,
-                    //     deviceOs: 'string-6',
-                    //     gcmRegId: 'string-8',
-                    //     deviceCode: 'string-10',
-
-                    // };
-
-                    // Test DATA
                     let userDetailsPayload = {
                         channelId: 2,
-                        ReferralCode: '',
+                        ReferralCode: this.state.refferalCode,
                         imei: '354553073954109',
-                        phoneNo: '08139262233',
-                        email: 'tester46472344@gmail.com',
-                        password: 'Test123$',
+                        phoneNo: this.state.userPhone,
+                        email: this.state.userEmail,
+                        password: this.state.userPassword,
                         deviceName: 'string-5',
                         securityQuestions: questionAndAnswersList,
                         deviceOs: 'string-6',
                         gcmRegId: 'string-8',
-                        deviceCode: 'string-10'
+                        deviceCode: 'string-10',
+
                     };
+
+                    // // Test DATA
+                    // let userDetailsPayload = {
+                    //     channelId: 2,
+                    //     ReferralCode: '',
+                    //     imei: '354553073954109',
+                    //     phoneNo: '08139262233',
+                    //     email: 'tester46472344@gmail.com',
+                    //     password: 'Test123$',
+                    //     deviceName: 'string-5',
+                    //     securityQuestions: questionAndAnswersList,
+                    //     deviceOs: 'string-6',
+                    //     gcmRegId: 'string-8',
+                    //     deviceCode: 'string-10'
+                    // };
                     
                     //If user provided BVN info save userDetails and go to Documents upload page
                 // this.props.customer_bvnverification_details.bvn_verification_status === BVN_VERIFICATION_SUCCESS
