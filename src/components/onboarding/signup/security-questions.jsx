@@ -48,7 +48,7 @@ function QuestionWrap(props) {
                 </select>
             </div>
             <div className="input-ctn">
-                <label>Answer to question {props.questionNumber.toString()}</label>
+                <label>Answer {props.questionNumber.toString()} <small>(case sensitive. e.g John is not the same as john)</small> </label>
                 <input onChange={props.handleAnswerChange} className="questionResponse" disabled id={'question-'+props.questionNumber+'answer'} type="text"/>             
             </div>
         </div>
@@ -96,7 +96,8 @@ class SecurityQuestions extends React.Component{
             answersList = [],
             questionAndAnswersList = [],
             numberofAsweredQuestions,
-            noEmptyQuestions;
+            noEmptyQuestions,
+            hasDuplicate= false;
 
 
 
@@ -125,63 +126,79 @@ class SecurityQuestions extends React.Component{
             
             numberofAsweredQuestions = questionAndAnswersList.length;
 
-            if(this.state.numberOfQuestions === numberofAsweredQuestions){
-                noEmptyQuestions = true;
+        
+            answersList = questionAndAnswersList.map(function(item){
+                                                        return item.id 
+                                                    });
 
-                let userDetailsPayload = {
-                    channelId: 2,
-                    ReferralCode: this.state.refferalCode,
-                    imei: '354553073954109',
-                    phoneNo: this.state.userPhone,
-                    email: this.state.userEmail,
-                    password: this.state.userPassword,
-                    deviceName: 'string-5',
-                    securityQuestions: questionAndAnswersList,
-                    deviceOs: 'string-6',
-                    gcmRegId: 'string-8',
-                    deviceCode: 'string-10',
+            hasDuplicate = answersList.some(function(item, index){ 
+                return answersList.indexOf(item) != index 
+            });
 
-                };
+            if(hasDuplicate==false){
+                this.props.alert.message = null;
+                if(this.state.numberOfQuestions === numberofAsweredQuestions){
+                    noEmptyQuestions = true;
 
-                // Test DATA
-                // let userDetailsPayload = {
-                //     channelId: 2,
-                //     ReferralCode: '',
-                //     imei: '354553073954109',
-                //     phoneNo: '08131562233',
-                //     email: 'tester212344@gmail.com',
-                //     password: 'Test123$',
-                //     deviceName: 'string-5',
-                //     securityQuestions: questionAndAnswersList,
-                //     deviceOs: 'string-6',
-                //     gcmRegId: 'string-8',
-                //     deviceCode: 'string-10'
-                // };
-                 
-                //If user provided BVN info save userDetails and go to Documents upload page
-               // this.props.customer_bvnverification_details.bvn_verification_status === BVN_VERIFICATION_SUCCESS
-               if(this.props.customer_bvnverification_details.bvn_verification_status === BVN_VERIFICATION_SUCCESS.toString()){
-                    this.props.dispatch(userActions.register(userDetailsPayload, USER_REGISTER_SAVE));
-                    history.push('/register/doc-upload');
+                    // let userDetailsPayload = {
+                    //     channelId: 2,
+                    //     ReferralCode: this.state.refferalCode,
+                    //     imei: '354553073954109',
+                    //     phoneNo: this.state.userPhone,
+                    //     email: this.state.userEmail,
+                    //     password: this.state.userPassword,
+                    //     deviceName: 'string-5',
+                    //     securityQuestions: questionAndAnswersList,
+                    //     deviceOs: 'string-6',
+                    //     gcmRegId: 'string-8',
+                    //     deviceCode: 'string-10',
 
-               }else{
-                //If user didnt provided BVN info POST userDetails and auto login user
-                this.setState({submitted : true, submitDisabled: true});
-                    let consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", userDetailsPayload);
-                        return consume.then((loginData)=>{
-                            
-                            //call AutoLogin functionality
-                            this.props.dispatch(userActions.loginAfterOnboarding(loginData.data));
-                        })
-                        .catch(error=>{
-                            this.setState({submitted : false, submitDisabled: false});
-                            this.props.dispatch(alertActions.error(utils.modelStateErrorHandler(error)));
-                        });
+                    // };
+
+                    // Test DATA
+                    let userDetailsPayload = {
+                        channelId: 2,
+                        ReferralCode: '',
+                        imei: '354553073954109',
+                        phoneNo: '08139262233',
+                        email: 'tester46472344@gmail.com',
+                        password: 'Test123$',
+                        deviceName: 'string-5',
+                        securityQuestions: questionAndAnswersList,
+                        deviceOs: 'string-6',
+                        gcmRegId: 'string-8',
+                        deviceCode: 'string-10'
+                    };
+                    
+                    //If user provided BVN info save userDetails and go to Documents upload page
+                // this.props.customer_bvnverification_details.bvn_verification_status === BVN_VERIFICATION_SUCCESS
+                if(this.props.customer_bvnverification_details.bvn_verification_status === BVN_VERIFICATION_SUCCESS.toString()){
+                        this.props.dispatch(userActions.register(userDetailsPayload, USER_REGISTER_SAVE));
+                        history.push('/register/doc-upload');
+
+                }else{
+                    //If user didnt provided BVN info POST userDetails and auto login user
+                    this.setState({submitted : true, submitDisabled: true});
+                        let consume = ApiService.request(routes.REGISTRATIONURLV2, "POST", userDetailsPayload);
+                            return consume.then((loginData)=>{
+                                
+                                //call AutoLogin functionality
+                                this.props.dispatch(userActions.loginAfterOnboarding(loginData.data));
+                            })
+                            .catch(error=>{
+                                this.setState({submitted : false, submitDisabled: false});
+                                this.props.dispatch(alertActions.error(utils.modelStateErrorHandler(error)));
+                            });
+                    }
+                    
                 }
-                
+                else{
+                    noEmptyQuestions = false;
+                }
             }
             else{
-                noEmptyQuestions = false;
+                var error= {message:'Please select different questions'}
+                this.props.dispatch(alertActions.error(utils.modelStateErrorHandler(error)));
             }
     }
 
@@ -299,7 +316,7 @@ class SecurityQuestions extends React.Component{
 
     componentDidMount() {
         // this.getRegistrationDetails();
-        this.getBvnDetails();
+        // this.getBvnDetails();
         this.getSecurityQuestions();
     }
 
@@ -333,7 +350,7 @@ class SecurityQuestions extends React.Component{
                     <div className="col-12">
                         <h3>Security Questions<span></span></h3>
                         <p>
-                            We’re so glad you’re ready to come onboard. Let’s start by getting to know you better. <br/> ANSWERS ARE CASE SENSITIVE
+                            We’re so glad you’re ready to come onboard. Let’s start by getting to know you better.
                         </p>
                     </div>
                 </div>
