@@ -181,7 +181,7 @@ class Signup extends React.Component{
                         <form className="onboard-form" onSubmit={this.handleSubmit}>
                             {error && <div className="info-label error">{error}</div>}
                             <div className={ !formError ? "input-ctn" : "input-ctn form-error" }>
-                                <label>Please enter your phone number (e.g +234-xxx-xxx-xxxx)</label>
+                                <label>Please enter your phone number (e.g +234-8xx-xxx-xxxx)</label>
                                 <ReactTelephoneInput
                                     inputProps = {this.state.inputProps}
                                     defaultCountry="ng"
