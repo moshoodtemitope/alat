@@ -48,7 +48,24 @@ class Dashboard extends React.Component{
         }
         else if(accounts.user_account === userConstants.DASHBOARD_ACCOUNT_FETCH_FAILURE){
             return(
-                <h4 className="text-center" style={{ marginTop: '65px'}}>No Account Data Found</h4>
+                // <h4 className="text-center" style={{ marginTop: '65px'}}>No Account Data Found</h4>
+                <div className="account-card m-b-50" style={{ minHeight : '190px' }}>
+                <div className="account-name">
+                    {/* <p>{acct.AccountType} <span>History</span></p> */}
+                </div>
+                <div className="account-no-status clearfix">
+                    <p className="account-no">{accounts.user_account_data.error}</p>
+                    {/* <p className="account-no">Acct No: {acct.AccountNumber}</p> */}
+                    {/* {acct.AccountStatus==='A' && <p className="account-status">Active</p>}
+                    {acct.AccountStatus==='PD' && <p className="account-status">Pending</p>}
+                    {acct.AccountStatus==='P' && <p className="account-status">Restricted</p>} */}
+                </div>
+
+                <div className="account-balance clearfix">
+                    <p className="balance">₦###,###</p>
+                    {/* <a href="#" className="btn-alat btn-white m-t-10 btn-sm">Link BVN</a> */}
+                </div>
+            </div>
             );
         }
         else if (accounts.user_account === userConstants.DASHBOARD_ACCOUNT_FETCH_SUCCESS){
@@ -325,7 +342,8 @@ function mapStateToProps(state) {
     return {
         user,
         accounts: state.dashboard_accounts,
-        accounts_history: state.dashboard_accounts_history
+        accounts_history: state.dashboard_accounts_history,
+        OnboardingPriority: state.dashboard_userOnboardingPriority
     };
 }
 
