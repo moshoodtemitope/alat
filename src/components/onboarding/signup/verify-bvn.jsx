@@ -105,8 +105,8 @@ class VerifyBvn extends React.Component{
     }
 
     componentDidMount() {
-        this.getRegistrationDetails();
-        this.getBvnDetails();
+        // this.getRegistrationDetails();
+        // this.getBvnDetails();
     }
 
     submitOtp=(e)=>{
@@ -280,6 +280,9 @@ class VerifyBvn extends React.Component{
                                 {state.resendingOtp === false && state.resendStatus !== "" &&
                                     <span className="grayed-cta-link text-left pull-right">{state.resendStatus}</span>
                                 }
+                                <span className="text-right pull-left cta-link">
+                                    <a href="#">Call my phone</a>
+                                </span>
                             {/* <span className="text-left pull-right cta-link">
                                 {state.resendingOtp === false && state.resendStatus === "" && state.resentCount< 2 &&
                                     <a className="cta-link" onClick={this.resendCode}>Resend code</a>
@@ -293,9 +296,7 @@ class VerifyBvn extends React.Component{
 
                             </span> */}
 
-                            {/* <span className="text-right pull-right cta-link">
-                                <a href="#">Call my phone</a>
-                            </span> */}
+                            
                         </p>
                     </div>
                 </div>
