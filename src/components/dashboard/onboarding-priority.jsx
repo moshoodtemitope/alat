@@ -61,6 +61,7 @@ class OnboardingPriority extends React.Component{
                     prorityViewModel = { message:"Fund your ALAT Account",
                     link:'#',
                     linkText:'Fund Account'};
+                return prorityViewModel;
             case 'AccountReactivation' : 
                     prorityViewModel = { message:"Your account has been blocked due to an extended period of inactivity.Reactivate your account to remove this restriction.",
                     link:'#',

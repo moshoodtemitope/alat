@@ -167,7 +167,7 @@ class Dashboard extends React.Component{
         }
         else if (accountsHistory.account_history === userConstants.DASHBOARD_ACCOUNT_FETCH_HISTORY_SUCCESS){
             let transHistory = accountsHistory.account_history_data.response;
-            console.log("We are here now o");
+            // console.log("We are here now o");
             return(
                 <Fragment>
                     {transHistory.map(function(hist, key) {
