@@ -4,9 +4,17 @@ import { alert} from "./alert.reducer";
 import {dashboard, transfer, onboarding} from "./export";
 import {bankListRequest, beneficiariesRequest} from "./transfer.reducer";
 import {accountHistoryReducer} from "./dashboard.reducer";
+import { userConstants } from "../constants/onboarding/user.constants";
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
-const rootReducer = combineReducers({
+const rootReducer = (state, action)=>{
+    if(action.type === userConstants.LOGOUT)
+        {   state = undefined;    }
+    return appReducer(state, action)
+
+};
+
+const appReducer = combineReducers({
     authentication,
     // registration,
     alert,
@@ -26,4 +34,5 @@ const rootReducer = combineReducers({
 
 });
 
+//export defualt appReducer;
 export default rootReducer;

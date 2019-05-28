@@ -29,7 +29,8 @@ class Login extends React.Component{
           history.listen((location, action) => {
             //  dispatch(alertActions.clear());
           });
-          dispatch(userActions.logout());
+          
+          //dispatch(userActions.logout());
           this.handleChange = this.handleChange.bind(this);
           this.handleSubmit = this.handleSubmit.bind(this);
       }
