@@ -30,6 +30,8 @@ class VerifyBvn extends React.Component{
             otpValue: '',
             formError: '',
             resentCount:0,
+            callCount:0,
+            otpCall: false,
             pageHeader:'BVN Verification',
             // resendingOtp: false,
             // resendStatus: ""
@@ -61,11 +63,11 @@ class VerifyBvn extends React.Component{
         let phoneEmail = "";
         if(bvnStatus === BVN_VERIFICATION_SUCCESS){
             let resp = bvnDetails.bvn_verification_data.response;
-            this.setState({otpSent: true, bvnPhoneNo: resp.bvnPhoneNo, phoneNo: resp.phoneNo, pageHeader: 'BVN Verification'});
+            this.setState({otpSent: true, bvnPhoneNo: resp.bvnPhoneNo, isBvn:true, phoneNo: resp.phoneNo, otpTracker:resp.tracker,  pageHeader: 'BVN Verification'});
         }
         else if(bvnSkipStatus ===SKIP_BVN_SUCCESS){
             let resp = bvnSkipDetails.bvn_verification_data.response;
-            this.setState({otpSent: true,phoneNo: resp.phoneNo, maskedPhoneNo:resp.maskedPhoneNo, pageHeader:'Phone Number Verification'});
+            this.setState({otpSent: true,phoneNo: resp.phoneNo, isBvn:false, otpTracker:resp.tracker, maskedPhoneNo:resp.maskedPhoneNo, pageHeader:'Phone Number Verification'});
         }
         else{
             this.setState({otpSent: false});
@@ -75,30 +77,38 @@ class VerifyBvn extends React.Component{
         
     }
 
-    resendCode(){
+    resendCode(isVoice, tracker, isBvn){
         this.setState({resendingOtp: true});
         this.setState({error: ''});
         let data = {
             phoneNo: this.state.phoneNo,
             otpType: null,
-            imei: '123456789012345'
+            imei: '123456789012345',
+            ForBVN: isBvn,
+            Tracker: tracker==null?'1234':tracker,
+            UseVoice: isVoice
         },
-        {resentCount} = this.state,
+        {resentCount, callCount} = this.state,
         consume = ApiService.request(routes.RESENDOTP, "POST", data);
         return consume.then((response)=>{
             // return (this.setState({resendingOtp: false, otpSent: true,  resendStatus: "OPT sent!"}));
-            resentCount ++;
+            if(isVoice){
+                callCount++
+            }else{
+                resentCount ++;
+            }
+            
             // if(resentCount>=2){
 
             // }
-            console.log('count is', resentCount);
-            this.setState({resendingOtp: false,resentCount, otpSent: true, failedVerfication:false,  resendStatus: "OPT sent!"})
+            // console.log('count is', resentCount);
+            this.setState({resendingOtp: false,resentCount,callCount, otpSent: true, otpCall:isVoice, failedVerfication:false,  resendStatus: "OPT sent!"})
             
         })
         .catch(err=>{
             //new
            
-            this.setState({resendingOtp: false, otpSent: false, otpStatusMessage: modelStateErrorHandler(err)});
+            this.setState({resendingOtp: false, otpSent: false, otpCall:false,  otpStatusMessage: modelStateErrorHandler(err)});
            
            
         })
@@ -106,7 +116,7 @@ class VerifyBvn extends React.Component{
 
     componentDidMount() {
         // this.getRegistrationDetails();
-        // this.getBvnDetails();
+        this.getBvnDetails();
     }
 
     submitOtp=(e)=>{
@@ -213,9 +223,16 @@ class VerifyBvn extends React.Component{
                 <div className="row">
                     <div className="col-12">
                         <h3>{this.state.pageHeader}<span></span></h3>
-                        {state.otpSent===true &&
+                        {state.otpSent===true && state.otpCall===false &&
                             <div className="info-label success">
                                 We have sent a verification code to ( {(state.bvnPhoneNo) && state.bvnPhoneNo} {(!state.bvnPhoneNo && state.maskedPhoneNo) && state.maskedPhoneNo} )<br/>
+                                Type the code you received below
+                            </div>
+                        }
+
+                        {state.otpSent===true && state.otpCall===true &&
+                            <div className="info-label success">
+                                We wil call you on ( {(state.bvnPhoneNo) && state.bvnPhoneNo} {(!state.bvnPhoneNo && state.maskedPhoneNo) && state.maskedPhoneNo} ) for your OTP code<br/>
                                 Type the code you received below
                             </div>
                         }
@@ -272,7 +289,7 @@ class VerifyBvn extends React.Component{
 
                         <p>
                                 {state.resendingOtp === false && state.resendStatus === "" && state.resentCount< 2 &&
-                                     <span className="text-left pull-right cta-link"><a className="cta-link" onClick={this.resendCode}>Resend code</a></span>
+                                     <span className="text-left pull-right cta-link"><a className="cta-link" onClick={()=>this.resendCode(false, this.state.otpTracker, this.state.isBvn )}>Resend code</a></span>
                                 }
                                 {state.resendingOtp === true || state.resentCount>= 2 &&
                                     <span className="grayed-cta-link text-left pull-right">Resend code</span>
@@ -280,9 +297,17 @@ class VerifyBvn extends React.Component{
                                 {state.resendingOtp === false && state.resendStatus !== "" &&
                                     <span className="grayed-cta-link text-left pull-right">{state.resendStatus}</span>
                                 }
-                                <span className="text-right pull-left cta-link">
-                                    <a href="#">Call my phone</a>
-                                </span>
+
+                                {state.resendingOtp === false && state.resendStatus === "" &&
+                                     <span className="text-right pull-left cta-link"><a className="cta-link" onClick={()=>this.resendCode(true, this.state.otpTracker, this.state.isBvn )}>Call my phone</a></span>
+                                }
+
+                                {state.resendingOtp === false && state.callCount >=2 &&
+                                     <span className="text-right pull-left grayed-cta-link">Call my phone</span>
+                                }
+                                {/* <span className="text-right pull-left cta-link">
+                                    <a >Call my phone</a>
+                                </span> */}
                             {/* <span className="text-left pull-right cta-link">
                                 {state.resendingOtp === false && state.resendStatus === "" && state.resentCount< 2 &&
                                     <a className="cta-link" onClick={this.resendCode}>Resend code</a>
