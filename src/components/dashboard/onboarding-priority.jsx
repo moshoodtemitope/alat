@@ -27,50 +27,53 @@ class OnboardingPriority extends React.Component{
     }
 
     getCorrespondingMessage(object){
+        console.log(object);
         let prorityViewModel = { message:'', link:'', linkText:''};
         switch (object.onboarding_priority_data.response.validationError) {
             case 'Completed':
                 if(object.onboarding_priority_data.response.score < 100){
-                    prorityViewModel.message = "Your documents have been received and are being verified. All restrictions on your account will be removed within two business days";
+                    prorityViewModel.message =  "Your documents have been received and are being verified. All restrictions on your account will be removed within two business days";
                     prorityViewModel.link="";
                     prorityViewModel.linkText = "";
-                    return prorityViewModel;
+                    break;
                 }
-                return prorityViewModel = { message:'', link:'', linkText:''};
+                 prorityViewModel = { message:'', link:'', linkText:''};
+                 break;
             case 'LinkBvn':
                     prorityViewModel = { message:"Link your BVN and get your account",
                                          link:'#',
                                           linkText:'Link BVN'};
-                return prorityViewModel;
-            case 'SetALATPin':
+                break;
+            case 'SetALATPin': 
                     prorityViewModel = { message:"Set your ALAT Pin",
                     link:'#',
                      linkText:'Set PIN'};
-                return prorityViewModel;
+                break;
             case 'UploadSelfie':
                     prorityViewModel = { message:"Upload your passport(selfie) and signature.",
                     link:'#',
                      linkText:'Update Profile'};
-                return prorityViewModel;
+                break;
             case 'UploadId':
                     prorityViewModel = { message:"Upload identification/utility documents",
                     link:'#',
                      linkText:'Upload Document'};
-                return prorityViewModel;
+                break;
             case 'FundAccount':
                     prorityViewModel = { message:"Fund your ALAT Account",
                     link:'#',
                     linkText:'Fund Account'};
+                break;
             case 'AccountReactivation' : 
                     prorityViewModel = { message:"Your account has been blocked due to an extended period of inactivity.Reactivate your account to remove this restriction.",
                     link:'#',
                     linkText:'Reactivate your Account'};
-                return prorityViewModel;
+                break;
             case 'AccountReactivationInProgress' : 
                 prorityViewModel = { message:"Your account reactivation is in progress and will be completed in 48 hours. Thank you",
                 link:'#',
                 linkText:''};
-            return prorityViewModel;
+                break;
             // case 'AccountReactivation':
             //     return "Your account has been blocked due to an extended period of inactivity.Reactivate your account to remove this restriction.";
             // case 'AccountReactivationInProgress':
@@ -84,6 +87,11 @@ class OnboardingPriority extends React.Component{
                      linkText:''};
                 return "Okay";
         }
+        if(object.onboarding_priority_data.response.message !=="")
+        {
+            prorityViewModel.message = object.onboarding_priority_data.response.message; 
+        }
+        return prorityViewModel;
     }
 
 
@@ -106,11 +114,13 @@ class OnboardingPriority extends React.Component{
         if(priorityObject.onboarding_priority === userConstants.DASHBOARD_ONBOARDING_PRIORITY_SUCCESS && priorityObject.onboarding_priority_data){
             let prorityViewModel = { message:'', link:'', linkText:''};
             if(priorityObject.onboarding_priority_data.response.message !== ""){
-                prorityViewModel.message = priorityObject.onboarding_priority_data.response.message;
+                //prorityViewModel.message = priorityObject.onboarding_priority_data.response.message;
+                prorityViewModel = this.getCorrespondingMessage(priorityObject);
             }
             else{
                 prorityViewModel = this.getCorrespondingMessage(priorityObject);
             }
+            //console.log(prorityViewModel);
             if(priorityObject.onboarding_priority_data.response.score < 100 || !user.isAlatPinSet) {
 
                 return (
@@ -126,14 +136,14 @@ class OnboardingPriority extends React.Component{
                             {user.isBvnLinked && <li className="active">Link BVN</li>}
                             {!user.isBvnLinked && <li>Link BVN</li>}
 
+                            {user.isAlatPinSet && <li className="active">Set PIN</li>}
+                            {!user.isAlatPinSet && <li>Set PIN</li>}
+
                             {user.isAlatLiteDocCompleted && <li className="active">Update Profile</li>}
                             {!user.isAlatLiteDocCompleted && <li>Update Profile</li>}
 
                             {user.isDocumentUploaded && <li className="active">Upload Document</li>}
                             {!user.isDocumentUploaded && <li>Upload Document</li>}
-
-                            {user.isAlatPinSet && <li className="active">Set PIN</li>}
-                            {!user.isAlatPinSet && <li>Set PIN</li>}
 
                             {priorityObject.onboarding_priority_data.response.score < 100 && <li>Fund Account</li>}
                             {priorityObject.onboarding_priority_data.response.score >= 100 && <li className="active">Fund Account</li>}
