@@ -32,7 +32,7 @@ class Dashboard extends React.Component{
         const { dispatch } = this.props;
         // console.log(this.props);
         console.log(this.state.user.token);
-        dispatch(getAccounts(this.state.user.token));
+        dispatch(getAccounts(this.state.user.token, true));
     }
 
     componentDidMount() {
@@ -105,6 +105,7 @@ class Dashboard extends React.Component{
                                         {acct.AccountStatus==='A' && <p className="account-status">Active</p>}
                                         {acct.AccountStatus==='PD' && <p className="account-status">Pending</p>}
                                         {acct.AccountStatus==='P' && <p className="account-status">Restricted</p>}
+                                        {acct.AccountStatus==='I' && <p className="account-status">Inactive</p>}
                                     </div>
     
                                     <div className="account-balance clearfix">
@@ -175,6 +176,8 @@ class Dashboard extends React.Component{
         // }
     }
 
+
+
     renderHistory(){
         let props = this.props;
         let accountsHistory = props.accounts_history;
@@ -198,9 +201,9 @@ class Dashboard extends React.Component{
                                 <div className="history-list clearfix">
                                     {/* <img src={this.renderHistoryImage()}/> */}
                                     {this.renderHistoryImage(trans)}
-                                    <p className="desc">{trans.Narration}<span className="date">{trans.TransactionDate}</span>
+                                    <p className="desc">{trans.Narration}<span className="date">{utils.FormartDate(trans.TransactionDate)}</span>
                                     </p>
-                                    <p className={trans.TransactionType ='D' ? "balance debit" : "balance credit"}>₦{utils.formatAmount(trans.Amount)}</p> 
+                                    <p className={trans.TransactionType ==='D' ? "balance debit" : "balance credit"}>₦{utils.formatAmount(trans.Amount)}</p> 
                                 </div>
                             </div>
                         ))
@@ -335,7 +338,6 @@ class Dashboard extends React.Component{
                                                 </div>
                                             </div>
                                         </div>
-
                                         <AnnouncementCard />
                                     </div>
                                 </div>
