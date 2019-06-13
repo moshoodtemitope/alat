@@ -15,7 +15,7 @@ class MenuContainer extends React.Component{
                             <div className="col-sm-12">
                                 <ul>
                                     <li>
-                                        <NavLink to="/dashboard" className="active clearfix"><i className="demo-icon icon-home" aria-hidden="true"></i><span>Dashboard</span></NavLink>
+                                        <NavLink to="/dashboard" className="clearfix"><i className="demo-icon icon-home" aria-hidden="true"></i><span>Dashboard</span></NavLink>
                                     </li>
                                     <li><a className="clearfix"><i className="demo-icon icon-send-money" aria-hidden="true"></i>
                                         <span>Transfer</span></a>
@@ -28,7 +28,7 @@ class MenuContainer extends React.Component{
                                             <li><a href="#">To Email / Phone No</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="#" className="clearfix"><i className="demo-icon icon-bills" aria-hidden="true"></i> <span>Airtime & Bills</span></a>
+                                    <li><NavLink to="/bills" className="clearfix"><i className="demo-icon icon-bills" aria-hidden="true"></i> <span>Airtime & Bills</span></NavLink>
                                     </li>
                                     <li><a href="#" className="clearfix"><i className="demo-icon icon-target" aria-hidden="true"></i><span> Savings</span></a></li>
                                     <li><a href="transaction-history.html" className="clearfix"><i className="demo-icon icon-loans" aria-hidden="true"></i><span> Loans</span></a>
