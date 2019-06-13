@@ -2,7 +2,8 @@ import * as React from "react";
 import {Redirect} from "react-router";
 import {Observable} from "rxjs";
 import {history} from "../_helpers/history";
-// import {userActions} from "../_actions";
+import {userActions} from "../redux/actions/onboarding/user.actions";
+import { dispatch } from "rxjs/internal/observable/pairs";
 
 const axios = require('axios');
 
@@ -91,8 +92,8 @@ export class ApiService {
                 // console.log(error.response.status);
                 // console.log(error.response.headers);
                  if (error.response.status === 401 && error.response.statusText.toLowerCase().includes('token not valid')) {
-                        
-                        history.push('/');
+                        dispatch(userActions.logout());
+                        //history.push('/');
                     }else {
                         return service;
                     }
