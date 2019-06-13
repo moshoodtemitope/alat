@@ -43,15 +43,16 @@ export class ApiService {
             return service.then(function (response) {
                 return service;
             }).catch(function (error) {
-                
+                console.log(error);
                 // return service;
                 if (error.response) {
+                    console.log(error.response);
                     // The request was made and the server responded with a status code
                     // that falls out of the range of 2xx
                     // console.log(error.response.data);
                     // console.log(error.response.status);
-                    // console.log(error.response.headers);
-                     if (error.response.status === 401 && error.response.statusText.toLowerCase().includes('token not valid')) {
+                    // console.log(error.response.headers);  && error.response.statusText.toLowerCase().includes('token not valid')
+                     if (error.response.status === 401) {
                             
                             history.push('/');
                         }else {
