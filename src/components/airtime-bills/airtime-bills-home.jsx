@@ -3,7 +3,9 @@ import InnerContainer from '../../shared/templates/inner-container';
 import { Fragment } from 'react';
 import Airtime from './airtime/airtime';
 import { Link, NavLink, Route } from 'react-router-dom';
-import Data from './data';
+// import Data from './data';
+// import  Airtime  from './airtime';
+import Data from './data/data';
 
 class Bills extends Component {
 

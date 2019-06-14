@@ -5,6 +5,7 @@ import {dashboard, transfer, onboarding, airtime} from "./export";
 import {bankListRequest, beneficiariesRequest} from "./transfer.reducer";
 import {accountHistoryReducer} from "./dashboard.reducer";
 import { userConstants } from "../constants/onboarding/user.constants";
+import dataReducer from './data.reducer';
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
 const rootReducer = (state, action)=>{
@@ -30,8 +31,13 @@ const appReducer = combineReducers({
     transfer_bankList: transfer.bankListRequest,
     transfer_beneficiaries: transfer.beneficiariesRequest,
     transfer_fetch_user_account: transfer.fetchAccountDetailsRequest,
-    airtime_beneficiaries: airtime.airtimeBeneficiariesReducer
+    airtime_beneficiaries: airtime.airtimeBeneficiariesReducer,
     // storage_reducer
+    // storage_reducer
+
+    //data_reducer
+    data_reducer: dataReducer
+
 });
 
 //export defualt appReducer;
