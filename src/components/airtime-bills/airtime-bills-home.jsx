@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import InnerContainer from '../../shared/templates/inner-container';
 import { Fragment } from 'react';
-import  Airtime  from './airtime/airtime';
-import {Link, NavLink, Route } from 'react-router-dom';
+import Airtime from './airtime/airtime';
+import { Link, NavLink, Route } from 'react-router-dom';
 import Data from './data';
 
 class Bills extends Component {
 
-    componentDidMount(){
+    
+
+    componentDidMount() {
 
     }
 
@@ -34,13 +36,10 @@ class Bills extends Component {
                                     </div>
                                 </div>
                                 {this.props.children}
-                           
+                                <Route path={'/bills/airtime'} component={Airtime} />
+                                <Route path={'/bills/data'} component={Data} />
                             </div>
                         </div>
-                        
-                        {/* <Route path={'/bills'} /> */}
-                        <Route path={'/bills/airtime'} component= {Airtime}/>
-                        <Route path={'/bills/data'} component= {Data}/>
                     </div>
                 </InnerContainer>
             </Fragment>
