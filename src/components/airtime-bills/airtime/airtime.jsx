@@ -56,7 +56,6 @@ class Airtime extends Component {
         return (
             <div className="col-sm-12">
                 <div className="row">
-
                     {this.renderAirtimeBeneficairy()}
                 </div>
             </div>)
@@ -95,8 +94,6 @@ class Airtime extends Component {
                         <center>
                             <img src={phoneimg} className="m-b-30" />
                             <p className="grey-text no-paylink">Loading saved beneficiaries...</p>
-                            {/* <p className="grey-text no-paylink">No saved airtime recharge</p> */}
-                            {/* <a href="send-contact3.html"><button class="btn-alat">Buy Airtime</button></a> */}
                         </center>
                     </div>
                 </div>
@@ -115,7 +112,6 @@ class Airtime extends Component {
                             </div>
                         </div>
                         {
-                            //    this.props.airtime_beneficiary.airtime_beneficiary_data.response
                             this.renderAirtimeBeneficiaries(this.props.airtime_beneficiary.airtime_beneficiary_data.response)
                         }
                     </Fragment>
@@ -138,13 +134,11 @@ class Airtime extends Component {
 }
 
 function mapStateToProps(state) {
-    //console.log(state);
     const { authentication } = state;
     const { user } = authentication;
     return {
         user,
         airtime_beneficiary: state.airtime_beneficiaries
-        //accounts: state.dashboard_accounts,
     };
 }
 
