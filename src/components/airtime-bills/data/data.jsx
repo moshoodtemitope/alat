@@ -2,11 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Index from '.';
 import * as actions from '../../../redux/actions/dataActions/export';
-// import { from } from 'rxjs';
-// import { dispatch } from 'rxjs/internal/observable/pairs';
-
-// var currentSubComponent = "Index";
-// var nextComponent;
 
 class Data extends Component{
     constructor(props) {
@@ -20,19 +15,8 @@ class Data extends Component{
         this.props.fetchBeneficiaries(this.state.user.token);
     }
    render() {
-
-    // switch(currentSubComponent){
-    //     case ("Index") :
-    //     nextComponent = <Index />;
-    //     break;
-    //     case ("changed") :
-    //     nextComponent = <h1>changed</h1>;
-    //     break; 
-    //     default :
-    //     nextComponent = <Index />;
-    // }
        return(
-           <Index hasBeneficiaries={this.props.beneficiaries.length > 0}/>
+           <Index beneficiaries={this.props.beneficiaries} hasBeneficiaries={this.props.beneficiaries.length > 0}/>
        );
    }
 }
