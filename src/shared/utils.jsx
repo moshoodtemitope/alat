@@ -3,6 +3,10 @@ export const formatAmount = (amount)=>{
     return amount.toLocaleString(navigator.language, { minimumFractionDigits: 2 });
 };
 
+export const formatAmountNoDecimal = (amount)=>{
+    return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+};
+
 export const canvasToFile = (dataURL) =>{
     let byteString;
     byteString = atob(dataURL.split(',')[1]);
@@ -73,4 +77,22 @@ export const FormartDate =(date)=>{
 let current_datetime = new Date(date.toLocaleString());
 let formatted_date = current_datetime.getDate() + " " + months[current_datetime.getMonth()] + ", " + current_datetime.getFullYear();
 return formatted_date;
+}
+
+
+export const checkInputValidation = (value, rules) => {
+    let isValid = true;
+
+    if (rules.required) {
+        isValid = value.trim() !== '' && isValid;
+    }
+    if (rules.minLength){
+        isValid = value.length >= rules.minLength && isValid
+    }
+    if(rules.isEmail){
+        const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+        isValid = pattern.test(value) && isValid
+    }
+
+    return isValid;
 }
