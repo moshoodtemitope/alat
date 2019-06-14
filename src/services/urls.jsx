@@ -41,6 +41,9 @@ export const routes = {
     FETCH_ACCOUNT_DETAILS: BASEURL + '/PaymentApi/api/Accounts/VerifyAccountName',
     //PaymentApi/api/Accounts/VerifyAccountName
 
+    //Airtime
+    AIRTIME_BENEFICIARIES : BASEURL + '/PaymentApi/api/AirtimeBill/GetAirtimeBeneficiaries',
+
     //Data
-    FETCH_DATA_BENEFICIARIES : BASEURL + '/PaymentApi/api/AirtimeBill/GetBillBeneficiaries',
+    FETCH_DATA_BENEFICIARIES : BASEURL + '/PaymentApi/api/AirtimeBill/GetBillBeneficiaries'
 };

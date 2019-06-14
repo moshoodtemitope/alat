@@ -43,7 +43,8 @@ class AuthenticatedRoutes extends React.Component{
                 <Switch>
                     {/*<Route path="/dashboard" component={Dashboard} />*/}
                     <PrivateRoute path='/dashboard' authed={this.props.user} component={Dashboard} />
-                    <PrivateRoute path='/bills' authed={this.props.user} component={Bills}/>
+                    <PrivateRoute path='/bills/airtime' authed={this.props.user} component={Bills}/>
+                    <PrivateRoute path='/bills/data' authed={this.props.user} component={Bills}/>
                 </Switch>
             </Router>
             // <Router history={history}>

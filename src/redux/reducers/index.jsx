@@ -1,7 +1,7 @@
 import {combineReducers} from "redux";
 import {authentication} from "./authentication.reducer";
 import { alert} from "./alert.reducer";
-import {dashboard, transfer, onboarding} from "./export";
+import {dashboard, transfer, onboarding, airtime} from "./export";
 import {bankListRequest, beneficiariesRequest} from "./transfer.reducer";
 import {accountHistoryReducer} from "./dashboard.reducer";
 import { userConstants } from "../constants/onboarding/user.constants";
@@ -31,10 +31,12 @@ const appReducer = combineReducers({
     transfer_bankList: transfer.bankListRequest,
     transfer_beneficiaries: transfer.beneficiariesRequest,
     transfer_fetch_user_account: transfer.fetchAccountDetailsRequest,
+    airtime_beneficiaries: airtime.airtimeBeneficiariesReducer,
+    // storage_reducer
     // storage_reducer
 
     //data_reducer
-    data_reducer: dataReducer,
+    data_reducer: dataReducer
 
 });
 
