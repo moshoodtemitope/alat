@@ -40,13 +40,12 @@ class Bills extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                                                      
+
                                 {this.props.children}
                                 <Switch>
-                                    <Route  to={'/bills/airtime'} component={Airtime} />
-                                    <Route to={'bills/airtime/buy'} component={BuyAirtime} />
-                                    <Route to={'bills/data'} component={Data} />
-                                    </Switch>
+                                <Route exact to={'bills/data'} component={Data} />
+                                <Route exact to={'/bills/airtime'} component={Airtime} />
+                                </Switch>
                             </div>
                         </div>
                     </div>

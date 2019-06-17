@@ -46,9 +46,9 @@ class AuthenticatedRoutes extends React.Component{
                     {/*<Route path="/dashboard" component={Dashboard} />*/}
                     <PrivateRoute path='/dashboard' authed={this.props.user} component={Dashboard} />
                     {/* <BillsRoute authed={this.props.user}/> */}
-                    <PrivateRoute exact path='/bills' authed={this.props.user} component= {Bills}>
+                    {/* <PrivateRoute exact path='/bills' authed={this.props.user} component= {Bills}>
                         <Redirect to={'/bills/airtime'} />
-                    </PrivateRoute>
+                    </PrivateRoute> */}
                     <PrivateRoute path='/bills/airtime' authed={this.props.user} component={Bills}/>
                     <PrivateRoute path='/bills/data' authed={this.props.user} component={Bills}/>
                 </Switch>
