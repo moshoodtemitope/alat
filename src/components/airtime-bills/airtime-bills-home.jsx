@@ -4,7 +4,6 @@ import { Fragment } from 'react';
 import Airtime from './airtime/airtime';
 import BuyAirtime from './airtime/airtime-buy'
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
-import { Router } from 'react-router';
 // import Data from './data';
 // import  Airtime  from './airtime';
 import Data from './data/data';
@@ -42,10 +41,9 @@ class Bills extends Component {
                                 </div>
 
                                 {this.props.children}
-                                <Switch>
-                                <Route exact to={'bills/data'} component={Data} />
-                                <Route exact to={'/bills/airtime'} component={Airtime} />
-                                </Switch>
+                                
+                                <Route to={'/bills/airtime'} component={Airtime} />
+                                <Route to={'bills/data'} component={Data} />
                             </div>
                         </div>
                     </div>

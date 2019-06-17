@@ -1,11 +1,33 @@
 import React, { Component, Fragment } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { airtimeConstants } from '../../../redux/constants/airtime/airtime.constants';
 import Airtime from './airtime';
 
 class BuyAirtime extends Component {
+    constructor(props){
+        super(props);
+        this.state={
+            phone: "",
+            provider: "",
+            amount: "",
+            phoneIvalid: true,
+        };
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+handleSubmit = (e)=>{
+    e.preventDefault();
+}
+
+handleChange = (e)=>{
+    const name = e.target.name;
+    this.setState({ [name] : e.target.value });
+}
 
     render() {
+        let  { phoneIvalid, phone } = this.state;
+        let props = this.props;
         return (
             <div className="col-sm-12">
                 <div className="row">
@@ -21,10 +43,12 @@ class BuyAirtime extends Component {
                                             {/* <div className="selectize-control single"><div className="selectize-input items not-full has-options"><input tabIndex="-32768" style={{width: '101px'}} type="text" placeholder="Select a Network" autoComplete="off" /></div>
                                                 <div className="selectize-dropdown single" style={{left: '0px' top: 43px; width: 400px; display: none;}}><div className="selectize-dropdown-content"></div></div></div> */}
                                         </div>
-
-                                        <div className="input-ctn">
-                                            <label>Phone Number</label>
-                                            <input type="tel"></input>
+                                        <div className={phoneIvalid ? "input-ctn" : "input-ctn form-error"}>
+                                            <label>Enter your Phone number</label>
+                                            <input type="text" onChange={this.handleChange} maxLength="11" name="phone" value={phone} placeholder="08033798761" />
+                                            {!phoneIvalid &&
+                                                <div className="text-danger">A valid phone number is required</div>
+                                            }
                                         </div>
 
                                         <div className="input-ctn">
@@ -44,7 +68,7 @@ class BuyAirtime extends Component {
                             </div>
 
                             <center>
-                                <Link to={'/bills/airtime'} component={Airtime} className="add-bene m-t-50" href="add-beneficiary.html">Go Back</Link>
+                                <Link to={'/bills/airtime'} className="add-bene m-t-50">Go Back</Link>
                             </center>
                         </div>
                     </div>
