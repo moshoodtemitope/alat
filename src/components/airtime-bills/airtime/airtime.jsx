@@ -1,5 +1,6 @@
 
-import React, { Component, Fragment } from 'react'
+import React, { Component, Fragment } from 'react';
+import {Link, NavLink, Route} from 'react-router-dom';
 import phoneimg from "../../../assets/img/phone-airtime.svg"
 import { connect } from "react-redux";
 import { getAirtimeBeneficiaries } from "../../../redux/actions/airtime-bill/airtime.action";
@@ -40,10 +41,10 @@ class Airtime extends Component {
             case 'GLO':
                 return (<img src={gloImg} srcSet="img/glo@2x.png 2x" />)
                 break;
-            case 'AIRTEL':
+            case 'Airtel':
                 return (<img src={airtelImg} srcSet="img/airtel@2x.png 2x" />)
                 break;
-            case '9Mobile':
+            case 'Etisalat':
                 return (<img src={etiImg} srcSet="img/9mobile@2x.png 2x" />)
                 break;
             default:
@@ -107,7 +108,7 @@ class Airtime extends Component {
                         <div className="col-sm-12">
                             <div className="row">
                                 <div className="col-sm-12">
-                                    <a href="airtime-1.html"><button className="btn-alat m-b-30 text-center">Buy Airtime</button></a>
+                                    <NavLink to={'/airtime/buy'}><button className="btn-alat m-b-30 text-center">Buy Airtime</button></NavLink>
                                 </div>
                             </div>
                         </div>

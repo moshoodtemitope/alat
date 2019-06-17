@@ -10,6 +10,8 @@ import Signup from "./onboarding/signup";
 import Bvn from "./onboarding/signup/bvn";
 import connect from "react-redux/es/connect/connect";
 import Bills from './airtime-bills/airtime-bills-home';
+import BillsRoute from './airtime-bills/bills-route';
+
 
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
@@ -43,8 +45,9 @@ class AuthenticatedRoutes extends React.Component{
                 <Switch>
                     {/*<Route path="/dashboard" component={Dashboard} />*/}
                     <PrivateRoute path='/dashboard' authed={this.props.user} component={Dashboard} />
-                    <PrivateRoute path='/bills/airtime' authed={this.props.user} component={Bills}/>
-                    <PrivateRoute path='/bills/data' authed={this.props.user} component={Bills}/>
+                    <BillsRoute authed={this.props.user}/>
+                    {/* <PrivateRoute path='/bills/airtime' authed={this.props.user} component={Bills}/>
+                    <PrivateRoute path='/bills/data' authed={this.props.user} component={Bills}/> */}
                 </Switch>
             </Router>
             // <Router history={history}>
@@ -54,7 +57,9 @@ class AuthenticatedRoutes extends React.Component{
             //         {/*<TransferRoute />*/}
             //         {/*<Route exact path="/transfer" component={TransferComponent} />*/}
             //     </Switch>
+            //  bills/airtime => bills/airtime/buy-airtime => bills/airtime/comfirm-aritme
             // </Router>
+
         )
     }
 }
