@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
+import { Fragment } from 'react';
 import {connect} from 'react-redux';
+import { Link, NavLink, Route } from 'react-router-dom';
+
 import Index from '.';
+import BuyData from './buy-data';
 import * as actions from '../../../redux/actions/dataActions/export';
 
 class Data extends Component{
@@ -16,14 +20,19 @@ class Data extends Component{
     }
    render() {
        return(
-           <Index beneficiaries={this.props.beneficiaries} hasBeneficiaries={this.props.beneficiaries.length > 0}/>
+           <Fragment>
+               {this.props.children}
+            <Route exact path='/bills/data' render={(props) => <Index {...props} beneficiaries={this.props.beneficiaries} isFetching={this.props.fetching} />} />
+            <Route path='/bills/data/buy' render={(props) => <BuyData {...props} />} />
+           </Fragment>
        );
    }
 }
 
 const mapStateToProps = state => {
     return{
-        beneficiaries : state.data_reducer.beneficiaries
+        beneficiaries : state.data_reducer.beneficiaries,
+        fetching: state.data_reducer.isFetching
     }
 }
 
