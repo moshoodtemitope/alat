@@ -1,4 +1,6 @@
 export {
     switchCurrentComponent,
-    fetchDataBeneficiaries
+    fetchDataBeneficiaries,
+    deleteDataBeneficiary,
+    fetchDataPlans
 } from './data.actions';
