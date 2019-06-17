@@ -15,16 +15,29 @@ export const updateObject = (oldObject, updatedProperties) => {
 //Utiliy End
 
 
-export const switchCurrentComponent = (name) => {
-    return{
-        type: actionTypes.SWITCH_CURRENT_COMPONENT,
-        name: name
-    };
-};
+// export const switchCurrentComponent = (name) => {
+//     return{
+//         type: actionTypes.SWITCH_CURRENT_COMPONENT,
+//         name: name
+//     };
+// };
+
+export const isFetchingTrue = () => {
+    return {
+        type: actionTypes.IS_FETCHING_TRUE
+    }
+}
+
+export const isFetchingFalse = () => {
+    return {
+        type: actionTypes.IS_FETCHING_FALSE
+    }
+}
 
 export const fetchDataBeneficiaries = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
+        dispatch(isFetchingTrue());
         let consume = ApiService.request(routes.FETCH_DATA_BENEFICIARIES, "POST", data, SystemConstant.HEADER);
         return consume
             .then(response => {
@@ -34,6 +47,7 @@ export const fetchDataBeneficiaries = (token, data) => {
             })
             .catch(error => {
                 // dispatch(failure(error.response.data.message.toString()));
+                dispatch(isFetchingFalse());
                 console.log(error);
             });
     };
@@ -46,3 +60,4 @@ export const fetchDataBeneficiaries = (token, data) => {
         data: response
      } }
 };
+
