@@ -8,7 +8,6 @@ const input = (props) => {
                     <input
                         {...props.elementConfig}
                         value={props.value}
-                        className={props.inputStyle}
                         onChange={props.changed} /> 
                         <TextError show={props.wrongInput} shouldValidate={props.isTouched}>{props.errormsg}</TextError>
                 </Base>;
@@ -21,7 +20,7 @@ const input = (props) => {
             inputElement = <textarea
                 {...props.elementConfig}
                 value={props.value}
-                onChange={props.changed} />;
+                onChange={props.changed}/>;
             break;
         default:
             inputElement = <input
