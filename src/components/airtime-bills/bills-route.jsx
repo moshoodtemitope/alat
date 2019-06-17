@@ -13,7 +13,7 @@ class BillsRoute extends React.Component{
         return (
                <Switch>
                    <Route exact path='/bills'>
-                   <Redirect to='/bills/airtime' />
+                        <Redirect to='/bills/airtime' />
                    </Route>
                     <Route path='/bills/airtime' authed={this.props.user} component={Bills}/>
                     <Route path='/bills/data' authed={this.props.user} component={Bills}/> 
