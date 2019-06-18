@@ -41,7 +41,7 @@ const index = (props) => {
                     {
                         props.beneficiaries.map((beneficiary, counter) => {
                             switch(beneficiary.BillerName) {
-                                case ('MTN'):
+                                case ('MTNN'):
                                     image = <img src={mtnLogo} alt="mtnlogo" />;
                                     break;
                                 case ('AIRTEL'):
