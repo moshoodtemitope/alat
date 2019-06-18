@@ -10,7 +10,7 @@ import { formatAmountNoDecimal } from '../../../shared/utils';
 import airtelLogo from '../../../assets/img/airtel.svg';
 import mtnLogo from '../../../assets/img/mtn.svg';
 import gloLogo from '../../../assets/img/glo.svg';
-import NmobileLogo from '../../../assets/img/9mobile.svg';
+import NinemobileLogo from '../../../assets/img/9mobile.svg';
 
 var image = null;
 class Index extends Component {
@@ -60,12 +60,8 @@ class Index extends Component {
                             </div>
                         </div>
                     </div>
-
-
-
                     <div className="col-sm-12">
                         <div className="row">
-
                             {
 
                                 this.props.beneficiaries.map((beneficiary, counter) => {
@@ -81,7 +77,7 @@ class Index extends Component {
                                             image = <img src={gloLogo} alt="gloLogo" />;
                                             break;
                                         case (4):
-                                            image = <img src={NmobileLogo} alt="9mobileLogo" />;
+                                            image = <img src={NinemobileLogo} alt="9mobileLogo" />;
                                             break;
                                         default:
                                             image = <img src={airtelLogo} alt="airtelLogo" />;
