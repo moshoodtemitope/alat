@@ -103,6 +103,7 @@ class BuyData extends Component {
         }
         updatedSelectOption.amount.value = dataPlanAmount.Amount;
         console.log(dataPlanAmount.Amount);
+        console.log("dataPlanAmount.Amount");
         this.setState({ buyDataForm: updatedSelectOption });
     }
 

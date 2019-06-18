@@ -2,15 +2,13 @@ import React from 'react';
 
 export const Input = (props) => {
     let inputElement = null;
-    let error = props.show && props.shouldValidate ? <p className="text-danger text-err">{props.children}</p> : null
+    // let error = props.show && props.shouldValidate ? <p className="text-danger text-err">{props.children}</p> : null
     const input =
         <input
             {...props.elementConfig}
             value={props.value}
             onChange={props.changed}
-            disabled={props.isDisabled} />
-    { error } {/* <TextError show={props.wrongInput} shouldValidate={props.isTouched}>{props.errormsg}</TextError> */ }
-
+            disabled={props.isDisabled} />;
 
     switch (props.elementType) {
         case ('input'):

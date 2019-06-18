@@ -1,5 +1,4 @@
 export {
-    switchCurrentComponent,
     fetchDataBeneficiaries,
     deleteDataBeneficiary,
     fetchDataPlans
