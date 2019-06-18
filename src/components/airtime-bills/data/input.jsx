@@ -35,7 +35,7 @@ export const Input = (props) => {
 export const Select = (props) =>(
     <div class="input-ctn">
         <label>{props.label}</label>
-        <select >
+        <select onChange={props.changed}>
             {props.optionsList.map((option, counter) => (
                 <option value={option.value} key={counter+1}>{option.displayValue}</option>
             ))}

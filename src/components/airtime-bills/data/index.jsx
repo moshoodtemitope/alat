@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'React';
 import { Link } from 'react-router-dom';
 
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import dataLogo from '../../../assets/img/phone-data.svg';
 import * as actions from '../../../redux/actions/dataActions/export';
@@ -52,14 +52,17 @@ class Index extends Component {
 
         if (this.props.beneficiaries.length > 0) {
             index = (
-                <div className="pt-3">
-                    <div className="col-sm-12 pb-4">
+                <Fragment>
+                    <div className="col-sm-12 mb-3">
                         <div className="row">
                             <div className="col-sm-12">
                                 <Link to={'/bills/data/buy'} className="btn-alat">Buy Data</Link>
                             </div>
                         </div>
                     </div>
+
+
+
                     <div className="col-sm-12">
                         <div className="row">
 
@@ -102,7 +105,9 @@ class Index extends Component {
                             }
                         </div>
                     </div>
-                </div>);
+                </Fragment>
+            );
+
 
         }
         return (
@@ -113,13 +118,13 @@ class Index extends Component {
                         <h3> Are you sure you want to delete?</h3>
                         <h6><b>{this.state.selectedBeneficiary.BillerAlias}</b></h6>
                         <div className="btn-opt">
-                            <button onClick={this.onCloseModal}  className="border-btn">Back</button>
+                            <button onClick={this.onCloseModal} className="border-btn">Back</button>
                             <button onClick={() => this.onDeleteBeneficiary(this.state.selectedBeneficiary)} className="btn-alat">Proceed</button>
                         </div>
                     </div>
                 </Modal>
                 {index}
-                
+
             </Fragment>
         )
     }
