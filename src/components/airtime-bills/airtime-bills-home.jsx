@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import InnerContainer from '../../shared/templates/inner-container';
 import { Fragment } from 'react';
 import Airtime from './airtime/airtime';
-import { Link, NavLink, Route } from 'react-router-dom';
+import BuyAirtime from './airtime/airtime-buy'
+import { Link, NavLink, Route, Switch } from 'react-router-dom';
 // import Data from './data';
 // import  Airtime  from './airtime';
 import Data from './data/data';
 
 class Bills extends Component {
 
-    
+
 
     componentDidMount() {
 
@@ -27,19 +28,22 @@ class Bills extends Component {
                                 </div>
 
                                 <div className="col-sm-12">
-                                    <div className="tab-overflow">
+                                    <div>
                                         <div className="sub-tab-nav">
                                             <ul>
                                                 <li><NavLink to={'/bills/airtime'}>Airtime</NavLink></li>
                                                 <li><NavLink to={'/bills/data'}>Data</NavLink></li>
+
                                                 {/* <li><a href="bills.html">Bills Payment</a></li> */}
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
+
                                 {this.props.children}
-                                <Route path={'/bills/airtime'} component={Airtime} />
-                                <Route path={'/bills/data'} component={Data} />
+                                
+                                <Route to={'/bills/airtime'} component={Airtime} />
+                                <Route to={'bills/data'} component={Data} />
                             </div>
                         </div>
                     </div>

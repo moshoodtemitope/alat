@@ -51,58 +51,61 @@ class Index extends Component {
             </div>);
 
         if (this.props.beneficiaries.length > 0) {
-            index = (
-                <Fragment>
-                    <div className="col-sm-12 mb-3">
-                        <div className="row">
-                            <div className="col-sm-12">
-                                <Link to={'/bills/data/buy'} className="btn-alat">Buy Data</Link>
+            var dataBeneficiaries = this.props.beneficiaries.filter(beneficiary => beneficiary.IsAirtime == false);
+            if (dataBeneficiaries.length > 0) {
+                index = (
+                    <Fragment>
+                        <div className="col-sm-12 mb-3">
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <Link to={'/bills/data/buy'} className="btn-alat">Buy Data</Link>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="col-sm-12">
-                        <div className="row">
-                            {
+                        <div className="col-sm-12">
+                            <div className="row">
+                                {
 
-                                this.props.beneficiaries.map((beneficiary, counter) => {
-                                    if (beneficiary.IsAirtime) return;
-                                    switch (beneficiary.NetworkCode) {
-                                        case (2):
-                                            image = <img src={mtnLogo} alt="mtnlogo" />;
-                                            break;
-                                        case (3):
-                                            image = <img src={airtelLogo} alt="airtelLogo" />;
-                                            break;
-                                        case (1):
-                                            image = <img src={gloLogo} alt="gloLogo" />;
-                                            break;
-                                        case (4):
-                                            image = <img src={NinemobileLogo} alt="9mobileLogo" />;
-                                            break;
-                                        default:
-                                            image = <img src={airtelLogo} alt="airtelLogo" />;
-                                    };
-                                    return (
+                                    dataBeneficiaries.map((beneficiary, counter) => {
+                                        switch (beneficiary.NetworkCode) {
+                                            case (2):
+                                                image = <img src={mtnLogo} alt="mtnlogo" />;
+                                                break;
+                                            case (3):
+                                                image = <img src={airtelLogo} alt="airtelLogo" />;
+                                                break;
+                                            case (1):
+                                                image = <img src={gloLogo} alt="gloLogo" />;
+                                                break;
+                                            case (4):
+                                                image = <img src={NinemobileLogo} alt="9mobileLogo" />;
+                                                break;
+                                            default:
+                                                image = <img src={airtelLogo} alt="airtelLogo" />;
+                                        };
+                                        return (
 
-                                        <div className="col-sm-12 col-md-4" key={counter + 1}>
-                                            <div className="al-card airtime-card">
-                                                <div className="clearfix">
-                                                    <div className="network-img">
-                                                        {image}
-                                                    </div>
-                                                    <div className="all-info">
-                                                        <p className="line-price">{beneficiary.BillerAlias} <span className="price">{"N" + formatAmountNoDecimal(beneficiary.Amount)}</span></p>
-                                                        <p className="num-ref">{beneficiary.PhoneNumber}<span className="price"><a onClick={() => this.onShowModal(beneficiary)}><i class="fa fa-trash-o" aria-hidden="true"></i></a></span></p>
+                                            <div className="col-sm-12 col-md-4" key={counter + 1}>
+                                                <div className="al-card airtime-card">
+                                                    <div className="clearfix">
+                                                        <div className="network-img">
+                                                            {image}
+                                                        </div>
+                                                        <div className="all-info">
+                                                            <p className="line-price">{beneficiary.BillerAlias} <span className="price">{"N" + formatAmountNoDecimal(beneficiary.Amount)}</span></p>
+                                                            <p className="num-ref">{beneficiary.PhoneNumber}<span className="price"><a onClick={() => this.onShowModal(beneficiary)}><i class="fa fa-trash-o" aria-hidden="true"></i></a></span></p>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>)
-                                })
-                            }
+                                            </div>)
+                                    })
+                                }
+                            </div>
                         </div>
-                    </div>
-                </Fragment>
-            );
+                    </Fragment>
+                );
+            }
+
 
 
         }
@@ -130,7 +133,7 @@ class Index extends Component {
 
 const mapStateToProps = state => {
     return {
-        fetching: state.data_reducer.isFetching
+        fetching: state.data_reducer.isFetching,
     }
 }
 

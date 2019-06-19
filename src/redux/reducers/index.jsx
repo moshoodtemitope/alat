@@ -32,6 +32,7 @@ const appReducer = combineReducers({
     transfer_beneficiaries: transfer.beneficiariesRequest,
     transfer_fetch_user_account: transfer.fetchAccountDetailsRequest,
     airtime_beneficiaries: airtime.airtimeBeneficiariesReducer,
+    airtime_beneDelete: airtime.deleteBeneficiaryReducer,
     // storage_reducer
     // storage_reducer
 

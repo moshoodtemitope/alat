@@ -8,7 +8,7 @@ import {
 } from "./dashboard.reducer";
 import {bankListRequest, beneficiariesRequest, fetchAccountDetailsRequest} from "./transfer.reducer";
 
-import { airtimeBeneficiariesReducer } from './airtime.reducer';
+import { airtimeBeneficiariesReducer, deleteBeneficiaryReducer  } from './airtime.reducer';
 
 
 export const onboarding = {
@@ -33,5 +33,6 @@ export const transfer = {
 };
 
 export const airtime ={
-    airtimeBeneficiariesReducer
+    airtimeBeneficiariesReducer,
+    deleteBeneficiaryReducer
 }
