@@ -2,9 +2,11 @@ import {ApiService} from "../../../services/apiService";
 import {routes} from "../../../services/urls";
 import {alertActions} from "../alert.actions";
 import {history} from './../../../_helpers/history';
+import {handleError, modelStateErrorHandler} from './../../../shared/utils';
 import {USER_REGISTER_FETCH, USER_REGISTER_SAVE, userConstants, BVN_VERIFICATION_PENDING, 
     BVN_VERIFICATION_SUCCESS, BVN_VERIFICATION_FAILURE, SKIP_BVN_PENDING, SKIP_BVN_SUCCESS,
     OTP_VERIFICATION_PENDING, OTP_VERIFICATION_FAILURE, DATA_FROM_BVN, SAVE_BVN_INFO} from "../../constants/onboarding/user.constants";
+import { dispatch } from "rxjs/internal/observable/pairs";
 
 export const userActions = {
     login,
@@ -13,7 +15,8 @@ export const userActions = {
     bvnVerify,
     skipBvn,
     saveBvnInfo,
-    saveBvnData
+    saveBvnData,
+    loginAfterOnboarding
 };
 
 function login(email, password) {
@@ -45,17 +48,30 @@ function login(email, password) {
 
                 history.push('/dashboard');
             }).catch(error => {
+                
                 // console.log(err.response.data.message);
-               
+                // console.log(error);
                 // submitting = false;
                 // throw new SubmissionError({ _error: err.response.data.message});
-                dispatch(failure(error.response.data.message.toString()));
-                dispatch(alertActions.error(error.response.data.message.toString()));
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
 
 
     };
 
+    function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
+    function success(response) { return { type: userConstants.LOGIN_SUCCESS, response } }
+    function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+}
+
+function loginAfterOnboarding(loginData){
+    return dispatch =>{
+        localStorage.setItem("user", JSON.stringify(loginData));
+
+        dispatch(success(loginData));
+        history.push('/dashboard');
+    }
     function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
     function success(response) { return { type: userConstants.LOGIN_SUCCESS, response } }
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
@@ -80,15 +96,16 @@ function skipBvn(bvnDetails){
         dispatch (request(consume));
         return consume
             .then(response =>{
-                dispatch(success(response.data));
+                data.maskedPhoneNo = response.data.phoneNo;
+                dispatch(success(data));
                 history.push('/register/verify-bvn');
             }).catch(error => {
-                dispatch(alertActions.error(error.response.data.message.toString()));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
     function request(request) { return { type:SKIP_BVN_PENDING, request} }
     function success(response) { return {type:SKIP_BVN_SUCCESS, response} }
-    //function failure(error) { return {type:BVN_VERIFICATION_FAILURE, error} }
+    function failure(error) { return {type:BVN_VERIFICATION_FAILURE, error} }
 }
 
 function bvnVerify (bvnDetails){
@@ -106,9 +123,12 @@ function bvnVerify (bvnDetails){
         return consume
             .then(response =>{
                 dispatch(success(response.data));
-                history.push('/register/verify-bvn');
+                // this.props.history.push('/register/verify-bvn');
+                
+                history.push('/register/verify-bvn', {userPhone: bvnDetails.phoneNo});
             }).catch(error => {
-                dispatch(alertActions.error(error.response.data.message.toString()));
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
     function request(request) { return { type:BVN_VERIFICATION_PENDING, request} }
@@ -125,8 +145,8 @@ function saveBvnInfo(otpData){
                 dispatch(success(response.data));
                 history.push('/register/confirm-bvndetails')
             }).catch(error =>{
-                dispatch(failure(error.response.data.message.toString()));
-                dispatch(alertActions.error(error.response.data.message.toString()));
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
         
     }
@@ -154,6 +174,7 @@ function saveBvnData(otpData, action){
     function pending(otpData) { return null }
     function save(otpData) { return { type: SAVE_BVN_INFO, otpData } }
 }
+
 
 
 function register(user, action) {

@@ -2,7 +2,8 @@ import * as React from "react";
 import {Redirect} from "react-router";
 import {Observable} from "rxjs";
 import {history} from "../_helpers/history";
-// import {userActions} from "../_actions";
+import {userActions} from "../redux/actions/onboarding/user.actions";
+import { dispatch } from "rxjs/internal/observable/pairs";
 
 const axios = require('axios');
 
@@ -12,7 +13,7 @@ export class ApiService {
         redirect: false
     };
 
-    static request(url, type, data, headers, noStringify=false){
+    static request(url, type, data, headers = undefined, noStringify=false){
         let bodyData;
         let service;
         // let header: any;
@@ -29,9 +30,12 @@ export class ApiService {
         // options = new RequestOptions({ headers: header });
         if (type.toLowerCase() === 'get') {
             // service = httpService.get(url, options);
-            axios.defaults.headers.common['alat-client-apiKey'] = 'ERTojertoijertoijert';
-            axios.defaults.headers.common['Content-Type'] = 'application/json';
-            if(headers){
+            if(headers == undefined){
+                axios.defaults.headers.common['alat-client-apiKey'] = 'ERTojertoijertoijert';
+                axios.defaults.headers.common['Content-Type'] = 'application/json';
+            }
+           
+            else if(headers !== undefined){
                 for (let [key, value] of Object.entries(headers)) {
                     axios.defaults.headers.common[key] = value;
                 }
@@ -42,51 +46,60 @@ export class ApiService {
             }).catch(function (error) {
                 console.log(error);
                 // return service;
-                if (error.response.status === 401 && error.response.statusText.toLowerCase().includes('token not valid')) {
-                    // const { dispatch } = this.props;
-                    // console.error("We wanna log out out");
-                    // dispatch(userActions.logout());
-                    // history.push('/logout')
-                    // localStorage.removeItem("user");
-                    history.push('/');
-                } else {
-                    return service;
-                }
+                if (error.response) {
+                    console.log(error.response);
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    // console.log(error.response.data);
+                    // console.log(error.response.status);
+                    // console.log(error.response.headers);  && error.response.statusText.toLowerCase().includes('token not valid')
+                     if (error.response.status === 401) {
+                            
+                            history.push('/');
+                        }else {
+                            return service;
+                        }
+                      
+                } 
+                return  service;
             });
 
         } else {
-            axios.defaults.headers.common['alat-client-apiKey'] = 'ERTojertoijertoijert';
-            axios.defaults.headers.common['Content-Type'] = 'application/json';
-            console.log(headers);
-            if(headers){
+            //check for header
+            if(headers == undefined){
+                axios.defaults.headers.common['alat-client-apiKey'] = 'ERTojertoijertoijert';
+                axios.defaults.headers.common['Content-Type'] = 'application/json';
+            }
+            
+           
+            else if(headers !== undefined){
                 for (let [key, value] of Object.entries(headers)) {
                     axios.defaults.headers.common[key] = value;
                 }
             }
+            console.log("after", headers);
+            console.log("after",axios.defaults.headers )
             service = axios.post(url, bodyData);
             return service.then(function (response) {
-                console.log(service);
+                // console.log("successful");
                 return service;
             }).catch(function (error) {
-                // return service;
-                if (error.response.status === 401 && error.response.statusText.toLowerCase().includes('token not valid')) {
-                    // const { dispatch } = this.props;
-                    // console.error("We wanna log out out");
-                    // history.push('/logout')
-                    // localStorage.removeItem("user");
-                    history.push('/');
-                } else {
-                    return service;
-                    // let requestError = error.response.status !== 0 ? error._body : '{ \"message\": \"Could not connect to server\" }';
-                    // console.log(requestError);
-                    // try {
-                    //     requestError = JSON.parse(requestError);
-                    // } catch (e) {
-                    //     requestError = 'Sorry, an error occured';
-                    // }
-                    // console.log(requestError);
-                    // return Observable.throw(requestError || 'Server error');
-                }
+               
+              if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                // console.log(error.response.data);
+                // console.log(error.response.status);
+                // console.log(error.response.headers);
+                 if (error.response.status === 401 && error.response.statusText.toLowerCase().includes('token not valid')) {
+                        dispatch(userActions.logout());
+                        //history.push('/');
+                    }else {
+                        return service;
+                    }
+                  
+            } 
+            return  service;
             });
         }
     }
@@ -98,27 +111,24 @@ export class ApiService {
         // let query: any;
 
         bodyData = noStringify ? JSON.stringify(data) : data;
-        // if (headers) {
-        //     console.log("headers in");
-        //     axios.defaults.headers.common['alat-client-apiKey'] = 'ERTojertoijertoijert';
-        //     axios.defaults.headers.common['Content-Type'] = 'application/json';
-        //     console.log(headers);
-        //     for (let [key, value] of Object.entries(headers)) {
-        //         axios.defaults.headers.common[key] = value;
-        //     }
-        // }
-        // else {
-        //     console.log("no headers in");
-        //     axios.defaults.headers.common['alat-client-apiKey'] = 'ERTojertoijertoijert';
-        //     axios.defaults.headers.common['Content-Type'] = 'application/json';
-        // }
+       
 
         if (type.toLowerCase() === "get") {
             console.log("get method");
-            axios.defaults.headers.common['alat-client-apiKey'] = 'ERTojertoijertoijert';
-            axios.defaults.headers.common['Content-Type'] = 'application/json';
-            console.log(headers);
-            if(headers){
+            // axios.defaults.headers.common['alat-client-apiKey'] = 'ERTojertoijertoijert';
+            // axios.defaults.headers.common['Content-Type'] = 'application/json';
+            // console.log(headers);
+            // if(headers){
+            //     for (let [key, value] of Object.entries(headers)) {
+            //         axios.defaults.headers.common[key] = value;
+            //     }
+            // }
+            if(headers== undefined){
+                axios.defaults.headers.common['alat-client-apiKey'] = 'ERTojertoijertoijert';
+                axios.defaults.headers.common['Content-Type'] = 'application/json';
+            }
+           
+            else if(headers !== undefined){
                 for (let [key, value] of Object.entries(headers)) {
                     axios.defaults.headers.common[key] = value;
                 }
@@ -157,10 +167,20 @@ export class ApiService {
         }
         else {
             console.log("post method");
-            axios.defaults.headers.common['alat-client-apiKey'] = 'ERTojertoijertoijert';
-            axios.defaults.headers.common['Content-Type'] = 'application/json';
-            console.log(headers);
-            if(headers){
+            // axios.defaults.headers.common['alat-client-apiKey'] = 'ERTojertoijertoijert';
+            // axios.defaults.headers.common['Content-Type'] = 'application/json';
+            // console.log(headers);
+            // if(headers){
+            //     for (let [key, value] of Object.entries(headers)) {
+            //         axios.defaults.headers.common[key] = value;
+            //     }
+            // }
+            if(headers== undefined){
+                axios.defaults.headers.common['alat-client-apiKey'] = 'ERTojertoijertoijert';
+                axios.defaults.headers.common['Content-Type'] = 'application/json';
+            }
+           
+            else if(headers !== undefined){
                 for (let [key, value] of Object.entries(headers)) {
                     axios.defaults.headers.common[key] = value;
                 }

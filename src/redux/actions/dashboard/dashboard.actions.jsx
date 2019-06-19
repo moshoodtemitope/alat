@@ -8,6 +8,8 @@ import {ApiService} from "../../../services/apiService";
 import {routes} from "../../../services/urls";
 import {dashboardConstants as userConstants} from "../../constants/dashboard/dashboard.constants";
 import {SystemConstant} from "../../../shared/constants";
+import { modelStateErrorHandler } from "../../../shared/utils";
+import { alertActions } from "../alert.actions";
 
 const user = JSON.parse(localStorage.getItem("user"));
 //
@@ -44,7 +46,7 @@ const user = JSON.parse(localStorage.getItem("user"));
 // };
 
 
-export const getAccounts = (token) => {
+export const getAccounts = (token, callHistory) => {
 
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
@@ -53,11 +55,19 @@ export const getAccounts = (token) => {
         return consume
             .then(response => {
                 //TODO: edit localDB accounts object
-                console.log(response);
+                let payload = {
+                    Take: 10,
+                    Skip: 0,
+                    AccountNumber: response.data.Accounts[0].AccountNumber
+                };
                 dispatch(success(response.data));
+                 if(callHistory === true){
+                 dispatch(getAccountHistory(token, payload));
+                 }
             })
             .catch(error => {
-                dispatch(failure(error.response.data.message.toString()));
+                dispatch(failure(modelStateErrorHandler(error)));
+               // dispatch(alertActions.error(modelStateErrorHandler(error)));
                 // throw(error);
             });
     };
@@ -69,7 +79,7 @@ export const getAccounts = (token) => {
 
 
 export const getAccountHistory = (token, data) => {
-
+    console.log("in here");
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
         let consume = ApiService.request(routes.GETACCOUNTHISTORY, "POST", data, SystemConstant.HEADER);
@@ -121,7 +131,7 @@ export const getOnboardingPriority = (token) => {
                 dispatch(success(response.data));
             })
             .catch(error => {
-                return error.response.data.message.toString();
+                return modelStateErrorHandler(error); //error.response.data.message.toString();
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };

@@ -14,11 +14,12 @@ import flags from "../../../assets/img/flags.png";
 import {ReactTelephoneInput} from "react-telephone-input";
 import "./../onboarding.scss";
 import {userActions} from "../../../redux/actions/onboarding/user.actions";
-import {USER_REGISTER_SAVE} from "../../../redux/constants/onboarding/user.constants";
+import {USER_REGISTER_SAVE, USER_REGISTER_FETCH} from "../../../redux/constants/onboarding/user.constants";
 import {connect} from "react-redux";
 import phoneimage from "../../../assets/img/phone-bvn.svg"
 import Modal from 'react-responsive-modal';
-
+import { modelStateErrorHandler } from '../../../shared/utils';
+ 
 require('react-telephone-input/lib/withStyles');
 // const ReactTelInput = require('react-telephone-input');
 const axios = require('axios');
@@ -34,7 +35,8 @@ class Signup extends React.Component{
             openModal: false,
             inputProps :{
              maxLength:20,
-             onInput : this.handleInputChange
+             onInput : this.handleInputChange,
+             tabIndex : 1
             }
             // international_code: ''
         };
@@ -74,7 +76,7 @@ class Signup extends React.Component{
             return '0' + ph.substr(3);
         }
         else{
-            return phone.replace(/[^a-zA-Z0-9]/g, '');
+            return phone;//.replace(/[^a-zA-Z0-9]/g, '');
         }
     }
 
@@ -92,6 +94,7 @@ class Signup extends React.Component{
             return;
         }
         if (phone) {
+           
             this.setState({phoneInputted: phone});
             this.onOpenModal();
 
@@ -119,16 +122,17 @@ class Signup extends React.Component{
         this.setState({ submitted: true });
         const { dispatch } = this.props;
         let data = {
-            PhoneNo: this.state.phoneInputted,
+            PhoneNo: this.state.phoneInputted.replace(/[^a-zA-Z0-9]/g, ''),
             channelId: 2
         };
+        dispatch(userActions.register({phone : data.PhoneNo}, USER_REGISTER_FETCH));
         let consume = ApiService.request(routes.SIGNUP_PHONE, "POST", data);
         return consume.then(function (response){
             dispatch(userActions.register({phone: data.PhoneNo}, USER_REGISTER_SAVE));
             history.push('/register/bvn');
         }).catch(err => {
             this.onCloseModal();
-            this.setState({ submitted: false, error: err.response.data.message});
+            this.setState({ submitted: false, error: modelStateErrorHandler(err)});
         });
     };
 
@@ -160,6 +164,7 @@ class Signup extends React.Component{
     render(){
         const { phone, international_code, submitted, error, formError, openModal } = this.state;
         let props = this.props;
+       
         // var countriesData = require('../countries.json');
 
         return (
@@ -176,13 +181,13 @@ class Signup extends React.Component{
                         <form className="onboard-form" onSubmit={this.handleSubmit}>
                             {error && <div className="info-label error">{error}</div>}
                             <div className={ !formError ? "input-ctn" : "input-ctn form-error" }>
-                                <label>Please enter your phone number</label>
+                                <label>Please enter your phone number (e.g +234-813-000-1111)</label>
                                 <ReactTelephoneInput
                                     inputProps = {this.state.inputProps}
                                     defaultCountry="ng"
                                     flagsImagePath={flags}
-                                    onBlur={this.handleInputBlur}
-                                    //onChange={this.handleInputChange}
+                                    //onBlur={this.handleInputBlur}
+                                    onChange={this.handleInputBlur}
                                     id="phoneInput"
                                 />
                                 {formError &&
@@ -207,11 +212,12 @@ class Signup extends React.Component{
                     <div className="div-modal">
                         <img src={phoneimage}/>
 
-                        <h3>Your phone number is <span>{this.state.phoneInputted}</span>. Do you want to proceed?</h3>
+                        <h3>Your phone number is <br/><strong><span>{this.state.phoneInputted}</span></strong>.<br/> Do you want to proceed?</h3>
 
                     <div className="btn-opt">
                         <button onClick={this.onCloseModal} className="border-btn">Back</button>
-                        <button onClick={this.submitData} className="btn-alat">Proceed</button>
+                        <button onClick={this.submitData} disabled={submitted}
+                         className="btn-alat">{ submitted ? "Processing..." : "Proceed"}</button>
                     </div>
                     </div>
                 </Modal>

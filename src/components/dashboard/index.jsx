@@ -32,7 +32,7 @@ class Dashboard extends React.Component{
         const { dispatch } = this.props;
         // console.log(this.props);
         console.log(this.state.user.token);
-        dispatch(getAccounts(this.state.user.token));
+        dispatch(getAccounts(this.state.user.token, true));
     }
 
     componentDidMount() {
@@ -48,36 +48,76 @@ class Dashboard extends React.Component{
         }
         else if(accounts.user_account === userConstants.DASHBOARD_ACCOUNT_FETCH_FAILURE){
             return(
-                <h4 className="text-center" style={{ marginTop: '65px'}}>No Account Data Found</h4>
+                // <h4 className="text-center" style={{ marginTop: '65px'}}>No Account Data Found</h4>
+                <div className="account-card m-b-50" style={{ minHeight : '190px' }}>
+                <div className="account-name">
+                    {/* <p>{acct.AccountType} <span>History</span></p> */}
+                </div>
+                <div className="account-no-status clearfix">
+                    <p className="account-no">{accounts.user_account_data.error}</p>
+                    {/* <p className="account-no">Acct No: {acct.AccountNumber}</p> */}
+                    {/* {acct.AccountStatus==='A' && <p className="account-status">Active</p>}
+                    {acct.AccountStatus==='PD' && <p className="account-status">Pending</p>}
+                    {acct.AccountStatus==='P' && <p className="account-status">Restricted</p>} */}
+                </div>
+
+                <div className="account-balance clearfix">
+                    <p className="balance">₦###,###</p>
+                    {/* <a href="#" className="btn-alat btn-white m-t-10 btn-sm">Link BVN</a> */}
+                </div>
+            </div>
             );
         }
         else if (accounts.user_account === userConstants.DASHBOARD_ACCOUNT_FETCH_SUCCESS){
             let userAccounts = accounts.user_account_data.response.Accounts;
-            return(
-                <Slider duration="500" infinite="true" emulateTouch="true" onSlideChange={event => this.getAccountHistory(event)}>
-                    {userAccounts.map(function(acct, key){
-                        return(
+            if(accounts.user_account_data.response.AccountGenerationStatus === "Awaiting"){
+                return (
+                    <div className="account-card m-b-50" style={{ minHeight : '190px' }}>
+                <div className="account-name">
+                    {/* <p>{acct.AccountType} <span>History</span></p> */}
+                </div>
+                <div className="account-no-status clearfix">
+                    <p className="account-no">Awaiting Generation</p>
+                    {/* <p className="account-no">Acct No: {acct.AccountNumber}</p> */}
+                    {/* {acct.AccountStatus==='A' && <p className="account-status">Active</p>}
+                    {acct.AccountStatus==='PD' && <p className="account-status">Pending</p>}
+                    {acct.AccountStatus==='P' && <p className="account-status">Restricted</p>} */}
+                </div>
 
-                            <div className="account-card m-b-50" key={key}>
-                                <div className="account-name">
-                                    <p>{acct.AccountType} <span>History</span></p>
+                <div className="account-balance clearfix">
+                    <p className="balance">₦###,###</p>
+                    {/* <a href="#" className="btn-alat btn-white m-t-10 btn-sm">Link BVN</a> */}
+                </div>
+            </div>
+                );
+            } else {
+                return(
+                    <Slider duration="500" infinite="true" emulateTouch="true" onSlideChange={event => this.getAccountHistory(event)}>
+                        {userAccounts.map(function(acct, key){
+                            return(
+    
+                                <div className="account-card m-b-50" key={key}>
+                                    <div className="account-name">
+                                        <p>{acct.AccountType} <span>History</span></p>
+                                    </div>
+                                    <div className="account-no-status clearfix">
+                                        <p className="account-no">Acct No: {acct.AccountNumber}</p>
+                                        {acct.AccountStatus==='A' && <p className="account-status">Active</p>}
+                                        {acct.AccountStatus==='PD' && <p className="account-status">Pending</p>}
+                                        {acct.AccountStatus==='P' && <p className="account-status">Restricted</p>}
+                                        {acct.AccountStatus==='I' && <p className="account-status">Inactive</p>}
+                                    </div>
+    
+                                    <div className="account-balance clearfix">
+                                        <p className="balance">₦{utils.formatAmount(acct.AvailableBalance)}</p>
+                                        <a href="#" className="btn-alat btn-white m-t-10 btn-sm">Fund Account</a>
+                                    </div>
                                 </div>
-                                <div className="account-no-status clearfix">
-                                    <p className="account-no">Acct No: {acct.AccountNumber}</p>
-                                    {acct.AccountStatus==='A' && <p className="account-status">Active</p>}
-                                    {acct.AccountStatus==='PD' && <p className="account-status">Pending</p>}
-                                    {acct.AccountStatus==='P' && <p className="account-status">Restricted</p>}
-                                </div>
-
-                                <div className="account-balance clearfix">
-                                    <p className="balance">₦{utils.formatAmount(acct.AvailableBalance)}</p>
-                                    <a href="#" className="btn-alat btn-white m-t-10 btn-sm">Fund Account</a>
-                                </div>
-                            </div>
-                        );
-                    })}
-                </Slider>
-            );
+                            );
+                        })}
+                    </Slider>
+                );
+            }
         }
     }
 
@@ -136,6 +176,8 @@ class Dashboard extends React.Component{
         // }
     }
 
+
+
     renderHistory(){
         let props = this.props;
         let accountsHistory = props.accounts_history;
@@ -150,47 +192,39 @@ class Dashboard extends React.Component{
         }
         else if (accountsHistory.account_history === userConstants.DASHBOARD_ACCOUNT_FETCH_HISTORY_SUCCESS){
             let transHistory = accountsHistory.account_history_data.response;
-            console.log("We are here now o");
+            // console.log("We are here now o");
             return(
                 <Fragment>
-                    {transHistory.map(function(hist, key) {
-                        return(
-                            <div className="history-ctn" key={key}>
+                    {transHistory.map((hist, key)=> (
+                        hist.Transactions.map((trans, k)=>(
+                            <div className="history-ctn" key={k}>
                                 <div className="history-list clearfix">
-                                    <img src={hstransfer}/>
-                                    {hist.Transaction}
-                                    <p className="desc">Funded Apple Virtual Card with USD 200
-                                        for NGN 80,000<span className="date">{hist.TransactionDate}</span>
+                                    {/* <img src={this.renderHistoryImage()}/> */}
+                                    {this.renderHistoryImage(trans)}
+                                    <p className="desc">{trans.Narration}<span className="date">{utils.FormartDate(trans.TransactionDate)}</span>
                                     </p>
-                                    <p className="balance credit">USD 200</p>
+                                    <p className={trans.TransactionType ==='D' ? "balance debit" : "balance credit"}>₦{utils.formatAmount(trans.Amount)}</p> 
                                 </div>
                             </div>
-                        );
-                    })}
-
-
-                    {/*{transHistory.map(function(hist, key) {*/}
-                        {/*return(*/}
-                            {/*<div className="history-ctn" key={key}>*/}
-                                {/*<div className="history-list clearfix">*/}
-                                    {/*<img src={hstransfer}/>*/}
-                                    {/*{hist.Transaction}*/}
-                                    {/*<p className="desc">Funded Apple Virtual Card with USD 200*/}
-                                        {/*for NGN 80,000<span className="date">{hist.TransactionDate}</span>*/}
-                                    {/*</p>*/}
-                                    {/*<p className="balance credit">USD 200</p>*/}
-                                {/*</div>*/}
-                            {/*</div>*/}
-                        {/*);*/}
-                    {/*})}*/}
+                        ))
+                    ))}
                 </Fragment>
             );
         }
         //console.error(props);
     }
+    
+    renderHistoryImage(Transaction){
+        switch(Transaction.TransactionType){
+         case "D" :
+         if (Transaction.Narration.indexOf('ATM WD') >= 0) { 
+            return (<img src={hsatm}/>);
+        } else return (<img src={hstransfer}/>);
 
-    showHistory(obj){
-
+        break;
+        default :
+        return  (<img src={hspos}/>)
+        }
     }
 
     render(){
@@ -216,7 +250,7 @@ class Dashboard extends React.Component{
                                             <div className="account-slide">
                                                 <h4>My Accounts <span>
                                                 <NavLink to="/accounts/accounts-history">
-                                                    View All
+                                                    {/* View All */}
                                                 </NavLink>
                                                 </span></h4>
                                             </div>
@@ -304,7 +338,6 @@ class Dashboard extends React.Component{
                                                 </div>
                                             </div>
                                         </div>
-
                                         <AnnouncementCard />
                                     </div>
                                 </div>
@@ -325,7 +358,8 @@ function mapStateToProps(state) {
     return {
         user,
         accounts: state.dashboard_accounts,
-        accounts_history: state.dashboard_accounts_history
+        accounts_history: state.dashboard_accounts_history,
+        OnboardingPriority: state.dashboard_userOnboardingPriority
     };
 }
 

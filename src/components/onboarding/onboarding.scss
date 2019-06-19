@@ -11,10 +11,16 @@
     text-decoration: underline;
     cursor: pointer;
   }
-  span{
-    color: #9c9c9c
-  }
+  // span{
+  //   color: #9c9c9c
+  // }
+  
 }
+.grayed-cta-link{
+  color: #9c9c9c;
+  cursor: not-allowed;
+}
+
 
 .btn-alat.disabled-btn, button:disabled { 
   // background: #DADADA;
@@ -26,8 +32,13 @@
 .error-text{
   display: none;
 }
+.loading-text{
+  color: #AB2656;
+  text-align: center;
+  margin-top: 30px;
+}
 .form-error {
-  input, input[type='number'] {
+  input, input[type='number'], select {
     border: 1px solid #AB2656!important;
   }
   .error-text{

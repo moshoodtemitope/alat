@@ -1,6 +1,6 @@
-// const URL = 'https://api.alat.ng';
- const URL = 'https://196.43.215.170';
-// const URL = 'https://196.43.215.157';
+const URL = 'https://api.alat.ng';
+//  const URL = 'https://196.43.215.170';
+// const URL = 'http://196.43.215.157';
 
 const BASEURL = URL;
 
@@ -13,8 +13,12 @@ export const routes = {
     BVN_VERIFICATION: BASEURL + '/RegistrationApi/api/registration/CallBvnService',
     SKIPBVNOTP: BASEURL + '/RegistrationApi/api/registration/RequestOtpForOnBoarding',
     VERIFYBVNOTP: BASEURL + '/RegistrationApi/api/registration/VerifyOtpForBvn',
-    RESENDOTP: BASEURL + '/RegistrationApi/api/registration/ResendOtp',
+    VERIFYSKIPOTPURL: BASEURL + '/RegistrationApi/api/registration/VerifyOtpForAll',
+    // RESENDOTP: BASEURL + '/RegistrationApi/api/registration/ResendOtp',
+    RESENDOTP: BASEURL + '/RegistrationApi/api/registration/ResendOtpV2',
     GETALLQUESTIONS: BASEURL + '/UserSecurityApi/api/v1/Account/AllQuestions',
+    REGISTRATIONURLV2: BASEURL + '/UserSecurityApi/api/v1/Account/RegistrationV2',
+    DOCUMENT_UPLOAD: BASEURL + '/DocumentUpload/api/upload/document',
    
     //user security
     ONBOARDING_PRIORITY: BASEURL + '/UserSecurityApi/api/v1/Account/GetOnboardingPriority',
@@ -36,4 +40,12 @@ export const routes = {
     FETCH_TRANSFER_BENEFICIARIES: BASEURL + '/PaymentApi/api/Beneficiary/All',
     FETCH_ACCOUNT_DETAILS: BASEURL + '/PaymentApi/api/Accounts/VerifyAccountName',
     //PaymentApi/api/Accounts/VerifyAccountName
+
+    //Airtime
+    AIRTIME_BENEFICIARIES : BASEURL + '/PaymentApi/api/AirtimeBill/GetAirtimeBeneficiaries',
+
+    //Data
+    FETCH_DATA_BENEFICIARIES : BASEURL + '/PaymentApi/api/AirtimeBill/GetAirtimeBeneficiaries',
+    DELETE_DATA_BENEFICIARY : BASEURL + '/PaymentApi/api/AirtimeBill/DeleteSavedAirtimeBillBeneficiaries',
+    FETCH_DATA_PLANS : BASEURL + '/PaymentApi/api/AirtimeBill/QuickTellerBillerItemsData',
 };
