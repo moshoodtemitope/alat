@@ -22,7 +22,12 @@ module.exports = (
             mode,
             entry: "./src/index.jsx",
             resolve: {
-                extensions: ['.js', '.jsx', '.css', 'scss'],
+                // modulesDirectories: ['node_modules'],
+                extensions: ['.js', '.jsx', '.css', 'scss', '.eot', '.ttf', '.svg', '.woff'],
+                // alias:{
+                //     fonts: path.resolve(__dirname, 'src', 'assets', 'fonts')
+                // },
+                // root: path.resolve('./app')
 
             },
             devServer: {

@@ -1,0 +1,86 @@
+// @import '../../assets/scss/fonts';
+// @import '../../assets/scss/mixins';
+// @import '../../assets/scss/button';
+
+.error-msg{
+  color: #AB2656;
+}
+.inputWrap{
+  &.form-error{
+    input, input[type='number'], select {
+      border: 1px solid #AB2656!important;
+    }
+    .error-text{
+      color: #AB2656;
+      display: block;
+    }
+  
+    label {
+      color: #AB2656;
+    }
+  
+    span.error {
+      display: block;
+      color: #AB2656;
+      font-size: em(14);
+      margin-top: 10px;
+    }
+  }
+}
+.beneficiary-card {
+    padding: 25px 20px;
+    cursor: pointer;
+  
+    &:hover {
+  
+    }
+  
+    .network-img {
+      float: left;
+      width: 15%;
+      i{
+        font-size: 28px;
+        color: #AB2656;
+        margin-top: 5px;
+      }
+    }
+  
+    .all-info {
+      width: 85%;
+      float: left;
+      p { 
+        margin-bottom: 0;
+        span {
+          float: right;
+          // font-family: $medium;
+          // color: $primary-color;
+        }
+      }
+    }
+  
+    .nickname {
+      color: #717171;
+      font-weight: 600;
+      font-size: 14px;
+      span {
+        float: right;
+      }
+    }
+  
+    .account-info {
+      // font-family: $medium;
+      font-size: 12px;
+      margin-bottom: 0 !important;
+      color:#666666; 
+      .bank-name {
+        float: right;
+        color: #b1b1b1;
+  
+        a {
+          display: inline-block;
+          padding: 0 10px;
+          color: #b1b1b1;
+        }
+      }
+    }
+  }
