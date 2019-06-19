@@ -21,9 +21,9 @@ class Data extends Component{
    render() {
        return(
            <Fragment>
-               {this.props.children}
-            <Route exact path='/bills/data' render={(props) => <Index {...props} beneficiaries={this.props.beneficiaries} isFetching={this.props.fetching} />} />
-            <Route path='/bills/data/buy' render={(props) => <BuyData {...props} />} />
+                {this.props.children}
+                <Route exact path='/bills/data' render={(props) => <Index {...props} beneficiaries={this.props.beneficiaries} isFetching={this.props.fetching} />} />
+                <Route path='/bills/data/buy' render={(props) => <BuyData {...props} />} />
            </Fragment>
        );
    }
