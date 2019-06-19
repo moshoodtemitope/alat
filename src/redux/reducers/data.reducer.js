@@ -70,11 +70,14 @@ import {updateObject} from '../actions/dataActions/data.actions';
 //     }
 // ];
 
+
+
 const initialState = {
     beneficiaries : [],
     dataPlans : [],
     isFetching: false,
-
+    dataToBuy: null,
+    debitableAccounts : []
 }; 
 
 const reducer = (state = initialState, action) => {
@@ -88,10 +91,13 @@ const reducer = (state = initialState, action) => {
            return updateObject(state, {isFetching: true});
         case actionTypes.IS_FETCHING_FALSE:
             return updateObject(state, {isFetching: false});
+        case actionTypes.SET_DATA_TRANSACTION_DETAILS:
+            return updateObject(state, {dataToBuy: action.data});
         case actionTypes.FETCH_DATA_PLAN_SUCCESS:
-            return updateObject(state, {
-                dataPlans : action.data,
-            });
+            return updateObject(state, {dataPlans: action.data});
+        case actionTypes.FETCH_DEBITABLE_ACCOUNTS_SUCCESS:
+            return updateObject(state, {debitableAccounts : action.data,});
+            // return updateObject(state, {debitableAccounts : mock2});
         default: return state;
     }
 }
