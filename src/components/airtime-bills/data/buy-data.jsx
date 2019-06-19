@@ -1,28 +1,40 @@
 import React, { Component } from 'React';
 import { Link } from 'react-router-dom';
 
-import { Input, Select } from './input';
+import { Input } from './input';
+import Select from 'react-select';
 import { formatAmountNoDecimal } from '../../../shared/utils';
 import { checkInputValidation } from '../../../shared/utils';
 import { connect } from 'react-redux';
 
+
 import * as actions from '../../../redux/actions/dataActions/export';
 
+
+var networkOperators = [
+    { value: "MTN", label: "MTN"},
+    { value: "Airtel", label: "Airtel"},
+    { value: "Glo", label: "Glo"},
+    { value: "Etisalat", label: "Etisalat"}
+]
 class BuyData extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            selectedNetwork: null,
+            selectedDataPlan: null,
+            dataPlansOptions: [],
             buyDataForm: {
-                dataPlan: {
-                    elementType: 'select',
-                    elementConfig: {
-                        options: [{ value: '', displayValue: '------' }],
-                    },
-                    label: 'Choose a data plan',
-                    value: '',
-                    validation: {},
-                    valid: true
-                },
+                // dataPlan: {
+                //     elementType: 'select',
+                //     elementConfig: {
+                //         options: [{ value: '', displayValue: '------' }],
+                //     },
+                //     label: 'Choose a data plan',
+                //     value: '',
+                //     validation: {},
+                //     valid: true
+                // },
                 amount: {
                     elementType: 'input',
                     elementConfig: {
@@ -72,27 +84,55 @@ class BuyData extends Component {
         }
     }
 
+    dataPlanChangedHandler = (selectedDataPlan) => {
+        this.setState({ selectedDataPlan }, () => {this.updateAmount(selectedDataPlan.amount)});
+        console.log(`Option selected:`, selectedDataPlan);
+    }
     
-    selectChangedHandler = (event) => {
-        var arrayToDisplay = [];
-        this.props.dataPlans.filter(data => data.Network == event.target.value)
-            .map((data => arrayToDisplay.push({ value: data.PaymentItem, displayValue: data.PaymentItem, amount: data.Amount })));
-        const updatedSelectOption = {
-            ...this.state.buyDataForm
+    networkChangedHandler = (selectedNetwork) => {
+        if(this.state.selectedDataPlan == null){
+            this.setState({ selectedNetwork }, () => {this.setDataPlans(selectedNetwork.value)});
+            console.log(`Option selected:`, selectedNetwork);
+        }else{
+            this.setState({ selectedDataPlan : null }, () => {this.networkChangedHandlerALT(selectedNetwork)} )
         }
-        updatedSelectOption.dataPlan.elementConfig.options = arrayToDisplay;
-        this.setState({ buyDataForm: updatedSelectOption }, this.updateAmount);
+
+        // var arrayToDisplay = [];
+        // this.props.dataPlans.filter(data => data.Network == event.target.value)
+        //     .map((data => arrayToDisplay.push({ value: data.PaymentItem, displayValue: data.PaymentItem, amount: data.Amount })));
+        // const updatedSelectOption = {
+        //     ...this.state.buyDataForm
+        // }
+        // updatedSelectOption.dataPlan.elementConfig.options = arrayToDisplay;
+        // this.setState({ buyDataForm: updatedSelectOption }, this.updateAmount);
         
     }
 
-    updateAmount = () => {
-        var selected = this.getSelectValue("dataPlan");
-        var dataPlanAmount = this.state.buyDataForm.dataPlan.elementConfig.options.filter(data => selected == data.value);
+    networkChangedHandlerALT = (selectedNetwork) => {
+        this.setState({ selectedNetwork }, () => {this.setDataPlans(selectedNetwork.value)});
+        console.log(`Option selected:`, selectedNetwork);
+    }
+
+    setDataPlans = (value) => {
+        var arrayToDisplay = [];
+        this.props.dataPlans.filter(data => data.Network == value)
+            .map((data => arrayToDisplay.push({ value: data.PaymentItem,label: data.PaymentItem, amount: data.Amount })));
+        this.setState({dataPlansOptions : arrayToDisplay}, () => {this.updateAmount(this.state.dataPlansOptions[0].amount)})
+    }
+
+    updateAmount = (value) => {
         const updatedSelectOption = {
             ...this.state.buyDataForm
         }
-        updatedSelectOption.amount.value = dataPlanAmount[0].amount;
-        this.setState({buyDataForm: updatedSelectOption})
+        updatedSelectOption.amount.value = value;
+        this.setState({ buyDataForm: updatedSelectOption });
+        // var selected = this.getSelectValue("dataPlan");
+        // var dataPlanAmount = this.state.buyDataForm.dataPlan.elementConfig.options.filter(data => selected == data.value);
+        // const updatedSelectOption = {
+        //     ...this.state.buyDataForm
+        // }
+        // updatedSelectOption.amount.value = dataPlanAmount[0].amount;
+        // this.setState({buyDataForm: updatedSelectOption})
     }
 
     getSelectValue = (idName) => {
@@ -153,6 +193,9 @@ class BuyData extends Component {
                 config: this.state.buyDataForm[key]
             });
         }
+        const { selectedNetwork } = this.state;
+        const { selectedDataPlan } = this.state;
+        const {dataPlansOptions} = this.state;
         return (
             <div className="col-sm-12">
                 <div className="row">
@@ -166,26 +209,25 @@ class BuyData extends Component {
                                         <div class="input-ctn">
                                             
                                             <label>Select a Network</label>
-                                            <select onChange={(event) => this.selectChangedHandler(event)} id="networkSelector">
-                                                <option value="">Select Data Network</option>
-                                                <option value="MTN">MTN</option>
-                                                <option value="Airtel">Airtel</option>
-                                                <option value="Glo">Glo</option>
-                                                <option value="Etisalat">Etisalat</option>
-                                            </select>
+                                            <Select
+                                                value={selectedNetwork}
+                                                onChange={this.networkChangedHandler}
+                                                options={networkOperators}
+                                                placeholder="Select..."
+                                            />
                                         </div>
-
-
-
+                                        <div class="input-ctn">
+                                        <label>Choose a data plan</label>
+                                        <Select
+                                                value={selectedDataPlan != null ? selectedDataPlan : dataPlansOptions[0]}
+                                                onChange={this.dataPlanChangedHandler}
+                                                options={dataPlansOptions}
+                                                placeholder="---"
+                                            />
+                                        </div>
                                         {formElementArray.map((formElement) => {
                                             if (formElement.config.elementType !== "input") {
-                                                return (
-                                                    <Select key={formElement.id}
-                                                        optionsList={formElement.config.elementConfig.options}
-                                                        label={formElement.config.label}
-                                                        id={formElement.id}
-                                                        changed={(event) => this.onDataPlanChanged(event)} />
-                                                )
+                                                return ;
                                             };
                                             return (
                                                 <div className="input-ctn" key={formElement.id}>
