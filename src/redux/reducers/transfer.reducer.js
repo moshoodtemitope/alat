@@ -28,11 +28,13 @@ export function bankListRequest(state=[], action) {
                 banks_data: action
             };
 
+        // default:
+        //     return {
+        //         banks: FETCH_BANK_PENDING,
+        //         banks_data: action
+        //     };
         default:
-            return {
-                banks: FETCH_BANK_PENDING,
-                banks_data: action
-            };
+            return state;
     }
 }
 

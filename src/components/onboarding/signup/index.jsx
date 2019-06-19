@@ -19,7 +19,7 @@ import {connect} from "react-redux";
 import phoneimage from "../../../assets/img/phone-bvn.svg"
 import Modal from 'react-responsive-modal';
 import { modelStateErrorHandler } from '../../../shared/utils';
-
+ 
 require('react-telephone-input/lib/withStyles');
 // const ReactTelInput = require('react-telephone-input');
 const axios = require('axios');

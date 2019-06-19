@@ -43,6 +43,7 @@ export const getBeneficiaries = (token) => {
                 dispatch(success(response));
             })
             .catch(error => {
+                
                 dispatch(failure(error.response.message.toString()));
             });
     };
@@ -59,9 +60,11 @@ export const accountEnquiry = (token, data) => {
         dispatch(request(consume));
         return consume
             .then(response => {
-                dispatch(success(response));
+                // callback();
+                dispatch(success(response.data));
             })
             .catch(error => {
+                console.error('Error is ', error);
                 dispatch(failure(error.response.message.toString()));
             });
     };

@@ -1,15 +1,4 @@
-[class^="icon-"], [class*=" icon-"] {
-  font-family: 'fontello';
-  font-style: normal;
-  font-weight: normal;
- 
-  /* fix buttons height */
-  line-height: 1em;
- 
-  /* you can be more comfortable with increased icons size */
-  /* font-size: 120%; */
-}
- 
+
 .icon-alert-active { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe800;&nbsp;'); }
 .icon-alert { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe801;&nbsp;'); }
 .icon-bills { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe802;&nbsp;'); }
@@ -21,4 +10,3 @@
 .icon-setting-icon { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe808;&nbsp;'); }
 .icon-target { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe809;&nbsp;'); }
 .icon-western-union { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe80a;&nbsp;'); }
-.icon-bank-building { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe80b;&nbsp;'); }
