@@ -73,7 +73,6 @@ class BuyData extends Component {
                     touched: false
                 },
             },
-            formIsValid: false,
             user: JSON.parse(localStorage.getItem("user")),
         };
     }
@@ -92,10 +91,8 @@ class BuyData extends Component {
     }
     
     networkChangedHandler = (selectedNetwork) => {
-        let validation = {...this.state.validation};
-        validation.networkSelector.hasError = false;
         if(this.state.selectedDataPlan == null){
-            this.setState({ selectedNetwork, validation }, () => {this.setDataPlans(selectedNetwork.value)});
+            this.setState({ selectedNetwork }, () => {this.setDataPlans(selectedNetwork.value)});
             console.log(`Option selected:`, selectedNetwork);
         }else{
             this.setState({ selectedDataPlan : null }, () => {this.networkChangedHandlerALT(selectedNetwork)} )
@@ -121,8 +118,21 @@ class BuyData extends Component {
         }
         updatedSelectOption.amount.value = value;
         this.setState({ buyDataForm: updatedSelectOption });
+        // var selected = this.getSelectValue("dataPlan");
+        // var dataPlanAmount = this.state.buyDataForm.dataPlan.elementConfig.options.filter(data => selected == data.value);
+        // const updatedSelectOption = {
+        //     ...this.state.buyDataForm
+        // }
+        // updatedSelectOption.amount.value = dataPlanAmount[0].amount;
+        // this.setState({buyDataForm: updatedSelectOption})
     }
 
+    getSelectValue = (idName) => {
+        var e = document.getElementById(idName);
+        console.log(e);
+        var selectValue = e.options[e.selectedIndex].value;
+        return selectValue;
+    }
 
     onDataPlanChanged = (event) => {
         var dataPlanAmount = this.state.buyDataForm.dataPlan.elementConfig.options.filter(data => event.target.value == data.value);
@@ -135,7 +145,10 @@ class BuyData extends Component {
 
     onSubmitBuyData = (event) => {
         event.preventDefault()
-        if(this.state.selectedNetwork && this.state.buyDataForm.phone.value != "" && this.phoneValidation(this.state.buyDataForm.phone.value)){
+        // const updatedSelectOption = {
+        //         ...this.state.buyDataForm
+        //     }
+        if(this.state.selectedNetwork && this.state.buyDataForm.phone.value != "" ){
             var dataToBuy = {
                 network: this.state.selectedNetwork.value,
                 dataPlan: this.state.selectedNetwork.value,
@@ -152,16 +165,24 @@ class BuyData extends Component {
             }
             if (this.state.buyDataForm.phone.value == ""){
                 validation.phoneInput.hasError.requiredError = true;
-            }else if(!this.phoneValidation(this.state.buyDataForm.phone.value)){
+            }else if(!this.phoneValidation(this.state.buyDataForm.amount.value)){
                 validation.phoneInput.hasError.validError = true;
             }
             this.setState({ validation});
         }
+        // var selected = this.getSelectValue("dataPlan");
+        // var dataPlanAmount = this.state.buyDataForm.dataPlan.elementConfig.options.filter(data => selected == data.value);
+        // const updatedSelectOption = {
+        //     ...this.state.buyDataForm
+        // }
+        // updatedSelectOption.amount.value = dataPlanAmount[0].amount;
+        // this.setState({buyDataForm: updatedSelectOption})
+        
     }
 
     phoneValidation = (value) => {
         const pattern = /^\d+$/;
-        return (value.length >= 11 && value.length <= 16 && pattern.test(value));
+        return (value.length >= 11 && isValid && value.length <= 16 && pattern.test(value));
     }
 
     inputChangedHandler = (event, inputIdentifier) => {
@@ -171,9 +192,6 @@ class BuyData extends Component {
         const updatedFormElement = {
             ...updatedBuyDataForm[inputIdentifier]
         };
-        let validation = {...this.state.validation};
-        validation.phoneInput.hasError.validError = false;
-        validation.phoneInput.hasError.requiredError = false;
         updatedFormElement.value = event.target.value;
         // updatedFormElement.valid = checkInputValidation(updatedFormElement.value, updatedFormElement.validation);
         updatedFormElement.valid = true;
@@ -185,7 +203,7 @@ class BuyData extends Component {
             formIsValid = updatedBuyDataForm[inputIdentifier].valid && formIsValid;
         }
         console.log(formIsValid);
-        this.setState({ buyDataForm: updatedBuyDataForm, formIsValid, validation });
+        this.setState({ buyDataForm: updatedBuyDataForm, formIsValid });
     }
 
     render() {
@@ -196,7 +214,9 @@ class BuyData extends Component {
                 config: this.state.buyDataForm[key]
             });
         }
-        const { selectedNetwork, selectedDataPlan, dataPlansOptions } = this.state;
+        const { selectedNetwork } = this.state;
+        const { selectedDataPlan } = this.state;
+        const {dataPlansOptions} = this.state;
         return (
             <div className="col-sm-12">
                 <div className="row">
@@ -215,7 +235,7 @@ class BuyData extends Component {
                                                 options={networkOperators}
                                                 placeholder="Select..."
                                             />
-                                           {this.state.validation.networkSelector.hasError ? <small className="text-danger">{this.state.validation.networkSelector.error}</small> : null}
+                                            {this.state.validation.networkSelector.hasError ? <small className="text-danger">{this.state.validation.networkSelector.error}</small> : null}
                                         </div>
                                         <div class="input-ctn">
                                         <label>Choose a data plan</label>
