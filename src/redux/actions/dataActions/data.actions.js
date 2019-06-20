@@ -113,3 +113,33 @@ export const fetchDataPlans = (token, data) => {
      } }
 }
 
+export const setDataTransactionDetails = (dataDetails) => {
+    return{
+        type : actionTypes.SET_DATA_TRANSACTION_DETAILS,
+        data : dataDetails
+    }
+}
+
+export const fetchDebitableAccounts = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.FETCH_DEBITABLE_ACCOUNTS, "POST", data, SystemConstant.HEADER);
+        return consume
+            .then(response => {
+                console.log(response.data);
+                console.log("response.data");
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                // dispatch(failure(error.response.data.message.toString()));
+                dispatch(isFetchingFalse());
+                console.log(error);
+            });
+    };
+
+    function success(response) { return { 
+        type : actionTypes.FETCH_DEBITABLE_ACCOUNTS_SUCCESS,
+        data: response
+     } }
+}
+

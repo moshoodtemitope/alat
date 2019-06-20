@@ -5,6 +5,7 @@ import { Link, NavLink, Route } from 'react-router-dom';
 
 import Index from '.';
 import BuyData from './buy-data';
+import ConfirmData from './confirm-data';
 import * as actions from '../../../redux/actions/dataActions/export';
 
 class Data extends Component{
@@ -16,14 +17,18 @@ class Data extends Component{
     }
 
     componentDidMount() {
-        this.props.fetchBeneficiaries(this.state.user.token);
+        if(this.props.beneficiaries < 1){
+            this.props.fetchBeneficiaries(this.state.user.token);
+        }
+        
     }
    render() {
        return(
            <Fragment>
                 {this.props.children}
                 <Route exact path='/bills/data' render={(props) => <Index {...props} beneficiaries={this.props.beneficiaries} isFetching={this.props.fetching} />} />
-                <Route path='/bills/data/buy' render={(props) => <BuyData {...props} />} />
+                <Route exact path='/bills/data/buy' render={(props) => <BuyData {...props} />} />
+                <Route path='/bills/data/buy/confirm' render={(props) => <ConfirmData {...props} />} />
            </Fragment>
        );
    }

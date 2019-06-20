@@ -43,9 +43,11 @@ export const routes = {
 
     //Airtime
     AIRTIME_BENEFICIARIES : BASEURL + '/PaymentApi/api/AirtimeBill/GetAirtimeBeneficiaries',
+    AIRTIME_DELETE_BENEFICIARY : BASEURL + '/PaymentApi/api/AirtimeBill/DeleteSavedAirtimeBillBeneficiaries',
 
     //Data
     FETCH_DATA_BENEFICIARIES : BASEURL + '/PaymentApi/api/AirtimeBill/GetAirtimeBeneficiaries',
     DELETE_DATA_BENEFICIARY : BASEURL + '/PaymentApi/api/AirtimeBill/DeleteSavedAirtimeBillBeneficiaries',
     FETCH_DATA_PLANS : BASEURL + '/PaymentApi/api/AirtimeBill/QuickTellerBillerItemsData',
+    FETCH_DEBITABLE_ACCOUNTS : BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2'
 };

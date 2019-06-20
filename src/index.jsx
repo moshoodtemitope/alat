@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import {store} from "./_helpers/store";
 import { Provider } from "react-redux";
 import IndexedRoute from "./components/routes";
+import {BrowserRouter} from 'react-router-dom';
 import './assets/css/bootstrap.css';
 import './assets/css/font-awesome/font-awesome.css';
 import './assets/css/fontello/css/fontello.css';
@@ -33,7 +34,9 @@ import App from "./App";
 ReactDOM.render(
     <Provider store={store}>
         {/*<IndexedRoute />*/}
-        <App />
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
     </Provider>,
     document.getElementById('root')
 );
