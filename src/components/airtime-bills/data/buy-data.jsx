@@ -1,41 +1,40 @@
 import React, { Component } from 'React';
+import { Link } from 'react-router-dom';
 
-import { Input, Select } from './input';
-
+import { Input } from './input';
+import Select from 'react-select';
+import { formatAmountNoDecimal } from '../../../shared/utils';
 import { checkInputValidation } from '../../../shared/utils';
 import { connect } from 'react-redux';
 
+
 import * as actions from '../../../redux/actions/dataActions/export';
 
+
+var networkOperators = [
+    { value: "MTN", label: "MTN"},
+    { value: "Airtel", label: "Airtel"},
+    { value: "Glo", label: "Glo"},
+    { value: "Etisalat", label: "Etisalat"}
+]
 class BuyData extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            selectedNetwork: null,
+            selectedDataPlan: null,
+            dataPlansOptions: [],
             buyDataForm: {
-                // selectNetwork: {
+                // dataPlan: {
                 //     elementType: 'select',
                 //     elementConfig: {
-                //         options: [
-                //             { value: 'MTN', displayValue: 'MTN' },
-                //             { value: 'Etisalat', displayValue: 'Etisalat' },
-                //             { value: 'Glo', displayValue: 'Glo' },
-                //             { value: 'Airtel', displayValue: 'Airtel' },
-                //         ]
+                //         options: [{ value: '', displayValue: '------' }],
                 //     },
-                //     label: 'Select  a Network',
+                //     label: 'Choose a data plan',
+                //     value: '',
                 //     validation: {},
                 //     valid: true
                 // },
-                dataPlan: {
-                    elementType: 'select',
-                    elementConfig: {
-                        options: [{ value: '', displayValue: '------' }],
-                    },
-                    label: 'Choose a data plan',
-                    value: '',
-                    validation: {},
-                    valid: true
-                },
                 amount: {
                     elementType: 'input',
                     elementConfig: {
@@ -43,7 +42,7 @@ class BuyData extends Component {
                         placeholder: '0000',
                     },
                     label: 'Amount',
-                    value: 5000,
+                    value: "",
                     isDisabled: true,
                     validation: {
                         required: true,
@@ -77,34 +76,92 @@ class BuyData extends Component {
         };
     }
 
-    componentDidMount() {
-        this.props.fetchDataPlans(this.state.user.token);
 
-        if (this.props.dataPlans.length > 1) {
-            //this.setState({})
+    componentDidMount() {
+        if (this.props.dataPlans.length < 1) {
+            
+            this.props.fetchDataPlans(this.state.user.token);
         }
     }
 
-    selectChangedHandler = (event) => {
+    dataPlanChangedHandler = (selectedDataPlan) => {
+        this.setState({ selectedDataPlan }, () => {this.updateAmount(selectedDataPlan.amount)});
+        console.log(`Option selected:`, selectedDataPlan);
+    }
+    
+    networkChangedHandler = (selectedNetwork) => {
+        if(this.state.selectedDataPlan == null){
+            this.setState({ selectedNetwork }, () => {this.setDataPlans(selectedNetwork.value)});
+            console.log(`Option selected:`, selectedNetwork);
+        }else{
+            this.setState({ selectedDataPlan : null }, () => {this.networkChangedHandlerALT(selectedNetwork)} )
+        }
+
+        // var arrayToDisplay = [];
+        // this.props.dataPlans.filter(data => data.Network == event.target.value)
+        //     .map((data => arrayToDisplay.push({ value: data.PaymentItem, displayValue: data.PaymentItem, amount: data.Amount })));
+        // const updatedSelectOption = {
+        //     ...this.state.buyDataForm
+        // }
+        // updatedSelectOption.dataPlan.elementConfig.options = arrayToDisplay;
+        // this.setState({ buyDataForm: updatedSelectOption }, this.updateAmount);
+        
+    }
+
+    networkChangedHandlerALT = (selectedNetwork) => {
+        this.setState({ selectedNetwork }, () => {this.setDataPlans(selectedNetwork.value)});
+        console.log(`Option selected:`, selectedNetwork);
+    }
+
+    setDataPlans = (value) => {
         var arrayToDisplay = [];
-        this.props.dataPlans.filter(data => data.Network == event.target.value)
-            .map((data => arrayToDisplay.push({ value: data.PaymentItem, displayValue: data.PaymentItem })));
+        this.props.dataPlans.filter(data => data.Network == value)
+            .map((data => arrayToDisplay.push({ value: data.PaymentItem,label: data.PaymentItem, amount: data.Amount })));
+        this.setState({dataPlansOptions : arrayToDisplay}, () => {this.updateAmount(this.state.dataPlansOptions[0].amount)})
+    }
+
+    updateAmount = (value) => {
         const updatedSelectOption = {
             ...this.state.buyDataForm
         }
-        updatedSelectOption.dataPlan.elementConfig.options = arrayToDisplay;
+        updatedSelectOption.amount.value = value;
         this.setState({ buyDataForm: updatedSelectOption });
+        // var selected = this.getSelectValue("dataPlan");
+        // var dataPlanAmount = this.state.buyDataForm.dataPlan.elementConfig.options.filter(data => selected == data.value);
+        // const updatedSelectOption = {
+        //     ...this.state.buyDataForm
+        // }
+        // updatedSelectOption.amount.value = dataPlanAmount[0].amount;
+        // this.setState({buyDataForm: updatedSelectOption})
+    }
+
+    getSelectValue = (idName) => {
+        var e = document.getElementById(idName);
+        console.log(e);
+        var selectValue = e.options[e.selectedIndex].value;
+        return selectValue;
     }
 
     onDataPlanChanged = (event) => {
-        var dataPlanAmount = this.props.dataPlans.filter(data => data.PaymentItem == event.target.value);
+        var dataPlanAmount = this.state.buyDataForm.dataPlan.elementConfig.options.filter(data => event.target.value == data.value);
         const updatedSelectOption = {
             ...this.state.buyDataForm
         }
-        updatedSelectOption.amount.value = dataPlanAmount.Amount;
-        console.log(dataPlanAmount.Amount);
-        console.log("dataPlanAmount.Amount");
+        updatedSelectOption.amount.value = dataPlanAmount[0].amount;
         this.setState({ buyDataForm: updatedSelectOption });
+    }
+
+    onSubmitBuyData = (event) => {
+        event.preventDefault()
+        var dataToBuy = {
+            network: this.getSelectValue("networkSelector"),
+            dataPlan: this.getSelectValue("dataPlan"),
+            amount: this.state.buyDataForm.amount.value,
+            phoneNumber: this.state.buyDataForm.phone.value
+        }
+        this.props.setDataToBuyDetails(dataToBuy);
+        console.log(dataToBuy);
+        this.props.history.push('/bills/data/buy/confirm');
     }
 
     inputChangedHandler = (event, inputIdentifier) => {
@@ -136,6 +193,9 @@ class BuyData extends Component {
                 config: this.state.buyDataForm[key]
             });
         }
+        const { selectedNetwork } = this.state;
+        const { selectedDataPlan } = this.state;
+        const {dataPlansOptions} = this.state;
         return (
             <div className="col-sm-12">
                 <div className="row">
@@ -147,30 +207,35 @@ class BuyData extends Component {
                                 <div className="transfer-ctn">
                                     <form>
                                         <div class="input-ctn">
+                                            
                                             <label>Select a Network</label>
-                                            <select onChange={(event) => this.selectChangedHandler(event)}>
-                                                <option value="">Select Data Network</option>
-                                                <option value="MTN">MTN</option>
-                                                <option value="Airtel">Airtel</option>
-                                                <option value="Glo">Glo</option>
-                                                <option value="Glo">Etisalat</option>
-                                            </select>
+                                            <Select
+                                                value={selectedNetwork}
+                                                onChange={this.networkChangedHandler}
+                                                options={networkOperators}
+                                                placeholder="Select..."
+                                            />
                                         </div>
-
+                                        <div class="input-ctn">
+                                        <label>Choose a data plan</label>
                                         <Select
-                                            optionsList={this.state.buyDataForm.dataPlan.elementConfig.options}
-                                            label={this.state.buyDataForm.dataPlan.label}
-                                            changed={(event) => this.onDataPlanChanged(event)} />
-
-                                        {formElementArray.map(formElement => {
-                                            if (formElement.config.elementType !== "input") return;
+                                                value={selectedDataPlan != null ? selectedDataPlan : dataPlansOptions[0]}
+                                                onChange={this.dataPlanChangedHandler}
+                                                options={dataPlansOptions}
+                                                placeholder="---"
+                                            />
+                                        </div>
+                                        {formElementArray.map((formElement) => {
+                                            if (formElement.config.elementType !== "input") {
+                                                return ;
+                                            };
                                             return (
                                                 <div className="input-ctn" key={formElement.id}>
                                                     <label>{formElement.config.label}</label>
                                                     <Input
                                                         elementType={formElement.config.elementType}
                                                         elementConfig={formElement.config.elementConfig}
-                                                        value={formElement.config.value}
+                                                        value={formElement.config.isDisabled ? 'N'+formatAmountNoDecimal(formElement.config.value) : formElement.config.value}
                                                         changed={(event) => this.inputChangedHandler(event, formElement.id)}
                                                         wrongInput={!formElement.config.valid}
                                                         isTouched={formElement.config.touched}
@@ -185,7 +250,7 @@ class BuyData extends Component {
                                             <div class="col-sm-12">
                                                 <center>
 
-                                                    <button class="btn-alat m-t-10 m-b-20 text-center">Next</button>
+                                                    <button onClick={this.onSubmitBuyData} class="btn-alat m-t-10 m-b-20 text-center">Next</button>
                                                 </center>
                                             </div>
                                         </div>
@@ -201,7 +266,7 @@ class BuyData extends Component {
                             </div>
 
                             <center>
-                                <a href="add-beneficiary.html" className="add-bene m-t-50">Go Back</a>
+                                <Link to={'/bills/data'} className="add-bene m-t-50">Go Back</Link>
                             </center>
                         </div>
                     </div>
@@ -213,13 +278,15 @@ class BuyData extends Component {
 
 const mapStateToProps = state => {
     return {
-        dataPlans: state.data_reducer.dataPlans
+        dataPlans: state.data_reducer.dataPlans,
+        dataInfo : state.data_reducer.dataToBuy,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         fetchDataPlans: (token) => dispatch(actions.fetchDataPlans(token)),
+        setDataToBuyDetails: (dataToBuy) => dispatch(actions.setDataTransactionDetails(dataToBuy))
     }
 }
 

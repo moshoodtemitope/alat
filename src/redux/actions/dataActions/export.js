@@ -1,5 +1,7 @@
 export {
     fetchDataBeneficiaries,
     deleteDataBeneficiary,
-    fetchDataPlans
+    fetchDataPlans,
+    setDataTransactionDetails,
+    fetchDebitableAccounts
 } from './data.actions';
