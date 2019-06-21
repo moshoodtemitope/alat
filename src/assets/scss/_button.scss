@@ -81,3 +81,66 @@ input[type="button"]:disabled, .disabled-btn {
   width: 100%;
   display: block;
 }
+
+//toggle buttonn
+.switch {
+  position: relative;
+	width: 8rem;
+	height: 5rem;
+	border-radius: 20%;
+	transition: background-color 100ms ease-out;
+	z-index: 1;
+	&:before, &:after{
+    content: "";
+		position: absolute;
+		top: 0;
+		background-color: inherit;
+		border-radius: 50%;
+		width: 5rem;
+		height: 5rem;
+		z-index: 2;
+  }
+		
+	&:before{
+    left: -1rem
+  }
+	&:after {
+    right: -1rem
+  }
+}
+	
+	
+.toggle-button{
+  position: absolute;
+	width: 4.6rem;
+	height: 4.6rem;
+	border-radius: 50%;
+	transition: transform 100ms ease-in-out;
+	z-index: 3;
+	border: 0.05rem solid #fff;
+	top: 0.16rem;
+}
+	
+
+.switch_is-off {
+  background-color: #fff;
+	border: 0.1rem solid #9c9c9c;
+}
+	
+
+.switch_is-on{
+  background-color: #d9534f
+}
+	
+
+.toggle-button_position-left{
+  transform: translateX(-0.8rem);
+	background-color: #ccc;
+}
+	
+
+.toggle-button_position-right{
+  transform: translateX(4.0rem);
+	background-color: #fff;
+}
+	

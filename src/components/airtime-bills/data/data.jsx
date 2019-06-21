@@ -6,6 +6,8 @@ import { Link, NavLink, Route } from 'react-router-dom';
 import Index from '.';
 import BuyData from './buy-data';
 import ConfirmData from './confirm-data';
+import Success from './success';
+import  VerifyOtp from './verify-otp'
 import * as actions from '../../../redux/actions/dataActions/export';
 
 class Data extends Component{
@@ -29,6 +31,8 @@ class Data extends Component{
                 <Route exact path='/bills/data' render={(props) => <Index {...props} beneficiaries={this.props.beneficiaries} isFetching={this.props.fetching} />} />
                 <Route exact path='/bills/data/buy' render={(props) => <BuyData {...props} />} />
                 <Route path='/bills/data/buy/confirm' render={(props) => <ConfirmData {...props} />} />
+                <Route path='/bills/data/buy/success' render={(props) => <Success {...props} />} />
+                <Route path='/bills/data/buy/verify' render={(props) => <VerifyOtp {...props} />} />
            </Fragment>
        );
    }
