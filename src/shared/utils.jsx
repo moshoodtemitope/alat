@@ -45,6 +45,7 @@ export const modelStateErrorHandler = (error, field) => {
 };
 
 export const handleError =(error)=>{
+    console.log("-----in handle error")
     var message = '';
     if (error.response) {
         // The request was made and the server responded with a status code

@@ -122,7 +122,7 @@ class ConfirmData extends Component {
         return (value.length >= 4 && value.length <= 4 && pattern.test(value));
     }
 
-    onSubmitBuyData = (event) => {
+    onSubmitForm = (event) => {
         var validation = { ...this.state.validation };
         event.preventDefault();
         if ((this.state.confirmDataForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedAccounts) || !this.pinInputValidation(this.state.confirmDataForm.pin.value)) {
@@ -140,13 +140,13 @@ class ConfirmData extends Component {
                 AccountNumber: (this.state.selectedAccounts ? this.state.selectedAccounts.value : this.state.confirmDataForm.activeAccount.elementConfig.options[0].value),
                 TransactionPin: this.state.confirmDataForm.pin.value
             }
-            console.log(payload);
+            this.props.setDataToBuyDetails(payload);
             this.props.verifyInputedPIN(this.state.user.token, payload);
         }
     }
 
     onCloseModal = () => {
-        this.props.resetPinState()
+        this.props.resetPinState();
     }
 
 
@@ -232,7 +232,7 @@ class ConfirmData extends Component {
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <center>
-                                                            <button disabled={this.props.fetching} onClick={this.onSubmitBuyData} class="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Buy Data"}</button>
+                                                            <button disabled={this.props.fetching} onClick={this.onSubmitForm} class="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Buy Data"}</button>
                                                         </center>
                                                     </div>
                                                 </div>
@@ -281,7 +281,8 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchDebitableAccounts: (token) => dispatch(actions.fetchDebitableAccounts(token)),
         verifyInputedPIN : (token, data) => dispatch(actions.pinVerificationStart(token, data)),
-        resetPinState: () => dispatch(actions.pinVerificationTryAgain())
+        resetPinState: () => dispatch(actions.pinVerificationTryAgain()),
+        setDataToBuyDetails: (dataToBuy, network) => dispatch(actions.setDataTransactionDetails(dataToBuy, network))
     }
 }
 

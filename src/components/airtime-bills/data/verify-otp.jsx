@@ -56,7 +56,6 @@ class VerifyOtp extends Component {
 
 
     componentDidMount() {
-        // this.props.fetchDebitableAccounts(this.state.user.token);
         this.props.resetPinState();
     }
 
@@ -83,6 +82,9 @@ class VerifyOtp extends Component {
     //     console.log(`Option selected:`, selectedAccount);
     // }
 
+    onSubmitForm = (event) => {
+        
+    }
 
     inputChangedHandler = (event, inputIdentifier) => {
         const updatedotpFormData = {
@@ -136,7 +138,6 @@ class VerifyOtp extends Component {
 
                                     <div className="m-t-30 width-300">
                                         <p className="m-b-20" >We just sent a verification code to your mobile number (+2348020****01)</p>
-
                                         <form>
 
 
@@ -165,7 +166,7 @@ class VerifyOtp extends Component {
                                             <div className="row">
                                                 <div className="col-sm-12">
                                                     <center>
-                                                        <button type="submit" className="btn-alat m-t-10 m-b-40 text-center">Confirm</button>
+                                                    <button disabled={this.props.fetching} onClick={this.onSubmitForm} class="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Confirm"}</button>
 
                                                         <a className="resend-otp" href="#">Didn't get OTP? Resend Code.</a>
                                                     </center>
@@ -195,7 +196,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        resetPinState: () => dispatch(actions.pinVerificationTryAgain())
+        resetPinState: () => dispatch(actions.pinVerificationTryAgain()),
+        verifyInputedPIN : (token, data) => dispatch(actions.pinVerificationStart(token, data)),
     }
 }
 

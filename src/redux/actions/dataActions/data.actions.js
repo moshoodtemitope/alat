@@ -181,12 +181,6 @@ export const pinVerificationStart = (token, data) => {
         }
     }
 
-    function wrongPin(message) {
-        return {
-            type: actionTypes.PIN_VERIFICATION_WRONG,
-            message: message
-        }
-    }
 
     // function success(response) { return { 
     //     type : actionTypes.FETCH_DEBITABLE_ACCOUNTS_SUCCESS,
