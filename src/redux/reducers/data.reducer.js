@@ -90,8 +90,6 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch(action.type){
-        case actionTypes.SWITCH_CURRENT_COMPONENT:
-            return updateObject(state, {currentComponent: action.name});
         case actionTypes.FETCH_DATA_BENEFICIARIES_SUCCESS:
             return updateObject(state, {beneficiaries: action.data, isFetching : false});
             // return updateObject(state, {beneficiaries: mock, isFetching : false});

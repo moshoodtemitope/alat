@@ -50,7 +50,9 @@ function login(email, password) {
             }).catch(error => {
                 
                 // console.log(err.response.data.message);
-                // console.log(error);
+                console.log("---------error at login");
+                console.log(error);
+                console.log(error.response)
                 // submitting = false;
                 // throw new SubmissionError({ _error: err.response.data.message});
                 dispatch(failure(modelStateErrorHandler(error)));
