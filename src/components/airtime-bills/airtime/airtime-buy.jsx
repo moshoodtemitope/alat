@@ -3,56 +3,100 @@ import { Link } from 'react-router-dom';
 import { airtimeConstants } from '../../../redux/constants/airtime/airtime.constants';
 import Airtime from './airtime';
 import Select from 'react-select';
-import {Textbox} from "react-inputs-validation";
-import * as  utils  from '../../../shared/utils'
+import { Textbox } from "react-inputs-validation";
+import * as  utils from '../../../shared/utils'
 import * as  constants from '../../../shared/constants'
+import AmountInput from './element/amountInput';
 
 var networkOperators = [
-    { value: "MTN", label: "MTN"},
-    { value: "Airtel", label: "Airtel"},
-    { value: "Glo", label: "Glo"},
-    { value: "Etisalat", label: "Etisalat"}
+    { value: "2", label: "MTN" },
+    { value: "3", label: "Airtel" },
+    { value: "1", label: "Glo" },
+    { value: "4", label: "Etisalat" }
 ]
 
 class BuyAirtime extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             PhoneNumber: "",
             NetworkCode: "",
             Amount: "",
-            phoneIvalid: true,
+            selectedNetwork: "",
+            formsubmitted: false,
+            phoneIvalid: false,
+            networkInvalid: false,
+            AmountInvalid: false,
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleAmount = this.handleAmount.bind(this);
+        // this.handleSelectChange = this.handleSelectChange.bind(this);
     }
 
-handleSubmit = (e)=>{
-    e.preventDefault();
-}
-
-getNetworkName(obj, value) {
-    return Object.keys(constants.NetworkName).filter(e => obj[e] === value)[0] || null;
-  }
-
-handleChange = (e)=>{
-    console.log(e.currentTarget);
-    console.log(e.target);
-    const name = e.target.name;
-    if(name === 'newtork'){
-        this.setState({ 'NetworkCode': this.getNetworkName(NetworkName, e.target.value) });
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.setState({ formsubmitted: true });
+        this.props.history.push('/bills/airtime/select-account');
+        console.log(this.state);
     }
-    else if(e.target.name === 'Amount')  {
-        console.log(utils.formatAmount(e.target.value));
-        e.target.setValue("0"); //set("value",utils.formatAmount(e.target.value)) //= utils.formatAmount(e.target.value);
-    this.setState({ [name] : e.target.value });
-    console.log(this.state.Amount);
+
+    checkInputValidity = () => {
+        
+        if (this.state.Amount == "") { this.setState({ AmountInvalid: true }),
+         ()=> valid = false }
+        // else this.setState({ AmountInvalid: false })
+
+        if (this.state.NetworkCode == "")
+            this.setState({ networkInvalid: true }, ()=> valid=false)
+        //else this.setState({ networkInvalid: false })
+
+        if (this.state.PhoneNumber.length != 11)
+            this.setState({ phoneIvalid: true })
+        // else this.setState({ phoneIvalid: true })
+
+        if (this.state.AmountInvalid || this.state.networkInvalid || this.state.phoneIvalid) {
+
+        } else {
+
+        }
     }
-}
+
+    getNetworkName(obj, value) {
+        return Object.keys(obj).filter(e => obj[e] === value)[0] || null;
+    }
+
+    handleChange = (e) => {
+        const name = e.target.name;
+        if (/[0-9]+/.test(e.target.value)) {
+            this.setState({ [name]: e.target.value });
+            if (this.state.formsubmitted && e.target.value.length == 11)
+                this.setState({ phoneIvalid: false });
+        }
+        else if (e.target.value == "") {
+            this.setState({ [name]: e.target.value });
+        }
+
+    }
+
+    handleAmount = (e) => {
+        // console.log(this.intValue);
+        this.setState({ "Amount": e });
+        if (this.state.formsubmitted) {
+            if (e != "")
+                this.setState({ AmountInvalid: false });
+        }
+    }
+
+    handleSelectChange = (selectedNetwork) => {
+        this.setState({ "NetworkCode": selectedNetwork.value });
+        if (this.state.formsubmitted && selectedNetwork.value != "")
+            this.setState({ networkInvalid: false })
+    }
 
     render() {
-        let  { phoneIvalid, PhoneNumber, Amount } = this.state;
+        let { phoneIvalid, networkInvalid, AmountInvalid, PhoneNumber, Amount, selectedNetwork, formattedValue, formsubmitted } = this.state;
         let props = this.props;
         return (
             <div className="col-sm-12">
@@ -63,34 +107,33 @@ handleChange = (e)=>{
                                 <h4 className="m-b-10 center-text hd-underline">Buy Airtime</h4>
                                 <div className="transfer-ctn">
                                     <form onSubmit={this.handleSubmit}>
-                                        <div className="input-ctn">
+                                        <div className={networkInvalid ? "input-ctn form-error" : "input-ctn"}>
                                             <label>Select a Network</label>
                                             <Select tabindex="-1"
-                                            options={networkOperators}
-                                            onChange={this.handleChange}
+                                                name="network"
+                                                options={networkOperators}
+                                                onChange={this.handleSelectChange}
+                                                value={selectedNetwork.label}
                                             />
-                                                
+                                            {networkInvalid &&
+                                                <div className="text-danger">Select a network please</div>}
                                             {/* <div className="selectize-control single"><div className="selectize-input items not-full has-options"><input tabIndex="-32768" style={{width: '101px'}} type="text" placeholder="Select a Network" autoComplete="off" /></div>
                                                 <div className="selectize-dropdown single" style={{left: '0px' top: 43px; width: 400px; display: none;}}><div className="selectize-dropdown-content"></div></div></div> */}
                                         </div>
-                                        <div className={phoneIvalid ? "input-ctn" : "input-ctn form-error"}>
+                                        <div className={phoneIvalid ? "input-ctn form-error" : "input-ctn"}>
                                             <label>Enter your Phone number</label>
                                             <input type="text" onChange={this.handleChange} maxLength="11" name="PhoneNumber" value={PhoneNumber} placeholder="08033798761" />
-                                            {!phoneIvalid &&
+                                            {phoneIvalid &&
                                                 <div className="text-danger">A valid phone number is required</div>
                                             }
                                         </div>
 
-                                        <div className="input-ctn">
-                                            <label>Amount</label>
-                                            <input onChange={this.handleChange} name="Amount"  type="tel"
-                                             />
-                                        </div>
+                                        <AmountInput value={formattedValue} onChange={this.handleAmount} name="Amount" intValue={Amount} AmountInvalid={AmountInvalid} />
 
                                         <div className="row">
                                             <div className="col-sm-12">
                                                 <center>
-                                                    <input className="btn-alat m-t-10 m-b-20 text-center" type="button" value="Next" />
+                                                    <input className="btn-alat m-t-10 m-b-20 text-center" type="submit" value="Next" />
                                                 </center>
                                             </div>
                                         </div>
