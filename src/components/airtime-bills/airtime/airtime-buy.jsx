@@ -35,31 +35,35 @@ class BuyAirtime extends Component {
         // this.handleSelectChange = this.handleSelectChange.bind(this);
     }
 
+    checkAmount = () => {
+        if (this.state.Amount == "") {
+            this.setState({ AmountInvalid: true });
+            return true;
+        }
+    }
+
+    checkNetwork = () => {
+        if (this.state.NetworkCode == "") {
+            this.setState({ networkInvalid: true });
+                return true;
+        }
+    }
+
+    checkPhone = () => {
+        if (this.state.PhoneNumber.length != 11){
+            this.setState({ phoneIvalid: true });
+            return true;
+        }
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({ formsubmitted: true });
-        this.props.history.push('/bills/airtime/select-account');
-        console.log(this.state);
-    }
-
-    checkInputValidity = () => {
         
-        if (this.state.Amount == "") { this.setState({ AmountInvalid: true }),
-         ()=> valid = false }
-        // else this.setState({ AmountInvalid: false })
-
-        if (this.state.NetworkCode == "")
-            this.setState({ networkInvalid: true }, ()=> valid=false)
-        //else this.setState({ networkInvalid: false })
-
-        if (this.state.PhoneNumber.length != 11)
-            this.setState({ phoneIvalid: true })
-        // else this.setState({ phoneIvalid: true })
-
-        if (this.state.AmountInvalid || this.state.networkInvalid || this.state.phoneIvalid) {
-
+        if (this.checkNetwork() || this.checkPhone() || this.checkAmount()) {
+            
         } else {
-
+            this.props.history.push("/bills/airtime/select-account");
         }
     }
 

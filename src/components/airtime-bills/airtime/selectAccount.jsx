@@ -1,10 +1,11 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 class SelectAcount extends React.Component {
 
     render() {
 
-        render(
+        return(
             <div class="col-sm-12">
                 <div class="row">
                     <div class="col-sm-12">
@@ -48,7 +49,7 @@ class SelectAcount extends React.Component {
                             </div>
 
                             <center>
-                                <a href="add-beneficiary.html" class="add-bene m-t-50">Go Back</a>
+                                <Link to={'/bills/airtime/buy'} class="add-bene m-t-50">Go Back</Link>
                             </center>
                         </div>
                     </div>

@@ -3,5 +3,7 @@ export {
     deleteDataBeneficiary,
     fetchDataPlans,
     setDataTransactionDetails,
-    fetchDebitableAccounts
+    fetchDebitableAccounts,
+    pinVerificationStart,
+    pinVerificationTryAgain
 } from './data.actions';

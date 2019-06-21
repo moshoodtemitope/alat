@@ -9,14 +9,10 @@ import { connect } from 'react-redux';
 
 
 import * as actions from '../../../redux/actions/dataActions/export';
+import { isFetchingFalse } from '../../../redux/actions/dataActions/data.actions';
 
 
-var networkOperators = [
-    { value: "MTN", label: "MTN"},
-    { value: "Airtel", label: "Airtel"},
-    { value: "Glo", label: "Glo"},
-    { value: "Etisalat", label: "Etisalat"}
-]
+
 class BuyData extends Component {
     constructor(props) {
         super(props);
@@ -111,8 +107,8 @@ class BuyData extends Component {
     setDataPlans = (value) => {
         var arrayToDisplay = [];
         this.props.dataPlans.filter(data => data.Network == value)
-            .map((data => arrayToDisplay.push({ value: data.PaymentItem,label: data.PaymentItem, amount: data.Amount })));
-        this.setState({dataPlansOptions : arrayToDisplay}, () => {this.updateAmount(this.state.dataPlansOptions[0].amount)})
+            .map((data => arrayToDisplay.push({ value: data.PaymentItem,label: data.PaymentItem, amount: data.Amount, billerCode: data.BillerPaymentCode, networkCode: data.NetworkCode })));
+        this.setState({dataPlansOptions : arrayToDisplay, selectedDataPlan : arrayToDisplay[0]}, () => {this.updateAmount(this.state.dataPlansOptions[0].amount)})
     }
 
     updateAmount = (value) => {
@@ -123,26 +119,19 @@ class BuyData extends Component {
         this.setState({ buyDataForm: updatedSelectOption });
     }
 
-
-    onDataPlanChanged = (event) => {
-        var dataPlanAmount = this.state.buyDataForm.dataPlan.elementConfig.options.filter(data => event.target.value == data.value);
-        const updatedSelectOption = {
-            ...this.state.buyDataForm
-        }
-        updatedSelectOption.amount.value = dataPlanAmount[0].amount;
-        this.setState({ buyDataForm: updatedSelectOption });
-    }
-
     onSubmitBuyData = (event) => {
         event.preventDefault()
         if(this.state.selectedNetwork && this.state.buyDataForm.phone.value != "" && this.phoneValidation(this.state.buyDataForm.phone.value)){
+            
             var dataToBuy = {
-                network: this.state.selectedNetwork.value,
-                dataPlan: this.state.selectedNetwork.value,
-                amount: this.state.buyDataForm.amount.value,
-                phoneNumber: this.state.buyDataForm.phone.value
+                Amount: parseFloat(this.state.buyDataForm.amount.value),
+                BillerPaymentCode: (this.state.selectedDataPlan ? this.state.selectedDataPlan.billerCode : this.state.dataPlansOptions[0].billerCode),
+                NetworkCode: (this.state.selectedDataPlan ? this.state.selectedDataPlan.networkCode : this.state.dataPlansOptions[0].networkCode),
+                PaymentItem: (this.state.selectedDataPlan ? this.state.selectedDataPlan.value : this.state.dataPlansOptions[0].value),
+                PhoneNumber: this.state.buyDataForm.phone.value,
+                SubscriberId: this.state.buyDataForm.phone.value,
             }
-            this.props.setDataToBuyDetails(dataToBuy);
+            this.props.setDataToBuyDetails(dataToBuy, this.state.selectedNetwork.value);
             console.log(dataToBuy);
             this.props.history.push('/bills/data/buy/confirm');
         }else{
@@ -196,6 +185,12 @@ class BuyData extends Component {
                 config: this.state.buyDataForm[key]
             });
         }
+        var networkOperators = (this.props.fetching ? [] :  [
+            { value: "MTN", label: "MTN"},
+            { value: "Airtel", label: "Airtel"},
+            { value: "Glo", label: "Glo"},
+            { value: "Etisalat", label: "Etisalat"}
+        ]);
         const { selectedNetwork, selectedDataPlan, dataPlansOptions } = this.state;
         return (
             <div className="col-sm-12">
@@ -280,13 +275,14 @@ const mapStateToProps = state => {
     return {
         dataPlans: state.data_reducer.dataPlans,
         dataInfo : state.data_reducer.dataToBuy,
+        fetching: state.data_reducer.isFetchingData,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         fetchDataPlans: (token) => dispatch(actions.fetchDataPlans(token)),
-        setDataToBuyDetails: (dataToBuy) => dispatch(actions.setDataTransactionDetails(dataToBuy))
+        setDataToBuyDetails: (dataToBuy, network) => dispatch(actions.setDataTransactionDetails(dataToBuy, network))
     }
 }
 

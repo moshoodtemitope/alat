@@ -1,4 +1,5 @@
 import * as actionTypes from "../constants/dataConstants/data.constant";
+import {alertConstants} from "../constants/alert.constants";
 
 import {updateObject} from '../actions/dataActions/data.actions';
 
@@ -70,14 +71,21 @@ import {updateObject} from '../actions/dataActions/data.actions';
 //     }
 // ];
 
-
+//Pin Verifed status
+// 0-Pin is correct
+// 1-Pin is Incorrect
+// 2-Retry Pin/default Pin State
 
 const initialState = {
     beneficiaries : [],
     dataPlans : [],
     isFetching: false,
+    isFetchingData: false,
     dataToBuy: null,
-    debitableAccounts : []
+    debitableAccounts : [],
+    pinVerified: 2,
+    pinErrorMessage: null,
+    network: ""
 }; 
 
 const reducer = (state = initialState, action) => {
@@ -92,12 +100,22 @@ const reducer = (state = initialState, action) => {
         case actionTypes.IS_FETCHING_FALSE:
             return updateObject(state, {isFetching: false});
         case actionTypes.SET_DATA_TRANSACTION_DETAILS:
-            return updateObject(state, {dataToBuy: action.data});
+            return updateObject(state, {dataToBuy: action.data, network: action.network});
         case actionTypes.FETCH_DATA_PLAN_SUCCESS:
-            return updateObject(state, {dataPlans: action.data});
+            return updateObject(state, {dataPlans: action.data, network : ""});
         case actionTypes.FETCH_DEBITABLE_ACCOUNTS_SUCCESS:
-            return updateObject(state, {debitableAccounts : action.data,});
+            return updateObject(state, {debitableAccounts : action.data, isFetching: false, pinErrorMessage: null});
             // return updateObject(state, {debitableAccounts : mock2});
+        case actionTypes.PIN_VERIFICATION_CORRECT:
+            return updateObject(state, {pinVerified : 0});
+        case actionTypes.PIN_VERIFICATION_WRONG:
+            return updateObject(state, {pinVerified : 1, pinErrorMessage : action.message});
+        case actionTypes.PIN_VERIFICATION_TRY_AGAIN:
+            return updateObject(state, {pinVerified : 2, pinErrorMessage: null});
+        case actionTypes.IS_FETCHING_DATA:
+            return updateObject(state, {isFetchingData : !state.isFetchingData});
+        case alertConstants.ERROR:
+            return updateObject(state, {pinVerified : 1, pinErrorMessage: action.message});
         default: return state;
     }
 }
