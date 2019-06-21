@@ -43,3 +43,22 @@ export function deleteBeneficiaryReducer(state=[], action){
             return state
     }
 }
+
+export function buyAirtimeReducer(state=[], action){
+    switch(action.type){
+        case airtimeConstants.AIRTIME_BUYDATA_PAGE1:
+            return {
+                airtime_buydata: airtimeConstants.AIRTIME_BUYDATA_PAGE1,
+                airtime_buydata_data: action
+            };
+            case airtimeConstants.AIRTIME_BUYDATA_PAGE2:
+                return{
+                    airtime_buydata: airtimeConstants.AIRTIME_BUYDATA_PAGE2,
+                    airtime_buydata_data: action
+                };
+
+            default: return {
+                state
+            };
+    }
+}

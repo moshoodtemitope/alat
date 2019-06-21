@@ -54,3 +54,13 @@ export const deleteBeneficairy =(token, BeneficiaryId) =>{
     function success(response) { return { type: airtimeConstants.AIRTIME_BENEFICIARIES_DELETE_SUCCESS, response } }
     function failure(error) { return { type: airtimeConstants.AIRTIME_BENEFICIARIES_DELETE_FAILURE, error } }
 }
+
+export const airtimeBuyData =(airtimeTransaction)=>{
+    return(dispatch)=>dispatch(request(airtimeTransaction));
+    function request(request) { return { type: airtimeConstants.AIRTIME_BUYDATA_PAGE2, request } }
+}
+
+export const selectAccount = (airtimeTransaction)=>{
+   return(dispatch)=> dispatch(request(airtimeTransaction));
+    function request(request) { return { type: airtimeConstants.AIRTIME_BUYDATA_PAGE3, request } }
+}

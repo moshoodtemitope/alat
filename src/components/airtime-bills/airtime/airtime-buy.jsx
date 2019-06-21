@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 import { airtimeConstants } from '../../../redux/constants/airtime/airtime.constants';
+import { airtimeBuyData } from "../../../redux/actions/airtime-bill/airtime.action";
 import Airtime from './airtime';
 import Select from 'react-select';
 import { Textbox } from "react-inputs-validation";
@@ -45,12 +47,12 @@ class BuyAirtime extends Component {
     checkNetwork = () => {
         if (this.state.NetworkCode == "") {
             this.setState({ networkInvalid: true });
-                return true;
+            return true;
         }
     }
 
     checkPhone = () => {
-        if (this.state.PhoneNumber.length != 11){
+        if (this.state.PhoneNumber.length != 11) {
             this.setState({ phoneIvalid: true });
             return true;
         }
@@ -59,10 +61,16 @@ class BuyAirtime extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({ formsubmitted: true });
-        
+
         if (this.checkNetwork() || this.checkPhone() || this.checkAmount()) {
-            
+
         } else {
+            const { dispatch } = this.props;
+            var result = dispatch(airtimeBuyData({
+                PhoneNumber: this.state.PhoneNumber,
+                NetworkCode: this.state.NetworkCode,
+                Amount: this.state.Amount
+            }));
             this.props.history.push("/bills/airtime/select-account");
         }
     }
@@ -156,5 +164,14 @@ class BuyAirtime extends Component {
     }
 }
 
+function mapStateToProps(state) {
+    const { authentication } = state;
+    const { user } = authentication;
+    return {
+        user,
+        alert: state.alert
+    };
+}
 
-export default BuyAirtime;
+
+export default connect(mapStateToProps)(BuyAirtime);
