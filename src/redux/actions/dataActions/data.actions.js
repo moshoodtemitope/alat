@@ -1,5 +1,7 @@
 import * as actionTypes from '../../constants/dataConstants/data.constant';
 
+import {alertActions} from "../alert.actions";
+import {handleError, modelStateErrorHandler} from './../../../shared/utils';
 import {SystemConstant} from "../../../shared/constants";
 import {ApiService} from "../../../services/apiService";
 import {routes} from "../../../services/urls";
@@ -87,19 +89,22 @@ export const deleteDataBeneficiary =  (token, data) => {
 }
 
 export const fetchDataPlans = (token, data) => {
+    
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        dispatch(isFetchingTrue());
+        dispatch(status());
         let consume = ApiService.request(routes.FETCH_DATA_PLANS, "POST", data, SystemConstant.HEADER);
         return consume
             .then(response => {
                 console.log(response.data);
                 console.log("response.data");
                 dispatch(success(response.data));
+                dispatch(status())
             })
             .catch(error => {
                 // dispatch(failure(error.response.data.message.toString()));
                 dispatch(isFetchingFalse());
+                dispatch(status())
                 console.log(error);
             });
     };
@@ -107,16 +112,20 @@ export const fetchDataPlans = (token, data) => {
     // function request(request) { return { 
         
     //  } }
+    function status() { return { 
+        type : actionTypes.IS_FETCHING_DATA,
+     } }
     function success(response) { return { 
         type : actionTypes.FETCH_DATA_PLAN_SUCCESS,
         data: response
      } }
 }
 
-export const setDataTransactionDetails = (dataDetails) => {
+export const setDataTransactionDetails = (dataDetails, networkName) => {
     return{
         type : actionTypes.SET_DATA_TRANSACTION_DETAILS,
-        data : dataDetails
+        data : dataDetails,
+        network: networkName
     }
 }
 
@@ -143,3 +152,50 @@ export const fetchDebitableAccounts = (token, data) => {
      } }
 }
 
+export const pinVerificationStart = (token, data) => {
+    console.log("is verifying pin");
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        dispatch(isFetchingTrue());
+        console.log("is treuly fetching pin");
+        let consume = ApiService.request(routes.PIN_VERIFICATION, "POST", data, SystemConstant.HEADER);
+        return consume
+            .then(response => {
+                dispatch(isFetchingFalse());
+                if(response.data.Response == 0){
+                    dispatch(correctPin())
+                }
+            })
+            .catch(error => {
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+                dispatch(isFetchingFalse());
+                console.log(error);
+            });
+
+            
+    };
+
+    function correctPin() {
+        return {
+            type: actionTypes.PIN_VERIFICATION_CORRECT
+        }
+    }
+
+    function wrongPin(message) {
+        return {
+            type: actionTypes.PIN_VERIFICATION_WRONG,
+            message: message
+        }
+    }
+
+    // function success(response) { return { 
+    //     type : actionTypes.FETCH_DEBITABLE_ACCOUNTS_SUCCESS,
+    //     data: response
+    //  } }
+}
+
+export const pinVerificationTryAgain = () => {
+    return {
+        type : actionTypes.PIN_VERIFICATION_TRY_AGAIN
+    }
+}

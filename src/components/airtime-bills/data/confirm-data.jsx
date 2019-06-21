@@ -1,10 +1,11 @@
-import React, { Component } from 'React';
+import React, { Component, Fragment } from 'React';
 import { Link, Redirect } from 'react-router-dom';
 
-import { Input, Select } from './input';
+import { Input } from './input';
+import Select from 'react-select';
 
 import { checkInputValidation } from '../../../shared/utils';
-
+import Modal from 'react-responsive-modal';
 import { formatAmountNoDecimal, formatAmount } from '../../../shared/utils';
 import { connect } from 'react-redux';
 
@@ -14,11 +15,22 @@ class ConfirmData extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            selectedAccounts: null,
+            validation: {
+                accountError: {
+                    hasError: false,
+                    error: "No debitable account found",
+                },
+                pinError: {
+                    hasError: false,
+                    error: 'Enter a valid PIN',
+                }
+            },
             confirmDataForm: {
                 activeAccount: {
                     elementType: 'select',
                     elementConfig: {
-                        options: [{ value: '', displayValue: 'Loading Accounts...' }],
+                        options: [{ value: '', label: 'Loading Accounts...' }],
                     },
                     label: 'Select an account to debit',
                     value: '',
@@ -26,10 +38,10 @@ class ConfirmData extends Component {
                     loaded: false,
                     valid: true
                 },
-                phone: {
+                pin: {
                     elementType: 'input',
                     elementConfig: {
-                        type: 'text',
+                        type: 'password',
                         placeholder: ''
                     },
                     value: '',
@@ -40,8 +52,6 @@ class ConfirmData extends Component {
                         isNumeric: true,
                     },
                     label: 'Enter ALAT PIN',
-                    valid: false,
-                    error: 'Enter a valid pin',
                     touched: false
                 },
             },
@@ -57,13 +67,16 @@ class ConfirmData extends Component {
 
     sortAccountsForSelect = () => {
         var arrayToDisplay = [];
-        if(this.props.accounts.length >= 1){
-            this.props.accounts.map((data => arrayToDisplay.push({ value: data.AccountNumber, displayValue: data.AccountDescription + " - N" + formatAmount(data.AvailableBalance) })));
-        }else{
-            arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account Available'}];
+        console.log(this.props.accounts);
+        console.log("this.props.accounts");
+
+        if (this.props.accounts.length >= 1) {
+            this.props.accounts.map((data => arrayToDisplay.push({ value: data.AccountNumber, label: data.AccountDescription + " - N" + formatAmount(data.AvailableBalance) })));
+        } else {
+            arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account Available' }];
         }
         console.log(arrayToDisplay)
-        
+
         const updatedSelectOption = {
             ...this.state.confirmDataForm
         }
@@ -73,8 +86,17 @@ class ConfirmData extends Component {
 
     }
 
+    accountChangedHandler = (selectedAccount) => {
+        var validation = { ...this.state.validation };
+        validation.accountError.hasError = false;
+        this.setState({ selectedAccount, validation });
+        console.log(`Option selected:`, selectedAccount);
+    }
+
 
     inputChangedHandler = (event, inputIdentifier) => {
+        let validation = { ...this.state.validation };
+        validation.pinError.hasError = false;
         const updatedConfirmDataForm = {
             ...this.state.confirmDataForm
         }
@@ -92,100 +114,154 @@ class ConfirmData extends Component {
             formIsValid = updatedConfirmDataForm[inputIdentifier].valid && formIsValid;
         }
         console.log(formIsValid);
-        this.setState({ confirmDataForm: updatedConfirmDataForm, formIsValid });
+        this.setState({ confirmDataForm: updatedConfirmDataForm, formIsValid, validation });
     }
+
+    pinInputValidation = (value) => {
+        const pattern = /^\d+$/;
+        return (value.length >= 4 && value.length <= 4 && pattern.test(value));
+    }
+
+    onSubmitBuyData = (event) => {
+        var validation = { ...this.state.validation };
+        event.preventDefault();
+        if ((this.state.confirmDataForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedAccounts) || !this.pinInputValidation(this.state.confirmDataForm.pin.value)) {
+            if (this.state.confirmDataForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedAccounts) {
+                validation.accountError.hasError = true;
+                this.setState({ validation });
+            }
+            if (!this.pinInputValidation(this.state.confirmDataForm.pin.value)) {
+                validation.pinError.hasError = true;
+                this.setState({ validation });
+            }
+        } else {
+            const payload = {
+                ...this.props.dataInfo,
+                AccountNumber: (this.state.selectedAccounts ? this.state.selectedAccounts.value : this.state.confirmDataForm.activeAccount.elementConfig.options[0].value),
+                TransactionPin: this.state.confirmDataForm.pin.value
+            }
+            console.log(payload);
+            this.props.verifyInputedPIN(this.state.user.token, payload);
+        }
+    }
+
+    onCloseModal = () => {
+        this.props.resetPinState()
+    }
+
+
 
     render() {
         let confirmData = <Redirect to="/bills/data/buy" />
-        if(this.props.dataInfo != null){
+        if (this.props.dataInfo != null) {
             const formElementArray = [];
-        for (let key in this.state.confirmDataForm) {
-            formElementArray.push({
-                id: key,
-                config: this.state.confirmDataForm[key]
-            });
-        }
-        if (this.props.accounts.length >= 1 && !this.state.confirmDataForm.activeAccount.loaded) {
-            this.sortAccountsForSelect();
-        }
-        confirmData =(
-            <div className="col-sm-12">
-                <div className="row">
+            for (let key in this.state.confirmDataForm) {
+                formElementArray.push({
+                    id: key,
+                    config: this.state.confirmDataForm[key]
+                });
+            }
+            if (this.props.accounts.length >= 1 && !this.state.confirmDataForm.activeAccount.loaded) {
+                this.sortAccountsForSelect();
+            }
+            const { selectedAccount } = this.state;
+
+            confirmData = (
+                <Fragment>
+                    <Modal open={this.props.pinVerified == 1 && this.props.pinErrorMessage} onClose={this.onCloseModal} center>
+                        <div className="div-modal">
+                            <h3> {this.props.pinErrorMessage}</h3>
+                        </div>
+                    </Modal>
                     <div className="col-sm-12">
-                        <div className="max-600">
-                            <div className="al-card no-pad">
-                                <h4 className="m-b-10 center-text hd-underline">Buy Data</h4>
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <div className="max-600">
+                                    <div className="al-card no-pad">
+                                        <h4 className="m-b-10 center-text hd-underline">Buy Data</h4>
 
-                                <div className="transfer-ctn">
+                                        <div className="transfer-ctn">
 
 
-                                    <form>
-                                        <div class="al-card no-pad">
-                                            <div class="trans-summary-card">
-                                                <div class="name-amount clearfix">
-                                                    <p class="pl-name-email">{this.props.dataInfo.network} Data Plan<span>{this.props.dataInfo.dataPlan}</span></p>
-                                                    <p class="pl-amount">N{formatAmountNoDecimal(this.props.dataInfo.amount)}</p>
+                                            <form>
+                                                <div class="al-card no-pad">
+                                                    <div class="trans-summary-card">
+                                                        <div class="name-amount clearfix">
+                                                            <p class="pl-name-email">{this.props.dataInfo.network} Data Plan<span>{this.props.dataInfo.PaymentItem}</span></p>
+                                                            <p class="pl-amount">N{formatAmountNoDecimal(this.props.dataInfo.Amount)}</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
+
+
+
+
+                                                {formElementArray.map((formElement) => {
+                                                    if (formElement.config.elementType !== "input") {
+                                                        return (
+                                                            <div className="input-ctn" key={formElement.id}>
+                                                                <label>Select an account to debit</label>
+                                                                <Select key={formElement.id}
+                                                                    value={selectedAccount == null ? formElement.config.elementConfig.options[0] : selectedAccount}
+                                                                    onChange={this.accountChangedHandler}
+                                                                    options={formElement.config.elementConfig.options}
+                                                                    placeholder="Loading Accounts..."
+                                                                />
+                                                                {this.state.validation.accountError.hasError ? <small className="text-danger">{this.state.validation.accountError.error}</small> : null}
+                                                            </div>
+                                                        )
+                                                    };
+                                                    return (
+                                                        <div className="input-ctn" key={formElement.id}>
+                                                            <label>{formElement.config.label}</label>
+                                                            <Input
+                                                                elementType={formElement.config.elementType}
+                                                                elementConfig={formElement.config.elementConfig}
+                                                                value={formElement.config.value}
+                                                                changed={(event) => this.inputChangedHandler(event, formElement.id)}
+                                                                wrongInput={!formElement.config.valid}
+                                                                isTouched={formElement.config.touched}
+                                                                errormsg={formElement.config.error}
+                                                                isDisabled={formElement.config.isDisabled} />
+                                                            {this.state.validation.pinError.hasError ? <small className="text-danger">{this.state.validation.pinError.error}</small> : null}
+                                                        </div>
+                                                    )
+
+                                                })}
+
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <center>
+                                                            <button disabled={this.props.fetching} onClick={this.onSubmitBuyData} class="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Buy Data"}</button>
+                                                        </center>
+                                                    </div>
+                                                </div>
+
+                                            </form>
+
+
+
                                         </div>
 
 
-                                        {formElementArray.map((formElement) => {
-                                            if (formElement.config.elementType !== "input") {
-                                                return (
-                                                    <Select key={formElement.id}
-                                                        optionsList={formElement.config.elementConfig.options}
-                                                        label={formElement.config.label}
-                                                        id={formElement.id}
-                                                        changed={(event) => this.onDataPlanChanged(event)} />
-                                                )
-                                            };
-                                            return (
-                                                <div className="input-ctn" key={formElement.id}>
-                                                    <label>{formElement.config.label}</label>
-                                                    <Input
-                                                        elementType={formElement.config.elementType}
-                                                        elementConfig={formElement.config.elementConfig}
-                                                        value={formElement.config.value}
-                                                        changed={(event) => this.inputChangedHandler(event, formElement.id)}
-                                                        wrongInput={!formElement.config.valid}
-                                                        isTouched={formElement.config.touched}
-                                                        errormsg={formElement.config.error}
-                                                        isDisabled={formElement.config.isDisabled} />
-                                                </div>
-                                            )
 
-                                        })}
+                                    </div>
 
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <center>
-
-                                                    <button onClick={this.onSubmitBuyData} class="btn-alat m-t-10 m-b-20 text-center">Next</button>
-                                                </center>
-                                            </div>
-                                        </div>
-
-                                    </form>
-
-
-
+                                    <center>
+                                        <Link to={'/bills/data/buy'} className="add-bene m-t-50">Go Back</Link>
+                                    </center>
                                 </div>
-
-
-
                             </div>
-
-                            <center>
-                                <Link to={'/bills/data/buy'} className="add-bene m-t-50">Go Back</Link>
-                            </center>
                         </div>
                     </div>
-                </div>
-            </div>
-        );
+                </Fragment>
+
+            );
+            if (this.props.pinVerified == 0) {
+                confirmData = <Redirect to="/bills/data/buy/verify" />
+            }
         }
-        
+
         return confirmData;
     }
 }
@@ -194,13 +270,18 @@ const mapStateToProps = state => {
     return {
         dataInfo: state.data_reducer.dataToBuy,
         dataPlans: state.data_reducer.dataPlans,
-        accounts: state.data_reducer.debitableAccounts
+        accounts: state.data_reducer.debitableAccounts,
+        fetching: state.data_reducer.isFetching,
+        pinVerified: state.data_reducer.pinVerified,
+        pinErrorMessage: state.data_reducer.pinErrorMessage
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         fetchDebitableAccounts: (token) => dispatch(actions.fetchDebitableAccounts(token)),
+        verifyInputedPIN : (token, data) => dispatch(actions.pinVerificationStart(token, data)),
+        resetPinState: () => dispatch(actions.pinVerificationTryAgain())
     }
 }
 

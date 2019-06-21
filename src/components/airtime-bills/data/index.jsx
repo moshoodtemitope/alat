@@ -45,7 +45,7 @@ class Index extends Component {
                     <center>
                         <img src={dataLogo} className="m-b-30" alt="Data Logo" />
                         <p className="grey-text no-paylink">{this.props.isFetching ? "Loading saved beneficiaries..." : "No saved data purchase"}</p>
-                        <Link to={'/bills/data/buy'} className="btn-alat">Buy Data</Link>
+                        <Link to={'/bills/data/buy'} className="btn-alat">Buy Data</Link> 
                     </center>
                 </div>
             </div>);
