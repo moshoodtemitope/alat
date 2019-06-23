@@ -17,12 +17,6 @@ export const updateObject = (oldObject, updatedProperties) => {
 //Utiliy End
 
 
-// export const switchCurrentComponent = (name) => {
-//     return{
-//         type: actionTypes.SWITCH_CURRENT_COMPONENT,
-//         name: name
-//     };
-// };
 
 export const isFetchingTrue = () => {
     return {
@@ -48,7 +42,7 @@ export const fetchDataBeneficiaries = (token, data) => {
                 dispatch(success(response.data));
             })
             .catch(error => {
-                // dispatch(failure(error.response.data.message.toString()));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
                 dispatch(isFetchingFalse());
                 console.log(error);
             });
@@ -76,7 +70,7 @@ export const deleteDataBeneficiary =  (token, data) => {
             })
             .catch(error => {
                 //handle error
-                // dispatch(failure(error.response.data.message.toString()));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
                 dispatch(isFetchingFalse());
                 console.log(error);
             });
@@ -102,7 +96,7 @@ export const fetchDataPlans = (token, data) => {
                 dispatch(status())
             })
             .catch(error => {
-                // dispatch(failure(error.response.data.message.toString()));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
                 dispatch(isFetchingFalse());
                 dispatch(status())
                 console.log(error);
@@ -140,7 +134,7 @@ export const fetchDebitableAccounts = (token, data) => {
                 dispatch(success(response.data));
             })
             .catch(error => {
-                // dispatch(failure(error.response.data.message.toString()));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
                 dispatch(isFetchingFalse());
                 console.log(error);
             });
@@ -152,7 +146,7 @@ export const fetchDebitableAccounts = (token, data) => {
      } }
 }
 
-export const pinVerificationStart = (token, data) => {
+export const pinVerificationStart = (token, data, isResending = false) => {
     console.log("is verifying pin");
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
@@ -163,7 +157,9 @@ export const pinVerificationStart = (token, data) => {
             .then(response => {
                 dispatch(isFetchingFalse());
                 if(response.data.Response == 0){
-                    dispatch(correctPin())
+                    if(isResending == false){
+                        dispatch(correctPin());
+                    };
                 }
             })
             .catch(error => {
@@ -180,16 +176,40 @@ export const pinVerificationStart = (token, data) => {
             type: actionTypes.PIN_VERIFICATION_CORRECT
         }
     }
-
-
-    // function success(response) { return { 
-    //     type : actionTypes.FETCH_DEBITABLE_ACCOUNTS_SUCCESS,
-    //     data: response
-    //  } }
 }
 
 export const pinVerificationTryAgain = () => {
     return {
         type : actionTypes.PIN_VERIFICATION_TRY_AGAIN
+    }
+}
+
+export const otpVerificationStart = (token, data) => {
+    console.log("is verifying otp");
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        dispatch(isFetchingTrue());
+        console.log("is treuly fetching pin");
+        let consume = ApiService.request(routes.DATA_OTP_VERIFICATION, "POST", data, SystemConstant.HEADER);
+        return consume
+            .then(response => {
+                dispatch(isFetchingFalse());
+                // if(response.data.Response == 0){
+                        dispatch(correctOtp());
+                // }
+            })
+            .catch(error => {
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+                dispatch(isFetchingFalse());
+                console.log(error);
+            });
+
+            
+    };
+
+    function correctOtp() {
+        return {
+            type: actionTypes.OTP_VERIFICATION_CORRECT
+        }
     }
 }

@@ -23,25 +23,29 @@ export const canvasToFile = (dataURL) =>{
 
 export const modelStateErrorHandler = (error, field) => {
     console.log("in model state");
-  if(error.response) {
-    if ("modelState" in error.response.data && error.response.data.message.toLowerCase().indexOf('the request is invalid.')>-1){
-        let message = '';
-       for(let key in error.response.data.modelState){
-            if ( error.response.data.modelState.hasOwnProperty(key)) {
-                // console.log(key + " -> " + error.modelState[key]);
-                if(Object.keys(error.response.data.modelState).length>1){
-                    message+=error.response.data.modelState[key]+', ';
-                }else{
-                    message+=error.response.data.modelState[key];
+  try{
+    if(error.response) {
+        if ("modelState" in error.response.data && error.response.data.message.toLowerCase().indexOf('the request is invalid.')>-1){
+            let message = '';
+           for(let key in error.response.data.modelState){
+                if ( error.response.data.modelState.hasOwnProperty(key)) {
+                    // console.log(key + " -> " + error.modelState[key]);
+                    if(Object.keys(error.response.data.modelState).length>1){
+                        message+=error.response.data.modelState[key]+', ';
+                    }else{
+                        message+=error.response.data.modelState[key];
+                    }
                 }
-            }
-       }
-       return message;
-    } else
-    return handleError(error);  //Check for the exact error code to know what to return
+           }
+           return message;
+        } else
+        return handleError(error);  //Check for the exact error code to know what to return
+      }
+      else
+      return handleError(error);  //Check for the exact error code to know what to return
+  }catch(err){
+      return "Error : Something went wrong";
   }
-  else
-  return handleError(error);  //Check for the exact error code to know what to return
 };
 
 export const handleError =(error)=>{
@@ -78,4 +82,11 @@ export const FormartDate =(date)=>{
 let current_datetime = new Date(date.toLocaleString());
 let formatted_date = current_datetime.getDate() + " " + months[current_datetime.getMonth()] + ", " + current_datetime.getFullYear();
 return formatted_date;
+}
+
+
+export const maskString = (string, replacerString, startIndex, endIndex) => { 
+    let toMask = string.substring(startIndex,endIndex);
+    string = string.replace(toMask, replacerString);
+    return string;
 }

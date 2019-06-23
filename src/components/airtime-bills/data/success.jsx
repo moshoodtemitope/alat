@@ -15,40 +15,17 @@ class Success extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // selectedAccounts: null,
-            // confirmDataForm: {
-            //     activeAccount: {
-            //         elementType: 'select',
-            //         elementConfig: {
-            //             options: [{ value: '', label: 'Loading Accounts...' }],
-            //         },
-            //         label: 'Select an account to debit',
-            //         value: '',
-            //         validation: {},
-            //         loaded: false,
-            //         valid: true
-            //     },
-            //     phone: {
-            //         elementType: 'input',
-            //         elementConfig: {
-            //             type: 'text',
-            //             placeholder: ''
-            //         },
-            //         value: '',
-            //         validation: {
-            //             required: true,
-            //             minLength: 4,
-            //             maxLength: 4,
-            //             isNumeric: true,
-            //         },
-            //         label: 'Enter ALAT PIN',
-            //         valid: false,
-            //         error: 'Enter a valid pin',
-            //         touched: false
-            //     },
-            // },
-            formIsValid: false,
-            saveBeneficiary: true,
+            saveBeneficiaryForm: {
+                phone: {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'text',
+                        placeholder: ''
+                    },
+                    value: '',
+                },
+            },
+            hasError: false,
             user: JSON.parse(localStorage.getItem("user")),
         };
     }
@@ -58,49 +35,23 @@ class Success extends Component {
         // this.props.fetchDebitableAccounts(this.state.user.token);
     }
 
-    // sortAccountsForSelect = () => {
-    //     var arrayToDisplay = [];
-    //     if (this.props.accounts.length >= 1) {
-    //         this.props.accounts.map((data => arrayToDisplay.push({ value: data.AccountNumber, label: data.AccountDescription + " - N" + formatAmount(data.AvailableBalance) })));
-    //     } else {
-    //         arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account Available' }];
-    //     }
-    //     console.log(arrayToDisplay)
-
-    //     const updatedSelectOption = {
-    //         ...this.state.confirmDataForm
-    //     }
-    //     updatedSelectOption.activeAccount.elementConfig.options = arrayToDisplay;
-    //     updatedSelectOption.activeAccount.loaded = true;
-    //     this.setState({ confirmDataForm: updatedSelectOption });
-
-    // }
-
-    // accountChangedHandler = (selectedAccount) => {
-    //     this.setState({ selectedAccount });
-    //     console.log(`Option selected:`, selectedAccount);
-    // }
-
-
     inputChangedHandler = (event, inputIdentifier) => {
-        const updatedConfirmDataForm = {
-            ...this.state.confirmDataForm
+        if(this.state.hasError == true){
+            this.setState({hasError : false});
+        }
+        const updatedSaveBeneficiaryForm = {
+            ...this.state.saveBeneficiaryForm
         }
         const updatedFormElement = {
-            ...updatedConfirmDataForm[inputIdentifier]
+            ...updatedSaveBeneficiaryForm[inputIdentifier]
         };
         updatedFormElement.value = event.target.value;
         // updatedFormElement.valid = checkInputValidation(updatedFormElement.value, updatedFormElement.validation);
         updatedFormElement.valid = true;
         updatedFormElement.touched = true;
-        updatedConfirmDataForm[inputIdentifier] = updatedFormElement;
+        updatedSaveBeneficiaryForm[inputIdentifier] = updatedFormElement;
 
-        let formIsValid = true;
-        for (let inputIdentifier in updatedConfirmDataForm) {
-            formIsValid = updatedConfirmDataForm[inputIdentifier].valid && formIsValid;
-        }
-        console.log(formIsValid);
-        this.setState({ confirmDataForm: updatedConfirmDataForm, formIsValid });
+        this.setState({ confirmDataForm: updatedConfirmDataForm });
     }
 
     handleToggle = () => {
@@ -109,7 +60,6 @@ class Success extends Component {
 
     render() {
         let success = <Redirect to="/bills/data/buy" />
-        //check
         if (this.props.dataInfo == null) {
             const formElementArray = [];
             for (let key in this.state.confirmDataForm) {
@@ -121,7 +71,6 @@ class Success extends Component {
             if (this.props.accounts.length >= 1 && !this.state.confirmDataForm.activeAccount.loaded) {
                 this.sortAccountsForSelect();
             }
-            // const { selectedAccount } = this.state;
 
             success = (
                 <div className="col-sm-12">
@@ -138,8 +87,8 @@ class Success extends Component {
                                         <div className="al-card no-pad">
                                             <div className="trans-summary-card">
                                                 <div className="name-amount clearfix">
-                                                    <p className="pl-name-email">MTN Data Plan<span>XtraData 30Days@N5000</span></p>
-                                                    <p className="pl-amount">N5,000</p>
+                                                    <p className="pl-name-email">{this.props.network} Data Plan<span>{this.props.dataInfo  ? this.props.dataInfo.PaymentItem : "*******"}</span></p>
+                                                    <p className="pl-amount">{this.props.dataInfo ? this.props.dataInfo.Amount : "####"}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -154,7 +103,7 @@ class Success extends Component {
 												            <label></label>
 												        </div>
                                                     </div> */}
-                                                    <div className="pretty p-switch p-fill">
+                                                    <div className="pretty p-switch p-fill" >
                                                         <Switch isChecked={this.state.saveBeneficiary} handleToggle={this.handleToggle} />
                                                     </div>
                                                     
@@ -169,7 +118,10 @@ class Success extends Component {
                                                             <label>Give it a name</label>
                                                             <input type="text" />
                                                         </div>
-                                                        <button onClick={this.onSubmitBuyData} class="btn-alat m-t-10 m-b-20 text-center">Save</button>
+                                                        <center>
+                                                            <button onClick={this.onSubmitBuyData} class="btn-alat m-t-10 m-b-20 text-center">Save</button>
+                                                        </center>
+                                                        
                                                     </form>
                                                 </div>
                                             ) : (
@@ -211,7 +163,8 @@ const mapStateToProps = state => {
     return {
         dataInfo: state.data_reducer.dataToBuy,
         dataPlans: state.data_reducer.dataPlans,
-        accounts: state.data_reducer.debitableAccounts
+        accounts: state.data_reducer.debitableAccounts,
+        network: state.data_reducer.network,
     }
 }
 

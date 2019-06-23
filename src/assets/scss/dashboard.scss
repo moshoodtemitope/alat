@@ -1084,14 +1084,17 @@ ul.menu-side {
   padding: 30px 30px;
 }
 
-.resend-otp {
+p.resend-otp, .resend-otp {
   display: block;
   margin-bottom: 40px;
   color: #43063C;
+  padding: 0;
+  cursor: pointer;
   font-size: em(14);
 
   &:hover {
     color: #43063C;
+    text-decoration: underline;
   }
 }
 

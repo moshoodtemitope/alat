@@ -71,10 +71,12 @@ import {updateObject} from '../actions/dataActions/data.actions';
 //     }
 // ];
 
+//--------------------------//
 //Pin Verifed status
-// 0-Pin is correct
-// 1-Pin is Incorrect
-// 2-Retry Pin/default Pin State
+// 0-correct/good to go
+// 1-There is error
+// 2-Retry Pin/default State
+//--------------------------//
 
 const initialState = {
     beneficiaries : [],
@@ -84,7 +86,7 @@ const initialState = {
     dataToBuy: null,
     debitableAccounts : [],
     pinVerified: 2,
-    pinErrorMessage: null,
+    errorMessage: null,
     network: ""
 }; 
 
@@ -107,13 +109,15 @@ const reducer = (state = initialState, action) => {
         case actionTypes.PIN_VERIFICATION_CORRECT:
             return updateObject(state, {pinVerified : 0});
         case actionTypes.PIN_VERIFICATION_WRONG:
-            return updateObject(state, {pinVerified : 1, pinErrorMessage : action.message});
+            return updateObject(state, {pinVerified : 1, errorMessage : action.message});
         case actionTypes.PIN_VERIFICATION_TRY_AGAIN:
-            return updateObject(state, {pinVerified : 2, pinErrorMessage: null});
+            return updateObject(state, {pinVerified : 2, errorMessage: null});
         case actionTypes.IS_FETCHING_DATA:
             return updateObject(state, {isFetchingData : !state.isFetchingData});
+        case actionTypes.OTP_VERIFICATION_CORRECT:
+            return updateObject(state, {pinVerified : 0});
         case alertConstants.ERROR:
-            return updateObject(state, {pinVerified : 1, pinErrorMessage: action.message});
+            return updateObject(state, {pinVerified : 1, errorMessage: action.message});
         default: return state;
     }
 }

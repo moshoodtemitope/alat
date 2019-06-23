@@ -5,5 +5,6 @@ export {
     setDataTransactionDetails,
     fetchDebitableAccounts,
     pinVerificationStart,
-    pinVerificationTryAgain
+    pinVerificationTryAgain,
+    otpVerificationStart
 } from './data.actions';
