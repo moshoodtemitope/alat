@@ -2,7 +2,7 @@ import React from 'react';
 
 export const Switch = function(props) {
 	return (
-		<div className={props.isChecked ? "switch switch_is-on" : "switch switch_is-off"} onClick={props.handleToggle} style={{marginRight:9}}>
+		<div className={props.isChecked ? "switch switch_is-on" : "switch switch_is-off"} onClick={props.handleToggle} style={{marginRight : 9}}>
 			<ToggleButton 
 				isChecked={props.isChecked}	
 			/>
