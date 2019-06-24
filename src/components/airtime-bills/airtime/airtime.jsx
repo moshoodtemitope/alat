@@ -12,7 +12,7 @@ import gloImg from "../../../assets/img/glo.svg";
 import * as utils from "../../../shared/utils";
 import BuyAirtime from './airtime-buy';
 import Index from './index';
-import SelectAccount from './selectAccount';
+import AirtimeSelectAccount from './airtime-select';
 
 class Airtime extends Component {
     constructor(props) {
@@ -31,7 +31,7 @@ class Airtime extends Component {
                {this.props.children}
             <Route exact path='/bills/airtime' render={(props) => <Index {...props} />} />
             <Route path='/bills/airtime/buy' render={(props) => <BuyAirtime {...props} />} />
-            <Route path='/bills/airtime/select-account' render={(props) => <SelectAccount {...props} />} />
+            <Route path='/bills/airtime/select-account' render={(props) => <AirtimeSelectAccount {...props} />} />
            </Fragment>
        );
    }

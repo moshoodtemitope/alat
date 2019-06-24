@@ -1,6 +1,6 @@
 import { airtimeConstants } from "../constants/airtime/airtime.constants";
 
-export function airtimeBeneficiariesReducer(state=[], action) {
+export function airtimeBeneficiariesReducer(state = [], action) {
     switch (action.type) {
         case airtimeConstants.AIRTIME_BENEFICIARIES_FETCH_SUCCESS:
             return {
@@ -18,11 +18,11 @@ export function airtimeBeneficiariesReducer(state=[], action) {
                 airtime_beneficiary_data: action
             };
         default:
-            return state
+            return { ...state }
     }
 }
 
-export function deleteBeneficiaryReducer(state=[], action){
+export function deleteBeneficiaryReducer(state = [], action) {
     switch (action.type) {
         case airtimeConstants.AIRTIME_BENEFICIARIES_DELETE_SUCCESS:
             return {
@@ -40,25 +40,51 @@ export function deleteBeneficiaryReducer(state=[], action){
                 airtime_beneficiary_data: action
             };
         default:
-            return state
+            return { ...state }
     }
 }
 
-export function buyAirtimeReducer(state=[], action){
-    switch(action.type){
+export function buyAirtimeReducer(state = [], action) {
+    switch (action.type) {
         case airtimeConstants.AIRTIME_BUYDATA_PAGE1:
             return {
                 airtime_buydata: airtimeConstants.AIRTIME_BUYDATA_PAGE1,
                 airtime_buydata_data: action
             };
-            case airtimeConstants.AIRTIME_BUYDATA_PAGE2:
-                return{
-                    airtime_buydata: airtimeConstants.AIRTIME_BUYDATA_PAGE2,
-                    airtime_buydata_data: action
-                };
-
-            default: return {
-                state
+        case airtimeConstants.AIRTIME_BUYDATA_PAGE2:
+            return {
+                airtime_buydata: airtimeConstants.AIRTIME_BUYDATA_PAGE2,
+                airtime_buydata_data: action
             };
+
+        default: return {
+            ...state
+        };
+    }
+}
+
+export function debitableAccountsReducer(state = [], action) {
+    switch (action.type) {
+        case airtimeConstants.GET_DEBTABLE_ACCOUNTS_SUCCESS:
+            return {
+                debitable_accounts: airtimeConstants.GET_DEBTABLE_ACCOUNTS_SUCCESS,
+                debitable_accounts_data: action
+            };
+
+        case airtimeConstants.GET_DEBTABLE_ACCOUNTS_PENDING:
+            return {
+                debitable_accounts: airtimeConstants.GET_DEBTABLE_ACCOUNTS_PENDING,
+                debitable_accounts_data: action
+            };
+
+        case airtimeConstants.GET_DEBTABLE_ACCOUNTS_FAILURE:
+            return {
+                debitable_accounts: airtimeConstants.GET_DEBTABLE_ACCOUNTS_FAILURE,
+                debitable_accounts_data: action
+            };
+
+        default: return {
+            ...state
+        };
     }
 }

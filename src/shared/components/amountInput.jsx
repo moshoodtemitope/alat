@@ -1,7 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 //import utils from
-
+//  The amount input on all Transaction pages
+//  Formarts text to currency as you type.
+// should be enhanced to handle decimal.
 class AmountInput extends React.Component {
     constructor(props) {
         super(props);

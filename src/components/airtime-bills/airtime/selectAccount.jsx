@@ -1,46 +1,112 @@
-import React from 'react'
+import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Select } from 'react-select';
+import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
+import AlatPinInput from '../../../shared/components/alatPinInput';
+import * as utils from '../../../shared/utils';
 
+// Component to select account number to bill and accepts PIN
+//Component also displays bill and returns submit action to the calling component.
 class SelectAcount extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            Pin: "",
+            isPinInvalid: false,
+            selectedAccount: {
+                AccountNumber: "",
+                AccountName: ""
+            },
+            isAccountInvalid: false,
+            isSubmitted: false,
+        };
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleAlatPinChange = this.handleAlatPinChange.bind(this);
+        this.handleSelectDebitableAccounts = this.handleSelectDebitableAccounts.bind(this);
+    }
+
+    handleAlatPinChange(pin) {
+        this.setState({ Pin: pin })
+        if(this.state.isSubmitted)
+        this.checkPin();
+    }
+
+    handleSelectDebitableAccounts(account) {
+        this.setState({ selectedAccount: account })
+        if(this.state.isSubmitted)
+        this.checkAccountNumber();
+    }
+
+    checkPin() {
+        if (this.state.Pin.length == 4) {
+            this.setState({ PinInvalid: false })
+            return false;
+        } else {
+            this.setState({ PinInvalid: true })
+            return true;
+        }
+    }
+
+    checkAccountNumber(){
+        if (this.state.selectedAccount.AccountNumber.length != "") {
+            this.setState({ isAccountInvalid : false })
+            return false;
+        } else {
+            this.setState({ isAccountInvalid: true })
+            return true;
+        }
+    }
+
+    handleSubmit(e){
+        e.preventDefault();
+        this.setState({isSubmitted : true});
+        if(this.checkAccountNumber() || this.checkPin())
+            {
+                //for tes purposes here
+                this.props.onSubmit({TransactionPin: this.state.Pin, AccountNumber : this.state.selectedAccount.AccountNumber});
+                //alert("failrd");
+                return;} 
+            else{
+             // alert("sucess");
+            }
+    }
 
     render() {
 
-        return(
-            <div class="col-sm-12">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="max-600">
-                            <div class="al-card no-pad">
-                                <h4 class="m-b-10 center-text hd-underline">Buy Airtime</h4>
-                                <div class="transfer-ctn">
-                                    <form>
-                                        <div class="al-card no-pad">
-                                            <div class="trans-summary-card">
-                                                <div class="name-amount clearfix">
-                                                    <p class="pl-name-email">Airtime Recharge<span>Airtel - 08020690101 </span></p>
-                                                    <p class="pl-amount">N2,000</p>
+        return (
+            <div className="col-sm-12">
+                <div className="row">
+                    <div className="col-sm-12">
+                        <div className="max-600">
+                            <div className="al-card no-pad">
+                                <h4 className="m-b-10 center-text hd-underline">{this.props.bill.ActionText}</h4>
+                                <div className="transfer-ctn">
+                                    <form onSubmit={this.handleSubmit}>
+                                        <div className="al-card no-pad">
+                                            <div className="trans-summary-card">
+                                                <div className="name-amount clearfix">
+                                                    <p className="pl-name-email">{this.props.bill.billCategory}<span>{this.props.bill.billerName} - {this.props.bill.valueRecipent} </span></p>
+                                                    <p className="pl-amount">N{this.props.bill.Amount && utils.formatAmountNoDecimal(this.props.bill.Amount)}</p>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="input-ctn">
-                                            <label>Select an account to debit</label>
-                                            <select>
-                                                <option>ALAT Account - N56,902.56</option>
-                                                <option>Current Account - N56,902.56</option>
-                                                <option>Domiciliary Account - $30</option>
-                                            </select>
-                                        </div>
+                                        <SelectDebitableAccounts 
+                                        value={this.state.accountNumber} 
+                                        accountInvalid={this.state.isAccountInvalid} 
+                                        onChange={this.handleSelectDebitableAccounts} />
 
-                                        <div class="input-ctn">
-                                            <label>Enter ALAT PIN</label>
-                                            <input type="password" />
-                                        </div>
+                                        <AlatPinInput
+                                            value={this.state.Pin}
+                                            onChange={this.handleAlatPinChange}
+                                            PinInvalid={this.isPinInvalid} />
 
-                                        <div class="row">
-                                            <div class="col-sm-12">
+                                        <div className="row">
+                                            <div className="col-sm-12">
                                                 <center>
-                                                    <input type="button" value="Buy Airtime" class="btn-alat m-t-10 m-b-20 text-center" />
+                                                    <input type="submit" value={this.props.bill.ActionText} className="btn-alat m-t-10 m-b-20 text-center" />
                                                 </center>
                                             </div>
                                         </div>
@@ -49,15 +115,23 @@ class SelectAcount extends React.Component {
                             </div>
 
                             <center>
-                                <Link to={'/bills/airtime/buy'} class="add-bene m-t-50">Go Back</Link>
+                                {/* '/bills/airtime/buy' */}
+                                <Link to={this.props.backLink} className="add-bene m-t-50">Go Back</Link>
                             </center>
                         </div>
                     </div>
                 </div>
             </div>);
     }
-
-
 }
+
+// function mapStateToProps(state) {
+//     const { authentication } = state;
+//     const { user } = authentication;
+//     return {
+//         user,
+//         alert: state.alert
+//     };
+// }
 
 export default SelectAcount;

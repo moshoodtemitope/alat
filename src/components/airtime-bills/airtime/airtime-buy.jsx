@@ -8,7 +8,7 @@ import Select from 'react-select';
 import { Textbox } from "react-inputs-validation";
 import * as  utils from '../../../shared/utils'
 import * as  constants from '../../../shared/constants'
-import AmountInput from './element/amountInput';
+import AmountInput from '../../../shared/components/amountInput';
 
 var networkOperators = [
     { value: "2", label: "MTN" },
@@ -24,6 +24,7 @@ class BuyAirtime extends Component {
             PhoneNumber: "",
             NetworkCode: "",
             Amount: "",
+            BillerName: "",
             selectedNetwork: "",
             formsubmitted: false,
             phoneIvalid: false,
@@ -81,7 +82,7 @@ class BuyAirtime extends Component {
 
     handleChange = (e) => {
         const name = e.target.name;
-        if (/[0-9]+/.test(e.target.value)) {
+        if (/^[0-9]+$/.test(e.target.value)) {
             this.setState({ [name]: e.target.value });
             if (this.state.formsubmitted && e.target.value.length == 11)
                 this.setState({ phoneIvalid: false });
@@ -102,7 +103,9 @@ class BuyAirtime extends Component {
     }
 
     handleSelectChange = (selectedNetwork) => {
-        this.setState({ "NetworkCode": selectedNetwork.value });
+        this.setState({ "NetworkCode": selectedNetwork.value,
+                        "BillerName" : selectedNetwork.label
+              });
         if (this.state.formsubmitted && selectedNetwork.value != "")
             this.setState({ networkInvalid: false })
     }

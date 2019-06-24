@@ -1,7 +1,7 @@
 import {combineReducers} from "redux";
 import {authentication} from "./authentication.reducer";
 import { alert} from "./alert.reducer";
-import {dashboard, transfer, onboarding, airtime} from "./export";
+import {dashboard, transfer, onboarding, airtime, global} from "./export";
 import {bankListRequest, beneficiariesRequest} from "./transfer.reducer";
 import {accountHistoryReducer} from "./dashboard.reducer";
 import { userConstants } from "../constants/onboarding/user.constants";
@@ -34,6 +34,8 @@ const appReducer = combineReducers({
     airtime_beneficiaries: airtime.airtimeBeneficiariesReducer,
     airtime_beneDelete: airtime.deleteBeneficiaryReducer,
     airtime_buydata: airtime.buyAirtimeReducer,
+
+    accounts: global.debitableAccountsReducer,
     // storage_reducer
     // storage_reducer
 
