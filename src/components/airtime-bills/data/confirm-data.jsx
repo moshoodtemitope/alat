@@ -63,6 +63,7 @@ class ConfirmData extends Component {
 
     componentDidMount() {
         this.props.fetchDebitableAccounts(this.state.user.token);
+
     }
 
     sortAccountsForSelect = () => {
@@ -105,16 +106,16 @@ class ConfirmData extends Component {
         };
         updatedFormElement.value = event.target.value;
         // updatedFormElement.valid = checkInputValidation(updatedFormElement.value, updatedFormElement.validation);
-        updatedFormElement.valid = true;
-        updatedFormElement.touched = true;
+        // updatedFormElement.valid = true;
+        // updatedFormElement.touched = true;
         updatedConfirmDataForm[inputIdentifier] = updatedFormElement;
 
-        let formIsValid = true;
-        for (let inputIdentifier in updatedConfirmDataForm) {
-            formIsValid = updatedConfirmDataForm[inputIdentifier].valid && formIsValid;
-        }
-        console.log(formIsValid);
-        this.setState({ confirmDataForm: updatedConfirmDataForm, formIsValid, validation });
+        // let formIsValid = true;
+        // for (let inputIdentifier in updatedConfirmDataForm) {
+        //     formIsValid = updatedConfirmDataForm[inputIdentifier].valid && formIsValid;
+        // }
+        // console.log(formIsValid);
+        this.setState({ confirmDataForm: updatedConfirmDataForm, validation });
     }
 
     pinInputValidation = (value) => {
@@ -141,14 +142,12 @@ class ConfirmData extends Component {
                 TransactionPin: this.state.confirmDataForm.pin.value
             }
             this.props.setDataToBuyDetails(payload);
+
             this.props.verifyInputedPIN(this.state.user.token, payload);
         }
     }
 
-    onCloseModal = () => {
-        this.props.resetPinState();
-    }
-
+    
 
 
     render() {
@@ -168,11 +167,7 @@ class ConfirmData extends Component {
 
             confirmData = (
                 <Fragment>
-                    <Modal open={this.props.pinVerified == 1 && this.props.pinErrorMessage} onClose={this.onCloseModal} center>
-                        <div className="div-modal">
-                            <h3> {this.props.pinErrorMessage}</h3>
-                        </div>
-                    </Modal>
+                    
                     <div className="col-sm-12">
                         <div className="row">
                             <div className="col-sm-12">
@@ -181,13 +176,11 @@ class ConfirmData extends Component {
                                         <h4 className="m-b-10 center-text hd-underline">Buy Data</h4>
 
                                         <div className="transfer-ctn">
-
-
                                             <form>
                                                 <div class="al-card no-pad">
                                                     <div class="trans-summary-card">
                                                         <div class="name-amount clearfix">
-                                                            <p class="pl-name-email">{this.props.dataInfo.network} Data Plan<span>{this.props.dataInfo.PaymentItem}</span></p>
+                                                            <p class="pl-name-email">{this.props.network} Data Plan<span>{this.props.dataInfo.PaymentItem}</span></p>
                                                             <p class="pl-amount">N{formatAmountNoDecimal(this.props.dataInfo.Amount)}</p>
                                                         </div>
                                                     </div>
@@ -258,6 +251,7 @@ class ConfirmData extends Component {
 
             );
             if (this.props.pinVerified == 0) {
+                this.props.resetPinState();
                 confirmData = <Redirect to="/bills/data/buy/verify" />
             }
         }
@@ -273,7 +267,7 @@ const mapStateToProps = state => {
         accounts: state.data_reducer.debitableAccounts,
         fetching: state.data_reducer.isFetching,
         pinVerified: state.data_reducer.pinVerified,
-        pinErrorMessage: state.data_reducer.pinErrorMessage
+        network: state.data_reducer.network,
     }
 }
 
@@ -281,8 +275,8 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchDebitableAccounts: (token) => dispatch(actions.fetchDebitableAccounts(token)),
         verifyInputedPIN : (token, data) => dispatch(actions.pinVerificationStart(token, data)),
+        setDataToBuyDetails: (dataToBuy, network) => dispatch(actions.setDataTransactionDetails(dataToBuy, network)),
         resetPinState: () => dispatch(actions.pinVerificationTryAgain()),
-        setDataToBuyDetails: (dataToBuy, network) => dispatch(actions.setDataTransactionDetails(dataToBuy, network))
     }
 }
 

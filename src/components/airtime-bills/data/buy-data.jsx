@@ -131,7 +131,7 @@ class BuyData extends Component {
                 PhoneNumber: this.state.buyDataForm.phone.value,
                 SubscriberId: this.state.buyDataForm.phone.value,
             }
-            this.props.setDataToBuyDetails(dataToBuy, this.state.selectedNetwork.value);
+            this.props.setDataToBuyDetails(dataToBuy, this.state.selectedNetwork ? this.state.selectedNetwork.value : "MTN");
             console.log(dataToBuy);
             this.props.history.push('/bills/data/buy/confirm');
         }else{
@@ -185,7 +185,7 @@ class BuyData extends Component {
                 config: this.state.buyDataForm[key]
             });
         }
-        var networkOperators = (this.props.fetching ? [] :  [
+        var networkOperators = (!this.props.dataPlans.length ? [] :  [
             { value: "MTN", label: "MTN"},
             { value: "Airtel", label: "Airtel"},
             { value: "Glo", label: "Glo"},
@@ -208,7 +208,7 @@ class BuyData extends Component {
                                                 value={selectedNetwork}
                                                 onChange={this.networkChangedHandler}
                                                 options={networkOperators}
-                                                placeholder="Select..."
+                                                placeholder={this.props.fetching ? "Loading data...":"Select..."}
                                             />
                                            {this.state.validation.networkSelector.hasError ? <small className="text-danger">{this.state.validation.networkSelector.error}</small> : null}
                                         </div>

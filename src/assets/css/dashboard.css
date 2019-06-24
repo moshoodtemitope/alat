@@ -1499,13 +1499,16 @@ ul.menu-side {
 .personal-info-ctn {
   padding: 30px 30px; }
 
-.resend-otp {
+p.resend-otp, .resend-otp {
   display: block;
   margin-bottom: 40px;
   color: #43063C;
+  cursor: pointer;
+  padding: 0;
   font-size: 1em; }
   .resend-otp:hover {
-    color: #43063C; }
+    color: #43063C;
+    text-decoration: underline; }
 
 .pin-links ul li:hover {
   background: #f8f8f8; }
