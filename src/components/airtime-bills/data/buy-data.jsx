@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../../redux/actions/dataActions/export';
 import { isFetchingFalse } from '../../../redux/actions/dataActions/data.actions';
 
-
+const pattern = /^\d+$/;
 
 class BuyData extends Component {
     constructor(props) {
@@ -120,7 +120,8 @@ class BuyData extends Component {
     }
 
     onSubmitBuyData = (event) => {
-        event.preventDefault()
+        event.preventDefault();
+        this.props.resetPinState();
         if(this.state.selectedNetwork && this.state.buyDataForm.phone.value != "" && this.phoneValidation(this.state.buyDataForm.phone.value)){
             
             var dataToBuy = {
@@ -149,7 +150,7 @@ class BuyData extends Component {
     }
 
     phoneValidation = (value) => {
-        const pattern = /^\d+$/;
+        
         return (value.length >= 11 && value.length <= 16 && pattern.test(value));
     }
 
@@ -164,6 +165,11 @@ class BuyData extends Component {
         validation.phoneInput.hasError.validError = false;
         validation.phoneInput.hasError.requiredError = false;
         updatedFormElement.value = event.target.value;
+        if(updatedFormElement.value.length >= 1){
+            if(!pattern.test(updatedFormElement.value) || updatedFormElement.value.length > 16){
+                return;
+            }
+        }
         // updatedFormElement.valid = checkInputValidation(updatedFormElement.value, updatedFormElement.validation);
         updatedFormElement.valid = true;
         updatedFormElement.touched = true;
@@ -174,6 +180,7 @@ class BuyData extends Component {
             formIsValid = updatedBuyDataForm[inputIdentifier].valid && formIsValid;
         }
         console.log(formIsValid);
+        
         this.setState({ buyDataForm: updatedBuyDataForm, formIsValid, validation });
     }
 
@@ -202,6 +209,9 @@ class BuyData extends Component {
                                 
                                 <div className="transfer-ctn">
                                     <form>
+                            
+                        {(this.props.pinVerified == 1 && this.props.errorMessage) ? <div className="info-label error">{this.props.errorMessage}</div> : null}
+                    
                                         <div class="input-ctn">
                                             <label>Select a Network</label>
                                             <Select
@@ -276,13 +286,16 @@ const mapStateToProps = state => {
         dataPlans: state.data_reducer.dataPlans,
         dataInfo : state.data_reducer.dataToBuy,
         fetching: state.data_reducer.isFetchingData,
+        pinVerified: state.data_reducer.pinVerified,
+        errorMessage: state.data_reducer.errorMessage
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         fetchDataPlans: (token) => dispatch(actions.fetchDataPlans(token)),
-        setDataToBuyDetails: (dataToBuy, network) => dispatch(actions.setDataTransactionDetails(dataToBuy, network))
+        setDataToBuyDetails: (dataToBuy, network) => dispatch(actions.setDataTransactionDetails(dataToBuy, network)),
+        resetPinState: () => dispatch(actions.pinVerificationTryAgain()),
     }
 }
 
