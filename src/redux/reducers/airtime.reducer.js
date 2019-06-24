@@ -63,6 +63,29 @@ export function buyAirtimeReducer(state = [], action) {
     }
 }
 
+export function buyAirtimeWebPinReducer(state = [], action) {
+    switch (action.type) {
+        case airtimeConstants.AIRTIME_WEBPIN_SUCCESS:
+            return {
+                airtime_buydata: airtimeConstants.AIRTIME_WEBPIN_SUCCESS,
+                airtime_buydata_data: action
+            };
+        case airtimeConstants.AIRTIME_WEBPIN_PENDING:
+            return {
+                airtime_buydata: airtimeConstants.AIRTIME_WEBPIN_PENDING,
+                airtime_buydata_data: action
+            };
+        case airtimeConstants.AIRTIME_WEBPIN_FAILURE:
+                    return {
+                        airtime_buydata: airtimeConstants.AIRTIME_WEBPIN_FAILURE,
+                        airtime_buydata_data: action
+                    };
+        default: return {
+            ...state
+        };
+    }
+}
+
 export function debitableAccountsReducer(state = [], action) {
     switch (action.type) {
         case airtimeConstants.GET_DEBTABLE_ACCOUNTS_SUCCESS:

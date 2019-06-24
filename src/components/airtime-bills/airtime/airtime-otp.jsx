@@ -11,7 +11,7 @@ class AirtimeOtp extends React.Component {
 
     getBillinfo(){
         let props = this.props
-        if (props.airtime.airtime_buydata == airtimeConstants.AIRTIME_BUYDATA_PAGE2) {
+        if (props.airtime_history.airtime_buydata == airtimeConstants.AIRTIME_BUYDATA_PAGE2) {
             // var bill = {
             //     ...this.props.airtime.airtime_buydata_data.data
             // };
@@ -27,8 +27,14 @@ class AirtimeOtp extends React.Component {
         }
     }
 
+    returnOtpValidationMsg(){
+        if(this.props.airtime.airtime_buydata_data)
+         return this.props.airtime.airtime_buydata_data.response.ValidationMsg;
+         else return "";
+    }
+
     onSubmit(otp){
-        //to be submitted
+        console.log(otp);
     }
 
     render() {
@@ -36,6 +42,8 @@ class AirtimeOtp extends React.Component {
             <OtpValidation 
             backLink={"/bills/airtime/select-account"}
             submitAction={this.onSubmit}
+            maxLength={6}
+            displayMessage={this.returnOtpValidationMsg()}
              />
         );
     }
@@ -47,7 +55,8 @@ function mapStateToProps(state) {
     return {
         user,
         alert: state.alert,
-        airtime: state.airtime_buydata
+        airtime: state.airtime_webpin,
+        airtime_history: state.airtime_buydata
     };
 }
 

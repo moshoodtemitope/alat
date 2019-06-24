@@ -25,6 +25,7 @@ class Index extends Component {
             selectedBeneficairy : {
                 key : -1
             },
+            isDelete : false
         };
         this.toggleModal = this.toggleModal.bind(this);
         
@@ -42,7 +43,9 @@ class Index extends Component {
     }
 
     deleteAfterAction(){
+       
         let props = this.props;
+        if(this.state.isDelete == true)
         if(props.airtime_beneDelete.airtime_beneficiary == airtimeConstants.AIRTIME_BENEFICIARIES_DELETE_SUCCESS)
         {
             let a = this.props.airtime_beneficiary.airtime_beneficiary_data.response;
@@ -50,6 +53,7 @@ class Index extends Component {
            
             this.props.airtime_beneficiary.airtime_beneficiary_data.response.splice(index,1);
             this.toggleModal();
+            this.setState({isDelete : false});
         }
     }
 
@@ -75,6 +79,7 @@ class Index extends Component {
        const { dispatch } = this.props;
        let props = this.props;
        var result =  dispatch(deleteBeneficairy(this.state.user.token, this.state.selectedBeneficairy.BeneficiaryId));
+       this.setState({ isDelete: true });
     }
 
     returnImage(networktype) {

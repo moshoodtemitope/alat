@@ -87,3 +87,29 @@ export const selectAccount = (airtimeTransaction)=>{
    return(dispatch)=> dispatch(request(airtimeTransaction));
     function request(data) { return { type: airtimeConstants.AIRTIME_BUYDATA_PAGE3, data } }
 }
+
+
+export const airtimeWebPinpayment =(token, data) =>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.AIRTIME_PAYMENT_WEBPIN, "POST", data, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                //TODO: edit localDB accounts object
+              
+                dispatch(success(response.data));
+               // return response;
+            })
+            .catch(error => {
+                //dispatch(failure(modelStateErrorHandler(error)));
+               dispatch(alertActions.error(modelStateErrorHandler(error)));
+               dispatch(failure(modelStateErrorHandler(error)));
+                // throw(error);
+            });
+    };
+
+    function request(request) { return { type: airtimeConstants.AIRTIME_WEBPIN_PENDING, request } }
+    function success(response) { return { type: airtimeConstants.AIRTIME_WEBPIN_SUCCESS, response } }
+    function failure(error) { return { type: airtimeConstants.AIRTIME_WEBPIN_FAILURE, error } }
+}
