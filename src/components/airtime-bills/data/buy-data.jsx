@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { Input } from './input';
 import Select from 'react-select';
+import {alertActions} from "../../../redux/actions/alert.actions";
 import { formatAmountNoDecimal } from '../../../shared/utils';
 import { checkInputValidation } from '../../../shared/utils';
 import { connect } from 'react-redux';
@@ -121,7 +122,7 @@ class BuyData extends Component {
 
     onSubmitBuyData = (event) => {
         event.preventDefault();
-        this.props.resetPinState();
+        this.props.clearError();
         if(this.state.selectedNetwork && this.state.buyDataForm.phone.value != "" && this.phoneValidation(this.state.buyDataForm.phone.value)){
             
             var dataToBuy = {
@@ -210,8 +211,9 @@ class BuyData extends Component {
                                 <div className="transfer-ctn">
                                     <form>
                             
-                        {(this.props.pinVerified == 1 && this.props.errorMessage) ? <div className="info-label error">{this.props.errorMessage}</div> : null}
-                    
+                                    {(this.props.alert.message) ?
+                        <div className="info-label error">{this.props.alert.message} | <span onClick={() => {this.props.fetchDataPlans(this.state.user.token)}} style={{textDecoration:"underline", cursor:"pointer"}}>Click here to try again</span></div> : null
+                        }
                                         <div class="input-ctn">
                                             <label>Select a Network</label>
                                             <Select
@@ -284,7 +286,8 @@ const mapStateToProps = state => {
         dataInfo : state.data_reducer.dataToBuy,
         fetching: state.data_reducer.isFetchingData,
         pinVerified: state.data_reducer.pinVerified,
-        errorMessage: state.data_reducer.errorMessage
+        errorMessage: state.data_reducer.errorMessage,
+        alert: state.alert,
     }
 }
 
@@ -293,6 +296,7 @@ const mapDispatchToProps = dispatch => {
         fetchDataPlans: (token) => dispatch(actions.fetchDataPlans(token)),
         setDataToBuyDetails: (dataToBuy, network) => dispatch(actions.setDataTransactionDetails(dataToBuy, network)),
         resetPinState: () => dispatch(actions.pinVerificationTryAgain()),
+        clearError: () => dispatch(alertActions.clear())
     }
 }
 

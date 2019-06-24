@@ -6,6 +6,7 @@ import Select from 'react-select';
 
 import { checkInputValidation } from '../../../shared/utils';
 import Modal from 'react-responsive-modal';
+import {alertActions} from "../../../redux/actions/alert.actions";
 import { formatAmountNoDecimal, formatAmount } from '../../../shared/utils';
 import { connect } from 'react-redux';
 
@@ -131,7 +132,7 @@ class ConfirmData extends Component {
     onSubmitForm = (event) => {
         var validation = { ...this.state.validation };
         event.preventDefault();
-        this.props.resetPinState();
+        this.props.clearError();
         if ((this.state.confirmDataForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedAccounts) || !this.pinInputValidation(this.state.confirmDataForm.pin.value)) {
             if (this.state.confirmDataForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedAccounts) {
                 validation.accountError.hasError = true;
@@ -195,8 +196,9 @@ class ConfirmData extends Component {
                                                 </div>
 
 
-                                                {(this.props.pinVerified == 1 && this.props.errorMessage) ? <div className="info-label error">{this.props.errorMessage}</div> : null}
-
+                                                {(this.props.alert.message) ?
+                        <div className="info-label error">{this.props.alert.message} {this.props.alert.message.indexOf("rror") != -1 ? <span onClick={() => {this.props.fetchDebitableAccounts(this.state.user.token)}} style={{textDecoration:"underline", cursor:"pointer"}}>Click here to try again</span> : null}</div> : null
+                        }
                                                 {formElementArray.map((formElement) => {
                                                     if (formElement.config.elementType !== "input") {
                                                         return (
@@ -277,6 +279,7 @@ const mapStateToProps = state => {
         pinVerified: state.data_reducer.pinVerified,
         errorMessage: state.data_reducer.errorMessage,
         network: state.data_reducer.network,
+        alert: state.alert,
     }
 }
 
@@ -286,6 +289,7 @@ const mapDispatchToProps = dispatch => {
         verifyInputedPIN : (token, data) => dispatch(actions.pinVerificationStart(token, data)),
         setDataToBuyDetails: (dataToBuy, network) => dispatch(actions.setDataTransactionDetails(dataToBuy, network)),
         resetPinState: () => dispatch(actions.pinVerificationTryAgain()),
+        clearError: () => dispatch(alertActions.clear())
     }
 }
 
