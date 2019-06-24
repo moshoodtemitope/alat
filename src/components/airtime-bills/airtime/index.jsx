@@ -144,6 +144,7 @@ class Index extends Component {
                         <center>
                             <img src={phoneimg} className="m-b-30" />
                             <p className="grey-text no-paylink">Loading saved beneficiaries...</p>
+                            <NavLink to={'airtime/buy'}><button className="btn-alat">Buy Airtime</button></NavLink>
                         </center>
                     </div>
                 </div>
