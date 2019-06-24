@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect} from 'react-redux';
 import OtpValidation from '../../../shared/components/otpvalidation';
+import { airtimeConstants} from '../../../redux/constants/airtime/airtime.constants';
 
 class AirtimeOtp extends React.Component {
     constructor(props) {
@@ -32,11 +34,21 @@ class AirtimeOtp extends React.Component {
     render() {
         return (
             <OtpValidation 
-            backLink={"/bills/airtime/done"}
+            backLink={"/bills/airtime/select-account"}
             submitAction={this.onSubmit}
              />
         );
     }
 }
 
-export default AirtimeOtp;
+function mapStateToProps(state) {
+    const { authentication } = state;
+    const { user } = authentication;
+    return {
+        user,
+        alert: state.alert,
+        airtime: state.airtime_buydata
+    };
+}
+
+export default connect(mapStateToProps)(AirtimeOtp);

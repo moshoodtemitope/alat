@@ -1,12 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import OTPInput from './otpInput';
-import phoneImg from '../../../assets/img/verify-phone.svg';
+import phoneImg from '../../assets/img/verify-phone.svg';
 
 class OtpValidation extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            OtpInavlid :false
+            OtpInavlid :false,
+            TransactionPin: ""
         };
     }
    
@@ -14,8 +16,13 @@ class OtpValidation extends React.Component {
     //     this.props.
     // }
 
-    handleSubmit=(object)=>{
-        this.props.submitAction(object);
+    handleSubmit=()=>{
+        this.props.submitAction({TransactionPin : this.state.TransactionPin});
+    }
+
+    handleOnChange=(e)=>{
+        console.log(e);
+      this.setState({ TransactionPin : e })
     }
 
     render() {
@@ -34,16 +41,21 @@ class OtpValidation extends React.Component {
                                 <div className="m-t-30 width-300">
                                     <p className="m-b-20" >We just sent a verification code to your mobile number (+2348020****01)</p>
 
-                                    <form>
+                                    <form onSubmit={this.props.submitAction}>
                                         {/* <div className="input-ctn">
                                             <input type="tel" />
                                         </div> */}
-                                        <OTPInput OTPInvalid={this.state.OtpInavlid}  />
+                                        <OTPInput 
+                                        OTPInvalid={this.state.OtpInavlid}
+                                        value={this.state.TransactionPin}
+                                        onChange={this.handleOnChange}
+
+                                         />
 
                                         <div className="row">
                                             <div className="col-sm-12">
                                                 <center>
-                                                    <input type="button" onSubmit={} value="Complete Transfer" className="btn-alat m-t-10 m-b-40 text-center" />
+                                                    <input type="submit" value="Complete Transfer" className="btn-alat m-t-10 m-b-40 text-center" />
                                                 </center>
                                             </div>
                                         </div>
@@ -61,5 +73,13 @@ class OtpValidation extends React.Component {
         );
     }
 }
-
+function mapStateToProps(state) {
+    const { authentication } = state;
+    const { user } = authentication;
+    return {
+        user,
+        alert: state.alert,
+        airtime: state.airtime_buydata
+    };
+}
 export default OtpValidation;
