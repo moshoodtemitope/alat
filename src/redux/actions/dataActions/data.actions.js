@@ -158,7 +158,7 @@ export const pinVerificationStart = (token, data, isResending = false) => {
                 dispatch(isFetchingFalse());
                 if(response.data.Response == 0){
                     if(isResending == false){
-                        dispatch(correctPin());
+                        dispatch(toNext());
                     };
                 }
             })
@@ -170,12 +170,6 @@ export const pinVerificationStart = (token, data, isResending = false) => {
 
             
     };
-
-    function correctPin() {
-        return {
-            type: actionTypes.PIN_VERIFICATION_CORRECT
-        }
-    }
 }
 
 export const pinVerificationTryAgain = () => {
@@ -195,7 +189,7 @@ export const otpVerificationStart = (token, data) => {
             .then(response => {
                 dispatch(isFetchingFalse());
                 // if(response.data.Response == 0){
-                        dispatch(correctOtp());
+                        dispatch(toNext());
                 // }
             })
             .catch(error => {
@@ -206,10 +200,47 @@ export const otpVerificationStart = (token, data) => {
 
             
     };
+}
 
-    function correctOtp() {
-        return {
-            type: actionTypes.OTP_VERIFICATION_CORRECT
-        }
+export const saveBeneficiary = (token, data) => {
+    console.log("is saving  beneficiary");
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        dispatch(isFetchingTrue());
+        console.log("is treuly saving  beneficiary");
+        let consume = ApiService.request(routes.SAVE_DATA_BENEFICIARY, "POST", data, SystemConstant.HEADER);
+        return consume
+            .then(response => {
+                dispatch(isFetchingFalse());
+                // if(response.data.Response == 0){
+                        dispatch(clearDataInfoPost());
+                // }
+            })
+            .catch(error => {
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+                dispatch(isFetchingFalse());
+                console.log(error);
+            });
+
+            
+    };
+}
+
+function toNext () {
+    return {
+        type: actionTypes.TO_NEXT
     }
 }
+
+export const clearDataInfoNoPost = () => {
+    return {
+        type: actionTypes.CLEAR_DATA_INFO_NOPOST
+    }
+}
+
+export const clearDataInfoPost = () => {
+    return {
+        type: actionTypes.CLEAR_DATA_INFO_POST
+    }
+}
+

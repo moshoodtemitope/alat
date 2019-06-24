@@ -1,7 +1,7 @@
 import React, { Component } from 'React';
 import { Link, Redirect } from 'react-router-dom';
 
-import { Input, Switch } from './input';
+import { Input } from './input';
 import Select from 'react-select';
 import verifyOtp from '../../../assets/img/verify-phone.svg';
 
@@ -32,7 +32,7 @@ class VerifyOtp extends Component {
 
 
     componentDidMount() {
-        // this.props.resetPinState();
+        this.props.resetPinState();
     }
 
     validateInputedOTP = (value) => {
@@ -105,7 +105,6 @@ class VerifyOtp extends Component {
                                         <form>
 
 
-                                            <div className="input-ctn">
 
                                                 {formElementArray.map((formElement) => {
                                                     return (
@@ -125,8 +124,6 @@ class VerifyOtp extends Component {
 
                                                 })}
 
-
-                                            </div>
 
                                             <div className="row">
                                                 <div className="col-sm-12">

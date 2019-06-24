@@ -6,5 +6,7 @@ export {
     fetchDebitableAccounts,
     pinVerificationStart,
     pinVerificationTryAgain,
-    otpVerificationStart
+    otpVerificationStart,
+    saveBeneficiary,
+    clearDataInfoNoPost
 } from './data.actions';

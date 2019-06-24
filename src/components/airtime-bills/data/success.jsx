@@ -2,11 +2,9 @@ import React, { Component } from 'React';
 import { Link, Redirect } from 'react-router-dom';
 
 import { Switch } from '../../../shared/elements/_toggle';
+import { Input } from './input';
 import successLogo from '../../../assets/img/success.svg';
 
-import { checkInputValidation } from '../../../shared/utils';
-
-import { formatAmountNoDecimal, formatAmount } from '../../../shared/utils';
 import { connect } from 'react-redux';
 
 import * as actions from '../../../redux/actions/dataActions/export';
@@ -16,16 +14,18 @@ class Success extends Component {
         super(props);
         this.state = {
             saveBeneficiaryForm: {
-                phone: {
+                alias: {
                     elementType: 'input',
                     elementConfig: {
                         type: 'text',
-                        placeholder: ''
+                        placeholder: '',
                     },
                     value: '',
+                    label: 'Give it a name'
                 },
             },
             hasError: false,
+            saveBeneficiary: false,
             user: JSON.parse(localStorage.getItem("user")),
         };
     }
@@ -36,9 +36,9 @@ class Success extends Component {
     }
 
     inputChangedHandler = (event, inputIdentifier) => {
-        if(this.state.hasError == true){
-            this.setState({hasError : false});
-        }
+        // if(this.state.hasError == true){
+        //     this.setState({hasError : false});
+        // }
         const updatedSaveBeneficiaryForm = {
             ...this.state.saveBeneficiaryForm
         }
@@ -46,32 +46,41 @@ class Success extends Component {
             ...updatedSaveBeneficiaryForm[inputIdentifier]
         };
         updatedFormElement.value = event.target.value;
-        // updatedFormElement.valid = checkInputValidation(updatedFormElement.value, updatedFormElement.validation);
-        updatedFormElement.valid = true;
-        updatedFormElement.touched = true;
         updatedSaveBeneficiaryForm[inputIdentifier] = updatedFormElement;
-
-        this.setState({ confirmDataForm: updatedConfirmDataForm });
+        this.setState({ saveBeneficiaryForm: updatedSaveBeneficiaryForm });
     }
 
     handleToggle = () => {
         this.setState({ saveBeneficiary: !this.state.saveBeneficiary });
     }
 
+    onSubmitSaveForm = () => {
+        var payload = { 
+            Amount: this.props.dataInfo.Amount,
+            BillerAlias: this.state.saveBeneficiaryForm.alias.value,
+            BillerPaymentCode: this.props.dataInfo.BillerPaymentCode,
+            PhoneNumber: this.props.dataInfo.PhoneNumber,
+            TransactionPin: this.props.TransactionPin,
+            NetworkCode : this.props.dataInfo.NetworkCode
+        };
+
+        this.props.onSaveBeneficiary(this.state.user.token, payload);
+    }
+
+    goToDashboard = () => {
+        this.props.toDashboard();
+    }
+
     render() {
         let success = <Redirect to="/bills/data/buy" />
-        if (this.props.dataInfo == null) {
+        if (this.props.dataInfo != null) {
             const formElementArray = [];
-            for (let key in this.state.confirmDataForm) {
+            for (let key in this.state.saveBeneficiaryForm) {
                 formElementArray.push({
                     id: key,
-                    config: this.state.confirmDataForm[key]
+                    config: this.state.saveBeneficiaryForm[key]
                 });
             }
-            if (this.props.accounts.length >= 1 && !this.state.confirmDataForm.activeAccount.loaded) {
-                this.sortAccountsForSelect();
-            }
-
             success = (
                 <div className="col-sm-12">
                     <div className="row">
@@ -114,21 +123,31 @@ class Success extends Component {
                                             this.state.saveBeneficiary ? (
                                                 <div className="save-purchase-frm">
                                                     <form>
-                                                        <div className="input-ctn">
-                                                            <label>Give it a name</label>
-                                                            <input type="text" />
+                                                            
+                                                            {formElementArray.map((formElement) => {
+                                                    return (
+                                                        <div className="input-ctn" key={formElement.id}>
+                                                            <label>{formElement.config.label}</label>
+                                                            <Input
+                                                                elementType={formElement.config.elementType}
+                                                                elementConfig={formElement.config.elementConfig}
+                                                                value={formElement.config.value}
+                                                                changed={(event) => this.inputChangedHandler(event, formElement.id)} />
                                                         </div>
+                                                    )
+
+                                                })}
                                                         <center>
-                                                            <button onClick={this.onSubmitBuyData} class="btn-alat m-t-10 m-b-20 text-center">Save</button>
+                                                            <button onClick={this.onSubmitSaveForm} class="btn-alat m-t-10 m-b-20 text-center">Save</button>
                                                         </center>
-                                                        
                                                     </form>
                                                 </div>
                                             ) : (
                                                     <div className="row">
                                                         <div className="col-sm-12">
                                                             <center>
-                                                                <Link to={'/dashboard'} className="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</Link>
+                                                            <button onClick={this.goToDashboard} class="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</button>
+                                                                {/* <Link to={'/dashboard'} className="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</Link> */}
                                                             </center>
                                                         </div>
                                                     </div>
@@ -153,6 +172,14 @@ class Success extends Component {
                     </div>
                 </div>
             );
+            if (this.props.pageState == 3) {
+                this.props.resetPinState();
+                success = <Redirect to="/dashboard" />
+            }
+            if (this.props.pageState == 0) {
+                this.props.resetPinState();
+                success = <Redirect to="/bills/data" />
+            }
         }
 
         return success;
@@ -165,12 +192,16 @@ const mapStateToProps = state => {
         dataPlans: state.data_reducer.dataPlans,
         accounts: state.data_reducer.debitableAccounts,
         network: state.data_reducer.network,
+        pageState: state.data_reducer.pinVerified
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
+        resetPinState: () => dispatch(actions.pinVerificationTryAgain()),
         fetchDebitableAccounts: (token) => dispatch(actions.fetchDebitableAccounts(token)),
+        onSaveBeneficiary:(token, data) => dispatch(actions.saveBeneficiary(token, data)),
+        toDashboard: () => dispatch(actions.clearDataInfoNoPost())
     }
 }
 
