@@ -13,6 +13,7 @@ import gloLogo from '../../../assets/img/glo.svg';
 import NinemobileLogo from '../../../assets/img/9mobile.svg';
 
 var image = null;
+var network = null;
 class Index extends Component {
 
     constructor(props) {
@@ -22,6 +23,10 @@ class Index extends Component {
             show: false,
             selectedBeneficiary: { BillerAlias: "" }
         };
+    }
+
+    componentDidMount() {
+        this.props.clearDataInfo();
     }
 
     onShowModal = (beneficiaryData) => {
@@ -36,6 +41,11 @@ class Index extends Component {
         console.log(beneficiaryData);
         this.props.onDeleteBeneficiary(this.state.user.token, beneficiaryData);
         this.onCloseModal();
+    }
+
+    useBeneficiary = (dataToSet, network) =>{
+        this.props.setDataToBuyDetails(dataToSet, network)
+        this.props.history.push('/bills/data/buy/confirm');
     }
 
     render() {
@@ -70,25 +80,37 @@ class Index extends Component {
                                         switch (beneficiary.NetworkCode) {
                                             case (2):
                                                 image = <img src={mtnLogo} alt="mtnlogo" />;
+                                                network = "MTN";
                                                 break;
                                             case (3):
                                                 image = <img src={airtelLogo} alt="airtelLogo" />;
+                                                network = "Airtel";
                                                 break;
                                             case (1):
                                                 image = <img src={gloLogo} alt="gloLogo" />;
+                                                network = "Glo"
                                                 break;
                                             case (4):
+                                                network = "Etisalat"
                                                 image = <img src={NinemobileLogo} alt="9mobileLogo" />;
                                                 break;
                                             default:
                                                 image = <img src={airtelLogo} alt="airtelLogo" />;
+                                                network = "Airtel";
                                         };
+                                        var dataToBuy = {
+                                            Amount: beneficiary.Amount,
+                                            BillerPaymentCode: beneficiary.BillerPaymentCode,
+                                            NetworkCode: beneficiary.NetworkCode,
+                                            PaymentItem: beneficiary.PaymentItem,
+                                            PhoneNumber: beneficiary.PhoneNumber,
+                                            SubscriberId: beneficiary.PhoneNumber,
+                                        }
                                         return (
-
-                                            <div className="col-sm-12 col-md-4" key={counter + 1}>
+                                            <div className="col-sm-12 col-md-4" key={counter + 1} >
                                                 <div className="al-card airtime-card">
                                                     <div className="clearfix">
-                                                        <div className="network-img">
+                                                        <div className="network-img"  onClick={() => {this.useBeneficiary(dataToBuy, network)}}>
                                                             {image}
                                                         </div>
                                                         <div className="all-info">
@@ -140,6 +162,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onDeleteBeneficiary: (token, data) => dispatch(actions.deleteDataBeneficiary(token, data)),
+        setDataToBuyDetails: (dataToBuy, network) => dispatch(actions.setDataTransactionDetails(dataToBuy, network)),
+        clearDataInfo: () => dispatch(actions.clearDataInfoNoPost())
     }
 }
 

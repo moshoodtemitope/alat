@@ -71,10 +71,13 @@ import {updateObject} from '../actions/dataActions/data.actions';
 //     }
 // ];
 
+//--------------------------//
 //Pin Verifed status
-// 0-Pin is correct
-// 1-Pin is Incorrect
-// 2-Retry Pin/default Pin State
+// 0-correct/good to go
+// 1-There is error
+// 2-Retry Pin/default State
+// 3-go to start
+//--------------------------//
 
 const initialState = {
     beneficiaries : [],
@@ -84,7 +87,7 @@ const initialState = {
     dataToBuy: null,
     debitableAccounts : [],
     pinVerified: 2,
-    pinErrorMessage: null,
+    errorMessage: null,
     network: ""
 }; 
 
@@ -104,16 +107,18 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_DEBITABLE_ACCOUNTS_SUCCESS:
             return updateObject(state, {debitableAccounts : action.data, isFetching: false, pinErrorMessage: null});
             // return updateObject(state, {debitableAccounts : mock2});
-        case actionTypes.PIN_VERIFICATION_CORRECT:
+        case actionTypes.TO_NEXT:
             return updateObject(state, {pinVerified : 0});
-        case actionTypes.PIN_VERIFICATION_WRONG:
-            return updateObject(state, {pinVerified : 1, pinErrorMessage : action.message});
         case actionTypes.PIN_VERIFICATION_TRY_AGAIN:
-            return updateObject(state, {pinVerified : 2, pinErrorMessage: null});
+            return updateObject(state, {pinVerified : 2, errorMessage: null});
         case actionTypes.IS_FETCHING_DATA:
             return updateObject(state, {isFetchingData : !state.isFetchingData});
+        case actionTypes.CLEAR_DATA_INFO_NOPOST:
+            return updateObject(state, {pinVerified : 3, dataToBuy : null, dataPlans : [], debitableAccounts : [], network : ""});
+        case actionTypes.CLEAR_DATA_INFO_POST:
+            return updateObject(state, {pinVerified : 0, dataToBuy : null, dataPlans : [], debitableAccounts : [], network : ""});
         case alertConstants.ERROR:
-            return updateObject(state, {pinVerified : 1, pinErrorMessage: action.message});
+            return updateObject(state, {pinVerified : 1, errorMessage: action.message});
         default: return state;
     }
 }

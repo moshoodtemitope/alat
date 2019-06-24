@@ -50,5 +50,7 @@ export const routes = {
     DELETE_DATA_BENEFICIARY : BASEURL + '/PaymentApi/api/AirtimeBill/DeleteSavedAirtimeBillBeneficiaries',
     FETCH_DATA_PLANS : BASEURL + '/PaymentApi/api/AirtimeBill/QuickTellerBillerItemsData',
     FETCH_DEBITABLE_ACCOUNTS : BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2',
-    PIN_VERIFICATION : BASEURL + '/PaymentApi/api/AirtimeBill/BillPaymentWebWithPIN'
+    PIN_VERIFICATION : BASEURL + '/PaymentApi/api/AirtimeBill/BillPaymentWebWithPIN',
+    DATA_OTP_VERIFICATION : BASEURL + '/PaymentApi/api/AirtimeBill/BillPaymentWebWithPINAndOTP',
+    SAVE_DATA_BENEFICIARY : BASEURL + '/PaymentApi/api/AirtimeBill/SaveDataBeneficiaries',
 };

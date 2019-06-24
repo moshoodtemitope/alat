@@ -1,13 +1,11 @@
 import React, { Component } from 'React';
 import { Link, Redirect } from 'react-router-dom';
 
-import { Input, Switch } from './input';
+import { Input } from './input';
 import Select from 'react-select';
 import verifyOtp from '../../../assets/img/verify-phone.svg';
 
-import { checkInputValidation } from '../../../shared/utils';
-
-import { formatAmountNoDecimal, formatAmount } from '../../../shared/utils';
+import {maskString } from '../../../shared/utils';
 import { connect } from 'react-redux';
 
 import * as actions from '../../../redux/actions/dataActions/export';
@@ -16,19 +14,7 @@ class VerifyOtp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // selectedAccounts: null,
             otpFormData: {
-                //     activeAccount: {
-                //         elementType: 'select',
-                //         elementConfig: {
-                //             options: [{ value: '', label: 'Loading Accounts...' }],
-                //         },
-                //         label: 'Select an account to debit',
-                //         value: '',
-                //         validation: {},
-                //         loaded: false,
-                //         valid: true
-                //     },
                 otp: {
                     elementType: 'input',
                     elementConfig: {
@@ -36,19 +22,9 @@ class VerifyOtp extends Component {
                         placeholder: ''
                     },
                     value: '',
-                    validation: {
-                        required: true,
-                        minLength: 4,
-                        maxLength: 4,
-                        isNumeric: true,
-                    },
-                    label: 'Enter ALAT PIN',
-                    valid: false,
-                    error: 'Enter a valid pin',
-                    touched: false
                 },
             },
-            formIsValid: false,
+            hasError: false,
             // saveBeneficiary: true,
             user: JSON.parse(localStorage.getItem("user")),
         };
@@ -59,34 +35,29 @@ class VerifyOtp extends Component {
         this.props.resetPinState();
     }
 
-    // sortAccountsForSelect = () => {
-    //     var arrayToDisplay = [];
-    //     if (this.props.accounts.length >= 1) {
-    //         this.props.accounts.map((data => arrayToDisplay.push({ value: data.AccountNumber, label: data.AccountDescription + " - N" + formatAmount(data.AvailableBalance) })));
-    //     } else {
-    //         arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account Available' }];
-    //     }
-    //     console.log(arrayToDisplay)
-
-    //     const updatedSelectOption = {
-    //         ...this.state.confirmDataForm
-    //     }
-    //     updatedSelectOption.activeAccount.elementConfig.options = arrayToDisplay;
-    //     updatedSelectOption.activeAccount.loaded = true;
-    //     this.setState({ confirmDataForm: updatedSelectOption });
-
-    // }
-
-    // accountChangedHandler = (selectedAccount) => {
-    //     this.setState({ selectedAccount });
-    //     console.log(`Option selected:`, selectedAccount);
-    // }
+    validateInputedOTP = (value) => {
+        const pattern = /^\d+$/;
+        return (value.length >= 4 && value.length <= 6 && pattern.test(value));
+    } 
 
     onSubmitForm = (event) => {
-        
+        event.preventDefault();
+        if(this.validateInputedOTP(this.state.otpFormData.otp.value)){
+            let payload = {...this.props.dataInfo, OTP: this.state.otpFormData.otp.value};
+        delete payload.NetworkCode;
+        delete payload.PaymentItem;
+
+        // console.log(payload);
+        this.props.verifyOtpInputed(this.state.user.token, payload);
+        }else{
+            this.setState({ hasError : true});
+        }
     }
 
     inputChangedHandler = (event, inputIdentifier) => {
+        if(this.state.hasError == true){
+            this.setState({hasError : false});
+        }
         const updatedotpFormData = {
             ...this.state.otpFormData
         }
@@ -94,21 +65,15 @@ class VerifyOtp extends Component {
             ...updatedotpFormData[inputIdentifier]
         };
         updatedFormElement.value = event.target.value;
-        // updatedFormElement.valid = checkInputValidation(updatedFormElement.value, updatedFormElement.validation);
         updatedFormElement.valid = true;
         updatedFormElement.touched = true;
         updatedotpFormData[inputIdentifier] = updatedFormElement;
 
-        let formIsValid = true;
-        for (let inputIdentifier in updatedotpFormData) {
-            formIsValid = updatedotpFormData[inputIdentifier].valid && formIsValid;
-        }
-        console.log(formIsValid);
+        // let formIsValid = true;
+        // for (let inputIdentifier in updatedotpFormData) {
+        //     formIsValid = updatedotpFormData[inputIdentifier].valid && formIsValid;
+        // }
         this.setState({ otpFormData: updatedotpFormData, formIsValid });
-    }
-
-    handleToggle = () => {
-        this.setState({ saveBeneficiary: !this.state.saveBeneficiary });
     }
 
     render() {
@@ -122,7 +87,6 @@ class VerifyOtp extends Component {
                     config: this.state.otpFormData[key]
                 });
             }
-            // const { selectedAccount } = this.state;
 
             verify = (
                 <div className="col-sm-12">
@@ -137,11 +101,10 @@ class VerifyOtp extends Component {
                                     </center>
 
                                     <div className="m-t-30 width-300">
-                                        <p className="m-b-20" >We just sent a verification code to your mobile number (+2348020****01)</p>
+                                        <p className="m-b-20" >We just sent a verification code to your mobile number {this.props.phoneNumber ? " (+"+maskString(this.props.phoneNumber, "****", 8, 11)+")" : "" }</p>
                                         <form>
 
 
-                                            <div className="input-ctn">
 
                                                 {formElementArray.map((formElement) => {
                                                     return (
@@ -155,20 +118,19 @@ class VerifyOtp extends Component {
                                                                 isTouched={formElement.config.touched}
                                                                 errormsg={formElement.config.error}
                                                                 isDisabled={formElement.config.isDisabled} />
+                                                                {this.state.hasError ? <small className="text-danger">Enter a valid OTP</small> : null}
                                                         </div>
                                                     )
 
                                                 })}
 
 
-                                            </div>
-
                                             <div className="row">
                                                 <div className="col-sm-12">
                                                     <center>
                                                     <button disabled={this.props.fetching} onClick={this.onSubmitForm} class="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Confirm"}</button>
 
-                                                        <a className="resend-otp" href="#">Didn't get OTP? Resend Code.</a>
+                                                        <p onClick={() => {this.props.verifyInputedPIN(this.state.user.token, this.props.dataInfo, true)}} className="resend-otp">Didn't get OTP? Resend Code.</p>
                                                     </center>
                                                 </div>
                                             </div>
@@ -180,6 +142,10 @@ class VerifyOtp extends Component {
                     </div>
                 </div>
             );
+            if (this.props.otpConfirmed == 0) {
+                this.props.resetPinState();
+                verify = <Redirect to="/bills/data/buy/success" />
+            }
         }
 
         return verify;
@@ -190,14 +156,18 @@ const mapStateToProps = state => {
     return {
         dataInfo: state.data_reducer.dataToBuy,
         dataPlans: state.data_reducer.dataPlans,
-        accounts: state.data_reducer.debitableAccounts
+        accounts: state.data_reducer.debitableAccounts,
+        phoneNumber: state.authentication.user.phoneNo,
+        fetching: state.data_reducer.isFetching,
+        otpConfirmed: state.data_reducer.pinVerified,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         resetPinState: () => dispatch(actions.pinVerificationTryAgain()),
-        verifyInputedPIN : (token, data) => dispatch(actions.pinVerificationStart(token, data)),
+        verifyOtpInputed: (token, data) => dispatch(actions.otpVerificationStart(token, data)),
+        verifyInputedPIN : (token, data, isResending) => dispatch(actions.pinVerificationStart(token, data, isResending)),
     }
 }
 
