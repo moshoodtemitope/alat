@@ -73,13 +73,5 @@ class OtpValidation extends React.Component {
         );
     }
 }
-function mapStateToProps(state) {
-    const { authentication } = state;
-    const { user } = authentication;
-    return {
-        user,
-        alert: state.alert,
-        airtime: state.airtime_buydata
-    };
-}
+
 export default OtpValidation;
