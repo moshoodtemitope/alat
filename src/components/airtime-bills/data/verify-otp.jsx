@@ -68,12 +68,7 @@ class VerifyOtp extends Component {
         updatedFormElement.valid = true;
         updatedFormElement.touched = true;
         updatedotpFormData[inputIdentifier] = updatedFormElement;
-
-        // let formIsValid = true;
-        // for (let inputIdentifier in updatedotpFormData) {
-        //     formIsValid = updatedotpFormData[inputIdentifier].valid && formIsValid;
-        // }
-        this.setState({ otpFormData: updatedotpFormData, formIsValid });
+        this.setState({ otpFormData: updatedotpFormData });
     }
 
     render() {
