@@ -11,13 +11,15 @@ class OtpValidation extends React.Component {
             TransactionPin: "",
             isSubmitted: false
         };
+
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     // handleChange=(e)=>{
     //     this.props.
     // }
 
-    handleSubmit = () => {
+    handleSubmit = (e) => {
         e.preventDefault();
         if (this.validatePin()) {
         }

@@ -23,7 +23,8 @@ class AirtimeOtp extends React.Component {
             //     ...bill
             // }
         } else {
-            this.props.history.push("/bills/airtime/buy");
+            //commented for test purposes
+            //this.props.history.push("/bills/airtime/buy");
         }
     }
 
