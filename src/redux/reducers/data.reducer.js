@@ -74,7 +74,7 @@ import {updateObject} from '../actions/dataActions/data.actions';
 //--------------------------//
 //Pin Verifed status
 // 0-correct/good to go
-// 1-There is error
+// 1-There is an error
 // 2-Retry Pin/default State
 // 3-go to start
 //--------------------------//

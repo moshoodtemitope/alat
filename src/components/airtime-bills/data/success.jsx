@@ -115,7 +115,6 @@ class Success extends Component {
                                                     <div className="pretty p-switch p-fill" >
                                                         <Switch isChecked={this.state.saveBeneficiary} handleToggle={this.handleToggle} />
                                                     </div>
-                                                    
                                                 </div>
                                             </div>
                                         </div>

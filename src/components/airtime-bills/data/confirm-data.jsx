@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 
 import * as actions from '../../../redux/actions/dataActions/export';
 
+const pattern = /^\d+$/;
 class ConfirmData extends Component {
     constructor(props) {
         super(props);
@@ -84,7 +85,6 @@ class ConfirmData extends Component {
         updatedSelectOption.activeAccount.elementConfig.options = arrayToDisplay;
         updatedSelectOption.activeAccount.loaded = true;
         this.setState({ confirmDataForm: updatedSelectOption });
-
     }
 
     accountChangedHandler = (selectedAccount) => {
@@ -105,6 +105,11 @@ class ConfirmData extends Component {
             ...updatedConfirmDataForm[inputIdentifier]
         };
         updatedFormElement.value = event.target.value;
+        if(updatedFormElement.value.length >= 1){
+            if(!pattern.test(updatedFormElement.value) || updatedFormElement.value.length > 4){
+                return;
+            }
+        }
         // updatedFormElement.valid = checkInputValidation(updatedFormElement.value, updatedFormElement.validation);
         // updatedFormElement.valid = true;
         // updatedFormElement.touched = true;
@@ -119,13 +124,14 @@ class ConfirmData extends Component {
     }
 
     pinInputValidation = (value) => {
-        const pattern = /^\d+$/;
+        
         return (value.length >= 4 && value.length <= 4 && pattern.test(value));
     }
 
     onSubmitForm = (event) => {
         var validation = { ...this.state.validation };
         event.preventDefault();
+        this.props.resetPinState();
         if ((this.state.confirmDataForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedAccounts) || !this.pinInputValidation(this.state.confirmDataForm.pin.value)) {
             if (this.state.confirmDataForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedAccounts) {
                 validation.accountError.hasError = true;
@@ -177,6 +183,8 @@ class ConfirmData extends Component {
 
                                         <div className="transfer-ctn">
                                             <form>
+                                            
+                    
                                                 <div class="al-card no-pad">
                                                     <div class="trans-summary-card">
                                                         <div class="name-amount clearfix">
@@ -187,7 +195,7 @@ class ConfirmData extends Component {
                                                 </div>
 
 
-
+                                                {(this.props.pinVerified == 1 && this.props.errorMessage) ? <div className="info-label error">{this.props.errorMessage}</div> : null}
 
                                                 {formElementArray.map((formElement) => {
                                                     if (formElement.config.elementType !== "input") {
@@ -267,6 +275,7 @@ const mapStateToProps = state => {
         accounts: state.data_reducer.debitableAccounts,
         fetching: state.data_reducer.isFetching,
         pinVerified: state.data_reducer.pinVerified,
+        errorMessage: state.data_reducer.errorMessage,
         network: state.data_reducer.network,
     }
 }
