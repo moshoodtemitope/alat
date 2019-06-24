@@ -1,8 +1,8 @@
 import React, { Fragment} from 'react';
 
-// For All 4 digit PIN Entries in the Application
+// For All 6 digit OTP Entries in the Application
 // For OTP also. maxLength configurable.
-class AlatPinInput extends React.Component {
+class OTPInput extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -19,11 +19,10 @@ class AlatPinInput extends React.Component {
     render() {
         return (
             <Fragment>
-                <div className={this.props.PinInvalid ? "input-ctn form-error" : "input-ctn"}>
-                    <label>Enter ALAT PIN</label>
+                <div className={this.props.OTPInvalid ? "input-ctn form-error" : "input-ctn"}>
                     <input value={this.props.value} onChange={this.onChange.bind(this)} maxLength={this.props.maxLength} type="password" />
-                    {this.props.PinInvalid &&
-                                                <div className="text-danger">Please supply your pin</div>
+                    {this.props.OTPInvalid &&
+                                                <div className="text-danger">Please supply your OTP</div>
                                             }
                 </div>
             </Fragment>
@@ -31,4 +30,4 @@ class AlatPinInput extends React.Component {
     }
 }
 
-export default AlatPinInput;
+export default OTPInput;

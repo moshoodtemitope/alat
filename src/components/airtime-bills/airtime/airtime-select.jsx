@@ -47,7 +47,7 @@ class AirtimeSelectAccount extends Component {
       // make api call.
 
       // redirect to the next component
-      this.props.history.push("bills/airtime/otp");
+      this.props.history.push("/bills/airtime/otp");
     }
 
 

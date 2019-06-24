@@ -3,13 +3,16 @@ import { connect } from 'react-redux';
 import Select from 'react-select';
 import * as actions from '../../redux/actions/airtime-bill/airtime.action';
 import { airtimeConstants } from '../../redux/constants/airtime/airtime.constants';
+import { formatAmount } from '../../shared/utils';
 
 class SelectDebitableAccounts extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            debitableAccounts: {},
+            user: JSON.parse(localStorage.getItem("user")),
+            debitableAccounts: [],
             selectedAccount: {},
+            isAccountsLoaded : false
         };
     }
 
@@ -19,11 +22,8 @@ class SelectDebitableAccounts extends React.Component {
 
     sortAccountsForSelect = () => {
         var arrayToDisplay = [];
-        // console.log(this.props.accounts);
-        // console.log("this.props.accounts");
-
-        if (this.props.accounts.length >= 1) {
-            this.props.accounts.map((data => arrayToDisplay.push({ value: data.AccountNumber, label: data.AccountDescription + " - N" + formatAmount(data.AvailableBalance) })));
+        if (this.props.accounts.debitable_accounts_data.data.length >= 1) {
+            this.props.accounts.debitable_accounts_data.data.map((data => arrayToDisplay.push({ value: data.AccountNumber, label: data.AccountDescription + " - N" + formatAmount(data.AvailableBalance) })));
         } else {
             arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account Available' }];
         }
@@ -33,7 +33,9 @@ class SelectDebitableAccounts extends React.Component {
         //     ...this.state
         // }
         // _debitableAccounts.debitableAccounts = arrayToDisplay;
-        this.setState({ debitableAccounts: arrayToDisplay });
+        
+        this.setState({ debitableAccounts: arrayToDisplay,
+                        isAccountsLoaded : true}, () => console.log(this.state.debitableAccounts));
 
     }
 
@@ -41,19 +43,23 @@ class SelectDebitableAccounts extends React.Component {
         if (this.props.accounts)
             if (this.props.accounts.debitable_accounts ==
                 airtimeConstants.GET_DEBTABLE_ACCOUNTS_SUCCESS) {
-
+                this.setState({isAccountsLoaded : true});
             }
             else {
-                this.props.fetchDebitableAccounts(this.props.user.token);
+                this.props.fetchDebitableAccounts(this.state.user.token);
             }
     }
 
     handleSelectAccount = (e) => {
-        this.props.onChange(e.target.value.AccountNumber);
-        this.setState({selectedAccount : e.target.value})
+        //console.log(e);
+        this.props.onChange(e.value);
+        this.setState({ selectedAccount: e.value })
     }
 
     render() {
+        if (this.props.accounts.debitable_accounts_data)
+            if (this.props.accounts.debitable_accounts_data.data && !this.state.isAccountsLoaded )
+                this.sortAccountsForSelect();
         return (
             <Fragment>
                 {this.props.accounts &&
@@ -64,10 +70,11 @@ class SelectDebitableAccounts extends React.Component {
                         <label>Select an account to debit</label>
                         <Select placeholder="Select Account"
                             onChange={this.handleSelectAccount}
-                            options={this.props.accounts.debitable_accounts.response}
+                            options={this.state.debitableAccounts}
                             value={this.props.value}
                         />
-                        <div className={this.props.accountInvalid ? "input-ctn form-error" : "input-ctn"}>an account is required</div>
+                        {this.props.accountInvalid &&
+                            <div className={this.props.accountInvalid ? "input-ctn form-error" : "input-ctn"}>an account is required</div>}
                     </div>
                 }
 
@@ -108,7 +115,7 @@ class SelectDebitableAccounts extends React.Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state);
+    //console.log(state);
     const { authentication } = state;
     const { user } = authentication;
     return {

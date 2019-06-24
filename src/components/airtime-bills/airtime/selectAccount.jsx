@@ -50,7 +50,7 @@ class SelectAcount extends React.Component {
     }
 
     checkAccountNumber(){
-        if (this.state.selectedAccount.AccountNumber.length != "") {
+        if (this.state.selectedAccount != "") {
             this.setState({ isAccountInvalid : false })
             return false;
         } else {
@@ -64,12 +64,12 @@ class SelectAcount extends React.Component {
         this.setState({isSubmitted : true});
         if(this.checkAccountNumber() || this.checkPin())
             {
-                //for tes purposes here
-                this.props.onSubmit({TransactionPin: this.state.Pin, AccountNumber : this.state.selectedAccount.AccountNumber});
-                //alert("failrd");
+              
+                alert("failrd");
                 return;} 
             else{
              // alert("sucess");
+             this.props.submitAction({TransactionPin: this.state.Pin, AccountNumber : this.state.selectedAccount});
             }
     }
 
@@ -101,7 +101,8 @@ class SelectAcount extends React.Component {
                                         <AlatPinInput
                                             value={this.state.Pin}
                                             onChange={this.handleAlatPinChange}
-                                            PinInvalid={this.isPinInvalid} />
+                                            PinInvalid={this.isPinInvalid} 
+                                            maxLength={4}/>
 
                                         <div className="row">
                                             <div className="col-sm-12">
