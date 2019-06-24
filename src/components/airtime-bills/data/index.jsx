@@ -37,6 +37,10 @@ class Index extends Component {
         this.setState({ show: false, selectedBeneficiary: { BillerAlias: "" } })
     }
 
+    onErrorModal = () => {
+        this.props.resetPinState();
+    }
+
     onDeleteBeneficiary = (beneficiaryData) => {
         console.log(beneficiaryData);
         this.props.onDeleteBeneficiary(this.state.user.token, beneficiaryData);
@@ -65,6 +69,11 @@ class Index extends Component {
             if (dataBeneficiaries.length > 0) {
                 index = (
                     <Fragment>
+                        <Modal open={this.props.pinVerified == 1 && this.props.errorMessage} onClose={this.onErrorModal} center>
+                                <div className="div-modal">
+                                    <h3><b>{this.props.errorMessage}</b> </h3>
+                                </div>
+                        </Modal>
                         <div className="col-sm-12 mb-3">
                             <div className="row">
                                 <div className="col-sm-12">
@@ -156,6 +165,8 @@ class Index extends Component {
 const mapStateToProps = state => {
     return {
         fetching: state.data_reducer.isFetching,
+        pinVerified: state.data_reducer.pinVerified,
+        errorMessage: state.data_reducer.errorMessage
     }
 }
 
@@ -163,7 +174,8 @@ const mapDispatchToProps = dispatch => {
     return {
         onDeleteBeneficiary: (token, data) => dispatch(actions.deleteDataBeneficiary(token, data)),
         setDataToBuyDetails: (dataToBuy, network) => dispatch(actions.setDataTransactionDetails(dataToBuy, network)),
-        clearDataInfo: () => dispatch(actions.clearDataInfoNoPost())
+        clearDataInfo: () => dispatch(actions.clearDataInfoNoPost()),
+        resetPinState: () => dispatch(actions.pinVerificationTryAgain()),
     }
 }
 

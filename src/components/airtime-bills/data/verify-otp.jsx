@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 
 import * as actions from '../../../redux/actions/dataActions/export';
 
+const pattern = /^\d+$/;
 class VerifyOtp extends Component {
     constructor(props) {
         super(props);
@@ -36,12 +37,13 @@ class VerifyOtp extends Component {
     }
 
     validateInputedOTP = (value) => {
-        const pattern = /^\d+$/;
+
         return (value.length >= 4 && value.length <= 6 && pattern.test(value));
     } 
 
     onSubmitForm = (event) => {
         event.preventDefault();
+        this.props.resetPinState();
         if(this.validateInputedOTP(this.state.otpFormData.otp.value)){
             let payload = {...this.props.dataInfo, OTP: this.state.otpFormData.otp.value};
         delete payload.NetworkCode;
@@ -65,6 +67,11 @@ class VerifyOtp extends Component {
             ...updatedotpFormData[inputIdentifier]
         };
         updatedFormElement.value = event.target.value;
+        if(updatedFormElement.value.length >= 1){
+            if(!pattern.test(updatedFormElement.value) || updatedFormElement.value.length > 6){
+                return;
+            }
+        }
         updatedFormElement.valid = true;
         updatedFormElement.touched = true;
         updatedotpFormData[inputIdentifier] = updatedFormElement;
@@ -90,12 +97,12 @@ class VerifyOtp extends Component {
                             <div className="max-600">
                                 <div className="al-card no-pad">
                                     <h4 className="m-b-10 center-text hd-underline">OTP Verification</h4>
-
-                                    <center>
-                                        <img src={verifyOtp} className="m-t-20" alt="Verify OTP" />
-                                    </center>
-
+                                    
+                                    
                                     <div className="m-t-30 width-300">
+                                    {(this.props.pinVerified == 1 && this.props.errorMessage) ? <div className="info-label error">{this.props.errorMessage}</div> : null}
+                                    <img src={verifyOtp} className="m-t-20" alt="Verify OTP" />
+                                    
                                         <p className="m-b-20" >We just sent a verification code to your mobile number {this.props.phoneNumber ? " (+"+maskString(this.props.phoneNumber, "****", 8, 11)+")" : "" }</p>
                                         <form>
 
@@ -153,6 +160,8 @@ const mapStateToProps = state => {
         dataPlans: state.data_reducer.dataPlans,
         accounts: state.data_reducer.debitableAccounts,
         phoneNumber: state.authentication.user.phoneNo,
+        pinVerified: state.data_reducer.pinVerified,
+        errorMessage: state.data_reducer.errorMessage,
         fetching: state.data_reducer.isFetching,
         otpConfirmed: state.data_reducer.pinVerified,
     }
