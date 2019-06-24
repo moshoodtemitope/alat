@@ -261,9 +261,6 @@ class BuyData extends Component {
                                         </div>
 
                                     </form>
-
-
-
                                 </div>
 
 
