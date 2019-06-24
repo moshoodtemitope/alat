@@ -5,6 +5,28 @@
 .error-msg{
   color: #AB2656;
 }
+.info-label{
+  margin-bottom: 10px!important;
+}
+.loading-content{
+  text-align: center;
+  margin-bottom: 10px;
+}
+.error-field{
+  border: 1px solid #AB2656!important;
+  color:  #AB2656;
+} 
+a:not([href]):not([tabindex]).cta-link{
+  text-align: right;
+  color: #AB2656;
+  &:hover{
+    text-decoration: underline;
+    color: #AB2656;
+  }
+  &.to-right{
+    float: right;
+  }
+}
 .inputWrap{
   &.form-error{
     input, input[type='number'], select {

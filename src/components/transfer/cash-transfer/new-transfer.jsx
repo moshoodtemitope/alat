@@ -40,6 +40,9 @@ class NewTransfer extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.continueTransfer = this.continueTransfer.bind(this);
+        this.fetchBanks = this.fetchBanks.bind(this);
+        this.renderBeneficiaries= this.renderBeneficiaries.bind(this);
+        this.getBeneficiaries = this.getBeneficiaries.bind(this);
     }
 
     componentDidMount() {
@@ -65,15 +68,12 @@ class NewTransfer extends React.Component {
         switch(beneficiaryListStatus){
             case FETCH_TRANSFER_BENEFICIARY_PENDING:
                 return (
-                    <div>
+                    <div className="loading-content">
                         Fetching Beneficiaries...
                     </div>
                 );
             case FETCH_TRANSFER_BENEFICIARY_SUCCESS:
                 let beneficiaries = props.beneficiaries.beneficiaries_data.response.data;
-                
-                
-
                 return(
                     beneficiaries.map((ben, key) => {
                         return (
@@ -110,11 +110,9 @@ class NewTransfer extends React.Component {
                     // </select>
                 );
             case FETCH_TRANSFER_BENEFICIARY_FAILURE:
-                this.showRetry();
+                // this.fetchBeneficiariesRetry();
                 return(
-                    <select disabled>
-                        <option>Unable to load beneficiaries</option>
-                    </select>
+                    <div className="info-label error">Unable to load beneficiaries</div>
                 );
         }
     }
@@ -152,7 +150,10 @@ class NewTransfer extends React.Component {
             {accountInfo.account_detail===GET_ACCOUNT_DETAILS_SUCCESS &&
                 this.setState({ submitted: false, submitButtonState: false })
             }
-            
+
+            {accountInfo.account_detail===GET_ACCOUNT_DETAILS_FAILURE &&
+                this.setState({ submitted: false, submitButtonState: false })
+            }
             
             
         }
@@ -218,18 +219,24 @@ class NewTransfer extends React.Component {
                     */
                 );
             case FETCH_BANK_FAILURE:
-                this.showRetry();
                 return(
-                    <select disabled>
-                        <option>Unable to load banks</option>
-                    </select>
+                    <div>
+                        <select className="error-field" disabled>
+                            <option>Unable to load banks</option>
+                        </select>
+                        <a className="cta-link to-right" onClick={this.fetchBanks}>Try again</a>
+                    </div>
                 );
         }
     }
 
-    showRetry(){
-        return <button onClick={this.fetchBanks.bind(this)}>Retry</button>;
+    fetchBeneficiariesRetry(){
+        return <center><button className="btn-alat m-t-10 m-b-20 text-center" onClick={this.renderBeneficiaries}>Retry</button></center>;
     }
+
+    // fetchBankRetry(){
+    //     return <center><button className="btn-alat m-t-10 m-b-20 text-center" onClick={this.fetchBanks}>Retry</button></center>;
+    // }
 
     render() {
         const {accountNumber, 
@@ -240,6 +247,7 @@ class NewTransfer extends React.Component {
         // const {loggingIn, alert} = this.props;
         const { submitted, inputState } = this.state;
         let props = this.props,
+            beneficiaryListStatus = props.beneficiaries,
             accountInfo = props.account_details;
         
             // {accountInfo.account_detail===GET_ACCOUNT_DETAILS_SUCCESS &&
@@ -359,6 +367,9 @@ class NewTransfer extends React.Component {
                                             </center> */}
 
                                             {this.renderBeneficiaries()}
+                                            {beneficiaryListStatus.beneficiaries===FETCH_TRANSFER_BENEFICIARY_FAILURE &&
+                                                <center><a className="cta-link" onClick={this.getBeneficiaries}>Try again</a></center>
+                                            }
                                         </div>
                                     </div>
                                 </div>

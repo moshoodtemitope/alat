@@ -22,7 +22,12 @@ export const getBanks = (token) => {
                 dispatch(success(response.data));
             })
             .catch(error => {
-                dispatch(failure(error.response.data.message.toString()));
+                if(error.response){
+                    dispatch(failure(error.response.message.toString()));
+                }else{
+                    dispatch(failure('We are unable to load your beneficiaries.'));
+                }
+                // dispatch(failure(error.response.data.message.toString()));
             });
     };
 
@@ -43,8 +48,13 @@ export const getBeneficiaries = (token) => {
                 dispatch(success(response));
             })
             .catch(error => {
+                console.error('was here', error);
+                if(error.response){
+                    dispatch(failure(error.response.message.toString()));
+                }else{
+                    dispatch(failure('We are unable to load your beneficiaries.'));
+                }
                 
-                dispatch(failure(error.response.message.toString()));
             });
     };
 
@@ -64,8 +74,11 @@ export const accountEnquiry = (token, data) => {
                 dispatch(success(response.data));
             })
             .catch(error => {
-                console.error('Error is ', error);
-                dispatch(failure(error.response.message.toString()));
+                if(error.response.message){
+                    dispatch(failure(error.response.message.toString()));
+                }else{
+                    dispatch(failure('We are unable to get recipient details.'));
+                }
             });
     };
 
