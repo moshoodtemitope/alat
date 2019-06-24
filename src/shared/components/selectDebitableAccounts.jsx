@@ -35,7 +35,7 @@ class SelectDebitableAccounts extends React.Component {
         // _debitableAccounts.debitableAccounts = arrayToDisplay;
         
         this.setState({ debitableAccounts: arrayToDisplay,
-                        isAccountsLoaded : true}, () => console.log(this.state.debitableAccounts));
+                        isAccountsLoaded : true});
 
     }
 

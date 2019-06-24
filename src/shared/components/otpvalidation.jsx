@@ -7,22 +7,36 @@ class OtpValidation extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            OtpInavlid :false,
-            TransactionPin: ""
+            OtpInvalid: false,
+            TransactionPin: "",
+            isSubmitted: false
         };
+
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
-   
+
     // handleChange=(e)=>{
     //     this.props.
     // }
 
-    handleSubmit=()=>{
-        this.props.submitAction({TransactionPin : this.state.TransactionPin});
+    handleSubmit = (e) => {
+        e.preventDefault();
+        if (this.validatePin()) {
+        }
+        else {
+            this.setState({isSubmitted : true});
+            this.props.submitAction({ TransactionPin: this.state.TransactionPin }); }
     }
 
-    handleOnChange=(e)=>{
-        console.log(e);
-      this.setState({ TransactionPin : e })
+    handleOnChange = (e) => {
+        this.setState({ TransactionPin: e })
+        if (this.isSubmitted == true)
+            this.validatePin();
+    }
+
+    validatePin = () => {
+        if (this.state.TransactionPin.length != this.props.maxLength) { this.setState({ OtpInvalid: true }); return true; }
+        else { this.setState({ OtpInvalid: false }); return false; }
     }
 
     render() {
@@ -39,18 +53,18 @@ class OtpValidation extends React.Component {
                                 </center>
 
                                 <div className="m-t-30 width-300">
-                                    <p className="m-b-20" >We just sent a verification code to your mobile number (+2348020****01)</p>
-
-                                    <form onSubmit={this.props.submitAction}>
+                                    {/* <p className="m-b-20" >We just sent a verification code to your mobile number (+2348020****01)</p> */}
+                                    <p className="m-b-20" > {this.props.displayMessage} </p>
+                                    <form onSubmit={this.handleSubmit}>
                                         {/* <div className="input-ctn">
                                             <input type="tel" />
                                         </div> */}
-                                        <OTPInput 
-                                        OTPInvalid={this.state.OtpInavlid}
-                                        value={this.state.TransactionPin}
-                                        onChange={this.handleOnChange}
-
-                                         />
+                                        <OTPInput
+                                            OTPInvalid={this.state.OtpInvalid}
+                                            value={this.state.TransactionPin}
+                                            onChange={this.handleOnChange}
+                                            maxLength={this.props.maxLength}
+                                        />
 
                                         <div className="row">
                                             <div className="col-sm-12">
@@ -63,15 +77,25 @@ class OtpValidation extends React.Component {
                                 </div>
                             </div>
 
-                            <center>
+                            {/* <center>
                                 <Link to={this.props.backLink} className="add-bene m-t-50">Go Back</Link>
-                            </center>
+                            </center> */}
                         </div>
                     </div>
                 </div>
             </div>
         );
     }
+}
+
+function mapStateToProps(state) {
+    const { authentication } = state;
+    const { user } = authentication;
+    return {
+        user,
+        alert: state.alert,
+        //airtime: state.airtime_buydata
+    };
 }
 
 export default OtpValidation;
