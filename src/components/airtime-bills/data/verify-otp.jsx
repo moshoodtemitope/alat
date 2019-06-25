@@ -4,6 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { Input } from './input';
 import Select from 'react-select';
 import verifyOtp from '../../../assets/img/verify-phone.svg';
+import {alertActions} from "../../../redux/actions/alert.actions";
 
 import {maskString } from '../../../shared/utils';
 import { connect } from 'react-redux';
@@ -43,7 +44,7 @@ class VerifyOtp extends Component {
 
     onSubmitForm = (event) => {
         event.preventDefault();
-        this.props.resetPinState();
+        this.props.clearError();
         if(this.validateInputedOTP(this.state.otpFormData.otp.value)){
             let payload = {...this.props.dataInfo, OTP: this.state.otpFormData.otp.value};
         delete payload.NetworkCode;
@@ -100,9 +101,11 @@ class VerifyOtp extends Component {
                                     
                                     
                                     <div className="m-t-30 width-300">
-                                    {(this.props.pinVerified == 1 && this.props.errorMessage) ? <div className="info-label error">{this.props.errorMessage}</div> : null}
-                                    <img src={verifyOtp} className="m-t-20" alt="Verify OTP" />
                                     
+                                    <img src={verifyOtp} className="m-t-20 m-b-20" alt="Verify OTP" />
+                                    {(this.props.alert.message) ?
+                        <div className="info-label error  m-t-10">{this.props.alert.message}</div> : null
+                        }
                                         <p className="m-b-20" >We just sent a verification code to your mobile number {this.props.phoneNumber ? " (+"+maskString(this.props.phoneNumber, "****", 8, 11)+")" : "" }</p>
                                         <form>
 
@@ -161,9 +164,9 @@ const mapStateToProps = state => {
         accounts: state.data_reducer.debitableAccounts,
         phoneNumber: state.authentication.user.phoneNo,
         pinVerified: state.data_reducer.pinVerified,
-        errorMessage: state.data_reducer.errorMessage,
         fetching: state.data_reducer.isFetching,
         otpConfirmed: state.data_reducer.pinVerified,
+        alert: state.alert,
     }
 }
 
@@ -172,6 +175,7 @@ const mapDispatchToProps = dispatch => {
         resetPinState: () => dispatch(actions.pinVerificationTryAgain()),
         verifyOtpInputed: (token, data) => dispatch(actions.otpVerificationStart(token, data)),
         verifyInputedPIN : (token, data, isResending) => dispatch(actions.pinVerificationStart(token, data, isResending)),
+        clearError: () => dispatch(alertActions.clear())
     }
 }
 
