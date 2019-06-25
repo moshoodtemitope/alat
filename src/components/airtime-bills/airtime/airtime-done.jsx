@@ -76,6 +76,9 @@ class AirtimeDone extends React.Component{
 				  					<h4 class="center-text red-text">Recharge Successful</h4>
 
 				  					<div class="m-t-20 width-400">
+                                      {this.props.alert && this.props.alert.message &&
+                                            <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                                        }
 					  					{/* <p class="m-b-30 f-s-16 center-text">Your phone line has been recharged with <span class="bold-text">N1,000</span> worth of Airtel credit.</p> */}
                                           <div className="al-card no-pad">
                                             <div className="trans-summary-card">
