@@ -34,6 +34,7 @@ class AirtimeSelectAccount extends Component {
             bill.valueRecipent = bill.PhoneNumber;
             bill.billCategory = "Airtime Recharge";
             bill.ActionText ="Buy Airtime";
+        
 
             this.state.bill = {
                 ...bill
@@ -47,7 +48,7 @@ class AirtimeSelectAccount extends Component {
      console.log(this.state.bill);
      console.log(object);
         this.props.dispatch(airtimeWebPinpayment(this.state.user.token,
-            { Network: this.state.bill.NetworkCode,
+            { NetworkCode: this.state.bill.NetworkCode,
               TransactionPin: object.TransactionPin,
               Amount : this.state.bill.Amount,
               AccountNumber : object.AccountNumber,

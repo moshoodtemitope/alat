@@ -141,3 +141,30 @@ export const airtimeWebPinOTPpayment =(token, data) =>{
     function success(response) { return { type: airtimeConstants.AIRTIME_WEBPIN_OTP_SUCCESS, response } }
     function failure(error) { return { type: airtimeConstants.AIRTIME_WEBPIN_OTP_FAILURE, error } }
 }
+
+export const airtimeBeneficiarySave =(token, data) =>{
+    
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.AIRTIME_BENEFICIARY_SAVE, "POST", data, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                //TODO: edit localDB accounts object
+              
+                dispatch(success(response.data));
+               // return response;
+            })
+            .catch(error => {
+                //dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+               
+                // throw(error);
+            });
+    };
+
+    function request(request) { return { type: airtimeConstants.AIRTIME_BENEFICIARIES_SAVE_PENDING, request } }
+    function success(response) { return { type: airtimeConstants.AIRTIME_BENEFICIARIES_SAVE_SUCCESS, response } }
+    function failure(error) { return { type: airtimeConstants.AIRTIME_BENEFICIARIES_SAVE_FAILURE, error } }
+}

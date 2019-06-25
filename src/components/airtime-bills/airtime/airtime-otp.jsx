@@ -13,6 +13,7 @@ class AirtimeOtp extends React.Component {
                 OTP: ""
             }
         }
+        this.onReSubmit = this.onReSubmit.bind(this);
         this.getBillinfo();
     }
 
@@ -47,7 +48,7 @@ class AirtimeOtp extends React.Component {
     }
 
     onReSubmit(){
-        this.props.dispatch(airtimeWebPinpayment(this.user.state.token,this.state.bill));
+        this.props.dispatch(airtimeWebPinpayment(this.state.user.token,this.state.bill));
     }
 
     render() {
@@ -56,11 +57,12 @@ class AirtimeOtp extends React.Component {
         return (
             <OtpValidation 
             backLink={"/bills/airtime/select-account"}
+            forwardLink={"bills/airtime/done"}
             submitAction={this.onSubmit}
             maxLength={6}
             busyAction ={this.props.airtime_otp == airtimeConstants.AIRTIME_WEBPIN_OTP_PENDING}
             retryAction ={this.onReSubmit}
-            onResubmitBusyAction = {this.props.airtime.airtime_buydata == airtimeConstants.AIRTIME_WEBPIN_PENDING}
+            onResubmitBusyAction = {this.props.airtime == airtimeConstants.AIRTIME_WEBPIN_PENDING}
             displayMessage={this.returnOtpValidationMsg()}
              />
         );

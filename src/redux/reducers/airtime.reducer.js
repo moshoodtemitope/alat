@@ -134,3 +134,29 @@ export function debitableAccountsReducer(state = [], action) {
         };
     }
 }
+
+export function airtimeSaveBeneficiaryReducer(state = [], action) {
+    switch (action.type) {
+        case airtimeConstants.AIRTIME_BENEFICIARIES_SAVE_SUCCESS:
+            return {
+                airtime_beneficiary: airtimeConstants.AIRTIME_BENEFICIARIES_SAVE_SUCCESS,
+                airtime_beneficiary_data: action
+            };
+
+        case airtimeConstants.AIRTIME_BENEFICIARIES_SAVE_PENDING:
+            return {
+                airtime_beneficiary: airtimeConstants.AIRTIME_BENEFICIARIES_SAVE_PENDING,
+                airtime_beneficiary_data: action
+            };
+
+        case airtimeConstants.AIRTIME_BENEFICIARIES_SAVE_FAILURE:
+            return {
+                airtime_beneficiary: airtimeConstants.AIRTIME_BENEFICIARIES_SAVE_FAILURE,
+                airtime_beneficiary_data: action
+            };
+
+        default: return {
+            ...state
+        };
+    }
+}
