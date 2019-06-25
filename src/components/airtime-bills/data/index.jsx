@@ -117,17 +117,20 @@ class Index extends Component {
                                         }
                                         return (
                                             <div className="col-sm-12 col-md-4" key={counter + 1} >
-                                                <div className="al-card airtime-card">
+                                                <div className="al-card airtime-card" onClick={() => {this.useBeneficiary(dataToBuy, network)}} style={{zIndex:"10"}}>
                                                     <div className="clearfix">
-                                                        <div className="network-img"  onClick={() => {this.useBeneficiary(dataToBuy, network)}}>
+                                                        <div className="network-img">
                                                             {image}
                                                         </div>
                                                         <div className="all-info">
                                                             <p className="line-price">{beneficiary.BillerAlias} <span className="price">{"N" + formatAmountNoDecimal(beneficiary.Amount)}</span></p>
-                                                            <p className="num-ref">{beneficiary.PhoneNumber}<span className="price"><a onClick={() => this.onShowModal(beneficiary)}><i class="fa fa-trash-o" aria-hidden="true"></i></a></span></p>
+                                                            <p className="num-ref">{beneficiary.PhoneNumber}</p>
                                                         </div>
                                                     </div>
+                                                    
                                                 </div>
+                                                <span className="price delete-bene"><a onClick={() => this.onShowModal(beneficiary)} style={{zIndex:"50"}}><i class="fa fa-trash-o"></i></a></span>
+                                                {/* <p className="num-ref">{beneficiary.PhoneNumber}<span className="price"><a onClick={() => this.onShowModal(beneficiary)} style={{zIndex:"50"}}><i class="fa fa-trash-o"></i></a></span></p> */}
                                             </div>)
                                     })
                                 }

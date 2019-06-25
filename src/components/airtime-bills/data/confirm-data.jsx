@@ -129,6 +129,11 @@ class ConfirmData extends Component {
         return (value.length >= 4 && value.length <= 4 && pattern.test(value));
     }
 
+    goBack =(event) => {
+        event.preventDefault();
+        this.props.history.goBack();
+    }
+
     onSubmitForm = (event) => {
         var validation = { ...this.state.validation };
         event.preventDefault();
@@ -251,7 +256,7 @@ class ConfirmData extends Component {
                                     </div>
 
                                     <center>
-                                        <Link to={'/bills/data/buy'} className="add-bene m-t-50">Go Back</Link>
+                                        <button onClick={this.goBack} className="add-bene m-t-50 goback">Go Back</button>
                                     </center>
                                 </div>
                             </div>

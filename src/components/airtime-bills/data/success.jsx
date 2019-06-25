@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { Switch } from '../../../shared/elements/_toggle';
 import { Input } from './input';
 import successLogo from '../../../assets/img/success.svg';
-
+import { formatAmountNoDecimal } from '../../../shared/utils';
 import { connect } from 'react-redux';
 
 import * as actions from '../../../redux/actions/dataActions/export';
@@ -99,7 +99,7 @@ class Success extends Component {
                                             <div className="trans-summary-card">
                                                 <div className="name-amount clearfix">
                                                     <p className="pl-name-email">{this.props.network} Data Plan<span>{this.props.dataInfo  ? this.props.dataInfo.PaymentItem : "*******"}</span></p>
-                                                    <p className="pl-amount">{this.props.dataInfo ? this.props.dataInfo.Amount : "####"}</p>
+                                                    <p className="pl-amount">{this.props.dataInfo ? "N"+formatAmountNoDecimal(this.props.dataInfo.Amount) : "####"}</p>
                                                 </div>
                                             </div>
                                         </div>

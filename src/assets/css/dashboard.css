@@ -2198,4 +2198,24 @@ p.resend-otp, .resend-otp {
     width: 30%;
     font-size: 0.8571428571em; } }
 
+    .goback {
+      background:none;
+      border:none;
+      cursor:pointer}
+    
+    .goback:hover {
+      color: #9D0F3E;
+    }
+
+    .delete-bene {
+      position: absolute;
+      top: 46%;
+      left: 85%;
+      color: #b1b1b1;
+    }
+
+    .delete-bene:hover {
+      color: #9D0F3E;
+    }
+
 /*# sourceMappingURL=dashboard.css.map */
