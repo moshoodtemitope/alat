@@ -8,7 +8,8 @@ export const Input = (props) => {
             {...props.elementConfig}
             value={props.value}
             onChange={props.changed}
-            disabled={props.isDisabled} />;
+            disabled={props.isDisabled} 
+            style={props.inputStyle} />;
 
     switch (props.elementType) {
         case ('input'):
@@ -24,7 +25,8 @@ export const Input = (props) => {
             inputElement = <input
                 {...props.elementConfig}
                 value={props.value}
-                onChange={props.changed} />;
+                onChange={props.changed}
+                className={props.inputStyle} />;
     }
     return inputElement;
 
