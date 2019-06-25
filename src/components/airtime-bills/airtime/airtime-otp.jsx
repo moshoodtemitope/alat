@@ -19,7 +19,6 @@ class AirtimeOtp extends React.Component {
     getBillinfo(){
         let props = this.props
         if (this.props.airtime.airtime_buydata == airtimeConstants.AIRTIME_WEBPIN_SUCCESS) {
-            console.log(this.props.airtime.airtime_buydata_data.obj.request);
             var bill = {
                 ...this.props.airtime.airtime_buydata_data.obj.request
             };
@@ -43,8 +42,6 @@ class AirtimeOtp extends React.Component {
         }
         bill.OTP = otp.TransactionPin;
         this.setState({bill : bill},()=>{
-           console.log(bill);
-           console.log(this.state.bill);
         this.props.dispatch(airtimeWebPinOTPpayment(this.state.user.token, bill))}
         );
     }
