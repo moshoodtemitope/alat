@@ -35,6 +35,7 @@ const appReducer = combineReducers({
     airtime_beneDelete: airtime.deleteBeneficiaryReducer,
     airtime_buydata: airtime.buyAirtimeReducer,
     airtime_webpin: airtime.buyAirtimeWebPinReducer,  
+    airtime_webpinotp: airtime.buyAirtimeWebPinOTPReducer,
 
     accounts: global.debitableAccountsReducer,
     // storage_reducer

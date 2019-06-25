@@ -56,6 +56,10 @@ class OtpValidation extends React.Component {
                                     {/* <p className="m-b-20" >We just sent a verification code to your mobile number (+2348020****01)</p> */}
                                     <p className="m-b-20" > {this.props.displayMessage} </p>
                                     <form onSubmit={this.handleSubmit}>
+
+                                    {this.props.alert && this.props.alert.message &&
+                             <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                            }
                                         {/* <div className="input-ctn">
                                             <input type="tel" />
                                         </div> */}
@@ -69,7 +73,8 @@ class OtpValidation extends React.Component {
                                         <div className="row">
                                             <div className="col-sm-12">
                                                 <center>
-                                                    <input type="submit" value="Complete Transfer" className="btn-alat m-t-10 m-b-40 text-center" />
+                                                    <button type="submit" value="Complete Transfer" className="btn-alat m-t-10 m-b-40 text-center">{this.props.busyAction ? "Processing...": "Complete Transfer"}</button>
+                                                     <p className="resend-otp">{this.props.onResubmitBusyAction ? "Resending OTP..." : "Didn't get OTP? Resend Code."}</p>
                                                 </center>
                                             </div>
                                         </div>
