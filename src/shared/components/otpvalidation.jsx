@@ -1,7 +1,9 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 import OTPInput from './otpInput';
 import phoneImg from '../../assets/img/verify-phone.svg';
+import { airtimeConstants } from '../../redux/constants/airtime/airtime.constants';
 
 class OtpValidation extends React.Component {
     constructor(props) {
@@ -24,8 +26,13 @@ class OtpValidation extends React.Component {
         if (this.validatePin()) {
         }
         else {
-            this.setState({isSubmitted : true});
-            this.props.submitAction({ TransactionPin: this.state.TransactionPin }); }
+            this.setState({ isSubmitted: true });
+            this.props.submitAction({ TransactionPin: this.state.TransactionPin });
+        }
+    }
+
+    handleRetry =()=>{
+        this.props.retryAction();
     }
 
     handleOnChange = (e) => {
@@ -40,6 +47,8 @@ class OtpValidation extends React.Component {
     }
 
     render() {
+        if(this.props.airtime.airtime_buydata == airtimeConstants.AIRTIME_WEBPIN_OTP_SUCCESS)
+           this.props.history.push(this.props.forwardLink);
         return (
             <div className="col-sm-12">
                 <div className="row">
@@ -57,13 +66,12 @@ class OtpValidation extends React.Component {
                                     <p className="m-b-20" > {this.props.displayMessage} </p>
                                     <form onSubmit={this.handleSubmit}>
 
-                                    {this.props.alert && this.props.alert.message &&
-                             <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
-                            }
-                                        {/* <div className="input-ctn">
-                                            <input type="tel" />
-                                        </div> */}
+                                        {this.props.alert && this.props.alert.message &&
+                                            <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                                        }
+                                   
                                         <OTPInput
+                                           //OTP is returned as { TransactionPIN }, so do something like OTP = otp.TransactionPIN
                                             OTPInvalid={this.state.OtpInvalid}
                                             value={this.state.TransactionPin}
                                             onChange={this.handleOnChange}
@@ -73,8 +81,8 @@ class OtpValidation extends React.Component {
                                         <div className="row">
                                             <div className="col-sm-12">
                                                 <center>
-                                                    <button type="submit" value="Complete Transfer" className="btn-alat m-t-10 m-b-40 text-center">{this.props.busyAction ? "Processing...": "Complete Transfer"}</button>
-                                                     <p className="resend-otp">{this.props.onResubmitBusyAction ? "Resending OTP..." : "Didn't get OTP? Resend Code."}</p>
+                                                    <button type="submit" disabled={this.props.busyAction} className="btn-alat m-t-10 m-b-40 text-center">{this.props.busyAction ? "Processing..." : "Complete Transfer"}</button>
+                                                    <p onClick={this.props.retryAction} className="resend-otp" >{this.props.onResubmitBusyAction ? "Resending OTP..." : "Didn't get OTP? Resend Code."}</p>
                                                 </center>
                                             </div>
                                         </div>
@@ -99,8 +107,8 @@ function mapStateToProps(state) {
     return {
         user,
         alert: state.alert,
-        //airtime: state.airtime_buydata
+        airtime: state.airtime_webpinotp,
     };
 }
 
-export default OtpValidation;
+export default connect(mapStateToProps)(OtpValidation);

@@ -26,38 +26,38 @@ class SelectAcount extends React.Component {
 
     handleAlatPinChange(pin) {
         this.setState({ Pin: pin })
-        if (this.state.isSubmitted)
-           { this.checkPin();}
+        if (this.state.isSubmitted) {
+            if (pin.length != 4)
+           this.setState({isPinInvalid : false})
+        }
     }
 
     handleSelectDebitableAccounts(account) {
         this.setState({ selectedAccount: account })
-        if (this.state.isSubmitted)
-           { this.checkAccountNumber();}
+        if (this.state.isSubmitted) { 
+            if(account.length == 10)
+            this.setState({ isAccountInvalid: false })
+         }
     }
 
     checkPin() {
         if (this.state.Pin.length != 4) {
             this.setState({ isPinInvalid: true })
-            return true;
-        }
-        else { this.setState({ isPinInvalid: false })
-        return false;  }
+            return true;}
     }
 
     checkAccountNumber() {
         if (this.state.selectedAccount.length != 10) {
             this.setState({ isAccountInvalid: true })
             return true;
-        }else { this.setState({ isAccountInvalid: false })
-        return false;  }
+        }
     }
 
     handleSubmit(e) {
         e.preventDefault();
         this.setState({ isSubmitted: true });
         if (this.checkAccountNumber() || this.checkPin()) {
-            
+
         }
         else {
             // alert("sucess");
@@ -74,16 +74,16 @@ class SelectAcount extends React.Component {
                         <div className="max-600">
                             <div className="al-card no-pad">
                                 <h4 className="m-b-10 center-text hd-underline">{this.props.bill.ActionText}</h4>
-                               
+
                                 <div className="transfer-ctn">
-                                {this.props.alert && this.props.alert.message &&
-                             <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
-                            }
+                                    {this.props.alert && this.props.alert.message &&
+                                        <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                                    }
                                     <form onSubmit={this.handleSubmit}>
                                         <div className="al-card no-pad">
                                             <div className="trans-summary-card">
                                                 <div className="name-amount clearfix">
-                                                    <p className="pl-name-email">{this.props.bill.billCategory}<span>{this.props.bill.billerName} - {this.props.bill.valueRecipent} </span></p>
+                                                    <p className="pl-name-email">{this.props.bill.billCategory}<span>{this.props.bill.BillerName} - {this.props.bill.valueRecipent} </span></p>
                                                     <p className="pl-amount">N{this.props.bill.Amount && utils.formatAmount(this.props.bill.Amount)}</p>
                                                 </div>
                                             </div>
@@ -97,15 +97,15 @@ class SelectAcount extends React.Component {
                                         <AlatPinInput
                                             value={this.state.Pin}
                                             onChange={this.handleAlatPinChange}
-                                            PinInvalid={this.isPinInvalid}
+                                            PinInvalid={this.state.isPinInvalid}
                                             maxLength={4} />
 
                                         <div className="row">
                                             <div className="col-sm-12">
                                                 <center>
-                                                    <button type="submit" disabled={this.props.submitBusy}  className="btn-alat m-t-10 m-b-20 text-center">{this.props.submitBusy ? "Processing...": this.props.bill.ActionText}</button>
+                                                    <button type="submit" disabled={this.props.submitBusy} className="btn-alat m-t-10 m-b-20 text-center">{this.props.submitBusy ? "Processing..." : this.props.bill.ActionText}</button>
                                                 </center>
-                                                
+
                                             </div>
                                         </div>
                                     </form>

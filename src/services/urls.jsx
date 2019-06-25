@@ -1,5 +1,5 @@
-//const URL = 'https://api.alat.ng';
- const URL = 'https://196.43.215.170';
+const URL = 'https://api.alat.ng';
+//const URL = 'https://196.43.215.170';
 // const URL = 'http://196.43.215.157';
 
 const BASEURL = URL;
@@ -46,6 +46,7 @@ export const routes = {
     AIRTIME_DELETE_BENEFICIARY : BASEURL + '/PaymentApi/api/AirtimeBill/DeleteSavedAirtimeBillBeneficiaries',
     AIRTIME_PAYMENT_WEBPIN : BASEURL + '/PaymentApi/api/AirtimeBill/AirtimePaymentWebWithPIN',
     AIRTIME_PAYMENT_WEBPINOTP : BASEURL +'/PaymentApi/api/AirtimeBill/AirtimePaymentWebPINAndOTP',
+    AIRTIME_BENEFICIARY_SAVE : BASEURL + '/PaymentApi/api/AirtimeBill/SaveAirtimeBeneficiaries',
     //Data
     FETCH_DATA_BENEFICIARIES : BASEURL + '/PaymentApi/api/AirtimeBill/GetAirtimeBeneficiaries',
     DELETE_DATA_BENEFICIARY : BASEURL + '/PaymentApi/api/AirtimeBill/DeleteSavedAirtimeBillBeneficiaries',

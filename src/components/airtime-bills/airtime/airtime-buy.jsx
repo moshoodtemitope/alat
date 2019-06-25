@@ -70,7 +70,8 @@ class BuyAirtime extends Component {
             var result = dispatch(airtimeBuyData({
                 PhoneNumber: this.state.PhoneNumber,
                 NetworkCode: this.state.NetworkCode,
-                Amount: this.state.Amount
+                Amount: this.state.Amount,
+                BillerName: this.state.BillerName
             }));
             this.props.history.push("/bills/airtime/select-account");
         }
