@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 import { Link, NavLink, Route } from 'react-router-dom';
 import phoneimg from "../../../assets/img/phone-airtime.svg"
 import { connect } from "react-redux";
-import { getAirtimeBeneficiaries, deleteBeneficairy } from "../../../redux/actions/airtime-bill/airtime.action";
+import { getAirtimeBeneficiaries, deleteBeneficairy, airtimeBuyData } from "../../../redux/actions/airtime-bill/airtime.action";
 import { airtimeConstants } from '../../../redux/constants/airtime/airtime.constants';
 import mtnImg from "../../../assets/img/mtn.svg";
 import airtelImg from "../../../assets/img/airtel.svg";
@@ -28,7 +28,7 @@ class Index extends Component {
             isDelete: false
         };
         this.toggleModal = this.toggleModal.bind(this);
-
+        //this.beneficiarySelected = this.beneficiarySelected.bind(this);
     }
 
     componentDidMount() {
@@ -79,9 +79,14 @@ class Index extends Component {
         const { dispatch } = this.props;
         let props = this.props;
         this.setState({ isDelete: true });
-        var result = dispatch(deleteBeneficairy(this.state.user.token, this.state.selectedBeneficairy.BeneficiaryId));
-        
+        var result = dispatch(deleteBeneficairy(this.state.user.token, this.state.selectedBeneficairy.BeneficiaryId));  
+    }
 
+    beneficiarySelected(ben){
+        console.log(ben);
+        const { dispatch } = this.props;
+        var result = dispatch(airtimeBuyData(ben));
+        this.props.history.push("/bills/airtime/select-account");
     }
 
     returnImage(networktype) {
@@ -122,7 +127,7 @@ class Index extends Component {
             this.props.airtime_beneficiary.airtime_beneficiary_data.response.map((ben, key) => {
                 if (ben.IsAirtime == true) {
                     return (
-                        <div className="col-sm-12 col-md-4" key={key}>
+                        <div className="col-sm-12 col-md-4" key={key} onClick={()=>this.beneficiarySelected(ben)}>
                             <div className="al-card airtime-card">
                                 <div className="clearfix">
                                     <div className="network-img">
