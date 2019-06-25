@@ -9,7 +9,7 @@ import {
 import {bankListRequest, beneficiariesRequest, fetchAccountDetailsRequest} from "./transfer.reducer";
 
 import { airtimeBeneficiariesReducer, deleteBeneficiaryReducer, buyAirtimeReducer,
-     debitableAccountsReducer, buyAirtimeWebPinReducer  } from './airtime.reducer';
+     debitableAccountsReducer, buyAirtimeWebPinReducer, buyAirtimeWebPinOTPReducer  } from './airtime.reducer';
 
 
 export const onboarding = {
@@ -37,7 +37,8 @@ export const airtime ={
     airtimeBeneficiariesReducer,
     deleteBeneficiaryReducer,
     buyAirtimeReducer,
-    buyAirtimeWebPinReducer
+    buyAirtimeWebPinReducer,
+    buyAirtimeWebPinOTPReducer
 }
 
 export const global ={
