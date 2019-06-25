@@ -43,7 +43,6 @@ class Index extends Component {
     }
 
     deleteAfterAction() {
-
         let props = this.props;
         if (this.state.isDelete == true) {
             if (props.airtime_beneDelete.airtime_beneficiary == airtimeConstants.AIRTIME_BENEFICIARIES_DELETE_SUCCESS) {
@@ -63,11 +62,12 @@ class Index extends Component {
         dispatch(getAirtimeBeneficiaries(this.state.user.token));
     }
 
-    toggleModal = (beneficiary, key) => {
-
+    toggleModal = (beneficiary, key, e) => {
+        if(e){
+        e.stopPropagation();
         this.setState({ selectedBeneficairy: { key: key } })
-
         this.setState({ selectedBeneficairy: beneficiary });
+        }
         if (this.state.openModal)
             this.setState({ openModal: false })
         else this.setState({ openModal: true });
@@ -121,7 +121,7 @@ class Index extends Component {
                 </div>
             </div>)
     }
-    // beneficiariesList
+    // beneficiariesList  
     renderAirtimeBeneficiaries(beneficiariesList) {
         return (
             this.props.airtime_beneficiary.airtime_beneficiary_data.response.map((ben, key) => {
@@ -135,7 +135,7 @@ class Index extends Component {
                                     </div>
                                     <div className="all-info">
                                         <p className="line-price">{ben.BillerAlias} <span className="price">#{utils.formatAmount(ben.Amount)}</span></p>
-                                        <p className="num-ref">{ben.PhoneNumber}<span className="price"><a onClick={() => this.toggleModal(ben, key)}><i className="fa fa-trash-o" aria-hidden="true"></i></a></span></p>
+                                        <p className="num-ref">{ben.PhoneNumber}<span className="price"><a onClick={(e) => this.toggleModal(ben, key, e)}><i className="fa fa-trash-o" aria-hidden="true"></i></a></span></p>
                                     </div>
                                 </div>
                             </div>
