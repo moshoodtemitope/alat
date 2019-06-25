@@ -52,17 +52,18 @@ class AirtimeOtp extends React.Component {
     }
 
     render() {
-            if(this.props.airtime_otp == airtimeConstants.AIRTIME_WEBPIN_OTP_SUCCESS)
+            if(this.props.airtime_otp.airtime_buydata == airtimeConstants.AIRTIME_WEBPIN_OTP_SUCCESS)
                     this.props.history.push("/bills/airtime/done");
+                    
         return (
             <OtpValidation 
             backLink={"/bills/airtime/select-account"}
             forwardLink={"bills/airtime/done"}
             submitAction={this.onSubmit}
             maxLength={6}
-            busyAction ={this.props.airtime_otp == airtimeConstants.AIRTIME_WEBPIN_OTP_PENDING}
+            busyAction ={this.props.airtime_otp.airtime_buydata == airtimeConstants.AIRTIME_WEBPIN_OTP_PENDING}
             retryAction ={this.onReSubmit}
-            onResubmitBusyAction = {this.props.airtime == airtimeConstants.AIRTIME_WEBPIN_PENDING}
+            onResubmitBusyAction = {this.props.airtime.airtime_buydata == airtimeConstants.AIRTIME_WEBPIN_PENDING}
             displayMessage={this.returnOtpValidationMsg()}
              />
         );
@@ -77,7 +78,7 @@ function mapStateToProps(state) {
         alert: state.alert,
         airtime: state.airtime_webpin,
         airtime_history: state.airtime_buydata,
-        airtime_otp: state.airtime_webpin
+        airtime_otp: state.airtime_webpinotp
     };
 }
 

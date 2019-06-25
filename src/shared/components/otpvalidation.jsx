@@ -47,8 +47,8 @@ class OtpValidation extends React.Component {
     }
 
     render() {
-        if(this.props.airtime.airtime_buydata == airtimeConstants.AIRTIME_WEBPIN_OTP_SUCCESS)
-           this.props.history.push(this.props.forwardLink);
+        
+           //this.props.history.push(this.props.forwardLink);
         return (
             <div className="col-sm-12">
                 <div className="row">
