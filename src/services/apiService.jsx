@@ -54,8 +54,8 @@ export class ApiService {
                     // console.log(error.response.status);
                     // console.log(error.response.headers);  && error.response.statusText.toLowerCase().includes('token not valid')
                      if (error.response.status === 401) {
-                            
-                            history.push('/');
+                        dispatch(userActions.logout());
+                            //history.push('/');
                         }else {
                             return service;
                         }
@@ -97,7 +97,6 @@ export class ApiService {
                     }else {
                         return service;
                     }
-                  
             } 
             return  service;
             });
@@ -143,8 +142,9 @@ export class ApiService {
                 // return response;
             }).catch(function (error) {
                 if (error.status === 401 && error.statusText.toLowerCase().includes('token not valid')) {
-                    sessionStorage.clear();
-                    return <Redirect to='/login'/>
+                    // sessionStorage.clear();
+                    // return <Redirect to='/login'/>
+                    dispatch(userActions.logout());
                     // this.router.navigate(['/login']); redirect to login
                 } else {
                     let requestError = error.status !== 0 ? error._body : '{ \"message\": \"Could not connect to server\" }';
@@ -197,8 +197,9 @@ export class ApiService {
                 }).catch(function (error) {
                     console.log(error);
                     if (error.status === 401 && error.statusText.toLowerCase().includes('token not valid')) {
-                        sessionStorage.clear();
-                        return <Redirect to='/login'/>
+                        // sessionStorage.clear();
+                        // return <Redirect to='/login'/>
+                        dispatch(userActions.logout());
                         // this.router.navigate(['/login']); redirect to login
                     } else {
                         let requestError = error.status !== 0 ? error._body : '{ \"message\": \"Could not connect to server\" }';
