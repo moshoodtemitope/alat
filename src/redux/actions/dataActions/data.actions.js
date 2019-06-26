@@ -44,8 +44,8 @@ export const fetchDataBeneficiaries = (token, data) => {
             .catch(error => {
                 
                 dispatch(isFetchingFalse());
-                dispatch(alertActions.error(modelStateErrorHandler(error)));
                 console.log(error);
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
 

@@ -116,7 +116,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.CLEAR_DATA_INFO_NOPOST:
             return updateObject(state, {pinVerified : 3, dataToBuy : null, dataPlans : [], debitableAccounts : [], network : ""});
         case actionTypes.CLEAR_DATA_INFO_POST:
-            return updateObject(state, {pinVerified : 0, dataToBuy : null, dataPlans : [], debitableAccounts : [], network : ""});
+            return updateObject(state, {pinVerified : 0, dataToBuy : null, dataPlans : [], debitableAccounts : [], network : "", beneficiaries : []});
         // case alertConstants.ERROR:
         //     return updateObject(state, {pinVerified : 1, errorMessage: action.message});
         default: return state;
