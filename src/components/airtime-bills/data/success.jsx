@@ -150,7 +150,7 @@ class Success extends Component {
                                                     <div className="row">
                                                         <div className="col-sm-12">
                                                             <center>
-                                                            <button onClick={this.goToDashboard} class="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</button>
+                                                            <button onClick={() =>{this.props.toDashboard()}} class="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</button>
                                                                 {/* <Link to={'/dashboard'} className="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</Link> */}
                                                             </center>
                                                         </div>
