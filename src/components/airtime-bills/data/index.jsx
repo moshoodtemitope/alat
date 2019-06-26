@@ -37,10 +37,6 @@ class Index extends Component {
         this.setState({ show: false, selectedBeneficiary: { BillerAlias: "" } })
     }
 
-    onErrorModal = () => {
-        this.props.clearError();
-    }
-
     onDeleteBeneficiary = (beneficiaryData) => {
         console.log(beneficiaryData);
         this.props.onDeleteBeneficiary(this.state.user.token, beneficiaryData);
@@ -173,7 +169,6 @@ const mapDispatchToProps = dispatch => {
         setDataToBuyDetails: (dataToBuy, network) => dispatch(actions.setDataTransactionDetails(dataToBuy, network)),
         clearDataInfo: () => dispatch(actions.clearDataInfoNoPost()),
         resetPinState: () => dispatch(actions.pinVerificationTryAgain()),
-        clearError: () => dispatch(alertActions.clear())
     }
 }
 
