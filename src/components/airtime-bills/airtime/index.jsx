@@ -48,7 +48,9 @@ class Index extends Component {
             if (props.airtime_beneDelete.airtime_beneficiary == airtimeConstants.AIRTIME_BENEFICIARIES_DELETE_SUCCESS) {
                 let a = this.props.airtime_beneficiary.airtime_beneficiary_data.response;
                 let index = a.findIndex(x => x.BeneficiaryId === this.state.selectedBeneficairyBeneficiaryId);
-
+                console.log(index);
+                index-=1;
+                console.log(index);
                 this.props.airtime_beneficiary.airtime_beneficiary_data.response.splice(index, 1);
                 this.toggleModal();
                 this.setState({ isDelete: false });
@@ -76,6 +78,7 @@ class Index extends Component {
     }
 
     deleteBeneficiary = (index) => {
+        console.log(this.state.selectedBeneficairy.BeneficiaryId);
         const { dispatch } = this.props;
         let props = this.props;
         this.setState({ isDelete: true });
@@ -98,13 +101,13 @@ class Index extends Component {
                 )
                 break;
             case 'GLO':
-                return (<img src={gloImg} srcSet="img/glo@2x.png 2x" />)
+                return (<img src={gloImg} srcSet="../../../img/glo@2x.png 2x" />)
                 break;
             case 'Airtel':
-                return (<img src={airtelImg} srcSet="img/airtel@2x.png 2x" />)
+                return (<img src={airtelImg} srcSet="../../../img/airtel@2x.png 2x" />)
                 break;
             case 'Etisalat':
-                return (<img src={etiImg} srcSet="img/9mobile@2x.png 2x" />)
+                return (<img src={etiImg} srcSet="../../../img/9mobile@2x.png 2x" />)
                 break;
             default:
                 return (<img src="" alt="Provider.png" />)
@@ -200,7 +203,7 @@ class Index extends Component {
                         </Modal>
                     </Fragment>
                 )
-            } else {
+            } else  {
                 return (
                     <div className="col-sm-12">
                         <div className="max-600 m-t-40">
