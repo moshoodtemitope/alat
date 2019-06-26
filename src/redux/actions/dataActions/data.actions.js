@@ -42,9 +42,10 @@ export const fetchDataBeneficiaries = (token, data) => {
                 dispatch(success(response.data));
             })
             .catch(error => {
-                dispatch(alertActions.error(modelStateErrorHandler(error)));
+                
                 dispatch(isFetchingFalse());
                 console.log(error);
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
 
@@ -70,9 +71,11 @@ export const deleteDataBeneficiary =  (token, data) => {
             })
             .catch(error => {
                 //handle error
-                dispatch(alertActions.error(modelStateErrorHandler(error)));
+                
                 dispatch(isFetchingFalse());
+                
                 console.log(error);
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
     
@@ -86,6 +89,7 @@ export const fetchDataPlans = (token, data) => {
     
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
+        dispatch(alertActions.clear());
         dispatch(status());
         let consume = ApiService.request(routes.FETCH_DATA_PLANS, "POST", data, SystemConstant.HEADER);
         return consume
@@ -96,10 +100,12 @@ export const fetchDataPlans = (token, data) => {
                 dispatch(status())
             })
             .catch(error => {
-                dispatch(alertActions.error(modelStateErrorHandler(error)));
+                
                 dispatch(isFetchingFalse());
-                dispatch(status())
+                dispatch(status());
                 console.log(error);
+                
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
 
@@ -134,9 +140,10 @@ export const fetchDebitableAccounts = (token, data) => {
                 dispatch(success(response.data));
             })
             .catch(error => {
-                dispatch(alertActions.error(modelStateErrorHandler(error)));
+                
                 dispatch(isFetchingFalse());
                 console.log(error);
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
 
@@ -163,9 +170,10 @@ export const pinVerificationStart = (token, data, isResending = false) => {
                 }
             })
             .catch(error => {
-                dispatch(alertActions.error(modelStateErrorHandler(error)));
+                
                 dispatch(isFetchingFalse());
                 console.log(error);
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
 
             
@@ -193,9 +201,9 @@ export const otpVerificationStart = (token, data) => {
                 // }
             })
             .catch(error => {
-                dispatch(alertActions.error(modelStateErrorHandler(error)));
                 dispatch(isFetchingFalse());
                 console.log(error);
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
 
             
@@ -217,9 +225,9 @@ export const saveBeneficiary = (token, data) => {
                 // }
             })
             .catch(error => {
-                dispatch(alertActions.error(modelStateErrorHandler(error)));
                 dispatch(isFetchingFalse());
                 console.log(error);
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
 
             

@@ -74,7 +74,7 @@ import {updateObject} from '../actions/dataActions/data.actions';
 //--------------------------//
 //Pin Verifed status
 // 0-correct/good to go
-// 1-There is error
+// 1-There is an error
 // 2-Retry Pin/default State
 // 3-go to start
 //--------------------------//
@@ -116,9 +116,9 @@ const reducer = (state = initialState, action) => {
         case actionTypes.CLEAR_DATA_INFO_NOPOST:
             return updateObject(state, {pinVerified : 3, dataToBuy : null, dataPlans : [], debitableAccounts : [], network : ""});
         case actionTypes.CLEAR_DATA_INFO_POST:
-            return updateObject(state, {pinVerified : 0, dataToBuy : null, dataPlans : [], debitableAccounts : [], network : ""});
-        case alertConstants.ERROR:
-            return updateObject(state, {pinVerified : 1, errorMessage: action.message});
+            return updateObject(state, {pinVerified : 0, dataToBuy : null, dataPlans : [], debitableAccounts : [], network : "", beneficiaries : []});
+        // case alertConstants.ERROR:
+        //     return updateObject(state, {pinVerified : 1, errorMessage: action.message});
         default: return state;
     }
 }

@@ -36,11 +36,6 @@ class Data extends Component{
        return(
            <Fragment>
                 {this.props.children}
-                <Modal open={this.props.pinVerified == 1 && this.props.errorMessage} onClose={this.onCloseModal} center>
-                        <div className="div-modal">
-                            <h3><b>{this.props.errorMessage}</b> </h3>
-                        </div>
-                </Modal>
                 <Route exact path='/bills/data' render={(props) => <Index {...props} beneficiaries={this.props.beneficiaries} isFetching={this.props.fetching} />} />
                 <Route exact path='/bills/data/buy' render={(props) => <BuyData {...props} />} />
                 <Route path='/bills/data/buy/confirm' render={(props) => <ConfirmData {...props} />} />
@@ -55,8 +50,6 @@ const mapStateToProps = state => {
     return{
         beneficiaries : state.data_reducer.beneficiaries,
         fetching: state.data_reducer.isFetching,
-        pinVerified: state.data_reducer.pinVerified,
-        errorMessage: state.data_reducer.errorMessage
     }
 }
 

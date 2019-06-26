@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { Input } from './input';
 import Select from 'react-select';
+import {alertActions} from "../../../redux/actions/alert.actions";
 import { formatAmountNoDecimal } from '../../../shared/utils';
 import { checkInputValidation } from '../../../shared/utils';
 import { connect } from 'react-redux';
@@ -11,7 +12,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../../redux/actions/dataActions/export';
 import { isFetchingFalse } from '../../../redux/actions/dataActions/data.actions';
 
-
+const pattern = /^\d+$/;
 
 class BuyData extends Component {
     constructor(props) {
@@ -120,7 +121,8 @@ class BuyData extends Component {
     }
 
     onSubmitBuyData = (event) => {
-        event.preventDefault()
+        event.preventDefault();
+        this.props.clearError();
         if(this.state.selectedNetwork && this.state.buyDataForm.phone.value != "" && this.phoneValidation(this.state.buyDataForm.phone.value)){
             
             var dataToBuy = {
@@ -149,7 +151,7 @@ class BuyData extends Component {
     }
 
     phoneValidation = (value) => {
-        const pattern = /^\d+$/;
+        
         return (value.length >= 11 && value.length <= 16 && pattern.test(value));
     }
 
@@ -164,6 +166,11 @@ class BuyData extends Component {
         validation.phoneInput.hasError.validError = false;
         validation.phoneInput.hasError.requiredError = false;
         updatedFormElement.value = event.target.value;
+        if(updatedFormElement.value.length >= 1){
+            if(!pattern.test(updatedFormElement.value) || updatedFormElement.value.length > 16){
+                return;
+            }
+        }
         // updatedFormElement.valid = checkInputValidation(updatedFormElement.value, updatedFormElement.validation);
         updatedFormElement.valid = true;
         updatedFormElement.touched = true;
@@ -174,6 +181,7 @@ class BuyData extends Component {
             formIsValid = updatedBuyDataForm[inputIdentifier].valid && formIsValid;
         }
         console.log(formIsValid);
+        
         this.setState({ buyDataForm: updatedBuyDataForm, formIsValid, validation });
     }
 
@@ -202,13 +210,17 @@ class BuyData extends Component {
                                 
                                 <div className="transfer-ctn">
                                     <form>
+                            
+                                    {(this.props.alert.message) ?
+                        <div className="info-label error">{this.props.alert.message} | <span onClick={() => {this.props.fetchDataPlans(this.state.user.token)}} style={{textDecoration:"underline", cursor:"pointer"}}>Click here to try again</span></div> : null
+                        }
                                         <div class="input-ctn">
                                             <label>Select a Network</label>
                                             <Select
                                                 value={selectedNetwork}
                                                 onChange={this.networkChangedHandler}
                                                 options={networkOperators}
-                                                placeholder={this.props.fetching ? "Loading data...":"Select..."}
+                                                placeholder={this.props.fetching ? "Loading data...": (this.props.dataPlans.length >= 1 ? "Select..." : "Failed. Please try again")}
                                             />
                                            {this.state.validation.networkSelector.hasError ? <small className="text-danger">{this.state.validation.networkSelector.error}</small> : null}
                                         </div>
@@ -251,9 +263,6 @@ class BuyData extends Component {
                                         </div>
 
                                     </form>
-
-
-
                                 </div>
 
 
@@ -276,13 +285,18 @@ const mapStateToProps = state => {
         dataPlans: state.data_reducer.dataPlans,
         dataInfo : state.data_reducer.dataToBuy,
         fetching: state.data_reducer.isFetchingData,
+        pinVerified: state.data_reducer.pinVerified,
+        errorMessage: state.data_reducer.errorMessage,
+        alert: state.alert,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         fetchDataPlans: (token) => dispatch(actions.fetchDataPlans(token)),
-        setDataToBuyDetails: (dataToBuy, network) => dispatch(actions.setDataTransactionDetails(dataToBuy, network))
+        setDataToBuyDetails: (dataToBuy, network) => dispatch(actions.setDataTransactionDetails(dataToBuy, network)),
+        resetPinState: () => dispatch(actions.pinVerificationTryAgain()),
+        clearError: () => dispatch(alertActions.clear())
     }
 }
 

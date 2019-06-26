@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { Switch } from '../../../shared/elements/_toggle';
 import { Input } from './input';
 import successLogo from '../../../assets/img/success.svg';
-
+import { formatAmountNoDecimal } from '../../../shared/utils';
 import { connect } from 'react-redux';
 
 import * as actions from '../../../redux/actions/dataActions/export';
@@ -54,20 +54,22 @@ class Success extends Component {
         this.setState({ saveBeneficiary: !this.state.saveBeneficiary });
     }
 
-    onSubmitSaveForm = () => {
+    onSubmitSaveForm = (event) => {
+        event.preventDefault();
         var payload = { 
             Amount: this.props.dataInfo.Amount,
             BillerAlias: this.state.saveBeneficiaryForm.alias.value,
             BillerPaymentCode: this.props.dataInfo.BillerPaymentCode,
             PhoneNumber: this.props.dataInfo.PhoneNumber,
-            TransactionPin: this.props.TransactionPin,
+            TransactionPin: this.props.dataInfo.TransactionPin,
             NetworkCode : this.props.dataInfo.NetworkCode
         };
 
         this.props.onSaveBeneficiary(this.state.user.token, payload);
     }
 
-    goToDashboard = () => {
+    goToDashboard = (event) => {
+        event.preventDefault();
         this.props.toDashboard();
     }
 
@@ -97,7 +99,7 @@ class Success extends Component {
                                             <div className="trans-summary-card">
                                                 <div className="name-amount clearfix">
                                                     <p className="pl-name-email">{this.props.network} Data Plan<span>{this.props.dataInfo  ? this.props.dataInfo.PaymentItem : "*******"}</span></p>
-                                                    <p className="pl-amount">{this.props.dataInfo ? this.props.dataInfo.Amount : "####"}</p>
+                                                    <p className="pl-amount">{this.props.dataInfo ? "N"+formatAmountNoDecimal(this.props.dataInfo.Amount) : "####"}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -115,13 +117,15 @@ class Success extends Component {
                                                     <div className="pretty p-switch p-fill" >
                                                         <Switch isChecked={this.state.saveBeneficiary} handleToggle={this.handleToggle} />
                                                     </div>
-                                                    
                                                 </div>
                                             </div>
                                         </div>
                                         {
                                             this.state.saveBeneficiary ? (
                                                 <div className="save-purchase-frm">
+                                                    {(this.props.alert.message) ?
+                        <div className="info-label error  m-t-10">{this.props.alert.message}</div> : null
+                        }
                                                     <form>
                                                             
                                                             {formElementArray.map((formElement) => {
@@ -192,7 +196,8 @@ const mapStateToProps = state => {
         dataPlans: state.data_reducer.dataPlans,
         accounts: state.data_reducer.debitableAccounts,
         network: state.data_reducer.network,
-        pageState: state.data_reducer.pinVerified
+        pageState: state.data_reducer.pinVerified,
+        alert: state.alert,
     }
 }
 
