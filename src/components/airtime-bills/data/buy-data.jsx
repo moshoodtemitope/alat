@@ -220,7 +220,7 @@ class BuyData extends Component {
                                                 value={selectedNetwork}
                                                 onChange={this.networkChangedHandler}
                                                 options={networkOperators}
-                                                placeholder={this.props.fetching ? "Loading data...":"Select..."}
+                                                placeholder={this.props.fetching ? "Loading data...": (this.props.dataPlans.length >= 1 ? "Select..." : "Failed. Please try again")}
                                             />
                                            {this.state.validation.networkSelector.hasError ? <small className="text-danger">{this.state.validation.networkSelector.error}</small> : null}
                                         </div>

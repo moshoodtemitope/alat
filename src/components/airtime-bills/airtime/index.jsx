@@ -14,42 +14,46 @@ import Modal from 'react-responsive-modal';
 import ConfirmModal from './element/confirmModal';
 
 class Index extends Component {
-    
+
     constructor(props) {
         super(props);
         this.state = {
             // user: user
             user: JSON.parse(localStorage.getItem("user")),
-            openModal : false,
-            submitted : false,
-            selectedBeneficairy : {
-                key : -1
+            openModal: false,
+            submitted: false,
+            selectedBeneficairy: {
+                key: -1
             },
+            isDelete: false
         };
         this.toggleModal = this.toggleModal.bind(this);
-        
+
     }
 
     componentDidMount() {
         this.fetchAirtimeBeneficiaries();
     }
 
-    getDeleteStatus=()=> {
+    getDeleteStatus = () => {
         let props = this.props;
-        if(props.airtime_beneDelete.airtime_beneficiary == airtimeConstants.AIRTIME_BENEFICIARIES_DELETE_PENDING)
-         return true;
-         else return false;
+        if (props.airtime_beneDelete.airtime_beneficiary == airtimeConstants.AIRTIME_BENEFICIARIES_DELETE_PENDING)
+            return true;
+        else return false;
     }
 
-    deleteAfterAction(){
+    deleteAfterAction() {
+
         let props = this.props;
-        if(props.airtime_beneDelete.airtime_beneficiary == airtimeConstants.AIRTIME_BENEFICIARIES_DELETE_SUCCESS)
-        {
-            let a = this.props.airtime_beneficiary.airtime_beneficiary_data.response;
-            let  index = a.findIndex(x => x.BeneficiaryId === this.state.selectedBeneficairyBeneficiaryId);
-           
-            this.props.airtime_beneficiary.airtime_beneficiary_data.response.splice(index,1);
-            this.toggleModal();
+        if (this.state.isDelete == true) {
+            if (props.airtime_beneDelete.airtime_beneficiary == airtimeConstants.AIRTIME_BENEFICIARIES_DELETE_SUCCESS) {
+                let a = this.props.airtime_beneficiary.airtime_beneficiary_data.response;
+                let index = a.findIndex(x => x.BeneficiaryId === this.state.selectedBeneficairyBeneficiaryId);
+
+                this.props.airtime_beneficiary.airtime_beneficiary_data.response.splice(index, 1);
+                this.toggleModal();
+                this.setState({ isDelete: false });
+            }
         }
     }
 
@@ -59,22 +63,25 @@ class Index extends Component {
         dispatch(getAirtimeBeneficiaries(this.state.user.token));
     }
 
-    toggleModal=(beneficiary, key)=>{
-        
-        this.setState({ selectedBeneficairy:{ key : key } })
+    toggleModal = (beneficiary, key) => {
 
-        this.setState({ selectedBeneficairy : beneficiary});
-        if(this.state.openModal)
-           this.setState( {openModal : false  })
-           else this.setState ({openModal : true  });
+        this.setState({ selectedBeneficairy: { key: key } })
 
-          //console.table(this.selectedBeneficairy);
+        this.setState({ selectedBeneficairy: beneficiary });
+        if (this.state.openModal)
+            this.setState({ openModal: false })
+        else this.setState({ openModal: true });
+
+        //console.table(this.selectedBeneficairy);
     }
 
-    deleteBeneficiary=(index)=>{
-       const { dispatch } = this.props;
-       let props = this.props;
-       var result =  dispatch(deleteBeneficairy(this.state.user.token, this.state.selectedBeneficairy.BeneficiaryId));
+    deleteBeneficiary = (index) => {
+        const { dispatch } = this.props;
+        let props = this.props;
+        this.setState({ isDelete: true });
+        var result = dispatch(deleteBeneficairy(this.state.user.token, this.state.selectedBeneficairy.BeneficiaryId));
+        
+
     }
 
     returnImage(networktype) {
@@ -113,22 +120,23 @@ class Index extends Component {
     renderAirtimeBeneficiaries(beneficiariesList) {
         return (
             this.props.airtime_beneficiary.airtime_beneficiary_data.response.map((ben, key) => {
-                if(ben.IsAirtime == true){
-                return (
-                    <div className="col-sm-12 col-md-4" key={key}>
-                        <div className="al-card airtime-card">
-                            <div className="clearfix">
-                                <div className="network-img">
-                                    {this.returnImage(ben.BillerName)}
-                                </div>
-                                <div className="all-info">
-                                    <p className="line-price">{ben.BillerAlias} <span className="price">#{utils.formatAmount(ben.Amount)}</span></p>
-                                    <p className="num-ref">{ben.PhoneNumber}<span className="price"><a onClick={()=>this.toggleModal(ben,key)}><i className="fa fa-trash-o" aria-hidden="true"></i></a></span></p>
+                if (ben.IsAirtime == true) {
+                    return (
+                        <div className="col-sm-12 col-md-4" key={key}>
+                            <div className="al-card airtime-card">
+                                <div className="clearfix">
+                                    <div className="network-img">
+                                        {this.returnImage(ben.BillerName)}
+                                    </div>
+                                    <div className="all-info">
+                                        <p className="line-price">{ben.BillerAlias} <span className="price">#{utils.formatAmount(ben.Amount)}</span></p>
+                                        <p className="num-ref">{ben.PhoneNumber}<span className="price"><a onClick={() => this.toggleModal(ben, key)}><i className="fa fa-trash-o" aria-hidden="true"></i></a></span></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                )}
+                    )
+                }
             })
         )
 
@@ -168,15 +176,15 @@ class Index extends Component {
                         {this.deleteAfterAction()}
                         <Modal open={this.state.openModal} onClose={this.toggleModal} center>
                             <div className="div-modal">
-                            {props.alert && props.alert.message &&
-                             <div className={`info-label ${props.alert.type}`}>{props.alert.message}</div>
-                            }
+                                {props.alert && props.alert.message &&
+                                    <div className={`info-label ${props.alert.type}`}>{props.alert.message}</div>
+                                }
 
                                 <h3>You want to delete<br /><strong>
-                                    
-                                      {this.state.selectedBeneficairy && <span>{this.state.selectedBeneficairy.BillerAlias}</span>}<br/>
-                                     {this.state.selectedBeneficairy && <span> {this.state.selectedBeneficairy.PhoneNumber}</span>}
-                                    </strong>.<br /> Do you want to proceed?</h3>
+
+                                    {this.state.selectedBeneficairy && <span>{this.state.selectedBeneficairy.BillerAlias}</span>}<br />
+                                    {this.state.selectedBeneficairy && <span> {this.state.selectedBeneficairy.PhoneNumber}</span>}
+                                </strong>.<br /> Do you want to proceed?</h3>
 
                                 <div className="btn-opt">
                                     <button onClick={this.toggleModal} className="border-btn">Back</button>

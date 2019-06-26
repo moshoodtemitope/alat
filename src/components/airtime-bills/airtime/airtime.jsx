@@ -14,6 +14,7 @@ import BuyAirtime from './airtime-buy';
 import Index from './index';
 import AirtimeSelectAccount from './airtime-select';
 import AirtimeOtp  from './airtime-otp';
+import AirtimeDone from './airtime-done';
 class Airtime extends Component {
     constructor(props) {
         super(props);
@@ -33,6 +34,7 @@ class Airtime extends Component {
             <Route path='/bills/airtime/buy' render={(props) => <BuyAirtime {...props} />} />
             <Route path='/bills/airtime/select-account' render={(props) => <AirtimeSelectAccount {...props} />} />
             <Route path='/bills/airtime/otp' render={(props)=> <AirtimeOtp {...props}/>}/>
+            <Route path='/bills/airtime/done' render={(props)=> <AirtimeDone {...props} />} />
            </Fragment>
        );
    }

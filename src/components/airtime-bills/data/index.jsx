@@ -38,7 +38,7 @@ class Index extends Component {
     }
 
     onErrorModal = () => {
-        this.props.resetPinState();
+        this.props.clearError();
     }
 
     onDeleteBeneficiary = (beneficiaryData) => {
@@ -58,7 +58,7 @@ class Index extends Component {
                 <div className="max-600 m-t-40">
                     <center>
                         <img src={dataLogo} className="m-b-30" alt="Data Logo" />
-                        <p className="grey-text no-paylink">{this.props.isFetching ? "Loading saved beneficiaries..." : "No saved data purchase"}</p>
+                        <p className="grey-text no-paylink">{this.props.isFetching ? "Loading saved beneficiaries..." : (this.props.alert.message ? <p><span style={{color:"red"}}>{this.props.alert.message}</span><span onClick={() => {this.props.fetchBeneficiaries(this.state.user.token)}} style={{textDecoration:"underline", cursor:"pointer"}}> Click here to try again</span></p> : "No saved data purchase")}</p>
                         <Link to={'/bills/data/buy'} className="btn-alat">Buy Data</Link> 
                     </center>
                 </div>
@@ -69,11 +69,6 @@ class Index extends Component {
             if (dataBeneficiaries.length > 0) {
                 index = (
                     <Fragment>
-                        <Modal open={this.props.pinVerified == 1 && this.props.errorMessage} onClose={this.onErrorModal} center>
-                                <div className="div-modal">
-                                    <h3><b>{this.props.errorMessage}</b> </h3>
-                                </div>
-                        </Modal>
                         <div className="col-sm-12 mb-3">
                             <div className="row">
                                 <div className="col-sm-12">
@@ -84,7 +79,6 @@ class Index extends Component {
                         <div className="col-sm-12">
                             <div className="row">
                                 {
-
                                     dataBeneficiaries.map((beneficiary, counter) => {
                                         switch (beneficiary.NetworkCode) {
                                             case (2):
@@ -168,17 +162,18 @@ class Index extends Component {
 const mapStateToProps = state => {
     return {
         fetching: state.data_reducer.isFetching,
-        pinVerified: state.data_reducer.pinVerified,
-        errorMessage: state.data_reducer.errorMessage
+        alert: state.alert,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         onDeleteBeneficiary: (token, data) => dispatch(actions.deleteDataBeneficiary(token, data)),
+        fetchBeneficiaries : (token) => dispatch(actions.fetchDataBeneficiaries(token)),
         setDataToBuyDetails: (dataToBuy, network) => dispatch(actions.setDataTransactionDetails(dataToBuy, network)),
         clearDataInfo: () => dispatch(actions.clearDataInfoNoPost()),
         resetPinState: () => dispatch(actions.pinVerificationTryAgain()),
+        clearError: () => dispatch(alertActions.clear())
     }
 }
 
