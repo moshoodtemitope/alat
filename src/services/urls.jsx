@@ -1,4 +1,4 @@
-//const URL = 'https://api.alat.ng';
+// const URL = 'https://api.alat.ng';
 const URL = 'https://196.43.215.170';
 // const URL = 'http://196.43.215.157';
 
