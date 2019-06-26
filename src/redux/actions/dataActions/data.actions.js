@@ -232,6 +232,12 @@ export const saveBeneficiary = (token, data) => {
 
             
     };
+
+    function clearDataInfoPost() {
+        return {
+            type: actionTypes.CLEAR_DATA_INFO_POST
+        }
+    }
 }
 
 function toNext () {
@@ -246,9 +252,4 @@ export const clearDataInfoNoPost = () => {
     }
 }
 
-export const clearDataInfoPost = () => {
-    return {
-        type: actionTypes.CLEAR_DATA_INFO_POST
-    }
-}
 
