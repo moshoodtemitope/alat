@@ -6,7 +6,7 @@ import {
     onboardingPriorityReducer,
     userGoalsReducer
 } from "./dashboard.reducer";
-import {bankListRequest, beneficiariesRequest, fetchAccountDetailsRequest} from "./transfer.reducer";
+import {bankListRequest, beneficiariesRequest, fetchAccountDetailsRequest, deleteBeneficiaryRequest} from "./transfer.reducer";
 
 import { airtimeBeneficiariesReducer, deleteBeneficiaryReducer  } from './airtime.reducer';
 
@@ -29,7 +29,8 @@ export const dashboard = {
 export const transfer = {
     bankListRequest,
     beneficiariesRequest,
-    fetchAccountDetailsRequest
+    fetchAccountDetailsRequest,
+    deleteBeneficiaryRequest
 };
 
 export const airtime ={

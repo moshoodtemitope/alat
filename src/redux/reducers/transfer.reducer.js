@@ -5,6 +5,9 @@ import {
     FETCH_TRANSFER_BENEFICIARY_FAILURE,
     FETCH_TRANSFER_BENEFICIARY_PENDING,
     FETCH_TRANSFER_BENEFICIARY_SUCCESS,
+    DELETE_TRANSFER_BENEFICIARY_FAILURE,
+    DELETE_TRANSFER_BENEFICIARY_PENDING,
+    DELETE_TRANSFER_BENEFICIARY_SUCCESS,
     GET_ACCOUNT_DETAILS_PENDING,
     GET_ACCOUNT_DETAILS_SUCCESS,
     GET_ACCOUNT_DETAILS_FAILURE
@@ -62,22 +65,51 @@ export function beneficiariesRequest(state=[], action) {
     }
 }
 
+export function deleteBeneficiaryRequest(state=[], action) {
+    switch (action.type) {
+        case DELETE_TRANSFER_BENEFICIARY_PENDING:
+            return {
+                beneficiary_delete_state: DELETE_TRANSFER_BENEFICIARY_PENDING,
+                beneficiaryDeleteStatus : true,
+                beneficiary_delete_data: action
+            };
+        case DELETE_TRANSFER_BENEFICIARY_SUCCESS:
+            return {
+                beneficiary_delete_state: DELETE_TRANSFER_BENEFICIARY_SUCCESS,
+                beneficiaryDeleteStatus : false,
+                beneficiary_delete_data: action
+            };
+        case DELETE_TRANSFER_BENEFICIARY_FAILURE:
+            return {
+                beneficiary_delete_state: DELETE_TRANSFER_BENEFICIARY_FAILURE,
+                beneficiaryDeleteStatus : false,
+                beneficiary_delete_data: action
+            };
+
+        default:
+            return state;
+    }
+}
+
 export function fetchAccountDetailsRequest(state=[], action) {
     switch (action.type) {
         case GET_ACCOUNT_DETAILS_PENDING:
             return {
                 account_detail: GET_ACCOUNT_DETAILS_PENDING,
-                account_detail_data: action
+                account_detail_data: action,
+                fetchStatus: true
             };
         case GET_ACCOUNT_DETAILS_SUCCESS:
             return {
                 account_detail: GET_ACCOUNT_DETAILS_SUCCESS,
-                account_detail_data: action
+                account_detail_data: action,
+                fetchStatus: true
             };
         case GET_ACCOUNT_DETAILS_FAILURE:
             return {
                 account_detail: GET_ACCOUNT_DETAILS_FAILURE,
-                account_detail_data: action
+                account_detail_data: action,
+                fetchStatus: false
             };
 
         default:

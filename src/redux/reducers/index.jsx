@@ -30,6 +30,7 @@ const appReducer = combineReducers({
     dashboard_announcementCard: dashboard.announcementReducer,
     transfer_bankList: transfer.bankListRequest,
     transfer_beneficiaries: transfer.beneficiariesRequest,
+    delete_transfer_beneficiaryState: transfer.deleteBeneficiaryRequest,
     transfer_fetch_user_account: transfer.fetchAccountDetailsRequest,
     airtime_beneficiaries: airtime.airtimeBeneficiariesReducer,
     airtime_beneDelete: airtime.deleteBeneficiaryReducer,
