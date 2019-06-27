@@ -10,7 +10,9 @@ import Signup from "./onboarding/signup";
 import Bvn from "./onboarding/signup/bvn";
 import connect from "react-redux/es/connect/connect";
 import Bills from './airtime-bills/airtime-bills-home';
+import Cashtransfer from "./transfer/cash-transfer/index";
 import NewTransfer from "./transfer/cash-transfer/new-transfer";
+import ProvideDetails from "./transfer/cash-transfer/provide-details";
 import TransferHome from "./transfer/transfer-home";
 import BillsRoute from './airtime-bills/bills-route';
 
@@ -53,8 +55,7 @@ class AuthenticatedRoutes extends React.Component{
                     </PrivateRoute> */}
                     <PrivateRoute path='/bills/airtime' authed={this.props.user} component={Bills}/>
                     <PrivateRoute path='/bills/data' authed={this.props.user} component={Bills}/>
-                    <PrivateRoute path='/transfer' authed={this.props.user} component={NewTransfer}/>
-                    <PrivateRoute path='/transfer/new-transfer' authed={this.props.user} component={TransferHome}/>
+                    <PrivateRoute path='/transfer' authed={this.props.user} component={Cashtransfer}/>
                 </Switch>
             </Router>
             

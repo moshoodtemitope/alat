@@ -46,7 +46,7 @@ class SelectDebitableAccounts extends React.Component {
                 this.setState({isAccountsLoaded : true});
             }
             else {
-                this.props.fetchDebitableAccounts(this.state.user.token);
+                this.props.fetchDebitableAccounts({token:this.state.user.token, requestType: this.props.requestType});
             }
     }
 
@@ -131,7 +131,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchDebitableAccounts: (token) => dispatch(actions.fetchDebitableAccounts(token))
+        fetchDebitableAccounts: (params) => dispatch(actions.fetchDebitableAccounts(params.token, params.requestType))
         // fetchDataPlans: (token) => dispatch(actions.fetchDataPlans(token)),
         // setDataToBuyDetails: (dataToBuy, network) => dispatch(actions.setDataTransactionDetails(dataToBuy, network))
     }

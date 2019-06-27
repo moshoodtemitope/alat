@@ -9,6 +9,52 @@
 .hide{
   display: none
 }
+.recipient-and-amount{
+  color: #ffffff;
+  .bank-info, p{
+    margin-bottom: 0;
+  }
+  .bankname {
+    // margin-right: 13px;
+    float: right;
+  }
+}
+.inputctn-wrap{
+  margin-bottom: 25px;
+  .input-ctn{
+    margin-bottom: 3px;
+  }
+  .limit-text{
+    color: #AB2656;
+    font-size: 13px;
+  }
+}
+.amount-charged{
+  font-size: 14px;
+  color: #AB2656;
+  margin-bottom: 5px;
+  display: block;
+  text-align: center;
+}
+.card-wrap{
+  margin-bottom: 35px;
+  .beneficiary-card .all-info{
+    width: 100%;
+  }
+  .card-heading{
+    margin-bottom: 6px;
+  }
+}
+.recipient-name{
+  font-size: 16px;
+  margin-bottom: 0;
+  font-family: "proxima_novasemibold", sans-serif;
+  color: #ffffff;
+  .amount-to-send{
+    float: right;
+    // margin-right: 13px;
+  }
+}
 .proceed-ctas{
   .btn-alat{
     min-width: unset;
@@ -98,6 +144,7 @@ a:not([href]):not([tabindex]).cta-link{
     }
   }
 }
+
 .beneficiary-card {
     padding: 25px 20px;
     cursor: pointer;

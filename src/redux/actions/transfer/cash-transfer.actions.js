@@ -12,7 +12,17 @@ import {
     DELETE_TRANSFER_BENEFICIARY_PENDING,
     DELETE_TRANSFER_BENEFICIARY_SUCCESS,
     DELETE_TRANSFER_BENEFICIARY_FAILURE,
-    GET_ACCOUNT_DETAILS_PENDING, GET_ACCOUNT_DETAILS_SUCCESS, GET_ACCOUNT_DETAILS_FAILURE
+    TRANSFER__BANK_DETAILS,
+    GET_ACCOUNT_DETAILS_PENDING, 
+    GET_ACCOUNT_DETAILS_SUCCESS, 
+    GET_ACCOUNT_DETAILS_FAILURE,
+    GET_TRANSACTION_LIMIT_PENDING, 
+    GET_TRANSACTION_LIMIT_SUCCESS, 
+    GET_TRANSACTION_LIMIT_FAILURE,
+    SENDBANK_TRANSFER_PENDING, 
+    SENDBANK_TRANSFER_SUCCESS, 
+    SENDBANK_TRANSFER_FAILURE,
+    SENDER__BANK_DETAILS
 } from "../../constants/transfer.constants";
 
 export const getBanks = (token) => {
@@ -68,6 +78,16 @@ export const deleteTransferBeneficiary = (token, beneficiaryToDelete, callback) 
     function failure(error) { return {type:DELETE_TRANSFER_BENEFICIARY_FAILURE, error} }
 }
 
+export const cashTransferData = (transferDetails) =>{
+    return(dispatch)=>dispatch(request(transferDetails));
+    function request(data) { return { type: TRANSFER__BANK_DETAILS, data } }
+}
+
+export const senderTransferData = (senderTansferDetails) =>{
+    return(dispatch)=>dispatch(request(senderTansferDetails));
+    function request(data) { return { type: SENDER__BANK_DETAILS, data } }
+}
+
 export const getBeneficiaries = (token) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
@@ -94,15 +114,58 @@ export const getBeneficiaries = (token) => {
     function failure(error) { return {type:FETCH_TRANSFER_BENEFICIARY_FAILURE, error} }
 };
 
-export const accountEnquiry = (token, data) => {
+export const getTransactionLimit = (token, accountNumber) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.FETCH_ACCOUNT_DETAILS, "POST", data, SystemConstant.HEADER);
+        let consume = ApiService.request(routes.GETLIMIT, "POST", {AccountNumber: accountNumber}, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                // consume.error(response);
+                dispatch(success(response));
+            })
+            .catch(error => {
+                console.error('was here', error);
+                if(error.response.message){
+                    dispatch(failure(error.response.message.toString()));
+                }else{
+                    dispatch(failure('An error while getting your transaction limit.'));
+                }
+                
+            });
+    };
+
+    function request(request) { return { type:GET_TRANSACTION_LIMIT_PENDING, request} }
+    function success(response) { return {type:GET_TRANSACTION_LIMIT_SUCCESS, response} }
+    function failure(error) { return {type:GET_TRANSACTION_LIMIT_FAILURE, error} }
+};
+
+export const accountEnquiry = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => { 
+        //  INTERBANK_CHARGES
+        
+        let consume = ApiService.request(routes.INTERBANK_CHARGES, "GET", SystemConstant.HEADER);
+        // let consume = ApiService.request(routes.FETCH_ACCOUNT_DETAILS, "POST", data, SystemConstant.HEADER);
         dispatch(request(consume));
         return consume
             .then(response => {
                 // callback();
-                dispatch(success(response.data));
+                let consume2 = ApiService.request(routes.FETCH_ACCOUNT_DETAILS, "POST", data, SystemConstant.HEADER);
+                return consume2
+                        .then(response2=>{
+                            let result  = Object.assign({}, ...response.data, response2.data)
+                            dispatch(success(result));
+                        })
+                        .catch(error=>{
+                            if(error.response.data.Message){
+                                dispatch(failure(error.response.data.Message.toString()));
+                            }else{
+                                console.log('bank error is', error.response);
+                                dispatch(failure('We are unable to get recipient details.'));
+                            }
+                        })
+               
             })
             .catch(error => {
                 if(error.response.data.Message){

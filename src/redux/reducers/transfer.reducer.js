@@ -10,7 +10,15 @@ import {
     DELETE_TRANSFER_BENEFICIARY_SUCCESS,
     GET_ACCOUNT_DETAILS_PENDING,
     GET_ACCOUNT_DETAILS_SUCCESS,
-    GET_ACCOUNT_DETAILS_FAILURE
+    GET_ACCOUNT_DETAILS_FAILURE,
+    GET_TRANSACTION_LIMIT_PENDING, 
+    GET_TRANSACTION_LIMIT_SUCCESS, 
+    GET_TRANSACTION_LIMIT_FAILURE,
+    SENDBANK_TRANSFER_PENDING, 
+    SENDBANK_TRANSFER_SUCCESS, 
+    SENDBANK_TRANSFER_FAILURE,
+    TRANSFER__BANK_DETAILS,
+    SENDER__BANK_DETAILS
 } from "../constants/transfer.constants";
 
 export function bankListRequest(state=[], action) {
@@ -37,7 +45,7 @@ export function bankListRequest(state=[], action) {
         //         banks_data: action
         //     };
         default:
-            return state;
+            return { ...state }
     }
 }
 
@@ -61,7 +69,7 @@ export function beneficiariesRequest(state=[], action) {
             };
 
         default:
-            return state;
+            return { ...state }
     }
 }
 
@@ -87,9 +95,38 @@ export function deleteBeneficiaryRequest(state=[], action) {
             };
 
         default:
-            return state;
+            return { ...state }
     }
 }
+
+export function transferDetailsReducer(state = [], action){
+    switch (action.type) {
+        case TRANSFER__BANK_DETAILS:
+            return {
+                transfer_info: TRANSFER__BANK_DETAILS,
+                transfer_info_data: action
+            };
+
+        default: return {
+            ...state
+        };
+    }
+}
+
+export function transferSenderDetailsReducer(state = [], action){
+    switch (action.type) {
+        case SENDER__BANK_DETAILS:
+            return {
+                transfer_info: SENDER__BANK_DETAILS,
+                transfer_info_data: action
+            };
+
+        default: return {
+            ...state
+        };
+    }
+}
+
 
 export function fetchAccountDetailsRequest(state=[], action) {
     switch (action.type) {
@@ -113,6 +150,32 @@ export function fetchAccountDetailsRequest(state=[], action) {
             };
 
         default:
-            return state;
+            return { ...state }
+    }
+}
+
+export function fetchTransactionLimitRequest(state=[], action) {
+    switch (action.type) {
+        case GET_TRANSACTION_LIMIT_PENDING:
+            return {
+                transferlimit: GET_TRANSACTION_LIMIT_PENDING,
+                transferlimit_data: action,
+                fetchStatus: true
+            };
+        case GET_TRANSACTION_LIMIT_SUCCESS:
+            return {
+                transferlimit: GET_TRANSACTION_LIMIT_SUCCESS,
+                transferlimit_data: action,
+                fetchStatus: true
+            };
+        case GET_TRANSACTION_LIMIT_FAILURE:
+            return {
+                transferlimit: GET_TRANSACTION_LIMIT_FAILURE,
+                transferlimit_data: action,
+                fetchStatus: false
+            };
+
+        default:
+            return { ...state }
     }
 }

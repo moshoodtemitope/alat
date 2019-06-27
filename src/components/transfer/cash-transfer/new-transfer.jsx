@@ -1,8 +1,11 @@
 import * as React from "react";
-import OnboardingContainer from "../../onboarding/Container";
 import {Router} from "react-router";
 // import * as utils from "../../shared/utils";
-import {accountEnquiry, getBanks, getBeneficiaries, deleteTransferBeneficiary} from "../../../redux/actions/transfer/cash-transfer.actions";
+import {accountEnquiry, 
+        getBanks, 
+        getBeneficiaries, 
+        deleteTransferBeneficiary,
+        cashTransferData} from "../../../redux/actions/transfer/cash-transfer.actions";
 import {FETCH_BANK_PENDING, 
         FETCH_BANK_SUCCESS, 
         FETCH_BANK_FAILURE, 
@@ -135,19 +138,7 @@ class NewTransfer extends React.Component {
                             <div className="see-more-cta"><a onClick={this.showAllBeneficiaries} >See all beneficiaries</a> </div>
                         }
                     </div>
-                    // <Select
-                    //     value={selectedOption}
-                    //     onChange={this.handleChange}
-                    //     options={options}
-                    // />
-
-                    // <select>
-                    //     {beneficiaries.map(function(beneficiary, accountNumber){
-                    //         return(
-                    //             <option key={accountNumber} value={beneficiary.AccountNumber}>{beneficiary.Nickname}</option>
-                    //         );
-                    //     })}
-                    // </select>
+                    
                 );
             case FETCH_TRANSFER_BENEFICIARY_FAILURE:
                 // this.fetchBeneficiariesRetry();
@@ -215,6 +206,7 @@ class NewTransfer extends React.Component {
             // }
         
     }
+    
     confirmDeleteTransferBeneficiary(){
         const { dispatch } = this.props;
        
@@ -233,12 +225,21 @@ class NewTransfer extends React.Component {
 
     continueTransfer(e){
         e.preventDefault();
+        const {dispatch, account_details} = this.props;
+        dispatch(cashTransferData({
+            AccountNumber: this.state.accountNumber,
+            AccountName: account_details.account_detail_data.response.AccountName,
+            BankName: this.state.selectedBank.label,
+            BankCode: this.state.selectedBank.value
+        }));
+        this.props.history.push("/transfer/provide-details");
     }
 
     handleSubmit(e, props) {
         
         e.preventDefault();
-        
+        // console.log('select bank is,', this.state.selectedBank);
+        // return false;
         const { selectedBank, accountNumber } = this.state;
         const { dispatch } = this.props;
        
@@ -262,6 +263,8 @@ class NewTransfer extends React.Component {
             {accountInfo.account_detail===GET_ACCOUNT_DETAILS_FAILURE &&
                 this.setState({ submitted: false, submitButtonState: false, inputState: false });
             }
+
+            console.log('account details will be', accountInfo);
             
             
         }
@@ -275,7 +278,7 @@ class NewTransfer extends React.Component {
         let props = this.props;
         return(
             <div className="input-ctn inputWrap">
-                <label>Account name</label>
+                <label>Account holder's name</label>
                 <Textbox
                     tabIndex="2"
                     id={'accountName'}
@@ -287,7 +290,7 @@ class NewTransfer extends React.Component {
         );
     }
 
-    // handleFailedAccoutn
+   
 
     handleChange(selectedBank){
         this.setState({ selectedBank });
@@ -321,14 +324,7 @@ class NewTransfer extends React.Component {
                         isDisabled={props.account_details.fetchStatus}
                         onChange={this.handleChange}
                     />
-                    /*<select>
-                        {banksList.map(function(bank, code){
-                            return(
-                                <option key={code} value={bank.BankCode}>{bank.BankName}</option>
-                            );
-                        })}
-                    </select>
-                    */
+                    
                 );
             case FETCH_BANK_FAILURE:
                 return(
@@ -342,14 +338,7 @@ class NewTransfer extends React.Component {
         }
     }
 
-    // fetchBeneficiariesRetry(){
-    //     return <center><button className="btn-alat m-t-10 m-b-20 text-center" onClick={this.renderBeneficiaries}>Retry</button></center>;
-    // }
-
-    // fetchBankRetry(){
-    //     return <center><button className="btn-alat m-t-10 m-b-20 text-center" onClick={this.fetchBanks}>Retry</button></center>;
-    // }
-
+    
     render() {
         const {accountNumber, 
                 error, 
@@ -473,7 +462,7 @@ class NewTransfer extends React.Component {
                                                             <div className="row">
                                                                 <div className="col-sm-6">
                                                                     <center>
-                                                                        <button type="submit" onClick={this.continueTransfer} className="btn-alat light-btn m-t-10 m-b-20 text-center">Save</button>
+                                                                        <button type="submit"  className="btn-alat light-btn m-t-10 m-b-20 text-center">Save</button>
                                                                     </center>
                                                                 </div>
                                                                 <div className="col-sm-6">

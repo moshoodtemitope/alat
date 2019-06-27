@@ -40,6 +40,12 @@ export const routes = {
     FETCH_TRANSFER_BENEFICIARIES: BASEURL + '/PaymentApi/api/Beneficiary/All',
     FETCH_ACCOUNT_DETAILS: BASEURL + '/PaymentApi/api/Accounts/VerifyAccountName',
     DELETE_TRANSFER_BENEFICIARIES: BASEURL + '/PaymentApi/api/Beneficiary/Delete',
+    DELETE_TRANSFER_BENEFICIARIES: BASEURL + '/PaymentApi/api/Beneficiary/Delete',
+    BANK_TRANSFER_WITHPIN: BASEURL + '/PaymentApi/api/BankTransferRequestWebWithPin',
+    INTERBANK_CHARGES: BASEURL + '/PaymentApi/api/InterBankCharges/All',
+    GETLIMIT: BASEURL + '/AccountMaintenance/api/transactions/getTransactionlimit', 
+    GetAllCustomerAccountsWithLimitsV2: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2', 
+    
     //PaymentApi/api/Accounts/VerifyAccountName
 
     //Airtime
