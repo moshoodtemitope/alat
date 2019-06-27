@@ -181,6 +181,7 @@ select {
   padding: 8px 15px;
   font-size: 1em;
   border-radius: 3px;
+  text-align: center;
   color: #444;
   margin-bottom: 30px; }
   .info-label.error {

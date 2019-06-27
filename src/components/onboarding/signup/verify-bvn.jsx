@@ -289,7 +289,7 @@ class VerifyBvn extends React.Component{
 
                         <p>
                                 {state.resendingOtp === false && state.resendStatus === "" && state.resentCount< 2 &&
-                                     <span className="text-left pull-right cta-link"><a className="cta-link" onClick={()=>this.resendCode(false, this.state.otpTracker, this.state.isBvn )}>Resend code</a></span>
+                                    <span className="text-left pull-right cta-link"><a className="cta-link" onClick={()=>this.resendCode(false, this.state.otpTracker, this.state.isBvn )}>Resend code</a></span>
                                 }
                                 {state.resendingOtp === true || state.resentCount>= 2 &&
                                     <span className="grayed-cta-link text-left pull-right">Resend code</span>
