@@ -88,7 +88,8 @@ const initialState = {
     debitableAccounts : [],
     pinVerified: 2,
     errorMessage: null,
-    network: ""
+    network: "",
+    isFromBeneficiary: false
 }; 
 
 const reducer = (state = initialState, action) => {
@@ -101,9 +102,9 @@ const reducer = (state = initialState, action) => {
         case actionTypes.IS_FETCHING_FALSE:
             return updateObject(state, {isFetching: false});
         case actionTypes.SET_DATA_TRANSACTION_DETAILS:
-            return updateObject(state, {dataToBuy: action.data, network: action.network});
+            return updateObject(state, {dataToBuy: action.data, network: action.network, isFromBeneficiary: action.fromBeneficiary});
         case actionTypes.FETCH_DATA_PLAN_SUCCESS:
-            return updateObject(state, {dataPlans: action.data, network : ""});
+            return updateObject(state, {dataPlans: action.data, network : "", isFromBeneficiary: false});
         case actionTypes.FETCH_DEBITABLE_ACCOUNTS_SUCCESS:
             return updateObject(state, {debitableAccounts : action.data, isFetching: false, pinErrorMessage: null});
             // return updateObject(state, {debitableAccounts : mock2});
