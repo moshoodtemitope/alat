@@ -32,6 +32,7 @@ class Success extends Component {
 
 
     componentDidMount() {
+        console.log("isfromBene" + this.props.isFromBeneficiary);
         // this.props.fetchDebitableAccounts(this.state.user.token);
     }
 
@@ -64,7 +65,7 @@ class Success extends Component {
             TransactionPin: this.props.dataInfo.TransactionPin,
             NetworkCode : this.props.dataInfo.NetworkCode
         };
-
+        console.log("saving benficiary");
         this.props.onSaveBeneficiary(this.state.user.token, payload);
     }
 
@@ -74,8 +75,8 @@ class Success extends Component {
     }
 
     render() {
-        let success = <Redirect to="/bills/data/buy" />
-        if (this.props.dataInfo != null) {
+        var success;
+        if (this.props.dataInfo != null && this.props.pageState == 2) {
             const formElementArray = [];
             for (let key in this.state.saveBeneficiaryForm) {
                 formElementArray.push({
@@ -104,22 +105,16 @@ class Success extends Component {
                                             </div>
                                         </div>
 
-                                        <div className="clearfix save-purchase">
+                                        {this.props.isFromBeneficiary ? null : <div className="clearfix save-purchase">
                                             <p>Save this purchase</p>
                                             <div className="">
                                                 <div className="clearfix">
-                                                    {/* <div className="pretty p-switch p-fill">
-												        <input type="checkbox" />
-												        <div className="state p-danger">
-												            <label></label>
-												        </div>
-                                                    </div> */}
                                                     <div className="pretty p-switch p-fill" >
                                                         <Switch isChecked={this.state.saveBeneficiary} handleToggle={this.handleToggle} />
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>}
                                         {
                                             this.state.saveBeneficiary ? (
                                                 <div className="save-purchase-frm">
@@ -142,7 +137,7 @@ class Success extends Component {
 
                                                 })}
                                                         <center>
-                                                            <button onClick={this.onSubmitSaveForm} class="btn-alat m-t-10 m-b-20 text-center">Save</button>
+                                                            <button disabled={this.props.fetching} onClick={this.onSubmitSaveForm} class="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Save"}</button>
                                                         </center>
                                                     </form>
                                                 </div>
@@ -150,7 +145,7 @@ class Success extends Component {
                                                     <div className="row">
                                                         <div className="col-sm-12">
                                                             <center>
-                                                            <button onClick={() =>{this.goToDashboard()}} class="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</button>
+                                                            <button onClick={this.goToDashboard} class="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</button>
                                                                 {/* <Link to={'/dashboard'} className="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</Link> */}
                                                             </center>
                                                         </div>
@@ -166,9 +161,6 @@ class Success extends Component {
 								                </div>
 								            </form>
 								        </div> */}
-
-
-
                                     </div>
                                 </div>
                             </div>
@@ -176,14 +168,17 @@ class Success extends Component {
                     </div>
                 </div>
             );
-            if (this.props.pageState == 3) {
-                this.props.resetPinState();
-                success = <Redirect to="/dashboard" />
-            }
-            if (this.props.pageState == 0) {
-                this.props.resetPinState();
-                success = <Redirect to="/bills/data" />
-            }
+        }else if(this.props.pageState == 3) {
+            console.log("going to dashboard no post");
+            this.props.resetPinState();
+            success = <Redirect to="/dashboard" />
+        }else if(this.props.pageState == 0) {
+            this.props.resetPinState();
+            console.log("going to dashboard post");
+            success = <Redirect to="/dashboard" />
+        }else{
+            console.log("success to not allowed ");
+            success = <Redirect to="/bills/data/buy" />
         }
 
         return success;
@@ -198,6 +193,8 @@ const mapStateToProps = state => {
         network: state.data_reducer.network,
         pageState: state.data_reducer.pinVerified,
         alert: state.alert,
+        isFromBeneficiary : state.data_reducer.isFromBeneficiary,
+        fetching: state.data_reducer.isFetching,
     }
 }
 
