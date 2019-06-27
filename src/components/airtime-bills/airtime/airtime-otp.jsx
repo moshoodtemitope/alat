@@ -83,9 +83,9 @@ function mapStateToProps(state) {
     return {
         user,
         alert: state.alert,
-        airtime: state.airtime_webpin,
-        airtime_history: state.airtime_buydata,
-        airtime_otp: state.airtime_webpinotp
+        airtime: state.airtimeReducerPile.airtime_webpin,
+        airtime_history: state.airtimeReducerPile.airtime_buydata,
+        airtime_otp: state.airtimeReducerPile.airtime_webpinotp
     };
 }
 

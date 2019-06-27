@@ -5,7 +5,7 @@ import { Switch } from '../../../shared/elements/_toggle';
 import { formatAmount } from '../../../shared/utils';
 import succesimg from '../../../assets/img/success.svg';
 import { airtimeConstants } from '../../../redux/constants/airtime/airtime.constants';
-import { airtimeBeneficiarySave } from '../../../redux/actions/airtime-bill/airtime.action';
+import { airtimeBeneficiarySave, clearAirtimeStore } from '../../../redux/actions/airtime-bill/airtime.action';
 
 
 class AirtimeDone extends React.Component {
@@ -29,7 +29,6 @@ class AirtimeDone extends React.Component {
     }
     getBillInfo() {
         let props = this.props
-        console.log(this.props.airtime_history.airtime_buydata_data.data);
 
         if (props.airtime_otp){
             if (this.props.airtime_otp.airtime_buydata == airtimeConstants.AIRTIME_WEBPIN_OTP_SUCCESS) {
@@ -71,7 +70,9 @@ class AirtimeDone extends React.Component {
 
     render() {
         if (this.props.airtime_bene.airtime_beneficiary == airtimeConstants.AIRTIME_BENEFICIARIES_SAVE_SUCCESS)
-            this.props.history.push("/bills/airtime");
+           {   
+               this.props.dispatch(clearAirtimeStore());
+               this.props.history.push("/dashboard"); }
         return (
             <div className="col-sm-12">
                 <div className="row">
@@ -139,7 +140,7 @@ class AirtimeDone extends React.Component {
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <center>
-                                                            <button onClick={() => { this.props.history.push('/dashboard') }} className="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</button>
+                                                            <button onClick={() => { this.props.dispatch(clearAirtimeStore()); this.props.history.push('/dashboard') }} className="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</button>
                                                             {/* <Link to={'/dashboard'} className="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</Link> */}
                                                         </center>
                                                     </div>
@@ -163,10 +164,10 @@ function mapStateToProps(state) {
     return {
         user,
         alert: state.alert,
-        airtime: state.airtime_webpin,
-        airtime_history: state.airtime_buydata,
-        airtime_otp: state.airtime_webpinotp,
-        airtime_bene: state.airtime_save_bene
+        airtime: state.airtimeReducerPile.airtime_webpin,
+        airtime_history: state.airtimeReducerPile.airtime_buydata,
+        airtime_otp: state.airtimeReducerPile.airtime_webpinotp,
+        airtime_bene: state.airtimeReducerPile.airtime_save_bene
     };
 }
 
