@@ -39,6 +39,7 @@ export function deleteBeneficiaryReducer(state = [], action) {
                 airtime_beneficiary: airtimeConstants.AIRTIME_BENEFICIARIES_FETCH_FAILURE,
                 airtime_beneficiary_data: action
             };
+        
         default:
             return { ...state }
     }
@@ -56,6 +57,7 @@ export function buyAirtimeReducer(state = [], action) {
                 airtime_buydata: airtimeConstants.AIRTIME_BUYDATA_PAGE2,
                 airtime_buydata_data: action
             };
+        
 
         default: return {
             ...state
@@ -76,10 +78,11 @@ export function buyAirtimeWebPinReducer(state = [], action) {
                 airtime_buydata_data: action
             };
         case airtimeConstants.AIRTIME_WEBPIN_FAILURE:
-                    return {
-                        airtime_buydata: airtimeConstants.AIRTIME_WEBPIN_FAILURE,
-                        airtime_buydata_data: action
-                    };
+            return {
+                airtime_buydata: airtimeConstants.AIRTIME_WEBPIN_FAILURE,
+                airtime_buydata_data: action
+            };
+        
         default: return {
             ...state
         };
@@ -99,10 +102,11 @@ export function buyAirtimeWebPinOTPReducer(state = [], action) {
                 airtime_buydata_data: action
             };
         case airtimeConstants.AIRTIME_WEBPIN_OTP_FAILURE:
-                    return {
-                        airtime_buydata: airtimeConstants.AIRTIME_WEBPIN_OTP_FAILURE,
-                        airtime_buydata_data: action
-                    };
+            return {
+                airtime_buydata: airtimeConstants.AIRTIME_WEBPIN_OTP_FAILURE,
+                airtime_buydata_data: action
+            };
+        
         default: return {
             ...state
         };
@@ -128,7 +132,7 @@ export function debitableAccountsReducer(state = [], action) {
                 debitable_accounts: airtimeConstants.GET_DEBTABLE_ACCOUNTS_FAILURE,
                 debitable_accounts_data: action
             };
-
+        
         default: return {
             ...state
         };
@@ -154,7 +158,7 @@ export function airtimeSaveBeneficiaryReducer(state = [], action) {
                 airtime_beneficiary: airtimeConstants.AIRTIME_BENEFICIARIES_SAVE_FAILURE,
                 airtime_beneficiary_data: action
             };
-
+        
         default: return {
             ...state
         };

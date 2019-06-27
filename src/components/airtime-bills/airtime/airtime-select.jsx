@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 import { airtimeConstants } from '../../../redux/constants/airtime/airtime.constants';
-import { airtimeWebPinpayment } from "../../../redux/actions/airtime-bill/airtime.action";
+import { airtimeWebPinpayment, clearAirtimeStore } from "../../../redux/actions/airtime-bill/airtime.action";
 import Airtime from './airtime';
 import Select from 'react-select';
 import { Textbox } from "react-inputs-validation";
@@ -54,7 +54,7 @@ class AirtimeSelectAccount extends Component {
               AccountNumber : object.AccountNumber,
               PhoneNumber : this.state.bill.PhoneNumber
              }));
-     // this.props.history.push("/bills/airtime/otp");
+    // this.props.history.push("/bills/airtime/otp");
     }
 
 
@@ -66,7 +66,7 @@ class AirtimeSelectAccount extends Component {
         //Handles validation for PIN and AccountNumber selection
         return (<SelectAcount 
             bill={this.state.bill} 
-            backLink={"/bills/airtime/buy"} 
+            backLink={this.props.airtime.airtime_buydata_data.isBene ? "/bills/airtime" : "/bills/airtime/buy"} 
             submitAction={this.onSubmit}
             submitBusy={this.props.airtime_webpin.airtime_buydata === 
                 airtimeConstants.AIRTIME_WEBPIN_PENDING} />);
@@ -79,8 +79,8 @@ function mapStateToProps(state) {
     return {
         user,
         alert: state.alert,
-        airtime: state.airtime_buydata,
-        airtime_webpin : state.airtime_webpin,
+        airtime: state.airtimeReducerPile.airtime_buydata,
+        airtime_webpin : state.airtimeReducerPile.airtime_webpin,
     }
 }
 

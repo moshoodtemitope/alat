@@ -6,6 +6,7 @@ import {bankListRequest, beneficiariesRequest} from "./transfer.reducer";
 import {accountHistoryReducer} from "./dashboard.reducer";
 import { userConstants } from "../constants/onboarding/user.constants";
 import dataReducer from './data.reducer';
+import { airtimeConstants } from "../constants/airtime/airtime.constants";
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
 const rootReducer = (state, action)=>{
@@ -14,6 +15,21 @@ const rootReducer = (state, action)=>{
     return appReducer(state, action)
 
 };
+
+
+const airtimeReducerPile =(state, action)=>{
+    if(action.type === airtimeConstants.AIRTIME_REDUCER_CLEAR)
+    { state = undefined; }
+    return airtimeReducer(state, action);
+}
+const airtimeReducer = combineReducers({
+    airtime_beneficiaries: airtime.airtimeBeneficiariesReducer,
+    airtime_beneDelete: airtime.deleteBeneficiaryReducer,
+    airtime_buydata: airtime.buyAirtimeReducer,
+    airtime_webpin: airtime.buyAirtimeWebPinReducer,  
+    airtime_webpinotp: airtime.buyAirtimeWebPinOTPReducer,
+    airtime_save_bene: airtime.airtimeSaveBeneficiaryReducer
+})
 
 const appReducer = combineReducers({
     authentication,
@@ -31,13 +47,7 @@ const appReducer = combineReducers({
     transfer_bankList: transfer.bankListRequest,
     transfer_beneficiaries: transfer.beneficiariesRequest,
     transfer_fetch_user_account: transfer.fetchAccountDetailsRequest,
-    airtime_beneficiaries: airtime.airtimeBeneficiariesReducer,
-    airtime_beneDelete: airtime.deleteBeneficiaryReducer,
-    airtime_buydata: airtime.buyAirtimeReducer,
-    airtime_webpin: airtime.buyAirtimeWebPinReducer,  
-    airtime_webpinotp: airtime.buyAirtimeWebPinOTPReducer,
-    airtime_save_bene: airtime.airtimeSaveBeneficiaryReducer,
-
+    airtimeReducerPile,
     accounts: global.debitableAccountsReducer,
     // storage_reducer
     // storage_reducer
