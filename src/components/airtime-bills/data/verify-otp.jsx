@@ -34,6 +34,7 @@ class VerifyOtp extends Component {
 
 
     componentDidMount() {
+        console.log(this.props.dataInfo);
         this.props.resetPinState();
     }
 
@@ -163,7 +164,6 @@ const mapStateToProps = state => {
         dataPlans: state.data_reducer.dataPlans,
         accounts: state.data_reducer.debitableAccounts,
         phoneNumber: state.authentication.user.phoneNo,
-        pinVerified: state.data_reducer.pinVerified,
         fetching: state.data_reducer.isFetching,
         otpConfirmed: state.data_reducer.pinVerified,
         alert: state.alert,

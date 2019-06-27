@@ -121,11 +121,12 @@ export const fetchDataPlans = (token, data) => {
      } }
 }
 
-export const setDataTransactionDetails = (dataDetails, networkName) => {
+export const setDataTransactionDetails = (dataDetails, networkName, fromBeneficiary = false) => {
     return{
         type : actionTypes.SET_DATA_TRANSACTION_DETAILS,
         data : dataDetails,
-        network: networkName
+        network: networkName,
+        fromBeneficiary: fromBeneficiary
     }
 }
 
@@ -232,6 +233,12 @@ export const saveBeneficiary = (token, data) => {
 
             
     };
+
+    function clearDataInfoPost() {
+        return {
+            type: actionTypes.CLEAR_DATA_INFO_POST
+        }
+    }
 }
 
 function toNext () {
@@ -246,9 +253,4 @@ export const clearDataInfoNoPost = () => {
     }
 }
 
-export const clearDataInfoPost = () => {
-    return {
-        type: actionTypes.CLEAR_DATA_INFO_POST
-    }
-}
 

@@ -100,9 +100,9 @@ export const fetchDebitableAccounts = (token, requestType, data) => {
     }
 }
 
-export const airtimeBuyData =(airtimeTransaction)=>{
-    return(dispatch)=>dispatch(request(airtimeTransaction));
-    function request(data) { return { type: airtimeConstants.AIRTIME_BUYDATA_PAGE2, data } }
+export const airtimeBuyData =(airtimeTransaction, isBene)=>{
+    return(dispatch)=>dispatch(request(airtimeTransaction,isBene));
+    function request(data) { return { type: airtimeConstants.AIRTIME_BUYDATA_PAGE2, data, isBene : isBene ? true : false } }
 }
 
 export const selectAccount = (airtimeTransaction)=>{
@@ -189,4 +189,11 @@ export const airtimeBeneficiarySave =(token, data) =>{
     function request(request) { return { type: airtimeConstants.AIRTIME_BENEFICIARIES_SAVE_PENDING, request } }
     function success(response) { return { type: airtimeConstants.AIRTIME_BENEFICIARIES_SAVE_SUCCESS, response } }
     function failure(error) { return { type: airtimeConstants.AIRTIME_BENEFICIARIES_SAVE_FAILURE, error } }
+}
+
+export const clearAirtimeStore =()=>{
+    return (dispatch) => { 
+        dispatch(clear());
+    }
+    function clear(){return {type: airtimeConstants.AIRTIME_REDUCER_CLEAR, clear_data: "" }}
 }

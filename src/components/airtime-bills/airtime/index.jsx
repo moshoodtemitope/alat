@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 import { Link, NavLink, Route } from 'react-router-dom';
 import phoneimg from "../../../assets/img/phone-airtime.svg"
 import { connect } from "react-redux";
-import { getAirtimeBeneficiaries, deleteBeneficairy, airtimeBuyData } from "../../../redux/actions/airtime-bill/airtime.action";
+import { getAirtimeBeneficiaries, deleteBeneficairy, airtimeBuyData, clearAirtimeStore } from "../../../redux/actions/airtime-bill/airtime.action";
 import { airtimeConstants } from '../../../redux/constants/airtime/airtime.constants';
 import mtnImg from "../../../assets/img/mtn.svg";
 import airtelImg from "../../../assets/img/airtel.svg";
@@ -46,10 +46,14 @@ class Index extends Component {
         let props = this.props;
         if (this.state.isDelete == true) {
             if (props.airtime_beneDelete.airtime_beneficiary == airtimeConstants.AIRTIME_BENEFICIARIES_DELETE_SUCCESS) {
-                let a = this.props.airtime_beneficiary.airtime_beneficiary_data.response;
-                let index = a.findIndex(x => x.BeneficiaryId === this.state.selectedBeneficairyBeneficiaryId);
-
-                this.props.airtime_beneficiary.airtime_beneficiary_data.response.splice(index, 1);
+                // let a = this.props.airtime_beneficiary.airtime_beneficiary_data.response;
+                // let index = a.findIndex(x => x.BeneficiaryId === this.state.selectedBeneficairyBeneficiaryId);
+                // console.log(index);
+                // index-=1;
+                // console.log(index);
+                // this.props.airtime_beneficiary.airtime_beneficiary_data.response.splice(index, 1);
+                this.props.dispatch(clearAirtimeStore());
+                this.fetchAirtimeBeneficiaries();
                 this.toggleModal();
                 this.setState({ isDelete: false });
             }
@@ -76,6 +80,7 @@ class Index extends Component {
     }
 
     deleteBeneficiary = (index) => {
+        console.log(this.state.selectedBeneficairy.BeneficiaryId);
         const { dispatch } = this.props;
         let props = this.props;
         this.setState({ isDelete: true });
@@ -83,9 +88,8 @@ class Index extends Component {
     }
 
     beneficiarySelected(ben){
-        console.log(ben);
         const { dispatch } = this.props;
-        var result = dispatch(airtimeBuyData(ben));
+        var result = dispatch(airtimeBuyData(ben, true));
         this.props.history.push("/bills/airtime/select-account");
     }
 
@@ -98,13 +102,13 @@ class Index extends Component {
                 )
                 break;
             case 'GLO':
-                return (<img src={gloImg} srcSet="img/glo@2x.png 2x" />)
+                return (<img src={gloImg} srcSet="../../../img/glo@2x.png 2x" />)
                 break;
             case 'Airtel':
-                return (<img src={airtelImg} srcSet="img/airtel@2x.png 2x" />)
+                return (<img src={airtelImg} srcSet="../../../img/airtel@2x.png 2x" />)
                 break;
             case 'Etisalat':
-                return (<img src={etiImg} srcSet="img/9mobile@2x.png 2x" />)
+                return (<img src={etiImg} srcSet="../../../img/9mobile@2x.png 2x" />)
                 break;
             default:
                 return (<img src="" alt="Provider.png" />)
@@ -200,7 +204,7 @@ class Index extends Component {
                         </Modal>
                     </Fragment>
                 )
-            } else {
+            } else  {
                 return (
                     <div className="col-sm-12">
                         <div className="max-600 m-t-40">
@@ -222,8 +226,8 @@ function mapStateToProps(state) {
     const { user } = authentication;
     return {
         user,
-        airtime_beneficiary: state.airtime_beneficiaries,
-        airtime_beneDelete: state.airtime_beneDelete,
+        airtime_beneficiary: state.airtimeReducerPile.airtime_beneficiaries,
+        airtime_beneDelete: state.airtimeReducerPile.airtime_beneDelete,
         alert: state.alert
     };
 }

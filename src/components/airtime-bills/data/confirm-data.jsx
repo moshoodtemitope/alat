@@ -65,7 +65,7 @@ class ConfirmData extends Component {
 
     componentDidMount() {
         this.props.fetchDebitableAccounts(this.state.user.token);
-
+        console.log(this.props.dataInfo)
     }
 
     sortAccountsForSelect = () => {
@@ -153,7 +153,7 @@ class ConfirmData extends Component {
                 AccountNumber: (this.state.selectedAccounts ? this.state.selectedAccounts.value : this.state.confirmDataForm.activeAccount.elementConfig.options[0].value),
                 TransactionPin: this.state.confirmDataForm.pin.value
             }
-            this.props.setDataToBuyDetails(payload);
+            this.props.setDataToBuyDetails(payload,this.props.network, this.props.isFromBeneficiary);
 
             this.props.verifyInputedPIN(this.state.user.token, payload);
         }
@@ -186,11 +186,8 @@ class ConfirmData extends Component {
                                 <div className="max-600">
                                     <div className="al-card no-pad">
                                         <h4 className="m-b-10 center-text hd-underline">Buy Data</h4>
-
                                         <div className="transfer-ctn">
                                             <form>
-                                            
-                    
                                                 <div class="al-card no-pad">
                                                     <div class="trans-summary-card">
                                                         <div class="name-amount clearfix">
@@ -199,8 +196,6 @@ class ConfirmData extends Component {
                                                         </div>
                                                     </div>
                                                 </div>
-
-
                                                 {(this.props.alert.message) ?
                         <div className="info-label error">{this.props.alert.message} {this.props.alert.message.indexOf("rror") != -1 ? <span onClick={() => {this.props.fetchDebitableAccounts(this.state.user.token)}} style={{textDecoration:"underline", cursor:"pointer"}}>Click here to try again</span> : null}</div> : null
                         }
@@ -284,6 +279,7 @@ const mapStateToProps = state => {
         pinVerified: state.data_reducer.pinVerified,
         errorMessage: state.data_reducer.errorMessage,
         network: state.data_reducer.network,
+        isFromBeneficiary : state.data_reducer.isFromBeneficiary,
         alert: state.alert,
     }
 }
@@ -292,7 +288,7 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchDebitableAccounts: (token) => dispatch(actions.fetchDebitableAccounts(token)),
         verifyInputedPIN : (token, data) => dispatch(actions.pinVerificationStart(token, data)),
-        setDataToBuyDetails: (dataToBuy, network) => dispatch(actions.setDataTransactionDetails(dataToBuy, network)),
+        setDataToBuyDetails: (dataToBuy, network, fromBeneficiary) => dispatch(actions.setDataTransactionDetails(dataToBuy, network, fromBeneficiary)),
         resetPinState: () => dispatch(actions.pinVerificationTryAgain()),
         clearError: () => dispatch(alertActions.clear())
     }
