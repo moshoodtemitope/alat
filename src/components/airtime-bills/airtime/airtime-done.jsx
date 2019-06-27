@@ -71,7 +71,7 @@ class AirtimeDone extends React.Component {
 
     render() {
         if (this.props.airtime_bene.airtime_beneficiary == airtimeConstants.AIRTIME_BENEFICIARIES_SAVE_SUCCESS)
-            this.props.history.push("/dashboard");
+            this.props.history.push("/bills/airtime");
         return (
             <div className="col-sm-12">
                 <div className="row">
