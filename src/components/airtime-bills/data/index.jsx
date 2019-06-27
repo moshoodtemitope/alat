@@ -44,7 +44,7 @@ class Index extends Component {
     }
 
     useBeneficiary = (dataToSet, network) =>{
-        this.props.setDataToBuyDetails(dataToSet, network)
+        this.props.setDataToBuyDetails(dataToSet, network, true)
         this.props.history.push('/bills/data/buy/confirm');
     }
 
@@ -166,7 +166,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onDeleteBeneficiary: (token, data) => dispatch(actions.deleteDataBeneficiary(token, data)),
         fetchBeneficiaries : (token) => dispatch(actions.fetchDataBeneficiaries(token)),
-        setDataToBuyDetails: (dataToBuy, network) => dispatch(actions.setDataTransactionDetails(dataToBuy, network)),
+        setDataToBuyDetails: (dataToBuy, network, fromBeneficiary) => dispatch(actions.setDataTransactionDetails(dataToBuy, network, fromBeneficiary)),
         clearDataInfo: () => dispatch(actions.clearDataInfoNoPost()),
         resetPinState: () => dispatch(actions.pinVerificationTryAgain()),
     }

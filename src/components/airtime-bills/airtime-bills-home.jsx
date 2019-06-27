@@ -33,6 +33,7 @@ class Bills extends Component {
                                             <ul>
                                                 <li><NavLink to={'/bills/airtime'}>Airtime</NavLink></li>
                                                 <li><NavLink to={'/bills/data'}>Data</NavLink></li>
+                                                <li><NavLink to={'/bills/bills'}>Bills</NavLink></li>
 
                                                 {/* <li><a href="bills.html">Bills Payment</a></li> */}
                                             </ul>
