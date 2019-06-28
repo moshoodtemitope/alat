@@ -1447,6 +1447,67 @@ ul.menu-side {
 .atm-pending {
   color: #AB2656; }
 
+  .fund-option {
+    color: #A90836;
+    background: #FFFFFF;
+    border: 0.95px solid #FFF4F4;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-shadow: 0px 8px 24px rgba(185, 185, 185, 0.162138);
+    box-shadow: 0px 8px 24px rgba(185, 185, 185, 0.162138);
+    border-radius: 4.75px;
+    width: 144px;
+    height: 152px;
+    margin: 8px;
+    padding: 17px;
+    padding-top: 30px;
+    cursor: pointer;
+    float: left; }
+    .fund-option .hoveraction {
+      display: none; }
+    .fund-option:hover {
+      color: white;
+      background: #A90836;
+      border: 0.95px solid #FFF4F4;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      -webkit-box-shadow: 0px 30px 40px rgba(0, 0, 0, 0.162138);
+      box-shadow: 0px 30px 40px rgba(0, 0, 0, 0.162138);
+      border-radius: 4.75px; }
+      .fund-option:hover .hoveraction {
+        display: unset; }
+      .fund-option:hover .toshow {
+        display: none; }
+    .fund-option p {
+      padding-top: 24px;
+      font-family: Proxima Nova;
+      font-size: 14px;
+      line-height: 17px; }
+  
+  .fund-option-ctn {
+    padding-right: 60px;
+    padding-left: 60px;
+    padding-top: 50px;
+    padding-bottom: 90px;
+    float: left;
+    width: 100%; }
+    .fund-option-ctn .active {
+      color: white;
+      background: #A90836;
+      border: 0.95px solid #FFF4F4;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      -webkit-box-shadow: 0px 30px 40px rgba(0, 0, 0, 0.162138);
+      box-shadow: 0px 30px 40px rgba(0, 0, 0, 0.162138);
+      border-radius: 4.75px; }
+      .fund-option-ctn .active .hoveraction {
+        display: unset; }
+      .fund-option-ctn .active .toshow {
+        display: none; }
+  
+  .fund-al-card {
+    float: left; }
+
 .profile-details {
   padding: 30px 30px 15px;
   text-align: center;

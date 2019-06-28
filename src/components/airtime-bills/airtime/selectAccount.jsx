@@ -92,7 +92,8 @@ class SelectAcount extends React.Component {
                                         <SelectDebitableAccounts
                                             value={this.state.accountNumber}
                                             accountInvalid={this.state.isAccountInvalid}
-                                            onChange={this.handleSelectDebitableAccounts} />
+                                            onChange={this.handleSelectDebitableAccounts} 
+                                            labelText={"Select an account to debit"}/>
 
                                         <AlatPinInput
                                             value={this.state.Pin}
