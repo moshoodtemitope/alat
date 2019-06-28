@@ -36,7 +36,7 @@ class AmountInput extends React.Component {
     }
 
     toCurrency(number) {
-        console.log(number);
+        // console.log(number);
         const formatter = new Intl.NumberFormat('en-IN', {
             style: "decimal",
             currency: "USD",

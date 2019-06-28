@@ -2,8 +2,125 @@
 // @import '../../assets/scss/mixins';
 // @import '../../assets/scss/button';
 
+// .modal-heading{
+//   color: #AB2656;
+// }
+
+.hide{
+  display: none
+}
+.recipient-and-amount{
+  color: #ffffff;
+  .bank-info, p{
+    margin-bottom: 0;
+  }
+  .bankname {
+    // margin-right: 13px;
+    float: right;
+  }
+}
+.inputctn-wrap{
+  margin-bottom: 25px;
+  .input-ctn{
+    margin-bottom: 3px;
+  }
+  .limit-text{
+    color: #AB2656;
+    font-size: 13px;
+  }
+}
+.amount-charged{
+  font-size: 14px;
+  color: #AB2656;
+  margin-bottom: 5px;
+  display: block;
+  text-align: center;
+}
+.card-wrap{
+  margin-bottom: 35px;
+  .beneficiary-card .all-info{
+    width: 100%;
+  }
+  .card-heading{
+    margin-bottom: 6px;
+  }
+}
+.recipient-name{
+  font-size: 16px;
+  margin-bottom: 0;
+  font-family: "proxima_novasemibold", sans-serif;
+  color: #ffffff;
+  .amount-to-send{
+    float: right;
+    // margin-right: 13px;
+  }
+}
+.proceed-ctas{
+  .btn-alat{
+    min-width: unset;
+    width: 100%;
+    &.light-btn{
+      background: #FDFEFE;
+      color: #BDC3C7;
+      border: 1px solid #D7DBDD;
+      &:hover{
+        color: #AB2656;
+        border: 1px solid #AB2656;
+      }
+    }
+  }
+}
+.search-beneficiary{
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05);
+  padding: 15px 15px;
+  background: #fff;
+  border-radius: 57px;
+  margin-bottom: 20px;
+  input{
+    border-radius: 24px!important;
+    text-align: center;
+  }
+}
+.see-more-cta {
+  text-align: center;
+  margin-bottom: 20px;
+  a:not([href]):not([tabindex]), &:hover{
+    color: #AB2656;
+    &:hover{
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}
+.div-modal h3.modal-heading {
+  color: #AB2656;
+  margin-bottom: 10px;
+  font-size: 21px;
+}
 .error-msg{
   color: #AB2656;
+}
+.info-label{
+  margin-bottom: 10px!important;
+}
+.loading-content{
+  text-align: center;
+  margin-bottom: 10px;
+}
+.error-field{
+  border: 1px solid #AB2656!important;
+  color:  #AB2656;
+} 
+a:not([href]):not([tabindex]).cta-link{
+  text-align: right;
+  color: #AB2656;
+  &:hover{
+    text-decoration: underline;
+    color: #AB2656;
+  }
+  &.to-right{
+    float: right;
+  }
 }
 .inputWrap{
   &.form-error{
@@ -27,6 +144,7 @@
     }
   }
 }
+
 .beneficiary-card {
     padding: 25px 20px;
     cursor: pointer;
@@ -54,16 +172,25 @@
           float: right;
           // font-family: $medium;
           // color: $primary-color;
+          &.nickname-text{
+            float: none;
+          }
         }
       }
     }
   
-    .nickname {
+    .summary-info {
       color: #717171;
       font-weight: 600;
       font-size: 14px;
       span {
         float: right;
+      }
+      i{
+        color: #b1b1b1;
+        &:hover{
+          color: #AB2656;
+        }
       }
     }
   
