@@ -12,7 +12,8 @@ import connect from "react-redux/es/connect/connect";
 import Bills from './airtime-bills/airtime-bills-home';
 import NewTransfer from "./transfer/cash-transfer/new-transfer";
 import TransferHome from "./transfer/transfer-home";
-import BillsRoute from './airtime-bills/bills-route';
+//import BillsRoute from './airtime-bills/bills-route';
+import FundAccount from './fund-account/index';
 
 
 
@@ -47,6 +48,7 @@ class AuthenticatedRoutes extends React.Component{
                 <Switch>
                     {/*<Route path="/dashboard" component={Dashboard} />*/}
                     <PrivateRoute path='/dashboard' authed={this.props.user} component={Dashboard} />
+                    <PrivateRoute path='/fund' authed={this.props.user} component={FundAccount} />
                     {/* <BillsRoute authed={this.props.user}/> */}
                     {/* <PrivateRoute exact path='/bills' authed={this.props.user} component= {Bills}>
                         <Redirect to={'/bills/airtime'} />

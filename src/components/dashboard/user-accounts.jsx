@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import $ from 'jquery';
 import Slider from 'react-animated-slider';
-import {NavLink} from "react-router-dom";
+import {NavLink, Link} from "react-router-dom";
 import {Fragment} from "react";
 import {getAccountHistory, getAccounts} from "../../redux/actions/dashboard/dashboard.actions";
 import {dashboardConstants as userConstants} from "../../redux/constants/dashboard/dashboard.constants";
@@ -59,13 +59,13 @@ class UserAccounts extends React.Component{
 
                                 <div className="account-balance clearfix">
                                     <p className="balance">₦{utils.formatAmount(acct.AvailableBalance)}</p>
-                                    <a href="#" className="btn-alat btn-white m-t-10 btn-sm">Fund Account</a>
+                                    {acct.IsDebitable && <NavLink to={"/fund"} className="btn-alat btn-white m-t-10 btn-sm">Fund </NavLink>}
                                 </div>
                             </div>
                         );
                     })}
                 </Slider>
-            );
+            );P
         }
     }
 
