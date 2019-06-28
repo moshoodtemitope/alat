@@ -24,7 +24,7 @@ class Bills extends Component {
                         <div className="container">
                             <div className="row">
                                 <div className="col-sm-12">
-                                    {/* <p className="page-title">Airtime & Bills Payment <span><a href="#" className="btn-alat">Buy Airtime</a></span></p> */}
+                                    <p className="page-title">Airtime & Bills Payment</p>
                                 </div>
 
                                 <div className="col-sm-12">

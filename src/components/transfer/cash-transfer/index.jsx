@@ -7,6 +7,7 @@ import NewTransfer from "./new-transfer";
 import ProvideDetails from "./provide-details";
 import ConFirmTransfer from "./confirm";
 import TransferSuccess from "./transfer-success";
+import TransferContainer from "../container"
 
 class Cashtransfer extends Component {
     constructor(props) {
@@ -17,7 +18,7 @@ class Cashtransfer extends Component {
     }
 
     componentDidMount() {
-      
+      console.log("index is mounted");
     }
    render() {
        return(
