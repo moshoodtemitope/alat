@@ -65,7 +65,7 @@ class UserAccounts extends React.Component{
                         );
                     })}
                 </Slider>
-            );P
+            );
         }
     }
 

@@ -11,7 +11,7 @@ import fundwemaHover from '../../assets/img/fund-wema-white.svg';
 import creditcard from '../../assets/img/credit-card.svg';
 import creditcardHover from '../../assets/img/credit-card-white.svg';
 import fundworld from '../../assets/img/fund-world.svg';
-import fundworldHover from '../../assets/img/fund-world-white';
+import fundworldHover from '../../assets/img/fund-world-white.svg';
 
 class FundAccountIndex extends React.Component {
     constructor(props) {
