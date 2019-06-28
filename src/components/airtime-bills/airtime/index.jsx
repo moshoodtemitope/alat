@@ -138,7 +138,7 @@ class Index extends Component {
                                         {this.returnImage(ben.BillerName)}
                                     </div>
                                     <div className="all-info">
-                                        <p className="line-price">{ben.BillerAlias} <span className="price">#{utils.formatAmount(ben.Amount)}</span></p>
+                                        <p className="line-price">{ben.BillerAlias} <span className="price">N{utils.formatAmount(ben.Amount)}</span></p>
                                         <p className="num-ref">{ben.PhoneNumber}<span className="price"><a onClick={(e) => this.toggleModal(ben, key, e)}><i className="fa fa-trash-o" aria-hidden="true"></i></a></span></p>
                                     </div>
                                 </div>

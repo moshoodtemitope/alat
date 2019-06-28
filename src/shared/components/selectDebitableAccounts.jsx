@@ -17,7 +17,9 @@ class SelectDebitableAccounts extends React.Component {
     }
 
     componentDidMount() {
-        this.loadDebitableAccounts();
+        if(this.props.accounts.debitable_accounts ==
+                airtimeConstants.GET_DEBTABLE_ACCOUNTS_PENDING){}
+        else this.loadDebitableAccounts();
     }
 
     sortAccountsForSelect = () => {
@@ -45,13 +47,17 @@ class SelectDebitableAccounts extends React.Component {
                 airtimeConstants.GET_DEBTABLE_ACCOUNTS_SUCCESS) {
                 this.setState({isAccountsLoaded : true});
             }
-            else {
+            else if(this.props.accounts.debitable_accounts ==
+                airtimeConstants.GET_DEBTABLE_ACCOUNTS_PENDING) {
+               // 
+            }
+            else{
                 this.props.fetchDebitableAccounts({token:this.state.user.token, requestType: this.props.requestType});
             }
     }
 
     handleSelectAccount = (e) => {
-        //console.log(e);
+        console.log(e);
         this.props.onChange(e.value);
         this.setState({ selectedAccount: e.value })
     }
@@ -67,7 +73,7 @@ class SelectDebitableAccounts extends React.Component {
                     airtimeConstants.GET_DEBTABLE_ACCOUNTS_SUCCESS
                     &&
                     <div className={this.props.accountInvalid ? "input-ctn form-error" : "input-ctn"}>
-                        <label>Select an account to debit</label>
+                        <label>{this.props.labelText}</label>
                         <Select placeholder="Select Account"
                             onChange={this.handleSelectAccount}
                             options={this.state.debitableAccounts}
@@ -83,7 +89,7 @@ class SelectDebitableAccounts extends React.Component {
                     airtimeConstants.GET_DEBTABLE_ACCOUNTS_PENDING
                     &&
                     <div className={this.props.accountInvalid ? "input-ctn form-error" : "input-ctn"}>
-                        <label>Select an account to debit</label>
+                        <label>{this.props.labelText}</label>
                         <Select placeholder="Loading accounts..."
                             disabled={true}
                         />
@@ -96,7 +102,7 @@ class SelectDebitableAccounts extends React.Component {
                     airtimeConstants.GET_DEBTABLE_ACCOUNTS_FAILURE
                     &&
                     <div className={this.props.accountInvalid ? "input-ctn form-error" : "input-ctn"}>
-                        <label>Select an account to debit</label>
+                        <label>{this.props.labelText}</label>
                         <Select placeholder="Failed to load accounts..."
                             disabled="true"
                         />
