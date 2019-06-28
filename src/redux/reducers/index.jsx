@@ -6,6 +6,7 @@ import {bankListRequest, beneficiariesRequest} from "./transfer.reducer";
 import {accountHistoryReducer} from "./dashboard.reducer";
 import { userConstants } from "../constants/onboarding/user.constants";
 import dataReducer from './data.reducer';
+import cardlessReducer from './cardless.reducer';
 import { airtimeConstants } from "../constants/airtime/airtime.constants";
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
@@ -64,7 +65,8 @@ const appReducer = combineReducers({
     // storage_reducer
 
     //data_reducer
-    data_reducer: dataReducer
+    data_reducer: dataReducer,
+    cardless_reducer: cardlessReducer,
 
 });
 
