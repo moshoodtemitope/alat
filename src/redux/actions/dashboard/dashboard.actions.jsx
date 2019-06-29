@@ -110,7 +110,20 @@ export const getGoalsSummary = (token) => {
                 dispatch(success(response.data));
             })
             .catch(error => {
-                dispatch(failure(error.response.data.message.toString()));
+                if((error.response.data.Message)){
+                    dispatch(failure(error.response.data.Message.toString()));
+                }
+                else if(error.response.message){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                    
+                else if(error.response.data.ModelState){
+                        dispatch(failure(modelStateErrorHandler(error)));
+                }
+                else{
+                    dispatch(failure('An error occurred.'));
+                }
+                // dispatch(failure(error.response.data.message.toString()));
             });
     };
 

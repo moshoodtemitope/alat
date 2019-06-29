@@ -9,11 +9,13 @@ import {
     SENDBANK_TRANSFER_SUCCESS, 
     SENDBANK_TRANSFER_FAILURE,} from "../../../redux/constants/transfer.constants";
 import AlatPinInput from '../../../shared/components/alatPinInput';
+import {sendMoneyTransfer} from "../../../redux/actions/transfer/cash-transfer.actions";
 
 class ConFirmTransfer extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
+            user: JSON.parse(localStorage.getItem("user")),
             Pin: "",
             isPinInvalid: false,
             isSubmitted: false,
@@ -28,9 +30,11 @@ class ConFirmTransfer extends React.Component{
 
     componentDidMount() {
         this.verifyTransferStage();
+        
     }
 
     verifyTransferStage(){
+        console.log('charegs', this.props.transfer_charges);
         let props = this.props
         if (!props.transfersender.transfer_info && props.transfersender.transfer_info !== SENDER__BANK_DETAILS) {
             this.props.history.push("/transfer");
@@ -46,7 +50,7 @@ class ConFirmTransfer extends React.Component{
                 SenderAccountName: props.transfersender.transfer_info_data.data.SenderAccountName,
                 SenderAccountBalance: props.transfersender.transfer_info_data.data.AccountBalance,
                 AmountToSend: props.transfersender.transfer_info_data.data.AmountToSend,
-                BankCharge : props.account_details.account_detail_data.response.Charge,
+                BankCharge : props.transfer_charges.bank_charges_data.response.data[0].Charge,
                 SenderAccountNumber: props.transfersender.transfer_info_data.data.SenderAccountNumber
             };
             if(transferDetails.BankCode === '035' || transferDetails.BankCode === '000017'){
@@ -66,6 +70,7 @@ class ConFirmTransfer extends React.Component{
 
     makeTransfer(e){
         e.preventDefault();
+        const {dispatch} = this.props;
         let payload = {
                         BeneficiaryEmail:this.props.transfersender.transfer_info_data.data.RecipientEmail,
                         SourceAccountName:this.state.accountData.SenderAccountName,
@@ -79,6 +84,11 @@ class ConFirmTransfer extends React.Component{
                         Narration:this.props.transfersender.transfer_info_data.data.TransferPurpose,
                         TransactionPin:this.state.Pin
                     }
+            dispatch(sendMoneyTransfer(this.state.user.token,payload, false));
+            let transferStatus = this.props.transfer_money;
+
+            
+            
         console.log('Payload for payment is', payload);
     }
     handleAlatPinChange(pin) {
@@ -92,7 +102,8 @@ class ConFirmTransfer extends React.Component{
     
 
     render(){
-        let props = this.props;
+        let props = this.props,
+            transferStatus = props.transfer_money;
         return(
             <Fragment>
                             <div className="col-sm-12">
@@ -136,23 +147,31 @@ class ConFirmTransfer extends React.Component{
                                                         </div>
                                                     </div>
 
-                                                    
-
-                                                        <AlatPinInput
-                                                            value={this.state.Pin}
-                                                            onChange={this.handleAlatPinChange}
-                                                            PinInvalid={this.state.isPinInvalid}
-                                                            maxLength={4} />
-
-                                                        <div className="row">
-                                                            <div className="col-sm-12">
-                                                                <center>
-                                                                    <span className="amount-charged"> You will be charged ₦{this.state.accountData.BankCharge} </span>
-                                                                    <button type="submit" onClick={this.makeTransfer} className="btn-alat m-t-10 m-b-20 text-center">Send Money</button>
-                                                                </center>
-
+                                                        <form onSubmit={this.makeTransfer} >
+                                                            <div className="inputctn-wrap centered-input">
+                                                                <AlatPinInput
+                                                                    value={this.state.Pin}
+                                                                    onChange={this.handleAlatPinChange}
+                                                                    PinInvalid={this.state.isPinInvalid}
+                                                                    maxLength={4} />
                                                             </div>
-                                                        </div>
+                                                            {transferStatus.sendmoney_status===SENDBANK_TRANSFER_FAILURE &&
+                                                                <div className="error-msg text-center">{transferStatus.sendmoney_status_data.error} </div>
+                                                            }
+                                                            <div className="row">
+                                                                <div className="col-sm-12">
+                                                                    <center>
+                                                                        <span className="amount-charged"> You will be charged ₦{this.state.accountData.BankCharge} </span>
+                                                                        <button type="submit" 
+                                                                            disabled={(this.props.transfer_money.fetchStatus && this.props.transfer_money.fetchStatus===true)?true:false}
+                                                                            className="btn-alat m-t-10 m-b-20 text-center">
+                                                                            {transferStatus.sendmoney_status===SENDBANK_TRANSFER_PENDING ?"Processing...": "Proceed"}
+                                                                        </button>
+                                                                    </center>
+
+                                                                </div>
+                                                            </div>
+                                                        </form>
                                                     
                                                 </div>
                                             </div>
@@ -171,9 +190,11 @@ function mapStateToProps(state) {
     return {
         user,
         alert: state.alert,
-        transfer_info: state.transfer_details_data,
-        account_details: state.transfer_fetch_user_account,
-        transfersender: state.transfersender_details_data
+        transfer_info: state.transferReducerPile.transfer_details_data,
+        account_details: state.transferReducerPile.transfer_fetch_user_account,
+        transfersender: state.transferReducerPile.transfersender_details_data,
+        transfer_money: state.transferReducerPile.transfer_send_money,
+        transfer_charges: state.transferReducerPile.transfer_bank_charges
     };
 }
 export default connect(mapStateToProps)(ConFirmTransfer);

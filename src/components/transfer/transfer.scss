@@ -19,6 +19,29 @@
     float: right;
   }
 }
+.centered-input{
+  .input-ctn input, input{
+    text-align: center;
+  }
+}
+a.edit-cta:not([href]):not([tabindex]){
+  color: #AB2656;
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+  &:hover{
+    color: #AB2656;
+    font-size: 14px;
+    text-decoration: underline;
+  }
+}
+.otpInput{
+  input{
+    letter-spacing: 7.2px;
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+}
 .inputctn-wrap{
   margin-bottom: 25px;
   .input-ctn{
@@ -97,8 +120,30 @@
   margin-bottom: 10px;
   font-size: 21px;
 }
+.al-card.ontransfer{
+  margin-bottom: 5px;
+  .trans-summary-card{
+    margin-bottom: 0;
+  }
+}
+.charges-text {
+  margin-bottom: 24px;
+  color: #AB2656;
+}
 .error-msg{
   color: #AB2656;
+}
+.info-label.error{
+  margin: 0 70px;
+}
+.otpform{
+  float: left;
+  width: 100%;
+  .failed-otp-ctas{
+    float: left;
+    width: 100%;
+    margin: 15px 0 28px;
+  }
 }
 .info-label{
   margin-bottom: 10px!important;

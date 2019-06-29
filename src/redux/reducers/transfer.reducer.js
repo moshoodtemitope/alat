@@ -17,8 +17,19 @@ import {
     SENDBANK_TRANSFER_PENDING, 
     SENDBANK_TRANSFER_SUCCESS, 
     SENDBANK_TRANSFER_FAILURE,
+    PROCESS_TRANSFER_PENDING, 
+    PROCESS_TRANSFER_SUCCESS, 
+    PROCESS_TRANSFER_FAILURE,
     TRANSFER__BANK_DETAILS,
-    SENDER__BANK_DETAILS
+    GET_BANKCHARGES_PENDING,
+    GET_BANKCHARGES_SUCCESS, 
+    GET_BANKCHARGES_FAILURE,
+    TRANSFER__BANK_DETAILS_FAILURE,
+    TRANSFER__BANK_DETAILS_SUCCESS,
+    SENDER__BANK_DETAILS,
+    SAVE_TRANSFER_BENEFICIARY_PENDING,
+    SAVE_TRANSFER_BENEFICIARY_SUCCESS,
+    SAVE_TRANSFER_BENEFICIARY_FAILURE
 } from "../constants/transfer.constants";
 
 export function bankListRequest(state=[], action) {
@@ -128,6 +139,33 @@ export function transferSenderDetailsReducer(state = [], action){
 }
 
 
+export function getBankChargesReducer(state=[], action) {
+    switch (action.type) {
+        case GET_BANKCHARGES_PENDING:
+            return {
+                bank_charges_state: GET_BANKCHARGES_PENDING,
+                bank_charges_data: action,
+                fetchStatus: true
+            };
+        case GET_BANKCHARGES_SUCCESS:
+            return {
+                bank_charges_state: GET_BANKCHARGES_SUCCESS,
+                bank_charges_data: action,
+                fetchStatus: false
+            };
+        case GET_BANKCHARGES_FAILURE:
+            return {
+                bank_charges_state: GET_BANKCHARGES_FAILURE,
+                bank_charges_data: action,
+                fetchStatus: true
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+
 export function fetchAccountDetailsRequest(state=[], action) {
     switch (action.type) {
         case GET_ACCOUNT_DETAILS_PENDING:
@@ -146,6 +184,84 @@ export function fetchAccountDetailsRequest(state=[], action) {
             return {
                 account_detail: GET_ACCOUNT_DETAILS_FAILURE,
                 account_detail_data: action,
+                fetchStatus: false
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+export function sendMoneyTransferRequest(state=[], action) {
+    switch (action.type) {
+        case SENDBANK_TRANSFER_PENDING:
+            return {
+                sendmoney_status: SENDBANK_TRANSFER_PENDING,
+                sendmoney_status_data: action,
+                fetchStatus: true
+            };
+        case SENDBANK_TRANSFER_SUCCESS:
+            return {
+                sendmoney_status: SENDBANK_TRANSFER_SUCCESS,
+                sendmoney_status_data: action,
+                fetchStatus: true
+            };
+        case SENDBANK_TRANSFER_FAILURE:
+            return {
+                sendmoney_status: SENDBANK_TRANSFER_FAILURE,
+                sendmoney_status_data: action,
+                fetchStatus: false
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+export function saveBankTransferReducer(state=[], action) {
+    switch (action.type) {
+        case SAVE_TRANSFER_BENEFICIARY_PENDING:
+            return {
+                sendmoney_status: SAVE_TRANSFER_BENEFICIARY_PENDING,
+                sendmoney_status_data: action,
+                fetchStatus: true
+            };
+        case SAVE_TRANSFER_BENEFICIARY_SUCCESS:
+            return {
+                sendmoney_status: SAVE_TRANSFER_BENEFICIARY_SUCCESS,
+                sendmoney_status_data: action,
+                fetchStatus: true
+            };
+        case SAVE_TRANSFER_BENEFICIARY_FAILURE:
+            return {
+                sendmoney_status: SAVE_TRANSFER_BENEFICIARY_FAILURE,
+                sendmoney_status_data: action,
+                fetchStatus: false
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+export function processMoneyTransferRequest(state=[], action) {
+    switch (action.type) {
+        case PROCESS_TRANSFER_PENDING:
+            return {
+                sendmoney_status: PROCESS_TRANSFER_PENDING,
+                sendmoney_status_data: action,
+                fetchStatus: true
+            };
+        case PROCESS_TRANSFER_SUCCESS:
+            return {
+                sendmoney_status: PROCESS_TRANSFER_SUCCESS,
+                sendmoney_status_data: action,
+                fetchStatus: false
+            };
+        case PROCESS_TRANSFER_FAILURE:
+            return {
+                sendmoney_status: PROCESS_TRANSFER_FAILURE,
+                sendmoney_status_data: action,
                 fetchStatus: false
             };
 

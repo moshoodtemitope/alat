@@ -8,6 +8,7 @@ import { userConstants } from "../constants/onboarding/user.constants";
 import dataReducer from './data.reducer';
 import cardlessReducer from './cardless.reducer';
 import { airtimeConstants } from "../constants/airtime/airtime.constants";
+import { TRANSFER_REDUCER_CLEAR } from "../constants/transfer.constants";
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
 const rootReducer = (state, action)=>{
@@ -23,6 +24,29 @@ const airtimeReducerPile =(state, action)=>{
     { state = undefined; }
     return airtimeReducer(state, action);
 }
+
+const transferReducerPile =(state, action)=>{
+    if(action.type === TRANSFER_REDUCER_CLEAR){ 
+        state = undefined; 
+    }
+    return transferReducers(state, action);
+}
+
+
+const transferReducers = combineReducers({
+    transfer_bankList: transfer.bankListRequest,
+    transfer_beneficiaries: transfer.beneficiariesRequest,
+    delete_transfer_beneficiaryState: transfer.deleteBeneficiaryRequest,
+    save_beneficiary: transfer.saveBankTransferReducer,
+    transfer_fetch_user_account: transfer.fetchAccountDetailsRequest,
+    transfer_details_data: transfer.transferDetailsReducer,
+    transfersender_details_data: transfer.transferSenderDetailsReducer,
+    transfer_send_money: transfer.sendMoneyTransferRequest,
+    transfer_processsend_money: transfer.processMoneyTransferRequest,
+    tranferlimit_info: transfer.fetchTransactionLimitRequest,
+    transfer_bank_charges: transfer.getBankChargesReducer
+})
+
 const airtimeReducer = combineReducers({
     airtime_beneficiaries: airtime.airtimeBeneficiariesReducer,
     airtime_beneDelete: airtime.deleteBeneficiaryReducer,
@@ -45,21 +69,24 @@ const appReducer = combineReducers({
     dashboard_userGoals: dashboard.userGoalsReducer,
     dashboard_userOnboardingPriority: dashboard.onboardingPriorityReducer,
     dashboard_announcementCard: dashboard.announcementReducer,
-    transfer_bankList: transfer.bankListRequest,
-    transfer_beneficiaries: transfer.beneficiariesRequest,
-    delete_transfer_beneficiaryState: transfer.deleteBeneficiaryRequest,
-    transfer_fetch_user_account: transfer.fetchAccountDetailsRequest,
-    transfer_details_data: transfer.transferDetailsReducer,
-    transfersender_details_data: transfer.transferSenderDetailsReducer,
-    tranferlimit_info: transfer.fetchTransactionLimitRequest,
-    airtime_beneficiaries: airtime.airtimeBeneficiariesReducer,
-    airtime_beneDelete: airtime.deleteBeneficiaryReducer,
-    airtime_buydata: airtime.buyAirtimeReducer,
-    airtime_webpin: airtime.buyAirtimeWebPinReducer,  
-    airtime_webpinotp: airtime.buyAirtimeWebPinOTPReducer,
-    airtime_save_bene: airtime.airtimeSaveBeneficiaryReducer,
+    // transfer_bankList: transfer.bankListRequest,
+    // transfer_beneficiaries: transfer.beneficiariesRequest,
+    // delete_transfer_beneficiaryState: transfer.deleteBeneficiaryRequest,
+    // transfer_fetch_user_account: transfer.fetchAccountDetailsRequest,
+    // transfer_details_data: transfer.transferDetailsReducer,
+    // transfersender_details_data: transfer.transferSenderDetailsReducer,
+    // transfer_send_money: transfer.sendMoneyTransferRequest,
+    // transfer_processsend_money: transfer.processMoneyTransferRequest,
+    // tranferlimit_info: transfer.fetchTransactionLimitRequest,
+    // airtime_beneficiaries: airtime.airtimeBeneficiariesReducer,
+    // airtime_beneDelete: airtime.deleteBeneficiaryReducer,
+    // airtime_buydata: airtime.buyAirtimeReducer,
+    // airtime_webpin: airtime.buyAirtimeWebPinReducer,  
+    // airtime_webpinotp: airtime.buyAirtimeWebPinOTPReducer,
+    // airtime_save_bene: airtime.airtimeSaveBeneficiaryReducer,
 
     airtimeReducerPile,
+    transferReducerPile,
     accounts: global.debitableAccountsReducer,
     // storage_reducer
     // storage_reducer

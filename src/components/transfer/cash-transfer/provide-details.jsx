@@ -10,11 +10,16 @@ import Select from 'react-select';
 import Modal from 'react-responsive-modal';
 import {Textbox} from "react-inputs-validation";
 import "./../transfer.scss";
-import {senderTransferData, getTransactionLimit} from "../../../redux/actions/transfer/cash-transfer.actions";
+import {senderTransferData, 
+        getTransactionLimit,
+        getBankTransferCharges} from "../../../redux/actions/transfer/cash-transfer.actions";
 import {
     TRANSFER__BANK_DETAILS,
     GET_TRANSACTION_LIMIT_PENDING, 
     GET_TRANSACTION_LIMIT_SUCCESS, 
+    GET_BANKCHARGES_PENDING,
+    GET_BANKCHARGES_SUCCESS, 
+    GET_BANKCHARGES_FAILURE,
     GET_TRANSACTION_LIMIT_FAILURE,} from "../../../redux/constants/transfer.constants";
 
 class ProvideDetails extends React.Component{
@@ -26,6 +31,7 @@ class ProvideDetails extends React.Component{
             isPinInvalid: false,
             selectedAccount: "",
             AmountToSend :"",
+            Amount:"",
             isAccountInvalid: false,
             isSubmitted: false,
             accountData:{},
@@ -37,10 +43,12 @@ class ProvideDetails extends React.Component{
         this.handleAmount = this.handleAmount.bind(this);
         this.handleSelectDebitableAccounts = this.handleSelectDebitableAccounts.bind(this);
         this.proceedWithTransfer = this.proceedWithTransfer.bind(this);
+        this.retryBankCharges = this.retryBankCharges.bind(this);
     }
 
     componentDidMount() {
         this.verifyTransferStage();
+        this.getBankCharges();
         
     }
 
@@ -54,40 +62,89 @@ class ProvideDetails extends React.Component{
         }
     }
 
+    getBankCharges(){
+        const {dispatch, account_details} = this.props;
+        dispatch(getBankTransferCharges(this.state.user.token));
+    }
+    retryBankCharges(e){
+        e.preventDefault();
+        this.getBankCharges();
+    }
+
     proceedWithTransfer(e){
         e.preventDefault();
-        const {dispatch, account_details} = this.props;
-        dispatch(senderTransferData({
-            SenderBankName: this.state.selectedDebitableAccount[0].AccountDescription,
-            SenderAccountName: this.state.selectedDebitableAccount[0].AccountName,
-            SenderAccountNumber: this.state.selectedAccount,
-            AmountToSend: this.state.Amount,
-            AccountBalance: this.state.selectedDebitableAccount[0].AvailableBalance,
-            RecipientEmail: this.state.recipientEmail,
-            TransferPurpose: this.state.transferPurpose
-        }))
-        this.props.history.push("/transfer/send");
+        let amountVal = parseFloat((this.state.Amount).replace(/,/g, ""));
+        if(this.state.selectedDebitableAccount){
+            this.setState({isErrorExisting:false, errorToshow: "" });
+            if(this.state.Amount!=="" && amountVal < parseFloat(this.state.selectedDebitableAccount[0].AvailableBalance) ){
+                const {dispatch, account_details} = this.props;
+                this.setState({isErrorExisting:false, errorToshow: "" });
+                dispatch(senderTransferData({
+                    SenderBankName: this.state.selectedDebitableAccount[0].AccountDescription,
+                    SenderAccountName: this.state.selectedDebitableAccount[0].AccountName,
+                    SenderAccountNumber: this.state.selectedAccount,
+                    AmountToSend: this.state.Amount,
+                    AccountBalance: this.state.selectedDebitableAccount[0].AvailableBalance,
+                    RecipientEmail: this.state.recipientEmail,
+                    TransferPurpose: this.state.transferPurpose
+                }))
+                this.props.history.push("/transfer/send");
+            }else{
+                if(this.state.Amount===""){
+                    this.setState({ isErrorExisting: true, errorToshow: "Please enter amount to send" });
+                }else{
+                    if ((amountVal > this.state.selectedDebitableAccount[0].AvailableBalance)) {
+                        this.setState({ isErrorExisting: true, errorToshow: "Amount exceeds account balance" });
+                    }
+                }
+                
+            }
+        }else{
+            this.setState({isErrorExisting:true, errorToshow: "Please select account to debit" });
+        }
     }
 
     handleAmount = (e) => {
         // console.log('amount is', this.intValue);
+        // console.log('enter value', typeof e);
+        this.setState({ "AmountToSend": e,isErrorExisting:false });
+        // let val = e.replace(",", "");
+        //     val = parseFloat(val);
+        // console.log('value',   e, typeof e);
+        // console.log('limitis',   this.state.transferLimit, typeof this.state.transferLimit);
 
-        if(e <= this.state.transferLimit){
-            this.setState({ Amount: e, isMorthanLimit:false });
-            if (this.state.formsubmitted) {
-                if (e != "")
-                    this.setState({ AmountInvalid: false });
+        if(this.state.selectedDebitableAccount){
+            if(parseFloat(e.replace(/,/g, ""))<= this.state.transferLimit){
+               
+                this.setState({ Amount: e, isMorthanLimit:false });
+                if(parseFloat(e.replace(",", "")) <= this.state.selectedDebitableAccount[0].AvailableBalance){
+                    
+                    this.setState({ Amount: e, isMorthanLimit:false });
+                }
+                else{
+                    this.setState({ Amount: e, isMorthanLimit:true, amountError: "Amount exceeds account balance" });
+                }
+
+                if (this.state.formsubmitted) {
+                    if (e != "")
+                        this.setState({ AmountInvalid: false });
+                }
+            }else{
+                
+                this.setState({isMorthanLimit:true,  amountError: "Amount exceeds daily transfer limit"})
             }
+            
         }else{
-            this.setState({isMorthanLimit:true, amountError: "Amount exceeds daily transfer limit"})
+            if(e.length>0){
+                this.setState({isMorthanLimit:true,  amountError: "Please select account to debit"})
+            }
+            else{
+                this.setState({amountError: ""});
+            }
+            
         }
 
-        if(e <= this.state.transferLimitthis.state.selectedDebitableAccount[0].AvailableBalance){
-            this.setState({ Amount: e, isMorthanBalance:false });
-        }
-        else{
-            this.setState({ Amount: e, isMorthanBalance:false, amountError: "Amount exceeds account balance" });
-        }
+        
     }
 
     verifyTransferStage(){
@@ -107,7 +164,7 @@ class ProvideDetails extends React.Component{
                 ...transferDetails
             }
             this.setState({accountData:transferDetails})
-            // console.log('state is', this.state.accountData);
+            console.log('state is', this.state.accountData);
         }
     }
 
@@ -127,6 +184,29 @@ class ProvideDetails extends React.Component{
             }
 
     }
+    renderBankFee(){
+        let chargesStatus = this.props.transfer_charges.bank_charges_state;
+        switch(chargesStatus){
+            case GET_BANKCHARGES_PENDING:
+                return(
+                    <div className="charges-text">Getting transfer fee...</div>
+                );
+            case GET_BANKCHARGES_SUCCESS:
+                return(
+                    <div className="charges-text">Transaction fee is
+                        {(this.state.accountData.BankCode === '035' || this.state.accountData.BankCode === '000017') && <span> ₦0</span> } 
+                        {(this.state.accountData.BankCode !== '035' && this.state.accountData.BankCode !== '000017') && <span> ₦{this.props.transfer_charges.bank_charges_data.response.data[0].Charge}</span>} 
+                    </div>
+                )
+            case GET_BANKCHARGES_FAILURE:
+                return(
+                    <div className="charges-text"> Failed to get transfer fee <a onClick={this.retryBankCharges}> Try again</a></div>
+                )
+        }
+        // {this.props.transfer_charges.bank_charges_state === GET_BANKCHARGES_SUCCESS && 
+        //     <div className="charges-text">Transaction fee is ₦{this.props.transfer_charges.bank_charges_data.response.data[0].Charge}</div>
+        // }
+    }
     
 
     handleAlatPinChange(pin) {
@@ -136,11 +216,14 @@ class ProvideDetails extends React.Component{
            this.setState({isPinInvalid : false})
         }
     }
+    
 
     handleSelectDebitableAccounts(account) {
         let allDebitableAccounts = this.props.debitable_accounts.debitable_accounts_data.data,
             selectedDebitableAccount = allDebitableAccounts.filter(accountDetails=>accountDetails.AccountNumber ===account),
             transferLimit;
+
+            this.setState({isErrorExisting:false, isMorthanLimit: false });
             // console.log('selected bank is', typeof this.props.transfer_info.transfer_info_data.data.BankCode);
             if(this.props.transfer_info.transfer_info_data.data.BankCode ==="035" || this.props.transfer_info.transfer_info_data.data.BankCode=== "000017"){
                 
@@ -171,7 +254,7 @@ class ProvideDetails extends React.Component{
             transferLimit,
             isSelectChanged,
             isMorthanLimit,
-            isMorthanBalance
+            isErrorExisting
         } = this.state;
         return(
             <Fragment>
@@ -183,7 +266,7 @@ class ProvideDetails extends React.Component{
                                                 <h4 className="m-b-10 center-text hd-underline">Provide Details</h4>
                                                 <div className="transfer-ctn">
                                                     <form onSubmit={this.proceedWithTransfer}>
-                                                        <div className="al-card no-pad">
+                                                        <div className="al-card no-pad  ontransfer">
                                                             <div className="trans-summary-card">
                                                                 <div className="name-amount clearfix">
                                                                    <div className="recipient-and-amount">
@@ -196,6 +279,7 @@ class ProvideDetails extends React.Component{
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                            {this.renderBankFee()}
 
                                                        
                                                         <div className="inputctn-wrap">
@@ -210,13 +294,11 @@ class ProvideDetails extends React.Component{
                                                         </div>
 
                                                         <div className="inputctn-wrap">
-                                                            <AmountInput value={formattedValue} intValue={AmountToSend}  name="Amount"  onChange={this.handleAmount} />
+                                                            <AmountInput value={formattedValue} intValue={AmountToSend}  name="Amount" onKeyUp={this.handleAmount}  onChange={this.handleAmount} />
                                                             {isMorthanLimit===true &&
                                                                 <span className="limit-text">{this.state.amountError}</span>
                                                             }
-                                                            {isMorthanBalance===true &&
-                                                                <span className="limit-text">{this.state.amountError}</span>
-                                                            }
+                                                            
                                                             
                                                         </div>
                                                         
@@ -251,12 +333,15 @@ class ProvideDetails extends React.Component{
                                                                 
                                                             />
                                                         </div>
-
-
+                                                        {this.state.isErrorExisting===true && 
+                                                            <div className="error-msg text-center">{this.state.errorToshow} </div>
+                                                        }
                                                         <div className="row">
                                                             <div className="col-sm-12">
                                                                 <center>
-                                                                    <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Continue</button>
+                                                                    <button type="submit" className="btn-alat m-t-10 m-b-20 text-center"
+                                                                        disabled={this.props.transfer_charges.fetchStatus}
+                                                                        >Continue</button>
                                                                 </center>
 
                                                             </div>
@@ -280,9 +365,10 @@ function mapStateToProps(state) {
         user,
         alert: state.alert,
         debitable_accounts: state.accounts,
-        transfer_info: state.transfer_details_data,
-        transfer_limits: state.tranferlimit_info,
-        account_details: state.transfer_fetch_user_account
+        transfer_info: state.transferReducerPile.transfer_details_data,
+        transfer_limits: state.transferReducerPile.tranferlimit_info,
+        transfer_charges: state.transferReducerPile.transfer_bank_charges,
+        account_details: state.transferReducerPile.transfer_fetch_user_account
     };
 }
 
