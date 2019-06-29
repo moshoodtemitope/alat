@@ -20,7 +20,7 @@ class VerifyOtp extends Component {
                 otp: {
                     elementType: 'input',
                     elementConfig: {
-                        type: 'text',
+                        type: 'password',
                         placeholder: ''
                     },
                     value: '',

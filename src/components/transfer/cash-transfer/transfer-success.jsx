@@ -86,24 +86,6 @@ class TransferSuccess extends React.Component{
             existingBeneficiaryError} = this.state;
         return(
             <Fragment>
-                <InnerContainer>
-                    <TransferContainer>
-                        <div className="row">
-                            <div className="col-sm-12">
-                                <p className="page-title">Send Money</p>
-                            </div>
-                            <div className="col-sm-12">
-                                <div className="tab-overflow">
-                                    <div className="sub-tab-nav">
-                                        <ul>
-                                            <li><a href="accounts.html" className="active">Bank Transfer</a></li>
-                                            <li><a href="statement.html">Send To Contacts</a></li>
-                                            <li><a href="#">Cardless Withdrawal</a></li>
-                                            <li><a href="#">FX Transfer</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
                             <div className="col-sm-12">
                                 <div className="row">
                                     <div className="col-sm-12">
@@ -163,9 +145,6 @@ class TransferSuccess extends React.Component{
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </TransferContainer>
-                </InnerContainer>
             </Fragment>
         )
     }

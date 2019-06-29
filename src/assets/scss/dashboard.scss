@@ -1009,6 +1009,85 @@ ul.menu-side {
 
 }
 
+//fund account
+.fund-option {
+  color: #A90836;
+  background: #FFFFFF;
+  border: 0.95px solid #FFF4F4;
+  box-sizing: border-box;
+  box-shadow: 0px 8px 24px rgba(185, 185, 185, 0.162138);
+  border-radius: 4.75px;
+  width: 144px;
+  height: 152px;
+  margin: 8px;
+  padding: 17px;
+  padding-top: 30px;
+  cursor: pointer;
+  //filter: grayscale(0.5);
+
+  float: left;
+
+  .hoveraction {
+    display: none;
+  }
+
+  &:hover {
+    color: white;
+    background: #A90836;
+    border: 0.95px solid #FFF4F4;
+    box-sizing: border-box;
+    box-shadow: 0px 30px 40px rgba(0, 0, 0, 0.162138);
+    border-radius: 4.75px;
+    .hoveraction {
+      display: unset;
+    }
+    .toshow {
+      display: none;
+    }
+  }
+
+  img {
+    // padding-left: 17px;
+    // padding-top: 30px;
+  }
+
+  p {
+    padding-top: 24px;
+    font-family: Proxima Nova;
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+}
+
+.fund-option-ctn {
+  padding-right: 60px;
+  padding-left: 60px;
+  padding-top: 50px;
+  padding-bottom: 90px;
+  float: left;
+  width: 100%;
+
+  .active {
+    color: white;
+    background: #A90836;
+    border: 0.95px solid #FFF4F4;
+    box-sizing: border-box;
+    box-shadow: 0px 30px 40px rgba(0, 0, 0, 0.162138);
+    border-radius: 4.75px;
+    .hoveraction {
+      display: unset;
+    }
+    .toshow {
+      display: none;
+    }
+  }
+}
+
+.fund-al-card {
+  float: left;
+}
+
 .profile-details {
   padding: 30px 30px 15px;
   text-align: center;

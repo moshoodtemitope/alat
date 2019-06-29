@@ -9,6 +9,7 @@ import ConFirmTransfer from "./confirm";
 import TransferOtp from "./transfer-otp";
 import TransferSuccess from "./transfer-success";
 import SaveBeneficiary from "./save-beneficiary";
+import TransferContainer from "../container"
 
 class Cashtransfer extends Component {
     constructor(props) {
@@ -19,7 +20,7 @@ class Cashtransfer extends Component {
     }
 
     componentDidMount() {
-      
+      console.log("index is mounted");
     }
    render() {
        return(

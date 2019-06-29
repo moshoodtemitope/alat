@@ -110,7 +110,7 @@ class Dashboard extends React.Component{
     
                                     <div className="account-balance clearfix">
                                         <p className="balance">₦{utils.formatAmount(acct.AvailableBalance)}</p>
-                                        <a href="#" className="btn-alat btn-white m-t-10 btn-sm">Fund Account</a>
+                                        {acct.IsDebitable && <NavLink to={"/fund"} className="btn-alat btn-white m-t-10 btn-sm">Fund Account</NavLink>}
                                     </div>
                                 </div>
                             );
