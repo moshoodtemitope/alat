@@ -58,6 +58,7 @@ class AmountInput extends React.Component {
                     type="text"
                     name={this.props.name}
                     value={this.state.formartedValue}
+                    onKeyUp={this.onChange.bind(this)}
                     onChange={this.onChange.bind(this)}
                 />
                 {this.props.AmountInvalid &&

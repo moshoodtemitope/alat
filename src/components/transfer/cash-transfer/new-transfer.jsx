@@ -5,7 +5,8 @@ import {accountEnquiry,
         getBanks, 
         getBeneficiaries, 
         deleteTransferBeneficiary,
-        cashTransferData} from "../../../redux/actions/transfer/cash-transfer.actions";
+        cashTransferData,
+        clearTransferStore} from "../../../redux/actions/transfer/cash-transfer.actions";
 import {FETCH_BANK_PENDING, 
         FETCH_BANK_SUCCESS, 
         FETCH_BANK_FAILURE, 
@@ -15,6 +16,9 @@ import {FETCH_BANK_PENDING,
         FETCH_TRANSFER_BENEFICIARY_SUCCESS, 
         FETCH_TRANSFER_BENEFICIARY_PENDING,
         FETCH_TRANSFER_BENEFICIARY_FAILURE,
+        TRANSFER__BANK_DETAILS,
+        TRANSFER__BANK_DETAILS_FAILURE,
+        TRANSFER__BANK_DETAILS_SUCCESS,
         DELETE_TRANSFER_BENEFICIARY_SUCCESS, 
         DELETE_TRANSFER_BENEFICIARY_PENDING,
         DELETE_TRANSFER_BENEFICIARY_FAILURE} from "../../../redux/constants/transfer.constants";
@@ -36,9 +40,10 @@ class NewTransfer extends React.Component {
             user: JSON.parse(localStorage.getItem("user")),
             hasBeneficiaries: false,
             selectedBank: null,
-            accountNumber: null,
+            accountNumber: "",
             accountInputError: '',
             submitted: false,
+            deletingBeneficiary: false,
             inputState: false,
             showAccountDetail: '',
             detailVerificacationStatus: '',
@@ -46,7 +51,7 @@ class NewTransfer extends React.Component {
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.continueTransfer = this.continueTransfer.bind(this);
+        this.keepRecipientData = this.keepRecipientData.bind(this);
         this.fetchBanks = this.fetchBanks.bind(this);
         this.renderBeneficiaries= this.renderBeneficiaries.bind(this);
         this.getBeneficiaries = this.getBeneficiaries.bind(this);
@@ -54,24 +59,70 @@ class NewTransfer extends React.Component {
         this.confirmDeleteTransferBeneficiary =  this.confirmDeleteTransferBeneficiary.bind(this);
         this.showAllBeneficiaries = this.showAllBeneficiaries.bind(this);
         this.searchBeneficiaries = this.searchBeneficiaries.bind(this);
+        this.goToSaveBeneficiary = this.goToSaveBeneficiary.bind(this);
+        this.editTransfer = this.editTransfer.bind(this);
+        this.handleDetailsStatus = this.handleDetailsStatus.bind(this);
+        this.proceedWithSelectBeneficary = this.proceedWithSelectBeneficary.bind(this);
     }
 
     componentDidMount() {
         this.fetchBanks();
         this.getBeneficiaries();
+        // this.handleDetailsStatus();
     }
 
 
 
     getBeneficiaries(){
         const { dispatch } = this.props;
+        // dispatch(accountEnquiry(this.state.user.token, {}))
         dispatch(getBeneficiaries(this.state.user.token));
     }
 
+    goToSaveBeneficiary(e){
+        e.preventDefault();
+        this.props.history.push("/transfer/provide-details");
+    }
 
-    toggleModal=(beneficiary, key)=>{
+    
+
+    editTransfer(e){
+        e.preventDefault();
+        const { dispatch } = this.props;
+        // this.forceUpdate();
+        // this.props.account_details.fetchStatus = false;
+        // console.log('state is', this.props);
+        // this.setState({ selectedBank:'' });
+        // this.props.dispatch(clearTransferStore());
+        this.setState({existingBeneficiaryError: false});
+        dispatch(accountEnquiry(this.state.user.token, {}))
+        // document.querySelector('#accountNumber').removeAttribute('disabled');
+    }
+
+    handleDetailsStatus(e){
+        e.preventDefault();
+        // if(this.props.account_details.account_detail===GET_ACCOUNT_DETAILS_SUCCESS){
+        //     this.setState({detailDisabledState: true});
+        //     console.log('details status is', this.state.detailDisabledState);
+        // }
+        // if(this.props.account_details.account_detail===GET_ACCOUNT_DETAILS_PENDING){
+        //     this.setState({detailDisabledState: true});
+        //     console.log('pending  status is', this.state.detailDisabledState);
+        // }
+        // if(this.props.account_details.account_detail===GET_ACCOUNT_DETAILS_FAILURE){
+        //     this.setState({detailDisabledState: false});
+        // }
+
+        this.props.dispatch(clearTransferStore());
         
-        this.setState({ beneficiaryToDelete : beneficiary, elemToDelete: key});
+    }
+
+    toggleModal=(beneficiary, key, e)=>{
+        this.setState({existingBeneficiaryError: false});
+        if(e){
+            e.stopPropagation();
+            this.setState({ beneficiaryToDelete : beneficiary, elemToDelete: key});
+        }
         
         if(this.state.openModal){
            this.setState( {openModal : false  })
@@ -113,14 +164,14 @@ class NewTransfer extends React.Component {
                                 
                                 <Fragment>
                                     <div className={(key>=1)?"col-sm-12 col-md-10 offset-md-1 each-beneficiary hide": "col-sm-12 col-md-10 each-beneficiary offset-md-1"} key={key} id={"beneficiary-"+key}>
-                                        <div className="al-card beneficiary-card">
+                                        <div className="al-card beneficiary-card" onClick={()=>this.proceedWithSelectBeneficary(ben)}>
                                             <div className="clearfix">
                                                 <div className="network-img">
                                                     {/* <img src="img/airtel.png" srcset="img/airtel@2x.png 2x"/> */}
                                                     <i className="demo-icon icon-bank-building" aria-hidden="true"></i>
                                                 </div>
                                                 <div className="all-info">
-                                                    <p className="summary-info"> <span className="nickname-text">{ben.Nickname}</span>  <span> <a onClick={()=>this.toggleModal(ben,'beneficiary-'+key)} ><i className="fa fa-trash-o" aria-hidden="true"></i></a>  </span> </p>
+                                                    <p className="summary-info"> <span className="nickname-text">{ben.Nickname}</span>  <span> <a onClick={(e)=>this.toggleModal(ben,'beneficiary-'+key, e)} ><i className="fa fa-trash-o" aria-hidden="true"></i></a>  </span> </p>
                                                     <p className="account-info">{ben.AccountNumber}
                                                         <span className="bank-name">{ben.BankName}</span>
                                                     </p>
@@ -187,7 +238,8 @@ class NewTransfer extends React.Component {
         // if(this.state.beneficiaryToDelete){
             
             let props = this.props;
-            // if(props.beneficiary_delete_state === DELETE_TRANSFER_BENEFICIARY_SUCCESS){
+            const {dispatch} = this.props;
+            if(this.state.deletingBeneficiary ===true && props.beneficiary_delete_state.beneficiary_delete_state === DELETE_TRANSFER_BENEFICIARY_SUCCESS){
             // let benDeleteStatus = props.beneficiary_delete_state;
             // let beneficiaries = props.beneficiaries.beneficiaries_data.response.data;
             // let deleteIndex = beneficiaries.findIndex(item=>{item.AccountNumber === this.state.beneficiaryToDelete.AccountNumber});
@@ -197,42 +249,87 @@ class NewTransfer extends React.Component {
         
                 // 
                 // console.log('to remove is', this.state.elemToDelete);
-                if(document.getElementById(''+this.state.elemToDelete)){
-                    document.getElementById(''+this.state.elemToDelete).remove();
-                    this.toggleModal();
-                }
+                // if(document.getElementById(''+this.state.elemToDelete)){
+                //     document.getElementById(''+this.state.elemToDelete).remove();
+                //     this.toggleModal();
+                // }
+               
                 
-           
-            // }
+                // dispatch(getBeneficiaries(this.state.user.token));
+                // this.props.dispatch(clearTransferStore());
+                this.getBeneficiaries();
+                this.toggleModal();
+                this.setState({deletingBeneficiary:false});
+            }
         
     }
+    
     
     confirmDeleteTransferBeneficiary(){
         const { dispatch } = this.props;
        
         let beneficiary = this.state.beneficiaryToDelete;
             beneficiary.TransactionPin = '0000';
-            this.setState({beneficiaryToDelete: beneficiary});
+            this.setState({beneficiaryToDelete: beneficiary, deletingBeneficiary: true});
             
-        dispatch(deleteTransferBeneficiary((this.state.user.token), this.state.beneficiaryToDelete));
-       
+            dispatch(deleteTransferBeneficiary((this.state.user.token), this.state.beneficiaryToDelete));
     }
+
+    
 
     fetchBanks(){
         const { dispatch } = this.props;
+        dispatch(accountEnquiry(this.state.user.token, {}))
         dispatch(getBanks(this.state.user.token));
     }
 
-    continueTransfer(e){
+    keepRecipientData(e, isSaveBeneficiary){
         e.preventDefault();
-        const {dispatch, account_details} = this.props;
+        const {dispatch, account_details, beneficiaries} = this.props;
+        this.setState({existingBeneficiaryError: false});
+
+        let    beneficiaryList = beneficiaries.beneficiaries_data.response.data,existingBeneficiary;
+        if(isSaveBeneficiary ===true){
+            existingBeneficiary = beneficiaryList.find((beneficiary)=>{
+                return beneficiary.AccountNumber === this.state.accountNumber;
+            })
+            console.log('existing is', typeof existingBeneficiary);
+            if(typeof existingBeneficiary==="undefined"){
+                this.setState({existingBeneficiaryError: false});
+                dispatch(cashTransferData({
+                    AccountNumber: this.state.accountNumber,
+                    AccountName: account_details.account_detail_data.response.AccountName,
+                    BankName: this.state.selectedBank.label,
+                    BankCode: this.state.selectedBank.value
+                },false));
+                this.props.history.push("/transfer/save-beneficiary");
+            }else{
+                this.setState({existingBeneficiaryError: true});
+            }
+            
+        }else{
+            dispatch(cashTransferData({
+                AccountNumber: this.state.accountNumber,
+                AccountName: account_details.account_detail_data.response.AccountName,
+                BankName: this.state.selectedBank.label,
+                BankCode: this.state.selectedBank.value
+            },false, null));
+            this.props.history.push("/transfer/provide-details");
+        }
+        
+    }
+
+    proceedWithSelectBeneficary(beneficiary){
+        console.log("selected ben is", beneficiary);
+        const {dispatch} = this.props;
+        // this.setState({})
         dispatch(cashTransferData({
-            AccountNumber: this.state.accountNumber,
-            AccountName: account_details.account_detail_data.response.AccountName,
-            BankName: this.state.selectedBank.label,
-            BankCode: this.state.selectedBank.value
-        }));
-        this.props.history.push("/transfer/provide-details");
+            AccountNumber: beneficiary.AccountNumber,
+            AccountName: beneficiary.AccountName,
+            BankName: beneficiary.BankName,
+            BankCode: beneficiary.BankCode
+        }, true, this.state.user.token));
+        
     }
 
     handleSubmit(e, props) {
@@ -247,9 +344,10 @@ class NewTransfer extends React.Component {
             this.setState({ submitted: true, submitButtonState: true, inputState: true });
             let payload = {
                 AccountNumber: accountNumber,
-                BankCode: selectedBank.value
+                BankCode: selectedBank.value||""
             };
             dispatch(accountEnquiry(this.state.user.token, payload));
+            // this.handleDetailsStatus();
             let accountFetchStatus = this.props.account_details;
            
 
@@ -294,7 +392,6 @@ class NewTransfer extends React.Component {
 
     handleChange(selectedBank){
         this.setState({ selectedBank });
-        
     }
 
     // accountDetails
@@ -322,6 +419,7 @@ class NewTransfer extends React.Component {
                         options={options}
                         // isDisabled={this.state.submitButtonState}
                         isDisabled={props.account_details.fetchStatus}
+                        // onInputChange={this.handleChange}
                         onChange={this.handleChange}
                     />
                     
@@ -344,7 +442,8 @@ class NewTransfer extends React.Component {
                 error, 
                 accountInputError, 
                 submitButtonState,
-                detailVerificacationStatus} = this.state;
+                detailVerificacationStatus,
+                existingBeneficiaryError} = this.state;
         // const {loggingIn, alert} = this.props;
         const { submitted, inputState } = this.state;
         let props = this.props,
@@ -406,30 +505,33 @@ class NewTransfer extends React.Component {
                                                                 name="accountNumber"
                                                                 type="text"
                                                                 autoComplete ="off"
+                                                                
                                                                 value={accountNumber}
                                                                 disabled={accountInfo.fetchStatus}
                                                                 maxLength="11"
                                                                 placeholder= "Enter recipient account number"
-                                                                
+                                                                validationOption ={{
+                                                                    "required":false
+                                                                }}
                                                                 onBlur={(e) => {}}
                                                                 onChange= {(accountNumber, e)=>{
                                                                     this.setState({accountInputError:'', accountNumber, submitButtonState: false});
-                                                                    if(accountNumber.length===0){
-                                                                        this.setState({accountInputError:'Account number is required', submitButtonState: true});
-                                                                        document.querySelector('.inputWrap').classList.add('form-error');
-                                                                    }
-                                                                    else if(accountNumber.length < 10){
-                                                                        this.setState({accountInputError:'A valid account number is required', submitButtonState: true});
-                                                                        document.querySelector('.inputWrap').classList.add('form-error');
-                                                                    }
-                                                                    else{
-                                                                        document.querySelector('.inputWrap').classList.remove('form-error');
-                                                                    }
+                                                                    // if(accountNumber.length===0){
+                                                                    //     this.setState({accountInputError:'Account number is required', submitButtonState: true});
+                                                                    //     document.querySelector('.inputWrap').classList.add('form-error');
+                                                                    // }
+                                                                    // else if(accountNumber.length < 10){
+                                                                    //     this.setState({accountInputError:'A valid account number is required', submitButtonState: true});
+                                                                    //     document.querySelector('.inputWrap').classList.add('form-error');
+                                                                    // }
+                                                                    // else{
+                                                                    //     document.querySelector('.inputWrap').classList.remove('form-error');
+                                                                    // }
                                                                 }}
                                                             />
-                                                            {accountInputError !=='' &&
+                                                            {/* {(accountInputError !=='' && accountInfo.account_detail!==GET_ACCOUNT_DETAILS_FAILURE) &&
                                                                 <small className="error-msg">{accountInputError}</small>
-                                                            }
+                                                            } */}
                                                             {accountInfo.account_detail===GET_ACCOUNT_DETAILS_FAILURE &&
                                                                 <small className="error-msg">{accountInfo.account_detail_data.error}</small>
                                                             }
@@ -462,25 +564,33 @@ class NewTransfer extends React.Component {
                                                             <div className="row">
                                                                 <div className="col-sm-6">
                                                                     <center>
-                                                                        <button type="submit"  className="btn-alat light-btn m-t-10 m-b-20 text-center">Save</button>
+                                                                        <button type="submit" onClick={(e)=>this.keepRecipientData(e, true)}  className="btn-alat light-btn m-t-10 m-b-20 text-center">Save</button>
                                                                     </center>
                                                                 </div>
                                                                 <div className="col-sm-6">
                                                                     <center>
-                                                                        <button type="submit" onClick={this.continueTransfer} className="btn-alat m-t-10 m-b-20 text-center">Send</button>
+                                                                        <button type="submit" onClick={(e)=>this.keepRecipientData(e, false)} className="btn-alat m-t-10 m-b-20 text-center">Send</button>
                                                                     </center>
                                                                 </div>
+                                                                <div className="col-sm-12">
+                                                                    <center> <a onClick={this.editTransfer} className="edit-cta">Edit details</a></center>
+                                                                    
+                                                                </div>
                                                             </div>
+                                                            
                                                         </div>
+                                                    }
+                                                    {existingBeneficiaryError ===true &&
+                                                        <div className="info-label error">This beneficiary already exists</div>
                                                     }
                                                 </div>
                                             </div>
 
                                             {this.renderBeneficiaries()}
-                                            {benDeleteStatus.beneficiary_delete_state ===DELETE_TRANSFER_BENEFICIARY_SUCCESS &&
+                                            {/* {benDeleteStatus.beneficiary_delete_state ===DELETE_TRANSFER_BENEFICIARY_SUCCESS &&
                                                 this.endBeneficiaryDelete()
-                                            }
-                                            {/* {this.endBeneficiaryDelete()} */}
+                                            } */}
+                                            {this.endBeneficiaryDelete()}
                                             <Modal open={this.state.openModal} onClose={this.toggleModal} center>
                                                 <div className="div-modal">
 
@@ -524,10 +634,10 @@ class NewTransfer extends React.Component {
 function mapStateToProps(state){
     // console.error(state);
     return {
-        bankList: state.transfer_bankList,
-        beneficiaries: state.transfer_beneficiaries,
-        account_details: state.transfer_fetch_user_account,
-        beneficiary_delete_state: state.delete_transfer_beneficiaryState
+        bankList: state.transferReducerPile.transfer_bankList,
+        beneficiaries: state.transferReducerPile.transfer_beneficiaries,
+        account_details: state.transferReducerPile.transfer_fetch_user_account,
+        beneficiary_delete_state: state.transferReducerPile.delete_transfer_beneficiaryState
     };
 }
 

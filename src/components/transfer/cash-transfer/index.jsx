@@ -6,7 +6,9 @@ import { connect } from "react-redux";
 import NewTransfer from "./new-transfer";
 import ProvideDetails from "./provide-details";
 import ConFirmTransfer from "./confirm";
+import TransferOtp from "./transfer-otp";
 import TransferSuccess from "./transfer-success";
+import SaveBeneficiary from "./save-beneficiary";
 
 class Cashtransfer extends Component {
     constructor(props) {
@@ -26,7 +28,9 @@ class Cashtransfer extends Component {
                 <Route exact path='/transfer' render={(props) => <NewTransfer {...props} />} />
                 <Route path='/transfer/provide-details' render={(props) => <ProvideDetails {...props} />}/>
                 <Route path='/transfer/send' render={(props) => <ConFirmTransfer {...props} />}/>
+                <Route path='/transfer/otp' render={(props) => <TransferOtp {...props} />}/>
                 <Route path='/transfer/success' render={(props) => <TransferSuccess {...props} />}/>
+                <Route path='/transfer/save-beneficiary' render={(props) => <SaveBeneficiary {...props} />}/>
            </Fragment>
        );
    }

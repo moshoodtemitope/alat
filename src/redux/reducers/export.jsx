@@ -12,6 +12,10 @@ import {bankListRequest,
         transferDetailsReducer,
         transferSenderDetailsReducer,
         fetchTransactionLimitRequest,
+        sendMoneyTransferRequest,
+        processMoneyTransferRequest,
+        saveBankTransferReducer,
+        getBankChargesReducer,
         deleteBeneficiaryRequest} from "./transfer.reducer";
 
 import { airtimeBeneficiariesReducer, deleteBeneficiaryReducer, buyAirtimeReducer,
@@ -41,7 +45,11 @@ export const transfer = {
     transferDetailsReducer,
     transferSenderDetailsReducer,
     deleteBeneficiaryRequest,
-    fetchTransactionLimitRequest
+    fetchTransactionLimitRequest,
+    sendMoneyTransferRequest,
+    processMoneyTransferRequest,
+    saveBankTransferReducer,
+    getBankChargesReducer
 };
 
 export const airtime ={
