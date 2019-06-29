@@ -17,8 +17,8 @@ class MenuContainer extends React.Component{
                                     <li>
                                         <NavLink to="/dashboard" className="clearfix"><i className="demo-icon icon-home" aria-hidden="true"></i><span>Dashboard</span></NavLink>
                                     </li>
-                                    <li><a className="clearfix"><i className="demo-icon icon-send-money" aria-hidden="true"></i>
-                                        <span>Transfer</span></a>
+                                    <li><NavLink to="/transfer" className="clearfix"><i className="demo-icon icon-send-money" aria-hidden="true"></i>
+                                        <span>Transfer</span></NavLink>
                                         <ul>
                                             <li>
                                                 <NavLink to="/transfer">Bank Transfer</NavLink>
