@@ -92,8 +92,6 @@ class SaveBeneficiary extends React.Component {
         return (
             
             <Fragment>
-                <InnerContainer>
-                    <TransferContainer>
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Send Money</p>
@@ -210,8 +208,6 @@ class SaveBeneficiary extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    </TransferContainer>
-                </InnerContainer>
             </Fragment>
         );
     }
