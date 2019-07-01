@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 
 
 import * as actions from '../../../redux/actions/cardless-withdrawal/export';
-import { isFetchingFalse } from '../../../redux/actions/dataActions/data.actions';
 
 const pattern = /^\d+$/;
 
@@ -71,8 +70,12 @@ class CreateWithdrawal extends Component {
             validation: {
                 pinNotSame: false,
                 aboveLimit: false,
-                mThousand: true
-
+                mThousand: true,
+                pinDigit: true,
+                required : {
+                    amountEmpty: false,
+                    pinEmpty: false,
+                }
             },
             user: JSON.parse(localStorage.getItem("user")),
         };
@@ -80,54 +83,39 @@ class CreateWithdrawal extends Component {
 
 
     componentDidMount() {
+        this.props.clearError();
+        this.props.resetPageState();
     }
-
-
-    // networkChangedHandlerALT = (selectedNetwork) => {
-    //     this.setState({ selectedNetwork }, () => {this.setDataPlans(selectedNetwork.value)});
-    //     console.log(`Option selected:`, selectedNetwork);
-    // }
-
-    // setDataPlans = (value) => {
-    //     var arrayToDisplay = [];
-    //     this.props.dataPlans.filter(data => data.Network == value)
-    //         .map((data => arrayToDisplay.push({ value: data.PaymentItem,label: data.PaymentItem, amount: data.Amount, billerCode: data.BillerPaymentCode, networkCode: data.NetworkCode })));
-    //     this.setState({dataPlansOptions : arrayToDisplay, selectedDataPlan : arrayToDisplay[0]}, () => {this.updateAmount(this.state.dataPlansOptions[0].amount)})
-    // }
-
-    // updateAmount = (value) => {
-    //     const updatedSelectOption = {
-    //         ...this.state.buyDataForm
-    //     }
-    //     updatedSelectOption.amount.value = value;
-    //     this.setState({ buyDataForm: updatedSelectOption });
-    // }
 
     onSubmitCwData = (event) => {
         event.preventDefault();
         this.props.clearError();
-        if(this.state.selectedNetwork && this.state.buyDataForm.phone.value != "" && this.phoneValidation(this.state.buyDataForm.phone.value)){
-            
-            this.props.setDataToBuyDetails(dataToBuy, this.state.selectedNetwork ? this.state.selectedNetwork.value : "MTN");
-            console.log(dataToBuy);
-            this.props.history.push('/bills/data/buy/confirm');
-        }else{
-            let validation = {...this.state.validation} 
-            if (!this.state.selectedNetwork){
-                validation.networkSelector.hasError = true;
+        let validation = {...this.state.validation};
+        if(!validation.pinDigit || validation.pinNotSame || !validation.mThousand) return;
+        let dataForm = {...this.state.cwDataForm};
+        if(dataForm.amount.value == "" || dataForm.pin.value == "" || dataForm.confirmPin.value == "" || dataForm.amount.value > 20000) {
+            if(dataForm.amount.value == ""){
+                validation.required.amountEmpty = true;
             }
-            if (this.state.buyDataForm.phone.value == ""){
-                validation.phoneInput.hasError.requiredError = true;
-            }else if(!this.phoneValidation(this.state.buyDataForm.phone.value)){
-                validation.phoneInput.hasError.validError = true;
+            if(dataForm.pin.value == "" || dataForm.confirmPin.value == ""){
+                validation.required.pinEmpty = true;
             }
-            this.setState({ validation});
+            if(dataForm.amount.value > 20000){
+                validation.aboveLimit = true;
+            }
+            this.setState({validation});
+            return;
         }
-    }
-
-    phoneValidation = (value) => {
-        
-        return (value.length >= 11 && value.length <= 16 && pattern.test(value));
+        let cardlessWithdrawal = {
+            CashOutPin: dataForm.pin.value,
+            ConfirmedCashOutPin: dataForm.confirmPin.value, 
+            Amount: parseFloat(dataForm.amount.value),
+            SelectedCardlessPayOutChannel: 1
+        }
+        this.props.setCardlessInfo(cardlessWithdrawal);
+        console.log(cardlessWithdrawal);
+        console.log(this.props.phoneNumber);
+        this.props.history.push('/cardless-withdrawal/confirm');
     }
 
     inputChangedHandler = (event, inputIdentifier) => {
@@ -138,32 +126,47 @@ class CreateWithdrawal extends Component {
             ...updatedCwDataForm[inputIdentifier]
         };
         let validation = {...this.state.validation};
-        updatedFormElement.value = event.target.value;
+        validation.aboveLimit =false;
+        validation.required.pinEmpty = false;
+        validation.required.amountEmpty = false;
         if(inputIdentifier == "amount"){
-            if(updatedFormElement.value.length >= 1){
+            updatedFormElement.valueToDisplay = event.target.value;
+            updatedFormElement.value = updatedFormElement.valueToDisplay.replace(/\,/g, '');
+            if(updatedFormElement.valueToDisplay.length >= 1){
                 if(!pattern.test(updatedFormElement.value) || updatedFormElement.value.length > 5){
                     return;
                 }
+                updatedFormElement.valueToDisplay = formatAmountNoDecimal(parseInt(updatedFormElement.value));
             }
             if(updatedFormElement.value % 1000 != 0){
                 validation.mThousand = false;
             }else{
                 validation.mThousand = true;
             }
+        }else if(inputIdentifier == "pin" || inputIdentifier == "confirmPin"){
+            updatedFormElement.value = event.target.value;
+            if(updatedFormElement.value.length >= 1){
+                if(!pattern.test(updatedFormElement.value) || updatedFormElement.value.length > 4){
+                    return;
+                }
+            }
+            if(inputIdentifier == "pin" && updatedFormElement.value.length != 4){
+                validation.pinDigit = false;
+            }else{
+                validation.pinDigit = true;
+            }
+            if(inputIdentifier == "confirmPin" && updatedCwDataForm.pin.value != updatedFormElement.value){
+                validation.pinNotSame = true;
+            }else if((inputIdentifier == "pin" && updatedCwDataForm.confirmPin.value.length > 0) && updatedCwDataForm.confirmPin.value != updatedFormElement.value){
+                validation.pinNotSame = true;
+            }else{
+                validation.pinNotSame = false;
+            }
         }
-        
-        // updatedFormElement.valid = checkInputValidation(updatedFormElement.value, updatedFormElement.validation);
-        // updatedFormElement.valid = true;
-        // updatedFormElement.touched = true;
-        updatedCwDataForm[inputIdentifier] = updatedFormElement;
 
-        let formIsValid = true;
-        for (let inputIdentifier in updatedBuyDataForm) {
-            formIsValid = updatedCwDataForm[inputIdentifier].valid && formIsValid;
-        }
-        console.log(formIsValid);
-        
-        this.setState({ cwDataForm: updatedCwDataForm, formIsValid, validation });
+        console.log(updatedFormElement.value)
+        updatedCwDataForm[inputIdentifier] = updatedFormElement;
+        this.setState({ cwDataForm: updatedCwDataForm, validation });
     }
 
     render() {
@@ -186,7 +189,7 @@ class CreateWithdrawal extends Component {
                                     <form>
                             
                                     {(this.props.alert.message) ?
-                        <div className="info-label error">{this.props.alert.message} | <span onClick={() => {this.props.fetchDataPlans(this.state.user.token)}} style={{textDecoration:"underline", cursor:"pointer"}}>Click here to try again</span></div> : null
+                        <div className="info-label error">{this.props.alert.message}</div> : null
                         }
                                         
                                         {formElementArray.map((formElement) => {
@@ -196,12 +199,15 @@ class CreateWithdrawal extends Component {
                                                     <Input
                                                         elementType={formElement.config.elementType}
                                                         elementConfig={formElement.config.elementConfig}
-                                                        value={formElement.config.value}
+                                                        value={formElement.id == "amount" ? formElement.config.valueToDisplay : formElement.config.value}
                                                         changed={(event) => this.inputChangedHandler(event, formElement.id)}
                                                         wrongInput={!formElement.config.valid}
                                                         isTouched={formElement.config.touched} />
-                                                        {formElement.id == "phone" && this.state.validation.phoneInput.hasError.validError ? <small className="text-danger">{this.state.validation.phoneInput.error.valid}</small> : null}
-                                                        {formElement.id == "phone" && this.state.validation.phoneInput.hasError.requiredError ? <small className="text-danger">{this.state.validation.phoneInput.error.required}</small> : null}
+                                                        {formElement.id == "amount" && !this.state.validation.mThousand ? <small className="text-danger">Must be multiple of N1,000</small> : null}
+                                                        {formElement.id == "confirmPin" && this.state.validation.pinNotSame ? <small className="text-danger">Pin is not the same</small> : null}
+                                                        {formElement.id == "pin" && !this.state.validation.pinDigit ? <small className="text-danger">PIN must be four digit</small> : null}
+                                                        {formElement.id == "amount" && this.state.validation.required.amountEmpty ? <small className="text-danger">Field is required</small> : null}
+                                                        {formElement.id == "pin" && this.state.validation.required.pinEmpty ? <small className="text-danger">Both PIN fields are required</small> : null}
                                                 </div>
                                             )
 
@@ -236,8 +242,6 @@ class CreateWithdrawal extends Component {
 
 const mapStateToProps = state => {
     return {
-        fetching: state.data_reducer.isFetchingData,
-        pinVerified: state.data_reducer.pinVerified,
         alert: state.alert,
     }
 }
@@ -245,7 +249,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         setCardlessInfo: (cwInfo) => dispatch(actions.setCardlessWithdrawalInfo(cwInfo)),
-        clearError: () => dispatch(alertActions.clear())
+        clearError: () => dispatch(alertActions.clear()),
+        resetPageState: () => dispatch(actions.resetPageState()),
     }
 }
 
