@@ -107,9 +107,9 @@ class CreateWithdrawal extends Component {
         event.preventDefault();
         this.props.clearError();
         if(this.state.selectedNetwork && this.state.buyDataForm.phone.value != "" && this.phoneValidation(this.state.buyDataForm.phone.value)){
-            
-            this.props.setDataToBuyDetails(dataToBuy, this.state.selectedNetwork ? this.state.selectedNetwork.value : "MTN");
-            console.log(dataToBuy);
+            //commented by moshood
+            // this.props.setDataToBuyDetails(dataToBuy, this.state.selectedNetwork ? this.state.selectedNetwork.value : "MTN");
+            // console.log(dataToBuy);
             this.props.history.push('/bills/data/buy/confirm');
         }else{
             let validation = {...this.state.validation} 
@@ -158,10 +158,11 @@ class CreateWithdrawal extends Component {
         updatedCwDataForm[inputIdentifier] = updatedFormElement;
 
         let formIsValid = true;
-        for (let inputIdentifier in updatedBuyDataForm) {
-            formIsValid = updatedCwDataForm[inputIdentifier].valid && formIsValid;
-        }
-        console.log(formIsValid);
+        //commented by moshood
+        // for (let inputIdentifier in updatedBuyDataForm) {
+        //     formIsValid = updatedCwDataForm[inputIdentifier].valid && formIsValid;
+        // }
+        // console.log(formIsValid);
         
         this.setState({ cwDataForm: updatedCwDataForm, formIsValid, validation });
     }
