@@ -55,3 +55,69 @@ export const setCardlessWithdrawalInfo = (data) => {
         data : data
     }
 }
+
+export const getOtpForCustomer = (token, data, isResending = false) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        dispatch(isFetchingTrue());
+        let consume = ApiService.request(routes.GET_OTP_FOR_CUSTOMER, "POST", data, SystemConstant.HEADER);
+        return consume
+            .then(response => {
+                dispatch(isFetchingFalse());
+                console.log(response.data);
+                console.log("response.data");
+                if(isResending == false){
+                    dispatch(success(response.data));
+                }
+            })
+            .catch(error => {
+                dispatch(isFetchingFalse());
+                console.log(error);
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+    function success(response) { return { 
+        type : actionTypes.SUCCESS_NEXT_PAGE,
+        data: response
+     } }
+};
+
+export const resetPageState = () => {
+    return {
+        type: actionTypes.RESET_PAGE_STATE,
+    }
+}
+
+export const cardlessOtpVerification = (token, data) => {
+    console.log("is verifying otp");
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        dispatch(isFetchingTrue());
+        console.log("is treuly fetching pin");
+        let consume = ApiService.request(routes.CARDLESS_OTP_PIN_VERIFICATION, "POST", data, SystemConstant.HEADER);
+        return consume
+            .then(response => {
+                dispatch(isFetchingFalse());
+                // if(response.data.Response == 0){
+                        dispatch(success(response));
+                // }
+            })
+            .catch(error => {
+                dispatch(isFetchingFalse());
+                console.log(error);
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+
+            
+    };
+    function success(response) { return { 
+        type : actionTypes.SUCCESS_NEXT_PAGE,
+        data: response
+     } }
+}
+
+export const clearCardlessData = () => {
+    return{
+        type : actionTypes.CLEAR_CARDLESS_DATA
+    }
+}
