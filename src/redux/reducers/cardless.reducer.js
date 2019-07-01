@@ -3,7 +3,7 @@ import * as actionTypes from "../constants/cardless-withdrawal/cardless.constant
 import {updateObject} from '../actions/dataActions/data.actions';
 
 //--------------------------//
-//Pin Verifed status
+//Page State status
 // 0-correct/good to go
 // 1-There is an error
 // 2-Retry Pin/default State
@@ -14,8 +14,8 @@ const initialState = {
     paycodes : [],
     isFetching: false,
     cwInfo: null,
-    debitableAccounts : [],
-    pinVerified: 2,
+    pageState: 2,
+    response: ""
 }; 
 
 const reducer = (state = initialState, action) => {
@@ -28,7 +28,13 @@ const reducer = (state = initialState, action) => {
         case actionTypes.IS_FETCHING_FALSE:
             return updateObject(state, {isFetching: false});
         case actionTypes.SET_CARDLESS_WITHDRAWAL_INFO:
-            return updateObject(state, {cwInfo: action.data});
+            return updateObject(state, {cwInfo: action.data}); 
+        case actionTypes.SUCCESS_NEXT_PAGE:
+            return updateObject(state, {pageState : 0, response: action.data, isFetching : false});
+        case actionTypes.RESET_PAGE_STATE:
+            return updateObject(state, {pageState : 2});
+        case actionTypes.CLEAR_CARDLESS_DATA:
+            return updateObject(state, {pageState : 0, cwInfo: null});
         // case actionTypes.FETCH_DATA_PLAN_SUCCESS:
         //     return updateObject(state, {dataPlans: action.data, network : "", isFromBeneficiary: false});
         // case actionTypes.FETCH_DEBITABLE_ACCOUNTS_SUCCESS:
