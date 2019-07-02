@@ -7,7 +7,8 @@ import { Link, NavLink, Route, Switch } from 'react-router-dom';
 // import Data from './data';
 // import  Airtime  from './airtime';
 import Data from './data/data';
-import PayBills from './bills/pay-bills'
+import PayBills from './bills/bills';
+
 
 class Bills extends Component {
 
@@ -34,19 +35,17 @@ class Bills extends Component {
                                             <ul>
                                                 <li><NavLink to={'/bills/airtime'}>Airtime</NavLink></li>
                                                 <li><NavLink to={'/bills/data'}>Data</NavLink></li>
-                                                <li><NavLink to={'/bills/bills'}>Bills</NavLink></li>
+                                                <li><NavLink to={'/bills/paybills'}>Bills Payment</NavLink></li>
 
                                                 {/* <li><a href="bills.html">Bills Payment</a></li> */}
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
-
                                 {this.props.children}
-                                
-                                <Route to={'/bills/airtime'} component={Airtime} />
-                                <Route to={'bills/data'} component={Data} />
-                                <Route to={'bills/bills'} component={PayBills} />
+                                <Route path={'/bills/airtime'} component={Airtime} />
+                                <Route path={'/bills/data'} component={Data} />
+                                <Route path={'/bills/paybills'} component={PayBills} /> 
                             </div>
                         </div>
                     </div>

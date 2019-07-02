@@ -1,3 +1,5 @@
 export {
-    fetchBillBeneficiaries
+    fetchBillBeneficiaries,
+    fetchBillersCategory,
+    fetchBillerItems,
 } from './bills.actions';

@@ -3,8 +3,13 @@ import { Fragment } from 'react';
 import {connect} from 'react-redux';
 import { Link, NavLink, Route } from 'react-router-dom';
 
-import Index from './index';
-import Modal from 'react-responsive-modal';
+import Index from '.';
+import Billers from './billers';
+// import BuyData from './buy-data';
+// import ConfirmData from './confirm-data';
+// import Success from './success';
+// import  VerifyOtp from './verify-otp'
+// import Modal from 'react-responsive-modal';
 import * as actions from '../../../redux/actions/bills/export';
 
 class PayBills extends Component{
@@ -16,12 +21,9 @@ class PayBills extends Component{
     }
 
     componentDidMount() {
-        console.log("heeyyyyy Im here paybills")
-        // this.props.resetPinState();
-        // if(this.props.bills.length < 1){
-        //     this.props.fetchBills(this.state.user.token);
-        // }
-        
+        if(this.props.bills < 1){
+            this.props.fetchBills(this.state.user.token);
+        }
     }
 
     onCloseModal = () => {
@@ -30,14 +32,13 @@ class PayBills extends Component{
 
 
    render() {
+    console.log("in billllllssss now- render method")
        return(
+           
            <Fragment>
                 {this.props.children}
-                <Route exact path='/bills/bills' render={(props) => <Index {...props} />} />
-                {/* <Route exact path='/bills/data/buy' render={(props) => <BuyData {...props} />} />
-                <Route path='/bills/data/buy/confirm' render={(props) => <ConfirmData {...props} />} />
-                <Route path='/bills/data/buy/success' render={(props) => <Success {...props} />} />
-                <Route path='/bills/data/buy/verify' render={(props) => <VerifyOtp {...props} />} /> */}
+                <Route exact path='/bills/paybills' render={(props) => <Index {...props} />} />
+                <Route exact path='/bills/paybills/biller' render={(props) => <Billers {...props} />} />
            </Fragment>
        );
    }

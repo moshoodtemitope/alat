@@ -5,7 +5,7 @@ import {updateObject} from '../actions/dataActions/data.actions';
 
 
 //--------------------------//
-//Pin Verifed status
+//Page State status
 // 0-correct/good to go
 // 1-There is an error
 // 2-Retry Pin/default State
@@ -14,10 +14,13 @@ import {updateObject} from '../actions/dataActions/data.actions';
 
 const initialState = {
     bills : [],
+    billers: [],
     // dataPlans : [],
     isFetching: false,
+    isFetchingItems: false,
     // isFetchingData: false,
     billToPay: null,
+    billerItems: [],
     pageState: 2,
     isFromBeneficiary: false
 }; 
@@ -25,16 +28,22 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch(action.type){
         case actionTypes.FETCH_BILLS_BENEFICIARY_SUCCESS:
-            return updateObject(state, {beneficiaries: action.data, isFetching : false});
+            return updateObject(state, {bills: action.data, isFetching : false});
             // return updateObject(state, {beneficiaries: mock, isFetching : false});
         case actionTypes.IS_FETCHING_TRUE:
            return updateObject(state, {isFetching: true});
         case actionTypes.IS_FETCHING_FALSE:
             return updateObject(state, {isFetching: false});
+        case actionTypes.FETCH_BILLERS_CATEGORY_SUCCESS:
+            return updateObject(state, {billers: action.data});
+        case actionTypes.FETCH_BILLER_ITEMS_SUCCESS:
+            return updateObject(state, {billerItems: action.data});
+        case actionTypes.IS_FETCHING_BILLER_ITEM:
+            return updateObject(state, {isFetchingItems: !state.isFetchingItems});
+        
         // case actionTypes.SET_DATA_TRANSACTION_DETAILS:
         //     return updateObject(state, {dataToBuy: action.data, network: action.network, isFromBeneficiary: action.fromBeneficiary});
-        // case actionTypes.FETCH_DATA_PLAN_SUCCESS:
-        //     return updateObject(state, {dataPlans: action.data, network : "", isFromBeneficiary: false});
+        // 
         // case actionTypes.FETCH_DEBITABLE_ACCOUNTS_SUCCESS:
         //     return updateObject(state, {debitableAccounts : action.data, isFetching: false, pinErrorMessage: null});
         //     // return updateObject(state, {debitableAccounts : mock2});
