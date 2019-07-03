@@ -90,7 +90,7 @@ class UserGoals extends React.Component{
             else if(userGoals.user_goals === 'DASHBOARD_GOALS_SUMMARY_FETCH_FAILURE'){
                 return (
                     <div>
-                        <h4>{userGoals.data.response}</h4>
+                        <h4>{userGoals.user_goals_data.error}</h4>
                         <button onClick={this.fetchuserGoals.bind(this)}>Retry</button>
                     </div>
                 )

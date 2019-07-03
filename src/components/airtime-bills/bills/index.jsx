@@ -102,7 +102,7 @@ class Index extends Component {
                                         // }
                                         return (
                                             <div className="col-sm-12 col-md-4" key={counter + 1} >
-                                                <div className="al-card airtime-card" onClick={() => {this.useBeneficiary(dataToBuy)}} style={{zIndex:"10"}}>
+                                                <div className="al-card airtime-card" style={{zIndex:"10"}}>
                                                     <div className="clearfix">
                                                         <div className="network-img">
                                                             {image}
