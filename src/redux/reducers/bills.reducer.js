@@ -29,7 +29,6 @@ const reducer = (state = initialState, action) => {
     switch(action.type){
         case actionTypes.FETCH_BILLS_BENEFICIARY_SUCCESS:
             return updateObject(state, {bills: action.data, isFetching : false});
-            // return updateObject(state, {beneficiaries: mock, isFetching : false});
         case actionTypes.IS_FETCHING_TRUE:
            return updateObject(state, {isFetching: true});
         case actionTypes.IS_FETCHING_FALSE:
@@ -37,9 +36,11 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_BILLERS_CATEGORY_SUCCESS:
             return updateObject(state, {billers: action.data});
         case actionTypes.FETCH_BILLER_ITEMS_SUCCESS:
-            return updateObject(state, {billerItems: action.data});
+            return updateObject(state, {billerItems: action.items});
         case actionTypes.IS_FETCHING_BILLER_ITEM:
             return updateObject(state, {isFetchingItems: !state.isFetchingItems});
+        case actionTypes.SET_BILL_TO_PAY_INFO:
+            return updateObject(state, {billToPay: action.data});
         
         // case actionTypes.SET_DATA_TRANSACTION_DETAILS:
         //     return updateObject(state, {dataToBuy: action.data, network: action.network, isFromBeneficiary: action.fromBeneficiary});

@@ -159,11 +159,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        // onDeleteBeneficiary: (token, data) => dispatch(actions.deleteDataBeneficiary(token, data)),
         fetchBills : (token) => dispatch(actions.fetchBillBeneficiaries(token)),
-        // setDataToBuyDetails: (dataToBuy, network, fromBeneficiary) => dispatch(actions.setDataTransactionDetails(dataToBuy, network, fromBeneficiary)),
-        // clearDataInfo: () => dispatch(actions.clearDataInfoNoPost()),
-        // resetPinState: () => dispatch(actions.pinVerificationTryAgain()),
     }
 }
 

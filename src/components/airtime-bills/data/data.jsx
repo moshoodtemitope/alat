@@ -39,8 +39,8 @@ class Data extends Component{
            
            <Fragment>
                 {this.props.children}
-                <Route path='/bills/data' render={(props) => <Index {...props} beneficiaries={this.props.beneficiaries} isFetching={this.props.fetching} />} />
-                <Route path='/bills/data/buy' render={(props) => <BuyData {...props} />} />
+                <Route exact path='/bills/data' render={(props) => <Index {...props} beneficiaries={this.props.beneficiaries} isFetching={this.props.fetching} />} />
+                <Route exact path='/bills/data/buy' render={(props) => <BuyData {...props} />} />
                 <Route path='/bills/data/buy/confirm' render={(props) => <ConfirmData {...props} />} />
                 <Route path='/bills/data/buy/success' render={(props) => <Success {...props} />} />
                 <Route path='/bills/data/buy/verify' render={(props) => <VerifyOtp {...props} />} />

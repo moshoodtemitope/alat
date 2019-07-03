@@ -5,6 +5,7 @@ import { Link, NavLink, Route } from 'react-router-dom';
 
 import Index from '.';
 import Billers from './billers';
+import Subscriber from './subscriber'
 // import BuyData from './buy-data';
 // import ConfirmData from './confirm-data';
 // import Success from './success';
@@ -39,6 +40,7 @@ class PayBills extends Component{
                 {this.props.children}
                 <Route exact path='/bills/paybills' render={(props) => <Index {...props} />} />
                 <Route exact path='/bills/paybills/biller' render={(props) => <Billers {...props} />} />
+                <Route path='/bills/paybills/subscriber' render={(props) => <Subscriber {...props} />} />
            </Fragment>
        );
    }

@@ -98,10 +98,15 @@ export const fetchBillerItems = (token, data) => {
             });
     };
 
-    function success(response) { return { 
+    function success(response) { 
+        var itemsArray = [];
+        response.map(item => itemsArray.push({value: item.PaymentItem, label: item.PaymentItem, amount: item.Amount, paymentCode: item.BillerPaymentCode, ref : item.ReferenceDetails}));
+        return { 
         type : actionTypes.FETCH_BILLER_ITEMS_SUCCESS,
-        data: response
+        // data: response,
+        items: itemsArray,
      } }
+
 };
 
 export const setBillInfo = (billInfo) => {
