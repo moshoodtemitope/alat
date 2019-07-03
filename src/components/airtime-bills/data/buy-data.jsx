@@ -256,7 +256,6 @@ class BuyData extends Component {
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <center>
-
                                                     <button onClick={this.onSubmitBuyData} class="btn-alat m-t-10 m-b-20 text-center">Next</button>
                                                 </center>
                                             </div>
@@ -264,11 +263,7 @@ class BuyData extends Component {
 
                                     </form>
                                 </div>
-
-
-
                             </div>
-
                             <center>
                                 <Link to={'/bills/data'} className="add-bene m-t-50">Go Back</Link>
                             </center>
