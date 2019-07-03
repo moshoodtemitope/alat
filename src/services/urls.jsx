@@ -1,5 +1,5 @@
-// const URL = 'https://api.alat.ng';
- const URL = 'https://196.43.215.170';
+const URL = 'https://api.alat.ng';
+//  const URL = 'https://196.43.215.170';
 // const URL = 'http://196.43.215.157';
 
 const BASEURL = URL;
@@ -68,5 +68,10 @@ export const routes = {
     //Cardless Withdrawal
     FETCH_UNEXPIRED_PAYCODES: BASEURL + '/PaymentApi/api/CardlessTransfer/GetAllUnExpiredPayCode',
     GET_OTP_FOR_CUSTOMER: BASEURL + '/RegistrationApi/api/registration/RequestOtpForCustomer',
-    CARDLESS_OTP_PIN_VERIFICATION: BASEURL + '/PaymentApi/api/CardlessTransfer/CardlessPaycodeRequestWeb'
+    CARDLESS_OTP_PIN_VERIFICATION: BASEURL + '/PaymentApi/api/CardlessTransfer/CardlessPaycodeRequestWeb',
+
+    // Bills
+    FETCH_BILLS_BENEFICIARIES: BASEURL + '/PaymentApi/api/AirtimeBill/GetBillBeneficiaries',
+    FETCH_BILLERS_CATEGORY: BASEURL + '/PaymentApi/api/AirtimeBill/QuickTellerCategoryAndBillers',
+    FETCH_BILLER_ITEM : BASEURL + '/PaymentApi/api/AirtimeBill/GetQuickTellerBillItems',
 };
