@@ -3,73 +3,7 @@ import {alertConstants} from "../constants/alert.constants";
 
 import {updateObject} from '../actions/dataActions/data.actions';
 
-// const mock = [
-//     {
-//         Amount: 499,
-//         BeneficiaryId: 382264,
-//         BillerAlias: "Not data",
-//         BillerName: "OtherBills",
-//         BillerPaymentCode: "0427757",
-//         CustomerId: 0,
-//         DataNetwork: "Airtel Data Plan",
-//         IsAirtime: true,
-//         NetworkCode: 3,
-//         PaymentItem: "Data ERC - N500(750MB valid for 14 days)",
-//         PhoneNumber: "08163152616",
-//     },
-//     {
-//         Amount: 1000,
-//         BeneficiaryId: 382264,
-//         BillerAlias: "Na data data",
-//         BillerName: "OtherBills",
-//         BillerPaymentCode: "0427757",
-//         CustomerId: 0,
-//         DataNetwork: "Airtel Data Plan",
-//         IsAirtime: false,
-//         NetworkCode: 2,
-//         PaymentItem: "Data ERC - N500(750MB valid for 14 days)",
-//         PhoneNumber: "08163152000",
-//     },
-//     {
-//         Amount: 800,
-//         BeneficiaryId: 382264,
-//         BillerAlias: "Na 2nd data data",
-//         BillerName: "OtherBills",
-//         BillerPaymentCode: "0427757",
-//         CustomerId: 0,
-//         DataNetwork: "Airtel Data Plan",
-//         IsAirtime: false,
-//         NetworkCode: 3,
-//         PaymentItem: "Data ERC - N500(750MB valid for 14 days)",
-//         PhoneNumber: "08163152616",
-//     },
-//     {
-//         Amount: 8000,
-//         BeneficiaryId: 382264,
-//         BillerAlias: "Na 8thnd data data",
-//         BillerName: "OtherBills",
-//         BillerPaymentCode: "0427757",
-//         CustomerId: 0,
-//         DataNetwork: "Airtel Data Plan",
-//         IsAirtime: false,
-//         NetworkCode: 3,
-//         PaymentItem: "Data ERC - N500(750MB valid for 14 days)",
-//         PhoneNumber: "08163152616",
-//     },
-//     {
-//         Amount: 5000,
-//         BeneficiaryId: 382264,
-//         BillerAlias: "Nobi data",
-//         BillerName: "OtherBills",
-//         BillerPaymentCode: "0427757",
-//         CustomerId: 0,
-//         DataNetwork: "Airtel Data Plan",
-//         IsAirtime: true,
-//         NetworkCode: 3,
-//         PaymentItem: "Data ERC - N500(750MB valid for 14 days)",
-//         PhoneNumber: "08163152616",
-//     }
-// ];
+
 
 //--------------------------//
 //Pin Verifed status
