@@ -29,7 +29,7 @@ class SelectDebitableAccounts extends React.Component {
         } else {
             arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account Available' }];
         }
-        console.log(arrayToDisplay)
+        //console.log(arrayToDisplay)
 
         // const _debitableAccounts = {
         //     ...this.state
@@ -57,8 +57,8 @@ class SelectDebitableAccounts extends React.Component {
     }
 
     handleSelectAccount = (e) => {
-        console.log(e);
-        this.props.onChange(e.value);
+       // console.log(e);
+        this.props.onChange(e.value, e);
         this.setState({ selectedAccount: e.value })
     }
 

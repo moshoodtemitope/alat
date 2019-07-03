@@ -22,6 +22,8 @@ import { airtimeBeneficiariesReducer, deleteBeneficiaryReducer, buyAirtimeReduce
      debitableAccountsReducer, buyAirtimeWebPinReducer, buyAirtimeWebPinOTPReducer,
      airtimeSaveBeneficiaryReducer  } from './airtime.reducer';
 
+import { fundAccountReducer, getTokenizedCardsReducer } from './fund-account.reducer';
+
 
 export const onboarding = {
     userRegistrationRequest,
@@ -64,4 +66,9 @@ export const airtime ={
 
 export const global ={
     debitableAccountsReducer
+}
+
+export const fundAccount={
+    fundAccountReducer,
+    getTokenizedCardsReducer
 }
