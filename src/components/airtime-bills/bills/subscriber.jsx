@@ -37,13 +37,11 @@ class Subscriber extends Component {
 
 
     inputChangedHandler = (event, inputIdentifier) => {
-        // let validation = { ...this.state.validation };
-        // validation.pinError.hasError = false;
-        if(this.state.isValid == false) this.setState({isValid : true})
+        if(this.state.isValid == false) this.setState({isValid : true});
+        if(this.props.alert.message) this.props.clearError();
         const updatedinputSubscriberForm = {
             ...this.state.inputSubscriberForm
         }
-        console.log()
         const updatedFormElement = {
             ...updatedinputSubscriberForm[inputIdentifier]
         };
@@ -53,19 +51,9 @@ class Subscriber extends Component {
         //         return;
         //     }
         // }
-        // updatedFormElement.valid = checkInputValidation(updatedFormElement.value, updatedFormElement.validation);
-        // updatedFormElement.valid = true;
-        // updatedFormElement.touched = true;
         updatedinputSubscriberForm[inputIdentifier] = updatedFormElement;
-
-        // let formIsValid = true;
-        // for (let inputIdentifier in updatedinputSubscriberForm) {
-        //     formIsValid = updatedinputSubscriberForm[inputIdentifier].valid && formIsValid;
-        // }
-        // console.log(formIsValid);
         this.setState({ inputSubscriberForm: updatedinputSubscriberForm });
     }
-
 
     goBack =(event) => {
         event.preventDefault();
@@ -79,7 +67,11 @@ class Subscriber extends Component {
             this.setState({isValid : false});
             return;
         }
-        alert("ok");
+        let payload = {
+            PaymentCode: this.props.billsInfo.item.paymentCode,
+            SubscriberId: this.state.inputSubscriberForm.ref.value,
+        }
+        this.props.getSubscriberName(this.state.user.token, payload)
     }
 
     
@@ -106,11 +98,11 @@ class Subscriber extends Component {
                                         <h4 className="m-b-10 center-text hd-underline">Pay Bill</h4>
                                         <div className="transfer-ctn">
                                             <form>
-                                                <div class="al-card no-pad">
-                                                    <div class="trans-summary-card">
-                                                        <div class="name-amount clearfix">
-                                                            <p class="pl-name-email">{this.props.billsInfo.biller} <span>{this.props.billsInfo.item.value}</span></p>
-                                                            <p class="pl-amount">N{formatAmountNoDecimal(this.props.billsInfo.item.amount)}</p>
+                                                <div className="al-card no-pad">
+                                                    <div className="trans-summary-card">
+                                                        <div className="name-amount clearfix">
+                                                            <p className="pl-name-email">{this.props.billsInfo.biller} <span>{this.props.billsInfo.item.value}</span></p>
+                                                            <p className="pl-amount">₦{formatAmountNoDecimal(this.props.billsInfo.item.amount)}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -133,7 +125,7 @@ class Subscriber extends Component {
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <center>
-                                                            <button disabled={this.props.fetching} onClick={this.onSubmitForm} className="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Buy Data"}</button>
+                                                            <button disabled={this.props.fetching} onClick={this.onSubmitForm} className="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Next"}</button>
                                                         </center>
                                                     </div>
                                                 </div>
@@ -152,10 +144,15 @@ class Subscriber extends Component {
                 </Fragment>
 
             );
-            // if (this.props.pageState == 0) {
-            //     this.props.resetPageState();
-            //     subscriber = <Redirect to="/bills/data/buy/verify" />
-            // }
+            if (this.props.pageState == 0) {
+                let updatedBillsInfo = {
+                    ...this.props.billsInfo,
+                    subscriberId : this.state.inputSubscriberForm.ref.value
+                } 
+                this.props.setBillInfo(updatedBillsInfo);
+                this.props.resetPageState(2);
+                subscriber = <Redirect to="/bills/paybills/confirm" />
+            }
         }
 
         return subscriber;
@@ -174,8 +171,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         setBillInfo: (data) => dispatch(actions.setBillInfo(data)),
-        // set: () => dispatch(actions.pinVerificationTryAgain()),
-        clearError: () => dispatch(alertActions.clear())
+        getSubscriberName: (token, data) => dispatch(actions.getSubscriberNameEnquiry(token, data)),
+        clearError: () => dispatch(alertActions.clear()),
+        resetPageState: (code) => dispatch(actions.resetBillPage(code)),
     }
 }
 

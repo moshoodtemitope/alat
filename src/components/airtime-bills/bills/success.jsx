@@ -2,12 +2,12 @@ import React, { Component } from 'React';
 import { Link, Redirect } from 'react-router-dom';
 
 import { Switch } from '../../../shared/elements/_toggle';
-import { Input } from './input';
+import { Input } from '../data/input';
 import successLogo from '../../../assets/img/success.svg';
 import { formatAmountNoDecimal } from '../../../shared/utils';
 import { connect } from 'react-redux';
 
-import * as actions from '../../../redux/actions/dataActions/export';
+import * as actions from '../../../redux/actions/bills/export';
 
 class Success extends Component {
     constructor(props) {
@@ -37,7 +37,7 @@ class Success extends Component {
     }
 
     inputChangedHandler = (event, inputIdentifier) => {
-        if(this.state.hasError == true) this.setState({hasError : false});
+        if (this.state.hasError == true) this.setState({ hasError: false });
         const updatedSaveBeneficiaryForm = {
             ...this.state.saveBeneficiaryForm
         }
@@ -55,17 +55,16 @@ class Success extends Component {
 
     onSubmitSaveForm = (event) => {
         event.preventDefault();
-        if(this.state.saveBeneficiaryForm.alias.value == ''){
-            this.setState({hasError : true});
+        if (this.state.saveBeneficiaryForm.alias.value == '') {
+            this.setState({ hasError: true });
             return;
         }
-        var payload = { 
-            Amount: this.props.dataInfo.Amount,
+        var payload = {
+            Amount: this.props.billsInfo.item.amount,
             BillerAlias: this.state.saveBeneficiaryForm.alias.value,
-            BillerPaymentCode: this.props.dataInfo.BillerPaymentCode,
-            PhoneNumber: this.props.dataInfo.PhoneNumber,
-            TransactionPin: this.props.dataInfo.TransactionPin,
-            NetworkCode : this.props.dataInfo.NetworkCode
+            BillerPaymentCode: this.props.billsInfo.item.paymentCode,
+            SubscriberID: this.props.billsInfo.subscriberId,
+            TransactionPin: this.props.billsInfo.TransactionPin,
         };
         console.log("saving benficiary");
         this.props.onSaveBeneficiary(this.state.user.token, payload);
@@ -78,7 +77,7 @@ class Success extends Component {
 
     render() {
         var success;
-        if (this.props.dataInfo != null && this.props.pageState == 2) {
+        if (this.props.billsInfo != null && this.props.pageState == 2) {
             const formElementArray = [];
             for (let key in this.state.saveBeneficiaryForm) {
                 formElementArray.push({
@@ -101,8 +100,8 @@ class Success extends Component {
                                         <div className="al-card no-pad">
                                             <div className="trans-summary-card">
                                                 <div className="name-amount clearfix">
-                                                    <p className="pl-name-email">{this.props.network} Data Plan<span>{this.props.dataInfo  ? this.props.dataInfo.PaymentItem : "*******"}</span></p>
-                                                    <p className="pl-amount">{this.props.dataInfo ? "₦"+formatAmountNoDecimal(this.props.dataInfo.Amount) : "####"}</p>
+                                                    <p className="pl-name-email">{this.props.billsInfo ? this.props.billsInfo.biller : "*****"}<span>{this.props.billsInfo ? this.props.billsInfo.item.value : "*******"}</span></p>
+                                                    <p className="pl-amount">{this.props.billsInfo ? "₦" + formatAmountNoDecimal(this.props.billsInfo.item.amount) : "####"}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -121,24 +120,24 @@ class Success extends Component {
                                             this.state.saveBeneficiary ? (
                                                 <div className="save-purchase-frm">
                                                     {(this.props.alert.message) ?
-                        <div className="info-label error  m-t-10">{this.props.alert.message}</div> : null
-                        }
+                                                        <div className="info-label error  m-t-10">{this.props.alert.message}</div> : null
+                                                    }
                                                     <form>
-                                                            
-                                                            {formElementArray.map((formElement) => {
-                                                    return (
-                                                        <div className="input-ctn" key={formElement.id}>
-                                                            <label>{formElement.config.label}</label>
-                                                            <Input
-                                                                elementType={formElement.config.elementType}
-                                                                elementConfig={formElement.config.elementConfig}
-                                                                value={formElement.config.value}
-                                                                changed={(event) => this.inputChangedHandler(event, formElement.id)} />
-                                                                {this.state.hasError ? <small className="text-danger">Field is required</small> : null}
-                                                        </div>
-                                                    )
 
-                                                })}
+                                                        {formElementArray.map((formElement) => {
+                                                            return (
+                                                                <div className="input-ctn" key={formElement.id}>
+                                                                    <label>{formElement.config.label}</label>
+                                                                    <Input
+                                                                        elementType={formElement.config.elementType}
+                                                                        elementConfig={formElement.config.elementConfig}
+                                                                        value={formElement.config.value}
+                                                                        changed={(event) => this.inputChangedHandler(event, formElement.id)} />
+                                                                    {this.state.hasError ? <small className="text-danger">Field is required</small> : null}
+                                                                </div>
+                                                            )
+
+                                                        })}
                                                         <center>
                                                             <button disabled={this.props.fetching} onClick={this.onSubmitSaveForm} class="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Save"}</button>
                                                         </center>
@@ -148,22 +147,12 @@ class Success extends Component {
                                                     <div className="row">
                                                         <div className="col-sm-12">
                                                             <center>
-                                                            <button onClick={this.goToDashboard} class="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</button>
-                                                                {/* <Link to={'/dashboard'} className="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</Link> */}
+                                                                <button onClick={this.goToDashboard} class="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</button>
                                                             </center>
                                                         </div>
                                                     </div>
                                                 )
                                         }
-
-                                        {/* <div className="save-purchase-form">
-						  					<form>
-								                <div className="input-ctn">
-								                    <label>Give it a name</label>
-								                    <input type="text" />
-								                </div>
-								            </form>
-								        </div> */}
                                     </div>
                                 </div>
                             </div>
@@ -171,17 +160,19 @@ class Success extends Component {
                     </div>
                 </div>
             );
-        }else if(this.props.pageState == 3) {
+        } else if (this.props.pageState == 3) {
             console.log("going to dashboard no post");
-            this.props.resetPinState();
+            this.props.resetPageState(2);
+            this.props.clearBillsInfo();
             success = <Redirect to="/dashboard" />
-        }else if(this.props.pageState == 0) {
-            this.props.resetPinState();
+        } else if (this.props.pageState == 0) {
+            this.props.resetPageState(2);
+            this.props.clearBillsInfo();
             console.log("going to dashboard post");
             success = <Redirect to="/dashboard" />
-        }else{
+        } else {
             console.log("success to not allowed ");
-            success = <Redirect to="/bills/data/buy" />
+            success = <Redirect to="/bills/paybills/biller" />
         }
 
         return success;
@@ -190,23 +181,21 @@ class Success extends Component {
 
 const mapStateToProps = state => {
     return {
-        dataInfo: state.data_reducer.dataToBuy,
-        dataPlans: state.data_reducer.dataPlans,
-        accounts: state.data_reducer.debitableAccounts,
-        network: state.data_reducer.network,
-        pageState: state.data_reducer.pinVerified,
+        billsInfo: state.bills_reducer.billToPay,
+        pageState: state.bills_reducer.pageState,
         alert: state.alert,
-        isFromBeneficiary : state.data_reducer.isFromBeneficiary,
-        fetching: state.data_reducer.isFetching,
+        fetching: state.bills_reducer.isFetching,
+        phoneNumber: state.authentication.user.phoneNo || state.authentication.user.response.phoneNo,
+        otpPayload: state.bills_reducer.otpData,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        resetPinState: () => dispatch(actions.pinVerificationTryAgain()),
-        fetchDebitableAccounts: (token) => dispatch(actions.fetchDebitableAccounts(token)),
-        onSaveBeneficiary:(token, data) => dispatch(actions.saveBeneficiary(token, data)),
-        toDashboard: () => dispatch(actions.clearDataInfoNoPost())
+        resetPageState: (code) => dispatch(actions.resetBillPage(code)),
+        onSaveBeneficiary: (token, data) => dispatch(actions.saveBillsBeneficiary(token, data)),
+        toDashboard: () => dispatch(actions.goToDashboard()),
+        clearBillsInfo : () => dispatch(actions.clearBillsInfo())
     }
 }
 

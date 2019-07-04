@@ -15,10 +15,10 @@ import {updateObject} from '../actions/dataActions/data.actions';
 const initialState = {
     bills : [],
     billers: [],
-    // dataPlans : [],
+    otpData : null,
     isFetching: false,
     isFetchingItems: false,
-    // isFetchingData: false,
+    subscriberName: "",
     billToPay: null,
     billerItems: [],
     pageState: 2,
@@ -34,32 +34,27 @@ const reducer = (state = initialState, action) => {
         case actionTypes.IS_FETCHING_FALSE:
             return updateObject(state, {isFetching: false});
         case actionTypes.FETCH_BILLERS_CATEGORY_SUCCESS:
-            return updateObject(state, {billers: action.data});
+            return updateObject(state, {billers: action.data, isFetching : false});
         case actionTypes.FETCH_BILLER_ITEMS_SUCCESS:
-            return updateObject(state, {billerItems: action.items});
+            return updateObject(state, {billerItems: action.items,isFetching : false});
         case actionTypes.IS_FETCHING_BILLER_ITEM:
             return updateObject(state, {isFetchingItems: !state.isFetchingItems});
         case actionTypes.SET_BILL_TO_PAY_INFO:
-            return updateObject(state, {billToPay: action.data});
-        
-        // case actionTypes.SET_DATA_TRANSACTION_DETAILS:
-        //     return updateObject(state, {dataToBuy: action.data, network: action.network, isFromBeneficiary: action.fromBeneficiary});
-        // 
-        // case actionTypes.FETCH_DEBITABLE_ACCOUNTS_SUCCESS:
-        //     return updateObject(state, {debitableAccounts : action.data, isFetching: false, pinErrorMessage: null});
-        //     // return updateObject(state, {debitableAccounts : mock2});
-        // case actionTypes.TO_NEXT:
-        //     return updateObject(state, {pinVerified : 0});
-        // case actionTypes.PIN_VERIFICATION_TRY_AGAIN:
-        //     return updateObject(state, {pinVerified : 2, errorMessage: null});
-        // case actionTypes.IS_FETCHING_DATA:
-        //     return updateObject(state, {isFetchingData : !state.isFetchingData});
-        // case actionTypes.CLEAR_DATA_INFO_NOPOST:
-        //     return updateObject(state, {pinVerified : 3, dataToBuy : null, dataPlans : [], debitableAccounts : [], network : ""});
-        // case actionTypes.CLEAR_DATA_INFO_POST:
-        //     return updateObject(state, {pinVerified : 0, dataToBuy : null, dataPlans : [], debitableAccounts : [], network : "", beneficiaries : []});
-        // case alertConstants.ERROR:
-        //     return updateObject(state, {pinVerified : 1, errorMessage: action.message});
+            return updateObject(state, {billToPay: action.data, otpData: action.otpPayload});
+        case actionTypes.VALID_SUBSCRIBER_NAME:
+            return updateObject(state, {subscriberName: action.data.SubscriberName, pageState: 0, isFetching: false});
+        case actionTypes.RESET_PAGE_STATE_BILL:
+            return updateObject(state, {pageState: action.code});
+        case actionTypes.FETCH_OTP_SUCCESS:
+            return updateObject(state, {pageState: 0});
+        case actionTypes.SAVE_BILL_BENEFICIARY_SUCCESS:
+            return updateObject(state, {pageState: 0});
+        case actionTypes.VERIFY_OTP_SUCCESS:
+            return updateObject(state, {pageState: 0});
+        case actionTypes.CLEAR_ALL_BILLS_DATA:
+            return updateObject(state, initialState);
+        case actionTypes.GO_TO_DASHBOARD_BILL:
+            return updateObject(state, {pageState: 3});
         default: return state;
     }
 }
