@@ -39,7 +39,7 @@ export const getTokenizedCards =(token, data)=>{
         return consume
             .then(response => {
                 //TODO: edit localDB accounts object
-                dispatch(success(response.data, request));
+                dispatch(success(response.data));
             })
             .catch(error => {
                // dispatch(success(response.data, request));
@@ -50,6 +50,114 @@ export const getTokenizedCards =(token, data)=>{
     };
 
     function request(request) { return { type: fundAccountConstants.GET_TOKENIZED_CARDS_PENDING, request } }
-    function success(response, request) { return { type: fundAccountConstants.GET_TOKENIZED_CARDS_FAILURE, response : response, data: request } }
-    function failure(error) { return { type: fundAccountConstants.GET_TOKENIZED_CARDS_SUCCESS, error } }
+    function success(response) { return { type: fundAccountConstants.GET_TOKENIZED_CARDS_SUCCESS, response  } }
+    function failure(error) { return { type: fundAccountConstants.GET_TOKENIZED_CARDS_FAILURE, error } }
+}
+
+export const saveCard =(token, data)=>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => { 
+        let consume = ApiService.request(routes.SAVE_CARD,
+             "POST", data, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+               // dispatch(success(response.data, request));
+                 dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // throw(error);
+            });
+    };
+
+    function request(request) { return { type: fundAccountConstants.SAVE_CARD_PENDING, request } }
+    function success(response) { return { type: fundAccountConstants.SAVE_CARD_SUCCESS, response  } }
+    function failure(error) { return { type: fundAccountConstants.SAVE_CARD_FAILURE, error } }
+}
+
+export const fundCardDetails =(data)=>{
+    return (dispatch) => { 
+       dispatch(success(data));
+    };
+   // function request(request) { return { type: fundAccountConstants.SAVE_CARD_PENDING, request } }
+    function success(response) { return { type: fundAccountConstants.FUNDCARD_DETAILS_SUCCESS, data  } }
+   // function failure(error) { return { type: fundAccountConstants.SAVE_CARD_FAILURE, error } }
+}
+
+export const deleteCard=(token, data)=>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {  //Route to be added
+        let consume = ApiService.request(routes.DELETETOKENIZEDCARDS,
+             "POST", data, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+               // dispatch(success(response.data, request));
+                 dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // throw(error);
+            });
+    };
+
+    function request(request) { return { type: fundAccountConstants.DELETE_SAVED_CARD_PENDING, request } }
+    function success(response) { return { type: fundAccountConstants.DELETE_SAVED_CARD_SUCCESS, response  } }
+    function failure(error) { return { type: fundAccountConstants.DELETE_SAVED_CARD_FAILURE, error } }
+}
+
+export const fundFromLocalCard=(token, data)=>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {  //Route to be added
+        let consume = ApiService.request("",
+             "POST", data, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+               // dispatch(success(response.data, request));
+                 dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // throw(error);
+            });
+    };
+
+    function request(request) { return { type: fundAccountConstants.FUND_FROM_CARD_PENDING, request } }
+    function success(response) { return { type: fundAccountConstants.FUND_FROM_CARD_SUCCESS, response  } }
+    function failure(error) { return { type: fundAccountConstants.FUND_FROM_CARD_FAILURE, error } }
+}
+
+export const fundFromForeignCard=(token, data)=>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {  //Route to be added
+        let consume = ApiService.request("",
+             "POST", data, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+               // dispatch(success(response.data, request));
+                 dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // throw(error);
+            });
+    };
+
+    function request(request) { return { type: fundAccountConstants.FUND_FROM_CARD_PENDING, request } }
+    function success(response) { return { type: fundAccountConstants.FUND_FROM_CARD_SUCCESS, response  } }
+    function failure(error) { return { type: fundAccountConstants.FUND_FROM_CARD_FAILURE, error } }
+}
+
+export const ClearAction=(type)=>{
+    return (dispatch) =>{
+       dispatch(clear(type))
+    };
+    function clear(type){return {type : type}}
 }

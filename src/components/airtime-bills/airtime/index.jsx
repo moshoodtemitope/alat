@@ -80,7 +80,7 @@ class Index extends Component {
     }
 
     deleteBeneficiary = (index) => {
-        console.log(this.state.selectedBeneficairy.BeneficiaryId);
+        //console.log(this.state.selectedBeneficairy.BeneficiaryId);
         const { dispatch } = this.props;
         let props = this.props;
         this.setState({ isDelete: true });

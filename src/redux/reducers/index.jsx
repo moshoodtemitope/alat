@@ -10,6 +10,7 @@ import cardlessReducer from './cardless.reducer';
 import billsReducer from './bills.reducer';
 import { airtimeConstants } from "../constants/airtime/airtime.constants";
 import { TRANSFER_REDUCER_CLEAR } from "../constants/transfer.constants";
+//import { saveCardReducer } from "./fund-account.reducer";
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
 const rootReducer = (state, action)=>{
@@ -66,7 +67,12 @@ const airtimeReducer = combineReducers({
 
 const fundAccountReducer = combineReducers({
     fundwema_alat : fundAccount.fundAccountReducer,
-    getTokencards : fundAccount.getTokenizedCardsReducer
+    getTokencards : fundAccount.getTokenizedCardsReducer,
+    saveCard: fundAccount.saveCardReducer,
+    cardDetails: fundAccount.tranCardDetailsReducer,
+    deleteCard: fundAccount.deleteCardReducer,
+    fundFromCard: fundAccount.fundFromCardReducer,
+
 })
 
 const appReducer = combineReducers({

@@ -22,7 +22,8 @@ import { airtimeBeneficiariesReducer, deleteBeneficiaryReducer, buyAirtimeReduce
      debitableAccountsReducer, buyAirtimeWebPinReducer, buyAirtimeWebPinOTPReducer,
      airtimeSaveBeneficiaryReducer  } from './airtime.reducer';
 
-import { fundAccountReducer, getTokenizedCardsReducer } from './fund-account.reducer';
+import { fundAccountReducer, getTokenizedCardsReducer,
+     saveCardReducer, tranCardDetailsReducer, deleteCardReducer, fundFromCardReducer } from './fund-account.reducer';
 
 
 export const onboarding = {
@@ -70,5 +71,9 @@ export const global ={
 
 export const fundAccount={
     fundAccountReducer,
-    getTokenizedCardsReducer
+    getTokenizedCardsReducer,
+    saveCardReducer,
+    tranCardDetailsReducer,
+    deleteCardReducer,
+    fundFromCardReducer
 }

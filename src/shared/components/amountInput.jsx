@@ -56,6 +56,7 @@ class AmountInput extends React.Component {
                 <label htmlFor={this.props.name}>Amount</label>
                 <input
                     type="text"
+                    autoComplete="off"
                     name={this.props.name}
                     value={this.state.formartedValue}
                     onKeyUp={this.onChange.bind(this)}

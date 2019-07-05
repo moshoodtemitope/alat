@@ -164,20 +164,9 @@ class CreateWithdrawal extends Component {
             }
         }
 
-<<<<<<< HEAD
-        let formIsValid = true;
-        //commented by moshood
-        // for (let inputIdentifier in updatedBuyDataForm) {
-        //     formIsValid = updatedCwDataForm[inputIdentifier].valid && formIsValid;
-        // }
-        // console.log(formIsValid);
-        
-        this.setState({ cwDataForm: updatedCwDataForm, formIsValid, validation });
-=======
         console.log(updatedFormElement.value)
         updatedCwDataForm[inputIdentifier] = updatedFormElement;
         this.setState({ cwDataForm: updatedCwDataForm, validation });
->>>>>>> e09519d16188db25d10c33221670eb4e2d5b58c5
     }
 
     render() {
