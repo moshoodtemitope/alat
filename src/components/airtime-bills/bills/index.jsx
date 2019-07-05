@@ -20,7 +20,8 @@ class Index extends Component {
         this.state = {
             user: JSON.parse(localStorage.getItem("user")),
             show: false,
-            selectedBeneficiary: { BillerAlias: "" }
+            selectedBeneficiary: null,
+            selectedAlias: ""
         };
     }
 
@@ -30,17 +31,17 @@ class Index extends Component {
         }
     }
 
-    onShowModal = (beneficiaryData) => {
-        this.setState({ selectedBeneficiary: beneficiaryData, show: true });
+    onShowModal = (beneficiaryId, alias) => {
+        this.setState({ selectedBeneficiary: beneficiaryId, selectedAlias: alias, show: true });
     }
 
     onCloseModal = () => {
-        this.setState({ show: false, selectedBeneficiary: { BillerAlias: "" } })
+        this.setState({ show: false, selectedBeneficiary: null, selectedAlias: ""})
     }
 
-    onDeleteBeneficiary = (beneficiaryData) => {
-        console.log(beneficiaryData);
-        this.props.onDeleteBeneficiary(this.state.user.token, beneficiaryData);
+    onDeleteBeneficiary = () => {
+        console.log(this.state.selectedBeneficiary);
+        this.props.deleteBeneficiary(this.state.user.token, {BeneficiaryId: this.state.selectedBeneficiary});
         this.onCloseModal();
     }
 
@@ -93,29 +94,31 @@ class Index extends Component {
                                                 image = <img src={airtelLogo} alt="airtelLogo" />;
                                         };
                                         // var billsToPay = {
-                                        //     Amount: beneficiary.Amount,
-                                        //     BillerPaymentCode: beneficiary.BillerPaymentCode,
-                                        //     NetworkCode: beneficiary.NetworkCode,
-                                        //     PaymentItem: beneficiary.PaymentItem,
-                                        //     PhoneNumber: beneficiary.PhoneNumber,
-                                        //     SubscriberId: beneficiary.PhoneNumber,
+                                        //     category: bill.BillerCategory,
+                                        //     biller: bill.BillerName,
+                                        //     item:{
+                                        //         value: bill.PaymentItem,
+                                        //         amount: bill.Amount,
+                                        //         paymentCode: bill.BillerPaymentCode,
+                                        //         ref: bill.SubscriberID
+                                        //     }
                                         // }
                                         return (
                                             <div className="col-sm-12 col-md-4" key={counter + 1} >
-                                                <div className="al-card airtime-card" onClick={() => {this.useBeneficiary(dataToBuy)}} style={{zIndex:"10"}}>
+                                                <div className="al-card airtime-card" style={{zIndex:"10"}}>
                                                     <div className="clearfix">
                                                         <div className="network-img">
                                                             {image}
                                                         </div>
                                                         <div className="all-info">
-                                                            <p className="line-price">{bill.BillerAlias} <span className="price">{"N" + formatAmountNoDecimal(bill.Amount)}</span></p>
+                                                            <p className="line-price">{bill.BillerAlias} <span className="price">{"₦" + formatAmountNoDecimal(bill.Amount)}</span></p>
                                                             <p className="num-ref">{bill.SubscriberID}</p>
                                                         </div>
                                                     </div>
                                                     
                                                 </div>
-                                                <span className="price delete-bene"><a onClick={() => this.onShowModal(bill)} style={{zIndex:"50"}}><i class="fa fa-trash-o"></i></a></span>
-                                                {/* <p className="num-ref">{beneficiary.PhoneNumber}<span className="price"><a onClick={() => this.onShowModal(beneficiary)} style={{zIndex:"50"}}><i class="fa fa-trash-o"></i></a></span></p> */}
+                                                <span className="price delete-bene"><a onClick={() => this.onShowModal(bill.BeneficiaryId, bill.BillerAlias)} style={{zIndex:"50"}}><i class="fa fa-trash-o"></i></a></span>
+                                                {/* <p className="num-ref">{beneficiary.PhoneNumber}<span className="price"><a onClick={() => this.onShowModal(bill.BeneficiaryId)} style={{zIndex:"50"}}><i class="fa fa-trash-o"></i></a></span></p> */}
                                             </div>)
                                     })
                                 }
@@ -133,10 +136,10 @@ class Index extends Component {
                 <Modal open={this.state.show} onClose={this.onCloseModal} center>
                     <div className="div-modal">
                         <h3> Are you sure you want to delete?</h3>
-                        <h6><b>{this.state.selectedBeneficiary.BillerAlias}</b></h6>
+                        <h6><b>{this.state.selectedAlias}</b></h6>
                         <div className="btn-opt">
                             <button onClick={this.onCloseModal} className="border-btn">Back</button>
-                            {/* <button onClick={() => this.onDeleteBeneficiary(this.state.selectedBeneficiary)} className="btn-alat">Proceed</button> */}
+                            <button onClick={() => this.onDeleteBeneficiary()} className="btn-alat">Proceed</button>
                         </div>
                     </div>
                 </Modal>
@@ -160,6 +163,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchBills : (token) => dispatch(actions.fetchBillBeneficiaries(token)),
+        deleteBeneficiary : (token, data) => dispatch(actions.deleteBillsBeneficiary(token, data)),
     }
 }
 

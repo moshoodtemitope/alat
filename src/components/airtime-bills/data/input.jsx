@@ -9,7 +9,8 @@ export const Input = (props) => {
             value={props.value}
             onChange={props.changed}
             disabled={props.isDisabled} 
-            style={props.inputStyle} />;
+            style={props.inputStyle}
+            readonly={props.isReadonly} />;
 
     switch (props.elementType) {
         case ('input'):

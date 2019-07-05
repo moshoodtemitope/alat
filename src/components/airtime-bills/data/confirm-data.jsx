@@ -32,7 +32,7 @@ class ConfirmData extends Component {
                 activeAccount: {
                     elementType: 'select',
                     elementConfig: {
-                        options: [{ value: '', label: 'Loading Accounts...' }],
+                        options: [],
                     },
                     label: 'Select an account to debit',
                     value: '',
@@ -192,7 +192,7 @@ class ConfirmData extends Component {
                                                     <div class="trans-summary-card">
                                                         <div class="name-amount clearfix">
                                                             <p class="pl-name-email">{this.props.network} Data Plan<span>{this.props.dataInfo.PaymentItem}</span></p>
-                                                            <p class="pl-amount">N{formatAmountNoDecimal(this.props.dataInfo.Amount)}</p>
+                                                            <p class="pl-amount">₦{formatAmountNoDecimal(this.props.dataInfo.Amount)}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -205,10 +205,10 @@ class ConfirmData extends Component {
                                                             <div className="input-ctn" key={formElement.id}>
                                                                 <label>Select an account to debit</label>
                                                                 <Select key={formElement.id}
-                                                                    value={selectedAccount == null ? formElement.config.elementConfig.options[0] : selectedAccount}
+                                                                    value={selectedAccount == null ? formElement.config.elementConfig.options : selectedAccount}
                                                                     onChange={this.accountChangedHandler}
                                                                     options={formElement.config.elementConfig.options}
-                                                                    placeholder="Loading Accounts..."
+                                                                    placeholder={this.props.alert.message  ? "Failed. Please try again" : (this.props.accounts.length > 0 ? "Select..." : "Loading Account...")}
                                                                 />
                                                                 {this.state.validation.accountError.hasError ? <small className="text-danger">{this.state.validation.accountError.error}</small> : null}
                                                             </div>

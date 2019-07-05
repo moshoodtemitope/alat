@@ -5,12 +5,10 @@ import { Link, NavLink, Route } from 'react-router-dom';
 
 import Index from '.';
 import Billers from './billers';
-import Subscriber from './subscriber'
-// import BuyData from './buy-data';
-// import ConfirmData from './confirm-data';
-// import Success from './success';
-// import  VerifyOtp from './verify-otp'
-// import Modal from 'react-responsive-modal';
+import Subscriber from './subscriber';
+import ConfirmBills from './confirm-bills';
+import Verify from './verify-otp';
+import Success from './success';
 import * as actions from '../../../redux/actions/bills/export';
 
 class PayBills extends Component{
@@ -41,6 +39,9 @@ class PayBills extends Component{
                 <Route exact path='/bills/paybills' render={(props) => <Index {...props} />} />
                 <Route exact path='/bills/paybills/biller' render={(props) => <Billers {...props} />} />
                 <Route path='/bills/paybills/subscriber' render={(props) => <Subscriber {...props} />} />
+                <Route path='/bills/paybills/confirm' render={(props) => <ConfirmBills {...props} />} />
+                <Route path='/bills/paybills/verify' render={(props) => <Verify {...props} />} />
+                <Route path='/bills/paybills/success' render={(props) => <Success {...props} />} />
            </Fragment>
        );
    }

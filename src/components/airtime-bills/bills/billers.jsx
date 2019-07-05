@@ -142,10 +142,10 @@ class Billers extends Component {
                                         <div className="input-ctn">
                                         <label>Select Package</label>
                                         <Select
-                                                value={selectedItem != null ? selectedItem : (this.props.billerItems[0] ? this.props.billerItems[0] : []) }
+                                                value={this.props.fetchingItems ? [] : (selectedItem != null ? selectedItem : (this.props.billerItems[0] ? this.props.billerItems[0] : [])) }
                                                 onChange={this.itemChangedHandler}
                                                 options={this.props.billerItems.length > 0 ? this.props.billerItems : []}
-                                                placeholder={this.props.alert.message  ? "Failed. Please try again" : (this.props.billerItems[0] ? "Select..." : (this.props.fetchingItems ? "Loading Packages..." : "---"))}
+                                                placeholder={this.props.alert.message  ? "Failed. Please try again" : (this.props.fetchingItems ? "Loading Packages...":  (this.props.billerItems[0] ? "Select..." : "---"))}
                                             />
                                         </div>
 
