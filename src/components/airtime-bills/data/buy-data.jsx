@@ -240,7 +240,7 @@ class BuyData extends Component {
                                                     <Input
                                                         elementType={formElement.config.elementType}
                                                         elementConfig={formElement.config.elementConfig}
-                                                        value={formElement.config.isDisabled ? 'N'+formatAmountNoDecimal(formElement.config.value) : formElement.config.value}
+                                                        value={formElement.config.isDisabled ? '₦'+formatAmountNoDecimal(formElement.config.value) : formElement.config.value}
                                                         changed={(event) => this.inputChangedHandler(event, formElement.id)}
                                                         wrongInput={!formElement.config.valid}
                                                         isTouched={formElement.config.touched}

@@ -113,7 +113,7 @@ class Index extends Component {
                                                             {image}
                                                         </div>
                                                         <div className="all-info">
-                                                            <p className="line-price">{beneficiary.BillerAlias} <span className="price">{"N" + formatAmountNoDecimal(beneficiary.Amount)}</span></p>
+                                                            <p className="line-price">{beneficiary.BillerAlias} <span className="price">{"₦" + formatAmountNoDecimal(beneficiary.Amount)}</span></p>
                                                             <p className="num-ref">{beneficiary.PhoneNumber}</p>
                                                         </div>
                                                     </div>

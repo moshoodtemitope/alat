@@ -3,15 +3,15 @@ import { Link, Redirect } from 'react-router-dom';
 
 import { Input } from '../../airtime-bills/data/input';
 import Select from 'react-select';
-import {alertActions} from "../../../redux/actions/alert.actions";
+import { alertActions } from "../../../redux/actions/alert.actions";
 import { formatAmountNoDecimal, formatAmount } from '../../../shared/utils';
 import { connect } from 'react-redux';
 
 import * as dataActions from '../../../redux/actions/dataActions/export';
-import * as actions from '../../../redux/actions/cardless-withdrawal/export';
+import * as actions from '../../../redux/actions/bills/export';
 
 const pattern = /^\d+$/;
-class ConfirmWithdrawal extends Component {
+class ConfirmBills extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -94,6 +94,7 @@ class ConfirmWithdrawal extends Component {
 
 
     inputChangedHandler = (event, inputIdentifier) => {
+        if (this.props.alert.message) this.props.clearError();
         let validation = { ...this.state.validation };
         validation.pinError.hasError = false;
         const updatedConfirmDataForm = {
@@ -103,8 +104,8 @@ class ConfirmWithdrawal extends Component {
             ...updatedConfirmDataForm[inputIdentifier]
         };
         updatedFormElement.value = event.target.value;
-        if(updatedFormElement.value.length >= 1){
-            if(!pattern.test(updatedFormElement.value) || updatedFormElement.value.length > 4){
+        if (updatedFormElement.value.length >= 1) {
+            if (!pattern.test(updatedFormElement.value) || updatedFormElement.value.length > 4) {
                 return;
             }
         }
@@ -113,11 +114,11 @@ class ConfirmWithdrawal extends Component {
     }
 
     pinInputValidation = (value) => {
-        
+
         return (value.length >= 4 && value.length <= 4 && pattern.test(value));
     }
 
-    goBack =(event) => {
+    goBack = (event) => {
         event.preventDefault();
         this.props.history.goBack();
     }
@@ -125,7 +126,7 @@ class ConfirmWithdrawal extends Component {
     onSubmitForm = (event) => {
         var validation = { ...this.state.validation };
         event.preventDefault();
-        this.props.clearError();
+        if (this.props.alert.message) this.props.clearError();
         if ((this.state.confirmDataForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedAccounts) || !this.pinInputValidation(this.state.confirmDataForm.pin.value)) {
             if (this.state.confirmDataForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedAccounts) {
                 validation.accountError.hasError = true;
@@ -137,26 +138,33 @@ class ConfirmWithdrawal extends Component {
             }
         } else {
             const payload = {
-                PhoneNo: this.props.phoneNumber,
+                AccountNumber: (this.state.selectedAccounts ? this.state.selectedAccounts.value : this.state.confirmDataForm.activeAccount.elementConfig.options[0].value),
+                Amount: this.props.billsInfo.item.amount,
+                BillerPaymentCode: this.props.billsInfo.item.paymentCode,
+                Charge: this.props.billsInfo.item.charge,
+                PhoneNumber: this.props.phoneNumber,
+                SubscriberId: this.props.billsInfo.subscriberId,
+                TransactionPin: this.state.confirmDataForm.pin.value,
             }
-            const updatedCwInfo = {
-                ...this.props.cwInfo,
+            const updatedBillInfo = {
+                ...this.props.billsInfo,
                 TransactionPin: this.state.confirmDataForm.pin.value,
                 AccountNumber: (this.state.selectedAccounts ? this.state.selectedAccounts.value : this.state.confirmDataForm.activeAccount.elementConfig.options[0].value),
             }
-            this.props.setCardlessInfo(updatedCwInfo);
+            this.props.setBillInfo(updatedBillInfo, payload);
             console.log(payload);
+            console.log(updatedBillInfo);
             this.props.fetchOtp(this.state.user.token, payload);
         }
     }
 
-    
+
 
 
     render() {
         console.log("render method")
         let confirmWithdrawal;
-        if (this.props.cwInfo != null && this.props.pageState == 2) {
+        if (this.props.billsInfo != null && this.props.pageState == 2) {
             const formElementArray = [];
             for (let key in this.state.confirmDataForm) {
                 formElementArray.push({
@@ -171,26 +179,41 @@ class ConfirmWithdrawal extends Component {
 
             confirmWithdrawal = (
                 <Fragment>
-                    
+
                     <div className="col-sm-12">
                         <div className="row">
                             <div className="col-sm-12">
                                 <div className="max-600">
                                     <div className="al-card no-pad">
-                                        <h4 className="m-b-10 center-text hd-underline">Buy Data</h4>
+                                        <h4 className="m-b-10 center-text hd-underline">Review Payment</h4>
                                         <div className="transfer-ctn">
                                             <form>
                                                 <div class="al-card no-pad">
                                                     <div class="trans-summary-card">
                                                         <div class="name-amount clearfix">
-                                                            <p class="pl-name-email">ATM<span>Cashout Channel</span></p>
-                                                            <p class="pl-amount">₦{formatAmountNoDecimal(this.props.cwInfo.Amount)}</p>
+                                                            <p className="pl-name-email">{this.props.billsInfo.biller} <span>{this.props.billsInfo.item.value}</span></p>
+                                                            <p className="pl-amount">₦{formatAmountNoDecimal(this.props.billsInfo.item.amount)}</p>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 {(this.props.alert.message) ?
-                        <div className="info-label error">{this.props.alert.message} {this.props.alert.message.indexOf("rror") != -1 ? <span onClick={() => {this.props.fetchDebitableAccounts(this.state.user.token)}} style={{textDecoration:"underline", cursor:"pointer"}}>Click here to try again</span> : null}</div> : null
-                        }
+                                                    <div className="info-label error">{this.props.alert.message} {this.props.alert.message.indexOf("rror") != -1 ? <span onClick={() => { this.props.fetchDebitableAccounts(this.state.user.token) }} style={{ textDecoration: "underline", cursor: "pointer" }}>Click here to try again</span> : null}</div> : null
+                                                }
+                                                {
+                                                    this.props.subscriberName == "" ? null : (
+                                                        <div className="input-ctn">
+                                                            <label>Customer Name</label>
+                                                            <Input
+                                                                elementType="input"
+                                                                elementConfig={{ type: "text" }}
+                                                                value={this.props.subscriberName}
+                                                                disabled={true}
+                                                                inputStyle={{ backgroundColor: "#666666", color: "#ffffff", fontWeight: "300" }}
+                                                                isReadonly={true} />
+                                                        </div>
+                                                    )
+                                                }
+
                                                 {formElementArray.map((formElement) => {
                                                     if (formElement.config.elementType !== "input") {
                                                         return (
@@ -214,10 +237,7 @@ class ConfirmWithdrawal extends Component {
                                                                 elementConfig={formElement.config.elementConfig}
                                                                 value={formElement.config.value}
                                                                 changed={(event) => this.inputChangedHandler(event, formElement.id)}
-                                                                wrongInput={!formElement.config.valid}
-                                                                isTouched={formElement.config.touched}
-                                                                errormsg={formElement.config.error}
-                                                                isDisabled={formElement.config.isDisabled} />
+                                                                wrongInput={!formElement.config.valid} />
                                                             {this.state.validation.pinError.hasError ? <small className="text-danger">{this.state.validation.pinError.error}</small> : null}
                                                         </div>
                                                     )
@@ -226,21 +246,14 @@ class ConfirmWithdrawal extends Component {
 
                                                 <div className="row">
                                                     <div className="col-sm-12">
-                                                    <p className="info-text m-b-20">You will be charged N105 on cash withdrawal</p>
+                                                        {this.props.billsInfo.item.charge > 0 ? <p className="info-text m-b-20 text-danger">You will be charged a fee of ₦{this.props.billsInfo.item.charge}</p> : null}
                                                         <center>
-                                                            <button disabled={this.props.fetching} onClick={this.onSubmitForm} class="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Buy Data"}</button>
+                                                            <button disabled={this.props.fetching} onClick={this.onSubmitForm} class="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Confirm"}</button>
                                                         </center>
                                                     </div>
                                                 </div>
-
                                             </form>
-
-
-
                                         </div>
-
-
-
                                     </div>
 
                                     <center>
@@ -251,19 +264,19 @@ class ConfirmWithdrawal extends Component {
                         </div>
                     </div>
                 </Fragment>
-
+        
             );
-            if(this.props.pageState == 0) {
-                console.log("otp sent redirecting")
-                this.props.resetPageState();
-                confirmWithdrawal = <Redirect to="/cardless-withdrawal/verify" />
+            if (this.props.pageState == 0) {
+                console.log("otp sent redirecting1")
+                this.props.resetPageState(2);
+                confirmWithdrawal = <Redirect to="/bills/paybills/verify" />
             }
-        }else if(this.props.pageState == 0) {
+        } else if (this.props.pageState == 0) {
             console.log("otp sent redirecting")
-            this.props.resetPageState();
-            confirmWithdrawal = <Redirect to="/cardless-withdrawal/verify" />
-        }else{
-            confirmWithdrawal = <Redirect to="/cardless-withdrawal/create" />
+            this.props.resetPageState(2);
+            confirmWithdrawal = <Redirect to="/bills/paybills/verify" />
+        } else {
+            confirmWithdrawal = <Redirect to="/bills/paybills/biller" />
         }
 
         return confirmWithdrawal;
@@ -272,11 +285,12 @@ class ConfirmWithdrawal extends Component {
 
 const mapStateToProps = state => {
     return {
-        cwInfo: state.cardless_reducer.cwInfo,
         accounts: state.data_reducer.debitableAccounts,
-        fetching: state.cardless_reducer.isFetching,
-        pageState: state.cardless_reducer.pageState,
+        billsInfo: state.bills_reducer.billToPay,
+        pageState: state.bills_reducer.pageState,
         alert: state.alert,
+        fetching: state.bills_reducer.isFetching,
+        subscriberName: state.bills_reducer.subscriberName,
         phoneNumber: state.authentication.user.phoneNo || state.authentication.user.response.phoneNo,
     }
 }
@@ -284,11 +298,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchDebitableAccounts: (token) => dispatch(dataActions.fetchDebitableAccounts(token)),
-        fetchOtp : (token, data) => dispatch(actions.getOtpForCustomer(token, data)),
-        resetPageState: () => dispatch(actions.resetPageState()),
+        setBillInfo: (billData, otpData) => dispatch(actions.setBillInfo(billData, otpData)),
+        fetchOtp: (token, data) => dispatch(actions.fetchOtpForCustomer(token, data)),
+        resetPageState: (code) => dispatch(actions.resetBillPage(code)),
         clearError: () => dispatch(alertActions.clear()),
-        setCardlessInfo: (cwInfo) => dispatch(actions.setCardlessWithdrawalInfo(cwInfo)),
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConfirmWithdrawal);
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmBills);

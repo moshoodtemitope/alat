@@ -100,7 +100,7 @@ export const fetchBillerItems = (token, data) => {
 
     function success(response) { 
         var itemsArray = [];
-        response.map(item => itemsArray.push({value: item.PaymentItem, label: item.PaymentItem, amount: item.Amount, paymentCode: item.BillerPaymentCode, ref : item.ReferenceDetails}));
+        response.map(item => itemsArray.push({value: item.PaymentItem, label: item.PaymentItem, amount: item.Amount, paymentCode: item.BillerPaymentCode, ref : item.ReferenceDetails, charge: item.Charge}));
         return { 
         type : actionTypes.FETCH_BILLER_ITEMS_SUCCESS,
         // data: response,
@@ -109,10 +109,164 @@ export const fetchBillerItems = (token, data) => {
 
 };
 
-export const setBillInfo = (billInfo) => {
+export const setBillInfo = (billInfo, otpData) => {
     return {
         type: actionTypes.SET_BILL_TO_PAY_INFO,
-        data: billInfo
+        data: billInfo,
+        otpPayload: otpData
+    }
+};
+
+export const getSubscriberNameEnquiry = (token, data) => {
+    console.log("fetch biller category 1st")
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        dispatch(isFetchingTrue());
+        let consume = ApiService.request(routes.GET_SUBSCRIBER_NAME, "POST", data, SystemConstant.HEADER);
+        return consume
+            .then(response => {
+                console.log(response.data);
+                console.log("response.data");
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                dispatch(isFetchingFalse());
+                console.log(error);
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function success(response) { return { 
+        type : actionTypes.VALID_SUBSCRIBER_NAME,
+        data: response
+     } }
+};
+
+export const resetBillPage= (code) => {
+    return{
+        type: actionTypes.RESET_PAGE_STATE_BILL,
+        code: code,
     }
 }
+
+export const clearBillsInfo = () => {
+    return {
+        type: actionTypes.CLEAR_ALL_BILLS_DATA,
+    }
+}
+
+export const fetchOtpForCustomer = (token, data, isResending = false) => {
+    console.log("fetch biller category 1st")
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        dispatch(isFetchingTrue());
+        let consume = ApiService.request(routes.PIN_VERIFICATION, "POST", data, SystemConstant.HEADER);
+        return consume
+            .then(response => {
+                console.log(response.data);
+                console.log("response.data");
+                dispatch(isFetchingFalse());
+                if(response.data.Response == 0){
+                    if(isResending == false) dispatch(success());
+                }else{
+                    dispatch(alertActions.error(modelStateErrorHandler(response.data.ValidationMsg)));
+                }
+            })
+            .catch(error => {
+                dispatch(isFetchingFalse());
+                console.log(error);
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function success() { return { 
+        type : actionTypes.FETCH_OTP_SUCCESS,
+     } }
+};
+
+export const verifyOtpForCustomer = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        dispatch(isFetchingTrue());
+        let consume = ApiService.request(routes.DATA_OTP_VERIFICATION, "POST", data, SystemConstant.HEADER);
+        return consume
+            .then(response => {
+                console.log(response.data);
+                console.log("response.data");
+                dispatch(isFetchingFalse());
+                if(response.data.Response == 0){
+                    dispatch(success());
+                }else{
+                    dispatch(alertActions.error(modelStateErrorHandler(response.data.ValidationMsg)));
+                }
+            })
+            .catch(error => {
+                dispatch(isFetchingFalse());
+                console.log(error);
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function success() { return { 
+        type : actionTypes.VERIFY_OTP_SUCCESS,
+     } }
+};
+
+export const saveBillsBeneficiary = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        dispatch(isFetchingTrue());
+        let consume = ApiService.request(routes.SAVE_BILLS_BENEFICIARY, "POST", data, SystemConstant.HEADER);
+        return consume
+            .then(response => {
+                console.log(response.data);
+                console.log("response.data");
+                dispatch(isFetchingFalse());
+                if(response.data.Response == 0){
+                    dispatch(success());
+                }else{
+                    dispatch(alertActions.error(modelStateErrorHandler(response.data.Description)));
+                }
+            })
+            .catch(error => {
+                dispatch(isFetchingFalse());
+                console.log(error);
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function success() { return { 
+        type : actionTypes.SAVE_BILL_BENEFICIARY_SUCCESS,
+     } }
+};
+
+export const goToDashboard = () => {
+    return {
+        type: actionTypes.GO_TO_DASHBOARD_BILL
+    }
+}
+
+export const deleteBillsBeneficiary = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        dispatch(isFetchingTrue());
+        let consume = ApiService.request(routes.DELETE_DATA_BENEFICIARY, "POST", data, SystemConstant.HEADER);
+        return consume
+            .then(response => {
+                console.log(response.data);
+                console.log("response.data");
+                dispatch(isFetchingFalse());
+                if(response.data.Response == 0){
+                    dispatch(fetchBillBeneficiaries(token));
+                }else{
+                    dispatch(alertActions.error(modelStateErrorHandler(response.data.Description)));
+                }
+            })
+            .catch(error => {
+                dispatch(isFetchingFalse());
+                console.log(error);
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+};
 
