@@ -132,6 +132,9 @@ a.edit-cta:not([href]):not([tabindex]){
 }
 .error-msg{
   color: #AB2656;
+  &.block-msg{
+    display: block;
+  }
 }
 .info-label.error{
   margin: 0 70px;

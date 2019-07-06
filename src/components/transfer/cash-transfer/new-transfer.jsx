@@ -300,6 +300,7 @@ class NewTransfer extends React.Component {
                     AccountNumber: this.state.accountNumber,
                     AccountName: account_details.account_detail_data.response.AccountName,
                     BankName: this.state.selectedBank.label,
+                    Currency: account_details.account_detail_data.response.Currency,
                     BankCode: this.state.selectedBank.value
                 },false));
                 this.props.history.push("/transfer/save-beneficiary");
@@ -312,6 +313,7 @@ class NewTransfer extends React.Component {
                 AccountNumber: this.state.accountNumber,
                 AccountName: account_details.account_detail_data.response.AccountName,
                 BankName: this.state.selectedBank.label,
+                Currency: account_details.account_detail_data.response.Currency,
                 BankCode: this.state.selectedBank.value
             },false, null));
             this.props.history.push("/transfer/provide-details");

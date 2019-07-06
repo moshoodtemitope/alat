@@ -91,7 +91,7 @@ export const deleteTransferBeneficiary = (token, beneficiaryToDelete, callback) 
     function failure(error) { return {type:DELETE_TRANSFER_BENEFICIARY_FAILURE, error} }
 }
 
-export const cashTransferData = (transferDetails,isTransfer,token) =>{
+export const cashTransferData = (transferDetails,isFxTransfer,token) =>{
     // if(isTransfer===true){
     //     SystemConstant.HEADER['alat-token'] = token;
     //     return(dispatch)=>{
@@ -123,7 +123,14 @@ export const cashTransferData = (transferDetails,isTransfer,token) =>{
 
     return(dispatch)=>{
         dispatch(request(transferDetails));
-        history.push("/transfer/provide-details");
+        if(!isFxTransfer){
+            console.log('bank transfer');
+            history.push("/transfer/provide-details");
+        }else{
+            console.log('FX transfer');
+            history.push("/fx-transfer/provide-details");
+        }
+       
     }
     
     function request(data) { return { type: TRANSFER__BANK_DETAILS, data } }
@@ -249,7 +256,7 @@ export const accountEnquiry = (token, data) => {
                             dispatch(success(result));
                         })
                         .catch(error=>{
-                            if(error.response.data.Message){
+                            if(error.response && error.response.data && error.response.data.Message){
                                 dispatch(failure(error.response.data.Message.toString()));
                             }else{
                                 console.log('bank error is', error.response);
