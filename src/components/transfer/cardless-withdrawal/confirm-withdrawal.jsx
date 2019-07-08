@@ -177,7 +177,7 @@ class ConfirmWithdrawal extends Component {
                             <div className="col-sm-12">
                                 <div className="max-600">
                                     <div className="al-card no-pad">
-                                        <h4 className="m-b-10 center-text hd-underline">Buy Data</h4>
+                                        <h4 className="m-b-10 center-text hd-underline">Confirm Withdrawal</h4>
                                         <div className="transfer-ctn">
                                             <form>
                                                 <div class="al-card no-pad">
@@ -228,7 +228,7 @@ class ConfirmWithdrawal extends Component {
                                                     <div className="col-sm-12">
                                                     <p className="info-text m-b-20">You will be charged N105 on cash withdrawal</p>
                                                         <center>
-                                                            <button disabled={this.props.fetching} onClick={this.onSubmitForm} class="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Buy Data"}</button>
+                                                            <button disabled={this.props.fetching} onClick={this.onSubmitForm} class="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Confirm Withdrawal"}</button>
                                                         </center>
                                                     </div>
                                                 </div>
