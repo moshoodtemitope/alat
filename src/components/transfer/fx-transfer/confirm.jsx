@@ -11,7 +11,7 @@ import {
 import AlatPinInput from '../../../shared/components/alatPinInput';
 import {sendMoneyTransfer} from "../../../redux/actions/transfer/cash-transfer.actions";
 
-class ConFirmTransfer extends React.Component{
+class ConFirmFxTransfer extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -37,7 +37,7 @@ class ConFirmTransfer extends React.Component{
         console.log('charegs', this.props.transfer_charges);
         let props = this.props
         if (!props.transfersender.transfer_info && props.transfersender.transfer_info !== SENDER__BANK_DETAILS) {
-            this.props.history.push("/transfer");
+            this.props.history.push("/fx-transfer");
             return;
         }else{
             
@@ -84,7 +84,7 @@ class ConFirmTransfer extends React.Component{
                         Narration:this.props.transfersender.transfer_info_data.data.TransferPurpose,
                         TransactionPin:this.state.Pin
                     }
-            dispatch(sendMoneyTransfer(this.state.user.token,payload, false, false));
+            dispatch(sendMoneyTransfer(this.state.user.token,payload, false, true));
             let transferStatus = this.props.transfer_money;
 
             
@@ -103,7 +103,8 @@ class ConFirmTransfer extends React.Component{
 
     render(){
         let props = this.props,
-            transferStatus = props.transfer_money;
+            transferStatus = props.transfer_money,
+            currency = this.props.transfer_info.transfer_info_data? this.props.transfer_info.transfer_info_data.data.Currency:null
         return(
             <Fragment>
                             <div className="col-sm-12">
@@ -120,7 +121,7 @@ class ConFirmTransfer extends React.Component{
                                                                 <div className="all-info">
                                                                     <p className="summary-info"> 
                                                                         <span className="nickname-text">{this.state.accountData.SenderBankName}</span>
-                                                                        <span className="bank-name">₦{this.state.accountData.SenderAccountBalance}</span>
+                                                                        <span className="bank-name">{currency}{this.state.accountData.SenderAccountBalance}</span>
                                                                     </p>
                                                                     <p className="account-info">{this.state.accountData.SenderAccountNumber}</p>
                                                                 </div>
@@ -135,7 +136,7 @@ class ConFirmTransfer extends React.Component{
                                                                     <div className="recipient-and-amount">
                                                                         <p className="recipient-name">
                                                                             <span className="recipientname">{this.state.accountData.AccountName}</span>
-                                                                            <span className="amount-to-send">₦{this.state.accountData.AmountToSend}</span>
+                                                                            <span className="amount-to-send">{currency}{this.state.accountData.AmountToSend}</span>
                                                                         </p>
                                                                         <div className="bank-info">
                                                                             <p className="bankname">{this.state.accountData.BankName}</p>
@@ -197,4 +198,4 @@ function mapStateToProps(state) {
         transfer_charges: state.transferReducerPile.transfer_bank_charges
     };
 }
-export default connect(mapStateToProps)(ConFirmTransfer);
+export default connect(mapStateToProps)(ConFirmFxTransfer);

@@ -15,7 +15,7 @@ import {
 
 import {sendMoneyTransfer,processMoneyTransfer} from "../../../redux/actions/transfer/cash-transfer.actions";
 
-class TransferOtp extends React.Component{
+class FxTransferOtp extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -44,7 +44,7 @@ class TransferOtp extends React.Component{
         console.log('stauts is', this.props.transfer_processsend_money.fetchStatus);
         // props.transfer_money.sendmoney_status !==SENDBANK_TRANSFER_SUCCESS
         if (!props.transfersender.transfer_info && props.transfersender.transfer_info !== SENDER__BANK_DETAILS) {
-            this.props.history.push("/transfer");
+            this.props.history.push("/fx-transfer");
             return;
         }else{
             
@@ -92,7 +92,7 @@ class TransferOtp extends React.Component{
                         Narration:this.props.transfersender.transfer_info_data.data.TransferPurpose,
                         TransactionPin:this.props.transfer_money.sendmoney_status_data.payloadPin
                     }
-            dispatch(sendMoneyTransfer(this.state.user.token,payload, true ,false));
+            dispatch(sendMoneyTransfer(this.state.user.token,payload, true, true));
             
 
             
@@ -117,7 +117,7 @@ class TransferOtp extends React.Component{
                         Narration:this.props.transfersender.transfer_info_data.data.TransferPurpose || "",
                         TransactionPin:this.props.transfer_money.sendmoney_status_data.payloadPin
                     }
-            dispatch(processMoneyTransfer(this.state.user.token,payload, false));
+            dispatch(processMoneyTransfer(this.state.user.token,payload, true));
             let transferStatus = this.props.transfer_money;
 
             
@@ -229,4 +229,4 @@ function mapStateToProps(state) {
         transfer_processsend_money: state.transferReducerPile.transfer_processsend_money 
     };
 }
-export default connect(mapStateToProps)(TransferOtp);
+export default connect(mapStateToProps)(FxTransferOtp);
