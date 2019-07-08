@@ -88,7 +88,9 @@ class Billers extends Component {
             category : this.state.selectedCategory.value,
             biller : this.state.selectedBiller.value,
             item : this.state.selectedItem,
+            hasAmount: this.state.selectedItem.hasAmount
         }
+        console.log("billsData")
         console.log(billsData)
         this.props.setBillInfo(billsData);
         this.props.history.push('/bills/paybills/subscriber');
