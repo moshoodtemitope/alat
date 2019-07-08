@@ -84,7 +84,7 @@ class ConFirmTransfer extends React.Component{
                         Narration:this.props.transfersender.transfer_info_data.data.TransferPurpose,
                         TransactionPin:this.state.Pin
                     }
-            dispatch(sendMoneyTransfer(this.state.user.token,payload, false));
+            dispatch(sendMoneyTransfer(this.state.user.token,payload, false, false));
             let transferStatus = this.props.transfer_money;
 
             

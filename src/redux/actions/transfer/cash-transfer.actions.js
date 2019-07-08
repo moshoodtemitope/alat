@@ -326,7 +326,7 @@ export const saveBankTransferBeneficiary = (token, bankTransferBeneficiary) => {
     function failure(error) { return {type:SAVE_TRANSFER_BENEFICIARY_FAILURE, error} }
 };
 
-export const sendMoneyTransfer = (token, transferPayload, resend) => {
+export const sendMoneyTransfer = (token, transferPayload, resend, isFxTransfer) => {
     SystemConstant.HEADER['alat-token'] = token;
     
         return (dispatch) => {
@@ -335,8 +335,11 @@ export const sendMoneyTransfer = (token, transferPayload, resend) => {
                 dispatch(request(consume));
                 return consume
                     .then(response => {
-                        if(resend===false){
+                        if(resend===false && !isFxTransfer){
                             history.push("/transfer/otp");
+                        }
+                        if(resend===false && isFxTransfer){
+                            history.push("/fx-transfer/otp");
                         }
                         
                         dispatch(success(response));
@@ -370,14 +373,20 @@ export const sendMoneyTransfer = (token, transferPayload, resend) => {
     function failure(error) { return {type:SENDBANK_TRANSFER_FAILURE, error, resend} }
 };
 
-export const processMoneyTransfer = (token, transferPayload) => {
+export const processMoneyTransfer = (token, transferPayload ,isFxTransfer) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
         let consume = ApiService.request(routes.BANK_TRANSFER_WITHPIN_ANDOTP, "POST", transferPayload, SystemConstant.HEADER);
         dispatch(request(consume));
         return consume
             .then(response => {
-                history.push("/transfer/success");
+                if(!isFxTransfer){
+                    history.push("/transfer/success");
+                }
+                
+                if(isFxTransfer){
+                    history.push("/fx-transfer/success");
+                }
                 dispatch(success(response));
             })
             .catch(error => {

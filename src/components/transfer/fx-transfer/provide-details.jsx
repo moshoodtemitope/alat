@@ -77,18 +77,23 @@ class ProvideDetails extends React.Component{
         if(this.state.selectedDebitableAccount){
             this.setState({isErrorExisting:false, errorToshow: "" });
             if(this.state.Amount!=="" && amountVal < parseFloat(this.state.selectedDebitableAccount[0].AvailableBalance) ){
-                const {dispatch, account_details} = this.props;
-                this.setState({isErrorExisting:false, errorToshow: "" });
-                dispatch(senderTransferData({
-                    SenderBankName: this.state.selectedDebitableAccount[0].AccountDescription,
-                    SenderAccountName: this.state.selectedDebitableAccount[0].AccountName,
-                    SenderAccountNumber: this.state.selectedAccount,
-                    AmountToSend: this.state.Amount,
-                    AccountBalance: this.state.selectedDebitableAccount[0].AvailableBalance,
-                    RecipientEmail: this.state.recipientEmail,
-                    TransferPurpose: this.state.transferPurpose
-                }))
-                this.props.history.push("/fx-transfer/confirm");
+                if(this.state.selectedAccount !==this.state.accountData.AccountNumber){
+                    const {dispatch, account_details} = this.props;
+                    this.setState({isErrorExisting:false, errorToshow: "" });
+                    dispatch(senderTransferData({
+                        SenderBankName: this.state.selectedDebitableAccount[0].AccountDescription,
+                        SenderAccountName: this.state.selectedDebitableAccount[0].AccountName,
+                        SenderAccountNumber: this.state.selectedAccount,
+                        AmountToSend: this.state.Amount,
+                        AccountBalance: this.state.selectedDebitableAccount[0].AvailableBalance,
+                        RecipientEmail: this.state.recipientEmail,
+                        TransferPurpose: this.state.transferPurpose
+                    }))
+                    this.props.history.push("/fx-transfer/confirm");
+                }else{
+                   
+                    this.setState({ isErrorExisting: true, errorToshow: "Sender and recipient account number cannot be the same" });
+                }
             }else{
                 if(this.state.Amount===""){
                     this.setState({ isErrorExisting: true, errorToshow: "Please enter amount to send" });
@@ -232,6 +237,14 @@ class ProvideDetails extends React.Component{
             }else{
                 transferLimit =selectedDebitableAccount[0].MaxInterBankTransferLimit;
             }
+        
+        if(account === this.state.accountData.AccountNumber){
+            this.setState({ isSameAccountSelected: true});
+        }
+        else{
+            this.setState({ isSameAccountSelected: false});
+        }
+        
             
         this.setState({ selectedAccount: account, selectedDebitableAccount, isSelectChanged:true, transferLimit}, ()=>{
             console.log("selected account is", selectedDebitableAccount);
@@ -255,7 +268,8 @@ class ProvideDetails extends React.Component{
             transferLimit,
             isSelectChanged,
             isMorthanLimit,
-            isErrorExisting
+            isErrorExisting,
+            isSameAccountSelected
         } = this.state;
         let currencySelected = this.props.transfer_info.transfer_info_data ? this.props.transfer_info.transfer_info_data.data.Currency : null;
         // console.log("currency text",this.props.transfer_info.transfer_info_data.data.Currency);
@@ -286,6 +300,9 @@ class ProvideDetails extends React.Component{
 
                                                        
                                                         <div className="inputctn-wrap">
+                                                            {isSameAccountSelected===true &&
+                                                                <span className="error-msg">Sender and recipient account number cannot be the same</span>
+                                                            }
                                                             <SelectDebitableAccounts
                                                                 value={this.state.accountNumber}
                                                                 currency={currencySelected}

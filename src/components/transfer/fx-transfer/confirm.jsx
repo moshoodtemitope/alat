@@ -84,7 +84,7 @@ class ConFirmFxTransfer extends React.Component{
                         Narration:this.props.transfersender.transfer_info_data.data.TransferPurpose,
                         TransactionPin:this.state.Pin
                     }
-            dispatch(sendMoneyTransfer(this.state.user.token,payload, false));
+            dispatch(sendMoneyTransfer(this.state.user.token,payload, false, true));
             let transferStatus = this.props.transfer_money;
 
             
@@ -136,7 +136,7 @@ class ConFirmFxTransfer extends React.Component{
                                                                     <div className="recipient-and-amount">
                                                                         <p className="recipient-name">
                                                                             <span className="recipientname">{this.state.accountData.AccountName}</span>
-                                                                            <span className="amount-to-send">{this.props.transfer_info.transfer_info_data.data.Currency}{this.state.accountData.AmountToSend}</span>
+                                                                            <span className="amount-to-send">{currency}{this.state.accountData.AmountToSend}</span>
                                                                         </p>
                                                                         <div className="bank-info">
                                                                             <p className="bankname">{this.state.accountData.BankName}</p>
