@@ -16,7 +16,10 @@ class Subscriber extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isValid: true,
+            validation:{
+                subValid : true,
+                amountEmpty : false
+            },
             inputSubscriberForm: {
                 ref: {
                     elementType: 'input',
@@ -25,6 +28,15 @@ class Subscriber extends Component {
                         placeholder: ''
                     },
                     value: '',
+                },
+                amount: {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'text',
+                        placeholder: ''
+                    },
+                    value: '',
+                    valueToDisplay: ''
                 },
             },
             user: JSON.parse(localStorage.getItem("user")),
@@ -37,7 +49,7 @@ class Subscriber extends Component {
 
 
     inputChangedHandler = (event, inputIdentifier) => {
-        if(this.state.isValid == false) this.setState({isValid : true});
+        let validation = {...this.state.validation};
         if(this.props.alert.message) this.props.clearError();
         const updatedinputSubscriberForm = {
             ...this.state.inputSubscriberForm
@@ -45,14 +57,29 @@ class Subscriber extends Component {
         const updatedFormElement = {
             ...updatedinputSubscriberForm[inputIdentifier]
         };
-        updatedFormElement.value = event.target.value;
-        // if(updatedFormElement.value.length >= 1){
-        //     if(!pattern.test(updatedFormElement.value) || updatedFormElement.value.length > 4){
-        //         return;
-        //     }
-        // }
+        if(inputIdentifier == "ref"){
+            updatedFormElement.value = event.target.value;
+            if(validation.subValid == false) validation.subValid = true;
+            if(updatedFormElement.value.length >= 1){
+                if(updatedFormElement.value.length > 30){
+                    return;
+                }
+            }
+        }
+        if(inputIdentifier == "amount"){
+            updatedFormElement.valueToDisplay = event.target.value;
+            updatedFormElement.value = updatedFormElement.valueToDisplay.replace(/\,/g, '');
+            if(validation.amountEmpty == true) validation.amountEmpty = false;
+            if(updatedFormElement.value.length >= 1){
+                if(!pattern.test(updatedFormElement.value) || updatedFormElement.value.length > 7){
+                    return;
+                }
+                updatedFormElement.valueToDisplay = formatAmountNoDecimal(parseInt(updatedFormElement.value));
+            }
+        }
+        console.log(updatedFormElement.value)
         updatedinputSubscriberForm[inputIdentifier] = updatedFormElement;
-        this.setState({ inputSubscriberForm: updatedinputSubscriberForm });
+        this.setState({ inputSubscriberForm: updatedinputSubscriberForm, validation });
     }
 
     goBack =(event) => {
@@ -63,13 +90,29 @@ class Subscriber extends Component {
     onSubmitForm = (event) => {
         event.preventDefault();
         this.props.clearError();
-        if(this.state.inputSubscriberForm.ref.value == ''){
-            this.setState({isValid : false});
+        let validation = {...this.state.validation};
+
+        if(this.state.inputSubscriberForm.ref.value == '' || this.state.inputSubscriberForm.amount.value == ''){
+            if(this.state.inputSubscriberForm.ref.value == ''){
+                validation.subValid = false;
+            }
+            if(this.state.inputSubscriberForm.amount.value == ''){
+                validation.amountEmpty = true;
+            }
+            this.setState({validation});
             return;
         }
+
         let payload = {
             PaymentCode: this.props.billsInfo.item.paymentCode,
             SubscriberId: this.state.inputSubscriberForm.ref.value,
+        }
+        if(this.state.inputSubscriberForm.amount.value != '') {
+            let billsData = {
+                ...this.props.billsInfo,
+                altAmount: parseFloat(this.state.inputSubscriberForm.amount.value)
+            }
+            this.props.setBillInfo(billsData);
         }
         this.props.getSubscriberName(this.state.user.token, payload)
     }
@@ -102,7 +145,7 @@ class Subscriber extends Component {
                                                     <div className="trans-summary-card">
                                                         <div className="name-amount clearfix">
                                                             <p className="pl-name-email">{this.props.billsInfo.biller} <span>{this.props.billsInfo.item.value}</span></p>
-                                                            <p className="pl-amount">₦{formatAmountNoDecimal(this.props.billsInfo.item.amount)}</p>
+                                                            {this.props.billsInfo.hasAmount ? <p className="pl-amount">₦{formatAmountNoDecimal(this.props.billsInfo.item.amount)}</p> : null}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -110,7 +153,18 @@ class Subscriber extends Component {
                         <div className="info-label error">{this.props.alert.message}</div> : null
                         }
                                                 {formElementArray.map((formElement) => {
-                                                    return (
+                                                    
+                                                    return formElement.id == "amount" ? ( !this.props.billsInfo.hasAmount ? (
+                                                        <div className="input-ctn" key={formElement.id}>
+                                                            <label>Amount</label>
+                                                            <Input
+                                                                elementType={formElement.config.elementType}
+                                                                elementConfig={formElement.config.elementConfig}
+                                                                value={formElement.config.valueToDisplay}
+                                                                changed={(event) => this.inputChangedHandler(event, formElement.id)} />
+                                                            {this.state.validation.amountEmpty ? <small className="text-danger">Field is required</small> : null}
+                                                        </div>
+                                                    ):null) : (
                                                         <div className="input-ctn" key={formElement.id}>
                                                             <label>{this.props.billsInfo.item.ref}</label>
                                                             <Input
@@ -118,7 +172,7 @@ class Subscriber extends Component {
                                                                 elementConfig={formElement.config.elementConfig}
                                                                 value={formElement.config.value}
                                                                 changed={(event) => this.inputChangedHandler(event, formElement.id)} />
-                                                            {!this.state.isValid ? <small className="text-danger">Field is required</small> : null}
+                                                            {!this.state.validation.subValid ? <small className="text-danger">Field is required</small> : null}
                                                         </div>
                                                     )
                                                 })}

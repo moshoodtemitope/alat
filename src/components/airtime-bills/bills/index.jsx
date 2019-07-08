@@ -77,22 +77,22 @@ class Index extends Component {
                             <div className="row">
                                 {
                                     this.props.bills.map((bill, counter) => {
-                                        switch (bill.BillerName) {
-                                            case (2):
-                                                image = <img src={mtnLogo} alt="mtnlogo" />;
-                                                break;
-                                            case (3):
-                                                image = <img src={airtelLogo} alt="airtelLogo" />;
-                                                break;
-                                            case (1):
-                                                image = <img src={gloLogo} alt="gloLogo" />;
-                                                break;
-                                            case (4):
-                                                image = <img src={NinemobileLogo} alt="9mobileLogo" />;
-                                                break;
-                                            default:
-                                                image = <img src={airtelLogo} alt="airtelLogo" />;
-                                        };
+                                        // switch (bill.BillerName) {
+                                        //     case (2):
+                                        //         image = <img src={mtnLogo} alt="mtnlogo" />;
+                                        //         break;
+                                        //     case (3):
+                                        //         image = <img src={airtelLogo} alt="airtelLogo" />;
+                                        //         break;
+                                        //     case (1):
+                                        //         image = <img src={gloLogo} alt="gloLogo" />;
+                                        //         break;
+                                        //     case (4):
+                                        //         image = <img src={NinemobileLogo} alt="9mobileLogo" />;
+                                        //         break;
+                                        //     default:
+                                        //         image = <img src={airtelLogo} alt="airtelLogo" />;
+                                        // };
                                         // var billsToPay = {
                                         //     category: bill.BillerCategory,
                                         //     biller: bill.BillerName,
@@ -107,8 +107,7 @@ class Index extends Component {
                                             <div className="col-sm-12 col-md-4" key={counter + 1} >
                                                 <div className="al-card airtime-card" style={{zIndex:"10"}}>
                                                     <div className="clearfix">
-                                                        <div className="network-img">
-                                                            {image}
+                                                        <div className="network-img" >.
                                                         </div>
                                                         <div className="all-info">
                                                             <p className="line-price">{bill.BillerAlias} <span className="price">{"₦" + formatAmountNoDecimal(bill.Amount)}</span></p>

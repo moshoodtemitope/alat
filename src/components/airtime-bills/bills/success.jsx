@@ -60,7 +60,7 @@ class Success extends Component {
             return;
         }
         var payload = {
-            Amount: this.props.billsInfo.item.amount,
+            Amount: this.props.billsInfo.item.amount > 0 ? this.props.billsInfo.item.amount : this.props.billsInfo.altAmount,
             BillerAlias: this.state.saveBeneficiaryForm.alias.value,
             BillerPaymentCode: this.props.billsInfo.item.paymentCode,
             SubscriberID: this.props.billsInfo.subscriberId,
@@ -101,7 +101,7 @@ class Success extends Component {
                                             <div className="trans-summary-card">
                                                 <div className="name-amount clearfix">
                                                     <p className="pl-name-email">{this.props.billsInfo ? this.props.billsInfo.biller : "*****"}<span>{this.props.billsInfo ? this.props.billsInfo.item.value : "*******"}</span></p>
-                                                    <p className="pl-amount">{this.props.billsInfo ? "₦" + formatAmountNoDecimal(this.props.billsInfo.item.amount) : "####"}</p>
+                                                    <p className="pl-amount">₦{this.props.billsInfo.item.amount > 0 ? formatAmountNoDecimal(this.props.billsInfo.item.amount) : formatAmountNoDecimal(this.props.billsInfo.altAmount)}</p>
                                                 </div>
                                             </div>
                                         </div>
