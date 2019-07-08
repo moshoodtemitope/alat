@@ -214,7 +214,7 @@ class BuyData extends Component {
                                     {(this.props.alert.message) ?
                         <div className="info-label error">{this.props.alert.message} | <span onClick={() => {this.props.fetchDataPlans(this.state.user.token)}} style={{textDecoration:"underline", cursor:"pointer"}}>Click here to try again</span></div> : null
                         }
-                                        <div class="input-ctn">
+                                        <div className="input-ctn">
                                             <label>Select a Network</label>
                                             <Select
                                                 value={selectedNetwork}
@@ -224,7 +224,7 @@ class BuyData extends Component {
                                             />
                                            {this.state.validation.networkSelector.hasError ? <small className="text-danger">{this.state.validation.networkSelector.error}</small> : null}
                                         </div>
-                                        <div class="input-ctn">
+                                        <div className="input-ctn">
                                         <label>Choose a data plan</label>
                                         <Select
                                                 value={selectedDataPlan != null ? selectedDataPlan : dataPlansOptions[0]}
@@ -240,7 +240,7 @@ class BuyData extends Component {
                                                     <Input
                                                         elementType={formElement.config.elementType}
                                                         elementConfig={formElement.config.elementConfig}
-                                                        value={formElement.config.isDisabled ? 'N'+formatAmountNoDecimal(formElement.config.value) : formElement.config.value}
+                                                        value={formElement.config.isDisabled ? '₦'+formatAmountNoDecimal(formElement.config.value) : formElement.config.value}
                                                         changed={(event) => this.inputChangedHandler(event, formElement.id)}
                                                         wrongInput={!formElement.config.valid}
                                                         isTouched={formElement.config.touched}
@@ -253,22 +253,17 @@ class BuyData extends Component {
 
                                         })}
 
-                                        <div class="row">
-                                            <div class="col-sm-12">
+                                        <div className="row">
+                                            <div className="col-sm-12">
                                                 <center>
-
-                                                    <button onClick={this.onSubmitBuyData} class="btn-alat m-t-10 m-b-20 text-center">Next</button>
+                                                    <button onClick={this.onSubmitBuyData} className="btn-alat m-t-10 m-b-20 text-center">Next</button>
                                                 </center>
                                             </div>
                                         </div>
 
                                     </form>
                                 </div>
-
-
-
                             </div>
-
                             <center>
                                 <Link to={'/bills/data'} className="add-bene m-t-50">Go Back</Link>
                             </center>

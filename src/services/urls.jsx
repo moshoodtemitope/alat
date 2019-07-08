@@ -1,6 +1,6 @@
 // const URL = 'https://api.alat.ng';
-//  const URL = 'https://196.43.215.170';
-const URL = 'http://196.43.215.157';
+const URL = 'https://196.43.215.170';
+// const URL = 'http://196.43.215.157';
 
 const BASEURL = URL;
 
@@ -35,6 +35,10 @@ export const routes = {
 
     //Payment
 
+    //FundAccount 
+    WEMA_TO_ALAT_TRANSFER_WITHOUT_OTP: BASEURL + '/PaymentApi/api/WemaAccountToAlatAccountWithoutOTP',
+    GET_TOKENIZED_CARDS: BASEURL + '/PaymentCardServicesApi/api/v1/TokenizationApi/GetTokenizedCards',
+
     //Transfer
     BANK_LIST: BASEURL + '/PaymentApi/api/BankList',
     FETCH_TRANSFER_BENEFICIARIES: BASEURL + '/PaymentApi/api/Beneficiary/All',
@@ -66,5 +70,14 @@ export const routes = {
     SAVE_DATA_BENEFICIARY : BASEURL + '/PaymentApi/api/AirtimeBill/SaveDataBeneficiaries',
 
     //Cardless Withdrawal
-    FETCH_UNEXPIRED_PAYCODES: BASEURL + '/PaymentApi/api/CardlessTransfer/GetAllUnExpiredPayCode'
+    FETCH_UNEXPIRED_PAYCODES: BASEURL + '/PaymentApi/api/CardlessTransfer/GetAllUnExpiredPayCode',
+    GET_OTP_FOR_CUSTOMER: BASEURL + '/RegistrationApi/api/registration/RequestOtpForCustomer',
+    CARDLESS_OTP_PIN_VERIFICATION: BASEURL + '/PaymentApi/api/CardlessTransfer/CardlessPaycodeRequestWeb',
+
+    // Bills
+    FETCH_BILLS_BENEFICIARIES: BASEURL + '/PaymentApi/api/AirtimeBill/GetBillBeneficiaries',
+    FETCH_BILLERS_CATEGORY: BASEURL + '/PaymentApi/api/AirtimeBill/QuickTellerCategoryAndBillers',
+    FETCH_BILLER_ITEM : BASEURL + '/PaymentApi/api/AirtimeBill/GetQuickTellerBillItems',
+    GET_SUBSCRIBER_NAME: BASEURL + '/PaymentApi/api/AirtimeBill/GetQuickTellerSubscriberNameEnquiry',
+    SAVE_BILLS_BENEFICIARY: BASEURL + '/PaymentApi/api/AirtimeBill/SaveBillBeneficiaries',
 };

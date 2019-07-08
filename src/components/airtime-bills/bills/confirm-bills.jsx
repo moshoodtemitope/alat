@@ -1,19 +1,17 @@
 import React, { Component, Fragment } from 'React';
 import { Link, Redirect } from 'react-router-dom';
 
-import { Input } from './input';
+import { Input } from '../../airtime-bills/data/input';
 import Select from 'react-select';
-
-import { checkInputValidation } from '../../../shared/utils';
-import Modal from 'react-responsive-modal';
-import {alertActions} from "../../../redux/actions/alert.actions";
+import { alertActions } from "../../../redux/actions/alert.actions";
 import { formatAmountNoDecimal, formatAmount } from '../../../shared/utils';
 import { connect } from 'react-redux';
 
-import * as actions from '../../../redux/actions/dataActions/export';
+import * as dataActions from '../../../redux/actions/dataActions/export';
+import * as actions from '../../../redux/actions/bills/export';
 
 const pattern = /^\d+$/;
-class ConfirmData extends Component {
+class ConfirmBills extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -57,7 +55,6 @@ class ConfirmData extends Component {
                     touched: false
                 },
             },
-            formIsValid: false,
             user: JSON.parse(localStorage.getItem("user")),
         };
     }
@@ -65,8 +62,8 @@ class ConfirmData extends Component {
 
     componentDidMount() {
         this.props.fetchDebitableAccounts(this.state.user.token);
-        console.log(this.props.dataInfo)
     }
+
 
     sortAccountsForSelect = () => {
         var arrayToDisplay = [];
@@ -97,6 +94,7 @@ class ConfirmData extends Component {
 
 
     inputChangedHandler = (event, inputIdentifier) => {
+        if (this.props.alert.message) this.props.clearError();
         let validation = { ...this.state.validation };
         validation.pinError.hasError = false;
         const updatedConfirmDataForm = {
@@ -106,30 +104,21 @@ class ConfirmData extends Component {
             ...updatedConfirmDataForm[inputIdentifier]
         };
         updatedFormElement.value = event.target.value;
-        if(updatedFormElement.value.length >= 1){
-            if(!pattern.test(updatedFormElement.value) || updatedFormElement.value.length > 4){
+        if (updatedFormElement.value.length >= 1) {
+            if (!pattern.test(updatedFormElement.value) || updatedFormElement.value.length > 4) {
                 return;
             }
         }
-        // updatedFormElement.valid = checkInputValidation(updatedFormElement.value, updatedFormElement.validation);
-        // updatedFormElement.valid = true;
-        // updatedFormElement.touched = true;
         updatedConfirmDataForm[inputIdentifier] = updatedFormElement;
-
-        // let formIsValid = true;
-        // for (let inputIdentifier in updatedConfirmDataForm) {
-        //     formIsValid = updatedConfirmDataForm[inputIdentifier].valid && formIsValid;
-        // }
-        // console.log(formIsValid);
         this.setState({ confirmDataForm: updatedConfirmDataForm, validation });
     }
 
     pinInputValidation = (value) => {
-        
+
         return (value.length >= 4 && value.length <= 4 && pattern.test(value));
     }
 
-    goBack =(event) => {
+    goBack = (event) => {
         event.preventDefault();
         this.props.history.goBack();
     }
@@ -137,7 +126,7 @@ class ConfirmData extends Component {
     onSubmitForm = (event) => {
         var validation = { ...this.state.validation };
         event.preventDefault();
-        this.props.clearError();
+        if (this.props.alert.message) this.props.clearError();
         if ((this.state.confirmDataForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedAccounts) || !this.pinInputValidation(this.state.confirmDataForm.pin.value)) {
             if (this.state.confirmDataForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedAccounts) {
                 validation.accountError.hasError = true;
@@ -149,22 +138,33 @@ class ConfirmData extends Component {
             }
         } else {
             const payload = {
-                ...this.props.dataInfo,
                 AccountNumber: (this.state.selectedAccounts ? this.state.selectedAccounts.value : this.state.confirmDataForm.activeAccount.elementConfig.options[0].value),
-                TransactionPin: this.state.confirmDataForm.pin.value
+                Amount: this.props.billsInfo.item.amount,
+                BillerPaymentCode: this.props.billsInfo.item.paymentCode,
+                Charge: this.props.billsInfo.item.charge,
+                PhoneNumber: this.props.phoneNumber,
+                SubscriberId: this.props.billsInfo.subscriberId,
+                TransactionPin: this.state.confirmDataForm.pin.value,
             }
-            this.props.setDataToBuyDetails(payload,this.props.network, this.props.isFromBeneficiary);
-
-            this.props.verifyInputedPIN(this.state.user.token, payload);
+            const updatedBillInfo = {
+                ...this.props.billsInfo,
+                TransactionPin: this.state.confirmDataForm.pin.value,
+                AccountNumber: (this.state.selectedAccounts ? this.state.selectedAccounts.value : this.state.confirmDataForm.activeAccount.elementConfig.options[0].value),
+            }
+            this.props.setBillInfo(updatedBillInfo, payload);
+            console.log(payload);
+            console.log(updatedBillInfo);
+            this.props.fetchOtp(this.state.user.token, payload);
         }
     }
 
-    
+
 
 
     render() {
-        let confirmData = <Redirect to="/bills/data/buy" />
-        if (this.props.dataInfo != null) {
+        console.log("render method")
+        let confirmWithdrawal;
+        if (this.props.billsInfo != null && this.props.pageState == 2) {
             const formElementArray = [];
             for (let key in this.state.confirmDataForm) {
                 formElementArray.push({
@@ -177,28 +177,43 @@ class ConfirmData extends Component {
             }
             const { selectedAccount } = this.state;
 
-            confirmData = (
+            confirmWithdrawal = (
                 <Fragment>
-                    
+
                     <div className="col-sm-12">
                         <div className="row">
                             <div className="col-sm-12">
                                 <div className="max-600">
                                     <div className="al-card no-pad">
-                                        <h4 className="m-b-10 center-text hd-underline">Buy Data</h4>
+                                        <h4 className="m-b-10 center-text hd-underline">Review Payment</h4>
                                         <div className="transfer-ctn">
                                             <form>
                                                 <div class="al-card no-pad">
                                                     <div class="trans-summary-card">
                                                         <div class="name-amount clearfix">
-                                                            <p class="pl-name-email">{this.props.network} Data Plan<span>{this.props.dataInfo.PaymentItem}</span></p>
-                                                            <p class="pl-amount">₦{formatAmountNoDecimal(this.props.dataInfo.Amount)}</p>
+                                                            <p className="pl-name-email">{this.props.billsInfo.biller} <span>{this.props.billsInfo.item.value}</span></p>
+                                                            <p className="pl-amount">₦{formatAmountNoDecimal(this.props.billsInfo.item.amount)}</p>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 {(this.props.alert.message) ?
-                        <div className="info-label error">{this.props.alert.message} {this.props.alert.message.indexOf("rror") != -1 ? <span onClick={() => {this.props.fetchDebitableAccounts(this.state.user.token)}} style={{textDecoration:"underline", cursor:"pointer"}}>Click here to try again</span> : null}</div> : null
-                        }
+                                                    <div className="info-label error">{this.props.alert.message} {this.props.alert.message.indexOf("rror") != -1 ? <span onClick={() => { this.props.fetchDebitableAccounts(this.state.user.token) }} style={{ textDecoration: "underline", cursor: "pointer" }}>Click here to try again</span> : null}</div> : null
+                                                }
+                                                {
+                                                    this.props.subscriberName == "" ? null : (
+                                                        <div className="input-ctn">
+                                                            <label>Customer Name</label>
+                                                            <Input
+                                                                elementType="input"
+                                                                elementConfig={{ type: "text" }}
+                                                                value={this.props.subscriberName}
+                                                                disabled={true}
+                                                                inputStyle={{ backgroundColor: "#666666", color: "#ffffff", fontWeight: "300" }}
+                                                                isReadonly={true} />
+                                                        </div>
+                                                    )
+                                                }
+
                                                 {formElementArray.map((formElement) => {
                                                     if (formElement.config.elementType !== "input") {
                                                         return (
@@ -222,32 +237,23 @@ class ConfirmData extends Component {
                                                                 elementConfig={formElement.config.elementConfig}
                                                                 value={formElement.config.value}
                                                                 changed={(event) => this.inputChangedHandler(event, formElement.id)}
-                                                                wrongInput={!formElement.config.valid}
-                                                                isTouched={formElement.config.touched}
-                                                                errormsg={formElement.config.error}
-                                                                isDisabled={formElement.config.isDisabled} />
+                                                                wrongInput={!formElement.config.valid} />
                                                             {this.state.validation.pinError.hasError ? <small className="text-danger">{this.state.validation.pinError.error}</small> : null}
                                                         </div>
                                                     )
 
                                                 })}
 
-                                                <div class="row">
-                                                    <div class="col-sm-12">
+                                                <div className="row">
+                                                    <div className="col-sm-12">
+                                                        {this.props.billsInfo.item.charge > 0 ? <p className="info-text m-b-20 text-danger">You will be charged a fee of ₦{this.props.billsInfo.item.charge}</p> : null}
                                                         <center>
-                                                            <button disabled={this.props.fetching} onClick={this.onSubmitForm} class="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Buy Data"}</button>
+                                                            <button disabled={this.props.fetching} onClick={this.onSubmitForm} class="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Confirm"}</button>
                                                         </center>
                                                     </div>
                                                 </div>
-
                                             </form>
-
-
-
                                         </div>
-
-
-
                                     </div>
 
                                     <center>
@@ -258,40 +264,45 @@ class ConfirmData extends Component {
                         </div>
                     </div>
                 </Fragment>
-
+        
             );
-            if (this.props.pinVerified == 0) {
-                this.props.resetPinState();
-                confirmData = <Redirect to="/bills/data/buy/verify" />
+            if (this.props.pageState == 0) {
+                console.log("otp sent redirecting1")
+                this.props.resetPageState(2);
+                confirmWithdrawal = <Redirect to="/bills/paybills/verify" />
             }
+        } else if (this.props.pageState == 0) {
+            console.log("otp sent redirecting")
+            this.props.resetPageState(2);
+            confirmWithdrawal = <Redirect to="/bills/paybills/verify" />
+        } else {
+            confirmWithdrawal = <Redirect to="/bills/paybills/biller" />
         }
 
-        return confirmData;
+        return confirmWithdrawal;
     }
 }
 
 const mapStateToProps = state => {
     return {
-        dataInfo: state.data_reducer.dataToBuy,
-        dataPlans: state.data_reducer.dataPlans,
         accounts: state.data_reducer.debitableAccounts,
-        fetching: state.data_reducer.isFetching,
-        pinVerified: state.data_reducer.pinVerified,
-        errorMessage: state.data_reducer.errorMessage,
-        network: state.data_reducer.network,
-        isFromBeneficiary : state.data_reducer.isFromBeneficiary,
+        billsInfo: state.bills_reducer.billToPay,
+        pageState: state.bills_reducer.pageState,
         alert: state.alert,
+        fetching: state.bills_reducer.isFetching,
+        subscriberName: state.bills_reducer.subscriberName,
+        phoneNumber: state.authentication.user.phoneNo || state.authentication.user.response.phoneNo,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchDebitableAccounts: (token) => dispatch(actions.fetchDebitableAccounts(token)),
-        verifyInputedPIN : (token, data) => dispatch(actions.pinVerificationStart(token, data)),
-        setDataToBuyDetails: (dataToBuy, network, fromBeneficiary) => dispatch(actions.setDataTransactionDetails(dataToBuy, network, fromBeneficiary)),
-        resetPinState: () => dispatch(actions.pinVerificationTryAgain()),
-        clearError: () => dispatch(alertActions.clear())
+        fetchDebitableAccounts: (token) => dispatch(dataActions.fetchDebitableAccounts(token)),
+        setBillInfo: (billData, otpData) => dispatch(actions.setBillInfo(billData, otpData)),
+        fetchOtp: (token, data) => dispatch(actions.fetchOtpForCustomer(token, data)),
+        resetPageState: (code) => dispatch(actions.resetBillPage(code)),
+        clearError: () => dispatch(alertActions.clear()),
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConfirmData);
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmBills);

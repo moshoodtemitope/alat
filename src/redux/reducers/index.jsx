@@ -1,12 +1,13 @@
 import {combineReducers} from "redux";
 import {authentication} from "./authentication.reducer";
 import { alert} from "./alert.reducer";
-import {dashboard, transfer, onboarding, airtime, global} from "./export";
+import {dashboard, transfer, onboarding, airtime, global, fundAccount} from "./export";
 import {bankListRequest, beneficiariesRequest} from "./transfer.reducer";
 import {accountHistoryReducer} from "./dashboard.reducer";
 import { userConstants } from "../constants/onboarding/user.constants";
 import dataReducer from './data.reducer';
 import cardlessReducer from './cardless.reducer';
+import billsReducer from './bills.reducer';
 import { airtimeConstants } from "../constants/airtime/airtime.constants";
 import { TRANSFER_REDUCER_CLEAR } from "../constants/transfer.constants";
 // import { * as dashboard_reducer } from './dashboard.reducer';
@@ -30,6 +31,13 @@ const transferReducerPile =(state, action)=>{
         state = undefined; 
     }
     return transferReducers(state, action);
+}
+
+const fundAccountReducerPile = (state, action)=>{
+    if(action.type === TRANSFER_REDUCER_CLEAR){ 
+        state = undefined; 
+    }
+    return fundAccountReducer(state, action);
 }
 
 
@@ -56,6 +64,11 @@ const airtimeReducer = combineReducers({
     airtime_save_bene: airtime.airtimeSaveBeneficiaryReducer
 })
 
+const fundAccountReducer = combineReducers({
+    fundwema_alat : fundAccount.fundAccountReducer,
+    getTokencards : fundAccount.getTokenizedCardsReducer
+})
+
 const appReducer = combineReducers({
     authentication,
     // registration,
@@ -69,6 +82,7 @@ const appReducer = combineReducers({
     dashboard_userGoals: dashboard.userGoalsReducer,
     dashboard_userOnboardingPriority: dashboard.onboardingPriorityReducer,
     dashboard_announcementCard: dashboard.announcementReducer,
+
     // transfer_bankList: transfer.bankListRequest,
     // transfer_beneficiaries: transfer.beneficiariesRequest,
     // delete_transfer_beneficiaryState: transfer.deleteBeneficiaryRequest,
@@ -84,9 +98,10 @@ const appReducer = combineReducers({
     // airtime_webpin: airtime.buyAirtimeWebPinReducer,  
     // airtime_webpinotp: airtime.buyAirtimeWebPinOTPReducer,
     // airtime_save_bene: airtime.airtimeSaveBeneficiaryReducer,
-
+    
     airtimeReducerPile,
     transferReducerPile,
+    fundAccountReducerPile,
     accounts: global.debitableAccountsReducer,
     // storage_reducer
     // storage_reducer
@@ -94,6 +109,7 @@ const appReducer = combineReducers({
     //data_reducer
     data_reducer: dataReducer,
     cardless_reducer: cardlessReducer,
+    bills_reducer: billsReducer,
 
 });
 

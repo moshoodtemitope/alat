@@ -1,19 +1,17 @@
 import React, { Component, Fragment } from 'React';
 import { Link, Redirect } from 'react-router-dom';
 
-import { Input } from './input';
+import { Input } from '../../airtime-bills/data/input';
 import Select from 'react-select';
-
-import { checkInputValidation } from '../../../shared/utils';
-import Modal from 'react-responsive-modal';
 import {alertActions} from "../../../redux/actions/alert.actions";
 import { formatAmountNoDecimal, formatAmount } from '../../../shared/utils';
 import { connect } from 'react-redux';
 
-import * as actions from '../../../redux/actions/dataActions/export';
+import * as dataActions from '../../../redux/actions/dataActions/export';
+import * as actions from '../../../redux/actions/cardless-withdrawal/export';
 
 const pattern = /^\d+$/;
-class ConfirmData extends Component {
+class ConfirmWithdrawal extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -57,7 +55,6 @@ class ConfirmData extends Component {
                     touched: false
                 },
             },
-            formIsValid: false,
             user: JSON.parse(localStorage.getItem("user")),
         };
     }
@@ -65,8 +62,8 @@ class ConfirmData extends Component {
 
     componentDidMount() {
         this.props.fetchDebitableAccounts(this.state.user.token);
-        console.log(this.props.dataInfo)
     }
+
 
     sortAccountsForSelect = () => {
         var arrayToDisplay = [];
@@ -74,7 +71,7 @@ class ConfirmData extends Component {
         console.log("this.props.accounts");
 
         if (this.props.accounts.length >= 1) {
-            this.props.accounts.map((data => arrayToDisplay.push({ value: data.AccountNumber, label: data.AccountDescription + " - ₦" + formatAmount(data.AvailableBalance) })));
+            this.props.accounts.map((data => arrayToDisplay.push({ value: data.AccountNumber, label: data.AccountDescription + " - N" + formatAmount(data.AvailableBalance) })));
         } else {
             arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account Available' }];
         }
@@ -111,16 +108,7 @@ class ConfirmData extends Component {
                 return;
             }
         }
-        // updatedFormElement.valid = checkInputValidation(updatedFormElement.value, updatedFormElement.validation);
-        // updatedFormElement.valid = true;
-        // updatedFormElement.touched = true;
         updatedConfirmDataForm[inputIdentifier] = updatedFormElement;
-
-        // let formIsValid = true;
-        // for (let inputIdentifier in updatedConfirmDataForm) {
-        //     formIsValid = updatedConfirmDataForm[inputIdentifier].valid && formIsValid;
-        // }
-        // console.log(formIsValid);
         this.setState({ confirmDataForm: updatedConfirmDataForm, validation });
     }
 
@@ -149,13 +137,16 @@ class ConfirmData extends Component {
             }
         } else {
             const payload = {
-                ...this.props.dataInfo,
-                AccountNumber: (this.state.selectedAccounts ? this.state.selectedAccounts.value : this.state.confirmDataForm.activeAccount.elementConfig.options[0].value),
-                TransactionPin: this.state.confirmDataForm.pin.value
+                PhoneNo: this.props.phoneNumber,
             }
-            this.props.setDataToBuyDetails(payload,this.props.network, this.props.isFromBeneficiary);
-
-            this.props.verifyInputedPIN(this.state.user.token, payload);
+            const updatedCwInfo = {
+                ...this.props.cwInfo,
+                TransactionPin: this.state.confirmDataForm.pin.value,
+                AccountNumber: (this.state.selectedAccounts ? this.state.selectedAccounts.value : this.state.confirmDataForm.activeAccount.elementConfig.options[0].value),
+            }
+            this.props.setCardlessInfo(updatedCwInfo);
+            console.log(payload);
+            this.props.fetchOtp(this.state.user.token, payload);
         }
     }
 
@@ -163,8 +154,9 @@ class ConfirmData extends Component {
 
 
     render() {
-        let confirmData = <Redirect to="/bills/data/buy" />
-        if (this.props.dataInfo != null) {
+        console.log("render method")
+        let confirmWithdrawal;
+        if (this.props.cwInfo != null && this.props.pageState == 2) {
             const formElementArray = [];
             for (let key in this.state.confirmDataForm) {
                 formElementArray.push({
@@ -177,7 +169,7 @@ class ConfirmData extends Component {
             }
             const { selectedAccount } = this.state;
 
-            confirmData = (
+            confirmWithdrawal = (
                 <Fragment>
                     
                     <div className="col-sm-12">
@@ -185,14 +177,14 @@ class ConfirmData extends Component {
                             <div className="col-sm-12">
                                 <div className="max-600">
                                     <div className="al-card no-pad">
-                                        <h4 className="m-b-10 center-text hd-underline">Buy Data</h4>
+                                        <h4 className="m-b-10 center-text hd-underline">Confirm Withdrawal</h4>
                                         <div className="transfer-ctn">
                                             <form>
                                                 <div class="al-card no-pad">
                                                     <div class="trans-summary-card">
                                                         <div class="name-amount clearfix">
-                                                            <p class="pl-name-email">{this.props.network} Data Plan<span>{this.props.dataInfo.PaymentItem}</span></p>
-                                                            <p class="pl-amount">₦{formatAmountNoDecimal(this.props.dataInfo.Amount)}</p>
+                                                            <p class="pl-name-email">ATM<span>Cashout Channel</span></p>
+                                                            <p class="pl-amount">₦{formatAmountNoDecimal(this.props.cwInfo.Amount)}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -232,10 +224,11 @@ class ConfirmData extends Component {
 
                                                 })}
 
-                                                <div class="row">
-                                                    <div class="col-sm-12">
+                                                <div className="row">
+                                                    <div className="col-sm-12">
+                                                    <p className="info-text m-b-20">You will be charged N105 on cash withdrawal</p>
                                                         <center>
-                                                            <button disabled={this.props.fetching} onClick={this.onSubmitForm} class="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Buy Data"}</button>
+                                                            <button disabled={this.props.fetching} onClick={this.onSubmitForm} class="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Confirm Withdrawal"}</button>
                                                         </center>
                                                     </div>
                                                 </div>
@@ -260,38 +253,42 @@ class ConfirmData extends Component {
                 </Fragment>
 
             );
-            if (this.props.pinVerified == 0) {
-                this.props.resetPinState();
-                confirmData = <Redirect to="/bills/data/buy/verify" />
+            if(this.props.pageState == 0) {
+                console.log("otp sent redirecting")
+                this.props.resetPageState();
+                confirmWithdrawal = <Redirect to="/cardless-withdrawal/verify" />
             }
+        }else if(this.props.pageState == 0) {
+            console.log("otp sent redirecting")
+            this.props.resetPageState();
+            confirmWithdrawal = <Redirect to="/cardless-withdrawal/verify" />
+        }else{
+            confirmWithdrawal = <Redirect to="/cardless-withdrawal/create" />
         }
 
-        return confirmData;
+        return confirmWithdrawal;
     }
 }
 
 const mapStateToProps = state => {
     return {
-        dataInfo: state.data_reducer.dataToBuy,
-        dataPlans: state.data_reducer.dataPlans,
+        cwInfo: state.cardless_reducer.cwInfo,
         accounts: state.data_reducer.debitableAccounts,
-        fetching: state.data_reducer.isFetching,
-        pinVerified: state.data_reducer.pinVerified,
-        errorMessage: state.data_reducer.errorMessage,
-        network: state.data_reducer.network,
-        isFromBeneficiary : state.data_reducer.isFromBeneficiary,
+        fetching: state.cardless_reducer.isFetching,
+        pageState: state.cardless_reducer.pageState,
         alert: state.alert,
+        phoneNumber: state.authentication.user.phoneNo || state.authentication.user.response.phoneNo,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchDebitableAccounts: (token) => dispatch(actions.fetchDebitableAccounts(token)),
-        verifyInputedPIN : (token, data) => dispatch(actions.pinVerificationStart(token, data)),
-        setDataToBuyDetails: (dataToBuy, network, fromBeneficiary) => dispatch(actions.setDataTransactionDetails(dataToBuy, network, fromBeneficiary)),
-        resetPinState: () => dispatch(actions.pinVerificationTryAgain()),
-        clearError: () => dispatch(alertActions.clear())
+        fetchDebitableAccounts: (token) => dispatch(dataActions.fetchDebitableAccounts(token)),
+        fetchOtp : (token, data) => dispatch(actions.getOtpForCustomer(token, data)),
+        resetPageState: () => dispatch(actions.resetPageState()),
+        clearError: () => dispatch(alertActions.clear()),
+        setCardlessInfo: (cwInfo) => dispatch(actions.setCardlessWithdrawalInfo(cwInfo)),
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConfirmData);
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmWithdrawal);

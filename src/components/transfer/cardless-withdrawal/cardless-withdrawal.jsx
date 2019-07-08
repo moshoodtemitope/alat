@@ -4,6 +4,9 @@ import { Link, NavLink, Route } from 'react-router-dom';
 
 import Index from '.';
 import CreateWithdarwal from './create-withdrawal';
+import ConfirmWithdrawal from './confirm-withdrawal';
+import VerifyOtp from './verify-otp';
+import Success from './success';
 
 class CardlessWithdrawal extends Component{
     constructor(props) {
@@ -24,7 +27,10 @@ class CardlessWithdrawal extends Component{
            <Fragment>
                 {this.props.children}
                 <Route exact path='/cardless-withdrawal' render={(props) => <Index {...props} />} />
-                <Route exact path='/cardless-withdrawal/create' render={(props) => <CreateWithdarwal {...props} />} />
+                <Route path='/cardless-withdrawal/create' render={(props) => <CreateWithdarwal {...props} />} />
+                <Route path='/cardless-withdrawal/confirm' render={(props) => <ConfirmWithdrawal {...props} />} />
+                <Route path='/cardless-withdrawal/verify' render={(props) => <VerifyOtp {...props} />} />
+                <Route path='/cardless-withdrawal/success' render={(props) => <Success {...props} />} />
            </Fragment>
        );
    }
