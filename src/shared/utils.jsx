@@ -26,6 +26,14 @@ export const cc_format = (value) => {
     
 }
 
+export const encryptTransactionData=(data, rules)=> {
+    let encryptedData = '';
+    for (let i = 0; i < data.length - 1; i++) {
+      encryptedData += rules[data[i]].EncryptedValue + '||||';
+    }
+    return encryptedData + rules[data[data.length - 1]].EncryptedValue;
+  }
+
 export const formartCardNumber=(number)=>{
     let str="";
     str += number.substr(0,4 ) + " ";

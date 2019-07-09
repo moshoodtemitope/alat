@@ -8,6 +8,7 @@ import FundWemaSuccess from './fund-wema/fund-wema-success';
 import FundCardIndex from './fund-card/fund-card-index';
 import FundCardDetails from './fund-card/card-details';
 import FundCardSelectAccount from './fund-card/fund-card-selectaccount';
+import FundCardSuccess from './fund-card/fund-card-success';
 
 
 class FundAccountIndex extends React.Component {
@@ -35,6 +36,7 @@ class FundAccountIndex extends React.Component {
                                                 <Route exact path={'/fund/card'} component={FundCardIndex}/>
                                                 <Route path={'/fund/card/details'} component={FundCardDetails} />
                                                <Route path={'/fund/card/select-account'} component={FundCardSelectAccount} />
+                                               <Route path={'/fund/card/success'} component={FundCardSuccess} />
                                     </div>
                                 </div>
 

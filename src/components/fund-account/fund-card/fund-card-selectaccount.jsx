@@ -7,13 +7,14 @@ import AlatPinInput from '../../../shared/components/alatPinInput';
 import * as actions from '../../../redux/actions/fund-account/fund-acount.action';
 import { fundAccountConstants } from '../../../redux/constants/fund-account/fund-account.constant';
 import { alertActions } from '../../../redux/actions/alert.actions';
-import * as util from '../../../shared/utils';
+import * as utils from '../../../shared/utils';
 
 
 class FundCardSelectAccount extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            user: JSON.parse(localStorage.getItem("user")),
             // accountNumber : "",
             selectedAccount: "",
             accountToDebit: "",
@@ -97,25 +98,20 @@ class FundCardSelectAccount extends React.Component {
         if (this.checkAccountNumber() || this.checkAmount() || this.checkPin()) {
 
         } else {
-            console.log(this.state);
-             //             Amount: "100"
-             // CustomerId: 0
-             // Pin: ""
-             // RecipientAccountNumber: "0232880005"
-             // RecipientBank: "035"
-             // TokenizedAlias: "My Access card"
-            const payload = {
-                // 'CardNo': formDataObj.value.cardNumber,
-                // 'CVV': formDataObj.value.cvv,
-                // 'ExpiryMonth': formDataObj.value.expiry.split(' / ')[0],
-                // 'ExpiryYear': formDataObj.value.expiry.split(' / ')[1],
-                'Amount': this.state.Amount,
-                'RecipientBank': '035',
-                'RecipientAccountNumber': this.state.selectedAccount
-            };
-            this.props.card_details.card_details_data.data.IsLocalCard ?
-                this.props.dispatch(actions.fundFromLocalCard(this.state.user.token, payload)) :
-                this.props.dispatch(actions.fundFromForeignCard(this.state.user.token, payload));
+            if (this.props.card_details.card_details_data.data.isBene) {
+                var payload = { //payload for existing saved card.
+                    Amount: this.state.Amount,
+                    CustomerId: 0,
+                    Pin: this.state.Pin,
+                    RecipientAccountNumber: this.state.selectedAccount,
+                    RecipientBank: "035",
+                    TokenizedAlias: this.props.card_details.card_details_data.data.TokenizedAlias
+                };
+
+                this.props.dispatch(actions.fundFromTokenizedCard(this.state.user.token, payload));
+            } else {
+                this.props.dispatch(actions.getEncryptionRule(this.state.user.token));
+            }
         }
     }
 
@@ -133,10 +129,40 @@ class FundCardSelectAccount extends React.Component {
             return (<Redirect to={"/fund/card/details"} />)
     }
 
+    fundfromNewCard = () => {
+        if (this.props.encryption_rule.encryption_rule_status == fundAccountConstants.ENCRYPTION_RULE_SUCCESS) {
+            var eRule = this.props.encryption_rule.encryption_rule_data.response;
+            console.log(this.props.card_details.card_details_data);
+            this.props.dispatch(actions.ClearAction(fundAccountConstants.ENCRYPTION_RULE_CLEAR));
+            this.props.dispatch(actions.verifyPAN(this.state.user.token, { PAN: utils.encryptTransactionData(this.props.card_details.card_details_data.data.CardPan, eRule) }))
+
+            var payload = {
+                //Payload for "CardToAccountTransferWithPIN"    
+                Amount: this.state.Amount,
+                CVV: utils.encryptTransactionData(this.props.card_details.card_details_data.data.Cvv, eRule),
+                CardPIn: utils.encryptTransactionData(this.state.Pin, eRule),
+                ExpiryMonth: utils.encryptTransactionData(this.props.card_details.card_details_data.data.ExpiryMonth, eRule),
+                ExpiryYear: utils.encryptTransactionData(this.props.card_details.card_details_data.data.ExpiryYear, eRule),
+                RecipientAccountNumber: this.state.selectedAccount,
+                RecipientBank: "035"
+            };
+
+            if (this.props.verify_pan.verify_pan_status == fundAccountConstants.VERIFY_PAN_SUCCESS) {
+                this.props.dispatch(actions.ClearAction(fundAccountConstants.VERIFY_PAN_CLEAR));
+                this.props.dispatch(actions.fundFromCardWithPin(this.state.user.token, payload));
+                if (this.props.fund_account.fund_account_status == fundAccountConstants.FUND_ACCOUNT_SUCCESS) {
+                   // this.props.dispatch(actions.ClearAction(fundAccountConstants.FUNDFROM_CARDWITH_PIN_FAILURE)) //
+                    return (<Redirect to={"/fund/card/success"} />);
+                }
+            }
+        }
+    }
+
     render() {
         return (
             <Fragment>
                 {this.renderBack()}
+                {this.fundfromNewCard()}
                 <div className="col-sm-12">
                     <div className="row">
                         <div className="col-sm-12">
@@ -146,11 +172,14 @@ class FundCardSelectAccount extends React.Component {
                                     <div className="transfer-ctn">
                                         <form onSubmit={(e) => this.handleSubmit(e)}>
                                             <input type="hidden" value="something" />
+                                            {this.props.alert && this.props.alert.message &&
+                                                <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                                            }
                                             <span>Transfer from</span>
                                             <div className="al-card no-pad">
                                                 <div className="trans-summary-card">
                                                     <div className="name-amount clearfix">
-                                                        <p className="pl-name-email">{this.cardDetailStatus() && util.formartCardNumber(this.props.card_details.card_details_data.data.MaskedPan)}
+                                                        <p className="pl-name-email">{this.cardDetailStatus() && utils.formartCardNumber(this.props.card_details.card_details_data.data.MaskedPan)}
                                                             <span>Expires : {this.cardDetailStatus() && this.props.card_details.card_details_data.data.ExpiryMonth}/
                                                 {this.cardDetailStatus() && this.props.card_details.card_details_data.data.ExpiryYear}</span></p>
                                                         <p className="pl-amount"></p>
@@ -208,6 +237,11 @@ function mapStateToProps(state) {
     return {
         alert: state.alert,
         card_details: state.fundAccountReducerPile.cardDetails,
+        encryption_rule: state.encrypt_rule,
+        verify_pan: state.verify_pan,
+       // fundwith_tokencard: state.fundAccountReducerPile.fundFromCardToken,
+       // fundwith_pin: state.fundAccountReducerPile.fundfromWithPin,
+        fund_account: state.fundAccountReducerPile.fundAccount
     }
 }
 

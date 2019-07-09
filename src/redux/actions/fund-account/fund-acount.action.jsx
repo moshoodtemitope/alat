@@ -6,16 +6,40 @@ import { modelStateErrorHandler } from "../../../shared/utils";
 import { alertActions } from "../alert.actions";
 import * as utils from "../../../shared/utils";
 
-export const fundAlatWemaAccount =(token, data)=>{
+// export const fundAlatWemaAccount =(token, data)=>{
+//     SystemConstant.HEADER['alat-token'] = token;
+//     return (dispatch) => {
+//         let consume = ApiService.request(routes.WEMA_TO_ALAT_TRANSFER_WITHOUT_OTP,
+//              "POST", data, SystemConstant.HEADER);
+//         dispatch(request(consume));
+//         return consume
+//             .then(response => {
+//                 //TODO: edit localDB accounts object
+//                 dispatch(success(response.data, request));
+//             })
+//             .catch(error => {
+//                // dispatch(success(response.data, request));
+//                  dispatch(failure(modelStateErrorHandler(error)));
+//                  dispatch(alertActions.error(modelStateErrorHandler(error)));
+//                 // throw(error);
+//             });
+//     };
+
+//     function request(request) { return { type: fundAccountConstants.FUND_ALAT_WEMA_PENDING, request } }
+//     function success(response, request) { return { type: fundAccountConstants.FUND_ALAT_WEMA_SUCCESS, response : response, data: request } }
+//     function failure(error) { return { type: fundAccountConstants.FUND_ALAT_WEMA_FAILURE, error } }
+// }
+
+export const saveCardAfterTransaction =(token, data)=>{
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.WEMA_TO_ALAT_TRANSFER_WITHOUT_OTP,
+        let consume = ApiService.request("",
              "POST", data, SystemConstant.HEADER);
         dispatch(request(consume));
         return consume
             .then(response => {
                 //TODO: edit localDB accounts object
-                dispatch(success(response.data, request));
+                dispatch(success(response.data));
             })
             .catch(error => {
                // dispatch(success(response.data, request));
@@ -25,9 +49,9 @@ export const fundAlatWemaAccount =(token, data)=>{
             });
     };
 
-    function request(request) { return { type: fundAccountConstants.FUND_ALAT_WEMA_PENDING, request } }
-    function success(response, request) { return { type: fundAccountConstants.FUND_ALAT_WEMA_SUCCESS, response : response, data: request } }
-    function failure(error) { return { type: fundAccountConstants.FUND_ALAT_WEMA_FAILURE, error } }
+    function request(request) { return { type: fundAccountConstants.SAVEAFTER_TRANSACTION_PENDING, request } }
+    function success(response) { return { type: fundAccountConstants.SAVEAFTER_TRANSACTION_SUCCESS, response  } }
+    function failure(error) { return { type: fundAccountConstants.SAVEAFTER_TRANSACTION_FAILURE, error } }
 }
 
 export const getTokenizedCards =(token, data)=>{
@@ -109,15 +133,15 @@ export const deleteCard=(token, data)=>{
     function failure(error) { return { type: fundAccountConstants.DELETE_SAVED_CARD_FAILURE, error } }
 }
 
-export const fundFromLocalCard=(token, data)=>{
+export const fundFromTokenizedCard=(token, data)=>{
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {  //Route to be added
-        let consume = ApiService.request("",
+        let consume = ApiService.request(routes.CARDTO_ACCOUNTTOKENIZED_TRANSFER,
              "POST", data, SystemConstant.HEADER);
         dispatch(request(consume));
         return consume
             .then(response => {
-                dispatch(success(response.data));
+                dispatch(success(response.data, data));
             })
             .catch(error => {
                // dispatch(success(response.data, request));
@@ -127,15 +151,61 @@ export const fundFromLocalCard=(token, data)=>{
             });
     };
 
-    function request(request) { return { type: fundAccountConstants.FUND_FROM_CARD_PENDING, request } }
-    function success(response) { return { type: fundAccountConstants.FUND_FROM_CARD_SUCCESS, response  } }
-    function failure(error) { return { type: fundAccountConstants.FUND_FROM_CARD_FAILURE, error } }
+    function request(request) { return { type: fundAccountConstants.FUND_ACCOUNT_PENDING, request } }
+    function success(response, request) { return { type: fundAccountConstants.FUND_ACCOUNT_SUCCESS, data: {response , request}  } }
+    function failure(error) { return { type: fundAccountConstants.FUND_ACCOUNT_FAILURE, error } }
 }
 
-export const fundFromForeignCard=(token, data)=>{
+export const fundFromCardWithPin=(token, data)=>{
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {  //Route to be added
-        let consume = ApiService.request("",
+        let consume = ApiService.request(routes.CARD_TO_ACCOUNT_TRANSFER_PIN,
+             "POST", data, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data, data));
+            })
+            .catch(error => {
+               // dispatch(success(response.data, request));
+                 dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // throw(error);
+            });
+    };
+
+    function request(request) { return { type: fundAccountConstants.FUND_ACCOUNT_PENDING, request } }
+    function success(response, request) { return { type: fundAccountConstants.FUND_ACCOUNT_SUCCESS, data: {response , request}  } }
+    function failure(error) { return { type: fundAccountConstants.FUND_ACCOUNT_FAILURE, error } }
+}
+
+export const getEncryptionRule=(token)=>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {  //Route to be added
+        let consume = ApiService.request(routes.ENCRYPTED_DATA_URL,
+             "POST", {}, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+               // dispatch(success(response.data, request));
+                 dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // throw(error);
+            });
+    };
+
+    function request(request) { return { type: fundAccountConstants.ENCRYPTION_RULE_PENDING, request } }
+    function success(response) { return { type: fundAccountConstants.ENCRYPTION_RULE_SUCCESS, response  } }
+    function failure(error) { return { type: fundAccountConstants.ENCRYPTION_RULE_FAILURE, error } }
+}
+
+export const verifyPAN=(token, data)=>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {  //Route to be added
+        let consume = ApiService.request(routes.VERIFY_CARD_PAN,
              "POST", data, SystemConstant.HEADER);
         dispatch(request(consume));
         return consume
@@ -150,9 +220,9 @@ export const fundFromForeignCard=(token, data)=>{
             });
     };
 
-    function request(request) { return { type: fundAccountConstants.FUND_FROM_CARD_PENDING, request } }
-    function success(response) { return { type: fundAccountConstants.FUND_FROM_CARD_SUCCESS, response  } }
-    function failure(error) { return { type: fundAccountConstants.FUND_FROM_CARD_FAILURE, error } }
+    function request(request) { return { type: fundAccountConstants.VERIFY_PAN_PENDING, request } }
+    function success(response) { return { type: fundAccountConstants.VERIFY_PAN_SUCCESS, response  } }
+    function failure(error) { return { type: fundAccountConstants.VERIFY_PAN_FAILURE, error } }
 }
 
 export const ClearAction=(type)=>{

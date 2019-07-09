@@ -18,7 +18,7 @@ class FundWemaSuccess extends React.Component {
     init() {
        if(this.props.fundwema.fund_account_status)
            if(this.props.fundwema.fund_account_status !== fundAccountConstants.FUND_ALAT_WEMA_SUCCESS){
-               //this.props.history.push("/fund/wema")
+               this.props.history.push("/fund/wema")
            }else{
             
            }
@@ -28,6 +28,10 @@ class FundWemaSuccess extends React.Component {
         if(this.props.accounts.debitable_accounts_data)
         var _account = this.props.accounts.debitable_accounts_data.data.find(account => account.AccountNumber== accountNumber);
         return _account.AccountDescription;
+    }
+    redirectHome=()=>{
+        this.props.dispatch(actions.ClearAction(fundAccountConstants.FUND_ACCOUNT_REDUCER_CLEAR));
+        this.props.history.push("/fund");
     }
     
 
@@ -74,7 +78,7 @@ class FundWemaSuccess extends React.Component {
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <center>
-                                                    <a href="dashboard2.html"><button class="btn-alat m-t-10 m-b-20 text-center" type="submit">Done</button></a>
+                                                    <a style={{cursor: "pointer"}}><button onClick={this.redirectHome()} class="btn-alat m-t-10 m-b-20 text-center" type="submit">Done</button></a>
                                                 </center>
                                             </div>
                                         </div>
