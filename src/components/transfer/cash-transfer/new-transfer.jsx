@@ -170,7 +170,7 @@ class NewTransfer extends React.Component {
                                 
                                 <Fragment>
                                     <div className={(key>=1)?"col-sm-12 col-md-10 offset-md-1 each-beneficiary hide": "col-sm-12 col-md-10 each-beneficiary offset-md-1"} key={key} id={"beneficiary-"+key}>
-                                        <div className="al-card beneficiary-card" onClick={()=>this.proceedWithSelectBeneficary(ben)}>
+                                        <div className="al-card beneficiary-card" onClick={()=>this.proceedWithSelectBeneficary(ben, false)}>
                                             <div className="clearfix">
                                                 <div className="network-img">
                                                     {/* <img src="img/airtel.png" srcset="img/airtel@2x.png 2x"/> */}
@@ -335,8 +335,9 @@ class NewTransfer extends React.Component {
             AccountNumber: beneficiary.AccountNumber,
             AccountName: beneficiary.AccountName,
             BankName: beneficiary.BankName,
-            BankCode: beneficiary.BankCode
-        }, true, this.state.user.token));
+            BankCode: beneficiary.BankCode,
+            Currency: beneficiary.Currency
+        }, false, this.state.user.token));
         
     }
 

@@ -123,7 +123,7 @@ export const cashTransferData = (transferDetails,isFxTransfer,token) =>{
 
     return(dispatch)=>{
         dispatch(request(transferDetails));
-        if(!isFxTransfer){
+        if(isFxTransfer ===false){
             console.log('bank transfer');
             history.push("/transfer/provide-details");
         }else{
