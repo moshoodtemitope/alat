@@ -34,13 +34,25 @@ class SelectDebitableAccounts extends React.Component {
                                       label: data.AccountDescription  +"\t"+ " (" +data.AccountNumber + " )   -" +data.Currency+ formatAmount(data.AvailableBalance) })
                                       
                 ));
-                arrayToDisplay = arrayToDisplay.filter(item=>item.accountCurrency ===this.props.currency);
-                
-                if(arrayToDisplay.length ===0){
-                    console.log('length', arrayToDisplay.length);
-                    arrayToDisplay.push({ value: '', label: 'No Debitable Account in your recipient currency' });
-                    // arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account in your recipient currency' }];
+                if(typeof this.props.currency !=="undefined"){
+                    arrayToDisplay = arrayToDisplay.filter(item=>item.accountCurrency ===this.props.currency);
+                    
+                    if(arrayToDisplay.length ===0){
+                        console.log('length', arrayToDisplay.length);
+                        arrayToDisplay.push({ value: '', label: 'No Debitable Account in your recipient currency' });
+                        // arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account in your recipient currency' }];
+                    }
+                }else{
+                    arrayToDisplay = arrayToDisplay.filter(item=>item.accountCurrency ==='NGN');
+                    if(arrayToDisplay.length ===0){
+                        arrayToDisplay.push({ value: '', label: 'No Debitable Naira Account Available' });
+                        // arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account in your recipient currency' }];
+                    }
                 }
+                
+               
+                
+                
                 
         } else {
             arrayToDisplay = [{ value: '', label: 'No Debitable Account Available' }];

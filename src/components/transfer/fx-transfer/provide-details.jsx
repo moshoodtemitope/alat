@@ -280,7 +280,7 @@ class ProvideDetails extends React.Component{
                                     <div className="col-sm-12">
                                         <div className="max-600">
                                             <div className="al-card no-pad">
-                                                <h4 className="m-b-10 center-text hd-underline">Provide Details</h4>
+                                                <h4 className="m-b-10 center-text hd-underline">Review Transfer</h4>
                                                 <div className="transfer-ctn">
                                                     <form onSubmit={this.proceedWithTransfer}>
                                                         <div className="al-card no-pad  ontransfer">
