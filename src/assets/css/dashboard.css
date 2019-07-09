@@ -1794,6 +1794,57 @@ p.resend-otp, .resend-otp {
     color: #57084E;
     font-size: 1.1428571429em; }
 
+    .fund-card-ctn {
+      -webkit-box-shadow: 0px 2px 11px rgba(255, 255, 255, 0.103431);
+      box-shadow: 0px 2px 11px rgba(255, 255, 255, 0.103431); }
+      .fund-card-ctn .fund-card {
+        background: url(../img/credit-card-1.svg);
+        background-size: cover;
+        background-position: center;
+        max-width: 400px;
+        max-height: 131px;
+        border-radius: 4px;
+        margin-bottom: 10px;
+        color: white;
+        padding: 25px 20px;
+        cursor: pointer;
+        font-family: Proxima Nova; }
+        .fund-card-ctn .fund-card a {
+          color: white;
+          float: right; }
+        .fund-card-ctn .fund-card .card-alias {
+          font-size: 14px;
+          line-height: 17px; }
+        .fund-card-ctn .fund-card .card-star {
+          font-family: Rubik;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 18px;
+          line-height: 18px;
+          margin-right: 9px; }
+        .fund-card-ctn .fund-card .card-digit {
+          margin-top: 17px; }
+        .fund-card-ctn .fund-card .card-no {
+          font-size: 20px;
+          line-height: 24px; }
+        .fund-card-ctn .fund-card .card-expires {
+          font-size: 12px;
+          line-height: 15px;
+          text-transform: uppercase;
+          color: rgba(255, 255, 255, 0.461843); }
+
+          .btn-alat-small{
+            color: white !important;
+            min-width: unset;
+          }
+          
+          .line-header{
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 110px !important;
+            align-items: center;
+          }
+
 .history-paginate {
   padding-top: 20px;
   float: right; }

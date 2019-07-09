@@ -45,8 +45,8 @@ class AirtimeSelectAccount extends Component {
     }
 
     onSubmit(object){
-     console.log(this.state.bill);
-     console.log(object);
+     //console.log(this.state.bill);
+     //console.log(object);
         this.props.dispatch(airtimeWebPinpayment(this.state.user.token,
             { NetworkCode: this.state.bill.NetworkCode,
               TransactionPin: object.TransactionPin,

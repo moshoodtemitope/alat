@@ -256,6 +256,7 @@ class ProvideDetails extends React.Component{
             isMorthanLimit,
             isErrorExisting
         } = this.state;
+        let currencySelected = this.props.transfer_info.transfer_info_data ? this.props.transfer_info.transfer_info_data.data.Currency : null;
         return(
             <Fragment>
                             <div className="col-sm-12">
@@ -263,7 +264,7 @@ class ProvideDetails extends React.Component{
                                     <div className="col-sm-12">
                                         <div className="max-600">
                                             <div className="al-card no-pad">
-                                                <h4 className="m-b-10 center-text hd-underline">Provide Details</h4>
+                                                <h4 className="m-b-10 center-text hd-underline">Review Transfer</h4>
                                                 <div className="transfer-ctn">
                                                     <form onSubmit={this.proceedWithTransfer}>
                                                         <div className="al-card no-pad  ontransfer">
@@ -285,6 +286,7 @@ class ProvideDetails extends React.Component{
                                                         <div className="inputctn-wrap">
                                                             <SelectDebitableAccounts
                                                                 value={this.state.accountNumber}
+                                                                // currency={currencySelected}
                                                                 requestType = "forBankTransfer"
                                                                 accountInvalid={this.state.isAccountInvalid}
                                                                 onChange={this.handleSelectDebitableAccounts} />
