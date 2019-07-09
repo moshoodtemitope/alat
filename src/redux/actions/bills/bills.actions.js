@@ -100,7 +100,7 @@ export const fetchBillerItems = (token, data) => {
 
     function success(response) { 
         var itemsArray = [];
-        response.map(item => itemsArray.push({value: item.PaymentItem, label: item.PaymentItem, amount: item.Amount, paymentCode: item.BillerPaymentCode, ref : item.ReferenceDetails, charge: item.Charge}));
+        response.map(item => itemsArray.push({value: item.PaymentItem, label: item.PaymentItem, amount: item.Amount, paymentCode: item.BillerPaymentCode, ref : item.ReferenceDetails, charge: item.Charge, hasAmount: item.Amount > 0}));
         return { 
         type : actionTypes.FETCH_BILLER_ITEMS_SUCCESS,
         // data: response,

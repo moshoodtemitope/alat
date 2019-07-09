@@ -215,8 +215,9 @@ class CreateWithdrawal extends Component {
 
                                         <div className="row">
                                             <div className="col-sm-12">
+                                                
                                                 <center>
-
+                                                {this.state.validation.aboveLimit ? <b className="text-danger">Amount can not exceed ₦20,000</b> : null}
                                                     <button onClick={this.onSubmitCwData} className="btn-alat m-t-10 m-b-20 text-center">Next</button>
                                                 </center>
                                             </div>

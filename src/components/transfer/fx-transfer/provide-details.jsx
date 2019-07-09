@@ -77,18 +77,23 @@ class ProvideDetails extends React.Component{
         if(this.state.selectedDebitableAccount){
             this.setState({isErrorExisting:false, errorToshow: "" });
             if(this.state.Amount!=="" && amountVal < parseFloat(this.state.selectedDebitableAccount[0].AvailableBalance) ){
-                const {dispatch, account_details} = this.props;
-                this.setState({isErrorExisting:false, errorToshow: "" });
-                dispatch(senderTransferData({
-                    SenderBankName: this.state.selectedDebitableAccount[0].AccountDescription,
-                    SenderAccountName: this.state.selectedDebitableAccount[0].AccountName,
-                    SenderAccountNumber: this.state.selectedAccount,
-                    AmountToSend: this.state.Amount,
-                    AccountBalance: this.state.selectedDebitableAccount[0].AvailableBalance,
-                    RecipientEmail: this.state.recipientEmail,
-                    TransferPurpose: this.state.transferPurpose
-                }))
-                this.props.history.push("/transfer/send");
+                if(this.state.selectedAccount !==this.state.accountData.AccountNumber){
+                    const {dispatch, account_details} = this.props;
+                    this.setState({isErrorExisting:false, errorToshow: "" });
+                    dispatch(senderTransferData({
+                        SenderBankName: this.state.selectedDebitableAccount[0].AccountDescription,
+                        SenderAccountName: this.state.selectedDebitableAccount[0].AccountName,
+                        SenderAccountNumber: this.state.selectedAccount,
+                        AmountToSend: this.state.Amount,
+                        AccountBalance: this.state.selectedDebitableAccount[0].AvailableBalance,
+                        RecipientEmail: this.state.recipientEmail,
+                        TransferPurpose: this.state.transferPurpose
+                    }))
+                    this.props.history.push("/fx-transfer/confirm");
+                }else{
+                   
+                    this.setState({ isErrorExisting: true, errorToshow: "Sender and recipient account number cannot be the same" });
+                }
             }else{
                 if(this.state.Amount===""){
                     this.setState({ isErrorExisting: true, errorToshow: "Please enter amount to send" });
@@ -150,13 +155,14 @@ class ProvideDetails extends React.Component{
     verifyTransferStage(){
         let props = this.props
         if (!props.transfer_info.transfer_info && props.transfer_info.transfer_info !== TRANSFER__BANK_DETAILS) {
-            this.props.history.push("/transfer");
+            this.props.history.push("/fx-transfer");
             return;
         }else{
             let transferDetails = {
                 AccountName: props.transfer_info.transfer_info_data.data.AccountName,
                 AccountNumber: props.transfer_info.transfer_info_data.data.AccountNumber,
                 BankName: props.transfer_info.transfer_info_data.data.BankName,
+                Currency: props.transfer_info.transfer_info_data.data.Currency ==="NGN"?"naira":props.transfer_info.transfer_info_data.data.Currency,
                 BankCode: props.transfer_info.transfer_info_data.data.BankCode
             };
 
@@ -164,7 +170,7 @@ class ProvideDetails extends React.Component{
                 ...transferDetails
             }
             this.setState({accountData:transferDetails})
-            console.log('state is', this.state.accountData);
+            // console.log('state is', this.state.accountData);
         }
     }
 
@@ -194,8 +200,8 @@ class ProvideDetails extends React.Component{
             case GET_BANKCHARGES_SUCCESS:
                 return(
                     <div className="charges-text">Transaction fee is
-                        {(this.state.accountData.BankCode === '035' || this.state.accountData.BankCode === '000017') && <span> ₦0</span> } 
-                        {(this.state.accountData.BankCode !== '035' && this.state.accountData.BankCode !== '000017') && <span> ₦{this.props.transfer_charges.bank_charges_data.response.data[0].Charge}</span>} 
+                        {(this.state.accountData.BankCode === '035' || this.state.accountData.BankCode === '000017') && <span> {this.state.accountData.Currency}0</span> } 
+                        {(this.state.accountData.BankCode !== '035' && this.state.accountData.BankCode !== '000017') && <span> {this.state.accountData.Currency}{this.props.transfer_charges.bank_charges_data.response.data[0].Charge}</span>} 
                     </div>
                 )
             case GET_BANKCHARGES_FAILURE:
@@ -231,14 +237,22 @@ class ProvideDetails extends React.Component{
             }else{
                 transferLimit =selectedDebitableAccount[0].MaxInterBankTransferLimit;
             }
+        
+        if(account === this.state.accountData.AccountNumber){
+            this.setState({ isSameAccountSelected: true});
+        }
+        else{
+            this.setState({ isSameAccountSelected: false});
+        }
+        
             
         this.setState({ selectedAccount: account, selectedDebitableAccount, isSelectChanged:true, transferLimit}, ()=>{
             console.log("selected account is", selectedDebitableAccount);
         });
-
+        
         const {dispatch} = this.props;
         dispatch(getTransactionLimit(this.state.user.token, account))
-        
+        // this.handleAmount();
         if (this.state.isSubmitted) { 
             if(account.length == 10)
             this.setState({ isAccountInvalid: false })
@@ -254,9 +268,11 @@ class ProvideDetails extends React.Component{
             transferLimit,
             isSelectChanged,
             isMorthanLimit,
-            isErrorExisting
+            isErrorExisting,
+            isSameAccountSelected
         } = this.state;
         let currencySelected = this.props.transfer_info.transfer_info_data ? this.props.transfer_info.transfer_info_data.data.Currency : null;
+        // console.log("currency text",this.props.transfer_info.transfer_info_data.data.Currency);
         return(
             <Fragment>
                             <div className="col-sm-12">
@@ -280,25 +296,29 @@ class ProvideDetails extends React.Component{
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                            {this.renderBankFee()}
+                                                            {/* {this.renderBankFee()} */}
 
                                                        
                                                         <div className="inputctn-wrap">
+                                                            {isSameAccountSelected===true &&
+                                                                <span className="error-msg">Sender and recipient account number cannot be the same</span>
+                                                            }
                                                             <SelectDebitableAccounts
                                                                 value={this.state.accountNumber}
-                                                                // currency={currencySelected}
+                                                                currency={currencySelected}
                                                                 requestType = "forBankTransfer"
                                                                 accountInvalid={this.state.isAccountInvalid}
                                                                 onChange={this.handleSelectDebitableAccounts} />
                                                             {isSelectChanged===true &&
-                                                                <span className="limit-text">Your daily transfer limit is ₦{transferLimit} </span>
+                                                                <span className="limit-text">Your daily transfer limit is {this.state.accountData.Currency}{transferLimit} </span>
                                                             }
                                                         </div>
 
                                                         <div className="inputctn-wrap">
                                                             <AmountInput value={formattedValue} intValue={AmountToSend}  name="Amount" onKeyUp={this.handleAmount}  onChange={this.handleAmount} />
+                                                            <span className="limit-text">in {this.state.accountData.Currency} </span>
                                                             {isMorthanLimit===true &&
-                                                                <span className="limit-text">{this.state.amountError}</span>
+                                                                <span className="limit-text pull-right">{this.state.amountError}</span>
                                                             }
                                                             
                                                             

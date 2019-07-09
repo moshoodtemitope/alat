@@ -82,7 +82,7 @@ class FundCardSuccess extends React.Component {
 
     saveSuccesAction=()=>{
         if(this.props.save_card.saveafter_trans_status == fundAccountConstants.SAVEAFTER_TRANSACTION_SUCCESS){
-            this.props.dispatch(actions.clearAirtimeStore(fundAccountConstants.FUND_ACCOUNT_REDUCER_CLEAR));
+            this.props.dispatch(actions.ClearAction(fundAccountConstants.FUND_ACCOUNT_REDUCER_CLEAR));
         return( <Redirect to={"/fund/card"}/>  );
         }
     }
@@ -151,7 +151,7 @@ class FundCardSuccess extends React.Component {
                                                     <div className="row">
                                                         <div className="col-sm-12">
                                                             <center>
-                                                                <button onClick={() => { this.props.dispatch(clearAirtimeStore(fundAccountConstants.FUND_ACCOUNT_REDUCER_CLEAR)); 
+                                                                <button onClick={() => { this.props.dispatch(actions.ClearAction(fundAccountConstants.FUND_ACCOUNT_REDUCER_CLEAR)); 
                                                                     this.props.history.push('/dashboard') }} className="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</button>
                                                                 {/* <Link to={'/dashboard'} className="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</Link> */}
                                                             </center>

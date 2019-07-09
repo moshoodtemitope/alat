@@ -131,6 +131,11 @@ class NewTransfer extends React.Component {
         }
     }
 
+    beneficiaryToshow(beneficiary){
+        return (beneficiary.Currency==="NGN");
+                                                        
+    }
+
     renderBeneficiaries(){
         
         let props = this.props;
@@ -146,12 +151,13 @@ class NewTransfer extends React.Component {
                     </div>
                 );
             case FETCH_TRANSFER_BENEFICIARY_SUCCESS:
-                let beneficiaries = props.beneficiaries.beneficiaries_data.response.data;
+                let beneficiaries = props.beneficiaries.beneficiaries_data.response.data,
+                filteredBeneficiaries = beneficiaries.filter(this.beneficiaryToshow);
                     // this.setState({beneficairiesList: beneficiaries});
                 
                 return(
                     <div>
-                        {(beneficiaries.length>1) && 
+                        {(filteredBeneficiaries.length>1) && 
                             <div className="col-sm-12 col-md-10 offset-md-1 search-wrap hide">
                                 <div className="search-beneficiary">
                                     <input type="text" onChange={this.searchBeneficiaries} placeholder="Search beneficiary"/>
@@ -159,12 +165,12 @@ class NewTransfer extends React.Component {
                             </div>
                             
                         }
-                        {beneficiaries.map((ben, key) => {
+                        {filteredBeneficiaries.map((ben, key) => {
                             return (
                                 
                                 <Fragment>
                                     <div className={(key>=1)?"col-sm-12 col-md-10 offset-md-1 each-beneficiary hide": "col-sm-12 col-md-10 each-beneficiary offset-md-1"} key={key} id={"beneficiary-"+key}>
-                                        <div className="al-card beneficiary-card" onClick={()=>this.proceedWithSelectBeneficary(ben)}>
+                                        <div className="al-card beneficiary-card" onClick={()=>this.proceedWithSelectBeneficary(ben, false)}>
                                             <div className="clearfix">
                                                 <div className="network-img">
                                                     {/* <img src="img/airtel.png" srcset="img/airtel@2x.png 2x"/> */}
@@ -185,7 +191,7 @@ class NewTransfer extends React.Component {
                             )
                         })
                         }
-                        {(beneficiaries.length>1) && 
+                        {(filteredBeneficiaries.length>1) && 
                             <div className="see-more-cta"><a onClick={this.showAllBeneficiaries} >See all beneficiaries</a> </div>
                         }
                     </div>
@@ -300,6 +306,7 @@ class NewTransfer extends React.Component {
                     AccountNumber: this.state.accountNumber,
                     AccountName: account_details.account_detail_data.response.AccountName,
                     BankName: this.state.selectedBank.label,
+                    Currency: account_details.account_detail_data.response.Currency,
                     BankCode: this.state.selectedBank.value
                 },false));
                 this.props.history.push("/transfer/save-beneficiary");
@@ -312,6 +319,7 @@ class NewTransfer extends React.Component {
                 AccountNumber: this.state.accountNumber,
                 AccountName: account_details.account_detail_data.response.AccountName,
                 BankName: this.state.selectedBank.label,
+                Currency: account_details.account_detail_data.response.Currency,
                 BankCode: this.state.selectedBank.value
             },false, null));
             this.props.history.push("/transfer/provide-details");
@@ -327,8 +335,9 @@ class NewTransfer extends React.Component {
             AccountNumber: beneficiary.AccountNumber,
             AccountName: beneficiary.AccountName,
             BankName: beneficiary.BankName,
-            BankCode: beneficiary.BankCode
-        }, true, this.state.user.token));
+            BankCode: beneficiary.BankCode,
+            Currency: beneficiary.Currency
+        }, false, this.state.user.token));
         
     }
 

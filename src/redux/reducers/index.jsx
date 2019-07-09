@@ -10,6 +10,7 @@ import cardlessReducer from './cardless.reducer';
 import billsReducer from './bills.reducer';
 import { airtimeConstants } from "../constants/airtime/airtime.constants";
 import { TRANSFER_REDUCER_CLEAR } from "../constants/transfer.constants";
+import { fundAccountConstants } from "../constants/fund-account/fund-account.constant"
 //import { saveCardReducer } from "./fund-account.reducer";
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
@@ -35,7 +36,7 @@ const transferReducerPile =(state, action)=>{
 }
 
 const fundAccountReducerPile = (state, action)=>{
-    if(action.type === FUND_ACCOUNT_REDUCER_CLEAR){ 
+    if(action.type === fundAccountConstants.FUND_ACCOUNT_REDUCER_CLEAR){ 
         state = undefined; 
     }
     return fundAccountReducer(state, action);
@@ -71,7 +72,8 @@ const fundAccountReducer = combineReducers({
     saveCard: fundAccount.saveCardReducer,
     cardDetails: fundAccount.tranCardDetailsReducer,
     deleteCard: fundAccount.deleteCardReducer,
-    saveTransCard: fundAccount.saveCardAfterTranReducer
+    saveTransCard: fundAccount.saveCardAfterTranReducer, 
+    fundwema_alat: fundAccount.fundWemaAccountReducer
     //fundFromCardToken: fundAccount.fundFromTokenisedCardReducer,
     //fundfromWithPin: fundAccount.fundFromCardWithPinReducer
 })

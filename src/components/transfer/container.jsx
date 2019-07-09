@@ -6,6 +6,7 @@ import NewTransfer from "./cash-transfer/new-transfer";
 import { Switch } from "react-router";
 import CashTransfer from './cash-transfer'
 import CardlessWithdrawal from './cardless-withdrawal/cardless-withdrawal'
+import fxTransfer from './fx-transfer/fxTransfer'
 
 class TransferContainer extends React.Component {
 
@@ -31,7 +32,7 @@ class TransferContainer extends React.Component {
                                                 <li><NavLink to={'/transfer'}>Bank Transfer</NavLink></li>
                                                 <li><a >Send To Contacts</a></li>
                                                 <li><NavLink to={'/cardless-withdrawal'}>Cardless Withdrawal</NavLink></li>
-                                                <li><a>FX Transfer</a></li>
+                                                <li><NavLink to={'/fx-transfer'}>FX Transfer</NavLink></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -39,6 +40,7 @@ class TransferContainer extends React.Component {
                                 {this.props.children}
                                 <Route exact to={'/transfer'} component={CashTransfer} />
                                 <Route to={'/cardless-withdrawal'} component={CardlessWithdrawal} />
+                                <Route to={'/fx-transfer'} component={fxTransfer} />
                             </div>
                         </div>
                     </div>

@@ -21,7 +21,7 @@ import {
 const options = [
 ];
 
-class SaveBeneficiary extends React.Component {
+class FxSaveBeneficiary extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -55,12 +55,12 @@ class SaveBeneficiary extends React.Component {
         const {dispatch} = this.props;
         let payload = {
             AccountName: this.props.account_details.transfer_info_data.data.AccountName,
-            AccountNumber:this.props.account_details.transfer_info_data.data.AccountNumber,
+            AccountNumber:this.props.account_details.transfer_info_data.data.AccountNumber.trim(),
             BankName:this.props.account_details.transfer_info_data.data.BankName,
             BankCode: this.props.account_details.transfer_info_data.data.BankCode,
-            NickName: this.state.accountAlias,
-            TransactionPin: this.state.Pin,
-            Currency: this.props.account_details.transfer_info_data.data.Currency
+            NickName: this.state.accountAlias.trim(),
+            TransactionPin: this.state.Pin.trim(),
+            Currency: this.props.account_details.transfer_info_data.data.Currency,
         }
         // console.log('payload is', payload);
         dispatch(saveBankTransferBeneficiary(this.state.user.token, payload));
@@ -72,7 +72,7 @@ class SaveBeneficiary extends React.Component {
        dispatch(saveBankTransferBeneficiary(this.state.user.token, {}))
        console.log('in here');
        if(!this.props.account_details.transfer_info_data || !this.props.account_details.transfer_info || (this.props.account_details.transfer_info !==TRANSFER__BANK_DETAILS) ){
-            this.props.history.push("/transfer");
+            this.props.history.push("/fx-transfer");
        }else{
            console.log('at all');
        }
@@ -88,28 +88,13 @@ class SaveBeneficiary extends React.Component {
         if (this.props.save_beneficiary_status.sendmoney_status == SAVE_TRANSFER_BENEFICIARY_SUCCESS){   
             // this.props.dispatch(accountEnquiry(this.state.user.token, {}))
             this.props.dispatch(clearTransferStore());
-            this.props.history.push("/transfer"); 
+            this.props.history.push("/fx-transfer"); 
         }
         return (
             
             <Fragment>
-                        <div className="row">
-                            <div className="col-sm-12">
-                                <p className="page-title">Send Money</p>
-                            </div>
-
-                            <div className="col-sm-12">
-                                <div className="tab-overflow">
-                                    <div className="sub-tab-nav">
-                                        <ul>
-                                            <li><a href="accounts.html" className="active">Bank Transfer</a></li>
-                                            <li><a href="statement.html">Send To Contacts</a></li>
-                                            <li><a href="#">Cardless Withdrawal</a></li>
-                                            <li><a href="#">FX Transfer</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                        
+                            
 
                             <div className="col-sm-12">
                                 <div className="row">
@@ -208,7 +193,7 @@ class SaveBeneficiary extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        
             </Fragment>
         );
     }
@@ -225,4 +210,4 @@ function mapStateToProps(state){
     };
 }
 
-export default connect(mapStateToProps)(SaveBeneficiary);
+export default connect(mapStateToProps)(FxSaveBeneficiary);

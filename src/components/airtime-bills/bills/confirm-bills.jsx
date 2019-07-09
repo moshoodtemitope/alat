@@ -71,7 +71,7 @@ class ConfirmBills extends Component {
         console.log("this.props.accounts");
 
         if (this.props.accounts.length >= 1) {
-            this.props.accounts.map((data => arrayToDisplay.push({ value: data.AccountNumber, label: data.AccountDescription + " - N" + formatAmount(data.AvailableBalance) })));
+            this.props.accounts.map((data => arrayToDisplay.push({ value: data.AccountNumber, label: data.AccountDescription + " - ₦" + formatAmount(data.AvailableBalance) })));
         } else {
             arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account Available' }];
         }
@@ -139,7 +139,7 @@ class ConfirmBills extends Component {
         } else {
             const payload = {
                 AccountNumber: (this.state.selectedAccounts ? this.state.selectedAccounts.value : this.state.confirmDataForm.activeAccount.elementConfig.options[0].value),
-                Amount: this.props.billsInfo.item.amount,
+                Amount: this.props.billsInfo.item.amount > 0 ? this.props.billsInfo.item.amount : this.props.billsInfo.altAmount,
                 BillerPaymentCode: this.props.billsInfo.item.paymentCode,
                 Charge: this.props.billsInfo.item.charge,
                 PhoneNumber: this.props.phoneNumber,
@@ -192,7 +192,7 @@ class ConfirmBills extends Component {
                                                     <div class="trans-summary-card">
                                                         <div class="name-amount clearfix">
                                                             <p className="pl-name-email">{this.props.billsInfo.biller} <span>{this.props.billsInfo.item.value}</span></p>
-                                                            <p className="pl-amount">₦{formatAmountNoDecimal(this.props.billsInfo.item.amount)}</p>
+                                                            <p className="pl-amount">₦{this.props.billsInfo.item.amount > 0 ? formatAmountNoDecimal(this.props.billsInfo.item.amount) : formatAmountNoDecimal(this.props.billsInfo.altAmount)}</p>
                                                         </div>
                                                     </div>
                                                 </div>

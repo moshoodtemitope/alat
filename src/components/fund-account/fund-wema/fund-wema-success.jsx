@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import succesImg from '../../../assets/img/success.svg';
 import { fundAccountConstants } from '../../../redux/constants/fund-account/fund-account.constant';
+import * as actions from '../../../redux/actions/fund-account/fund-acount.action';
 //import OtpValidation from '../../../shared/components/otpvalidation';
 
 class FundWemaSuccess extends React.Component {

@@ -24,10 +24,38 @@ class SelectDebitableAccounts extends React.Component {
 
     sortAccountsForSelect = () => {
         var arrayToDisplay = [];
+        // console.log('accounts are',this.props.accounts.debitable_accounts_data.data );
+        // console.log('currency sent is ', this.props.currency);
+
         if (this.props.accounts.debitable_accounts_data.data.length >= 1) {
-            this.props.accounts.debitable_accounts_data.data.map((data => arrayToDisplay.push({ value: data.AccountNumber, label: data.AccountDescription + " - N" + formatAmount(data.AvailableBalance) })));
+            this.props.accounts.debitable_accounts_data.data.map((data => 
+                arrayToDisplay.push({ value: data.AccountNumber, 
+                                      accountCurrency: data.Currency,
+                                      label: data.AccountDescription  +"\t"+ " (" +data.AccountNumber + " )   -" +data.Currency+ formatAmount(data.AvailableBalance) })
+                                      
+                ));
+                if(typeof this.props.currency !=="undefined"){
+                    arrayToDisplay = arrayToDisplay.filter(item=>item.accountCurrency ===this.props.currency);
+                    
+                    if(arrayToDisplay.length ===0){
+                        console.log('length', arrayToDisplay.length);
+                        arrayToDisplay.push({ value: '', label: 'No Debitable Account in your recipient currency' });
+                        // arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account in your recipient currency' }];
+                    }
+                }else{
+                    arrayToDisplay = arrayToDisplay.filter(item=>item.accountCurrency ==='NGN');
+                    if(arrayToDisplay.length ===0){
+                        arrayToDisplay.push({ value: '', label: 'No Debitable Naira Account Available' });
+                        // arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account in your recipient currency' }];
+                    }
+                }
+                
+               
+                
+                
+                
         } else {
-            arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account Available' }];
+            arrayToDisplay = [{ value: '', label: 'No Debitable Account Available' }];
         }
         //console.log(arrayToDisplay)
 
@@ -35,6 +63,9 @@ class SelectDebitableAccounts extends React.Component {
         //     ...this.state
         // }
         // _debitableAccounts.debitableAccounts = arrayToDisplay;
+
+        
+
         
         this.setState({ debitableAccounts: arrayToDisplay,
                         isAccountsLoaded : true});
