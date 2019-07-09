@@ -92,11 +92,11 @@ class Subscriber extends Component {
         this.props.clearError();
         let validation = {...this.state.validation};
 
-        if(this.state.inputSubscriberForm.ref.value == '' || this.state.inputSubscriberForm.amount.value == ''){
+        if(this.state.inputSubscriberForm.ref.value == '' || (this.state.inputSubscriberForm.amount.value == '' && !this.props.billsInfo.hasAmount)){
             if(this.state.inputSubscriberForm.ref.value == ''){
                 validation.subValid = false;
             }
-            if(this.state.inputSubscriberForm.amount.value == ''){
+            if(this.state.inputSubscriberForm.amount.value == '' && !this.props.billsInfo.hasAmount){
                 validation.amountEmpty = true;
             }
             this.setState({validation});
@@ -107,7 +107,7 @@ class Subscriber extends Component {
             PaymentCode: this.props.billsInfo.item.paymentCode,
             SubscriberId: this.state.inputSubscriberForm.ref.value,
         }
-        if(this.state.inputSubscriberForm.amount.value != '') {
+        if(this.state.inputSubscriberForm.amount.value != '' && !this.props.billsInfo.hasAmount) {
             let billsData = {
                 ...this.props.billsInfo,
                 altAmount: parseFloat(this.state.inputSubscriberForm.amount.value)
