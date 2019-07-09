@@ -1,5 +1,5 @@
-const URL = 'https://api.alat.ng';
-// const URL = 'https://196.43.215.170';
+//const URL = 'https://api.alat.ng';
+ const URL = 'https://196.43.215.170';
 // const URL = 'http://196.43.215.157';
 
 const BASEURL = URL;
@@ -38,6 +38,12 @@ export const routes = {
     //FundAccount 
     WEMA_TO_ALAT_TRANSFER_WITHOUT_OTP: BASEURL + '/PaymentApi/api/WemaAccountToAlatAccountWithoutOTP',
     GET_TOKENIZED_CARDS: BASEURL + '/PaymentCardServicesApi/api/v1/TokenizationApi/GetTokenizedCards',
+    SAVE_CARD: BASEURL +  '/PaymentCardServicesApi/api/v1/TokenizationApi/TokenizedCardsBeforeTrans',
+    DELETETOKENIZEDCARDS: BASEURL + '/PaymentCardServicesApi/api/v1/TokenizationApi/DeleteTokenizedCards',
+    CARDTO_ACCOUNTTOKENIZED_TRANSFER: BASEURL + '/PaymentCardServicesApi/api/v1/TokenizationApi/CardToAccountTokenizedTransfer',
+    VERIFY_CARD_PAN :BASEURL + '/PaymentCardServicesApi/api/Cards/VerifyCardPanDetailsWEB',
+    CARD_TO_ACCOUNT_TRANSFER_PIN: BASEURL + '/PaymentCardServicesApi/api/Cards/CardToAccountTransferWithPinWEB',
+    ENCRYPTED_DATA_URL: BASEURL + '/PaymentCardServicesApi/api/Cards/EncryptedNumbers',
 
     //Transfer
     BANK_LIST: BASEURL + '/PaymentApi/api/BankList',
