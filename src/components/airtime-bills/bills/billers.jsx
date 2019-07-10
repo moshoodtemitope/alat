@@ -189,7 +189,6 @@ const mapDispatchToProps = dispatch => {
     return {
         setBillInfo: (data) => dispatch(actions.setBillInfo(data)),
         fetchBillersCategory: (token) => dispatch(actions.fetchBillersCategory(token)),
-        // setState: () => dispatch(actions.pinVerificationTryAgain()),
         fetchBillerItems: (token, data) => dispatch(actions.fetchBillerItems(token, data)),
         clearError: () => dispatch(alertActions.clear())
     }

@@ -106,7 +106,7 @@ class Success extends Component {
                                             </div>
                                         </div>
 
-                                        {this.props.isFromBeneficiary ? null : <div className="clearfix save-purchase">
+                                        {this.props.billsInfo.isBeneficiary ? null : <div className="clearfix save-purchase">
                                             <p>Save this purchase</p>
                                             <div className="">
                                                 <div className="clearfix">
