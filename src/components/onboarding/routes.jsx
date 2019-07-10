@@ -66,6 +66,7 @@ class OnboardingRoute extends React.Component{
                 <Route path="/register/doc-upload" component={DocumentUplaod}/>
                 {/* <PrivateRoute fakeAuth={fakeAuth} exact path='/dashboard' component={Dashboard} />*/}
                 {/*<Route component={Error404} />*/}
+                
             </div>
         )
     }
