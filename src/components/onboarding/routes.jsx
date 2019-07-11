@@ -13,6 +13,9 @@ import {Redirect, Router} from "react-router";
 // import Logout from "./Logout";
 import {Fragment} from "react";
 import Dashboard from "../dashboard";
+import OnboardingLandingPage from "./landing-page";
+import LoanOnboardingStep1 from "./loans/loans-step-1";
+import LoanOnboardingStep2 from './loans/loan-ste-2';
 
 export const fakeAuth = {
     isAuthenticated: false,
@@ -66,7 +69,9 @@ class OnboardingRoute extends React.Component{
                 <Route path="/register/doc-upload" component={DocumentUplaod}/>
                 {/* <PrivateRoute fakeAuth={fakeAuth} exact path='/dashboard' component={Dashboard} />*/}
                 {/*<Route component={Error404} />*/}
-                
+                <Route path="/signup-landing" component={OnboardingLandingPage}/>
+                <Route path="/loan/step-1" component={LoanOnboardingStep1}/>
+                <Route path="/loan/step-2" component={LoanOnboardingStep2}/>
             </div>
         )
     }
