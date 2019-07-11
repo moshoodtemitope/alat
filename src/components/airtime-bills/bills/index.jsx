@@ -45,9 +45,9 @@ class Index extends Component {
         this.onCloseModal();
     }
 
-    useBeneficiary = (dataToSet) =>{
-        this.props.setDataToBuyDetails(dataToSet, true)
-        this.props.history.push('/bills/data/buy/confirm');
+    useBeneficiary = (billToSet) =>{
+        this.props.setBillInfo(billToSet)
+        this.props.history.push('/bills/paybills/confirm');
     }
 
     render() {
@@ -93,19 +93,20 @@ class Index extends Component {
                                         //     default:
                                         //         image = <img src={airtelLogo} alt="airtelLogo" />;
                                         // };
-                                        // var billsToPay = {
-                                        //     category: bill.BillerCategory,
-                                        //     biller: bill.BillerName,
-                                        //     item:{
-                                        //         value: bill.PaymentItem,
-                                        //         amount: bill.Amount,
-                                        //         paymentCode: bill.BillerPaymentCode,
-                                        //         ref: bill.SubscriberID
-                                        //     }
-                                        // }
+                                        var billsToPay = {
+                                            category: bill.BillerCategory,
+                                            biller: bill.BillerName,
+                                            subscriberId: bill.SubscriberID,
+                                            isBeneficiary : true,
+                                            item:{
+                                                value: bill.PaymentItem,
+                                                amount: bill.Amount,
+                                                paymentCode: bill.BillerPaymentCode,
+                                            }
+                                        }
                                         return (
                                             <div className="col-sm-12 col-md-4" key={counter + 1} >
-                                                <div className="al-card airtime-card" style={{zIndex:"10"}}>
+                                                <div className="al-card airtime-card" onClick={() => this.useBeneficiary(billsToPay)} style={{zIndex:"10"}}>
                                                     <div className="clearfix">
                                                         <div className="network-img" >.
                                                         </div>
@@ -161,6 +162,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        setBillInfo: (data) => dispatch(actions.setBillInfo(data)),
         fetchBills : (token) => dispatch(actions.fetchBillBeneficiaries(token)),
         deleteBeneficiary : (token, data) => dispatch(actions.deleteBillsBeneficiary(token, data)),
     }

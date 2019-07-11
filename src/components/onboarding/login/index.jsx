@@ -89,7 +89,7 @@ class Login extends React.Component{
                 </div>
                 <div className="row">
                     <div className="col-12">
-                        {alert && alert.message &&
+                        {alert && alert.message && !alert.message.includes("'closed'") &&
                         <div className={`info-label ${alert.type}`}>{alert.message}</div>
                         }
                         <form className="onboard-form" onSubmit={this.handleSubmit}>

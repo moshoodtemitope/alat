@@ -21,6 +21,17 @@ export class ApiService {
         let httpService;
         bodyData = noStringify ? JSON.stringify(data) : data;
 
+        if(localStorage.getItem("user") == null){
+            headers = undefined;
+            console.log("sssssssss, I turn header to undefined");
+            console.log(headers);
+        }else{
+            console.log(headers);
+            console.log("we good bro..order chip[s!!!");
+            for (let [key, value] of Object.entries(headers)) {
+                console.log(key,value);
+            }
+        }
         // header = new Headers(headers || {
         //     'Content-Type': 'application/json',
         //     'alat-client-apiKey': 'ERTojertoijertoijert',
@@ -31,11 +42,16 @@ export class ApiService {
         if (type.toLowerCase() === 'get') {
             // service = httpService.get(url, options);
             if(headers == undefined){
+                if(localStorage.getItem("user") == null && axios.defaults.headers.common["alat-token"]){
+                    delete axios.defaults.headers.common.Authorization;
+                    delete axios.defaults.headers.common["alat-token"];
+                }
                 axios.defaults.headers.common['alat-client-apiKey'] = 'ERTojertoijertoijert';
                 axios.defaults.headers.common['Content-Type'] = 'application/json';
             }
            
             else if(headers !== undefined){
+
                 for (let [key, value] of Object.entries(headers)) {
                     axios.defaults.headers.common[key] = value;
                 }
@@ -67,6 +83,10 @@ export class ApiService {
         } else {
             //check for header
             if(headers == undefined){
+                if(localStorage.getItem("user") == null && axios.defaults.headers.common["alat-token"]){
+                    delete axios.defaults.headers.common.Authorization;
+                    delete axios.defaults.headers.common["alat-token"];
+                }
                 axios.defaults.headers.common['alat-client-apiKey'] = 'ERTojertoijertoijert';
                 axios.defaults.headers.common['Content-Type'] = 'application/json';
             }
@@ -123,6 +143,10 @@ export class ApiService {
             //     }
             // }
             if(headers== undefined){
+                if(localStorage.getItem("user") == null && axios.defaults.headers.common["alat-token"]){
+                    delete axios.defaults.headers.common.Authorization;
+                    delete axios.defaults.headers.common["alat-token"];
+                }
                 axios.defaults.headers.common['alat-client-apiKey'] = 'ERTojertoijertoijert';
                 axios.defaults.headers.common['Content-Type'] = 'application/json';
             }
@@ -176,6 +200,10 @@ export class ApiService {
             //     }
             // }
             if(headers== undefined){
+                if(localStorage.getItem("user") == null && axios.defaults.headers.common["alat-token"]){
+                    delete axios.defaults.headers.common.Authorization;
+                    delete axios.defaults.headers.common["alat-token"];
+                }
                 axios.defaults.headers.common['alat-client-apiKey'] = 'ERTojertoijertoijert';
                 axios.defaults.headers.common['Content-Type'] = 'application/json';
             }
