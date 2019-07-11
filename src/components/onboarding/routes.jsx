@@ -15,7 +15,7 @@ import {Fragment} from "react";
 import Dashboard from "../dashboard";
 import OnboardingLandingPage from "./landing-page";
 import LoanOnboardingStep1 from "./loans/loans-step-1";
-import LoanOnboardingStep2 from './loans/loan-ste-2';
+import LoanOnboardingStep2 from './loans/loan-step-2';
 
 export const fakeAuth = {
     isAuthenticated: false,

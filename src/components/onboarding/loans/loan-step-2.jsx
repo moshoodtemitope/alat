@@ -11,7 +11,7 @@ class LoanOboardingStep2 extends React.Component {
     }
 
     render(){
-        return(<h1>Page 3</h1>);
+        return(<h1>Loan stage 3</h1>);
     }
 
 }
