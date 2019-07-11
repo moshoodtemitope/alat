@@ -10,6 +10,8 @@ import cardlessReducer from './cardless.reducer';
 import billsReducer from './bills.reducer';
 import { airtimeConstants } from "../constants/airtime/airtime.constants";
 import { TRANSFER_REDUCER_CLEAR } from "../constants/transfer.constants";
+import { fundAccountConstants } from "../constants/fund-account/fund-account.constant"
+//import { saveCardReducer } from "./fund-account.reducer";
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
 const rootReducer = (state, action)=>{
@@ -34,7 +36,7 @@ const transferReducerPile =(state, action)=>{
 }
 
 const fundAccountReducerPile = (state, action)=>{
-    if(action.type === TRANSFER_REDUCER_CLEAR){ 
+    if(action.type === fundAccountConstants.FUND_ACCOUNT_REDUCER_CLEAR){ 
         state = undefined; 
     }
     return fundAccountReducer(state, action);
@@ -65,8 +67,15 @@ const airtimeReducer = combineReducers({
 })
 
 const fundAccountReducer = combineReducers({
-    fundwema_alat : fundAccount.fundAccountReducer,
-    getTokencards : fundAccount.getTokenizedCardsReducer
+    fundAccount : fundAccount.fundAccountReducer,
+    getTokencards : fundAccount.getTokenizedCardsReducer,
+    saveCard: fundAccount.saveCardReducer,
+    cardDetails: fundAccount.tranCardDetailsReducer,
+    deleteCard: fundAccount.deleteCardReducer,
+    saveTransCard: fundAccount.saveCardAfterTranReducer, 
+    fundwema_alat: fundAccount.fundWemaAccountReducer
+    //fundFromCardToken: fundAccount.fundFromTokenisedCardReducer,
+    //fundfromWithPin: fundAccount.fundFromCardWithPinReducer
 })
 
 const appReducer = combineReducers({
@@ -82,27 +91,13 @@ const appReducer = combineReducers({
     dashboard_userGoals: dashboard.userGoalsReducer,
     dashboard_userOnboardingPriority: dashboard.onboardingPriorityReducer,
     dashboard_announcementCard: dashboard.announcementReducer,
-
-    // transfer_bankList: transfer.bankListRequest,
-    // transfer_beneficiaries: transfer.beneficiariesRequest,
-    // delete_transfer_beneficiaryState: transfer.deleteBeneficiaryRequest,
-    // transfer_fetch_user_account: transfer.fetchAccountDetailsRequest,
-    // transfer_details_data: transfer.transferDetailsReducer,
-    // transfersender_details_data: transfer.transferSenderDetailsReducer,
-    // transfer_send_money: transfer.sendMoneyTransferRequest,
-    // transfer_processsend_money: transfer.processMoneyTransferRequest,
-    // tranferlimit_info: transfer.fetchTransactionLimitRequest,
-    // airtime_beneficiaries: airtime.airtimeBeneficiariesReducer,
-    // airtime_beneDelete: airtime.deleteBeneficiaryReducer,
-    // airtime_buydata: airtime.buyAirtimeReducer,
-    // airtime_webpin: airtime.buyAirtimeWebPinReducer,  
-    // airtime_webpinotp: airtime.buyAirtimeWebPinOTPReducer,
-    // airtime_save_bene: airtime.airtimeSaveBeneficiaryReducer,
     
     airtimeReducerPile,
     transferReducerPile,
     fundAccountReducerPile,
     accounts: global.debitableAccountsReducer,
+    encrypt_rule: global.getEncryptionRuleReducer,
+    verify_pan: global.verifyPANReducer,
     // storage_reducer
     // storage_reducer
 
