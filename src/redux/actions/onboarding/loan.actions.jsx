@@ -17,6 +17,7 @@ export const loanOnbaordingStep1 =(data)=>{
                 dispatch(success(response.data, data));
             })
             .catch(error => {
+                console.log("error in here");
                // dispatch(success(response.data, request));
                  dispatch(failure(modelStateErrorHandler(error)));
                  dispatch(alertActions.error(modelStateErrorHandler(error)));

@@ -58,6 +58,7 @@ class LoanOboardingStep1 extends React.Component {
     }
 
     handleSubmit =(e)=>{
+        console.log("clicked");
         e.preventDefault();
         this.setState({isSubmitted : true});
         if(this.validateEmail() || this.validatePhoneNumber(11)){
@@ -102,7 +103,8 @@ class LoanOboardingStep1 extends React.Component {
                                     <input type='text'name="phoneNumber" value={this.state.phoneNumber} maxLength={11}
                                     onChange={this.handlePhoneNumberChange} />
                                 </div>
-                                <input type="submit" value="Next" className="btn-alat btn-block" />
+                                <input type="submit" value={this.props.loan_step1.loan_step1_status == loanOnboardingConstants.LOAN_STEP1_PENDING ? "Processing..." : "Next"} 
+                                className="btn-alat btn-block" />
                             </form>
                         </div>
                     </div>
