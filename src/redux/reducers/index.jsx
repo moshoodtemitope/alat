@@ -1,7 +1,7 @@
 import {combineReducers} from "redux";
 import {authentication} from "./authentication.reducer";
 import { alert} from "./alert.reducer";
-import {dashboard, transfer, onboarding, airtime, global, fundAccount} from "./export";
+import {dashboard, transfer, onboarding, airtime, global, fundAccount, loanOnboarding} from "./export";
 import {bankListRequest, beneficiariesRequest} from "./transfer.reducer";
 import {accountHistoryReducer} from "./dashboard.reducer";
 import { userConstants } from "../constants/onboarding/user.constants";
@@ -10,7 +10,8 @@ import cardlessReducer from './cardless.reducer';
 import billsReducer from './bills.reducer';
 import { airtimeConstants } from "../constants/airtime/airtime.constants";
 import { TRANSFER_REDUCER_CLEAR } from "../constants/transfer.constants";
-import { fundAccountConstants } from "../constants/fund-account/fund-account.constant"
+import { fundAccountConstants } from "../constants/fund-account/fund-account.constant";
+import { loanOnboardingConstants } from '../constants/onboarding/loan.constants';
 //import { saveCardReducer } from "./fund-account.reducer";
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
@@ -40,6 +41,13 @@ const fundAccountReducerPile = (state, action)=>{
         state = undefined; 
     }
     return fundAccountReducer(state, action);
+}
+
+const loanOnboardingReducerPile = (state, action)=>{
+    if(action.type === loanOnboardingConstants.LOAN_ONBOARDING_REDUCER_CLEAR){
+        state = undefined;
+    }
+    return loanOnboardingReducer(state, action);
 }
 
 
@@ -78,6 +86,10 @@ const fundAccountReducer = combineReducers({
     //fundfromWithPin: fundAccount.fundFromCardWithPinReducer
 })
 
+const loanOnboardingReducer = combineReducers({
+    loanOnboardingStep1 : loanOnboarding.loanOnboardingStep1Reducer,
+})
+
 const appReducer = combineReducers({
     authentication,
     // registration,
@@ -95,6 +107,7 @@ const appReducer = combineReducers({
     airtimeReducerPile,
     transferReducerPile,
     fundAccountReducerPile,
+    loanOnboardingReducerPile,
     accounts: global.debitableAccountsReducer,
     encrypt_rule: global.getEncryptionRuleReducer,
     verify_pan: global.verifyPANReducer,

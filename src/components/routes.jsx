@@ -48,6 +48,7 @@ class IndexedRoute extends React.Component {
             <div>
                 <OnboardingRoute />
                 <AuthenticatedRoutes />
+                
             </div>
             // <Router history={history}>
             //     <Switch>
