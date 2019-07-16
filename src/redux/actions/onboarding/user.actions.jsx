@@ -79,12 +79,11 @@ function loginAfterOnboarding(loginData){
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
-function logout(isTimeout = false) {
+function logout() {
     // userService.logout();
     //console.error("We are logging you out...");
     localStorage.clear();
     history.push('/');
-    if(isTimeout) dispatch(alertActions.error(modelStateErrorHandler({message : "Oops!!! Your Session has expired."})));
     // window.location.reload();
     return { type: userConstants.LOGOUT };
 }
