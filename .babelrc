@@ -21,7 +21,8 @@
                 // "polyfill": true,
                 "regenerator": true
             }
-        ]
+        ],
+        ["@babel/plugin-syntax-dynamic-import"]
     ],
     "env": {
         "test": {

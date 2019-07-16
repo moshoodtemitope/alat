@@ -77,22 +77,6 @@ class Index extends Component {
                             <div className="row">
                                 {
                                     this.props.bills.map((bill, counter) => {
-                                        // switch (bill.BillerName) {
-                                        //     case (2):
-                                        //         image = <img src={mtnLogo} alt="mtnlogo" />;
-                                        //         break;
-                                        //     case (3):
-                                        //         image = <img src={airtelLogo} alt="airtelLogo" />;
-                                        //         break;
-                                        //     case (1):
-                                        //         image = <img src={gloLogo} alt="gloLogo" />;
-                                        //         break;
-                                        //     case (4):
-                                        //         image = <img src={NinemobileLogo} alt="9mobileLogo" />;
-                                        //         break;
-                                        //     default:
-                                        //         image = <img src={airtelLogo} alt="airtelLogo" />;
-                                        // };
                                         var billsToPay = {
                                             category: bill.BillerCategory,
                                             biller: bill.BillerName,
