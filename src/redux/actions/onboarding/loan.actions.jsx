@@ -17,7 +17,7 @@ export const loanOnbaordingStep1 =(data)=>{
                 dispatch(success(response.data, data));
             })
             .catch(error => {
-                console.log("error in here");
+               // console.log("error in here");
                // dispatch(success(response.data, request));
                  dispatch(failure(modelStateErrorHandler(error)));
                  dispatch(alertActions.error(modelStateErrorHandler(error)));
@@ -26,6 +26,17 @@ export const loanOnbaordingStep1 =(data)=>{
     };
 
     function request(request) { return { type: loanOnboardingConstants.LOAN_STEP1_PENDING, request } }
-    function success(response, request) { return { type: loanOnboardingConstants.LOAN_STEP1_SUCCESS, response : response, data: request } }
+    function success(response, request) { return { type: loanOnboardingConstants.LOAN_STEP1_SUCCESS, data: { response : response, request: request } }}
     function failure(error) { return { type: loanOnboardingConstants.LOAN_STEP1_FAILURE, error } }
+}
+
+export const loanOnbaordingStep2 =(data)=>{
+    //SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        dispatch(success(data));
+    };
+
+   // function request(request) { return { type: loanOnboardingConstants.LOAN_STEP1_PENDING, request } }
+    function success(data) { return { type: loanOnboardingConstants.LOAN_STEP2_SUCCESS, data: data}}
+   // function failure(error) { return { type: loanOnboardingConstants.LOAN_STEP1_FAILURE, error } }
 }

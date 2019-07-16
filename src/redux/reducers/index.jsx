@@ -88,6 +88,7 @@ const fundAccountReducer = combineReducers({
 
 const loanOnboardingReducer = combineReducers({
     loanOnboardingStep1 : loanOnboarding.loanOnboardingStep1Reducer,
+    loanOnboardingStep2 : loanOnboarding.loanOnboardingStep2Reducer
 })
 
 const appReducer = combineReducers({

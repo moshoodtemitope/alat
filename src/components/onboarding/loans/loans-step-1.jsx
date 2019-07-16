@@ -58,15 +58,14 @@ class LoanOboardingStep1 extends React.Component {
     }
 
     handleSubmit =(e)=>{
-        console.log("clicked");
+       // console.log("clicked");
         e.preventDefault();
         this.setState({isSubmitted : true});
-        if(this.validateEmail() || this.validatePhoneNumber(11)){
-            console.log("here");
+        if(this.validatePhoneNumber(11)){
+           // console.log("here");
         }else { 
             var payload ={
-                PhoneNumber : this.state.phoneNumber,
-                EmailAddress : this.state.email
+                PhoneNumber : this.state.phoneNumber
             }
             this.props.dispatch(actions.loanOnbaordingStep1(payload));
          }
@@ -74,7 +73,7 @@ class LoanOboardingStep1 extends React.Component {
     
     renderRedirect =()=>{
         if(this.props.loan_step1.loan_step1_status == loanOnboardingConstants.LOAN_STEP1_SUCCESS)
-        return (<Redirect to={"loan/step-2"}/>)
+        return (<Redirect to={"/loan/step-2"}/>)
     }
 
     render() {
@@ -94,10 +93,10 @@ class LoanOboardingStep1 extends React.Component {
                             {this.props.alert && this.props.alert.message &&
                              <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                             }
-                                <div  className={this.state.emailInvalid ? "input-ctn form-error" : "input-ctn"}>
+                                {/* <div  className={this.state.emailInvalid ? "input-ctn form-error" : "input-ctn"}>
                                     <label>Email</label>
                                     <input type="text" name="email" value={this.state.email} onChange={this.handleEmail} />
-                                </div>
+                                </div> */}
                                 <div  className={this.state.phoneNumberInvalid ? "input-ctn form-error" : "input-ctn"}>
                                     <label>Phone Number</label>
                                     <input type='text'name="phoneNumber" value={this.state.phoneNumber} maxLength={11}

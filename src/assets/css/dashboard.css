@@ -4,24 +4,28 @@
   src: url("../fonts/proximanova/proximanova-light.eot?#iefix") format("embedded-opentype"), url("../fonts/proximanova/proximanova-light.woff") format("woff"), url("../fonts/proximanova/proximanova-light.ttf") format("truetype"), url("../fonts/proximanova/proximanova-light.svg#proxima_novalight") format("svg");
   font-weight: normal;
   font-style: normal; }
+
 @font-face {
   font-family: 'proxima_novaregular';
   src: url("../fonts/proximanova/proximanova-regular.eot");
   src: url("../fonts/proximanova/proximanova-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/proximanova/proximanova-regular.woff") format("woff"), url("../fonts/proximanova/proximanova-regular.ttf") format("truetype"), url("../fonts/proximanova/proximanova-regular.svg#proxima_nova_rgregular") format("svg");
   font-weight: normal;
   font-style: normal; }
+
 @font-face {
   font-family: 'proxima_novasemibold';
   src: url("../fonts/proximanova/proximanova-semibold.eot");
   src: url("../fonts/proximanova/proximanova-semibold.eot?#iefix") format("embedded-opentype"), url("../fonts/proximanova/proximanova-semibold.woff") format("woff"), url("../fonts/proximanova/proximanova-semibold.ttf") format("truetype"), url("../fonts/proximanova/proximanova-semibold.svg#proxima_novasemibold") format("svg");
   font-weight: normal;
   font-style: normal; }
+
 @font-face {
   font-family: 'proxima_novabold';
   src: url("../fonts/proximanova/proximanova-bold.eot");
   src: url("../fonts/proximanova/proximanova-bold.eot?#iefix") format("embedded-opentype"), url("../fonts/proximanova/proximanova-bold.woff") format("woff"), url("../fonts/proximanova/proximanova-bold.ttf") format("truetype"), url("../fonts/proximanova/proximanova-bold.svg#proxima_nova_rgbold") format("svg");
   font-weight: normal;
   font-style: normal; }
+
 body {
   font-family: "proxima_novaregular", sans-serif;
   font-size: 14px;
@@ -83,6 +87,7 @@ h5 {
 @media (min-width: 992px) {
   .container {
     max-width: 1140px; } }
+
 ul {
   margin: 0;
   padding: 0; }
@@ -130,6 +135,7 @@ a {
   /* Rectangle 7: */
   border: 1px solid #C4C4D0;
   border-radius: 3px;
+  -webkit-box-shadow: none;
   box-shadow: none;
   display: block;
   width: 100%;
@@ -139,10 +145,13 @@ a {
   font-size: 1em;
   -webkit-transition: border-color ease-in-out .30s, -webkit-box-shadow ease-in-out .30s;
   -o-transition: border-color ease-in-out .30s, box-shadow ease-in-out .30s;
-  transition: border-color ease-in-out .30s, box-shadow ease-in-out .30s; }
+  transition: border-color ease-in-out .30s, -webkit-box-shadow ease-in-out .30s;
+  transition: border-color ease-in-out .30s, box-shadow ease-in-out .30s;
+  transition: border-color ease-in-out .30s, box-shadow ease-in-out .30s, -webkit-box-shadow ease-in-out .30s; }
   [type='text']:focus, [type='password']:focus, [type='date']:focus, [type='datetime']:focus, [type='datetime-local']:focus, [type='month']:focus, [type='week']:focus, [type='email']:focus, [type='number']:focus, [type='search']:focus, [type='tel']:focus, [type='time']:focus, [type='url']:focus, [type='color']:focus, select:focus, textarea:focus {
     border: 1px solid #2B303A;
     outline: none;
+    -webkit-box-shadow: none;
     box-shadow: none; }
   [type='text'].error, [type='password'].error, [type='date'].error, [type='datetime'].error, [type='datetime-local'].error, [type='month'].error, [type='week'].error, [type='email'].error, [type='number'].error, [type='search'].error, [type='tel'].error, [type='time'].error, [type='url'].error, [type='color'].error, select.error, textarea.error {
     border: 1px solid #FF0000; }
@@ -153,8 +162,10 @@ input:disabled {
 
 .form-error input {
   border: 1px solid #AB2656; }
+
 .form-error label {
   color: #AB2656; }
+
 .form-error span.error {
   display: block;
   color: #AB2656;
@@ -188,6 +199,7 @@ select {
   font-family: "proxima_novasemibold", sans-serif; }
 
 .selectize-control.single .selectize-input {
+  -webkit-box-shadow: none;
   box-shadow: none;
   background: none;
   background-image: none;
@@ -203,6 +215,7 @@ select {
   font-size: 14px; }
 
 .selectize-dropdown {
+  -webkit-box-shadow: none;
   box-shadow: none;
   border: 1px solid #C4C4D0;
   border-top: none; }
@@ -332,303 +345,503 @@ select {
   display: none; }
 
 .progress-circle.p1 .value-bar {
+  -webkit-transform: rotate(4deg);
+  -ms-transform: rotate(4deg);
   transform: rotate(4deg); }
 
 .progress-circle.p2 .value-bar {
+  -webkit-transform: rotate(7deg);
+  -ms-transform: rotate(7deg);
   transform: rotate(7deg); }
 
 .progress-circle.p3 .value-bar {
+  -webkit-transform: rotate(11deg);
+  -ms-transform: rotate(11deg);
   transform: rotate(11deg); }
 
 .progress-circle.p4 .value-bar {
+  -webkit-transform: rotate(14deg);
+  -ms-transform: rotate(14deg);
   transform: rotate(14deg); }
 
 .progress-circle.p5 .value-bar {
+  -webkit-transform: rotate(18deg);
+  -ms-transform: rotate(18deg);
   transform: rotate(18deg); }
 
 .progress-circle.p6 .value-bar {
+  -webkit-transform: rotate(22deg);
+  -ms-transform: rotate(22deg);
   transform: rotate(22deg); }
 
 .progress-circle.p7 .value-bar {
+  -webkit-transform: rotate(25deg);
+  -ms-transform: rotate(25deg);
   transform: rotate(25deg); }
 
 .progress-circle.p8 .value-bar {
+  -webkit-transform: rotate(29deg);
+  -ms-transform: rotate(29deg);
   transform: rotate(29deg); }
 
 .progress-circle.p9 .value-bar {
+  -webkit-transform: rotate(32deg);
+  -ms-transform: rotate(32deg);
   transform: rotate(32deg); }
 
 .progress-circle.p10 .value-bar {
+  -webkit-transform: rotate(36deg);
+  -ms-transform: rotate(36deg);
   transform: rotate(36deg); }
 
 .progress-circle.p11 .value-bar {
+  -webkit-transform: rotate(40deg);
+  -ms-transform: rotate(40deg);
   transform: rotate(40deg); }
 
 .progress-circle.p12 .value-bar {
+  -webkit-transform: rotate(43deg);
+  -ms-transform: rotate(43deg);
   transform: rotate(43deg); }
 
 .progress-circle.p13 .value-bar {
+  -webkit-transform: rotate(47deg);
+  -ms-transform: rotate(47deg);
   transform: rotate(47deg); }
 
 .progress-circle.p14 .value-bar {
+  -webkit-transform: rotate(50deg);
+  -ms-transform: rotate(50deg);
   transform: rotate(50deg); }
 
 .progress-circle.p15 .value-bar {
+  -webkit-transform: rotate(54deg);
+  -ms-transform: rotate(54deg);
   transform: rotate(54deg); }
 
 .progress-circle.p16 .value-bar {
+  -webkit-transform: rotate(58deg);
+  -ms-transform: rotate(58deg);
   transform: rotate(58deg); }
 
 .progress-circle.p17 .value-bar {
+  -webkit-transform: rotate(61deg);
+  -ms-transform: rotate(61deg);
   transform: rotate(61deg); }
 
 .progress-circle.p18 .value-bar {
+  -webkit-transform: rotate(65deg);
+  -ms-transform: rotate(65deg);
   transform: rotate(65deg); }
 
 .progress-circle.p19 .value-bar {
+  -webkit-transform: rotate(68deg);
+  -ms-transform: rotate(68deg);
   transform: rotate(68deg); }
 
 .progress-circle.p20 .value-bar {
+  -webkit-transform: rotate(72deg);
+  -ms-transform: rotate(72deg);
   transform: rotate(72deg); }
 
 .progress-circle.p21 .value-bar {
+  -webkit-transform: rotate(76deg);
+  -ms-transform: rotate(76deg);
   transform: rotate(76deg); }
 
 .progress-circle.p22 .value-bar {
+  -webkit-transform: rotate(79deg);
+  -ms-transform: rotate(79deg);
   transform: rotate(79deg); }
 
 .progress-circle.p23 .value-bar {
+  -webkit-transform: rotate(83deg);
+  -ms-transform: rotate(83deg);
   transform: rotate(83deg); }
 
 .progress-circle.p24 .value-bar {
+  -webkit-transform: rotate(86deg);
+  -ms-transform: rotate(86deg);
   transform: rotate(86deg); }
 
 .progress-circle.p25 .value-bar {
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
   transform: rotate(90deg); }
 
 .progress-circle.p26 .value-bar {
+  -webkit-transform: rotate(94deg);
+  -ms-transform: rotate(94deg);
   transform: rotate(94deg); }
 
 .progress-circle.p27 .value-bar {
+  -webkit-transform: rotate(97deg);
+  -ms-transform: rotate(97deg);
   transform: rotate(97deg); }
 
 .progress-circle.p28 .value-bar {
+  -webkit-transform: rotate(101deg);
+  -ms-transform: rotate(101deg);
   transform: rotate(101deg); }
 
 .progress-circle.p29 .value-bar {
+  -webkit-transform: rotate(104deg);
+  -ms-transform: rotate(104deg);
   transform: rotate(104deg); }
 
 .progress-circle.p30 .value-bar {
+  -webkit-transform: rotate(108deg);
+  -ms-transform: rotate(108deg);
   transform: rotate(108deg); }
 
 .progress-circle.p31 .value-bar {
+  -webkit-transform: rotate(112deg);
+  -ms-transform: rotate(112deg);
   transform: rotate(112deg); }
 
 .progress-circle.p32 .value-bar {
+  -webkit-transform: rotate(115deg);
+  -ms-transform: rotate(115deg);
   transform: rotate(115deg); }
 
 .progress-circle.p33 .value-bar {
+  -webkit-transform: rotate(119deg);
+  -ms-transform: rotate(119deg);
   transform: rotate(119deg); }
 
 .progress-circle.p34 .value-bar {
+  -webkit-transform: rotate(122deg);
+  -ms-transform: rotate(122deg);
   transform: rotate(122deg); }
 
 .progress-circle.p35 .value-bar {
+  -webkit-transform: rotate(126deg);
+  -ms-transform: rotate(126deg);
   transform: rotate(126deg); }
 
 .progress-circle.p36 .value-bar {
+  -webkit-transform: rotate(130deg);
+  -ms-transform: rotate(130deg);
   transform: rotate(130deg); }
 
 .progress-circle.p37 .value-bar {
+  -webkit-transform: rotate(133deg);
+  -ms-transform: rotate(133deg);
   transform: rotate(133deg); }
 
 .progress-circle.p38 .value-bar {
+  -webkit-transform: rotate(137deg);
+  -ms-transform: rotate(137deg);
   transform: rotate(137deg); }
 
 .progress-circle.p39 .value-bar {
+  -webkit-transform: rotate(140deg);
+  -ms-transform: rotate(140deg);
   transform: rotate(140deg); }
 
 .progress-circle.p40 .value-bar {
+  -webkit-transform: rotate(144deg);
+  -ms-transform: rotate(144deg);
   transform: rotate(144deg); }
 
 .progress-circle.p41 .value-bar {
+  -webkit-transform: rotate(148deg);
+  -ms-transform: rotate(148deg);
   transform: rotate(148deg); }
 
 .progress-circle.p42 .value-bar {
+  -webkit-transform: rotate(151deg);
+  -ms-transform: rotate(151deg);
   transform: rotate(151deg); }
 
 .progress-circle.p43 .value-bar {
+  -webkit-transform: rotate(155deg);
+  -ms-transform: rotate(155deg);
   transform: rotate(155deg); }
 
 .progress-circle.p44 .value-bar {
+  -webkit-transform: rotate(158deg);
+  -ms-transform: rotate(158deg);
   transform: rotate(158deg); }
 
 .progress-circle.p45 .value-bar {
+  -webkit-transform: rotate(162deg);
+  -ms-transform: rotate(162deg);
   transform: rotate(162deg); }
 
 .progress-circle.p46 .value-bar {
+  -webkit-transform: rotate(166deg);
+  -ms-transform: rotate(166deg);
   transform: rotate(166deg); }
 
 .progress-circle.p47 .value-bar {
+  -webkit-transform: rotate(169deg);
+  -ms-transform: rotate(169deg);
   transform: rotate(169deg); }
 
 .progress-circle.p48 .value-bar {
+  -webkit-transform: rotate(173deg);
+  -ms-transform: rotate(173deg);
   transform: rotate(173deg); }
 
 .progress-circle.p49 .value-bar {
+  -webkit-transform: rotate(176deg);
+  -ms-transform: rotate(176deg);
   transform: rotate(176deg); }
 
 .progress-circle.p50 .value-bar {
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
   transform: rotate(180deg); }
 
 .progress-circle.p51 .value-bar {
+  -webkit-transform: rotate(184deg);
+  -ms-transform: rotate(184deg);
   transform: rotate(184deg); }
 
 .progress-circle.p52 .value-bar {
+  -webkit-transform: rotate(187deg);
+  -ms-transform: rotate(187deg);
   transform: rotate(187deg); }
 
 .progress-circle.p53 .value-bar {
+  -webkit-transform: rotate(191deg);
+  -ms-transform: rotate(191deg);
   transform: rotate(191deg); }
 
 .progress-circle.p54 .value-bar {
+  -webkit-transform: rotate(194deg);
+  -ms-transform: rotate(194deg);
   transform: rotate(194deg); }
 
 .progress-circle.p55 .value-bar {
+  -webkit-transform: rotate(198deg);
+  -ms-transform: rotate(198deg);
   transform: rotate(198deg); }
 
 .progress-circle.p56 .value-bar {
+  -webkit-transform: rotate(202deg);
+  -ms-transform: rotate(202deg);
   transform: rotate(202deg); }
 
 .progress-circle.p57 .value-bar {
+  -webkit-transform: rotate(205deg);
+  -ms-transform: rotate(205deg);
   transform: rotate(205deg); }
 
 .progress-circle.p58 .value-bar {
+  -webkit-transform: rotate(209deg);
+  -ms-transform: rotate(209deg);
   transform: rotate(209deg); }
 
 .progress-circle.p59 .value-bar {
+  -webkit-transform: rotate(212deg);
+  -ms-transform: rotate(212deg);
   transform: rotate(212deg); }
 
 .progress-circle.p60 .value-bar {
+  -webkit-transform: rotate(216deg);
+  -ms-transform: rotate(216deg);
   transform: rotate(216deg); }
 
 .progress-circle.p61 .value-bar {
+  -webkit-transform: rotate(220deg);
+  -ms-transform: rotate(220deg);
   transform: rotate(220deg); }
 
 .progress-circle.p62 .value-bar {
+  -webkit-transform: rotate(223deg);
+  -ms-transform: rotate(223deg);
   transform: rotate(223deg); }
 
 .progress-circle.p63 .value-bar {
+  -webkit-transform: rotate(227deg);
+  -ms-transform: rotate(227deg);
   transform: rotate(227deg); }
 
 .progress-circle.p64 .value-bar {
+  -webkit-transform: rotate(230deg);
+  -ms-transform: rotate(230deg);
   transform: rotate(230deg); }
 
 .progress-circle.p65 .value-bar {
+  -webkit-transform: rotate(234deg);
+  -ms-transform: rotate(234deg);
   transform: rotate(234deg); }
 
 .progress-circle.p66 .value-bar {
+  -webkit-transform: rotate(238deg);
+  -ms-transform: rotate(238deg);
   transform: rotate(238deg); }
 
 .progress-circle.p67 .value-bar {
+  -webkit-transform: rotate(241deg);
+  -ms-transform: rotate(241deg);
   transform: rotate(241deg); }
 
 .progress-circle.p68 .value-bar {
+  -webkit-transform: rotate(245deg);
+  -ms-transform: rotate(245deg);
   transform: rotate(245deg); }
 
 .progress-circle.p69 .value-bar {
+  -webkit-transform: rotate(248deg);
+  -ms-transform: rotate(248deg);
   transform: rotate(248deg); }
 
 .progress-circle.p70 .value-bar {
+  -webkit-transform: rotate(252deg);
+  -ms-transform: rotate(252deg);
   transform: rotate(252deg); }
 
 .progress-circle.p71 .value-bar {
+  -webkit-transform: rotate(256deg);
+  -ms-transform: rotate(256deg);
   transform: rotate(256deg); }
 
 .progress-circle.p72 .value-bar {
+  -webkit-transform: rotate(259deg);
+  -ms-transform: rotate(259deg);
   transform: rotate(259deg); }
 
 .progress-circle.p73 .value-bar {
+  -webkit-transform: rotate(263deg);
+  -ms-transform: rotate(263deg);
   transform: rotate(263deg); }
 
 .progress-circle.p74 .value-bar {
+  -webkit-transform: rotate(266deg);
+  -ms-transform: rotate(266deg);
   transform: rotate(266deg); }
 
 .progress-circle.p75 .value-bar {
+  -webkit-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
   transform: rotate(270deg); }
 
 .progress-circle.p76 .value-bar {
+  -webkit-transform: rotate(274deg);
+  -ms-transform: rotate(274deg);
   transform: rotate(274deg); }
 
 .progress-circle.p77 .value-bar {
+  -webkit-transform: rotate(277deg);
+  -ms-transform: rotate(277deg);
   transform: rotate(277deg); }
 
 .progress-circle.p78 .value-bar {
+  -webkit-transform: rotate(281deg);
+  -ms-transform: rotate(281deg);
   transform: rotate(281deg); }
 
 .progress-circle.p79 .value-bar {
+  -webkit-transform: rotate(284deg);
+  -ms-transform: rotate(284deg);
   transform: rotate(284deg); }
 
 .progress-circle.p80 .value-bar {
+  -webkit-transform: rotate(288deg);
+  -ms-transform: rotate(288deg);
   transform: rotate(288deg); }
 
 .progress-circle.p81 .value-bar {
+  -webkit-transform: rotate(292deg);
+  -ms-transform: rotate(292deg);
   transform: rotate(292deg); }
 
 .progress-circle.p82 .value-bar {
+  -webkit-transform: rotate(295deg);
+  -ms-transform: rotate(295deg);
   transform: rotate(295deg); }
 
 .progress-circle.p83 .value-bar {
+  -webkit-transform: rotate(299deg);
+  -ms-transform: rotate(299deg);
   transform: rotate(299deg); }
 
 .progress-circle.p84 .value-bar {
+  -webkit-transform: rotate(302deg);
+  -ms-transform: rotate(302deg);
   transform: rotate(302deg); }
 
 .progress-circle.p85 .value-bar {
+  -webkit-transform: rotate(306deg);
+  -ms-transform: rotate(306deg);
   transform: rotate(306deg); }
 
 .progress-circle.p86 .value-bar {
+  -webkit-transform: rotate(310deg);
+  -ms-transform: rotate(310deg);
   transform: rotate(310deg); }
 
 .progress-circle.p87 .value-bar {
+  -webkit-transform: rotate(313deg);
+  -ms-transform: rotate(313deg);
   transform: rotate(313deg); }
 
 .progress-circle.p88 .value-bar {
+  -webkit-transform: rotate(317deg);
+  -ms-transform: rotate(317deg);
   transform: rotate(317deg); }
 
 .progress-circle.p89 .value-bar {
+  -webkit-transform: rotate(320deg);
+  -ms-transform: rotate(320deg);
   transform: rotate(320deg); }
 
 .progress-circle.p90 .value-bar {
+  -webkit-transform: rotate(324deg);
+  -ms-transform: rotate(324deg);
   transform: rotate(324deg); }
 
 .progress-circle.p91 .value-bar {
+  -webkit-transform: rotate(328deg);
+  -ms-transform: rotate(328deg);
   transform: rotate(328deg); }
 
 .progress-circle.p92 .value-bar {
+  -webkit-transform: rotate(331deg);
+  -ms-transform: rotate(331deg);
   transform: rotate(331deg); }
 
 .progress-circle.p93 .value-bar {
+  -webkit-transform: rotate(335deg);
+  -ms-transform: rotate(335deg);
   transform: rotate(335deg); }
 
 .progress-circle.p94 .value-bar {
+  -webkit-transform: rotate(338deg);
+  -ms-transform: rotate(338deg);
   transform: rotate(338deg); }
 
 .progress-circle.p95 .value-bar {
+  -webkit-transform: rotate(342deg);
+  -ms-transform: rotate(342deg);
   transform: rotate(342deg); }
 
 .progress-circle.p96 .value-bar {
+  -webkit-transform: rotate(346deg);
+  -ms-transform: rotate(346deg);
   transform: rotate(346deg); }
 
 .progress-circle.p97 .value-bar {
+  -webkit-transform: rotate(349deg);
+  -ms-transform: rotate(349deg);
   transform: rotate(349deg); }
 
 .progress-circle.p98 .value-bar {
+  -webkit-transform: rotate(353deg);
+  -ms-transform: rotate(353deg);
   transform: rotate(353deg); }
 
 .progress-circle.p99 .value-bar {
+  -webkit-transform: rotate(356deg);
+  -ms-transform: rotate(356deg);
   transform: rotate(356deg); }
 
 .progress-circle.p100 .value-bar {
+  -webkit-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);
   transform: rotate(360deg); }
 
 #nav-icon1 {
@@ -726,6 +939,7 @@ a:hover {
   border-radius: 3px;
   min-width: 220px;
   text-align: center;
+  -webkit-box-shadow: 0px 4px 4px rgba(255, 255, 255, 0.25);
   box-shadow: 0px 4px 4px rgba(255, 255, 255, 0.25); }
 
 .btn-alat:hover {
@@ -738,6 +952,7 @@ a:hover {
 .btn-white {
   background: #fff !important;
   color: #AB2656;
+  -webkit-box-shadow: none;
   box-shadow: none; }
   .btn-white:hover {
     color: #AB2656; }
@@ -783,7 +998,7 @@ input[type="button"]:disabled {
   .logo-left i {
     color: #fff;
     margin-right: 20px;
-    font-size: 1.7142857143em;
+    font-size: 1.71429em;
     margin-top: 2px;
     float: left;
     display: none; }
@@ -806,7 +1021,7 @@ input[type="button"]:disabled {
     color: #fff;
     float: right;
     margin-right: 10px;
-    font-size: 1.1428571429em; }
+    font-size: 1.14286em; }
 
 .notification-top {
   float: right;
@@ -834,7 +1049,7 @@ input[type="button"]:disabled {
 ul.menu-side {
   margin-top: 10px; }
   ul.menu-side li {
-    font-size: 1.2857142857em;
+    font-size: 1.28571em;
     margin-bottom: 5px; }
     ul.menu-side li a {
       color: #4d4d4d;
@@ -874,7 +1089,7 @@ ul.menu-side {
   margin: 0 auto; }
 
 .welcome-name {
-  font-size: 2.1428571429em;
+  font-size: 2.14286em;
   font-family: "proxima_novasemibold", sans-serif; }
   .welcome-name span {
     color: #AB2656; }
@@ -889,7 +1104,7 @@ ul.menu-side {
     .goal-intro h3 span {
       color: #AB2656; }
   .goal-intro p {
-    font-size: 1.1428571429em;
+    font-size: 1.14286em;
     color: #959595;
     margin-bottom: 0; }
   .goal-intro img {
@@ -919,6 +1134,7 @@ ul.menu-side {
   top: 0;
   right: 0;
   border-radius: 3px;
+  -webkit-box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05);
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05); }
   .mini-nav ul li {
     border-bottom: 1px solid #ededed; }
@@ -947,7 +1163,7 @@ ul.menu-side {
     border-bottom: 1px solid #62205A; }
     .account-card .account-name p {
       text-transform: uppercase;
-      font-size: 0.8571428571em;
+      font-size: 0.85714em;
       margin-bottom: 0; }
       .account-card .account-name p span {
         float: right;
@@ -957,7 +1173,7 @@ ul.menu-side {
     padding: 20px 30px 15px; }
     .account-card .account-no-status .account-no {
       background: #8F638A;
-      font-size: 0.7142857143em;
+      font-size: 0.71429em;
       padding: 3px 10px;
       margin-bottom: 0;
       letter-spacing: 0.5px;
@@ -982,7 +1198,7 @@ ul.menu-side {
 .account-balance {
   padding: 0px 30px 20px; }
   .account-balance p {
-    font-size: 1.7142857143em;
+    font-size: 1.71429em;
     margin-bottom: 0;
     font-family: "proxima_novasemibold", sans-serif;
     color: #fff; }
@@ -993,6 +1209,7 @@ ul.menu-side {
   position: fixed;
   top: 0;
   background: #fff;
+  -webkit-box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08);
   box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08);
   z-index: 8; }
   .hr-nav-header ul li {
@@ -1008,6 +1225,7 @@ ul.menu-side {
       padding: 10px 0;
       background: #ffffff;
       display: none;
+      -webkit-box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.09);
       box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.09);
       border-bottom-right-radius: 4px;
       border-bottom-left-radius: 4px; }
@@ -1042,9 +1260,13 @@ ul.menu-side {
 .dashboard-wrapper {
   position: relative;
   padding-top: 180px;
-  margin-bottom: 50px; }
+  min-height: 100vh; }
   .dashboard-wrapper p.welcome-name {
     margin-bottom: 30px; }
+
+  .not-white{
+    background-color : #F2F2F2 !important;
+  }
 
 .account-slide {
   padding: 15px 30px;
@@ -1052,7 +1274,7 @@ ul.menu-side {
   margin-bottom: 30px; }
   .account-slide h4 span {
     float: right;
-    font-size: 0.8571428571em;
+    font-size: 0.85714em;
     font-family: "proxima_novaregular", sans-serif; }
 
 .account-setup {
@@ -1121,6 +1343,7 @@ ul.menu-side {
   max-width: 100%;
   border-top-right-radius: 4px;
   border-top-left-radius: 4px; }
+
 .info-card .content {
   padding: 30px 30px 30px; }
   .info-card .content h4 {
@@ -1131,7 +1354,7 @@ ul.menu-side {
 
 .transact-history h4 span {
   float: right;
-  font-size: 0.8571428571em;
+  font-size: 0.85714em;
   font-family: "proxima_novaregular", sans-serif; }
 
 .history-ctn:last-child .history-list {
@@ -1164,16 +1387,28 @@ ul.menu-side {
   margin-top: -4px; }
   .history-list .desc span {
     display: block;
-    font-size: 0.8571428571em;
+    font-size: 0.85714em;
     margin-top: 4px;
     color: #999; }
 
-/* Bx slider start */
 .bx-wrapper {
   border: none;
+  -webkit-box-shadow: none;
   box-shadow: none;
   background: none;
   margin: 0 auto; }
+
+.line-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 15px 110px !important;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center; }
 
 .bx-wrapper .bx-pager.bx-default-pager a {
   width: 7px;
@@ -1200,87 +1435,6 @@ ul.menu-side {
 .bx-wrapper .bx-next:hover, .bx-wrapper .bx-next:focus {
   background-position: initial; }
 
-/* Bx slider ends */
-/* Main slider starts */
-.acct-match {
-  height: 332px !important; }
-
-.slider {
-  position: relative;
-  width: 100%;
-  height: 400px;
-  overflow: hidden;
-  border: none;
-  box-shadow: none;
-  background: none;
-  margin: 0 auto; }
-  .slider a.previousButton, .slider a.nextButton {
-    font-size: 22px;
-    line-height: 0;
-    display: block;
-    position: absolute;
-    top: 25%;
-    transform: translateY(-50%);
-    transition: all .3s linear;
-    z-index: 1;
-    padding: 10px;
-    text-decoration: none;
-    backface-visibility: hidden;
-    /* prevent jump effect when scaling */ }
-    .slider a.previousButton:not(.disabled):hover, .slider a.nextButton:not(.disabled):hover {
-      transform: translateY(-50%) scale(1.25);
-      cursor: pointer; }
-    .slider a.previousButton svg polygon, .slider a.nextButton svg polygon {
-      fill: #e1e1e1; }
-  .slider a.previousButton {
-    left: 10px; }
-  .slider a.nextButton {
-    right: 10px; }
-
-.slider a.previousButton:not(.disabled):hover, .slider a.nextButton:not(.disabled):hover {
-  -webkit-transform: translateY(-50%) scale(1.25);
-  transform: translateY(-50%) scale(1.25);
-  cursor: pointer; }
-
-.slider a.previousButton {
-  left: 10px; }
-
-.slider a.nextButton {
-  right: 10px; }
-
-.slide {
-  position: absolute;
-  overflow: hidden; }
-
-.slide.hidden {
-  visibility: hidden; }
-
-.slide.previous {
-  left: -100%; }
-
-.slide.current {
-  left: 60px; }
-
-.slide.next {
-  left: 100%; }
-
-.slide.animateIn,
-.slide.animateOut {
-  -webkit-transition: all 2s ease;
-  transition: all 2s ease; }
-
-.slide.animateIn.previous,
-.slide.animateIn.next {
-  left: 0;
-  visibility: visible; }
-
-.slide.animateOut.previous {
-  left: 100%; }
-
-.slide.animateOut.next {
-  left: -100%; }
-
-/* Main slider ends */
 .acct-card-pad {
   padding-bottom: 40px !important;
   min-height: 325px; }
@@ -1292,7 +1446,7 @@ ul.menu-side {
     margin-bottom: 20px; }
 
 .page-title {
-  font-size: 1.7142857143em;
+  font-size: 1.71429em;
   font-family: "proxima_novasemibold", sans-serif;
   margin-bottom: 20px !important;
   color: #444; }
@@ -1329,11 +1483,21 @@ ul.menu-side {
         .sub-tab-nav ul li a.active {
           color: #AB2656;
           border-bottom: 3px solid #AB2656; }
-
+.max-500 {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto; }
+  
 .max-600 {
   max-width: 600px;
   width: 100%;
   margin: 0 auto; }
+
+  .max-750{
+    max-width: 750px;
+    width: 100%;
+    margin: 0 auto;
+  }
 
 .get-statement p {
   color: #787878;
@@ -1375,7 +1539,7 @@ ul.menu-side {
   margin: 0 auto; }
 
 .no-paylink {
-  font-size: 1.1428571429em;
+  font-size: 1.14286em;
   color: #A6A6A6;
   margin-bottom: 40px; }
   .no-paylink span {
@@ -1399,6 +1563,10 @@ ul.menu-side {
     font-family: "proxima_novaregular", sans-serif;
     color: #717171; }
 
+.btn-alat-small {
+  color: white !important;
+  min-width: unset; }
+
 .pl-amount {
   float: right;
   color: #AB2656;
@@ -1412,7 +1580,7 @@ ul.menu-side {
 .pl-act-status {
   float: left;
   color: #4d4d4d;
-  font-size: 0.8571428571em;
+  font-size: 0.85714em;
   margin-bottom: 0; }
   .pl-act-status span {
     font-family: "proxima_novasemibold", sans-serif; }
@@ -1439,7 +1607,7 @@ ul.menu-side {
 .success-span-text {
   text-align: center;
   color: #4d4d4d;
-  font-size: 1.1428571429em; }
+  font-size: 1.14286em; }
 
 .atm-paid {
   color: #169A62; }
@@ -1447,71 +1615,10 @@ ul.menu-side {
 .atm-pending {
   color: #AB2656; }
 
-  .fund-option {
-    color: #A90836;
-    background: #FFFFFF;
-    border: 0.95px solid #FFF4F4;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    -webkit-box-shadow: 0px 8px 24px rgba(185, 185, 185, 0.162138);
-    box-shadow: 0px 8px 24px rgba(185, 185, 185, 0.162138);
-    border-radius: 4.75px;
-    width: 144px;
-    height: 152px;
-    margin: 8px;
-    padding: 17px;
-    padding-top: 30px;
-    cursor: pointer;
-    float: left; }
-    .fund-option .hoveraction {
-      display: none; }
-    .fund-option:hover {
-      color: white;
-      background: #A90836;
-      border: 0.95px solid #FFF4F4;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      -webkit-box-shadow: 0px 30px 40px rgba(0, 0, 0, 0.162138);
-      box-shadow: 0px 30px 40px rgba(0, 0, 0, 0.162138);
-      border-radius: 4.75px; }
-      .fund-option:hover .hoveraction {
-        display: unset; }
-      .fund-option:hover .toshow {
-        display: none; }
-    .fund-option p {
-      padding-top: 24px;
-      font-family: Proxima Nova;
-      font-size: 14px;
-      line-height: 17px; }
-  
-  .fund-option-ctn {
-    padding-right: 60px;
-    padding-left: 60px;
-    padding-top: 50px;
-    padding-bottom: 90px;
-    float: left;
-    width: 100%; }
-    .fund-option-ctn .active {
-      color: white;
-      background: #A90836;
-      border: 0.95px solid #FFF4F4;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      -webkit-box-shadow: 0px 30px 40px rgba(0, 0, 0, 0.162138);
-      box-shadow: 0px 30px 40px rgba(0, 0, 0, 0.162138);
-      border-radius: 4.75px; }
-      .fund-option-ctn .active .hoveraction {
-        display: unset; }
-      .fund-option-ctn .active .toshow {
-        display: none; }
-  
-  .fund-al-card {
-    float: left; }
-
 .profile-details {
   padding: 30px 30px 15px;
   text-align: center;
-  font-size: 1.2857142857em;
+  font-size: 1.28571em;
   font-family: "proxima_novasemibold", sans-serif;
   color: #4d4d4d;
   border-bottom: 1px solid #EEEEEE;
@@ -1548,31 +1655,29 @@ ul.menu-side {
   .profile-req ul li a {
     color: #4d4d4d;
     display: block;
-    font-size: 1.1428571429em;
+    font-size: 1.14286em;
     padding: 7px 0; }
     .profile-req ul li a:hover {
       text-decoration: none;
       color: #000; }
 
 .pending-profile {
-  font-size: 1.2857142857em; }
+  font-size: 1.28571em; }
 
 .personal-info-ctn {
   padding: 30px 30px; }
 
-p.resend-otp, .resend-otp {
+.resend-otp {
   display: block;
   margin-bottom: 40px;
   color: #43063C;
-  cursor: pointer;
-  padding: 0;
   font-size: 1em; }
   .resend-otp:hover {
-    color: #43063C;
-    text-decoration: underline; }
+    color: #43063C; }
 
 .pin-links ul li:hover {
   background: #f8f8f8; }
+
 .pin-links ul li a {
   display: block;
   padding: 15px 30px;
@@ -1619,9 +1724,18 @@ p.resend-otp, .resend-otp {
   .card-pan span {
     display: inline-block;
     margin-right: 10px;
-    font-size: 1.1428571429em;
+    font-size: 1.14286em;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     font-family: "proxima_novasemibold", sans-serif; }
+
+    .month-count-wrap{
+      display: flex;
+      justify-content: space-between;
+      color: #9B9B9B;
+      font-size: 14px;
+      line-height: 17px;
+      letter-spacing: -0.1875px;
+    }
 
 .card-name {
   position: absolute;
@@ -1632,7 +1746,7 @@ p.resend-otp, .resend-otp {
   .card-name span {
     display: inline-block;
     margin-right: 10px;
-    font-size: 1.1428571429em;
+    font-size: 1.14286em;
     font-family: "proxima_novasemibold", sans-serif; }
 
 .form-sub-head {
@@ -1670,7 +1784,7 @@ p.resend-otp, .resend-otp {
 
 .active-channel {
   color: #57084E;
-  font-size: 1.1428571429em; }
+  font-size: 1.14286em; }
 
 .card-selection {
   margin-bottom: 40px; }
@@ -1696,7 +1810,8 @@ p.resend-otp, .resend-otp {
   color: #fff;
   float: left;
   margin-bottom: 0;
-  font-size: 1.1428571429em; }
+  font-size: 1.14286em; }
+
 .logo-balance img {
   float: left; }
 
@@ -1714,6 +1829,7 @@ p.resend-otp, .resend-otp {
   position: relative;
   margin: 0 auto;
   background: url(../img/virtual-card-bg.svg);
+  -webkit-box-shadow: 0 0.5px 1.5px 0 rgba(0, 0, 0, 0.35);
   box-shadow: 0 0.5px 1.5px 0 rgba(0, 0, 0, 0.35); }
 
 .v-card-details {
@@ -1785,65 +1901,52 @@ p.resend-otp, .resend-otp {
 .dollar-conv {
   text-align: center;
   color: #57084E;
-  font-size: 1.1428571429em;
+  font-size: 1.14286em;
   margin-bottom: 20px; }
   .dollar-conv-top {
     margin-top: 30px;
     margin-bottom: 0;
     text-align: center;
     color: #57084E;
-    font-size: 1.1428571429em; }
+    font-size: 1.14286em; }
 
-    .fund-card-ctn {
-      -webkit-box-shadow: 0px 2px 11px rgba(255, 255, 255, 0.103431);
-      box-shadow: 0px 2px 11px rgba(255, 255, 255, 0.103431); }
-      .fund-card-ctn .fund-card {
-        background: url(../img/credit-card-1.svg);
-        background-size: cover;
-        background-position: center;
-        max-width: 400px;
-        max-height: 131px;
-        border-radius: 4px;
-        margin-bottom: 10px;
-        color: white;
-        padding: 25px 20px;
-        cursor: pointer;
-        font-family: Proxima Nova; }
-        .fund-card-ctn .fund-card a {
-          color: white;
-          float: right; }
-        .fund-card-ctn .fund-card .card-alias {
-          font-size: 14px;
-          line-height: 17px; }
-        .fund-card-ctn .fund-card .card-star {
-          font-family: Rubik;
-          font-style: normal;
-          font-weight: normal;
-          font-size: 18px;
-          line-height: 18px;
-          margin-right: 9px; }
-        .fund-card-ctn .fund-card .card-digit {
-          margin-top: 17px; }
-        .fund-card-ctn .fund-card .card-no {
-          font-size: 20px;
-          line-height: 24px; }
-        .fund-card-ctn .fund-card .card-expires {
-          font-size: 12px;
-          line-height: 15px;
-          text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.461843); }
-
-          .btn-alat-small{
-            color: white !important;
-            min-width: unset;
-          }
-          
-          .line-header{
-            display: flex;
-            justify-content: space-between;
-            padding: 15px 110px !important;
-            align-items: center;
-          }
+.fund-card-ctn {
+  -webkit-box-shadow: 0px 2px 11px rgba(255, 255, 255, 0.103431);
+  box-shadow: 0px 2px 11px rgba(255, 255, 255, 0.103431); }
+  .fund-card-ctn .fund-card {
+    background: url(../img/credit-card.svg);
+    background-size: cover;
+    background-position: center;
+    max-width: 400px;
+    max-height: 131px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    color: white;
+    padding: 25px 20px;
+    font-family: Proxima Nova; }
+    .fund-card-ctn .fund-card a {
+      color: white;
+      float: right; }
+    .fund-card-ctn .fund-card .card-alias {
+      font-size: 14px;
+      line-height: 17px; }
+    .fund-card-ctn .fund-card .card-star {
+      font-family: Rubik;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 18px;
+      line-height: 18px;
+      margin-right: 9px; }
+    .fund-card-ctn .fund-card .card-digit {
+      margin-top: 17px; }
+    .fund-card-ctn .fund-card .card-no {
+      font-size: 20px;
+      line-height: 24px; }
+    .fund-card-ctn .fund-card .card-expires {
+      font-size: 12px;
+      line-height: 15px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.461843); }
 
 .history-paginate {
   padding-top: 20px;
@@ -1929,7 +2032,7 @@ p.resend-otp, .resend-otp {
       float: right; }
   .airtime-card .num-ref {
     font-family: "proxima_novasemibold", sans-serif;
-    font-size: 1.1428571429em;
+    font-size: 1.14286em;
     margin-bottom: 0 !important; }
     .airtime-card .num-ref span {
       float: right;
@@ -1941,6 +2044,7 @@ p.resend-otp, .resend-otp {
 
 .save-purchase p {
   float: left; }
+
 .save-purchase .pretty {
   float: right; }
 
@@ -1956,7 +2060,7 @@ p.resend-otp, .resend-otp {
   text-decoration: none; }
 
 .goal-title {
-  font-size: 1.2857142857em;
+  font-size: 1.28571em;
   text-transform: uppercase;
   margin-bottom: 40px;
   color: #4d4d4d;
@@ -1965,13 +2069,15 @@ p.resend-otp, .resend-otp {
 .goal-sel {
   padding: 40px 30px;
   cursor: pointer;
+  -webkit-transition: all 0.8s ease-in-out;
+  -o-transition: all 0.8s ease-in-out;
   transition: all 0.8s ease-in-out;
   min-height: 281px; }
   .goal-sel img {
     margin-bottom: 25px; }
   .goal-sel h4 {
     text-transform: capitalize;
-    font-size: 1.2857142857em;
+    font-size: 1.28571em;
     margin-bottom: 25px;
     color: #fff; }
   .goal-sel p {
@@ -1979,21 +2085,30 @@ p.resend-otp, .resend-otp {
     color: #fff; }
   .goal-sel.fixed {
     background: #9D0F3E;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    -webkit-box-shadow: 3px 8px 24px rgba(255, 255, 255, 0.3221);
     box-shadow: 3px 8px 24px rgba(255, 255, 255, 0.3221);
     border-radius: 4.75px; }
   .goal-sel.flexi {
     background: #43063C;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    -webkit-box-shadow: 3px 8px 24px rgba(255, 255, 255, 0.3221);
     box-shadow: 3px 8px 24px rgba(255, 255, 255, 0.3221);
     border-radius: 4.75px; }
   .goal-sel.stash {
     background: #4B2FB8;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    -webkit-box-shadow: 3px 8px 24px rgba(255, 255, 255, 0.3221);
     box-shadow: 3px 8px 24px rgba(255, 255, 255, 0.3221);
     border-radius: 4.75px; }
   .goal-sel:hover {
+    -webkit-box-shadow: 3px 8px 24px #3c3d3e;
     box-shadow: 3px 8px 24px #3c3d3e;
+    -webkit-transform: scale(1.04);
+    -ms-transform: scale(1.04);
     transform: scale(1.04); }
 
 .goal-option a {
@@ -2107,6 +2222,7 @@ p.resend-otp, .resend-otp {
   margin-right: 20px;
   margin-top: 6px;
   background: #fff;
+  -webkit-box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05);
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05);
   border: 1px solid #f6f6f6;
   border-radius: 4px; }
@@ -2138,6 +2254,7 @@ p.resend-otp, .resend-otp {
 @media screen and (min-width: 1030px) {
   .hr-nav-header {
     display: block !important; } }
+
 @media screen and (max-width: 1024px) {
   .db2-fixed-header {
     padding: 10px 0;
@@ -2146,17 +2263,13 @@ p.resend-otp, .resend-otp {
       width: 30%; }
     .db2-fixed-header .col-sm-9 {
       width: 70%; }
-
   .welcome-name {
-    font-size: 1.7142857143em; }
-
+    font-size: 1.71429em; }
   .hr-nav-header {
     display: none; }
-
   #nav-icon1 {
     display: block;
     margin-left: -15px; }
-
   .hr-nav-header {
     height: 100%;
     overflow: scroll;
@@ -2169,117 +2282,98 @@ p.resend-otp, .resend-otp {
         float: none; }
         .hr-nav-header ul li a {
           padding: 15px 15px 15px 0;
-          font-size: 1.1428571429em; }
+          font-size: 1.14286em; }
           .hr-nav-header ul li a i {
             margin-right: 20px; }
-
   .dashboard-wrapper {
     padding-top: 120px; }
-
   .bx-wrapper {
     padding: 0 20px; }
-
   .bx-pager {
     display: block;
     margin: 0 auto;
     left: 0; }
-
   .acct-card-pad {
     padding-bottom: 40px !important;
     min-height: 345px; }
-
   .bx-controls-direction {
     display: none; }
-
   .reminder-card {
     width: 100%; }
-
   .account-setup ul li {
     display: none; }
     .account-setup ul li.next {
       display: block; } }
+
 @media (max-width: 768px) {
   .container {
     max-width: 768px; }
-
   .page-title {
-    font-size: 1.4285714286em; }
+    font-size: 1.42857em; }
     .page-title span {
       font-size: 12px; }
       .page-title span a {
         padding: 10px 15px; } }
+
 @media screen and (max-width: 600px) {
   .db2-fixed-header .col-sm-4 {
     width: 50%; }
   .db2-fixed-header .col-sm-8 {
     width: 50%; }
-
   .page-title {
-    font-size: 1.2857142857em; } }
+    font-size: 1.28571em; } }
+
 @media screen and (max-width: 480px) {
   .hr-nav-header {
     height: 100%;
     overflow: scroll;
     margin-top: 70px; }
-
   .dashboard-wrapper {
     padding-top: 100px; }
-
   .db2-fixed-header .col-sm-4 {
     width: 50%; }
   .db2-fixed-header .col-sm-8 {
     width: 50%; }
-
   .success-span-text {
     text-align: center;
     color: #4d4d4d;
     font-size: 1em; }
-
   .user-name-circle p {
     display: none; }
-
   .welcome-name {
-    font-size: 1.4285714286em; }
-
+    font-size: 1.42857em; }
   .account-slide {
     padding: 15px 20px; }
-
   .account-card .account-name {
     padding: 10px 20px 8px; }
   .account-card .account-no-status {
     padding: 20px 20px 15px; }
-
   .account-balance {
     padding-left: 20px;
     padding-right: 20px; }
-
   .goal-intro p {
     font-size: 1em; }
-
   .account-setup {
     padding: 30px 20px 20px; }
     .account-setup ul li {
       display: none; }
       .account-setup ul li.next {
         display: block; }
-
   .transact-history {
     padding: 30px 20px; }
-
   .info-card .content {
     padding: 20px; }
     .info-card .content p {
       margin-bottom: 0; }
     .info-card .content h4 {
-      font-size: 1.1428571429em; }
-
+      font-size: 1.14286em; }
   .history-list .desc {
     width: 65%; }
-
   .hr-nav-header ul li:hover > ul {
     display: none; }
   .hr-nav-header ul li ul {
     display: none;
+    -webkit-box-shadow: none;
     box-shadow: none;
     padding-left: 25px;
     width: 100%;
@@ -2287,19 +2381,19 @@ p.resend-otp, .resend-otp {
     padding-bottom: 10px;
     height: initial;
     position: relative; }
-
   .transfer-ctn, .transfer-ctn-2 {
     padding: 30px 20px; } }
+
 @media screen and (max-width: 380px) {
   .gl-left, .gl-right {
     float: none;
     width: 100%;
     padding: 20px 20px; }
-
   .gl-left {
     border-right: none; }
     .gl-left.last {
       border-bottom: 1px solid #ededed; } }
+
 @media screen and (max-width: 360px) {
   .history-list img {
     display: none; }
@@ -2308,26 +2402,4 @@ p.resend-otp, .resend-otp {
   .history-list .balance {
     text-align: right;
     width: 30%;
-    font-size: 0.8571428571em; } }
-
-    .goback {
-      background:none;
-      border:none;
-      cursor:pointer}
-    
-    .goback:hover {
-      color: #9D0F3E;
-    }
-
-    .delete-bene {
-      position: absolute;
-      top: 46%;
-      left: 85%;
-      color: #b1b1b1;
-    }
-
-    .delete-bene:hover {
-      color: #9D0F3E;
-    }
-
-/*# sourceMappingURL=dashboard.css.map */
+    font-size: 0.85714em; } }
