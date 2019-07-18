@@ -246,25 +246,25 @@ Tick.defaultProps = {
  // extends Component<TooltipRailProps>
 
 export function TooltipRail({activeHandleID, getRailProps, getEventData })  {
-    state = {
+    let state = {
       value: null,
       percent: null
     };
   
-     defaultProps = {
+    let defaultProps = {
       disabled: false
     };
   
-    onMouseEnter = () => {
+    let onMouseEnter=()=>{
       document.addEventListener("mousemove", this.onMouseMove);
-    };
+    }
   
-    onMouseLeave = () => {
+    let onMouseLeave = () => {
       this.setState({ value: null, percent: null });
       document.removeEventListener("mousemove", this.onMouseMove);
     };
   
-    onMouseMove = (e) => {
+    let onMouseMove = (e) => {
         console.log(e);
       const { activeHandleID, getEventData } = this.props;
   
@@ -275,7 +275,7 @@ export function TooltipRail({activeHandleID, getRailProps, getEventData })  {
       }
     };
   
-    render=() =>{
+    let render=() =>{
       const { value, percent } = this.state;
       const { activeHandleID, getRailProps } = this.props;
   
@@ -296,13 +296,15 @@ export function TooltipRail({activeHandleID, getRailProps, getEventData })  {
             </div>
           ) : null}
           <div
-            style={railStyle}
+            // style={railStyle}
             {...getRailProps({
               onMouseEnter: this.onMouseEnter,
               onMouseLeave: this.onMouseLeave
             })}
           />
-          <div style={railCenterStyle} />
+          <div 
+          // style={railCenterStyle} 
+          />
         </Fragment>
       );
     }

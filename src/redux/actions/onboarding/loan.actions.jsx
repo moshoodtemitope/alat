@@ -45,7 +45,7 @@ export const loanOnbaordingStep2 =(data)=>{
 
 // Email and password is also collected on this page and saved wth this endpoint
 export const LoanOnboardingStep3 =(data)=>{
-    SystemConstant.HEADER['alat-token'] = token;
+    //SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
         let consume = ApiService.request(routes.LOANS_STEP_3, //route to be changed to customerProfile
              "POST", data);
