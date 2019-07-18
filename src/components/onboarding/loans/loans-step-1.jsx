@@ -102,8 +102,9 @@ class LoanOboardingStep1 extends React.Component {
                                     <input type='text'name="phoneNumber" value={this.state.phoneNumber} maxLength={11}
                                     onChange={this.handlePhoneNumberChange} />
                                 </div>
-                                <input type="submit" value={this.props.loan_step1.loan_step1_status == loanOnboardingConstants.LOAN_STEP1_PENDING ? "Processing..." : "Next"} 
-                                className="btn-alat btn-block" />
+                                <button  className="btn-alat btn-block"  type="submit" disabled={this.props.loan_step1.loan_step1_status == loanOnboardingConstants.LOAN_STEP1_PENDING}>
+                                {this.props.loan_step1.loan_step1_status == loanOnboardingConstants.LOAN_STEP1_PENDING ? "Processing..." : "Next"}
+                                    </button> 
                             </form>
                         </div>
                     </div>

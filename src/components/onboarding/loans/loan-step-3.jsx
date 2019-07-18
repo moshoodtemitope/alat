@@ -196,14 +196,14 @@ class LoanOnboardingStep3 extends React.Component {
         e.preventDefault();
         // console.log(this.state);
         //if (this.validateForm()) {
-            console.log("submitted");
-            this.props.dispatch(actions.verifyBvn({
-                "bvn": this.state.bvn,
-                "phoneNo": this.state.phoneNumber,
-                "isOnboarding": true,
-                "channelId": 2,  //channelID tobe confirmed for web
-                "dateOfBirth": this.state.dob
-            }));
+        console.log("submitted");
+        this.props.dispatch(actions.verifyBvn({
+            "bvn": this.state.bvn,
+            "phoneNo": this.state.phoneNumber,
+            "isOnboarding": true,
+            "channelId": 2,  //channelID tobe confirmed for web
+            "dateOfBirth": this.state.dob
+        }));
         //}
     }
 
@@ -230,11 +230,11 @@ class LoanOnboardingStep3 extends React.Component {
                 </div>
                 <div className="al-card no-pad">
                     <div className="transfer-ctn">
-                    {this.props.alert && this.props.alert.message &&
-                                <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
-                            }
+                        {this.props.alert && this.props.alert.message &&
+                            <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                        }
                         <form onSubmit={this.handleSubmit}>
-                           
+
                             <div className={bvnInvalid ? "input-ctn form-error" : "input-ctn"}>
                                 <label>Enter your BVN</label>
                                 <input type="text" onChange={this.handleBVN} maxLength="11" name="bvn" value={bvn} placeholder="Enter your BVN" />
@@ -293,10 +293,11 @@ class LoanOnboardingStep3 extends React.Component {
                             <div className="row">
                                 <div className="col-sm-12">
                                     <center>
-                                        <input type="submit"
-                                         disabled={this.props.loan_bvn.loan_bvn_status === loanOnboardingConstants.LOAN_VERIFY_BVN_PENDING}
-                                         value={this.props.loan_bvn.loan_bvn_status === loanOnboardingConstants.LOAN_VERIFY_BVN_PENDING ? "Processing...":"Create Profile"}
-                                         className="btn-alat m-t-10 m-b-20 text-center" />
+                                        <button type="submit"
+                                            disabled={this.props.loan_bvn.loan_bvn_status === loanOnboardingConstants.LOAN_VERIFY_BVN_PENDING}
+                                            className="btn-alat m-t-10 m-b-20 text-center">
+                                            {this.props.loan_bvn.loan_bvn_status === loanOnboardingConstants.LOAN_VERIFY_BVN_PENDING ? "Processing..." : "Create Profile"}
+                                        </button>
                                     </center>
                                 </div>
                             </div>

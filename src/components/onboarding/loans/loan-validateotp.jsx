@@ -14,7 +14,10 @@ class LoanOnboardingValidateOTP extends React.Component {
         this.state = {
             OtpInvalid: false,
             Otp: "",
-            phoneNumber: ""
+            bvn: "",
+            phoneNumber: "",
+            finacleEmail: ""
+
         };
     }
 
@@ -25,8 +28,12 @@ class LoanOnboardingValidateOTP extends React.Component {
         if (this.props.loan_bvn)
         if (this.props.loan_bvn.loan_bvn_status == loanOnboardingConstants.LOAN_VERIFY_BVN_SUCCESS) {
             var data = {
-
+                ...this.props.loan_bvn.loan_bvn_data.data
             };
+            this.setState({ phoneNumber : data.request.phoneNo, 
+                bvnPhoneNo : data.response.bvnPhoneNo,
+                bvn: data.request.bvn, 
+                finacleEmail : data.response.finacleEmail  })
         }else {
             this.props.history.push("/loan/step-3");
         }
@@ -34,12 +41,14 @@ class LoanOnboardingValidateOTP extends React.Component {
     }
 
     handleOnChange = (e) => {
-        this.setState({ Otp: e });
+        this.setState({ Otp: e.TransactionPin });
     }
 
-    onSubmit = () => {
+    onSubmit = (otp) => {
         this.props.dispatch(actions.validateOtp({
-
+            "bvn": this.state.bvn,
+            "otp": otp.TransactionPin,
+            "phoneNo": this.state.phoneNumber
         }));
     }
 
@@ -50,22 +59,24 @@ class LoanOnboardingValidateOTP extends React.Component {
         // this.props.dispatch(airtimeWebPinpayment(this.state.user.token, bill));
     }
 
+    gotoNextPage=()=>{
+        if(this.props.loan_val_otp)
+        if(this.props.loan_val_otp.loan_valOtp_status == loanOnboardingConstants.LOAN_VALIDATEOTP_SUCCESS){
+            return (<Redirect to="/loan/bvn-info"/>)
+        }
+    }
+
     returnOtpValidationMsg() {
         // console.log(this.props.airtime.airtime_buydata_data);
-        if(this.props.loan_bvnverify)
-        if(this.props.loan_bvnverify.loan_valOtp_status == loanOnboardingConstants.LOAN_VALIDATEOTP_SUCCESS){
-            return "It has been sent";
-        }
-        // if (this.props.airtime.airtime_buydata_data) {
-        //         if (this.props.airtime.airtime_buydata_data.obj) {
-        //             return this.props.airtime.airtime_buydata_data.obj.response.ValidationMsg;
-        //         }
-        //         else return "";
-        // }else return "";
+        if (this.props.loan_bvn)
+        if (this.props.loan_bvn.loan_bvn_status == loanOnboardingConstants.LOAN_VERIFY_BVN_SUCCESS) {
+            return  `OTP has been sent to ${this.props.loan_bvn.loan_bvn_data.data.response.bvnPhoneNo}`;
+        }else return "";
     }
 
     render() {
         return (<LoanOnboardingContainer>
+            {this.gotoNextPage()}
             <div className="col-sm-12">
                 <div className="max-500">
                     <div className="loan-header-text text-center">
@@ -77,7 +88,7 @@ class LoanOnboardingValidateOTP extends React.Component {
                         forwardLink={"bills/airtime/done"}
                         submitAction={this.onSubmit}
                         maxLength={6}
-                        busyAction={this.props.loan_bvnverify.loan_valOtp_status == loanOnboardingConstants.LOAN_VALIDATEOTP_PENDING}
+                        busyAction={this.props.loan_val_otp.loan_valOtp_status == loanOnboardingConstants.LOAN_VALIDATEOTP_PENDING}
                         retryAction={null}
                         onResubmitBusyAction={null}
                         displayMessage={this.returnOtpValidationMsg()}
@@ -121,7 +132,8 @@ function mapStateToProps(state) {
     return {
         alert: state.alert,
         loan_step2: state.loanOnboardingReducerPile.loanOnboardingStep2,
-        loan_bvn: state.loanOnboardingReducerPile.loanOnboardingValidateOTP
+        loan_val_otp: state.loanOnboardingReducerPile.loanOnboardingValidateOTP,
+        loan_bvn: state.loanOnboardingReducerPile.loanOnboardingBVN
     };
 }
 export default connect(mapStateToProps)(LoanOnboardingValidateOTP);
