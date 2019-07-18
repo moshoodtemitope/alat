@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import billsLogo from '../../../assets/img/bills-icon.svg';
+import billIcon from '../../../assets/img/Combined-Shape.svg'
 import * as actions from '../../../redux/actions/bills/export';
 import Modal from 'react-responsive-modal';
 import { formatAmountNoDecimal } from '../../../shared/utils';
@@ -92,7 +93,8 @@ class Index extends Component {
                                             <div className="col-sm-12 col-md-4" key={counter + 1} >
                                                 <div className="al-card airtime-card" onClick={() => this.useBeneficiary(billsToPay)} style={{zIndex:"10"}}>
                                                     <div className="clearfix">
-                                                        <div className="network-img" >.
+                                                        <div className="network-img" >
+                                                            <img src={billIcon} alt={bill.BillerName} />
                                                         </div>
                                                         <div className="all-info">
                                                             <p className="line-price">{bill.BillerAlias} <span className="price">{"₦" + formatAmountNoDecimal(bill.Amount)}</span></p>

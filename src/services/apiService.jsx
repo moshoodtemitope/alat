@@ -23,14 +23,6 @@ export class ApiService {
 
         if(localStorage.getItem("user") == null){
             headers = undefined;
-            console.log("sssssssss, I turn header to undefined");
-            console.log(headers);
-        }else{
-            console.log(headers);
-            console.log("we good bro..order chip[s!!!");
-            for (let [key, value] of Object.entries(headers)) {
-                console.log(key,value);
-            }
         }
         // header = new Headers(headers || {
         //     'Content-Type': 'application/json',
@@ -70,7 +62,7 @@ export class ApiService {
                     // console.log(error.response.status);
                     // console.log(error.response.headers);  && error.response.statusText.toLowerCase().includes('token not valid')
                      if (error.response.status === 401) {
-                        dispatch(userActions.logout(true));
+                        dispatch(userActions.logout());
                             //history.push('/');
                         }else {
                             return service;
@@ -104,7 +96,7 @@ export class ApiService {
                 // console.log("successful");
                 return service;
             }).catch(function (error) {
-               
+            
               if (error.response) {
                 // The request was made and the server responded with a status code
                 // that falls out of the range of 2xx
@@ -112,7 +104,7 @@ export class ApiService {
                 // console.log(error.response.status);
                 // console.log(error.response.headers);
                  if (error.response.status === 401 && error.response.statusText.toLowerCase().includes('token not valid')) {
-                        dispatch(userActions.logout(true));
+                        dispatch(userActions.logout());
                         //history.push('/');
                     }else {
                         return service;
@@ -168,7 +160,7 @@ export class ApiService {
                 if (error.status === 401 && error.statusText.toLowerCase().includes('token not valid')) {
                     // sessionStorage.clear();
                     // return <Redirect to='/login'/>
-                    dispatch(userActions.logout(true));
+                    dispatch(userActions.logout());
                     // this.router.navigate(['/login']); redirect to login
                 } else {
                     let requestError = error.status !== 0 ? error._body : '{ \"message\": \"Could not connect to server\" }';
@@ -227,7 +219,7 @@ export class ApiService {
                     if (error.status === 401 && error.statusText.toLowerCase().includes('token not valid')) {
                         // sessionStorage.clear();
                         // return <Redirect to='/login'/>
-                        dispatch(userActions.logout(true));
+                        dispatch(userActions.logout());
                         // this.router.navigate(['/login']); redirect to login
                     } else {
                         let requestError = error.status !== 0 ? error._body : '{ \"message\": \"Could not connect to server\" }';
