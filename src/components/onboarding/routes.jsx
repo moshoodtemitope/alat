@@ -17,6 +17,7 @@ import OnboardingLandingPage from "./landing-page";
 import LoanOnboardingStep1 from "./loans/loans-step-1";
 import LoanOnboardingStep2 from './loans/loan-step-2';
 import LoanOnboardingStep3 from './loans/loan-step-3';
+import LoanOnboardingValidateOTP from './loans/loan-validateotp';
 
 export const fakeAuth = {
     isAuthenticated: false,
@@ -74,6 +75,7 @@ class OnboardingRoute extends React.Component{
                 <Route path="/loan/step-1" component={LoanOnboardingStep1}/>
                 <Route path="/loan/step-2" component={LoanOnboardingStep2}/>
                 <Route path="/loan/step-3" component={LoanOnboardingStep3} />
+                <Route path="/loan/validateotp" component={LoanOnboardingValidateOTP}/>
             </div>
         )
     }

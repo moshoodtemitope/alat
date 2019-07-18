@@ -23,7 +23,34 @@ class LoanOnboardingStep3 extends React.Component {
             verifyEmailInvalid: false,
             dobInvalid: false,
             passwordInvalid: false,
-            verifyPasswordInvalid: false
+            verifyPasswordInvalid: false,
+
+            phoneNumber: "",
+            LoanAmount: "",
+            Tenure: ""
+        }
+    }
+    componentDidMount = () => {
+        this.init();
+    }
+
+    init = () => {
+        if (this.props.loan_step2) {
+            if (this.props.loan_step2.loan_step2_status == loanOnboardingConstants.LOAN_STEP2_SUCCESS) {
+                var data = {
+                    ...this.props.loan_step2.loan_step2_data.data
+                };
+                this.setState({
+                    phoneNumber: data.PhoneNumber,
+                    LoanAmount: data.LoanAmount,
+                    Tenure: data.Term
+                });
+
+            } else {
+                this.props.history.push("/loan/step-2");
+            }
+        } else {
+            this.props.history.push("/loan/step-2");
         }
     }
 
@@ -46,11 +73,11 @@ class LoanOnboardingStep3 extends React.Component {
 
     validateBvn = (zeroIndex) => {
         if ((this.state.bvn.length - zeroIndex) === 10) {
-            this.setState({ bvnIvalid: false });
+            this.setState({ bvnInvalid: false });
             return false;
         }
         else {
-            this.setState({ bvnIvalid: true });
+            this.setState({ bvnInvalid: true });
             return true;
         }
     }
@@ -66,7 +93,7 @@ class LoanOnboardingStep3 extends React.Component {
         }
     }
 
-    checkPwd=()=> {
+    checkPwd = () => {
         let str = this.state.password;
         var digitEx = new RegExp(/\d/);
         var lowerEx = new RegExp(/[a-z]/);
@@ -126,15 +153,65 @@ class LoanOnboardingStep3 extends React.Component {
         } else this.setState({ emailInvalid: false });
     }
 
-    valConfirmPasswordValid=()=>{
-        if(this.state.password === this.state.verifyPassword){
-            this.setState({verifyPasswordInvalid : false});
+    valConfirmPasswordValid = () => {
+        if (this.state.password === this.state.verifyPassword) {
+            this.setState({ verifyPasswordInvalid: false });
             return false;
         }
-        else{
-            this.setState({verifyPasswordInvalid : true});
+        else {
+            this.setState({ verifyPasswordInvalid: true });
             return true;
         }
+    }
+
+    valDob = () => {
+        if (this.state.dob == null) {
+            this.setState({ dobInvalid: true });
+            return true;
+        } else {
+            this.setState({ dobInvalid: false });
+            return false;
+        }
+    }
+
+    validateForm() {
+
+        if (this.validateBvn(1) && this.validateEmail() && this.valConfirmPasswordValid() &&
+            this.checkPwd() && this.ValConfirmEmail() && this.valDob()) {
+
+            if (this.state.verifyEmail !== '' && this.state.verifyPassword !== '') {
+
+                return true;
+            } else {
+                this.setState({ verifyEmailInvalid: false, verifyPasswordInvalid: false })
+                return false
+            }
+        } else {
+
+            return false;
+        }
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        // console.log(this.state);
+        //if (this.validateForm()) {
+            console.log("submitted");
+            this.props.dispatch(actions.verifyBvn({
+                "bvn": this.state.bvn,
+                "phoneNo": this.state.phoneNumber,
+                "isOnboarding": true,
+                "channelId": 2,  //channelID tobe confirmed for web
+                "dateOfBirth": this.state.dob
+            }));
+        //}
+    }
+
+    gotoOtp = () => {
+        if (this.props.loan_bvn)
+            if (this.props.loan_bvn.loan_bvn_status == loanOnboardingConstants.LOAN_VERIFY_BVN_SUCCESS) {
+                return <Redirect to="/loan/validateotp" />
+            }
     }
 
     render() {
@@ -145,6 +222,7 @@ class LoanOnboardingStep3 extends React.Component {
 
 
         return (<LoanOnboardingContainer>
+            {this.gotoOtp()}
             <div className="max-500">
                 <div className="loan-header-text text-center">
                     <h4 className="text-black">Let's know more about you</h4>
@@ -152,11 +230,12 @@ class LoanOnboardingStep3 extends React.Component {
                 </div>
                 <div className="al-card no-pad">
                     <div className="transfer-ctn">
-                        <form>
-                            {props.alert && props.alert.message &&
-                                <div className={`info-label ${props.alert.type}`}>{props.alert.message}</div>
+                    {this.props.alert && this.props.alert.message &&
+                                <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                             }
-                            <div className={!bvnInvalid ? "input-ctn" : "input-ctn form-error"}>
+                        <form onSubmit={this.handleSubmit}>
+                           
+                            <div className={bvnInvalid ? "input-ctn form-error" : "input-ctn"}>
                                 <label>Enter your BVN</label>
                                 <input type="text" onChange={this.handleBVN} maxLength="11" name="bvn" value={bvn} placeholder="Enter your BVN" />
                                 {bvnInvalid &&
@@ -179,7 +258,7 @@ class LoanOnboardingStep3 extends React.Component {
                                 }
                             </div>
 
-                            <div className={passwordInvalid ?"input-ctn form-error": "input-ctn"}>
+                            <div className={passwordInvalid ? "input-ctn form-error" : "input-ctn"}>
                                 <label>Create a Password</label>
                                 <input onChange={this.handleInputChange} type="password" name="password" value={password} onBlur={this.checkPwd} />
                                 {passwordInvalid && <div className="pw-hint">Your password must contain an <b>upper-case letter</b>, a <b>lower-case letter</b>, a <b>number</b> and a <b>special character</b>.</div>}
@@ -187,7 +266,7 @@ class LoanOnboardingStep3 extends React.Component {
                                     <div className="text-danger">{passwordInvalidMessage}</div>
                                 }
                             </div>
-                            <div className={verifyPasswordInvalid ? "input-ctn form-error" :  "input-ctn"}>
+                            <div className={verifyPasswordInvalid ? "input-ctn form-error" : "input-ctn"}>
                                 <label>Confirm Password</label>
                                 <input onChange={this.handleInputChange} type="password" onBlur={this.valConfirmPasswordValid} name="verifyPassword" value={verifyPassword} />
                                 {verifyPasswordInvalid &&
@@ -198,7 +277,7 @@ class LoanOnboardingStep3 extends React.Component {
                                 <label>Your Date of Birth</label>
                                 <DatePicker placeholderText="19 June, 1992" selected={dob}
                                     onChange={this.handleDatePicker}
-                                    onChangeRaw={(e) => this.handleChange(e)}
+                                    // onChangeRaw={(e) => this.handleChange(e)}
                                     dateFormat="d MMMM, yyyy"
                                     peekNextMonth
                                     showMonthDropdown
@@ -214,7 +293,10 @@ class LoanOnboardingStep3 extends React.Component {
                             <div className="row">
                                 <div className="col-sm-12">
                                     <center>
-                                        <input type="button" value="Create Profile" className="btn-alat m-t-10 m-b-20 text-center" />
+                                        <input type="submit"
+                                         disabled={this.props.loan_bvn.loan_bvn_status === loanOnboardingConstants.LOAN_VERIFY_BVN_PENDING}
+                                         value={this.props.loan_bvn.loan_bvn_status === loanOnboardingConstants.LOAN_VERIFY_BVN_PENDING ? "Processing...":"Create Profile"}
+                                         className="btn-alat m-t-10 m-b-20 text-center" />
                                     </center>
                                 </div>
                             </div>
@@ -228,8 +310,10 @@ class LoanOnboardingStep3 extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        alert: state.alert
-    }
+        alert: state.alert,
+        loan_step2: state.loanOnboardingReducerPile.loanOnboardingStep2,
+        loan_bvn: state.loanOnboardingReducerPile.loanOnboardingBVN
+    };
 }
 
 export default connect(mapStateToProps)(LoanOnboardingStep3);
