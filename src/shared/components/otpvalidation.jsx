@@ -11,12 +11,20 @@ class OtpValidation extends React.Component {
         this.state = {
             OtpInvalid: false,
             TransactionPin: "",
-            isSubmitted: false
+            isSubmitted: false,
+            buttonText: ""
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-
+    
+    componentDidMount=()=>{
+        if(this.props.retryAction != null){
+           this.setState({buttonText: "Complete Transfer"});
+        }else {  
+            this.setState({buttonText: "Validate"});
+        }
+    }
     // handleChange=(e)=>{
     //     this.props.
     // }
@@ -55,7 +63,7 @@ class OtpValidation extends React.Component {
                     <div className="col-sm-12">
                         <div className="max-600">
                             <div className="al-card no-pad">
-                                <h4 className="m-b-10 center-text hd-underline">OTP Verification</h4>
+                            {this.props.retryAction && <h4 className="m-b-10 center-text hd-underline">OTP Verification</h4>}
 
                                 <center>
                                     <img src={phoneImg} className="m-t-20" />
@@ -81,8 +89,8 @@ class OtpValidation extends React.Component {
                                         <div className="row">
                                             <div className="col-sm-12">
                                                 <center>
-                                                    <button type="submit" disabled={this.props.busyAction} className="btn-alat m-t-10 m-b-40 text-center">{this.props.busyAction ? "Processing..." : "Complete Transfer"}</button>
-                                                    <p onClick={this.props.retryAction} className="resend-otp" >{this.props.onResubmitBusyAction ? "Resending OTP..." : "Didn't get OTP? Resend Code."}</p>
+                                                    <button type="submit" disabled={this.props.busyAction} className="btn-alat m-t-10 m-b-40 text-center">{this.props.busyAction ? "Processing..." : this.state.buttonText }</button>
+                                                    {this.props.retryAction && <p onClick={this.props.retryAction} className="resend-otp" >{this.props.onResubmitBusyAction ? "Resending OTP..." : "Didn't get OTP? Resend Code."}</p>}
                                                 </center>
                                             </div>
                                         </div>
