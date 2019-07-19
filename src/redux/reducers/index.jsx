@@ -91,7 +91,10 @@ const loanOnboardingReducer = combineReducers({
     loanOnboardingStep2 : loanOnboarding.loanOnboardingStep2Reducer,
     loanOnboardingBVN: loanOnboarding.loanOnboardingVerifyBVNReducer,
     loanOnboardingStep3 : loanOnboarding.loanOnboardingStep3Reducer,
-    loanOnboardingValidateOTP : loanOnboarding.loanOnboardingValidateOTPReducer
+    loanOnboardingValidateOTP : loanOnboarding.loanOnboardingValidateOTPReducer,
+    loanOnboardingGenerateStatement : loanOnboarding.generateStatementReducer,
+    loanOnboardingRequestStatement : loanOnboarding.requestStatementReducer,
+    loanSalaryEntryReducer : loanOnboarding.salaryEntryReducer
 })
 
 const appReducer = combineReducers({

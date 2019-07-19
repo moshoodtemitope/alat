@@ -129,3 +129,81 @@ export function loanOnboardingValidateOTPReducer(state = {}, action) {
             };
     }
 }
+
+export function generateStatementReducer(state = {}, action) {
+    switch (action.type) {
+        case loanOnboardingConstants.LOAN_GENERATE_STATEMENT_SUCCESS:
+            return {
+                loan_genStat_status: loanOnboardingConstants.LOAN_GENERATE_STATEMENT_SUCCESS,
+                loan_genStat_data: action,
+                //registration_step: 1
+            };
+        case loanOnboardingConstants.LOAN_GENERATE_STATEMENT_PENDING:
+            return {
+                loan_genStat_status: loanOnboardingConstants.LOAN_GENERATE_STATEMENT_PENDING,
+                loan_genStat_data: action,
+                // registration_step: 1
+            };
+        case loanOnboardingConstants.LOAN_GENERATE_STATEMENT_FAILURE:
+            return {
+                loan_genStat_status: loanOnboardingConstants.LOAN_GENERATE_STATEMENT_FAILURE,
+                loan_genStat_data: action,
+            };
+        default:
+            return {
+                ...state,
+            };
+    }
+}
+
+export function requestStatementReducer(state = {}, action) {
+    switch (action.type) {
+        case loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS:
+            return {
+                loan_reqStat_status: loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS,
+                loan_reqStat_data: action,
+                //registration_step: 1
+            };
+        case loanOnboardingConstants.LOAN_REQUEST_STATEMENT_PENDING:
+            return {
+                loan_reqStat_status: loanOnboardingConstants.LOAN_REQUEST_STATEMENT_PENDING,
+                loan_reqStat_data: action,
+                // registration_step: 1
+            };
+        case loanOnboardingConstants.LOAN_REQUEST_STATEMENT_FAILURE:
+            return {
+                loan_reqStat_status: loanOnboardingConstants.LOAN_REQUEST_STATEMENT_FAILURE,
+                loan_reqStat_data: action,
+            };
+        default:
+            return {
+                ...state,
+            };
+    }
+}
+
+export function salaryEntryReducer(state = {}, action) {
+    switch (action.type) {
+        case loanOnboardingConstants.LOAN_SALARYENTRY_SUCCESS:
+            return {
+                loan_salEnt_status: loanOnboardingConstants.LOAN_SALARYENTRY_SUCCESS,
+                loan_salEnt_data: action,
+                //registration_step: 1
+            };
+        case loanOnboardingConstants.LOAN_SALARYENTRY_PENDING:
+            return {
+                loan_salEnt_status: loanOnboardingConstants.LOAN_SALARYENTRY_PENDING,
+                loan_salEnt_data: action,
+                // registration_step: 1
+            };
+        case loanOnboardingConstants.LOAN_SALARYENTRY_FAILURE:
+            return {
+                loan_salEnt_status: loanOnboardingConstants.LOAN_SALARYENTRY_FAILURE,
+                loan_salEnt_data: action,
+            };
+        default:
+            return {
+                ...state,
+            };
+    }
+}

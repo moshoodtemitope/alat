@@ -116,3 +116,81 @@ export const validateOtp =(data)=>{
     function success(response, request) { return { type: loanOnboardingConstants.LOAN_VALIDATEOTP_SUCCESS, data: { response : response, request: request } }}
     function failure(error) { return { type: loanOnboardingConstants.LOAN_VALIDATEOTP_FAILURE, error } }
 }
+
+export const generateStatement =(token, url)=>{
+    let paramsurl = `${routes.LOAN_GENERATE_STATEMENT}?${url}`;
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(paramsurl,
+             "POST", null, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                //TODO: edit localDB accounts object
+                dispatch(success(response.data, data));
+            })
+            .catch(error => {
+               // console.log("error in here");
+               // dispatch(success(response.data, request));
+                 dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // throw(error);
+            });
+    };
+
+    function request(request) { return { type: loanOnboardingConstants.LOAN_GENERATE_STATEMENT_PENDING, request } }
+    function success(response, request) { return { type: loanOnboardingConstants.LOAN_GENERATE_STATEMENT_SUCCESS, data: { response : response, request: request } }}
+    function failure(error) { return { type: loanOnboardingConstants.LOAN_GENERATE_STATEMENT_FAILURE, error } }
+}
+
+export const requestStatement =(token, url)=>{
+    let paramsurl = `${routes.LOAN_REQUEST_STATEMENT}?${url}`;
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(paramsurl,
+             "POST", null, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                //TODO: edit localDB accounts object
+                dispatch(success(response.data, data));
+            })
+            .catch(error => {
+               // console.log("error in here");
+               // dispatch(success(response.data, request));
+                 dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // throw(error);
+            });
+    };
+
+    function request(request) { return { type: loanOnboardingConstants.LOAN_REQUEST_STATEMENT_PENDING, request } }
+    function success(response, request) { return { type: loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS, data: { response : response, request: request } }}
+    function failure(error) { return { type: loanOnboardingConstants.LOAN_REQUEST_STATEMENT_FAILURE, error } }
+}
+
+export const salaryEntry =(token, data)=>{
+  //  let url = `${routes.LOAN_REQUEST_STATEMENT}?${url}`;
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.LOAN_SELECTED_ENTRIES,
+             "POST", data, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                //TODO: edit localDB accounts object
+                dispatch(success(response.data, data));
+            })
+            .catch(error => {
+               // console.log("error in here");
+               // dispatch(success(response.data, request));
+                 dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // throw(error);
+            });
+    };
+
+    function request(request) { return { type: loanOnboardingConstants.LOAN_SALARYENTRY_PENDING, request } }
+    function success(response, request) { return { type: loanOnboardingConstants.LOAN_SALARYENTRY_SUCCESS, data: { response : response, request: request } }}
+    function failure(error) { return { type: loanOnboardingConstants.LOAN_SALARYENTRY_FAILURE, error } }
+}

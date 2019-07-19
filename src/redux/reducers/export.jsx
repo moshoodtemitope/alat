@@ -27,7 +27,8 @@ import { fundAccountReducer, getTokenizedCardsReducer,
       getEncryptionRuleReducer, verifyPANReducer, fundWemaAccountReducer } from './fund-account.reducer';
 
 import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingVerifyBVNReducer,
-     loanOnboardingStep3Reducer, loanOnboardingValidateOTPReducer} from './loan-onboarding.reducer';
+     loanOnboardingStep3Reducer, loanOnboardingValidateOTPReducer, generateStatementReducer,
+      requestStatementReducer, salaryEntryReducer} from './loan-onboarding.reducer';
 
 export const onboarding = {
     userRegistrationRequest,
@@ -41,7 +42,10 @@ export const loanOnboarding = {
     loanOnboardingStep2Reducer,
     loanOnboardingVerifyBVNReducer,
     loanOnboardingStep3Reducer,
-    loanOnboardingValidateOTPReducer
+    loanOnboardingValidateOTPReducer,
+    generateStatementReducer,
+    requestStatementReducer,
+    salaryEntryReducer
 }
 
 export const dashboard = {

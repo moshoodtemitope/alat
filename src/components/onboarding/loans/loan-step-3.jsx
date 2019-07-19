@@ -202,7 +202,11 @@ class LoanOnboardingStep3 extends React.Component {
             "phoneNo": this.state.phoneNumber,
             "isOnboarding": true,
             "channelId": 2,  //channelID tobe confirmed for web
-            "dateOfBirth": this.state.dob
+            "dateOfBirth": this.state.dob,
+            "email" : this.state.email,
+            "password" : this.state.password,
+            loanAmount: this.state.LoanAmount,
+            tenure: this.state.Tenure
         }));
         //}
     }
