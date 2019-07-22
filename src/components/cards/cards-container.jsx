@@ -3,7 +3,8 @@ import { Fragment } from "react";
 import InnerContainer from '../../shared/templates/inner-container';
 import { Route, NavLink } from "react-router-dom";
 import { Switch } from "react-router";
-// import CashTransfer from './cash-transfer'
+import HotlistCardContainer from './hotlist-card'
+import RequestCardContainer from './request-card'
 // import CardlessWithdrawal from './cardless-withdrawal/cardless-withdrawal'
 // import fxTransfer from './fx-transfer/fxTransfer'
 
@@ -28,19 +29,19 @@ class CardsContainer extends React.Component {
                                     <div>
                                         <div className="sub-tab-nav">
                                             <ul>
-                                                <li>Request Card</li>
-                                                <li><a >Card Control</a></li>
+                                                <li><NavLink to={'/cards'}>Request Card</NavLink></li>
+                                                <li>Card Control</li>
                                                 <li>Set Card Pin</li>
-                                                <li>Hotlist Card</li>
+                                                <li><Navlink to={'/cards/hotlist'}>Hotlist Card </Navlink></li>
                                                 <li>ALAT Dollar Card</li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                                 {this.props.children}
-                                {/* <Route exact to={'/transfer'} component={CashTransfer} />
-                                <Route to={'/cardless-withdrawal'} component={CardlessWithdrawal} />
-                                <Route to={'/fx-transfer'} component={fxTransfer} /> */}
+                                <Route exact to={'/cards'} component={RequestCardContainer} />
+                                <Route to={'/cards/hotlist'} component={HotlistCardContainer} />
+                                {/* <Route to={'/fx-transfer'} component={fxTransfer} />  */} */}
                             </div>
                         </div>
                     </div>

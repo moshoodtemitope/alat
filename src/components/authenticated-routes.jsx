@@ -16,6 +16,7 @@ import ProvideDetails from "./transfer/cash-transfer/provide-details";
 import TransferHome from "./transfer/transfer-home";
 //import BillsRoute from './airtime-bills/bills-route';
 import FundAccountIndex from './fund-account/index';
+import CardsContainer from './cards/cards-container';
 
 
 
@@ -61,6 +62,7 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path='/transfer' authed={this.props.user} component={TransferContainer}/>
                     <PrivateRoute path='/cardless-withdrawal' authed={this.props.user} component={TransferContainer}/>
                     <PrivateRoute path='/fx-transfer' authed={this.props.user} component={TransferContainer}/>
+                    <PrivateRoute path='/cards' authed={this.props.user} component={CardsContainer}/>
                 </Switch>
             </Router>
             
