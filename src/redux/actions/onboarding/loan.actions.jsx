@@ -122,7 +122,7 @@ export const generateStatement =(token, url)=>{
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
         let consume = ApiService.request(paramsurl,
-             "POST", null, SystemConstant.HEADER);
+             "GET", null, SystemConstant.HEADER);
         dispatch(request(consume));
         return consume
             .then(response => {
@@ -148,7 +148,7 @@ export const requestStatement =(token, url)=>{
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
         let consume = ApiService.request(paramsurl,
-             "POST", null, SystemConstant.HEADER);
+             "GET", null, SystemConstant.HEADER);
         dispatch(request(consume));
         return consume
             .then(response => {
@@ -168,6 +168,32 @@ export const requestStatement =(token, url)=>{
     function success(response, request) { return { type: loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS, data: { response : response, request: request } }}
     function failure(error) { return { type: loanOnboardingConstants.LOAN_REQUEST_STATEMENT_FAILURE, error } }
 }
+
+export const salaryTransaction =(token)=>{
+    //  let url = `${routes.LOAN_REQUEST_STATEMENT}?${url}`;
+      SystemConstant.HEADER['alat-token'] = token;
+      return (dispatch) => {
+          let consume = ApiService.request(routes.LOAN_SALARY_TRANSACTION,
+               "GET", null, SystemConstant.HEADER);
+          dispatch(request(consume));
+          return consume
+              .then(response => {
+                  //TODO: edit localDB accounts object
+                  dispatch(success(response.data, data));
+              })
+              .catch(error => {
+                 // console.log("error in here");
+                 // dispatch(success(response.data, request));
+                   dispatch(failure(modelStateErrorHandler(error)));
+                   dispatch(alertActions.error(modelStateErrorHandler(error)));
+                  // throw(error);
+              });
+      };
+  
+      function request(request) { return { type: loanOnboardingConstants.LOAN_SALARYTRANSACTION_PENDING, request } }
+      function success(response, request) { return { type: loanOnboardingConstants.LOAN_SALARYTRANSACTION_SUCCESS, data: { response : response, request: request } }}
+      function failure(error) { return { type: loanOnboardingConstants.LOAN_SALARYTRANSACTION_FAILURE, error } }
+  }
 
 export const salaryEntry =(token, data)=>{
   //  let url = `${routes.LOAN_REQUEST_STATEMENT}?${url}`;
@@ -194,3 +220,55 @@ export const salaryEntry =(token, data)=>{
     function success(response, request) { return { type: loanOnboardingConstants.LOAN_SALARYENTRY_SUCCESS, data: { response : response, request: request } }}
     function failure(error) { return { type: loanOnboardingConstants.LOAN_SALARYENTRY_FAILURE, error } }
 }
+
+  export const getScoreCard =(token)=>{
+    //  let url = `${routes.LOAN_REQUEST_STATEMENT}?${url}`;
+      SystemConstant.HEADER['alat-token'] = token;
+      return (dispatch) => {
+          let consume = ApiService.request(routes.LOAN_GET_SCORECARD_QUESTIONS,
+               "GET", null, SystemConstant.HEADER);
+          dispatch(request(consume));
+          return consume
+              .then(response => {
+                  //TODO: edit localDB accounts object
+                  dispatch(success(response.data, data));
+              })
+              .catch(error => {
+                 // console.log("error in here");
+                 // dispatch(success(response.data, request));
+                   dispatch(failure(modelStateErrorHandler(error)));
+                   dispatch(alertActions.error(modelStateErrorHandler(error)));
+                  // throw(error);
+              });
+      };
+  
+      function request(request) { return { type: loanOnboardingConstants.LOAN_SCORECARD_QUESTION_PENDING, request } }
+      function success(response, request) { return { type: loanOnboardingConstants.LOAN_SCORECARD_QUESTION_SUCCESS, data: { response : response, request: request } }}
+      function failure(error) { return { type: loanOnboardingConstants.LOAN_SCORECARD_QUESTION_FAILURE, error } }
+  }
+
+  export const postScoreCardAnswer =(token, data)=>{
+    //  let url = `${routes.LOAN_REQUEST_STATEMENT}?${url}`;
+      SystemConstant.HEADER['alat-token'] = token;
+      return (dispatch) => {
+          let consume = ApiService.request(routes.LOAN_POST_SCORECARD_ANSWER,
+               "POST", data, SystemConstant.HEADER);
+          dispatch(request(consume));
+          return consume
+              .then(response => {
+                  //TODO: edit localDB accounts object
+                  dispatch(success(response.data, data));
+              })
+              .catch(error => {
+                 // console.log("error in here");
+                 // dispatch(success(response.data, request));
+                   dispatch(failure(modelStateErrorHandler(error)));
+                   dispatch(alertActions.error(modelStateErrorHandler(error)));
+                  // throw(error);
+              });
+      };
+  
+      function request(request) { return { type: loanOnboardingConstants.LOAN_SCORECARD_ANSWER_PENDING, request } }
+      function success(response, request) { return { type: loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS, data: { response : response, request: request } }}
+      function failure(error) { return { type: loanOnboardingConstants.LOAN_SCORECARD_ANSWER_FAILURE, error } }
+  }

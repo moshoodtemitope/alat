@@ -28,7 +28,8 @@ import { fundAccountReducer, getTokenizedCardsReducer,
 
 import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingVerifyBVNReducer,
      loanOnboardingStep3Reducer, loanOnboardingValidateOTPReducer, generateStatementReducer,
-      requestStatementReducer, salaryEntryReducer} from './loan-onboarding.reducer';
+      requestStatementReducer,salaryTransactionReducer, salaryEntryReducer, getScoreCardQuestionReducer,
+      postScoreCardAnswerReducer} from './loan-onboarding.reducer';
 
 export const onboarding = {
     userRegistrationRequest,
@@ -45,7 +46,10 @@ export const loanOnboarding = {
     loanOnboardingValidateOTPReducer,
     generateStatementReducer,
     requestStatementReducer,
-    salaryEntryReducer
+    salaryTransactionReducer,
+    salaryEntryReducer,
+    getScoreCardQuestionReducer,
+    postScoreCardAnswerReducer
 }
 
 export const dashboard = {
@@ -77,7 +81,6 @@ export const airtime ={
     buyAirtimeWebPinReducer,
     buyAirtimeWebPinOTPReducer,
     airtimeSaveBeneficiaryReducer
-    
 }
 
 export const global ={

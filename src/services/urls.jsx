@@ -95,4 +95,7 @@ export const routes = {
     LOAN_REQUEST_STATEMENT: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/RequestBankStatement', // request param
     LOAN_GENERATE_STATEMENT: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GenerateBankStatement', //request params
     LOAN_SELECTED_ENTRIES : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/SelectedSalaryEntries',
+    LOAN_SALARY_TRANSACTION: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GetSalaryTransactions',
+    LOAN_GET_SCORECARD_QUESTIONS : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GetScoreCardQuestions',
+    LOAN_POST_SCORECARD_ANSWER: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/PostScoreCardResponse',
 };

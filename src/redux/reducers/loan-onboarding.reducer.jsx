@@ -182,6 +182,32 @@ export function requestStatementReducer(state = {}, action) {
     }
 }
 
+export function salaryTransactionReducer(state = {}, action) {
+    switch (action.type) {
+        case loanOnboardingConstants.LOAN_SALARYTRANSACTION_SUCCESS:
+            return {
+                loan_salTran_status: loanOnboardingConstants.LOAN_SALARYTRANSACTION_SUCCESS,
+                loan_salTran_data: action,
+                //registration_step: 1
+            };
+        case loanOnboardingConstants.LOAN_SALARYTRANSACTION_PENDING:
+            return {
+                loan_salTran_status: loanOnboardingConstants.LOAN_SALARYTRANSACTION_PENDING,
+                loan_salTran_data: action,
+                // registration_step: 1
+            };
+        case loanOnboardingConstants.LOAN_SALARYTRANSACTION_FAILURE:
+            return {
+                loan_salTran_status: loanOnboardingConstants.LOAN_SALARYTRANSACTION_FAILURE,
+                loan_salTran_data: action,
+            };
+        default:
+            return {
+                ...state,
+            };
+    }
+}
+
 export function salaryEntryReducer(state = {}, action) {
     switch (action.type) {
         case loanOnboardingConstants.LOAN_SALARYENTRY_SUCCESS:
@@ -207,3 +233,52 @@ export function salaryEntryReducer(state = {}, action) {
             };
     }
 }
+
+export function getScoreCardQuestionReducer(state = {}, action) {
+    switch (action.type) {
+        case loanOnboardingConstants.LOAN_SCORECARD_QUESTION_SUCCESS:
+            return {
+                loan_scoreQ_status: loanOnboardingConstants.LOAN_SCORECARD_QUESTION_SUCCESS,
+                loan_scoreQ_data: action,
+            };
+        case loanOnboardingConstants.LOAN_SCORECARD_QUESTION_PENDING:
+            return {
+                loan_scoreQ_status: loanOnboardingConstants.LOAN_SCORECARD_QUESTION_PENDING,
+                loan_scoreQ_data: action,
+            };
+        case loanOnboardingConstants.LOAN_SCORECARD_QUESTION_FAILURE:
+            return {
+                loan_scoreQ_status: loanOnboardingConstants.LOAN_SCORECARD_QUESTION_FAILURE,
+                loan_scoreQ_data: action,
+            };
+        default:
+            return {
+                ...state,
+            };
+    }
+}
+
+export function postScoreCardAnswerReducer(state = {}, action) {
+    switch (action.type) {
+        case loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS:
+            return {
+                loan_scoreA_status: loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS,
+                loan_scoreA_data: action,
+            };
+        case loanOnboardingConstants.LOAN_SCORECARD_ANSWER_PENDING:
+            return {
+                loan_scoreA_status: loanOnboardingConstants.LOAN_SCORECARD_ANSWER_PENDING,
+                loan_scoreA_data: action,
+            };
+        case loanOnboardingConstants.LOAN_SCORECARD_ANSWER_FAILURE:
+            return {
+                loan_scoreA_status: loanOnboardingConstants.LOAN_SCORECARD_ANSWER_FAILURE,
+                loan_scoreA_data: action,
+            };
+        default:
+            return {
+                ...state,
+            };
+    }
+}
+
