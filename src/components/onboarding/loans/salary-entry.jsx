@@ -13,22 +13,23 @@ class LoanOnboardingSalaryEntry extends React.Component {
         super(props);
         this.state = {
             user: JSON.parse(localStorage.getItem("user")),
-            enytrList: [{
-                "entryId": 1,
-                "accountNumber" : "0123456789",
-                "accountName" : "Faleye Benjamin",
-                "description" : "My own salary joo",
-                "date" : "12-12-2009",
-                "amount" : "100,000,000:00"
-            },
-            {
-                "entryId": 2,
-                "accountNumber" : "9876543210",
-                "accountName" : "Amotayo Omolara",
-                "description" : "My own salary joo",
-                "date" : "12-12-2009",
-                "amount" : "1,000,000:00"
-            },
+            enytrList: [
+            //     {
+            //     "entryId": 1,
+            //     "accountNumber" : "0123456789",
+            //     "accountName" : "Faleye Benjamin",
+            //     "description" : "My own salary joo",
+            //     "date" : "12-12-2009",
+            //     "amount" : "100,000,000:00"
+            // },
+            // {
+            //     "entryId": 2,
+            //     "accountNumber" : "9876543210",
+            //     "accountName" : "Amotayo Omolara",
+            //     "description" : "My own salary joo",
+            //     "date" : "12-12-2009",
+            //     "amount" : "1,000,000:00"
+            // },
         ],
         selectedEntryList: [],
         }
@@ -44,7 +45,7 @@ class LoanOnboardingSalaryEntry extends React.Component {
         key: e.target.value};
         var arr = [...this.state.selectedEntryList];
      if(e.target.checked){
-         arr.push(entry.entryId)
+         arr.push(entry.transactionId)
      }else if(!e.target.checked){
         arr.splice(e.target.value, 1);
      }
@@ -52,7 +53,7 @@ class LoanOnboardingSalaryEntry extends React.Component {
     }
 
     postSalarEntries=()=>{
-        this.props.dispatch(salaryEntry(this.user.token. this.state.selectedEntryList));
+        this.props.dispatch(actions.salaryEntry(this.user.token. this.state.selectedEntryList));
     }
 
     gotoNextPage=()=>{
@@ -78,8 +79,7 @@ class LoanOnboardingSalaryEntry extends React.Component {
                             <thead>
                                 <tr>
                                     <th scope="col"></th>
-                                    <th scope="col">Account Number</th>
-                                    <th scope="col">Account Name</th>
+                                    
                                     <th scope="col">Description</th>
                                     <th scope="col">Amount</th>
                                     <th scope="col">Date</th>
@@ -91,11 +91,9 @@ class LoanOnboardingSalaryEntry extends React.Component {
                                         <tr key={key}>
                                             <th scope="row"><input type="checkbox" value={key} checked={entry.isChecked} onChange={(e) => this.entryChecked(entry,e)}
                                                 style={{ opacity: "unset", position: "unset" }} /></th>
-                                            <td>{entry.accountNumber}</td>
-                                            <td>{entry.accountName}</td>
                                             <td>{entry.description}</td>
                                             <td>{entry.amount}</td>
-                                            <td>{entry.date}</td>
+                                            <td>{entry.transactionDate}</td>
                                         </tr>
                                     )
                                 })}

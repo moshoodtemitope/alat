@@ -19,7 +19,7 @@ class LoanOnboardingBVNInfo extends React.Component {
         }
     }
     componentDidMount(){
-       // this.init();
+        this.init();
     }
 
     init=()=>{
@@ -48,7 +48,7 @@ class LoanOnboardingBVNInfo extends React.Component {
 
         this.props.dispatch(actions.LoanOnboardingStep3({
             email: data.request.email,
-            phoneNumber: data.request.phoneNumber,
+            phoneNumber: data.request.phoneNo,
             fullName: `${this.state.FirstName} ${this.state.LastName}`,
             bvn: this.state.BVN,
             password: data.request.password,
@@ -57,7 +57,11 @@ class LoanOnboardingBVNInfo extends React.Component {
             dateOfBirth: data.request.dateOfBirth,
             isOnboarding: true,
             loanAmount: data.request.loanAmount,
-            tenure: data.request.tenure
+            tenure: data.request.tenure,
+            deviceName: 'string-5',
+            deviceOs: 'string-6',
+            gcmRegId: 'string-8',
+            deviceCode: 'string-10'
         }));
     }
     
@@ -113,9 +117,13 @@ class LoanOnboardingBVNInfo extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <a style={{cursor: "pointer", color: "white"}}
+                        {/* style={{cursor: "pointer", color: "white"}} */}
+                        <button 
+                        disabled= {this.props.loan_createprofile.loan_step3_status == loanOnboardingConstants.LOAN_STEP3_PENDING}
                         className="btn-alat btn-block"
-                        onClick={this.CreateProfile} >Confirm Details</a>
+                        onClick={this.CreateProfile}>
+                        {this.props.loan_createprofile.loan_step3_status == loanOnboardingConstants.LOAN_STEP3_PENDING ? "Processing..." : "Confirm Details"}
+                        </button>
                     </div>
 
                 </div>

@@ -6,6 +6,7 @@ import * as actions from '../../../redux/actions/onboarding/loan.actions';
 import { loanOnboardingConstants } from '../../../redux/constants/onboarding/loan.constants';
 import LoanOnboardingContainer from './loanOnboarding-container';
 import OtpValidation from '../../../shared/components/otpvalidation';
+import Select from 'react-select';
 import {
     FETCH_BANK_PENDING,
     FETCH_BANK_SUCCESS,
@@ -28,7 +29,7 @@ class LoanOnbaordingSalaryDetails extends React.Component {
         }
     }
     componentDidMount = () => {
-        // this.init();
+         this.init();
     }
 
     init = () => {
@@ -51,6 +52,7 @@ class LoanOnbaordingSalaryDetails extends React.Component {
                 );
             case FETCH_BANK_SUCCESS:
                 let banksList = props.bankList.banks_data.response;
+                var options= [];
                 for (var bank in banksList) {
                     options.push({ value: banksList[bank].BankCode, label: banksList[bank].BankName });
                 }

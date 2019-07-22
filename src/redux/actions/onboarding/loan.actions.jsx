@@ -127,7 +127,8 @@ export const generateStatement =(token, url)=>{
         return consume
             .then(response => {
                 //TODO: edit localDB accounts object
-                dispatch(success(response.data, data));
+                //dispatch(success(response.data, data));
+                dispatch(success(response.data));
             })
             .catch(error => {
                // console.log("error in here");
@@ -139,7 +140,8 @@ export const generateStatement =(token, url)=>{
     };
 
     function request(request) { return { type: loanOnboardingConstants.LOAN_GENERATE_STATEMENT_PENDING, request } }
-    function success(response, request) { return { type: loanOnboardingConstants.LOAN_GENERATE_STATEMENT_SUCCESS, data: { response : response, request: request } }}
+    // function success(response, request) { return { type: loanOnboardingConstants.LOAN_GENERATE_STATEMENT_SUCCESS, data: { response : response, request: request } }}
+    function success(response) { return { type: loanOnboardingConstants.LOAN_GENERATE_STATEMENT_SUCCESS, data: {response} }}
     function failure(error) { return { type: loanOnboardingConstants.LOAN_GENERATE_STATEMENT_FAILURE, error } }
 }
 
@@ -153,7 +155,8 @@ export const requestStatement =(token, url)=>{
         return consume
             .then(response => {
                 //TODO: edit localDB accounts object
-                dispatch(success(response.data, data));
+               // dispatch(success(response.data, data));
+               dispatch(success(response.data));
             })
             .catch(error => {
                // console.log("error in here");
@@ -165,7 +168,8 @@ export const requestStatement =(token, url)=>{
     };
 
     function request(request) { return { type: loanOnboardingConstants.LOAN_REQUEST_STATEMENT_PENDING, request } }
-    function success(response, request) { return { type: loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS, data: { response : response, request: request } }}
+    // function success(response, request) { return { type: loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS, data: { response : response, request: request } }}
+    function success(response) { return { type: loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS, data: { response : response } }}
     function failure(error) { return { type: loanOnboardingConstants.LOAN_REQUEST_STATEMENT_FAILURE, error } }
 }
 
@@ -179,7 +183,8 @@ export const salaryTransaction =(token)=>{
           return consume
               .then(response => {
                   //TODO: edit localDB accounts object
-                  dispatch(success(response.data, data));
+                //   dispatch(success(response.data, data));
+                dispatch(success(response.data));
               })
               .catch(error => {
                  // console.log("error in here");
@@ -191,7 +196,8 @@ export const salaryTransaction =(token)=>{
       };
   
       function request(request) { return { type: loanOnboardingConstants.LOAN_SALARYTRANSACTION_PENDING, request } }
-      function success(response, request) { return { type: loanOnboardingConstants.LOAN_SALARYTRANSACTION_SUCCESS, data: { response : response, request: request } }}
+    //   function success(response, request) { return { type: loanOnboardingConstants.LOAN_SALARYTRANSACTION_SUCCESS, data: { response : response, request: request } }}
+      function success(response) { return { type: loanOnboardingConstants.LOAN_SALARYTRANSACTION_SUCCESS, data: { response : response } }}
       function failure(error) { return { type: loanOnboardingConstants.LOAN_SALARYTRANSACTION_FAILURE, error } }
   }
 
@@ -231,7 +237,8 @@ export const salaryEntry =(token, data)=>{
           return consume
               .then(response => {
                   //TODO: edit localDB accounts object
-                  dispatch(success(response.data, data));
+                  //dispatch(success(response.data, data));
+                  dispatch(success(response.data));
               })
               .catch(error => {
                  // console.log("error in here");
@@ -243,7 +250,7 @@ export const salaryEntry =(token, data)=>{
       };
   
       function request(request) { return { type: loanOnboardingConstants.LOAN_SCORECARD_QUESTION_PENDING, request } }
-      function success(response, request) { return { type: loanOnboardingConstants.LOAN_SCORECARD_QUESTION_SUCCESS, data: { response : response, request: request } }}
+      function success(response) { return { type: loanOnboardingConstants.LOAN_SCORECARD_QUESTION_SUCCESS, data: { response : response } }}
       function failure(error) { return { type: loanOnboardingConstants.LOAN_SCORECARD_QUESTION_FAILURE, error } }
   }
 
