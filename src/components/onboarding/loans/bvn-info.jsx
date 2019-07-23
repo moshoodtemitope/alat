@@ -41,8 +41,40 @@ class LoanOnboardingBVNInfo extends React.Component {
         else this.props.history.push("/loan/validateotp");
     }
 
+    CreateProfile =()=>{
+        var data = {
+            ...this.props.loan_bvn.loan_bvn_data.data
+        };
+
+        this.props.dispatch(actions.LoanOnboardingStep3({
+            email: data.request.email,
+            phoneNumber: data.request.phoneNo,
+            fullName: `${this.state.FirstName} ${this.state.LastName}`,
+            bvn: this.state.BVN,
+            password: data.request.password,
+            imei: '354553073954109',
+            "channelId": 2,
+            dateOfBirth: data.request.dateOfBirth,
+            isOnboarding: true,
+            loanAmount: data.request.loanAmount,
+            tenure: data.request.tenure,
+            deviceName: 'string-5',
+            deviceOs: 'string-6',
+            gcmRegId: 'string-8',
+            deviceCode: 'string-10'
+        }));
+    }
+    
+    gotoSalaryDetails=()=>{
+      if(this.props.loan_createprofile)
+      if(this.props.loan_createprofile.loan_step3_status == loanOnboardingConstants.LOAN_STEP3_SUCCESS){
+          this.props.history.push("/loan/salary-detail");
+      }
+    }
+
     render() {
         return (<LoanOnboardingContainer>
+            {this.gotoSalaryDetails()}
             <div className="col-sm-12">
                 <div className="max-500">
                     <div className="loan-header-text text-center">
@@ -50,6 +82,9 @@ class LoanOnboardingBVNInfo extends React.Component {
                         <p>Ensure the BVN details belongs to you.</p>
                     </div>
                     <div className="al-card">
+                    {this.props.alert && this.props.alert.message &&
+                            <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                        }
                         <div className="details-container">
                             <div className="row mb-4">
                                 <div className="col-6">
@@ -82,7 +117,13 @@ class LoanOnboardingBVNInfo extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <a href="#" className="btn-alat btn-block">Confirm Details</a>
+                        {/* style={{cursor: "pointer", color: "white"}} */}
+                        <button 
+                        disabled= {this.props.loan_createprofile.loan_step3_status == loanOnboardingConstants.LOAN_STEP3_PENDING}
+                        className="btn-alat btn-block"
+                        onClick={this.CreateProfile}>
+                        {this.props.loan_createprofile.loan_step3_status == loanOnboardingConstants.LOAN_STEP3_PENDING ? "Processing..." : "Confirm Details"}
+                        </button>
                     </div>
 
                 </div>
@@ -93,7 +134,10 @@ class LoanOnboardingBVNInfo extends React.Component {
 
 function mapStateToProps(state){
     return {
+        alert: state.alert,
         loan_val_otp: state.loanOnboardingReducerPile.loanOnboardingValidateOTP,
+        loan_bvn: state.loanOnboardingReducerPile.loanOnboardingBVN,
+        loan_createprofile: state.loanOnboardingReducerPile.loanOnboardingStep3
     };
 }
 

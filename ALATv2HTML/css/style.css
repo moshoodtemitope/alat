@@ -1,0 +1,68 @@
+/************ TABLE OF CONTENTS ***************
+1. Fonts and Imports
+2. Reset
+3. Global
+4. Header
+...............
+**********************************************/
+@import url(./font.css);
+@import url(./font-awesome/font-awesome.css);
+/***
+====================================================================
+	Reset
+====================================================================
+ ***/
+* {
+  margin: 0px;
+  padding: 0px;
+  border: none;
+  outline: none; }
+
+body {
+  font-family: "Proxima Nova", sans-serif;
+  color: #000000;
+  font-weight: 300;
+  background: #fcfcfc; }
+  @media screen and (max-width: 480px) {
+    body {
+      font-size: 12px; } }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Proxima Nova", sans-serif; }
+
+h1 {
+  font-size: 64px; }
+
+h2 {
+  font-size: 48px; }
+
+h3 {
+  font-size: 30px; }
+
+h4 {
+  font-size: 24px; }
+
+h5 {
+  font-size: 20px; }
+
+h6 {
+  font-size: 18px; }
+
+a {
+  color: #9D0F3E;
+  text-decoration: none; }
+
+a:hover {
+  color: #9D0F3E;
+  text-decoration: underline; }
+
+.btn-alat {
+  margin-top: 40px;
+  background: #9D0F3E;
+  color: #FFFFFF;
+  display: block;
+  cursor: pointer;
+  height: 55px;
+  border-radius: 3px; }
+
+/*# sourceMappingURL=style.css.map */
