@@ -12,7 +12,9 @@ import {
     FETCH_BANK_SUCCESS,
     FETCH_BANK_FAILURE,
 } from "../../../redux/constants/transfer.constants";
-import { getBanks } from "../../../redux/actions/transfer/cash-transfer.actions";
+//import { getBanks } from "../../../redux/actions/transfer/cash-transfer.actions";
+const options = [
+];
 //import OTPInput from '../../../shared/components/otpInput' //'./otpInput';
 
 class LoanOnbaordingSalaryDetails extends React.Component {
@@ -25,20 +27,69 @@ class LoanOnbaordingSalaryDetails extends React.Component {
             isTermChecked: "",
             bankCode: "",
             isAccepted: false,
-            selectedBank: null
+            selectedBank: null,
+            isSubmitted: false,
+
+            employerNameInvalid: false,
+            accountNumberInvalid: false,
+            selectedBankInvalid: false
         }
     }
     componentDidMount = () => {
-         this.init();
+        this.init();
     }
 
     init = () => {
         if (this.props.loan_step3)
             if (this.props.loan_step3.loan_step3_status == loanOnboardingConstants.LOAN_STEP3_SUCCESS) {
-                this.props.dispatch(getBanks(this.state.user.token));
+                this.fetchBanks();
             } else this.props.history.push("/loan/bvn-info");
         else { this.props.history.push("/loan/bvn-info") }
     }
+
+    validateFields = () => {
+        var acctNumberInvalid = false;
+        var employerNameInvalid = false;
+        var selectedBankInvalid = false;
+        if (this.state.accountNumber.length != 10) {
+            this.setState({ accountNumberInvalid: true })
+            acctNumberInvalid = true;
+        }
+
+        if (this.state.accountNumber.length == 10) {
+            this.setState({ accountNumberInvalid: false })
+            acctNumberInvalid = false;
+        }
+
+        if (this.state.employerName.length == 0 || this.state.employerName == "") {
+            this.setState({ employerNameInvalid: true })
+            employerNameInvalid = true;
+        }
+
+        if (this.state.employerName.length > 0) {
+            this.setState({ employerNameInvalid: false })
+            employerNameInvalid = false;
+        }
+
+        if (this.state.bankCode == "") {
+            this.setState({ selectedBankInvalid: true });
+            selectedBankInvalid = true;
+        }
+        if (this.state.bankCode != "") {
+            this.setState({ selectedBankInvalid: false });
+            selectedBankInvalid = false;
+        }
+
+        if (acctNumberInvalid || employerNameInvalid || selectedBankInvalid)
+            return true;
+        else return false;
+    }
+
+    fetchBanks = () => {
+        this.props.dispatch(actions.getBanks(this.props.loan_step3.loan_step3_data.data.response.token));
+    }
+
+
 
     renderBankDropdown(props) {
         let banksStatus = props.bankList.banks; //FETCH_BANK_PENDING;
@@ -51,21 +102,25 @@ class LoanOnbaordingSalaryDetails extends React.Component {
                     </select>
                 );
             case FETCH_BANK_SUCCESS:
-                let banksList = props.bankList.banks_data.response;
-                var options= [];
+                let banksList = props.bankList.banks_data.response.Response;
+                //var options = [];
                 for (var bank in banksList) {
-                    options.push({ value: banksList[bank].BankCode, label: banksList[bank].BankName });
+                    options.push({ value: banksList[bank].Id, label: banksList[bank].Name });
                 }
-                const { selectedBank } = this.state;
+                const { selectedBank, selectedBankInvalid } = this.state;
                 return (
-                    <Select
-                        options={options}
-                        // isDisabled={this.state.submitButtonState}
-                        isDisabled={props.account_details.fetchStatus}
-                        // onInputChange={this.handleChange}
-                        onChange={this.handleChange}
-                    />
-
+                    <Fragment>
+                        <Select
+                            options={options}
+                            // isDisabled={this.state.submitButtonState}
+                            isDisabled={false}
+                            //onInputChange={this.handleChange}
+                            onChange={this.handleChange}
+                        />
+                        {selectedBankInvalid &&
+                            <div className="text-danger">Select a Bank</div>
+                        }
+                    </Fragment>
                 );
             case FETCH_BANK_FAILURE:
                 return (
@@ -79,13 +134,43 @@ class LoanOnbaordingSalaryDetails extends React.Component {
         }
     }
 
-    onSubmit = () => {
-        let url = `accountNumber=${this.state.accountNumber}&bankId=${this.state.bankCode}&employersName=${this.state.employerName}`;
-        this.props.dispatch(actions.requestStatement(this.state.user.token, url));
+    onSubmit = (e) => {
+        e.preventDefault();
+        this.setState({ isSubmitted: true });
+        if (this.validateFields()) {
+
+        } else {
+            let url = `accountNumber=${this.state.accountNumber}&bankId=${this.state.bankCode}&employersName=${this.state.employerName}`;
+            this.props.dispatch(actions.requestStatement(this.props.loan_step3.loan_step3_data.data.response.token, url));
+        }
     }
 
-    handleChange(selectedBank) {
-        this.setState({ selectedBank });
+    handleChange = (selectedBank) => {
+        this.setState({ selectedBank, bankCode: selectedBank.value });
+    }
+
+
+    handleInputChange = (e) => {
+        if (e.target.name == "employerName") {
+            this.setState({ employerName: e.target.value }, () => {
+                if (this.state.isSubmitted)
+                    this.validateFields();
+            });
+        }
+        else if (e.target.name == "accountNumber") {
+            if (/^\d+$/.test(e.target.value)) {
+                this.setState({ accountNumber: e.target.value }, () => {
+                    if (this.state.isSubmitted)
+                        this.validateFields();
+                });
+            }
+            else if (e.target.value == "") {
+                this.setState({ accountNumber: "" }, () => {
+                    if (this.state.isSubmitted)
+                        this.validateFields();
+                })
+            }
+        }
     }
 
     handleCheckBox = (e) => {
@@ -107,7 +192,8 @@ class LoanOnbaordingSalaryDetails extends React.Component {
 
 
     render() {
-        const { employerName, accountNumber } = this.state;
+        const { employerName, accountNumber, employerNameInvalid, accountNumberInvalid,
+            selectedBankInvalid } = this.state;
         let props = this.props;
         return (
             <LoanOnboardingContainer>
@@ -123,18 +209,26 @@ class LoanOnbaordingSalaryDetails extends React.Component {
                                 {this.props.alert && this.props.alert.message &&
                                     <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                                 }
-                                <form>
-                                    <div className="input-ctn">
+                                <form onSubmit={this.onSubmit}>
+                                    <div className={employerNameInvalid ? "input-ctn form-error" : "input-ctn"}>
                                         <label>Employer Name</label>
-                                        <input type="text" value={employerName} onChange={this.handleChange} />
+                                        <input type="text" name="employerName"
+                                            value={employerName} onChange={this.handleInputChange} />
+                                        {employerNameInvalid &&
+                                            <div className="text-danger">A valid employer name is required</div>
+                                        }
                                     </div>
 
-                                    <div className="input-ctn">
+                                    <div className={accountNumberInvalid ? "input-ctn form-error" : "input-ctn"}>
                                         <label>Account Number</label>
-                                        <input type="text" maxLength={10} value={accountNumber} onChange={this.handleChange} />
+                                        <input type="text" name="accountNumber" maxLength={10} value={accountNumber}
+                                            onChange={this.handleInputChange} />
+                                        {accountNumberInvalid &&
+                                            <div className="text-danger">A valid employer name is required</div>
+                                        }
                                     </div>
 
-                                    <div className="input-ctn">
+                                    <div className={selectedBankInvalid ? "input-ctn form-error" : "input-ctn"}>
                                         <label>Select Bank</label>
                                         {this.renderBankDropdown(props)}
                                         <div className="pw-hint pw-terms">

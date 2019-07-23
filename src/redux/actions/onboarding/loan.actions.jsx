@@ -4,6 +4,11 @@ import {alertActions} from "../alert.actions";
 import {SystemConstant} from "../../../shared/constants";
 import { modelStateErrorHandler } from "../../../shared/utils";
 import { loanOnboardingConstants } from '../../constants/onboarding/loan.constants';
+import {
+    FETCH_BANK_PENDING,
+    FETCH_BANK_SUCCESS,
+    FETCH_BANK_FAILURE,
+} from "../../../redux/constants/transfer.constants";
 
 export const loanOnbaordingStep1 =(data)=>{
     //SystemConstant.HEADER['alat-token'] = token;
@@ -53,6 +58,7 @@ export const LoanOnboardingStep3 =(data)=>{
         return consume
             .then(response => {
                 //TODO: edit localDB accounts object
+                localStorage.setItem("user", JSON.stringify(response.data));
                 dispatch(success(response.data, data));
             })
             .catch(error => {
@@ -279,3 +285,28 @@ export const salaryEntry =(token, data)=>{
       function success(response, request) { return { type: loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS, data: { response : response, request: request } }}
       function failure(error) { return { type: loanOnboardingConstants.LOAN_SCORECARD_ANSWER_FAILURE, error } }
   }
+
+  export const getBanks = (token) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.LOAN_BANK_LIST, "GET", null, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                // consume.log(response);
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                if(error.response.message){
+                    dispatch(failure(error.response.message.toString()));
+                }else{
+                    dispatch(failure('We are unable to load banks.'));
+                }
+                // dispatch(failure(error.response.data.message.toString()));
+            });
+    };
+
+    function request(request) { return { type:FETCH_BANK_PENDING, request} }
+    function success(response) { return {type:FETCH_BANK_SUCCESS, response} }
+    function failure(error) { return {type:FETCH_BANK_FAILURE, error} }
+};
