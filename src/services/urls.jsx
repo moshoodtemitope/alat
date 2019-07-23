@@ -1,6 +1,6 @@
 //const URL = 'https://api.alat.ng';
-//const URL = 'https://196.43.215.170';
-const URL = 'https://196.43.215.157';
+const URL = 'https://196.43.215.170';
+//const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
 
@@ -19,7 +19,7 @@ export const routes = {
     GETALLQUESTIONS: BASEURL + '/UserSecurityApi/api/v1/Account/AllQuestions',
     REGISTRATIONURLV2: BASEURL + '/UserSecurityApi/api/v1/Account/RegistrationV2',
     DOCUMENT_UPLOAD: BASEURL + '/DocumentUpload/api/upload/document',
-   
+
     //user security
     ONBOARDING_PRIORITY: BASEURL + '/UserSecurityApi/api/v1/Account/GetOnboardingPriority',
     ANNOUNCEMENT: BASEURL + '/UserSecurityapi/api/v1/Account/GetNewsFeeds',
@@ -35,7 +35,7 @@ export const routes = {
 
     //Payment
 
-    //FundAccount 
+    //FundAccount
     WEMA_TO_ALAT_TRANSFER_WITHOUT_OTP: BASEURL + '/PaymentApi/api/WemaAccountToAlatAccountWithoutOTP',
     GET_TOKENIZED_CARDS: BASEURL + '/PaymentCardServicesApi/api/v1/TokenizationApi/GetTokenizedCards',
     SAVE_CARD: BASEURL +  '/PaymentCardServicesApi/api/v1/TokenizationApi/TokenizedCardsBeforeTrans',
@@ -55,9 +55,9 @@ export const routes = {
     BANK_TRANSFER_WITHPIN: BASEURL + '/PaymentApi/api/BankTransferRequestWebWithPin',
     BANK_TRANSFER_WITHPIN_ANDOTP: BASEURL + '/PaymentApi/api/BankTransferRequestWebWithPinAndOTP',
     INTERBANK_CHARGES: BASEURL + '/PaymentApi/api/InterBankCharges/All',
-    GETLIMIT: BASEURL + '/AccountMaintenance/api/transactions/getTransactionlimit', 
-    GetAllCustomerAccountsWithLimitsV2: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2', 
-    
+    GETLIMIT: BASEURL + '/AccountMaintenance/api/transactions/getTransactionlimit',
+    GetAllCustomerAccountsWithLimitsV2: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2',
+
     //PaymentApi/api/Accounts/VerifyAccountName
 
     //Airtime
