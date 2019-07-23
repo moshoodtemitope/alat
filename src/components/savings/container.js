@@ -1,0 +1,20 @@
+import * as React from "react";
+import {Fragment} from "react";
+
+
+class SavingsContainer extends React.Component {
+    render() {
+        // console.log(this.props);
+        return (
+            <Fragment>
+                <div className="dashboard-wrapper">
+                    <div className="container">
+                        {this.props.children}
+                    </div>
+                </div>
+            </Fragment>
+        );
+    }
+}
+
+export default SavingsContainer;

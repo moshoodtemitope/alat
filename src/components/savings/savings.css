@@ -1,0 +1,111 @@
+ @import '../../assets/css/font.css';
+ .home-container{
+    justify-content: center;
+    align-items: center
+ }
+.fixed-goal{
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
+    border-radius: 6px;
+    background: #9D0F3E;
+    border: 0.95px solid #FFF4F4;
+    box-sizing: border-box;
+    width: 300px;
+    height: 250px;
+    margin-left:10px;
+    margin-right:10px;
+}
+.goal-icon{
+    padding-top: 20px;
+    margin: 25px;
+}
+.flex-text{
+    font-weight: bold;
+    font-size: 18px;
+    display: block;
+    color: #ffffff;
+    margin-left: 25px;
+    line-height: 22px;
+    font-family:proxima_novasemibold;
+    font-style: normal;
+}
+.info-text3{
+    color: #fff;  
+    font-size: 14px;
+    line-height: 20px;
+    display: block;
+    margin-left: 15px;
+    padding-left: 10px;
+    padding-right: 20px;
+    font-family:proxima_novaregular;
+  
+}
+.info-text2{
+    color: #4D4D4D;  
+    font-size: 14px;
+    line-height: 20px;
+    display: block;
+    margin-left: 15px;
+    padding-left: 10px;
+    padding-right: 20px;
+    font-family:proxima_novaregular;
+  
+}
+.flex-goal{
+    box-shadow: 3px 8px 24px rgba(255, 255, 255, 0.3221); 
+    border-radius: 6px;
+    background: #ffffff;
+    border: 0.95px solid #FFF4F4;
+    box-sizing: border-box;
+    width: 300px;
+    height: 250px;
+    margin-left:10px;
+    margin-right:10px;
+}
+.stash-goal{
+    border-radius: 6px;
+    background: #ffffff;
+    box-shadow: 0px 8px 24px rgba(185, 185, 185, 0.162138);
+    border: 0.95px solid #FFF4F4;
+    box-sizing: border-box;
+    width: 300px;
+    height: 250px;
+    margin-left:10px;
+    margin-right:10px;
+}
+.plan-text{
+    font-weight: bold;
+    font-size: 18px;
+    display: block;
+    color: #AB2656;
+    margin-left: 25px;
+    line-height: 22px;
+    font-family:proxima_novasemibold;
+    font-style: normal;
+}
+.header-info{
+    font-family: proxima_novasemibold;
+    font-size: 18px;
+    color: #444444;
+    display: block;
+    padding-left: 35px;
+    padding-right: 35px;
+} 
+.label-text{
+    font-family: proxima_novasemibold;
+    font-size: 14px;
+    line-height: 17px;
+    color: #7C7C7C;
+}
+.form-row{
+    padding-right:50px;
+    padding-left: 50px;
+}
+.form-group{
+    padding-left: 50px;
+    padding-right: 50px;
+}
+.react-datepicker__header{
+         color: #AB2656;
+
+}
+  
