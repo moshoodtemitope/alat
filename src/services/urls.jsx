@@ -93,10 +93,10 @@ export const routes = {
     LOAN_VERIFY_BVN : BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/CallBvnService',
     LOAN_VALIDATE_OTP: BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/VerifyOtpForBvn',
 
-    //savings&goals
-    ADDGOAL: BASEURL + '/Savings.WebApi/api/Savings/AddGoal',
-    ADDFLEXIGOAL: BASEURL + '/Savings.WebApi/api/Savings/AddFlexiGoal',
-    ADDSTACHGOAL: BASEURL + '/Savings.WebApi/api/Savings/AddStashGoal',
-    FETCH_DEBITABLE_ACCOUNTS_WITH_LIMITS: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2',
+    // //savings&goals
+    // ADDGOAL: BASEURL + '/Savings.WebApi/api/Savings/AddGoal',
+    // ADDFLEXIGOAL: BASEURL + '/Savings.WebApi/api/Savings/AddFlexiGoal',
+    // ADDSTACHGOAL: BASEURL + '/Savings.WebApi/api/Savings/AddStashGoal',
+    // FETCH_DEBITABLE_ACCOUNTS_WITH_LIMITS: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2',
 
 };
