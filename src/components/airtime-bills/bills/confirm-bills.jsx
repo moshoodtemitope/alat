@@ -248,7 +248,7 @@ class ConfirmBills extends Component {
                                                     <div className="col-sm-12">
                                                         {this.props.billsInfo.item.charge > 0 ? <p className="info-text m-b-20 text-danger">You will be charged a fee of ₦{this.props.billsInfo.item.charge}</p> : null}
                                                         <center>
-                                                            <button disabled={this.props.fetching} onClick={this.onSubmitForm} class="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Confirm"}</button>
+                                                            <button disabled={this.props.fetching} onClick={this.onSubmitForm} className="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Confirm"}</button>
                                                         </center>
                                                     </div>
                                                 </div>
