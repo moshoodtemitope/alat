@@ -1,10 +1,9 @@
-import * as React from "react";
-import {Redirect, Route, Router, Switch} from "react-router";
-import {connect} from "react-redux";
-import {Fragment} from "react";
+import React, {Fragment, Suspense} from "react";
+import { Redirect, Route, Router, Switch } from "react-router";
+import { connect } from "react-redux";
 import OnboardingRoute from "./onboarding/routes";
 // import {OnboardingRoute} from "./onboarding/routes";
-import {history} from './../_helpers/history';
+import { history } from './../_helpers/history';
 import AuthenticatedRoutes from "./authenticated-routes";
 import Login from "./onboarding/login";
 import Signup from "./onboarding/signup";
@@ -13,6 +12,10 @@ import Dashboard from "./dashboard";
 import TransferHome from "./transfer/transfer-home";
 import NewTransfer from "./transfer/cash-transfer/new-transfer";
 import TransferRoute from "./transfer/routes";
+
+// const AuthenticatedRoutes = React.lazy(() =>
+//   import(/* webpackChunkName: 'AuthenticatedRoutes' */ "./authenticated-routes")
+// );
 
 // function PrivateRoute ({component: Component, authed, ...rest}) {
 //     console.error(authed);
@@ -50,6 +53,13 @@ class IndexedRoute extends React.Component {
                 <AuthenticatedRoutes />
                 
             </div>
+
+            // <Fragment>
+            //     <OnboardingRoute />
+            //     <Suspense fallback={<div className="text-center">Loading...</div>}>
+            //         <AuthenticatedRoutes />
+            //     </Suspense>
+            // </Fragment>
             // <Router history={history}>
             //     <Switch>
             //         <PrivateRoute path='/dashboard' component={Dashboard} authed={this.props.user} />
