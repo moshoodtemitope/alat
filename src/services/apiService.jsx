@@ -23,14 +23,6 @@ export class ApiService {
 
         if(localStorage.getItem("user") == null){
             headers = undefined;
-            console.log("sssssssss, I turn header to undefined");
-            console.log(headers);
-        }else{
-            console.log(headers);
-            console.log("we good bro..order chip[s!!!");
-            for (let [key, value] of Object.entries(headers)) {
-                console.log(key,value);
-            }
         }
         // header = new Headers(headers || {
         //     'Content-Type': 'application/json',
@@ -104,7 +96,7 @@ export class ApiService {
                 // console.log("successful");
                 return service;
             }).catch(function (error) {
-               
+            
               if (error.response) {
                 // The request was made and the server responded with a status code
                 // that falls out of the range of 2xx
