@@ -37,7 +37,18 @@ class MenuContainer extends React.Component{
                                     </li>
                                     <li><a href="#" className="clearfix"><i className="demo-icon icon-western-union" aria-hidden="true"></i>
                                         <span>Remmitance</span></a></li>
-                                    <li><a href="#" className="clearfix"><i className="demo-icon icon-card" aria-hidden="true"></i><span> Cards</span></a>
+                                    
+                                    <li><NavLink to="/cards" className="clearfix"><i className="demo-icon icon-card" aria-hidden="true"></i>
+                                        <span>Cards</span></NavLink>
+                                        <ul>
+                                            <li>
+                                                <NavLink to="/cards">Request card</NavLink>
+                                            </li>
+                                            <li><a href="#">Card Control</a></li>
+                                            <li><a href="#"> Set Card Pin</a></li>
+                                            <li><NavLink to="/cards/hotlist">Hotlist Card</NavLink></li>
+                                            <li><a href="#"> Alat Dollar Card</a></li>
+                                        </ul>
                                     </li>
                                     <li><a href="#" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i><span>Settings</span></a></li>
                                 </ul>

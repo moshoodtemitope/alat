@@ -30,10 +30,10 @@ class CardsContainer extends React.Component {
                                         <div className="sub-tab-nav">
                                             <ul>
                                                 <li><NavLink to={'/cards'}>Request Card</NavLink></li>
-                                                <li>Card Control</li>
-                                                <li>Set Card Pin</li>
-                                                <li><Navlink to={'/cards/hotlist'}>Hotlist Card </Navlink></li>
-                                                <li>ALAT Dollar Card</li>
+                                                <li> <a href="#"> Card Control</a></li>
+                                                <li><a href="#">Set Card Pin</a></li>
+                                                <li><NavLink to={'/cards/hotlist'}>Hotlist Card </NavLink></li>
+                                                <li><a href="#"></a> ALAT Dollar Card</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -41,7 +41,7 @@ class CardsContainer extends React.Component {
                                 {this.props.children}
                                 <Route exact to={'/cards'} component={RequestCardContainer} />
                                 <Route to={'/cards/hotlist'} component={HotlistCardContainer} />
-                                {/* <Route to={'/fx-transfer'} component={fxTransfer} />  */} */}
+                                {/* <Route to={'/fx-transfer'} component={fxTransfer} />  */} 
                             </div>
                         </div>
                     </div>
