@@ -26,7 +26,7 @@ class HotlistCardContainer extends Component {
        return(
            <Fragment>
                 {this.props.children}
-                <Route exact path='/cards/hotlist' render={(props) => <HotlistCard {...props} />} />
+                <Route exact path='/hotlist' render={(props) => <HotlistCard {...props} />} />
                 {/* <Route path='/transfer/provide-details' render={(props) => <ProvideDetails {...props} />}/>
                 <Route path='/transfer/send' render={(props) => <ConFirmTransfer {...props} />}/>
                 <Route path='/transfer/otp' render={(props) => <TransferOtp {...props} />}/>

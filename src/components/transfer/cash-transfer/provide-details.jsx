@@ -287,7 +287,7 @@ class ProvideDetails extends React.Component{
                                                             <SelectDebitableAccounts
                                                                 value={this.state.accountNumber}
                                                                 // currency={currencySelected}
-                                                                requestType = "forBankTransfer"
+                                                                // requestType = "forBankTransfer"
                                                                 accountInvalid={this.state.isAccountInvalid}
                                                                 onChange={this.handleSelectDebitableAccounts} />
                                                             {isSelectChanged===true &&

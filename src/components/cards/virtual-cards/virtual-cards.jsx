@@ -1,43 +1,76 @@
+import * as React from "react";
+import {Router, NavLink} from "react-router";
+// import * as utils from "../../shared/utils";
 
-import React, { Component, Fragment } from 'react';
-import {Link, NavLink, Route} from 'react-router-dom';
-import { connect } from "react-redux";
+import {Fragment} from "react";
+import {connect} from "react-redux";
+import { Link } from 'react-router-dom';
+import Select from 'react-select';
+import Modal from 'react-responsive-modal';
+import {Textbox} from "react-inputs-validation";
+import "./../cards.scss";
+import * as utils from '../../../shared/utils';
+const options = [
+];
 
-// import NewTransfer from "./new-transfer";
-
-class VirtualCards extends Component {
+class VirtualCards extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: JSON.parse(localStorage.getItem("user"))
+            user: JSON.parse(localStorage.getItem("user")),
         };
+        
     }
 
     componentDidMount() {
-     
     }
-   render() {
-       return(
-           <Fragment>
-                {this.props.children}
-                {/* <Route exact path='/transfer' render={(props) => <NewTransfer {...props} />} />
-                <Route path='/transfer/provide-details' render={(props) => <ProvideDetails {...props} />}/>
-                <Route path='/transfer/send' render={(props) => <ConFirmTransfer {...props} />}/>
-                <Route path='/transfer/otp' render={(props) => <TransferOtp {...props} />}/>
-                <Route path='/transfer/success' render={(props) => <TransferSuccess {...props} />}/>
-                <Route path='/transfer/save-beneficiary' render={(props) => <SaveBeneficiary {...props} />}/> */}
-           </Fragment>
-       );
-   }
+
+    renderTopUpCard(){
+        return(
+            <div className="col-sm-12">
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <div className="max-600">
+                                <div className="al-card no-pad">
+                                    <div className="sub-tab-nav inpage-nav">
+                                        <ul>
+                                            <li> <Link to={'virtual-cards'}>Top Up</Link></li>
+                                            <li> <Link to={'virtual-cards/history'}> Transaction History</Link></li>
+                                            <li> <Link to={'virtual-cards/liquidate'}>Liquidate Card</Link></li>
+                                            <li> <Link to={'virtual-cards/delete'}>Delete Card</Link></li>
+                                        </ul>
+                                    </div>
+                                    <div className="transfer-ctn">
+                                        <form>
+                                            liquidate
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/* here down */}
+                </div>
+        )
+    }
+
+    
+    render() {
+        
+
+        return (
+            <Fragment>
+               { this.renderTopUpCard()}
+            </Fragment>
+        );
+    }
 }
 
-function mapStateToProps(state) {
-    const { authentication } = state;
-    const { user } = authentication;
+
+function mapStateToProps(state){
     return {
-        user,
+       
     };
 }
 
 export default connect(mapStateToProps)(VirtualCards);
-//export default Airtime;

@@ -46,8 +46,8 @@ class MenuContainer extends React.Component{
                                             </li>
                                             <li><a href="#">Card Control</a></li>
                                             <li><a href="#"> Set Card Pin</a></li>
-                                            <li><NavLink to="/cards/hotlist">Hotlist Card</NavLink></li>
-                                            <li><a href="#"> Alat Dollar Card</a></li>
+                                            <li><NavLink to="/hotlist">Hotlist Card</NavLink></li>
+                                            <li><NavLink to="/virtual-cards"> Alat Dollar Card </NavLink></li>
                                         </ul>
                                     </li>
                                     <li><a href="#" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i><span>Settings</span></a></li>
