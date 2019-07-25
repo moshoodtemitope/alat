@@ -24,6 +24,7 @@ class LoanOnboardingStep3 extends React.Component {
             dobInvalid: false,
             passwordInvalid: false,
             verifyPasswordInvalid: false,
+            isSubmitted: false,
 
             phoneNumber: "",
             LoanAmount: "",
@@ -68,7 +69,12 @@ class LoanOnboardingStep3 extends React.Component {
 
     handleDatePicker = (dob) => {
         dob.setHours(dob.getHours() + 1);
-        this.setState({ dob: dob });
+        this.setState({ dob: dob },()=>{
+            if(this.state.isSubmitted){
+               // console.log("here");
+                this.valDob();
+            }
+        });
     }
 
     validateBvn = (zeroIndex) => {
@@ -82,16 +88,16 @@ class LoanOnboardingStep3 extends React.Component {
         }
     }
 
-    validateDob = () => {
-        if (this.state.dob == null) {
-            this.setState({ dobInvalid: true });
-            return true;
-        }
-        else {
-            this.setState({ dobInvalid: false });
-            return false;
-        }
-    }
+    // validateDob = () => {
+    //     if (this.state.dob == null) {
+    //         this.setState({ dobInvalid: true });
+    //         return true;
+    //     }
+    //     else {
+    //         this.setState({ dobInvalid: false });
+    //         return false;
+    //     }
+    // }
 
     checkPwd = () => {
         let str = this.state.password;
@@ -132,10 +138,13 @@ class LoanOnboardingStep3 extends React.Component {
 
     ValConfirmEmail = () => {
         if (this.state.email.toLowerCase() === this.state.verifyEmail.toLowerCase()) {
-            this.setState({ verifyEmailInvalid: false })
+            this.setState({ verifyEmailInvalid: false });
             return false;
-        } else {
-            this.setState({ verifyEmailInvalid: true })
+        } else if(this.state.verifyEmail == ""){
+            this.setState({ verifyEmailInvalid: true });
+            return true;
+        }else{ 
+            this.setState({ verifyEmailInvalid: true });
             return true;
         }
     }
@@ -166,9 +175,11 @@ class LoanOnboardingStep3 extends React.Component {
 
     valDob = () => {
         if (this.state.dob == null) {
+            //console.log("true here");
             this.setState({ dobInvalid: true });
             return true;
         } else {
+           // console.log("inner box");
             this.setState({ dobInvalid: false });
             return false;
         }
@@ -176,16 +187,10 @@ class LoanOnboardingStep3 extends React.Component {
 
     validateForm() {
 
-        if (this.validateBvn(1) && this.validateEmail() && this.valConfirmPasswordValid() &&
-            this.checkPwd() && this.ValConfirmEmail() && this.valDob()) {
-
-            if (this.state.verifyEmail !== '' && this.state.verifyPassword !== '') {
-
+        if (this.validateBvn(1) || this.validateEmail() || this.ValConfirmEmail() || this.valConfirmPasswordValid() ||
+            this.checkPwd() || this.valDob()) {
                 return true;
-            } else {
-                this.setState({ verifyEmailInvalid: false, verifyPasswordInvalid: false })
-                return false
-            }
+            
         } else {
 
             return false;
@@ -194,17 +199,24 @@ class LoanOnboardingStep3 extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
+        this.setState({isSubmitted : true});
         // console.log(this.state);
-        //if (this.validateForm()) {
-        console.log("submitted");
-        this.props.dispatch(actions.verifyBvn({
+        if (this.validateForm()) {
+       
+        }else {
+            //console.log("submitted");
+             this.props.dispatch(actions.verifyBvn({
             "bvn": this.state.bvn,
             "phoneNo": this.state.phoneNumber,
             "isOnboarding": true,
             "channelId": 2,  //channelID tobe confirmed for web
-            "dateOfBirth": this.state.dob
+            "dateOfBirth": this.state.dob,
+            "email" : this.state.email,
+            "password" : this.state.password,
+            loanAmount: this.state.LoanAmount,
+            tenure: this.state.Tenure
         }));
-        //}
+        }
     }
 
     gotoOtp = () => {
@@ -233,7 +245,7 @@ class LoanOnboardingStep3 extends React.Component {
                         {this.props.alert && this.props.alert.message &&
                             <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                         }
-                        <form onSubmit={this.handleSubmit}>
+                        <form autoComplete="none" onSubmit={this.handleSubmit}>
 
                             <div className={bvnInvalid ? "input-ctn form-error" : "input-ctn"}>
                                 <label>Enter your BVN</label>
@@ -244,7 +256,7 @@ class LoanOnboardingStep3 extends React.Component {
                             </div>
                             <div className={emailInvalid ? "input-ctn form-error" : "input-ctn"}>
                                 <label>Email Address</label>
-                                <input onChange={this.handleInputChange} onBlur={this.validateEmail} type="email" name="email" value={email} />
+                                <input autoComplete="none" onChange={this.handleInputChange} onBlur={this.validateEmail} type="email" name="email" value={email} />
                                 {emailInvalid &&
                                     // <div className="text-danger">invalid email entered</div>
                                     <div className="text-danger">email is invalid</div>
@@ -260,7 +272,7 @@ class LoanOnboardingStep3 extends React.Component {
 
                             <div className={passwordInvalid ? "input-ctn form-error" : "input-ctn"}>
                                 <label>Create a Password</label>
-                                <input onChange={this.handleInputChange} type="password" name="password" value={password} onBlur={this.checkPwd} />
+                                <input autoComplete="none" onChange={this.handleInputChange} type="password" name="password" value={password} onBlur={this.checkPwd} />
                                 {passwordInvalid && <div className="pw-hint">Your password must contain an <b>upper-case letter</b>, a <b>lower-case letter</b>, a <b>number</b> and a <b>special character</b>.</div>}
                                 {passwordInvalid &&
                                     <div className="text-danger">{passwordInvalidMessage}</div>
