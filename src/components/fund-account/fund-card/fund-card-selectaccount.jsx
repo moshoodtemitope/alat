@@ -19,7 +19,6 @@ class FundCardSelectAccount extends React.Component {
             selectedAccount: "",
             accountToDebit: "",
             isAccountInvalid: false,
-
             Pin: "",
             isPinInvalid: false,
             Amount: "",

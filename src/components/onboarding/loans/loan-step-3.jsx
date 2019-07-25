@@ -225,7 +225,7 @@ class LoanOnboardingStep3 extends React.Component {
             {this.gotoOtp()}
             <div className="max-500">
                 <div className="loan-header-text text-center">
-                    <h4 className="text-black">Let's know more about you</h4>
+                    <h4 className="text-black">Lets know more about you</h4>
                     <p>complete the form below to create your profile</p>
                 </div>
                 <div className="al-card no-pad">

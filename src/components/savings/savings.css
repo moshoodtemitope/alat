@@ -25,7 +25,7 @@
     color: #ffffff;
     margin-left: 25px;
     line-height: 22px;
-    font-family:proxima_novasemibold;
+    font-family:"proxima_novasemibold";
     font-style: normal;
 }
 .info-text3{
@@ -36,7 +36,7 @@
     margin-left: 15px;
     padding-left: 10px;
     padding-right: 20px;
-    font-family:proxima_novaregular;
+    font-family:"proxima_novaregular";
   
 }
 .info-text2{
@@ -47,7 +47,7 @@
     margin-left: 15px;
     padding-left: 10px;
     padding-right: 20px;
-    font-family:proxima_novaregular;
+    font-family:"proxima_novaregular";
   
 }
 .flex-goal{
@@ -79,19 +79,19 @@
     color: #AB2656;
     margin-left: 25px;
     line-height: 22px;
-    font-family:proxima_novasemibold;
+    font-family:"proxima_novasemibold";
     font-style: normal;
 }
 .header-info{
-    font-family: proxima_novasemibold;
+    font-family: "proxima_novasemibold";
     font-size: 18px;
     color: #444444;
     display: block;
-    padding-left: 35px;
-    padding-right: 35px;
+    padding-left: 50px;
+    padding-right: 50px;
 } 
 .label-text{
-    font-family: proxima_novasemibold;
+    font-family: "proxima_novasemibold";
     font-size: 14px;
     line-height: 17px;
     color: #7C7C7C;
@@ -108,4 +108,44 @@
          color: #AB2656;
 
 }
+.coverForSummary {
+    padding-top: 20px;
+    display: flex;
+    flex-wrap: nowrap;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eeeeee;
+}
+.coverForSummary .right, .coverForSummary .left {
+    width: 50%;
+}
+.coverForSummary .left {
+    padding-left: 10%;
+}
+  
+.coverForSummary .right {
+    padding-left: 5%;
+}
+  
+.coverForSummary .boldedText {
+    font-weight: bold;
+    margin-bottom: 0px;
+    font-size: 16px;
+    font-family: "proxima_novasemibold"
+  
+}
+.coverForSummary .GoalText {
+    font-size: 14px;
+    line-height: 17px;
+    color: #4D4D4D;
+    margin-bottom: 10px;
+    font-family:"proxima_novaregular"
+}
+.css-vj8t7z{
+    height:25px;
+}
+.css-19bqh2r{
+    height: 25px;
+}
+
+
   

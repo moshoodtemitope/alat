@@ -29,6 +29,8 @@ import { fundAccountReducer, getTokenizedCardsReducer,
 import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingVerifyBVNReducer,
      loanOnboardingStep3Reducer, loanOnboardingValidateOTPReducer} from './loan-onboarding.reducer';
 
+ import {fixedGoalStep1Reducer,fixedGoalStep2Reducer} from './goal/fixed-goal.reducers'
+
 export const onboarding = {
     userRegistrationRequest,
     bvnDetailsReducer,
@@ -93,3 +95,7 @@ export const fundAccount={
     //fundFromCardWithPinReducer
     saveCardAfterTranReducer
 }
+ export const fixedGoal={
+    fixedGoalStep1Reducer,
+    fixedGoalStep2Reducer
+ }

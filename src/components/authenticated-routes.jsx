@@ -18,7 +18,8 @@ import TransferHome from "./transfer/transfer-home";
 import FundAccountIndex from './fund-account/index';
 import ChooseGoalPlan from './savings/goal/goal-plan';
 import FixedGoal from './savings/fixed-goal';
-import FixedGoalComplete from './savings/fixed-goal-complete'
+import FixedGoalComplete from './savings/fixed-goal-step2';
+import SubmitFixedGoal from './savings/submit-fixed-goal'
 
 
 
@@ -67,6 +68,9 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path='/savings/choose-goal-plan' authed={this.props.user} component={ChooseGoalPlan}/>
                     <PrivateRoute path='/savings/fixed-goal' authed={this.props.user} component={FixedGoal}/>
                     <PrivateRoute path='/savings/fixed-goal-complete' authed={this.props.user} component={FixedGoalComplete}/>
+                    <PrivateRoute path='/savings/submit-fixed-goal' authed={this.props.user} component={SubmitFixedGoal}/>
+
+
                 </Switch>
             </Router>
             
