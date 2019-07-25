@@ -14,13 +14,13 @@ const search = (props) => {
                     
                         <div className="col-md-6 input-ctn">
                             <label>Search by Keyword</label>
-                            <input type="text" />
+                            <input type="text" onChange={props.search}/>
                         </div>
                         <div className="col-md-3 input-ctn">
                             <label>Start Date</label>
                             <DatePicker placeholderText="" selected={props.start}
                                 onChange={props.changeStart}
-                                onChangeRaw={(e) => this.handleChange(e)}
+                                //onChangeRaw={(e) => this.handleChange(e)}
                                 dateFormat="d MMMM, yyyy"
                                 peekNextMonth
                                 showMonthDropdown
@@ -33,7 +33,7 @@ const search = (props) => {
                             <label>End Date</label>
                             <DatePicker placeholderText="" selected={props.end}
                                 onChange={props.changeEnd}
-                                onChangeRaw={(e) => this.handleChange(e)}
+                                //onChangeRaw={(e) => this.handleChange(e)}
                                 dateFormat="d MMMM, yyyy"
                                 peekNextMonth
                                 showMonthDropdown
@@ -46,7 +46,7 @@ const search = (props) => {
                 </form>
 
             </div>
-            <button className="btn-alat m-t-10" style={{ width: "100%" }}>Search</button>
+            <button className="btn-alat m-t-10" onClick={props.searchFilter} style={{ width: "100%" }}>Search</button>
         </div>
     )
 }

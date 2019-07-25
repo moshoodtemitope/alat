@@ -7,7 +7,7 @@ const sendReceipt = (props) => {
             <div className="ac-info-div">
                 <p>Click on <b>Send Receipt</b> to filter and generate receipts for your NIP transactions. </p>
             </div>
-            <button onClick={props.receipt} className="btn-alat m-t-10" style={{width: "100%"}}>Send Receipt</button>
+            <button onClick={props.receipt} className="btn-alat m-t-10" style={{width: "100%"}}>{props.sendReceipt ? "Cancel" : "Send Receipt"}</button>
         </div>
     )
 }
