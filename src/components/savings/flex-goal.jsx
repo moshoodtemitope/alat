@@ -32,6 +32,7 @@ class FlexGoal extends React.Component {
             startDate:null,
             endDate:null,
             AmountSavedText:"",
+            AmountSaved:"",
             SelectedtimeSaved:"",
             timeSaved:"",
             isSubmitted : false,
@@ -100,13 +101,34 @@ class FlexGoal extends React.Component {
         }
     }
     handleAmount = (e) => {
-        // console.log(this.intValue);
-        console.log('test', e.target.value);
-        this.setState({ "AmountSavedText": e.target.value });
-        if (this.state.formsubmitted) {
-            if (e != "")
-                this.setState( {  AmountSavedInvalid: false });
-        }
+        // console.log
+         var intVal = e.target.value.replace(/,/g, '');
+         if (/^\d+(\.\d+)?$/g.test(intVal)) {
+             // if (parseInt(intVal, 10) <= 2000000) {
+             this.setState({ AmountSaved: intVal, AmountSavedText: this.toCurrency(intVal) },
+                 () => this.updateRepayment());
+             // }
+         } else if (e.target.value == "") {
+             this.setState({ AmountSaved: "", AmountSavedText: "" },
+                 () => this.updateRepayment());
+         }
+ 
+         if(this.state.isSubmitted == true)
+         if (this.state.formsubmitted) {
+                    if (e != "")
+                        this.setState( {  AmountSavedInvalid: false });
+                }
+     }
+ 
+     toCurrency(number) {
+         // console.log(number);
+         const formatter = new Intl.NumberFormat('en-US', {
+             style: "decimal",
+             currency: "USD",
+             maximumFractionDigits: 2
+         });
+ 
+         return formatter.format(number);
     }
     handleSelectChange = (SelectedtimeSaved) => {
         this.setState({ "timeSaved": SelectedtimeSaved.value,
@@ -115,6 +137,27 @@ class FlexGoal extends React.Component {
         if (this.state.formsubmitted && SelectedtimeSaved.value != "")
             this.setState({ TimeSavedInvalid: false })
     }
+    updateRepayment = () => {
+        this.setState({ repaymentAmount: this.calcRepayment(this.state.LoanAmount, this.state.InterestRate, this.state.Term) })
+    }
+
+    calcRepayment = (loanAmount, interestRate, tenure) => {
+        //[P x R x (1+R)^N]/[(1+R)^N-1]
+        let _intRate = interestRate / 12;
+       let _interestRate = 1 + _intRate;
+       //console.log(_interestRate);
+      
+       let _tenure = tenure - 1;
+     
+        let numerator = loanAmount * _interestRate *_intRate;
+        let finalNumerator =  Math.pow(numerator, tenure);
+        let denominator = Math.pow(_interestRate, _tenure);
+
+        let monthlyRepayment = finalNumerator / denominator;
+        //console.log(monthlyRepayment);
+        return monthlyRepayment;
+    }
+    
     
     
   
@@ -249,7 +292,7 @@ class FlexGoal extends React.Component {
                                                             name="AmountSavedText"
                                                             onChange={this.handleAmount}
                                                             placeholder="E.g. ₦100,000"
-                                                            value={AmountSavedText}
+                                                            value={this.state.AmountSavedText}
 
                                                           
                                                          />

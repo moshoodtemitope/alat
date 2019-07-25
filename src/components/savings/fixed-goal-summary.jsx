@@ -22,6 +22,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
             endDate:"",
             goalName:"",
             timeSaved:"",
+            TargetAmount:"",
             debitAccount:""
 
         }
@@ -42,7 +43,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
             console.log('tag', data)
 
             this.setState({
-                AmountSavedText:data.AmountSavedText,
+                AmountSaved:data.AmountSavedText,
                 startDate: data.startDate,
                 endDate: data.endDate,  
                 goalName:data.goalName,
@@ -57,9 +58,10 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
             "goalName":this.state.goalName,
             "startDate":this.state.startDate,
             "endDate":this.state.endDate,
-            "AmountSavedText":this.state.AmountSavedText,
+            "AmountSaved":this.state.AmountSavedText,
             "timeSaved":this.state.timeSaved,
             "debitAccount":this.state.debitAccount,
+            'TargetAmount':this.state.AmountSavedText
         }));
 
     }
@@ -172,8 +174,8 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
     }
 }
 const mapStateToProps = state => ({
-    fixed_goal_step1: state.fixed_reducer,
-    fixed_goal_step2:state.fixed_reducer2,
+    fixed_goal_step1: state.fixed_goal_step1,
+    fixed_goal_step2:state.fixed_goal_step2,
     add_fixed_goal:state.add_goal_reducer,
     alert: state.alert,
 

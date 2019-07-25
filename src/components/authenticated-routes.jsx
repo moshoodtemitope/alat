@@ -17,7 +17,7 @@ import TransferHome from "./transfer/transfer-home";
 //import BillsRoute from './airtime-bills/bills-route';
 import FundAccountIndex from './fund-account/index';
 import ChooseGoalPlan from './savings/goal/goal-plan';
-import FixedGoal from './savings/fixed-goal';
+import FixedGoal from './savings/fixed-goal_step1'
 import FixedGoalComplete from './savings/fixed-goal-step2';
 import FixedGoalSummary from './savings/fixed-goal-summary';
 import FlexGoal from './savings/flex-goal';

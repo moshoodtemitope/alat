@@ -129,8 +129,8 @@ const appReducer = combineReducers({
     bills_reducer: billsReducer,
 
     //fixed goal reducers
-    fixed_reducer:fixedGoal.fixedGoalStep1Reducer,
-    fixed_reducer2:fixedGoal.fixedGoalStep2Reducer,
+    fixed_goal_step1:fixedGoal.fixedGoalStep1Reducer,
+    fixed_goal_step2:fixedGoal.fixedGoalStep2Reducer,
     add_goal_reducer:fixedGoal.addGoalReducer,
 
     // flex goal reducers

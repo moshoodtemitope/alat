@@ -40,7 +40,7 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
             console.log('tag', data)
 
             this.setState({
-                AmountSavedText:data.AmountSavedText,
+                AmountSaved:data.AmountSavedText,
                 startDate: data.startDate,
                 endDate: data.endDate,  
                 goalName:data.goalName,
@@ -48,6 +48,19 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
                 debitAccount:data.debitAccount,
             });
         }
+    }
+    handleSubmit=()=>{
+        event.preventDefault()
+        this.props.dispatch(actions.addFlexGoal({
+            "goalName":this.state.goalName,
+            "startDate":this.state.startDate,
+            "endDate":this.state.endDate,
+            "AmountSaved":this.state.AmountSavedText,
+            "timeSaved":this.state.timeSaved,
+            "debitAccount":this.state.debitAccount,
+            'TargetAmount':this.state.AmountSavedText
+        }));
+
     }
     render() {
         return (
@@ -77,6 +90,7 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
                         <div className="row">
                             <div className="col-sm-12">
                                 <div className="max-600">
+                                <form onSubmit={this.handleSubmit}>
                                     <div className="al-card no-pad">
                                         <div className="coverForSummary">
                                             <div className="left">
@@ -119,6 +133,7 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
                                         </div>
                                     
                                     </div>
+                                    </form>
 
                                 
                                 </div>

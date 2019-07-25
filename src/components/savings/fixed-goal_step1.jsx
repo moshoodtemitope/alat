@@ -10,6 +10,7 @@ import DatePicker from "react-datepicker";
 import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant'
 import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
 import "react-datepicker/dist/react-datepicker.css";
+import AmountInput from '../../shared/components/amountInput'
 
 const selectedTime = [
            
@@ -32,6 +33,7 @@ class FixedGoal extends React.Component {
             startDate:null,
             endDate:null,
             AmountSavedText:"",
+            AmountSaved:"",
             SelectedtimeSaved:"",
             timeSaved:"",
             isSubmitted : false,
@@ -99,15 +101,39 @@ class FixedGoal extends React.Component {
             return true;
         }
     }
+    
     handleAmount = (e) => {
-        // console.log(this.intValue);
-        console.log('test', e.target.value);
-        this.setState({ "AmountSavedText": e.target.value });
-        if (this.state.formsubmitted) {
-            if (e != "")
-                this.setState( {  AmountSavedInvalid: false });
-        }
-    }
+        // console.log
+         var intVal = e.target.value.replace(/,/g, '');
+         if (/^\d+(\.\d+)?$/g.test(intVal)) {
+             // if (parseInt(intVal, 10) <= 2000000) {
+             this.setState({ AmountSaved: intVal, AmountSavedText: this.toCurrency(intVal) },
+                 () => this.updateRepayment());
+             // }
+         } else if (e.target.value == "") {
+             this.setState({ AmountSaved: "", AmountSavedText: "" },
+                 () => this.updateRepayment());
+         }
+ 
+         if(this.state.isSubmitted == true)
+         if (this.state.formsubmitted) {
+                    if (e != "")
+                        this.setState( {  AmountSavedInvalid: false });
+                }
+     }
+ 
+     toCurrency(number) {
+         // console.log(number);
+         const formatter = new Intl.NumberFormat('en-US', {
+             style: "decimal",
+             currency: "USD",
+             maximumFractionDigits: 2
+         });
+ 
+         return formatter.format(number);
+     }
+    
+ 
     handleSelectChange = (SelectedtimeSaved) => {
         this.setState({ "timeSaved": SelectedtimeSaved.value,
                         "timeSaved" : SelectedtimeSaved.label
@@ -115,7 +141,26 @@ class FixedGoal extends React.Component {
         if (this.state.formsubmitted && SelectedtimeSaved.value != "")
             this.setState({ TimeSavedInvalid: false })
     }
-    
+    updateRepayment = () => {
+        this.setState({ repaymentAmount: this.calcRepayment(this.state.LoanAmount, this.state.InterestRate, this.state.Term) })
+    }
+
+    calcRepayment = (loanAmount, interestRate, tenure) => {
+        //[P x R x (1+R)^N]/[(1+R)^N-1]
+        let _intRate = interestRate / 12;
+       let _interestRate = 1 + _intRate;
+       //console.log(_interestRate);
+      
+       let _tenure = tenure - 1;
+     
+        let numerator = loanAmount * _interestRate *_intRate;
+        let finalNumerator =  Math.pow(numerator, tenure);
+        let denominator = Math.pow(_interestRate, _tenure);
+
+        let monthlyRepayment = finalNumerator / denominator;
+        //console.log(monthlyRepayment);
+        return monthlyRepayment;
+    }
     
   
     onSubmit(event){
@@ -203,7 +248,7 @@ class FixedGoal extends React.Component {
                                                         <DatePicker 
                                                             className="form-control"
                                                             selected={this.state.startDate}
-                                                            placeholder="October 31, 2017"
+                                                            placeholder="Goal startDate"
                                                             dateFormat=" MMMM d, yyyy"
                                                             name="startDate"
                                                             peekNextMonth
@@ -249,7 +294,7 @@ class FixedGoal extends React.Component {
                                                             name="AmountSavedText"
                                                             onChange={this.handleAmount}
                                                             placeholder="E.g. ₦100,000"
-                                                            value={AmountSavedText}
+                                                            value={this.state.AmountSavedText}
 
                                                           
                                                          />
@@ -310,6 +355,6 @@ class FixedGoal extends React.Component {
     }
 }
 const mapStateToProps = state => ({
-    fixed_goal_step1: state.fixed_reducer
+    fixed_goal_step1: state.fixed_goal_step1
 })
 export default connect(mapStateToProps)(FixedGoal);
