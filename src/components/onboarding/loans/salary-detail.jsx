@@ -91,8 +91,6 @@ class LoanOnbaordingSalaryDetails extends React.Component {
         this.props.dispatch(actions.getBanks(this.props.loan_step3.loan_step3_data.data.response.token));
     }
 
-
-
     renderBankDropdown(props) {
         let banksStatus = props.bankList.banks; //FETCH_BANK_PENDING;
 
