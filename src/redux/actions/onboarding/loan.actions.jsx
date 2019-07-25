@@ -47,6 +47,16 @@ export const loanOnbaordingStep2 =(data)=>{
    // function failure(error) { return { type: loanOnboardingConstants.LOAN_STEP1_FAILURE, error } }
 }
 
+export const saveUserDetails =(data)=>{
+    //SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        dispatch(success(data));
+    };
+   // function request(request) { return { type: loanOnboardingConstants.LOAN_STEP1_PENDING, request } }
+    function success(data) { return { type: loanOnboardingConstants.LOAN_USERNAME_SUCCESS, data: data}}
+   // function failure(error) { return { type: loanOnboardingConstants.LOAN_STEP1_FAILURE, error } }
+}
+
 
 // Email and password is also collected on this page and saved wth this endpoint
 export const LoanOnboardingStep3 =(data)=>{

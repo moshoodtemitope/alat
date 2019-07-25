@@ -10,167 +10,180 @@ import LoanOnboardingContainer from './loanOnboarding-container';
 class LoanOnboardingScoreCard extends React.Component {
     constructor(props) {
         super(props);
-        this.state ={
+        this.state = {
             user: JSON.parse(localStorage.getItem("user")),
             // EducationQualifications : [],
             // YearsOfExperience: [],
             // NumberOfDependants: [],
-            "EducationQualifications": [
-                {
-                    "Id": 1,
-                    "Text": "Primary School"
-                },
-                {
-                    "Id": 2,
-                    "Text": "Secondary School"
-                },
-                {
-                    "Id": 3,
-                    "Text": "Diploma"
-                },
-                {
-                    "Id": 4,
-                    "Text": "Graduate"
-                },
-                {
-                    "Id": 5,
-                    "Text": "Post Graduate"
-                },
-                {
-                    "Id": 6,
-                    "Text": "Professional/Technhnical Degree"
-                }
+            EducationQualifications: [
+                // {
+                //     "Id": 1,
+                //     "Text": "Primary School"
+                // },
+                // {
+                //     "Id": 2,
+                //     "Text": "Secondary School"
+                // },
+                // {
+                //     "Id": 3,
+                //     "Text": "Diploma"
+                // },
+                // {
+                //     "Id": 4,
+                //     "Text": "Graduate"
+                // },
+                // {
+                //     "Id": 5,
+                //     "Text": "Post Graduate"
+                // },
+                // {
+                //     "Id": 6,
+                //     "Text": "Professional/Technhnical Degree"
+                // }
             ],
-            "YearsOfExperience": [
-                {
-                    "Id": 1,
-                    "Text": "< 2 Years"
-                },
-                {
-                    "Id": 2,
-                    "Text": "2 - 5 Years"
-                },
-                {
-                    "Id": 3,
-                    "Text": "5 - 10 Years"
-                },
-                {
-                    "Id": 4,
-                    "Text": "10 - 15 Years"
-                },
-                {
-                    "Id": 5,
-                    "Text": "> 15 Years"
-                }
+            YearsOfExperience: [
+                // {
+                //     "Id": 1,
+                //     "Text": "< 2 Years"
+                // },
+                // {
+                //     "Id": 2,
+                //     "Text": "2 - 5 Years"
+                // },
+                // {
+                //     "Id": 3,
+                //     "Text": "5 - 10 Years"
+                // },
+                // {
+                //     "Id": 4,
+                //     "Text": "10 - 15 Years"
+                // },
+                // {
+                //     "Id": 5,
+                //     "Text": "> 15 Years"
+                // }
             ],
-            "NumberOfDependants": [
-                {
-                    "Id": 1,
-                    "Text": "No Dependants"
-                },
-                {
-                    "Id": 2,
-                    "Text": "1-2 Dependants"
-                },
-                {
-                    "Id": 3,
-                    "Text": "3-4 Dependants"
-                },
-                {
-                    "Id": 4,
-                    "Text": "> 4 Dependants"
-                }
+            NumberOfDependants: [
+                // {
+                //     "Id": 1,
+                //     "Text": "No Dependants"
+                // },
+                // {
+                //     "Id": 2,
+                //     "Text": "1-2 Dependants"
+                // },
+                // {
+                //     "Id": 3,
+                //     "Text": "3-4 Dependants"
+                // },
+                // {
+                //     "Id": 4,
+                //     "Text": "> 4 Dependants"
+                // }
             ],
-    
+
 
             selectedDependant: null,
-            selectedYOE : null,
-            selectedQualification : null
+            selectedYOE: null,
+            selectedQualification: null,
+            isPopulated: false
         }
         //this.submitScoreCardAnswer = this.submitScoreCardAnswer.bind(this);
     }
 
-    componentDidMount=()=>{
-     // this.init();
+    componentDidMount = () => {
+        this.init();
     }
 
-    init=()=>{
-        if(this.props.salary_entry)
-        if(this.props.salary_entry.loan_salEnt_status == loanOnboardingConstants.LOAN_SALARYENTRY_SUCCESS){
-            this.props.dispatch(actions.getScoreCard(this.state.user.token));
-        }else{
-            return (this.props.history.push("/loan/salary-entry"));
+    init = () => {
+        if (this.props.salary_entry)
+            if (this.props.salary_entry.loan_salEnt_status == loanOnboardingConstants.LOAN_SALARYENTRY_SUCCESS) {
+                this.props.dispatch(actions.getScoreCard(this.state.user.token));
+            } else {
+                return (this.props.history.push("/loan/salary-entry"));
+            }
+    }
+
+
+    populateOptions = () => {
+        if (!this.state.isPopulated) {
+            if (this.props.score_card_Q)
+                if (this.props.score_card_Q.loan_scoreQ_status == loanOnboardingConstants.LOAN_SCORECARD_QUESTION_SUCCESS) {
+                    var data = {
+                        ...this.props.score_card_Q.loan_scoreQ_data.data.response.Response
+                    }
+
+                    this.setState({
+                        EducationQualifications: data.EducationQualifications,
+                        YearsOfExperience: data.YearsOfExperience,
+                        NumberOfDependants: data.NumberOfDependants,
+                        isPopulated : true
+                    })
+                }
         }
     }
 
-
-    populateOptions =()=>{
-     if(this.props.score_card_Q)
-     if(this.props.score_card_Q.loan_scoreQ_status == loanOnboardingConstants.LOAN_SCORECARD_QUESTION_SUCCESS)
-     {   
-         var data = {
-             ...this.props.score_card_Q.loan_scoreQ_data.data.response.Response
-         }
-
-         this.setState({EducationQualifications : data.EducationQualifications,
-            YearsOfExperience : data.YearsOfExperience,
-            NumberOfDependants : data.NumberOfDependants,
-          })
-        }
-    }
-
-    mapToLabelValuePair=(arrayToMap)=>{
+    mapToLabelValuePair = (arrayToMap) => {
         var newArray = [];
-      arrayToMap.map((entry, key)=>{
-          var obj = {  
-              label : entry.Text,
-              value : entry.Id
-          }
-       newArray.push(obj);
-      })
-      return newArray;
+        arrayToMap.map((entry, key) => {
+            var obj = {
+                label: entry.Text,
+                value: entry.Id
+            }
+            newArray.push(obj);
+        })
+        return newArray;
     }
 
-    getScoreCardQuestionPendingStatus =()=>{
-        if(this.props.score_card_Q)
-        if(this.props.score_card_Q.loan_scoreQ_status == loanOnboardingConstants.LOAN_SCORECARD_QUESTION_PENDING)
-        return true;
-        else return false;
+    getScoreCardQuestionPendingStatus = () => {
+        if (this.props.score_card_Q)
+            if (this.props.score_card_Q.loan_scoreQ_status == loanOnboardingConstants.LOAN_SCORECARD_QUESTION_PENDING)
+                return true;
+            else return false;
     }
 
-    QualificationChangeHandler=(QualificationSelected)=>{
-        this.setState({selectedQualification : QualificationSelected})
+    getScoreCardAnswerPendingStatus =()=>{
+        if (this.props.score_card_A)  //loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS
+            if (this.props.score_card_A.loan_scoreA_status == loanOnboardingConstants.LOAN_SCORECARD_ANSWER_PENDING)
+            return true;
+            else return false
     }
 
-    NumberOfDependantsChangeHandler=(SelectedNod)=>{
-        this.setState({ selectedDependant : SelectedNod});
+    QualificationChangeHandler = (QualificationSelected) => {
+        this.setState({ selectedQualification: QualificationSelected })
     }
 
-    selectedYOEChangeHandle=(selectedYOE)=>{
-        this.setState({ selectedYOE : selectedYOE});
+    NumberOfDependantsChangeHandler = (SelectedNod) => {
+        this.setState({ selectedDependant: SelectedNod });
     }
 
-    submitScoreCardAnswer=(e)=>{
+    selectedYOEChangeHandle = (selectedYOE) => {
+        this.setState({ selectedYOE: selectedYOE });
+    }
+
+    submitScoreCardAnswer = (e) => {
         e.preventDefault();
-        this.props.actions.postScoreCardAnswer(this.state.user.token, {
-            YearsOfExperience : this.state.selectedYOE.value,
-            EducationQualification : this.state.selectedQualification.value,
-            Dependants : this.state.selectedDependant.value
-        });
+        this.props.dispatch(actions.postScoreCardAnswer(this.state.user.token, {
+            YearsOfExperienceId: this.state.selectedYOE.value,
+            EducationQualificationLevelId: this.state.selectedQualification.value,
+            NumberOfDependantId: this.state.selectedDependant.value
+        }));
     }
 
-    gotoNextPage=()=>{
-        if(this.props.score_card_A)
-        if(this.props.score_card_A.loan_scoreA_status == loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS){
-            this.props.history.push("/loan/score-result");
-        }
+    gotoNextPage = () => {
+        if (this.props.score_card_A)  //loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS
+            if (this.props.score_card_A.loan_scoreA_status == loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS
+                ||  this.props.score_card_A.loan_scoreA_status == loanOnboardingConstants.LOAN_SCORECARD_ANSWER_FAILURE) {
+                this.props.history.push("/loan/card-result");
+            }
     }
 
     render() {
-        const { YearsOfExperience, NumberOfDependants, EducationQualifications,selectedQualification, selectedDependant, selectedYOE } =this.state;
+        const { YearsOfExperience, NumberOfDependants, EducationQualifications, selectedQualification, selectedDependant, selectedYOE } = this.state;
         return (
             <LoanOnboardingContainer>
                 {this.populateOptions()}
+                {this.gotoNextPage()}
                 <div className="col-sm-12">
                     <div className="max-500">
                         <div className="loan-header-text text-center">
@@ -178,50 +191,49 @@ class LoanOnboardingScoreCard extends React.Component {
                             <p>Kindly select the answer that best describes you.</p>
                         </div>
                         <div className="al-card no-pad">
-                        {this.props.alert && this.props.alert.message &&
-                                        <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
-                                    }
+                            {this.props.alert && this.props.alert.message &&
+                                <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                            }
                             <div className="transfer-ctn">
                                 <form onSubmit={this.submitScoreCardAnswer}>
                                     <div className="input-ctn">
                                         <label>1. Educational Qualification</label>
                                         <Select
-                                                disabled={this.getScoreCardQuestionPendingStatus()}
-                                                value={selectedQualification}
-                                                onChange={this.QualificationChangeHandler}
-                                                options={this.mapToLabelValuePair(EducationQualifications)}
-                                                placeholder={this.getScoreCardQuestionPendingStatus() ? "Loading..." : "Select" }
-                                            />
-                                           {/* {this.state.validation.networkSelector.hasError ? <small className="text-danger">{this.state.validation.networkSelector.error}</small> : null} */}
-                                        </div>
+                                            disabled={this.getScoreCardQuestionPendingStatus()}
+                                            value={selectedQualification}
+                                            onChange={this.QualificationChangeHandler}
+                                            options={this.mapToLabelValuePair(EducationQualifications)}
+                                            placeholder={this.getScoreCardQuestionPendingStatus() ? "Loading..." : "Select"}
+                                        />
+                                        {/* {this.state.validation.networkSelector.hasError ? <small className="text-danger">{this.state.validation.networkSelector.error}</small> : null} */}
+                                    </div>
 
                                     <div className="input-ctn">
                                         <label>2. Number of dependants</label>
-                                       <Select
-                                                disabled={this.getScoreCardQuestionPendingStatus()}
-                                                value={selectedDependant}
-                                                onChange={this.NumberOfDependantsChangeHandler}
-                                                options={this.mapToLabelValuePair(NumberOfDependants)}
-                                                placeholder={this.getScoreCardQuestionPendingStatus() ? "Loading..." : "Select" }
-                                            />
+                                        <Select
+                                            disabled={this.getScoreCardQuestionPendingStatus()}
+                                            value={selectedDependant}
+                                            onChange={this.NumberOfDependantsChangeHandler}
+                                            options={this.mapToLabelValuePair(NumberOfDependants)}
+                                            placeholder={this.getScoreCardQuestionPendingStatus() ? "Loading..." : "Select"}
+                                        />
                                     </div>
 
                                     <div className="input-ctn">
                                         <label>3. Number of years of experience in jobs</label>
                                         <Select
-                                                 disabled={this.getScoreCardQuestionPendingStatus()}
-                                                value={selectedYOE}
-                                                onChange={this.selectedYOEChangeHandle}
-                                                options={this.mapToLabelValuePair(YearsOfExperience)}
-                                                placeholder={this.getScoreCardQuestionPendingStatus() ? "Loading..." : "Select" }
-                                            />
+                                            disabled={this.getScoreCardQuestionPendingStatus()}
+                                            value={selectedYOE}
+                                            onChange={this.selectedYOEChangeHandle}
+                                            options={this.mapToLabelValuePair(YearsOfExperience)}
+                                            placeholder={this.getScoreCardQuestionPendingStatus() ? "Loading..." : "Select"}
+                                        />
                                     </div>
                                     <div className="row">
                                         <div className="col-sm-12">
                                             <center>
-                                                <button type="submit" disabled={this.getScoreCardQuestionPendingStatus()} 
-                                                 
-                                                    className="btn-alat m-t-10 m-b-20 text-center" >{this.getScoreCardQuestionPendingStatus() ? "Processing...": "Proceed"}</button>
+                                                <button type="submit" disabled={this.getScoreCardAnswerPendingStatus()}
+                                                    className="btn-alat m-t-10 m-b-20 text-center" >{this.getScoreCardAnswerPendingStatus() ? "Processing..." : "Proceed"}</button>
                                             </center>
                                         </div>
                                     </div>
@@ -238,7 +250,7 @@ class LoanOnboardingScoreCard extends React.Component {
     }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     return {
         alert: state.alert,
         //loan_step2: state.loanOnboardingReducerPile.loanOnboardingStep2,

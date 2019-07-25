@@ -36,6 +36,8 @@ class LoanOnboardingBVNInfo extends React.Component {
                  Dob: data.response.dob,
                  BVN: data.response.bvn,
                  PhoneNumber : data.response.phoneNumber
+            },()=>{
+                this.props.dispatch(actions.saveUserDetails({ FirstName : data.response.firstName }))
             });
         }else this.props.history.push("/loan/validateotp");
         else this.props.history.push("/loan/validateotp");
@@ -64,6 +66,15 @@ class LoanOnboardingBVNInfo extends React.Component {
             deviceCode: 'string-10'
         }));
     }
+
+    formartDate=(dateString)=>{
+        let dateObj = new Date(dateString);
+        let   day = dateObj.getDate();
+        let   month = dateObj.getMonth()+1;
+        let    year = dateObj.getFullYear();
+        let    fullDob = day+'/'+month+'/'+year;
+        return fullDob;
+    }
     
     gotoSalaryDetails=()=>{
       if(this.props.loan_createprofile)
@@ -73,7 +84,7 @@ class LoanOnboardingBVNInfo extends React.Component {
     }
 
     render() {
-        return (<LoanOnboardingContainer>
+        return (<LoanOnboardingContainer UserName={this.state.FirstName}>
             {this.gotoSalaryDetails()}
             <div className="col-sm-12">
                 <div className="max-500">
@@ -103,7 +114,7 @@ class LoanOnboardingBVNInfo extends React.Component {
                                 </div>
                                 <div className="col-6">
                                     <span className="label">Date of Birth</span><br />
-                                    <span>{this.state.Dob}</span>
+                                    <span>{this.formartDate(this.state.Dob)}</span>
                                 </div>
                             </div>
                             <div className="row mb-4">

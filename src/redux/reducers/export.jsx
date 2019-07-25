@@ -28,7 +28,7 @@ import { fundAccountReducer, getTokenizedCardsReducer,
 
 import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingVerifyBVNReducer,
      loanOnboardingStep3Reducer, loanOnboardingValidateOTPReducer, generateStatementReducer,
-      requestStatementReducer,salaryTransactionReducer, salaryEntryReducer, getScoreCardQuestionReducer,
+      requestStatementReducer,salaryTransactionReducer, salaryEntryReducer, saveUserDetailsReducer, getScoreCardQuestionReducer,
       postScoreCardAnswerReducer} from './loan-onboarding.reducer';
 
 export const onboarding = {
@@ -49,7 +49,8 @@ export const loanOnboarding = {
     salaryTransactionReducer,
     salaryEntryReducer,
     getScoreCardQuestionReducer,
-    postScoreCardAnswerReducer
+    postScoreCardAnswerReducer,
+    saveUserDetailsReducer
 }
 
 export const dashboard = {

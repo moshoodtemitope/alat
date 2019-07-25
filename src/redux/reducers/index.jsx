@@ -98,6 +98,7 @@ const loanOnboardingReducer = combineReducers({
     loanSalaryEntryReducer : loanOnboarding.salaryEntryReducer,
     loanGetScoreCardQuestion: loanOnboarding.getScoreCardQuestionReducer,
     loanPostScoreCardAnswer : loanOnboarding.postScoreCardAnswerReducer,
+    loanUserDetails: loanOnboarding.saveUserDetailsReducer
 })
 
 const appReducer = combineReducers({

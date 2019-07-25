@@ -282,3 +282,18 @@ export function postScoreCardAnswerReducer(state = {}, action) {
     }
 }
 
+export function saveUserDetailsReducer(state = {}, action) {
+    switch (action.type) {
+        case loanOnboardingConstants.LOAN_USERNAME_SUCCESS:
+            return {
+                loan_userdetails_status: loanOnboardingConstants.LOAN_USERNAME_SUCCESS,
+                loan_userdetails_data: action,
+            };
+       
+        default:
+            return {
+                ...state,
+            };
+    }
+}
+

@@ -29,6 +29,7 @@ class LoanOnbaordingSalaryDetails extends React.Component {
             isAccepted: false,
             selectedBank: null,
             isSubmitted: false,
+            FirstName: "",
 
             employerNameInvalid: false,
             accountNumberInvalid: false,
@@ -43,6 +44,7 @@ class LoanOnbaordingSalaryDetails extends React.Component {
         if (this.props.loan_step3)
             if (this.props.loan_step3.loan_step3_status == loanOnboardingConstants.LOAN_STEP3_SUCCESS) {
                 this.fetchBanks();
+              this.setState({ FirstName :this.props.user_detail.loan_userdetails_data.data.FirstName });   
             } else this.props.history.push("/loan/bvn-info");
         else { this.props.history.push("/loan/bvn-info") }
     }
@@ -196,7 +198,7 @@ class LoanOnbaordingSalaryDetails extends React.Component {
             selectedBankInvalid } = this.state;
         let props = this.props;
         return (
-            <LoanOnboardingContainer>
+            <LoanOnboardingContainer UserName={this.state.FirstName}>
                 {this.gotoNextPage()}
                 <div className="col-sm-12">
                     <div className="max-500">
@@ -247,7 +249,7 @@ class LoanOnbaordingSalaryDetails extends React.Component {
                                     <div className="row">
                                         <div className="col-sm-12">
                                             <center>
-                                                <button type="submit" disabled={!this.state.isAccepted} className="btn-alat m-t-10 m-b-20 text-center">
+                                                <button type="submit" disabled={!this.state.isAccepted || this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_PENDING} className="btn-alat m-t-10 m-b-20 text-center">
                                                     {this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_PENDING ?
                                                         "Proceesing..." : "Proceed"}
                                                 </button>
@@ -275,7 +277,8 @@ function mapStateToProps(state) {
         loan_bvn: state.loanOnboardingReducerPile.loanOnboardingBVN,
         loan_step3: state.loanOnboardingReducerPile.loanOnboardingStep3,
         bankList: state.transferReducerPile.transfer_bankList,
-        loan_reqStat: state.loanOnboardingReducerPile.loanOnboardingGenerateStatement
+        loan_reqStat: state.loanOnboardingReducerPile.loanOnboardingRequestStatement,
+        user_detail: state.loanOnboardingReducerPile.loanUserDetails,
     };
 }
 export default connect(mapStateToProps)(LoanOnbaordingSalaryDetails);

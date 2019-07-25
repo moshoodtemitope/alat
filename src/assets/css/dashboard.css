@@ -1580,8 +1580,13 @@ ul.menu-side {
           color: #AB2656;
           border-bottom: 3px solid #AB2656; }
 
-          .upper-line{
+          .upper-line-success{
             background: #27ED3A;
+            min-height: 16px;
+          }
+          
+          .upper-line-failure{
+            background: #dc3545;
             min-height: 16px;
           }
           

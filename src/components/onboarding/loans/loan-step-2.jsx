@@ -87,7 +87,7 @@ class LoanOboardingStep2 extends React.Component {
     LoanAplyClick = () => {
      this.setState({isSubmitted : true});
         if (this.state.Term >= 1) {
-            if (this.state.LoanAmount > 100 && this.state.LoanAmount<= 2000000) {
+            if (this.state.LoanAmount > 0 && this.state.LoanAmount<= this.state.MaxAmount) {
                 this.props.dispatch(actions.loanOnbaordingStep2({
                     "LoanAmount": this.state.LoanAmount,
                     "Term": this.state.Term,
