@@ -10,7 +10,7 @@ import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant
 
  
 
- class submitFixedGoal extends Component {
+ class FlexGoalSummary extends Component {
      constructor(props){
          super(props)
 
@@ -32,7 +32,7 @@ import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant
 
     init = () => {
         if (this.props.fixed_goal_step2.fixed_step2_status != fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS_STEP2)
-            this.props.history.push("/savings/fixed-goal-complete");
+            this.props.history.push("/savings/flex-goal-step2");
         else {
             var data = {
                 ...this.props.fixed_goal_step2.fixed_step2_data.data
@@ -70,7 +70,7 @@ import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant
                             </div>
                         </div>
                     </div>
-                    <h1 style={{margin:"auto", color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>Fixed Goal Summary</h1>
+                    <h1 style={{margin:"auto", color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}> Flexi Goal Summary</h1>
                         <div style={{margin:"30px"}}></div>
 
                     <div className="col-sm-12">
@@ -148,5 +148,5 @@ const mapStateToProps = state => ({
     fixed_goal_step1: state.fixed_reducer,
     fixed_goal_step2:state.fixed_reducer2
 })
-export default connect(mapStateToProps)(submitFixedGoal);
+export default connect(mapStateToProps)(FlexGoalSummary);
 
