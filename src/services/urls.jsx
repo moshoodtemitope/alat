@@ -1,6 +1,6 @@
-const URL = 'https://api.alat.ng';
-//  const URL = 'https://196.43.215.170';
-// const URL = 'http://196.43.215.157';
+//const URL = 'https://api.alat.ng';
+//const URL = 'https://196.43.215.170';
+const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
 
@@ -90,4 +90,10 @@ export const routes = {
     FETCH_BILLER_ITEM : BASEURL + '/PaymentApi/api/AirtimeBill/GetQuickTellerBillItems',
     GET_SUBSCRIBER_NAME: BASEURL + '/PaymentApi/api/AirtimeBill/GetQuickTellerSubscriberNameEnquiryV2',
     SAVE_BILLS_BENEFICIARY: BASEURL + '/PaymentApi/api/AirtimeBill/SaveBillBeneficiaries',
+
+    //Loans_Onboarding
+    LOANS_STEP_1 :BASEURL +'/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/SignUp',
+    LOANS_STEP_3 :BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/CustomerProfile',
+    LOAN_VERIFY_BVN : BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/CallBvnService',
+    LOAN_VALIDATE_OTP: BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/VerifyOtpForBvn'
 };

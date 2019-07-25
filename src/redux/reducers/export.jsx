@@ -26,6 +26,8 @@ import { fundAccountReducer, getTokenizedCardsReducer,
      saveCardReducer, tranCardDetailsReducer, deleteCardReducer,saveCardAfterTranReducer,
       getEncryptionRuleReducer, verifyPANReducer, fundWemaAccountReducer } from './fund-account.reducer';
 
+import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingVerifyBVNReducer,
+     loanOnboardingStep3Reducer, loanOnboardingValidateOTPReducer} from './loan-onboarding.reducer';
 
 export const onboarding = {
     userRegistrationRequest,
@@ -33,6 +35,14 @@ export const onboarding = {
     bvnSkipReducer,
     bvnCustomerDetailsReducer
 };
+
+export const loanOnboarding = {
+    loanOnboardingStep1Reducer,
+    loanOnboardingStep2Reducer,
+    loanOnboardingVerifyBVNReducer,
+    loanOnboardingStep3Reducer,
+    loanOnboardingValidateOTPReducer
+}
 
 export const dashboard = {
     accountFetch,

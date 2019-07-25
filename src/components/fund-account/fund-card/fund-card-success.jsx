@@ -176,7 +176,8 @@ function mapStateToProps(state) {
         //fundwith_pin: state.fundAccountReducerPile.fundfromWithPin,
         card_details: state.fundAccountReducerPile.cardDetails,
         fund_account: state.fundAccountReducerPile.fundAccount,
-        save_card: state.fundAccountReducerPile.saveTransCard
+        save_card: state.fundAccountReducerPile.saveTransCard,
+        alert : state.alert
     };
 }
 

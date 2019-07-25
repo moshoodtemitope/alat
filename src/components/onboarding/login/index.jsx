@@ -134,7 +134,7 @@ class Login extends React.Component{
                             </div>
                             <button type="submit" disabled={loggingIn} className="btn-alat btn-block">{ loggingIn ? "Processing..." : "Login" }</button>
                         </form>
-                        <p className="text-center">Don't have an account? <NavLink to="/register">Sign up</NavLink></p>
+                        <p className="text-center">Don't have an account? <NavLink to="/signup-landing">Sign up</NavLink></p>
                     </div>
                 </div>
             </OnboardingContainer>

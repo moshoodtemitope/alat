@@ -51,6 +51,7 @@ class IndexedRoute extends React.Component {
             <div>
                 <OnboardingRoute />
                 <AuthenticatedRoutes />
+                
             </div>
 
             // <Fragment>
