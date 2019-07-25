@@ -1,6 +1,6 @@
 import {combineReducers} from "redux";
 import {authentication} from "./authentication.reducer";
-import { alert} from "./alert.reducer";
+import { alert } from "./alert.reducer";
 import {dashboard, transfer, onboarding, airtime, global, fundAccount, loanOnboarding} from "./export";
 import {bankListRequest, beneficiariesRequest} from "./transfer.reducer";
 import {accountHistoryReducer} from "./dashboard.reducer";
@@ -12,6 +12,8 @@ import { airtimeConstants } from "../constants/airtime/airtime.constants";
 import { TRANSFER_REDUCER_CLEAR } from "../constants/transfer.constants";
 import { fundAccountConstants } from "../constants/fund-account/fund-account.constant";
 import { loanOnboardingConstants } from '../constants/onboarding/loan.constants';
+import flexiSavingGoal from './savingsReducers/savings.reducers';
+import flexiGoalCreationSaving from './savingsReducers/flexiGoalCreationSaving';
 //import { saveCardReducer } from "./fund-account.reducer";
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
@@ -19,9 +21,7 @@ const rootReducer = (state, action)=>{
     if(action.type === userConstants.LOGOUT)
         {   state = undefined;    }
     return appReducer(state, action)
-
 };
-
 
 const airtimeReducerPile =(state, action)=>{
     if(action.type === airtimeConstants.AIRTIME_REDUCER_CLEAR)
@@ -30,15 +30,15 @@ const airtimeReducerPile =(state, action)=>{
 }
 
 const transferReducerPile =(state, action)=>{
-    if(action.type === TRANSFER_REDUCER_CLEAR){ 
-        state = undefined; 
+    if(action.type === TRANSFER_REDUCER_CLEAR){
+        state = undefined;
     }
     return transferReducers(state, action);
 }
 
 const fundAccountReducerPile = (state, action)=>{
-    if(action.type === fundAccountConstants.FUND_ACCOUNT_REDUCER_CLEAR){ 
-        state = undefined; 
+    if(action.type === fundAccountConstants.FUND_ACCOUNT_REDUCER_CLEAR){
+        state = undefined;
     }
     return fundAccountReducer(state, action);
 }
@@ -69,7 +69,7 @@ const airtimeReducer = combineReducers({
     airtime_beneficiaries: airtime.airtimeBeneficiariesReducer,
     airtime_beneDelete: airtime.deleteBeneficiaryReducer,
     airtime_buydata: airtime.buyAirtimeReducer,
-    airtime_webpin: airtime.buyAirtimeWebPinReducer,  
+    airtime_webpin: airtime.buyAirtimeWebPinReducer,
     airtime_webpinotp: airtime.buyAirtimeWebPinOTPReducer,
     airtime_save_bene: airtime.airtimeSaveBeneficiaryReducer
 })
@@ -80,7 +80,7 @@ const fundAccountReducer = combineReducers({
     saveCard: fundAccount.saveCardReducer,
     cardDetails: fundAccount.tranCardDetailsReducer,
     deleteCard: fundAccount.deleteCardReducer,
-    saveTransCard: fundAccount.saveCardAfterTranReducer, 
+    saveTransCard: fundAccount.saveCardAfterTranReducer,
     fundwema_alat: fundAccount.fundWemaAccountReducer
     //fundFromCardToken: fundAccount.fundFromTokenisedCardReducer,
     //fundfromWithPin: fundAccount.fundFromCardWithPinReducer
@@ -96,6 +96,8 @@ const loanOnboardingReducer = combineReducers({
 
 const appReducer = combineReducers({
     authentication,
+    flexiSavingGoal,
+    flexiGoalCreationSaving,
     // registration,
     alert,
     onboarding_user_details: onboarding.userRegistrationRequest,
@@ -107,7 +109,7 @@ const appReducer = combineReducers({
     dashboard_userGoals: dashboard.userGoalsReducer,
     dashboard_userOnboardingPriority: dashboard.onboardingPriorityReducer,
     dashboard_announcementCard: dashboard.announcementReducer,
-    
+
     airtimeReducerPile,
     transferReducerPile,
     fundAccountReducerPile,

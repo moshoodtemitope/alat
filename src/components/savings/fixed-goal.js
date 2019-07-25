@@ -26,7 +26,7 @@ class FixedGoal extends React.Component {
 
 
         }
-      
+
 
     }
 
@@ -68,7 +68,7 @@ class FixedGoal extends React.Component {
                                             <li><a href="accounts.html" className="active">Goals</a></li>
                                             <li><a href="statement.html">Group Savings</a></li>
                                             <li><a href="#">Investments</a></li>
-                                        
+
                                         </ul>
                                     </div>
                                 </div>
@@ -89,7 +89,7 @@ class FixedGoal extends React.Component {
                                                 <div className="form-row">
                                                     <div className={ !stdInvalid ? "form-group col-md-6" : "input-ctn form-error"}>
                                                         <label className="label-text">When would you like to start</label>
-                                                        <DatePicker className="form-control" selected={startDate} 
+                                                        <DatePicker className="form-control" selected={startDate}
                                                         placeholder="October 31, 2017"
                                                         dateFormat=" MMMM d, yyyy"
                                                         showMonthDropdown
@@ -129,29 +129,26 @@ class FixedGoal extends React.Component {
                                                         </center>
                                                     </div>
                                                 </div>
-                                            
-                                            
-                                            
-                                            
-                                            
+
+
+
                                             </form>
 
-                                            
-                                            
+
+
                                         </div>
 
-                                       
+
                                        </div>
-                                      
+
                                       </div>
-                                    
+
                                 </div>
-                            
+
                             </div>
-                        
+
                         </div>
 
-                    
                     </SavingsContainer>
 
                 </InnerContainer>

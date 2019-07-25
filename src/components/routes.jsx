@@ -3,6 +3,7 @@ import {Redirect, Route, Router, Switch} from "react-router";
 import {connect} from "react-redux";
 import {Fragment} from "react";
 import OnboardingRoute from "./onboarding/routes";
+import SavingRoute from './savings/routes';
 // import {OnboardingRoute} from "./onboarding/routes";
 import {history} from './../_helpers/history';
 import AuthenticatedRoutes from "./authenticated-routes";
@@ -48,7 +49,7 @@ class IndexedRoute extends React.Component {
             <div>
                 <OnboardingRoute />
                 <AuthenticatedRoutes />
-                
+                <SavingRoute />
             </div>
             // <Router history={history}>
             //     <Switch>

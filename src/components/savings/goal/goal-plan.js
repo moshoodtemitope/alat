@@ -12,7 +12,6 @@ import {NavLink, Route} from "react-router-dom";
 class GoalPlan extends React.Component {
     render() {
         return (
-            
             <Fragment>
                 <InnerContainer>
                     <SavingsContainer>
@@ -27,7 +26,7 @@ class GoalPlan extends React.Component {
                                         <li><a href="accounts.html" className="active">Goals</a></li>
                                         <li><a href="statement.html">Group Savings</a></li>
                                         <li><a href="#">Investments</a></li>
-                                    
+
                                     </ul>
                                 </div>
                             </div>
@@ -40,13 +39,15 @@ class GoalPlan extends React.Component {
                                     <p className="flex-text">Fixed Goal</p>
                                     <p className="info-text3">Save daily, weekly or monthly towards
                                     a target amount, earn 10% interest annually. No withdrawals allowed</p>
-                                </div> 
-                                </NavLink>                       
-                                <div className="flex-goal">
-                                    <img className="goal-icon" src={graph} alt=''/>
-                                    <p className="plan-text">Flex Goal</p>
-                                    <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days.</p>
                                 </div>
+                                </NavLink>
+                                <NavLink to="/savings/goals/flexigoalCreation">
+                                  <div className="flex-goal">
+                                      <img className="goal-icon" src={graph} alt=''/>
+                                      <p className="plan-text">Flex Goal</p>
+                                      <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days.</p>
+                                  </div>
+                                </NavLink>
                                 <div className="stash-goal">
                                     <img className="goal-icon" src={stash} alt=''/>
                                     <p className="plan-text">Stash</p>
@@ -54,11 +55,11 @@ class GoalPlan extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    
-                    
 
 
-        
+
+
+
 
                     </div>
                     </SavingsContainer>
@@ -66,9 +67,9 @@ class GoalPlan extends React.Component {
             </Fragment>
 
 
-                
-        
+
+
         );
     }
 }
-export default GoalPlan; 
+export default GoalPlan;
