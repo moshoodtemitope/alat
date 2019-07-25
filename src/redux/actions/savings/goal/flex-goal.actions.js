@@ -1,6 +1,6 @@
 import {
-    fixedGoalConstants
-} from '../../../constants/goal/fixed-goal.constant';
+    flexGoalConstants
+} from '../../../constants/goal/flex-goal.constant';
 import {alertActions} from "../../alert.actions";
 import { modelStateErrorHandler } from "../../../../shared/utils";
 import {ApiService} from "../../../../services/apiService";
@@ -9,34 +9,34 @@ import {routes} from "../../../../services/urls";
 
 
 // add FixedGoal
-export const fetchFixedGoalStep1 = (data) =>{
+export const fetchFlexGoalStep1 = (data) =>{
     return(dispatch)=>{
         dispatch(success(data))
     }
     function success(data){
         return{
-            type:fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS,
+            type:flexGoalConstants.FETCH_FLEX_GOAL_SUCCESS,
             data:data
         
         }
     }
 }
 
-export const fetchFixedGoalStep2 =(data) =>{
+export const fetchFlexGoalStep2 =(data) =>{
     return(dispatch)=>{
         dispatch(success(data))
 
     }
     function success(data){
         return{
-            type:fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS_STEP2,
+            type:flexGoalConstants.FETCH_FLEX_GOAL_SUCCESS_STEP2,
             data:data
         }
     }
 }
-export const addFixedGoal =(data)=>{
+export const addFlexGoal =(data)=>{
     return (dispatch) => {
-        let consume = ApiService.request(routes.ADDGOAL,
+        let consume = ApiService.request(routes.ADDFLEXIGOAL,
              "POST", data);
         dispatch(request(consume));
         return consume
@@ -53,7 +53,7 @@ export const addFixedGoal =(data)=>{
             });
     };
 
-    function request(request) { return { type:fixedGoalConstants.ADD_FIXED_GOAL_PENDING,  request } }
-    function success(response, request) { return { type: fixedGoalConstants.ADD_FIXED_GOAL_SUCCESS, data: { response : response, request: request } }}
-    function failure(error) { return { type: fixedGoalConstants.ADD_FIXED_GOAL_FAILURE, error } }
+    function request(request) { return { type:flexGoalConstants.ADD_FLEX_GOAL_PENDING,  request } }
+    function success(response, request) { return { type: flexGoalConstants.ADD_FLEX_GOAL_SUCCESS, data: { response : response, request: request } }}
+    function failure(error) { return { type: flexGoalConstants.ADD_FLEX_GOAL_FAILURE, error } }
 }

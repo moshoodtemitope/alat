@@ -7,8 +7,8 @@ import {Switch} from "react-router";
 import Select from 'react-select';
 import { connect } from 'react-redux';
 import DatePicker from "react-datepicker";
-import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant'
-import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
+import {flexGoalConstants} from '../../redux/constants/goal/flex-goal.constant'
+import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
 import "react-datepicker/dist/react-datepicker.css";
 
 const selectedTime = [
@@ -125,7 +125,7 @@ class FlexGoal extends React.Component {
 
         } else {
             this.setState({isSubmitted : true });
-            this.props.dispatch(actions.fetchFixedGoalStep1({
+            this.props.dispatch(actions.fetchFlexGoalStep1({
                 "goalName":this.state.goalName,
                 "startDate":this.state.startDate,
                 "endDate":this.state.endDate,
@@ -138,8 +138,8 @@ class FlexGoal extends React.Component {
     }
     
     gotoStep2 = () => {
-        if (this.props.fixed_goal_step1)
-            if (this.props.fixed_goal_step1.fixed_step1_status == fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS) {
+        if (this.props.flex_goal_step1)
+            if (this.props.flex_goal_step1.flex_step1_status == flexGoalConstants.FETCH_FLEX_GOAL_SUCCESS) {
                 return <Redirect to="/savings/flex-goal-step2" />
             }
     }
@@ -272,10 +272,10 @@ class FlexGoal extends React.Component {
                                                         <center>
 
                                                             <button 
-                                                            disabled={this.props.fixed_goal_step1.fixed_step1_status == fixedGoalConstants.FETCH_FIXED_GOAL_PENDING}
+                                                            disabled={this.props.flex_goal_step1.flex_step1_status == flexGoalConstants.FETCH_FLEX_GOAL_PENDING}
 
                                                             type="submit" className="btn-alat m-t-10 m-b-20 text-center">
-                                                            {this.props.fixed_goal_step1.fixed_step1_status == fixedGoalConstants.FETCH_FIXED_GOAL_PENDING ? "Processing..." :"Next"}
+                                                            {this.props.flex_goal_step1.flex_step1_status == flexGoalConstants.FETCH_FLEX_GOAL_PENDING ? "Processing..." :"Next"}
 
                                                             </button>
                                                         </center>
@@ -310,6 +310,6 @@ class FlexGoal extends React.Component {
     }
 }
 const mapStateToProps = state => ({
-    fixed_goal_step1: state.fixed_reducer
+    flex_goal_step1: state.flex_goal_step1
 })
 export default connect(mapStateToProps)(FlexGoal);

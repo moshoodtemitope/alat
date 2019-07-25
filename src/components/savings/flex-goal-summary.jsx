@@ -4,8 +4,8 @@ import SavingsContainer from './container';
 import {Fragment} from "react";
 import { connect } from 'react-redux';
 import moment from 'moment';
-import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant';
-
+import {flexGoalConstants} from '../../redux/constants/goal/flex-goal.constant'
+import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
 
 
  
@@ -20,7 +20,7 @@ import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant
             endDate:"",
             goalName:"",
             timeSaved:"",
-            selectedAccount:""
+            debitAccount:""
 
         }
      }
@@ -31,11 +31,11 @@ import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant
     }
 
     init = () => {
-        if (this.props.fixed_goal_step2.fixed_step2_status != fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS_STEP2)
+        if (this.props.flex_goal_step2.flex_step2_status != flexGoalConstants.FETCH_FLEX_GOAL_SUCCESS_STEP2)
             this.props.history.push("/savings/flex-goal-step2");
         else {
             var data = {
-                ...this.props.fixed_goal_step2.fixed_step2_data.data
+                ...this.props.flex_goal_step2.flex_step2_data.data
             };
             console.log('tag', data)
 
@@ -45,7 +45,7 @@ import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant
                 endDate: data.endDate,  
                 goalName:data.goalName,
                 timeSaved:data.timeSaved,
-                selectedAccount:data.selectedAccount,
+                debitAccount:data.debitAccount,
             });
         }
     }
@@ -106,7 +106,7 @@ import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant
                                             </div>
                                             <div className="right">
                                                 <p className='GoalText'>Account to Debit</p>
-                                                <p className='boldedText'>{this.state.selectedAccount}</p>
+                                                <p className='boldedText'>{this.state.debitAccount}</p>
                                             </div>
                                         </div>
                                     
@@ -145,8 +145,8 @@ import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant
     }
 }
 const mapStateToProps = state => ({
-    fixed_goal_step1: state.fixed_reducer,
-    fixed_goal_step2:state.fixed_reducer2
+    flex_goal_step1: state.flex_goal_step1,
+    flex_goal_step2:state.flex_goal_step2
 })
 export default connect(mapStateToProps)(FlexGoalSummary);
 

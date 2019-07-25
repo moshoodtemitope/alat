@@ -19,7 +19,7 @@ import FundAccountIndex from './fund-account/index';
 import ChooseGoalPlan from './savings/goal/goal-plan';
 import FixedGoal from './savings/fixed-goal';
 import FixedGoalComplete from './savings/fixed-goal-step2';
-import SubmitFixedGoal from './savings/submit-fixed-goal';
+import FixedGoalSummary from './savings/fixed-goal-summary';
 import FlexGoal from './savings/flex-goal';
 import FlexGoalStep2 from './savings/flex-goal-step2';
 import FlexGoalSummary from './savings/flex-goal-summary'
@@ -71,7 +71,7 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path='/savings/choose-goal-plan' authed={this.props.user} component={ChooseGoalPlan}/>
                     <PrivateRoute path='/savings/fixed-goal' authed={this.props.user} component={FixedGoal}/>
                     <PrivateRoute path='/savings/fixed-goal-complete' authed={this.props.user} component={FixedGoalComplete}/>
-                    <PrivateRoute path='/savings/submit-fixed-goal' authed={this.props.user} component={SubmitFixedGoal}/>
+                    <PrivateRoute path='/savings/fixed-goal-summary' authed={this.props.user} component={FixedGoalSummary}/>
                     <PrivateRoute path='/savings/flex-goal' authed={this.props.user} component={FlexGoal}/>
                     <PrivateRoute path='/savings/flex-goal-step2' authed={this.props.user} component={FlexGoalStep2}/>
                     <PrivateRoute path='/savings/flex-goal-summary' authed={this.props.user} component={FlexGoalSummary}/>

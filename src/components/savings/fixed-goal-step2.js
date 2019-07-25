@@ -37,7 +37,7 @@ class FixedGoal extends React.Component {
             goalName:"",
             timeSaved:"",
             //accountNumber:"",
-            selectedAccount:"",
+            debitAccount:"",
             isSubmitted: false,
             isAccountInvalid: false,
             SelectedtimeSaved:"",
@@ -63,14 +63,14 @@ class FixedGoal extends React.Component {
     }
     handleSelectDebitableAccounts(account) {
         console.log('dss', account);
-        this.setState({ selectedAccount: account })
+        this.setState({ debitAccount: account })
         if (this.state.isSubmitted) { 
             if(account.length == 10)
             this.setState({ isAccountInvalid: false })
          }
     }
     checkAccountNumber() {
-        if (this.state.selectedAccount.length != 10) {
+        if (this.state.debitAccount.length != 10) {
             this.setState({ isAccountInvalid: true })
             return true;
         }
@@ -122,7 +122,7 @@ class FixedGoal extends React.Component {
                 "endDate":this.state.endDate,
                 "AmountSavedText":this.state.AmountSavedText,
                 "timeSaved":this.state.timeSaved,
-                "selectedAccount":this.state.selectedAccount,
+                "debitAccount":this.state.debitAccount,
             }));
         }
        
@@ -130,7 +130,7 @@ class FixedGoal extends React.Component {
     gotoStep3 = () => {
         if (this.props.fixed_goal_step2)
             if (this.props.fixed_goal_step2.fixed_step2_status == fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS_STEP2) {
-                return <Redirect to="/savings/submit-fixed-goal" />
+                return <Redirect to="/savings/fixed-goal-summary" />
             }
     }
     

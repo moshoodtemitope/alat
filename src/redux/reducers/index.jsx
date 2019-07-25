@@ -1,7 +1,7 @@
 import {combineReducers} from "redux";
 import {authentication} from "./authentication.reducer";
 import { alert} from "./alert.reducer";
-import {dashboard, transfer, onboarding, airtime, global,fixedGoal,fundAccount, loanOnboarding} from "./export";
+import {dashboard, transfer, onboarding, airtime, global,fixedGoal,flexGoal,fundAccount, loanOnboarding} from "./export";
 import {bankListRequest, beneficiariesRequest} from "./transfer.reducer";
 import {accountHistoryReducer} from "./dashboard.reducer";
 import { userConstants } from "../constants/onboarding/user.constants";
@@ -128,9 +128,15 @@ const appReducer = combineReducers({
     cardless_reducer: cardlessReducer,
     bills_reducer: billsReducer,
 
-    //goal reducers
+    //fixed goal reducers
     fixed_reducer:fixedGoal.fixedGoalStep1Reducer,
     fixed_reducer2:fixedGoal.fixedGoalStep2Reducer,
+    add_goal_reducer:fixedGoal.addGoalReducer,
+
+    // flex goal reducers
+    flex_goal_step1:flexGoal.flexGoalStep1Reducer,
+    flex_goal_step2:flexGoal.flexGoalStep2Reducer,
+    add_flex_goal:flexGoal.addFlexGoalReducer
 
 
 });

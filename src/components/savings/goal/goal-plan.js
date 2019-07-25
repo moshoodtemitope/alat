@@ -37,7 +37,7 @@ class GoalPlan extends React.Component {
                                 <NavLink to="/savings/fixed-goal">
                                 <div className="fixed-goal">
                                     <img className="goal-icon" src={calender} alt=''/>
-                                    <p className="flex-text">Flex Goal</p>
+                                    <p className="flex-text">Fixed Goal</p>
                                     <p className="info-text3">Save daily, weekly or monthly towards
                                     a target amount, earn 10% interest annually. No withdrawals allowed</p>
                                 </div> 

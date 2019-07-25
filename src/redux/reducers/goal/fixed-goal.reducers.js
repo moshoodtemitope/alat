@@ -53,3 +53,27 @@ export function fixedGoalStep2Reducer(state = [], action) {
         };
     }
 }
+export function addGoalReducer(state = [], action) {
+    switch (action.type) {
+        case fixedGoalConstants.ADD_FIXED_GOAL_SUCCESS:
+            return{
+                add_goal_status:fixedGoalConstants.ADD_FIXED_GOAL_SUCCESS,
+                add_goal_data:action,
+            }
+        case fixedGoalConstants.ADD_FIXED_GOAL_PENDING:
+            return{
+                add_goal_status:fixedGoalConstants.ADD_FIXED_GOAL_PENDING,
+                add_goal_data:action,
+            }
+        case fixedGoalConstants.ADD_FIXED_GOAL_FAILURE:
+            return{
+                add_goal_status:fixedGoalConstants.ADD_FIXED_GOAL_FAILURE,
+                add_goal_data:action,
+
+        }
+        
+        default: return {
+            ...state
+        };
+    }
+}
