@@ -16,7 +16,7 @@ class GoalPlan extends React.Component {
             <Fragment>
                 <InnerContainer>
                     <SavingsContainer>
-                    <div className="row">
+                    <div className="row checkSome">
                         <div className="col-sm-12">
                             <p className="page-title">Savings & Goals</p>
                         </div>
@@ -33,7 +33,7 @@ class GoalPlan extends React.Component {
                             </div>
                         </div>
                         <div className="Home-container">
-                            <div className="row">
+                            <div className="choose-goal-plan-row ">
                                 <NavLink to="/savings/fixed-goal">
                                 <div className="fixed-goal">
                                     <img className="goal-icon" src={calender} alt=''/>

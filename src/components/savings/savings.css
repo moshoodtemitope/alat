@@ -1,7 +1,10 @@
  @import '../../assets/css/font.css';
- .home-container{
-    justify-content: center;
-    align-items: center
+ 
+ .choose-goal-plan-row{
+    display: flex;
+    flex-wrap: wrap;
+    
+   
  }
 .fixed-goal{
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
@@ -17,6 +20,10 @@
 .goal-icon{
     padding-top: 20px;
     margin: 25px;
+}
+
+.checkSome{
+ justify-content: center;
 }
 .flex-text{
     font-weight: bold;

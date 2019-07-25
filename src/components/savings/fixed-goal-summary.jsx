@@ -89,7 +89,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
 
 
                         {this.props.alert && this.props.alert.message &&
-                            <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                            <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                         }
                     <h1 style={{margin:"auto", color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>Fixed Goal Summary</h1>
                         <div style={{margin:"30px"}}></div>
