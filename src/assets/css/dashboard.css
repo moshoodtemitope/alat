@@ -285,6 +285,20 @@ select {
   padding: 0;
 }
 
+  .unset-pad {
+    padding: unset !important;
+}
+
+.salary-table{
+  font-family: "proxima_novasemibold", sans-serif;
+  font-size: 8px;
+ line-height: 10px;
+/* identical to box height */
+ text-transform: uppercase;
+ color: #7C7C7C;
+}
+
+
 .m-t-10 {
   margin-top: 10px !important;
 }
@@ -1928,42 +1942,55 @@ ul.menu-side li a.settings {
   margin-bottom: 50px;
   width: 100%;
   min-width: 480px;
-  overflow-x: visible;
-}
+  overflow-x: visible; }
+  .sub-tab-nav ul {
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #E6E8ED; }
+    .sub-tab-nav ul li {
+      display: inline-block; }
+      .sub-tab-nav ul li a {
+        color: #666;
+        font-size: 1em;
+        display: inline-block;
+        padding: 15px 0px;
+        margin-right: 20px; }
+        .sub-tab-nav ul li a:hover {
+          text-decoration: none; }
+        .sub-tab-nav ul li a.active {
+          color: #AB2656;
+          border-bottom: 3px solid #AB2656; }
 
-.sub-tab-nav ul {
-  margin: 0;
-  padding: 0;
-  border-bottom: 1px solid #E6E8ED;
-}
-
-.sub-tab-nav ul li {
-  display: inline-block;
-}
-
-.sub-tab-nav ul li a {
-  color: #666;
-  font-size: 1em;
-  display: inline-block;
-  padding: 15px 0px;
-  margin-right: 20px;
-}
-
-.sub-tab-nav ul li a:hover {
-  text-decoration: none;
-}
-
-.sub-tab-nav ul li a.active {
-  color: #AB2656;
-  border-bottom: 3px solid #AB2656;
-}
+          .upper-line-success{
+            background: #27ED3A;
+            min-height: 16px;
+          }
+          
+          .upper-line-failure{
+            background: #dc3545;
+            min-height: 16px;
+          }
+          
+          .result-msg{
+            margin: 40px 70px;
+          }
+          
+          .max-460{
+            max-width: 460px;
+            width: 100%;
+            margin: 0 auto;
+          }
 
 .max-500 {
   width: 100%;
   max-width: 500px;
-  margin: 0 auto;
-}
+  margin: 0 auto; }
 
+  .max-650 {
+    max-width: 650px;
+    width: 100%;
+    margin: 0 auto; }
+  
 .max-600 {
   max-width: 600px;
   width: 100%;
@@ -3219,8 +3246,12 @@ ul.menu-side li a.settings {
     margin-right: 20px;
   }
   .dashboard-wrapper {
-    padding-top: 120px;
+    padding-top: 120px; }
+
+    .loan-onboarding-bkg {
+      background-color: #F2F2F2 !important;
   }
+
   .bx-wrapper {
     padding: 0 20px;
   }

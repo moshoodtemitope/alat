@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="theme-color" content="#9D0F3E" />
+
+    <link rel="shortcut icon" href="" type="image/x-icon" />
+    <title>ALAT by Wema</title>
+
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- font-awesome.css -->
+    <link href="css/font-awesome/font-awesome.css" rel="stylesheet">
+    <link href="css/selectize.default.css" rel="stylesheet">
+    <link href="css/dropify.min.css" rel="stylesheet">
+
+    <!--JQuery-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/standalone/selectize.min.js"></script>
+    <script src="js/dropify.min.js"></script>
+
+    <!-- User Defined Style -->
+    <link href="css/app.css" rel="stylesheet">
+    <!--   <link href="css/components.css" rel="stylesheet"> -->
+</head>
+<body>
+<div class="onboarding">
+    <div class="container middle">
+        <div class="inner">
+            <div class="row">
+                <!-- Logo -->
+                <div class="col-4">
+                    <img src="img/logo.svg" />
+                </div>
+                <div class="col-sm-8 col-8 text-right pull-right">
+                    <i class="fa fa-circle bullet active"></i>
+                    <i class="fa fa-circle bullet active"></i>
+                    <i class="fa fa-circle bullet active"></i>
+                    <i class="fa fa-circle bullet active"></i>
+                    <i class="fa fa-circle bullet active"></i>
+                    <i class="fa fa-circle bullet active"></i>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Header -->
+                <div class="col-12">
+                    <h3>Documents Upload<span></span></h3>
+                    <p>
+                        One last thing. Upload a picture of your face (Selfie) and a photo of your signature on a white sheet of paper.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <form class="onboard-form">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="upload-div">
+                                    <p class="bold-text">Picture Upload</p>
+                                    <div class="upload-box">
+                                        <input type="file" id="input-file-now" class="dropify" data-height="150">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-6">
+                                <div class="upload-div">
+                                    <p class="bold-text">Signature Upload</p>
+                                    <div class="upload-box">
+                                        <input type="file" id="input-file-now" class="dropify" data-height="150">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="submit" value="Upload Documents" class="btn-alat btn-block"/>
+                    </form>
+                    <p class="text-center"><a href="#">Skip for now</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('select').selectize();
+    $('.dropify').dropify({
+        messages: {
+            'default': 'Tap to upload file',
+        }
+    });
+</script>
+</body>
+</html>
