@@ -43,12 +43,13 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
             console.log('tag', data)
 
             this.setState({
-                AmountSaved:data.AmountSavedText,
+                AmountSavedText:data.AmountSavedText,
                 startDate: data.startDate,
                 endDate: data.endDate,  
                 goalName:data.goalName,
                 timeSaved:data.timeSaved,
                 debitAccount:data.debitAccount,
+                TargetAmount:data.AmountSaved
             });
         }
     }
@@ -58,7 +59,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
             "goalName":this.state.goalName,
             "startDate":this.state.startDate,
             "endDate":this.state.endDate,
-            "AmountSaved":this.state.AmountSavedText,
+            "AmountSavedText":this.state.AmountSavedText,
             "timeSaved":this.state.timeSaved,
             "debitAccount":this.state.debitAccount,
             'TargetAmount':this.state.AmountSavedText

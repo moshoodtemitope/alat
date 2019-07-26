@@ -20,7 +20,8 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
             endDate:"",
             goalName:"",
             timeSaved:"",
-            debitAccount:""
+            debitAccount:"",
+            DebitAmount	:"",
 
         }
      }
@@ -40,12 +41,14 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
             console.log('tag', data)
 
             this.setState({
-                AmountSaved:data.AmountSavedText,
+                AmountSavedText:data.AmountSavedText,
                 startDate: data.startDate,
                 endDate: data.endDate,  
                 goalName:data.goalName,
                 timeSaved:data.timeSaved,
                 debitAccount:data.debitAccount,
+                DebitAmount	:data.AmountSavedText
+
             });
         }
     }
@@ -55,10 +58,10 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
             "goalName":this.state.goalName,
             "startDate":this.state.startDate,
             "endDate":this.state.endDate,
-            "AmountSaved":this.state.AmountSavedText,
+            "AmountSavedText":this.state.AmountSavedText,
             "timeSaved":this.state.timeSaved,
             "debitAccount":this.state.debitAccount,
-            'TargetAmount':this.state.AmountSavedText
+            'DebitAmount':this.state.AmountSavedText
         }));
 
     }
@@ -83,6 +86,9 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
                             </div>
                         </div>
                     </div>
+                    {this.props.alert && this.props.alert.message &&
+                        <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                    }
                     <h1 style={{margin:"auto", color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}> Flexi Goal Summary</h1>
                         <div style={{margin:"30px"}}></div>
 
@@ -161,7 +167,9 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
 }
 const mapStateToProps = state => ({
     flex_goal_step1: state.flex_goal_step1,
-    flex_goal_step2:state.flex_goal_step2
+    flex_goal_step2:state.flex_goal_step2,
+    alert: state.alert,
+
 })
 export default connect(mapStateToProps)(FlexGoalSummary);
 

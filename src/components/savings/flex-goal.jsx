@@ -246,7 +246,7 @@ class FlexGoal extends React.Component {
                                                         <DatePicker 
                                                             className="form-control"
                                                             selected={this.state.startDate}
-                                                            placeholder="October 31, 2017"
+                                                            placeholderText="Goal start Date"
                                                             dateFormat=" MMMM d, yyyy"
                                                             name="startDate"
                                                             peekNextMonth

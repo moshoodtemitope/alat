@@ -153,6 +153,20 @@
 .css-19bqh2r{
     height: 25px;
 }
+.date-picker-icon {
+    float: right;
+    margin-right: 6px;
+    margin-top: -30px;
+    position: relative;
+    z-index: 2;
+}
+.text-purple{
+    color: #AB2656;
+    font-size:12px;
+    margin:auto;
+    padding-top:3px
 
+
+}
 
   
