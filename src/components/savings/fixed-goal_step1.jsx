@@ -162,13 +162,13 @@ class FixedGoal extends React.Component {
 
     }
 
-    calcRepayment = (savedAmount,interestRate,tenure) => {
+    calcRepayment = (savedAmount,interestRate,tenure,startDate,endDate) => {
         //[P x R x (1+R)^N]/[(1+R)^N-1]
-        let _intRate = interestRate / 30;
+        let _intRate = interestRate / 365;
        let _interestRate = 1 + _intRate;
        //console.log(_interestRate);
       
-       let _tenure = tenure - 1;
+       let _tenure = startDate + endDate;
      
         let numerator = savedAmount * _interestRate *_intRate;
         let finalNumerator =  Math.pow(numerator, tenure);
