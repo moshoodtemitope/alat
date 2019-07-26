@@ -194,6 +194,7 @@ class FixedGoal extends React.Component {
                 "AmountSavedText":this.state.AmountSavedText,
                 "frequencyGoal":this.state.frequencyGoal
             }));
+            console.log('tag', '')
         }
         
        
