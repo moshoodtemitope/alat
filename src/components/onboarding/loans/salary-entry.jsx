@@ -14,7 +14,7 @@ class LoanOnboardingSalaryEntry extends React.Component {
         super(props);
         this.state = {
             user: JSON.parse(localStorage.getItem("user")),
-            FirstName: "",
+            //FirstName: "",
             enytrList: [
                 //     {
                 //     "TransactionId": 1,
@@ -38,9 +38,11 @@ class LoanOnboardingSalaryEntry extends React.Component {
     }
 
     init = () => {
+        if (this.props.loan_reqStat)
+        if (this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS)
         this.props.dispatch(actions.salaryTransaction(this.state.user.token));
-        if(this.props.user_detail.loan_userdetails_data)
-        this.setState({ FirstName :this.props.user_detail.loan_userdetails_data.data.FirstName }); 
+        // if(this.props.user_detail.loan_userdetails_data)
+        // this.setState({ FirstName :this.props.user_detail.loan_userdetails_data.data.FirstName }); 
     }
 
     entryChecked = (salaryEntry, e) => {
@@ -128,7 +130,7 @@ class LoanOnboardingSalaryEntry extends React.Component {
         render = () => {
             this.gotoNextPage();
             return (
-                <LoanOnboardingContainer UserName={this.state.FirstName}>
+                <LoanOnboardingContainer UserName={this.state.user.firstname}>
                     <div className="row">
                         <div className="col-sm-12">
                             <div className="max-650">
@@ -173,7 +175,7 @@ function mapStateToProps(state) {
         loan_genStat: state.loanOnboardingReducerPile.loanOnboardingGenerateStatement,
         salary_trans: state.loanOnboardingReducerPile.loanOnboardingSalaryTransaction,
         salary_entry: state.loanOnboardingReducerPile.loanSalaryEntryReducer,
-        user_detail: state.loanOnboardingReducerPile.loanUserDetails,
+        //user_detail: state.loanOnboardingReducerPile.loanUserDetails,
     };
 }
 export default connect(mapStateToProps)(LoanOnboardingSalaryEntry);

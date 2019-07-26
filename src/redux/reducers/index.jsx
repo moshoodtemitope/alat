@@ -44,7 +44,7 @@ const fundAccountReducerPile = (state, action)=>{
 }
 
 const loanOnboardingReducerPile = (state, action)=>{
-    if(action.type === loanOnboardingConstants.LOAN_ONBOARDING_REDUCER_CLEAR){
+    if(action.type === loanOnboardingConstants.LOAN_ONBOARDING_CLEAR){
         state = undefined;
     }
     return loanOnboardingReducer(state, action);

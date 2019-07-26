@@ -49,6 +49,7 @@ class LoanOnboardingBVNInfo extends React.Component {
         };
 
         this.props.dispatch(actions.LoanOnboardingStep3({
+            firstname: this.state.firstName,
             email: data.request.email,
             phoneNumber: data.request.phoneNo,
             fullName: `${this.state.FirstName} ${this.state.LastName}`,
