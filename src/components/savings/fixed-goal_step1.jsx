@@ -131,7 +131,7 @@ class FixedGoal extends React.Component {
                     if (e != "")
                         this.setState( {  AmountSavedInvalid: false });
                 }
-     }
+    }
  
      toCurrency(number) {
          // console.log(number);
