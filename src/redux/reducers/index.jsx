@@ -8,6 +8,7 @@ import { userConstants } from "../constants/onboarding/user.constants";
 import dataReducer from './data.reducer';
 import cardlessReducer from './cardless.reducer';
 import billsReducer from './bills.reducer';
+import accountsReducer from './accounts.reducer';
 import { airtimeConstants } from "../constants/airtime/airtime.constants";
 import { TRANSFER_REDUCER_CLEAR } from "../constants/transfer.constants";
 import { fundAccountConstants } from "../constants/fund-account/fund-account.constant";
@@ -129,7 +130,7 @@ const appReducer = combineReducers({
     data_reducer: dataReducer,
     cardless_reducer: cardlessReducer,
     bills_reducer: billsReducer,
-
+    accountsM_reducer : accountsReducer,
 });
 
 //export defualt appReducer;
