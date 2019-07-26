@@ -36,23 +36,25 @@ class GoalPlan extends React.Component {
                                 <NavLink to="/savings/fixed-goal">
                                 <div className="fixed-goal">
                                     <img className="goal-icon" src={calender} alt=''/>
-                                    <p className="flex-text">Fixed Goal</p>
+                                    <p className="flex-text">Flex Goal</p>
                                     <p className="info-text3">Save daily, weekly or monthly towards
                                     a target amount, earn 10% interest annually. No withdrawals allowed</p>
+                                </div> 
+                                </NavLink> 
+                                <NavLink to="/savings/flex-goal">                      
+                                <div className="flex-goal">
+                                    <img className="goal-icon" src={graph} alt=''/>
+                                    <p className="plan-text">Flex Goal</p>
+                                    <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days.</p>
                                 </div>
                                 </NavLink>
-                                <NavLink to="/savings/goals/flexigoalCreation">
-                                  <div className="flex-goal">
-                                      <img className="goal-icon" src={graph} alt=''/>
-                                      <p className="plan-text">Flex Goal</p>
-                                      <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days.</p>
-                                  </div>
+                                <NavLink to="/savings/goal/create-stash">
+                                    <div className="stash-goal">
+                                        <img className="goal-icon" src={stash} alt=''/>
+                                        <p className="plan-text">Stash</p>
+                                        <p className="info-text2">Save whatever you want whenever you want and earn 10% interest with the option to withdraw your interest on monthly basis</p>
+                                    </div>
                                 </NavLink>
-                                <div className="stash-goal">
-                                    <img className="goal-icon" src={stash} alt=''/>
-                                    <p className="plan-text">Stash</p>
-                                    <p className="info-text2">Save whatever you want whenever you want and earn 10% interest with the option to withdraw your interest on monthly basis</p>
-                                </div>
                             </div>
                         </div>
 
