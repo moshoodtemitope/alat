@@ -116,21 +116,28 @@
 
 }
 .coverForSummary {
-    padding-top: 20px;
+    /* padding-top: 20px; */
     display: flex;
     flex-wrap: nowrap;
     padding-bottom: 20px;
     border-bottom: 1px solid #eeeeee;
+    padding-bottom: 0px;
 }
 .coverForSummary .right, .coverForSummary .left {
     width: 50%;
 }
 .coverForSummary .left {
     padding-left: 10%;
+    border-right: 1px solid #eeeeee;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
   
 .coverForSummary .right {
     padding-left: 5%;
+    border-left: 1px solid #eeeeee;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
   
 .coverForSummary .boldedText {
@@ -168,6 +175,14 @@
     font-family:"proxima_novaregular"
 
 
+
+}
+
+.coverForSummary .left {
+
+}
+
+.coverForSummary .right {
 
 }
 
