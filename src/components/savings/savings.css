@@ -162,9 +162,11 @@
 }
 .text-purple{
     color: #AB2656;
-    font-size:12px;
+    font-size:14px;
     margin:auto;
-    padding-top:3px
+    padding-top: 3px;
+    font-family:"proxima_novaregular"
+
 
 
 }

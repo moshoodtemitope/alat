@@ -46,6 +46,7 @@ class FixedGoal extends React.Component {
             Term:"",
             InterestRate:"",
             repaymentAmount: "",
+            showMessage: false
 
 
 
@@ -204,6 +205,10 @@ class FixedGoal extends React.Component {
                 return <Redirect to="/savings/fixed-goal-complete" />
             }
     }
+
+    showInterest = () =>  {
+        this.setState({showMessage: true})
+    }
     
 
     
@@ -307,6 +312,7 @@ class FixedGoal extends React.Component {
                                                     <div className={AmountSavedInvalid ? "form-group col-md-6 form-error" : "form-group col-md-6"}>
                                                         <label className="label-text">How much would you like to save</label>
                                                         <input 
+                                                            onKeyUp= {this.showInterest}
                                                              
                                                             className="form-control" 
                                                             name="AmountSavedText"
@@ -319,8 +325,9 @@ class FixedGoal extends React.Component {
                                                          {AmountSavedInvalid && 
                                                             <div className="text-danger">Enter the amount you want to save</div>}
                                                             {
-                                        
-                                                              <div className="text-purple m-b-55"><h3 className="text-purple m-b-55"> You will earn approximately ₦ {util.formatAmount(this.state.repaymentAmount)} in interest.</h3></div>
+                                                                this.state.showMessage ? 
+                                                              <div className="text-purple m-b-55"><h3 className="text-purple m-b-55"> You will earn approximately ₦ {util.formatAmount(this.state.repaymentAmount)} in interest.</h3></div> 
+                                                              : null
 
                                                             }
      
