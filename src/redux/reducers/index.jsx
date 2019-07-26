@@ -1,17 +1,19 @@
 import {combineReducers} from "redux";
 import {authentication} from "./authentication.reducer";
 import { alert} from "./alert.reducer";
-import {dashboard, transfer, onboarding, airtime, global, fundAccount, loanOnboarding} from "./export";
+import {dashboard, transfer, onboarding, airtime, global,fixedGoal,flexGoal,fundAccount, loanOnboarding} from "./export";
 import {bankListRequest, beneficiariesRequest} from "./transfer.reducer";
 import {accountHistoryReducer} from "./dashboard.reducer";
 import { userConstants } from "../constants/onboarding/user.constants";
 import dataReducer from './data.reducer';
 import cardlessReducer from './cardless.reducer';
 import billsReducer from './bills.reducer';
+import fixedGoalReducer from './goal/fixed-goal.reducers'
 import { airtimeConstants } from "../constants/airtime/airtime.constants";
 import { TRANSFER_REDUCER_CLEAR } from "../constants/transfer.constants";
 import { fundAccountConstants } from "../constants/fund-account/fund-account.constant";
 import { loanOnboardingConstants } from '../constants/onboarding/loan.constants';
+
 //import { saveCardReducer } from "./fund-account.reducer";
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
@@ -21,6 +23,7 @@ const rootReducer = (state, action)=>{
     return appReducer(state, action)
 
 };
+
 
 
 const airtimeReducerPile =(state, action)=>{
@@ -94,6 +97,8 @@ const loanOnboardingReducer = combineReducers({
     loanOnboardingValidateOTP : loanOnboarding.loanOnboardingValidateOTPReducer
 })
 
+
+
 const appReducer = combineReducers({
     authentication,
     // registration,
@@ -122,6 +127,17 @@ const appReducer = combineReducers({
     data_reducer: dataReducer,
     cardless_reducer: cardlessReducer,
     bills_reducer: billsReducer,
+
+    //fixed goal reducers
+    fixed_goal_step1:fixedGoal.fixedGoalStep1Reducer,
+    fixed_goal_step2:fixedGoal.fixedGoalStep2Reducer,
+    add_goal_reducer:fixedGoal.addGoalReducer,
+
+    // flex goal reducers
+    flex_goal_step1:flexGoal.flexGoalStep1Reducer,
+    flex_goal_step2:flexGoal.flexGoalStep2Reducer,
+    add_flex_goal:flexGoal.addFlexGoalReducer
+
 
 });
 

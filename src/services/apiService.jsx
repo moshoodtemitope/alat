@@ -23,14 +23,6 @@ export class ApiService {
 
         if(localStorage.getItem("user") == null){
             headers = undefined;
-           // console.log("sssssssss, I turn header to undefined");
-           // console.log(headers);
-        }else{
-           // console.log(headers);
-           // console.log("we good bro..order chip[s!!!");
-            for (let [key, value] of Object.entries(headers)) {
-               // console.log(key,value);
-            }
         }
         // header = new Headers(headers || {
         //     'Content-Type': 'application/json',
@@ -97,14 +89,14 @@ export class ApiService {
                     axios.defaults.headers.common[key] = value;
                 }
             }
-            // console.log("after", headers);
-            // console.log("after",axios.defaults.headers )
+            console.log("after", headers);
+            console.log("after",axios.defaults.headers )
             service = axios.post(url, bodyData);
             return service.then(function (response) {
                 // console.log("successful");
                 return service;
             }).catch(function (error) {
-               
+            
               if (error.response) {
                 // The request was made and the server responded with a status code
                 // that falls out of the range of 2xx
@@ -133,7 +125,7 @@ export class ApiService {
        
 
         if (type.toLowerCase() === "get") {
-           // console.log("get method");
+            console.log("get method");
             // axios.defaults.headers.common['alat-client-apiKey'] = 'ERTojertoijertoijert';
             // axios.defaults.headers.common['Content-Type'] = 'application/json';
             // console.log(headers);
@@ -157,8 +149,8 @@ export class ApiService {
                 }
             }
             axios.get(url, bodyData).then(function (response) {
-                // console.log('dcfv');
-                // console.log(response);
+                console.log('dcfv');
+                console.log(response);
                 return service.map((res) => {
                     return res._body !== '' ? res.json() : null;
                     // return response;
@@ -190,7 +182,7 @@ export class ApiService {
             });
         }
         else {
-            //console.log("post method");
+            console.log("post method");
             // axios.defaults.headers.common['alat-client-apiKey'] = 'ERTojertoijertoijert';
             // axios.defaults.headers.common['Content-Type'] = 'application/json';
             // console.log(headers);
@@ -214,16 +206,16 @@ export class ApiService {
                 }
             }
             return axios.post(url, bodyData).then(function (response) {
-                // console.log('dcfv');
-                // console.log(response);
-                // console.log(service);
+                console.log('dcfv');
+                console.log(response);
+                console.log(service);
                 return service.map((res) => {
-                    //console.log(response);
+                    console.log(response);
                     return response;
                     // return res._body !== '' ? res.json() : null;
                     // return response;
                 }).catch(function (error) {
-                    //console.log(error);
+                    console.log(error);
                     if (error.status === 401 && error.statusText.toLowerCase().includes('token not valid')) {
                         // sessionStorage.clear();
                         // return <Redirect to='/login'/>
@@ -231,7 +223,7 @@ export class ApiService {
                         // this.router.navigate(['/login']); redirect to login
                     } else {
                         let requestError = error.status !== 0 ? error._body : '{ \"message\": \"Could not connect to server\" }';
-                        //console.log(requestError);
+                        console.log(requestError);
                         try {
                             requestError = JSON.parse(requestError);
                         } catch (e) {

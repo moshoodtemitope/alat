@@ -16,6 +16,13 @@ import ProvideDetails from "./transfer/cash-transfer/provide-details";
 import TransferHome from "./transfer/transfer-home";
 //import BillsRoute from './airtime-bills/bills-route';
 import FundAccountIndex from './fund-account/index';
+import ChooseGoalPlan from './savings/goal/goal-plan';
+import FixedGoal from './savings/fixed-goal_step1'
+import FixedGoalComplete from './savings/fixed-goal-step2';
+import FixedGoalSummary from './savings/fixed-goal-summary';
+import FlexGoal from './savings/flex-goal';
+import FlexGoalStep2 from './savings/flex-goal-step2';
+import FlexGoalSummary from './savings/flex-goal-summary'
 
 
 
@@ -61,6 +68,19 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path='/transfer' authed={this.props.user} component={TransferContainer}/>
                     <PrivateRoute path='/cardless-withdrawal' authed={this.props.user} component={TransferContainer}/>
                     <PrivateRoute path='/fx-transfer' authed={this.props.user} component={TransferContainer}/>
+                    <PrivateRoute path='/savings/choose-goal-plan' authed={this.props.user} component={ChooseGoalPlan}/>
+                    <PrivateRoute path='/savings/fixed-goal' authed={this.props.user} component={FixedGoal}/>
+                    <PrivateRoute path='/savings/fixed-goal-complete' authed={this.props.user} component={FixedGoalComplete}/>
+                    <PrivateRoute path='/savings/fixed-goal-summary' authed={this.props.user} component={FixedGoalSummary}/>
+                    <PrivateRoute path='/savings/flex-goal' authed={this.props.user} component={FlexGoal}/>
+                    <PrivateRoute path='/savings/flex-goal-step2' authed={this.props.user} component={FlexGoalStep2}/>
+                    <PrivateRoute path='/savings/flex-goal-summary' authed={this.props.user} component={FlexGoalSummary}/>
+
+
+
+
+
+
                 </Switch>
             </Router>
             
