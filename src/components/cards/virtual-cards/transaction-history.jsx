@@ -73,7 +73,7 @@ class TransactionHistory extends React.Component {
                                     </div>
                                     <div className="transfer-ctn">
                                         <form>
-                                           history dsdsd
+                                           history
                                         </form>
                                     </div>
                                 </div>

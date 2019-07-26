@@ -74,7 +74,7 @@ class DeleteCard extends React.Component {
                                     </div>
                                     <div className="transfer-ctn">
                                         <form>
-                                            Delete cfdfdf
+                                            Delete
                                         </form>
                                     </div>
                                 </div>

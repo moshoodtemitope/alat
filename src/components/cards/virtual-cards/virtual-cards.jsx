@@ -35,14 +35,14 @@ class VirtualCards extends React.Component {
                                     <div className="sub-tab-nav inpage-nav">
                                         <ul>
                                             <li> <Link to={'virtual-cards'}>Top Up</Link></li>
-                                            <li> <Link to={'virtual-cards/history'}> Transaction History</Link></li>
-                                            <li> <Link to={'virtual-cards/liquidate'}>Liquidate Card</Link></li>
-                                            <li> <Link to={'virtual-cards/delete'}>Delete Card</Link></li>
+                                            <li> <Link to={'/virtual-cards/history'}> Transaction History</Link></li>
+                                            <li> <Link to={'/virtual-cards/liquidate'}>Liquidate Card</Link></li>
+                                            <li> <Link to={'/virtual-cards/delete'}>Delete Card</Link></li>
                                         </ul>
                                     </div>
                                     <div className="transfer-ctn">
                                         <form>
-                                            liquidate
+                                            virtual
                                         </form>
                                     </div>
                                 </div>
