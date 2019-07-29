@@ -29,7 +29,7 @@ class LoanOnbaordingSalaryDetails extends React.Component {
             isAccepted: false,
             selectedBank: null,
             isSubmitted: false,
-            FirstName: "",
+            //FirstName: "",
 
             employerNameInvalid: false,
             accountNumberInvalid: false,
@@ -44,7 +44,7 @@ class LoanOnbaordingSalaryDetails extends React.Component {
         if (this.props.loan_step3)
             if (this.props.loan_step3.loan_step3_status == loanOnboardingConstants.LOAN_STEP3_SUCCESS) {
                 this.fetchBanks();
-              this.setState({ FirstName :this.props.user_detail.loan_userdetails_data.data.FirstName });   
+             // this.setState({ FirstName :this.props.user_detail.loan_userdetails_data.data.FirstName });   
             } else this.props.history.push("/loan/bvn-info");
         else { this.props.history.push("/loan/bvn-info") }
     }
@@ -196,7 +196,7 @@ class LoanOnbaordingSalaryDetails extends React.Component {
             selectedBankInvalid } = this.state;
         let props = this.props;
         return (
-            <LoanOnboardingContainer UserName={this.state.FirstName}>
+            <LoanOnboardingContainer UserName={this.state.user.firstname}>
                 {this.gotoNextPage()}
                 <div className="col-sm-12">
                     <div className="max-500">
@@ -257,9 +257,9 @@ class LoanOnbaordingSalaryDetails extends React.Component {
                                 </form>
                             </div>
                         </div>
-                        <center>
+                        {/* <center>
                             <Link to={'/loan/bvn-info'} className="add-bene m-t-50">Go Back</Link>
-                        </center>
+                        </center> */}
                     </div>
                 </div>
             </LoanOnboardingContainer>
@@ -276,7 +276,7 @@ function mapStateToProps(state) {
         loan_step3: state.loanOnboardingReducerPile.loanOnboardingStep3,
         bankList: state.transferReducerPile.transfer_bankList,
         loan_reqStat: state.loanOnboardingReducerPile.loanOnboardingRequestStatement,
-        user_detail: state.loanOnboardingReducerPile.loanUserDetails,
+        //user_detail: state.loanOnboardingReducerPile.loanUserDetails,
     };
 }
 export default connect(mapStateToProps)(LoanOnbaordingSalaryDetails);

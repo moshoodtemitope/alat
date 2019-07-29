@@ -68,7 +68,11 @@ export const LoanOnboardingStep3 =(data)=>{
         return consume
             .then(response => {
                 //TODO: edit localDB accounts object
-                localStorage.setItem("user", JSON.stringify(response.data));
+                var dataToSave = {
+                    ...response.data,
+                    firstname : data.firstname
+                };
+                localStorage.setItem("user", JSON.stringify(dataToSave));
                 dispatch(success(response.data, data));
             })
             .catch(error => {
@@ -320,3 +324,10 @@ export const salaryEntry =(token, data)=>{
     function success(response) { return {type:FETCH_BANK_SUCCESS, response} }
     function failure(error) { return {type:FETCH_BANK_FAILURE, error} }
 };
+
+export const clearLoanOnboardingStore =()=>{
+    return (dispatch) => { 
+        dispatch(clear());
+    }
+    function clear(){return {type: loanOnboardingConstants.LOAN_ONBOARDING_CLEAR, clear_data: "" }}
+}
