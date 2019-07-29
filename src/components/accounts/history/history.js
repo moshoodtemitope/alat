@@ -17,11 +17,14 @@ class History extends Component {
             selectedAccount: null,
             accounts: [],
             accountsLoaded: false,
+            invalidInterval: false,
             startDate: null,
             endDate: null,
+            keyword: null,
             isReceipt: false,
             take: 10,
-            skip:0,
+            skip: 0,
+            isBackendSearch: false,
             user: JSON.parse(localStorage.getItem("user")),
         };
     }
@@ -54,15 +57,18 @@ class History extends Component {
             AccountNumber: this.state.selectedAccount == null && !this.state.accounts[0] && arrayToDisplay[0].value == '' ? arrayToDisplay[0].value : this.state.selectedAccount ? this.state.selectedAccount.value : arrayToDisplay[0].value,
         };
 
-        this.setState({ accounts: arrayToDisplay, accountsLoaded: true}, () => this.fetchTransactionHistory(payload));
+        this.setState({ accounts: arrayToDisplay, accountsLoaded: true }, () => this.fetchTransactionHistory(payload));
     }
 
     fetchTransactionHistory = (payload, accountNumber) => {
-        if(!payload){
+        if (!payload) {
             payload = {
                 Take: this.state.take,
                 Skip: this.state.skip,
                 AccountNumber: accountNumber,
+                From: this.state.isBackendSearch ? this.state.startDate : null,
+                To: this.state.isBackendSearch ? this.state.endDate : null,
+                KeyWord: this.state.isBackendSearch ? this.state.keyword : null,
             };
         }
         console.log("payload", payload)
@@ -71,14 +77,14 @@ class History extends Component {
 
     accountChangedHandler = (selectedAccount) => {
         this.props.clearHistory();
-        this.setState({ selectedAccount, skip : 0},() => this.fetchTransactionHistory(null, selectedAccount.value));
+        this.setState({ selectedAccount, skip: 0, isBackendSearch: false }, () => this.fetchTransactionHistory(null, selectedAccount.value));
 
         console.log(`Option selected:`, selectedAccount);
     }
 
     viewMoreTransactions = () => {
         let account = this.state.selectedAccount == null && !this.state.accounts[0] && this.state.accounts[0].value == '' ? this.state.accounts[0].value : this.state.selectedAccount ? this.state.selectedAccount.value : this.state.accounts[0].value;
-        this.setState({skip : this.state.skip + 10},() => this.fetchTransactionHistory(null, account))
+        this.setState({ skip: this.state.skip + 10 }, () => this.fetchTransactionHistory(null, account))
     }
 
     handleStartDatePicker = (startDate) => {
@@ -100,34 +106,42 @@ class History extends Component {
         //     this.setState({skip : 0},() => this.fetchTransactionHistory({Take: this.state.take, Skip: this.state.skip, AccountNumber: selectedAccount.value,}));
         //     return;
         // }
-    this.setState({isReceipt : !this.state.isReceipt/**,skip : 0 */}, () => this.props.fetchReceiptTransaction(this.state.user.token, {
+        this.setState({ isReceipt: !this.state.isReceipt })/**,skip : 0 }, () => this.props.fetchReceiptTransaction(this.state.user.token, {
             accountNumber: this.state.selectedAccount != null ? this.state.selectedAccount.value : this.state.accounts[0].value,
             take: this.state.take,
             skip: 0// this.state.skip,
-        }))
+        }))*/
     }
 
-    searchTransactions(e){
-        
+    searchTransactions(e) {
+
         let searchText = e.target.value;
-        // if(searchText.length>=1){
-            document.querySelectorAll('.history-ctn').forEach((historyctn)=>{
-                let searchData = historyctn.querySelector('.narr-text').textContent.toLowerCase() + historyctn.querySelector('.amount-s').textContent.toLowerCase();
-                if(searchData.indexOf(searchText.toLowerCase()) > -1){
-                    
-                    if(historyctn.classList.contains('hide')){
-                        historyctn.classList.remove('hide');
-                    }
+        document.querySelectorAll('.history-ctn').forEach((historyctn) => {
+            let searchData = historyctn.querySelector('.narr-text').textContent.toLowerCase() + historyctn.querySelector('.amount-s').textContent.toLowerCase();
+            if (searchData.indexOf(searchText.toLowerCase()) > -1) {
+
+                if (historyctn.classList.contains('hide')) {
+                    historyctn.classList.remove('hide');
                 }
-                else{
-                    historyctn.classList.add('hide');
-                    
-                }
-            });
+            }
+            else {
+                historyctn.classList.add('hide');
+
+            }
+        });
     }
 
     searchFromBackend = (event) => {
         event.preventDefault();
+        if(this.state.startDate && this.state.endDate){
+            if(Date.parse(this.state.startDate) > Date.parse(this.state.endDate)){
+                this.setState({invalidInterval: true});
+                return;
+            }
+        }
+        this.setState({invalidInterval: false}, () => this.props.clearHistory());
+        let selected = this.state.selectedAccount ? this.state.selectedAccount.value : this.state.accounts[0].value;
+        this.setState({ skip: 0, isBackendSearch: true }, () => this.fetchTransactionHistory(null, selected));
     }
 
     render() {
@@ -135,7 +149,7 @@ class History extends Component {
             this.sortAccountsForSelect();
         }
 
-        const { selectedAccount, accounts, startDate, endDate, isReceipt } = this.state;
+        const { selectedAccount, accounts, startDate, endDate, isReceipt, invalidInterval } = this.state;
         return (
             <Fragment>
                 <div class="col-sm-12 col-md-4">
@@ -144,16 +158,17 @@ class History extends Component {
                         options={accounts}
                         changeAccount={this.accountChangedHandler}
                         error={this.props.alert.message}
-                        aLength={this.props.accounts.length} />
+                        aLength={this.props.accounts.length}
+                        retryFetch={() => this.props.fetchDebitableAccounts(this.state.user.token, false)} />
                     <Info
                         available={!this.props.accounts.length ? "---" : !accounts[0] ? "---" : selectedAccount == null ? `₦${formatAmount(accounts[0].available)}` : `₦${formatAmount(selectedAccount.available)}`}
                         book={!this.props.accounts.length ? "---" : !accounts[0] ? "---" : selectedAccount == null ? `₦${formatAmount(accounts[0].book)}` : `₦${formatAmount(selectedAccount.book)}`}
                         liened={!this.props.accounts.length ? "---" : !accounts[0] ? "---" : selectedAccount == null ? `₦${formatAmount(accounts[0].liened)}` : `₦${formatAmount(selectedAccount.liened)}`}
                         uncleared={!this.props.accounts.length ? "---" : !accounts[0] ? "---" : selectedAccount == null ? `₦${formatAmount(accounts[0].uncleared)}` : `₦${formatAmount(selectedAccount.uncleared)}`}
                     />
-                    <SendReceipt 
-                    receipt={this.toggleIsReceipt}
-                    sendReceipt={isReceipt}/>
+                    <SendReceipt
+                        receipt={this.toggleIsReceipt}
+                        sendReceipt={isReceipt} />
                 </div>
                 <div class="col-sm-12 col-md-8">
                     <Search
@@ -162,18 +177,19 @@ class History extends Component {
                         changeStart={this.handleStartDatePicker}
                         changeEnd={this.handleEndDatePicker}
                         search={this.searchTransactions}
-                        //searchFilter={} 
-                        />
+                        searchFilter={this.searchFromBackend}
+                        invalidDate={invalidInterval}
+                    />
                     <TransactionHistory
                         accountsLoaded={accounts.length}
                         history={this.props.historyList}
                         historyLength={this.props.historyList.length}
                         sendReceipt={isReceipt}
-                        receivedTransactions = {this.props.noReceived}
+                        receivedTransactions={this.props.noReceived}
                         fetchingHistory={this.props.fetching}
                         viewMore={this.viewMoreTransactions}
-                        //callSendReceipt={}
-                        //isSending={}
+                    //callSendReceipt={}
+                    //isSending={}
                     />
                 </div>
             </Fragment>
@@ -185,7 +201,6 @@ class History extends Component {
 
 const mapStateToProps = state => {
     return {
-        //accounts: state.data_reducer.debitableAccounts,
         accounts: state.dashboard_accounts.user_account_data && state.dashboard_accounts.user_account_data.response ? state.dashboard_accounts.user_account_data.response.Accounts : state.dashboard_accounts,
         alert: state.alert,
         fetching: state.accountsM_reducer.isFetchingHistory,
@@ -199,11 +214,7 @@ const mapDispatchToProps = dispatch => {
         fetchDebitableAccounts: (token, withHistory) => dispatch(getAccounts(token, withHistory)),
         fetchHistory: (token, payload) => dispatch(actions.fetchAccountHistory(token, payload)),
         clearHistory: () => dispatch(actions.clearCurrentHistory()),
-        fetchReceiptTransaction: (token, payload) => dispatch(actions.fetchReceiptEnableTransaction(token,payload))
-        // setBillInfo: (billData, otpData) => dispatch(actions.setBillInfo(billData, otpData)),
-        // fetchOtp: (token, data) => dispatch(actions.fetchOtpForCustomer(token, data)),
-        // resetPageState: (code) => dispatch(actions.resetBillPage(code)),
-        // clearError: () => dispatch(alertActions.clear()),
+        fetchReceiptTransaction: (token, payload) => dispatch(actions.fetchReceiptEnableTransaction(token, payload))
     }
 }
 

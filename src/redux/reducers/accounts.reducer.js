@@ -23,7 +23,7 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCHING_HISTORY_SUCCESS:
-            return updateObject(state, { history: [...state.history , ...action.data], isFetchingHistory: false });
+            return updateObject(state, { history: [...state.history, ...action.data], isFetchingHistory: false });
         // return updateObject(state, {beneficiaries: mock, isFetching : false});
         case actionTypes.IS_FETCHING_TRUE:
             return updateObject(state, { isFetching: true });
@@ -35,6 +35,8 @@ const reducer = (state = initialState, action) => {
             return updateObject(state, { history: [], receivedTransactions: 0 });
         case actionTypes.SET_RECEIVED_TRANSACTIONS:
             return updateObject(state, { receivedTransactions: action.count });
+        case actionTypes.SEND_STATEMENT_SUCCESS:
+            return updateObject(state, { isFetching: false });
         default: return state;
     }
 }

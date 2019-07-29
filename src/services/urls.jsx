@@ -1,6 +1,6 @@
-//const URL = 'https://api.alat.ng';
-//const URL = 'https://196.43.215.170';
-const URL = 'https://196.43.215.157';
+const URL = 'https://api.alat.ng';
+// const URL = 'https://196.43.215.170';
+// const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
 
@@ -31,8 +31,9 @@ export const routes = {
     GETACCOUNTHISTORY: BASEURL + '/AccountMaintenance/api/transactions',
     SEND_RECEIPT_TRANSACTIONS: BASEURL + '/AccountMaintenance/api/transactions/sendreciept',
     GET_RECEIPT_TRANSACTIONS : function (accountNumber, take, skip, startDate =null, endDate=null){
-        return `${BASEURL}/getreciepts?accountNumber=${accountNumber}&take=${take}&skip=${skip}&startDate=${startDate}&endDate=${endDate}`;    
+        return `${BASEURL}/AccountMaintenance/api/transactions/getreciepts?accountNumber=${accountNumber}&take=${take}&skip=${skip}&startDate=${startDate}&endDate=${endDate}`;    
     },
+    SEND_STATEMENT: BASEURL + '/AccountMaintenance/api/transactions/statementsV2',
 
     //goals and savings
     CUSTOMERGOALS: BASEURL + '/Savings.WebApi/api/Savings/CustomergoalsV2',

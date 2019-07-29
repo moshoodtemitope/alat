@@ -13,7 +13,7 @@ const transactionHistory = (props) => {
         <div className="al-card transact-history">
             <div className="text-center m-t-50">
                 <span style={{ fontSize: 50, color: "#ccc", marginLeft: -10 }} className="fa fa-history m-b-20"></span>
-                <p>{props.accountsLoaded ? "Loading transactions history..." : "Loading all accounts..."}</p>
+                <p>{props.accountsLoaded ?  "Loading transactions history..." : "Loading all accounts..."}</p>
             </div>
         </div>
     );
@@ -45,7 +45,7 @@ const transactionHistory = (props) => {
                                 <div className="history-ctn" key={index}>
                                     <div className="history-list clearfix">
                                         <img src={image} />
-                                        <p className="desc"><p className="narr-text">{histData.Narration}</p><span class="date">{FormartDate(hist.TransactionDate)}</span></p>
+                                        <p className="desc"><i className="narr-text">{histData.Narration}</i><span class="date">{FormartDate(hist.TransactionDate)}</span></p>
                                         {histData.TransactionType == "C" ? <p class="balance credit"><span className="amount-s" style={{display:"none"}}>{histData.Amount}</span>{`₦${formatAmount(histData.Amount)}`} {props.sendReceipt ? props.isSending ? <span class="receipt" onClick={props.callSendReceipt} style={{cursor: "not-allowed"}}>Sending...</span> : <span class="receipt">Send Receipt</span> : null}</p> : <p class="balance debit ac-debit" style={{ textAlign: "right" }}><span className="amount-s" style={{display:"none"}}>{histData.Amount}</span>{`- ₦${formatAmount(histData.Amount)}`} {props.sendReceipt ? <span class="receipt">Send Receipt</span> : null} </p>}
                                     </div>
                                 </div>)

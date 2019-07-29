@@ -42,6 +42,7 @@ const search = (props) => {
                                 maxDate={new Date()}
                             />
                         </div>
+                        {props.invalidDate ? <p className="text-center text-danger" style={{margin: "0px auto"}}>Start date cannot exceed end date</p> : null}
                 </div>
                 </form>
 

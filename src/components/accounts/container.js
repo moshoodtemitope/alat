@@ -3,6 +3,7 @@ import InnerContainer from '../../shared/templates/inner-container';
 import { Fragment } from 'react';
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import History from './history/history';
+import Statement from './statement/statement';
 
 
 class Accounts extends Component {
@@ -35,7 +36,9 @@ class Accounts extends Component {
                                     </div>
                                 </div>
                                 {this.props.children}
-                                <Route path={'/accounts' || '/accounts/accounts-history'} component={History} />
+                                <Route path={'/accounts'} exact component={History} />
+                                <Route path={'/accounts/accounts-history'} component={History} />
+                                <Route path={'/accounts/accounts-statement'} component={Statement} />
                                 
                             </div>
                         </div>

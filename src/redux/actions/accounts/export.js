@@ -1,5 +1,6 @@
 export {
     fetchAccountHistory,
     clearCurrentHistory,
-    fetchReceiptEnableTransaction
+    fetchReceiptEnableTransaction,
+    sendStatement
 } from './accounts.action';

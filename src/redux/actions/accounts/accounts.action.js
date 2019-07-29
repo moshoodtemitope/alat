@@ -51,6 +51,12 @@ export const setReceivedTransactions = (number) => {
     }
 }
 
+export const sendStatementSuccess = () => {
+    return {
+        type: actionTypes.SEND_STATEMENT_SUCCESS
+    }
+}
+
 export const fetchAccountHistory = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
@@ -123,6 +129,28 @@ export const sendTransactionReceipt = (token, data) => {
         return { 
             type: actionTypes.FETCHING_HISTORY_SUCCESS, 
             data: data
+        } 
+    }
+};
+
+export const sendStatement = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.SEND_STATEMENT, "POST", data, SystemConstant.HEADER);
+        dispatch(isFetchingTrue());
+        return consume
+            .then(response => {
+                dispatch(sendStatementSuccess());
+                dispatch(alertActions.success(modelStateErrorHandler({message : "Your request has been sent successfully"})));
+            })
+            .catch(error => {
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function success() { 
+        return { 
+            type: actionTypes.SEND_STATEMENT_SUCCESS,
         } 
     }
 };
