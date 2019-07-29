@@ -131,7 +131,7 @@ class FixedGoal extends React.Component {
                     if (e != "")
                         this.setState( {  AmountSavedInvalid: false });
                 }
-     }
+    }
  
      toCurrency(number) {
          // console.log(number);
@@ -164,7 +164,7 @@ class FixedGoal extends React.Component {
 
     calcRepayment = (savedAmount,interestRate,tenure) => {
         //[P x R x (1+R)^N]/[(1+R)^N-1]
-        let _intRate = interestRate / 30;
+        let _intRate = interestRate / 365;
        let _interestRate = 1 + _intRate;
        //console.log(_interestRate);
       
