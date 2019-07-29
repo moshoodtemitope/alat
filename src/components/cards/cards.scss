@@ -1,6 +1,70 @@
-.inpage-nav{
+.sub-tab-nav.inpage-nav{
+    margin-bottom: 0;
     ul{
         display: flex;
         justify-content: space-evenly;
+    }
+} 
+
+.atmcard-wrap {
+    height: 220px;
+    background: linear-gradient(150.04deg, #AB0B28 0%, rgba(127, 6, 78, 0.94953) 98.67%, rgba(126, 6, 79, 0.864442) 100%);
+    border-radius: 9px;
+    padding: 18px 30px 25px;
+    color: #ffffff;
+    margin-bottom: 25px;
+}
+.other-addressinfo {
+    display: flex;
+    .inputWrap{
+        padding-right:20px;
+    }
+}
+input{
+    min-height: 38px;
+}
+.top-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.cardname{
+    margin-top: 18px;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1.3px;
+}
+.balanceinfo {
+    font-size: 17px;
+}
+.cardnum-digits {
+    font-size: 23px;
+    font-weight: 600;
+    margin-top: 18px;
+    letter-spacing: 1.5px;
+}
+.carddata {
+    display: flex;
+    align-items: center;
+    margin-top: 18px;
+}
+.each-carddata {
+    margin-right: 45px;
+    font-size: 12px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    span{
+        display: block;
+        max-width: 35px;
+        font-weight: 600;
+        font-size: 8px;
+        letter-spacing: 1.2px;
+    }
+    &:nth-child(2){
+        .card-infodetail{
+            margin-left: 5px;
+        }
     }
 }
