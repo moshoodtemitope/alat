@@ -11,6 +11,7 @@ import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant
 import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
 import "react-datepicker/dist/react-datepicker.css";
 import * as util from '../../shared/utils'
+import moment from 'moment';
 
 
 const selectedTime = [
@@ -34,19 +35,18 @@ class FixedGoal extends React.Component {
             startDate:null,
             endDate:null,
             AmountSavedText:"",
-            AmountSaved:1000,
+            targetAmount:"",
             SelectedtimeSaved:"",
-            frequencyGoal:"",
+            goalFrequency:"",
             isSubmitted : false,
             endDateInvalid:false,
             startDateInvalid:false,
-            AmountSavedInvalid:false,
+            targetAmountInvalid:false,
             GoalNameInvalid:false,
-            TimeSavedInvalid:false,
-            Term:"",
-            InterestRate:"",
-            repaymentAmount: "",
-            showMessage: false
+            goalFrequencyInvalid:false,
+            showInterests:"",
+            showMessage: false,
+            frequencyAmount:""
 
 
 
@@ -106,9 +106,9 @@ class FixedGoal extends React.Component {
             return true;
         }
     }
-    checkTimeSaved = () => {
-        if (this.state.frequencyGoal == "") {
-            this.setState({ TimeSavedInvalid: true });
+    checkgoalFrequency = () => {
+        if (this.state.goalFrequency == "") {
+            this.setState({ goalFrequencyInvalid: true });
             return true;
         }
     }
@@ -118,12 +118,12 @@ class FixedGoal extends React.Component {
          var intVal = e.target.value.replace(/,/g, '');
          if (/^\d+(\.\d+)?$/g.test(intVal)) {
              // if (parseInt(intVal, 10) <= 2000000) {
-             this.setState({ AmountSaved: intVal, AmountSavedText: this.toCurrency(intVal) },
-                 () => this.updateRepayment());
+             this.setState({ targetAmount: intVal, targetAmount: this.toCurrency(intVal) },
+                 () => this.setFregValue());
              // }
          } else if (e.target.value == "") {
-             this.setState({ AmountSaved: "", AmountSavedText: "" },
-                 () => this.updateRepayment());
+             this.setState({ targetAmount: "", targetAmount: "" },
+                 () => this.setFregValue());
          }
  
          if(this.state.isSubmitted == true)
@@ -133,7 +133,7 @@ class FixedGoal extends React.Component {
                 }
     }
  
-     toCurrency(number) {
+    toCurrency(number) {
          // console.log(number);
          const formatter = new Intl.NumberFormat('en-US', {
              style: "decimal",
@@ -142,48 +142,104 @@ class FixedGoal extends React.Component {
          });
  
          return formatter.format(number);
-     }
+    }
+    removeComma(currencyValue) {
+        return currencyValue.replace(/,/g, '');
+    }
     
  
     handleSelectChange = (SelectedtimeSaved) => {
-        this.setState({ "frequencyGoal": SelectedtimeSaved.value,
-                        "frequencyGoal" : SelectedtimeSaved.label
+        this.setState({ "goalFrequency": SelectedtimeSaved.value,
+                        "goalFrequency" : SelectedtimeSaved.label
               });
         if (this.state.formsubmitted && SelectedtimeSaved.value != "")
-            this.setState({ TimeSavedInvalid: false })
+            this.setState({ goalFrequencyInvalid: false })
     }
-    updateRepayment = () => {
-        this.setState({ repaymentAmount: this.calcRepayment(this.state.AmountSaved, this.state.InterestRate, this.state.Term) })
-        console.log('test',this.calcRepayment(this.state.AmountSaved, this.state.InterestRate, this.state.Term))
-        console.log('amount saved',this.state.AmountSaved)
-        console.log('interest rate',this.state.InterestRate)
-        console.log('term',this.state.Term)
+    setFregValue = () => {
+        this.setState({ showInterests: this.calculateInterest(this.state.targetAmount, this.state.startDate, this.state.endDate) })
+        console.log('test',this.calculateInterest(this.state.targetAmount, this.state.startDate, this.state.endDate))
+        console.log('amount saved',this.state.targetAmount)
+        console.log('interest rate',this.state.startDate)
+        console.log('term',this.state.endDate)
        
 
+    } 
+    getMonthsBetween(from,to){
+      if (from > to) return this.getMonthsBetween(to, from);
+      let fromYear = moment(from).year();
+      let toYear = moment(to).year();
+      let toMonth = moment(to).month();
+      let fromMonth = moment(from).month();
+      let fromDay = moment(from).date();
+      let toDay = moment(to).date();
+      fromMonth += 1; //Moment returns January as 0 for instance
+      toMonth += 1;
+      var startMonths = this.getAbsoulteMonths(from);
+      var endMonths = this.getAbsoulteMonths(to);
+      var monthDiff = endMonths - startMonths;
+      let futureDate = moment(from).add(monthDiff, 'months').format('DD MMMM, YYYY');
+      if (futureDate > to || toDay < fromDay)
+      {
+          return monthDiff - 1;
+      }
+      else
+      {
+          return monthDiff + 1;
+      }
     }
+    getAbsoulteMonths(momentDate) {
+        var months = Number(momentDate.format("MM"));
+        var years = Number(momentDate.format("YYYY"));
+        return months + (years * 12);
+    }
+    calculateMonthly(){
+        let days = null;
+        let res;;
+        let finalInterest;
+        let amount= parseFloat(this.removeComma(this.state.targetAmount));
+        let startDate = moment(this.state.startDate, 'DD MMMM, YYYY');
+        let enddate = moment(this.state.endDate, 'DD MMMM, YYYY');
+        // let date = moment(enddate, 'DD-MM-YYYY').add(res, 'days');
+        res = enddate.diff(startDate, 'days');
+        let months = Math.round((res/365) * 12);
+        let debitAmount = (amount/months).toFixed(2);
+        let debitValue = amount/this.getMonthsBetween(startDate, enddate);
+        finalInterest = this.utils.GetFixedGoalFutureValue(debitValue, this.formula.interestRate, months);
+        this.interest = finalInterest;
+        this.showInterest = true;
+        this.frequencyAmount = (amount/months).toFixed(2);
+      }
 
-    calcRepayment = (savedAmount,interestRate,tenure) => {
-        //[P x R x (1+R)^N]/[(1+R)^N-1]
-        let _intRate = interestRate / 365;
-       let _interestRate = 1 + _intRate;
-       //console.log(_interestRate);
-      
-       let _tenure = tenure - 1;
-     
-        let numerator = savedAmount * _interestRate *_intRate;
-        let finalNumerator =  Math.pow(numerator, tenure);
-        let denominator = Math.pow(_interestRate, _tenure);
-
-        let monthlyRepayment = finalNumerator / denominator;
-        //console.log(monthlyRepayment);
-        return monthlyRepayment;
+    calculateInterest = () => {
+        let days = null;
+        let res;
+        if(this.state.targetAmount && this.state.endDate && this.state.goalFrequency && this.state.startDate){
+          let startDate = moment(this.state.startDate).format('DD MMMM, YYYY');
+          let enddate = moment(this.state.endDate, 'DD MMMM, YYYY');
+          res = enddate.diff(startDate, 'days');
+          let amount = this.removeComma(this.state.targetAmount);
+          let ia = ((amount / 365) * this.formula.interestRate );
+          let diff_in_months = Math.floor(moment(enddate).diff(moment(startDate), 'months', true));
+          let dailycontribution;
+          if(diff_in_months > 1){
+           this.interest = this.util.GetGoalFutureValue((amount / diff_in_months),this.formula.interestRate, diff_in_months);
+          }else{
+            let ia = ((amount / 365) * this.formula.interestRate );
+            dailycontribution = res * ( ia - (this.formula.tax) *ia);
+            this.interest =  parseFloat(dailycontribution).toFixed(2);
+          }
+          this.showInterests = true;
+        }else{
+          this.showInterests = false;
+        }
+       
     }
     
   
     onSubmit(event){
         event.preventDefault();
 
-        if (this.checkGoalName()||this.valStartDate()||this.valEndDate()||this.checkAmount()||this.checkTimeSaved()) {
+        if (this.checkGoalName()||this.valStartDate()||this.valEndDate()||this.checkAmount()||this.checkgoalFrequency()) {
 
         } else {
             this.setState({isSubmitted : true });
@@ -191,7 +247,7 @@ class FixedGoal extends React.Component {
                 "goalName":this.state.goalName,
                 "startDate":this.state.startDate,
                 "endDate":this.state.endDate,
-                "AmountSavedText":this.state.AmountSavedText,
+                "targetAmount":this.state.targetAmount,
                 "frequencyGoal":this.state.frequencyGoal
             }));
             console.log('tag', '')
@@ -217,7 +273,7 @@ class FixedGoal extends React.Component {
 
     render() {
         
-        let {GoalNameInvalid,endDateInvalid,startDateInvalid,AmountSavedInvalid,TimeSavedInvalid,AmountSavedText,frequencyGoal}=this.state
+        let {GoalNameInvalid,endDateInvalid,startDateInvalid,targetAmountInvalid,goalFrequencyInvalid,AmountSavedText,goalFrequency}=this.state
         let props = this.props;
 
         return (
@@ -282,6 +338,8 @@ class FixedGoal extends React.Component {
                                                             value={this.state.startDate}
                                                             
                                                             />
+                                                            <i class="mdi mdi-calendar-range"></i>
+
                                                             {startDateInvalid &&
                                                                 <div className="text-danger">select a valid date</div>
                                                             }
@@ -304,30 +362,32 @@ class FixedGoal extends React.Component {
                                                             value={this.state.endDate}
 
                                                         />
+                                                        <i class="mdi mdi-calendar-range"></i>
+
                                                         {endDateInvalid &&
                                                             <div className="text-danger">select a valid date</div>
                                                         }
                                                     </div>
                                                 </div>
                                                 <div className="form-row">
-                                                    <div className={AmountSavedInvalid ? "form-group col-md-6 form-error" : "form-group col-md-6"}>
+                                                    <div className={targetAmountInvalid ? "form-group col-md-6 form-error" : "form-group col-md-6"}>
                                                         <label className="label-text">How much would you like to save</label>
                                                         <input 
                                                             onKeyUp= {this.showInterest}
                                                              
                                                             className="form-control" 
-                                                            name="AmountSavedText"
+                                                            name="targetAmount"
                                                             onChange={this.handleAmount}
                                                             placeholder="E.g. ₦100,000"
-                                                            value={this.state.AmountSavedText}
+                                                            value={this.state.targetAmount}
 
                                                           
                                                          />
-                                                         {AmountSavedInvalid && 
+                                                         {targetAmountInvalid && 
                                                             <div className="text-danger">Enter the amount you want to save</div>}
                                                             {
-                                                                this.state.showMessage ? 
-                                                              <div className="text-purple m-b-55"><h3 className="text-purple m-b-55"> You will earn approximately ₦ {util.formatAmount(this.state.repaymentAmount)} in interest.</h3></div> 
+                                                            this.state.showMessage ? 
+                                                              <div className="text-purple m-b-55"><h3 className="text-purple m-b-55"> You will earn approximately ₦ {util.formatAmount(this.state.showInterests)} in interest.</h3></div> 
                                                               : null
 
                                                             }
@@ -335,15 +395,15 @@ class FixedGoal extends React.Component {
                                                     </div>
                                                     
 
-                                                    <div className={TimeSavedInvalid ? "form-group col-md-6 form-error" : "form-group col-md-6"}>
+                                                    <div className={goalFrequencyInvalid ? "form-group col-md-6 form-error" : "form-group col-md-6"}>
                                                         <label className="label-text">How often do you want to save</label>
                                                         <Select type="text" 
                                                             options={selectedTime}
-                                                            name="timeSaved"
+                                                            name="goalFrequency"
                                                             onChange={this.handleSelectChange}
-                                                            value={frequencyGoal.label}
+                                                            value={goalFrequency.label}
                                                           />
-                                                          {TimeSavedInvalid && <div className='text-danger'>Enter saving duration</div>}
+                                                          {goalFrequencyInvalid && <div className='text-danger'>Enter saving duration</div>}
                                                     </div>
                                                 </div>
                                                 <div className="row">

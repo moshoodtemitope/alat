@@ -98,5 +98,11 @@ export const routes = {
     ADDFLEXIGOAL: BASEURL + '/Savings.WebApi/api/Savings/AddFlexiGoal',
     ADDSTACHGOAL: BASEURL + '/Savings.WebApi/api/Savings/AddStashGoal',
     FETCH_DEBITABLE_ACCOUNTS_WITH_LIMITS: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2',
+    GOALTYPE: BASEURL + '/Savings.WebApi/api/Savings/GoalType',
+    GOAL_FORMULAR: BASEURL + '/Savings.WebApi/api/savings/GetValues',
+    GETCUSTOMERGOALSUMMARY: BASEURL + '/AccountMaintenance/api/transactions/savings',
+
+
+
 
 };

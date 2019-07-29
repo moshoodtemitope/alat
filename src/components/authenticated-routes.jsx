@@ -20,7 +20,7 @@ import ChooseGoalPlan from './savings/goal/goal-plan';
 import FixedGoal from './savings/fixed-goal_step1'
 import FixedGoalComplete from './savings/fixed-goal-step2';
 import FixedGoalSummary from './savings/fixed-goal-summary';
-import FlexGoal from './savings/flex-goal';
+import FlexGoal from './savings/flex-goal-step1';
 import FlexGoalStep2 from './savings/flex-goal-step2';
 import FlexGoalSummary from './savings/flex-goal-summary'
 

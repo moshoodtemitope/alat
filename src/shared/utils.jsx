@@ -157,3 +157,37 @@ export const maskString = (string, replacerString, startIndex, endIndex) => {
     string = string.replace(toMask, replacerString);
     return string;
 }
+export const GetGoalFutureValue = (debitAmount, annualInterestRate, month) =>{
+      let months = Math.round(month);
+      let futureValue = 0;
+      let rate = ((annualInterestRate - 0.01) / 12);
+      for (let n = 1; n <= months; n++)
+      {
+          var multiplier = (1 + rate);
+          futureValue += debitAmount * (Math.pow(multiplier, n));     
+      }
+      let amount = futureValue - (debitAmount * months);
+      return this.toCurrency( parseFloat(amount).toFixed(2));
+}
+export const toCurrency =(currency) =>{
+    if (currency) {
+      currency = typeof currency !== 'string' ? currency.toString() : currency;
+      let numberValueArray = currency.split('.');
+      let numberValue = this.removeComma(numberValueArray[0]);
+      currency = numberValueArray.length > 1 ? numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+        + '.' + numberValueArray[1] : numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+    }
+    return currency;
+}
+export const GetFixedGoalFutureValue =(debitAmount, annualInterestRate, months)=>{
+            let futureValue= 0;
+            var result;
+            let rate = ((annualInterestRate - 0.01) / 12);
+            for (let n = 1; n <= months; n++)
+            {
+                var multiplier = (1 + rate);
+                futureValue += debitAmount * (Math.pow(multiplier, n));     
+            }
+            result = futureValue - (debitAmount * months); //I dont even know why, with the /6.02, it matched with mobile calc
+            return this.toCurrency(parseFloat(result).toFixed(2));
+}
