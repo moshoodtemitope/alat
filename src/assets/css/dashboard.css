@@ -2613,3 +2613,8 @@ p.acc-view-more {
   cursor: pointer;
   margin-top: 20px;
 }
+
+.resend-otp:hover {
+  cursor: pointer !important;
+  text-decoration: underline !important;
+}

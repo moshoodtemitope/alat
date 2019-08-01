@@ -8,20 +8,28 @@ import { formatAmount, FormartDate } from '../../../shared/utils';
 
 var image;
 var historyCount;
+
+
 const transactionHistory = (props) => {
+    const createheader = () => {
+        return (
+            <h4 className="m-b-20">Transaction History <span><p onClick={props.receipt} style={{color : "#AB2656",cursor: "pointer", fontSize: 14}}><img src={filter} style={{ marginRight: 15 }} /><b>Transaction Filter: </b> <b>{props.sendReceipt ? "Receipts" : "All"} </b></p></span></h4>
+        )
+    }
     let historyData = props.sendReceipt ? props.receiptHistory : props.history;
     let transactionHistory = (
         <div className="al-card transact-history">
+            {createheader()}
             <div className="text-center m-t-50">
                 <span style={{ fontSize: 50, color: "#ccc", marginLeft: -10 }} className="fa fa-history m-b-20"></span>
-                <p>{props.accountsLoaded ? "Checking for transaction history..." : "Loading all accounts..."}</p>
+                <p style={{ fontWeight: 600 }}>{props.accountsLoaded ? "Checking for transaction history..." : "Loading all accounts..."}</p>
             </div>
         </div>
     );
     if (historyData.length) {
         transactionHistory = (
             <div className="al-card transact-history">
-                <h4 className="m-b-20">Transaction History <span><a href="#"><img src={filter} style={{ marginRight: 15 }} />Filter Transaction</a></span></h4>
+                {createheader()}
                 <div className="history-table clearfix">
                     <div className="history-ctn2">
                         <div className="history-list clearfix">
@@ -58,14 +66,15 @@ const transactionHistory = (props) => {
         );
     }
 
-    if( (props.response != 2 )){
+    if ((props.response != 2)) {
         transactionHistory = (
             <div className="al-card transact-history">
-            <div className="text-center m-t-50">
-                {props.response == 0 ? <span style={{ fontSize: 50, color: "#5BB746", marginLeft: -10 }} className="fa fa-check-circle m-b-20"></span> : <span style={{ fontSize: 50, color: "#ccc", marginLeft: -10 }} className="fa fa-history m-b-20"></span> }
-                <p style={{fontWeight:600}}>{props.response == 0 ? "Redirecting... Receipt has been sent to your e-mail" : "Sending transaction receipt"}</p>
+                {createheader()}
+                <div className="text-center m-t-50">
+                    {props.response == 0 ? <span style={{ fontSize: 50, color: "#5BB746", marginLeft: -10 }} className="fa fa-check-circle m-b-20"></span> : <span style={{ fontSize: 50, color: "#ccc", marginLeft: -10 }} className="fa fa-history m-b-20"></span>}
+                    <p style={{ fontWeight: 600 }}>{props.response == 0 ? "Redirecting... Receipt has been sent to your e-mail" : "Sending transaction receipt"}</p>
+                </div>
             </div>
-        </div>
         );
     }
 

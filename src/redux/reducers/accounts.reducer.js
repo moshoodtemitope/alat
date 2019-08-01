@@ -60,6 +60,10 @@ const reducer = (state = initialState, action) => {
             return updateObject(state, { sendingReceipt: false, receiptResponse: 0 });
         case actionTypes.CLEAR_RESPONSE:
             return updateObject(state, { receiptResponse: action.status });
+        case actionTypes.CLEAR_LIMIT_DATA:
+            return updateObject(state, { limitData: null, pageState : 2 });
+        case actionTypes.SEND_TRANSACTION_LIMIT_SUCCESS:
+            return updateObject(state, { pageState: 0, isFetching : false });
         default: return state;
     }
 }

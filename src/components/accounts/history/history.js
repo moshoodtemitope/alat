@@ -9,7 +9,14 @@ import * as actions from '../../../redux/actions/accounts/export';
 import { formatAmount } from '../../../shared/utils';
 import { connect } from 'react-redux';
 import { getAccounts } from "../../../redux/actions/dashboard/dashboard.actions";
+import './history.css';
 
+let boxDefault = {
+    show1: false,
+    show2: false,
+    show3: false,
+    show4: false,
+};
 class History extends Component {
     constructor(props) {
         super(props);
@@ -26,6 +33,13 @@ class History extends Component {
             skip: 0,
             isBackendSearch: false,
             user: JSON.parse(localStorage.getItem("user")),
+            infoBox: {
+                show1: false,
+                show2: false,
+                show3: false,
+                show4: false,
+            },
+            currentShowedBox: "0"
         };
     }
 
@@ -61,6 +75,7 @@ class History extends Component {
     }
 
     fetchTransactionHistory = (payload, accountNumber) => {
+        this.checkInfoState();
         if (!payload) {
             payload = {
                 Take: this.state.take,
@@ -76,6 +91,7 @@ class History extends Component {
     }
 
     accountChangedHandler = (selectedAccount) => {
+        this.checkInfoState();
         let currentAccount = this.state.selectedAccount != null ? this.state.selectedAccount.value : this.state.accounts[0].value;
         if (selectedAccount.value == currentAccount) return;
         this.props.clearHistory();
@@ -92,6 +108,7 @@ class History extends Component {
     }
 
     viewMoreTransactions = () => {
+        this.checkInfoState();
         let account = this.state.selectedAccount != null ? this.state.selectedAccount.value : this.state.accounts[0].value;
         if (this.state.isReceipt) {
             this.setState({ skip: this.state.skip + 10 }, () => this.props.fetchReceiptTransaction(this.state.user.token, {
@@ -107,18 +124,21 @@ class History extends Component {
     }
 
     handleStartDatePicker = (startDate) => {
+        this.checkInfoState();
         startDate.setHours(startDate.getHours() + 1);
         console.log(startDate)
         this.setState({ startDate });
     }
 
     handleEndDatePicker = (endDate) => {
+        this.checkInfoState();
         endDate.setHours(endDate.getHours() + 1);
         console.log(endDate)
         this.setState({ endDate });
     }
 
     toggleIsReceipt = (event) => {
+        this.checkInfoState();
         event.preventDefault();
         if (this.state.isReceipt) {
             this.props.clearHistory();
@@ -137,7 +157,7 @@ class History extends Component {
     }
 
     searchTransactions(e) {
-
+        this.checkInfoState();
         let searchText = e.target.value;
         document.querySelectorAll('.history-ctn').forEach((historyctn) => {
             let searchData = historyctn.querySelector('.narr-text').textContent.toLowerCase() + historyctn.querySelector('.amount-s').textContent.toLowerCase();
@@ -156,6 +176,7 @@ class History extends Component {
 
     searchFromBackend = (event) => {
         event.preventDefault();
+        this.checkInfoState();
         if (this.state.startDate && this.state.endDate) {
             if (Date.parse(this.state.startDate) > Date.parse(this.state.endDate)) {
                 this.setState({ invalidInterval: true });
@@ -178,6 +199,7 @@ class History extends Component {
     }
 
     sendTransReceipt = (identifier, identifierId) => {
+        this.checkInfoState();
         this.props.clear(1);
         let payload = {
             Identifier: parseInt(identifier),
@@ -185,6 +207,42 @@ class History extends Component {
             AccountNumber: this.state.selectedAccount ? this.state.selectedAccount.value : this.state.accounts[0].value,
         }
         this.props.sendTransactionReceipt(this.state.user.token, payload);
+    }
+
+    checkInfoState = () => {
+        if(this.state.currentShowedBox != "0"){
+            this.setState({infoBox : boxDefault, currentShowedBox: "0"})
+        }
+    }
+
+    toggleInfoBoxes = (boxNo) => {
+        let box = {
+            show1: false,
+            show2: false,
+            show3: false,
+            show4: false,
+        };
+        if(this.state.currentShowedBox == boxNo){
+            this.setState({infoBox : box, currentShowedBox: "0"})
+            return;
+        }
+        switch (boxNo) {
+            case "1":
+                box.show1 = true
+                break;
+            case "2":
+                box.show2 = true
+                break;
+            case "3":
+                box.show3 = true
+                break;
+            case "4":
+                box.show4 = true
+                break;
+            default:
+                break;
+        }
+        this.setState({infoBox : box, currentShowedBox: boxNo})
     }
 
     render() {
@@ -208,6 +266,11 @@ class History extends Component {
                         book={!this.props.accounts.length ? "---" : !accounts[0] ? "---" : selectedAccount == null ? `₦${formatAmount(accounts[0].book)}` : `₦${formatAmount(selectedAccount.book)}`}
                         liened={!this.props.accounts.length ? "---" : !accounts[0] ? "---" : selectedAccount == null ? `₦${formatAmount(accounts[0].liened)}` : `₦${formatAmount(selectedAccount.liened)}`}
                         uncleared={!this.props.accounts.length ? "---" : !accounts[0] ? "---" : selectedAccount == null ? `₦${formatAmount(accounts[0].uncleared)}` : `₦${formatAmount(selectedAccount.uncleared)}`}
+                        show1={this.state.infoBox.show1}
+                        show2={this.state.infoBox.show2}
+                        show3={this.state.infoBox.show3}
+                        show4={this.state.infoBox.show4}
+                        showInfo={this.toggleInfoBoxes}
                     />
                     <SendReceipt
                         receipt={this.toggleIsReceipt}
@@ -228,6 +291,7 @@ class History extends Component {
                         history={this.props.historyList}
                         historyLength={this.props.historyList.length}
                         sendReceipt={isReceipt}
+                        receipt={this.toggleIsReceipt}
                         receiptSending={this.props.isSendingReceipt}
                         response={this.props.receiptRes}
                         receivedTransactions={this.props.noReceived}

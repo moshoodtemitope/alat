@@ -1,12 +1,6 @@
-<<<<<<< HEAD
 // const URL = 'https://api.alat.ng';
 const URL = 'https://196.43.215.170';
 // const URL = 'https://196.43.215.157';
-=======
-//const URL = 'https://api.alat.ng';
-const URL = 'https://196.43.215.170';
-//const URL = 'https://196.43.215.157';
->>>>>>> 679bb041e6b67a83038f7efb3aac4a57e63c3f65
 
 const BASEURL = URL;
 
@@ -41,6 +35,7 @@ export const routes = {
     },
     SEND_STATEMENT: BASEURL + '/AccountMaintenance/api/transactions/statementsV2',
     GET_TRANSACTION_LIMIT: BASEURL + '/AccountMaintenance/api/transactions/getTransactionlimit',
+    SET_TRANSACTION_LIMIT: BASEURL + '/AccountMaintenance/api/transactions/setTransactionlimit',
 
     //goals and savings
     CUSTOMERGOALS: BASEURL + '/Savings.WebApi/api/Savings/CustomergoalsV2',
