@@ -109,17 +109,16 @@ class Statement extends Component {
                                         <p className="s-info mb-4">Your account statement for the selected period will be sent to your email address</p>
                                         <form>
 
-
-                                            <div className="input-ctn">
-                                                <label>Select an account</label>
-                                                <Select
-                                                    value={selectedAccount == null ? accounts.length > 0 ? accounts[0] : accounts : selectedAccount}
-                                                    onChange={this.accountChangedHandler}
-                                                    options={accounts}
-                                                    placeholder={this.props.alert.message ? "Failed. Please try again" : (this.props.accounts.length > 0 ? "Select..." : "Loading Account...")}
-                                                />
-                                            </div>
                                             <div className="row">
+                                                <div className="input-ctn col-md-12">
+                                                    <label>Select an account</label>
+                                                    <Select
+                                                        value={selectedAccount == null ? accounts.length > 0 ? accounts[0] : accounts : selectedAccount}
+                                                        onChange={this.accountChangedHandler}
+                                                        options={accounts}
+                                                        placeholder={this.props.alert.message ? "Failed. Please try again" : (this.props.accounts.length > 0 ? "Select..." : "Loading Account...")}
+                                                    />
+                                                </div>
                                                 <div className="col-md-6 input-ctn">
                                                     <label>Start Date</label>
                                                     <DatePicker placeholderText="" selected={startDate}
@@ -146,16 +145,16 @@ class Statement extends Component {
                                                         maxDate={new Date()}
                                                     />
                                                 </div>
+                                                {invalidInterval ? <p className="text-center text-danger" style={{ margin: "0px auto" }}>Start date cannot exceed end date</p> : null}
+                                                {emptyDate ? <p className="text-center text-danger" style={{ margin: "0px auto" }}>Please select both start and end date</p> : null}
+                                               
+                                                    <div className="col-sm-12">
+                                                        <center>
+                                                            <button onClick={this.onSubmitData} disabled={this.props.sending} className="btn-alat m-t-10 m-b-20 text-center">{this.props.sending ? "Processing..." : "Request Statement"}</button>
+                                                        </center>
+                                                    </div>
                                             </div>
-                                            {invalidInterval ? <p className="text-center text-danger" style={{ margin: "0px auto" }}>Start date cannot exceed end date</p> : null}
-                                            {emptyDate ? <p className="text-center text-danger" style={{ margin: "0px auto" }}>Please select both start and end date</p> : null}
-                                            <div className="row">
-                                                <div className="col-sm-12">
-                                                    <center>
-                                                        <button onClick={this.onSubmitData} disabled={this.props.sending} className="btn-alat m-t-10 m-b-20 text-center">{this.props.sending ? "Processing..." : "Request Statement"}</button>
-                                                    </center>
-                                                </div>
-                                            </div>
+
                                         </form>
                                     </div>
                                 </div>

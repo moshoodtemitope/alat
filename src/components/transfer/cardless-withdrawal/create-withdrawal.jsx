@@ -168,7 +168,7 @@ class CreateWithdrawal extends Component {
         updatedCwDataForm[inputIdentifier] = updatedFormElement;
         this.setState({ cwDataForm: updatedCwDataForm, validation });
     }
-
+ 
     render() {
         const formElementArray = [];
         for (let key in this.state.cwDataForm) {

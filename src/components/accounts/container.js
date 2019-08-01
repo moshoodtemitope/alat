@@ -4,6 +4,7 @@ import { Fragment } from 'react';
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import History from './history/history';
 import Statement from './statement/statement';
+import Limit from './trans-limit/trans-limit'
 
 
 class Accounts extends Component {
@@ -28,18 +29,18 @@ class Accounts extends Component {
                                     <div>
                                         <div className="sub-tab-nav">
                                             <ul>
-                                                <li><NavLink to={'/accounts/accounts-history'}>History</NavLink></li>
-                                                <li><NavLink to={'/accounts/accounts-statement'}>Get Statement</NavLink></li>
-                                                <li><NavLink to={'/accounts/accounts-limits'}>Account LImit</NavLink></li>
+                                                <li><NavLink to={'/account/account-history'}>History</NavLink></li>
+                                                <li><NavLink to={'/account/account-statement'}>Get Statement</NavLink></li>
+                                                <li><NavLink to={'/account/account-limit'}>Account LImit</NavLink></li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                                 {this.props.children}
-                                <Route path={'/accounts'} exact component={History} />
-                                <Route path={'/accounts/accounts-history'} component={History} />
-                                <Route path={'/accounts/accounts-statement'} component={Statement} />
-                                
+                                <Route path={'/account'} exact component={History} />
+                                <Route path={'/account/account-history'} component={History} />
+                                <Route path={'/account/account-statement'} component={Statement} />
+                                <Route path={'/account/account-limit'} component={Limit} />
                             </div>
                         </div>
                     </div>

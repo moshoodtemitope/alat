@@ -62,7 +62,7 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path='/transfer' authed={this.props.user} component={TransferContainer}/>
                     <PrivateRoute path='/cardless-withdrawal' authed={this.props.user} component={TransferContainer}/>
                     <PrivateRoute path='/fx-transfer' authed={this.props.user} component={TransferContainer}/>
-                    <PrivateRoute path='/accounts' authed={this.props.user} component={Accounts}/>
+                    <PrivateRoute path='/account' authed={this.props.user} component={Accounts}/>
                 </Switch>
             </Router>
             
