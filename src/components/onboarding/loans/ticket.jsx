@@ -97,7 +97,7 @@ class LoanOnboardingTicket extends React.Component {
         const { ticketNumber, ticketPassword, ticketNumberInvalid, ticketPasswordInvalid } = this.state;
         let props = this.props;
         return (
-            <LoanOnboardingContainer>
+            <LoanOnboardingContainer UserName={this.state.user.firstname}>
                 {/* {this.init()} */}
                 {this.gotoNextPage()}
                 <div className="row">

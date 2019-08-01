@@ -22,16 +22,21 @@ class LoanOnboardingScoreResult extends React.Component {
 	}
 
 	init = () => {
-		console.log(this.props);
+		//console.log(this.props);
 		if (this.props.score_card_A.loan_scoreA_data)  //loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS
 			if (this.props.score_card_A.loan_scoreA_status != loanOnboardingConstants.LOAN_SCORECARD_ANSWER_PENDING) {
 				// this.props.history.push("/loan/card-result");
 				var data = {
 					...this.props.score_card_A.loan_scoreA_data.data.response
 				}
-				console.log(data);
+				//console.log(data);
 				this.setState({ data: data });
 			}
+	}
+
+	doneClick=()=>{
+		this.props.dispatch(actions.clearLoanOnboardingStore());
+		this.props.history.push("/");
 	}
 
 	returnScoreCardSuccessStatus = () => {
@@ -42,7 +47,7 @@ class LoanOnboardingScoreResult extends React.Component {
 
 	render() {
 		return (
-			<LoanOnboardingContainer>
+			<LoanOnboardingContainer UserName={this.state.user.firstname}>
 				<div className="col-sm-12">
 					<div className="max-460">
 						<div className="loan-header-text text-center">
@@ -75,7 +80,7 @@ class LoanOnboardingScoreResult extends React.Component {
 						{!this.returnScoreCardSuccessStatus() && <div className="row">
 							<div className="col-sm-12">
 								<center>
-									<input type="button" value="Done" onClick={()=>{this.props.history.push("/")}}
+									<input type="button" value="Done" onClick={this.doneClick}
 										className="btn-alat  m-b-20 text-center btn-alat-outline grey" />
 								</center>
 							</div>

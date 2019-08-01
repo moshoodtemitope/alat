@@ -181,7 +181,7 @@ class LoanOnboardingScoreCard extends React.Component {
     render() {
         const { YearsOfExperience, NumberOfDependants, EducationQualifications, selectedQualification, selectedDependant, selectedYOE } = this.state;
         return (
-            <LoanOnboardingContainer>
+            <LoanOnboardingContainer UserName={this.state.user.firstname}>
                 {this.populateOptions()}
                 {this.gotoNextPage()}
                 <div className="col-sm-12">
