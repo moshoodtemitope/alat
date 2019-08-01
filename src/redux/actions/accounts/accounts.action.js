@@ -1,10 +1,10 @@
 import * as actionTypes from '../../constants/accounts/accounts.constants';
 
-import {alertActions} from "../alert.actions";
-import {handleError, modelStateErrorHandler} from './../../../shared/utils';
-import {SystemConstant} from "../../../shared/constants";
-import {ApiService} from "../../../services/apiService";
-import {routes} from "../../../services/urls";
+import { alertActions } from "../alert.actions";
+import { handleError, modelStateErrorHandler } from './../../../shared/utils';
+import { SystemConstant } from "../../../shared/constants";
+import { ApiService } from "../../../services/apiService";
+import { routes } from "../../../services/urls";
 
 
 
@@ -38,18 +38,38 @@ export const isSendingReceipt = () => {
     }
 }
 
-export const sendReceiptSuccess = () => {
-    return {
-        type: actionTypes.SEND_RECEIPT_SUCCESS
-    }
-}
-
 export const setReceivedTransactions = (number) => {
     return {
         type: actionTypes.SET_RECEIVED_TRANSACTIONS,
         count: number
     }
 }
+
+export const sendStatementSuccess = () => {
+    return {
+        type: actionTypes.SEND_STATEMENT_SUCCESS
+    }
+}
+
+export const setLimitData = (data) => {
+    return {
+        type: actionTypes.SET_LIMIT_DATA,
+        data: data
+    }
+}
+
+export const resetPageState = () => {
+    return {
+        type: actionTypes.RESET_PAGE_STATE,
+    }
+}
+
+export const clearResponse = (status) => {
+    return {
+        type: actionTypes.CLEAR_RESPONSE,
+        status: status
+    };
+};
 
 export const fetchAccountHistory = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
@@ -59,9 +79,9 @@ export const fetchAccountHistory = (token, data) => {
         return consume
             .then(response => {
                 let responseCount = 0
-                if(response.data.length){
-                    for(var data of response.data){
-                        for(var transaction of data.Transactions){
+                if (response.data.length) {
+                    for (var data of response.data) {
+                        for (var transaction of data.Transactions) {
                             responseCount++;
                         }
                     }
@@ -73,56 +93,151 @@ export const fetchAccountHistory = (token, data) => {
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
-    function success(data) { 
-        return { 
-            type: actionTypes.FETCHING_HISTORY_SUCCESS, 
+    function success(data) {
+        return {
+            type: actionTypes.FETCHING_HISTORY_SUCCESS,
             data: data
-        } 
+        }
     }
 };
 
 export const fetchReceiptEnableTransaction = (token, payload, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.GET_RECEIPT_TRANSACTIONS(payload.accountNumber, payload.take, payload.skip, payload.startDate, payload.endDate), "POST", data, SystemConstant.HEADER);
-        //dispatch(isFetchingHistory());
+        let consume = ApiService.request(routes.GET_RECEIPT_TRANSACTIONS(payload.accountNumber, payload.take, payload.skip, payload.startDate, payload.endDate), "GET", data, SystemConstant.HEADER);
+        dispatch(isFetchingHistory());
         return consume
             .then(response => {
-                // dispatch(success(response.data));
-                console.log("the receipt thing",response.data);
+                let responseCount = 0
+                if (response.data.length) {
+                    for (var data of response.data) {
+                        for (var transaction of data.Transactions) {
+                            responseCount++;
+                        }
+                    }
+                }
+                dispatch(setReceivedTransactions(responseCount));
+                dispatch(success(response.data));
             })
             .catch(error => {
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
 
-    function success(data) { 
-        return { 
-            type: actionTypes.FETCHING_HISTORY_SUCCESS, 
+    function success(data) {
+        return {
+            type: actionTypes.FETCHING_RECEIPT_HISTORY_SUCCESS,
             data: data
-        } 
+        }
     }
 };
+
 
 export const sendTransactionReceipt = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.GET_RECEIPT_TRANSACTIONS(), "POST", data, SystemConstant.HEADER);
-        dispatch(isFetchingHistory());
+        let consume = ApiService.request(routes.SEND_TRANSACTION_RECEIPT, "POST", data, SystemConstant.HEADER);
+        dispatch(isSendingReceipt());
         return consume
             .then(response => {
-                // dispatch(success(response.data));
-                console.log("the receipt thing",response.data);
+                dispatch(success());
+                dispatchClearResponse(2);
+                // console.log("the receipt thing",response.data);
+            })
+            .catch(error => {
+                // dispatch(isSendingReceipt());
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+
+            function dispatchClearResponse(status) {
+                setTimeout(() => {
+                    dispatch(clearResponse(status));
+                }, 3000);
+            };
+    };
+
+    function success() {
+        return {
+            type: actionTypes.SEND_RECEIPT_SUCCESS,
+        }
+    }
+
+};
+
+export const sendStatement = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.SEND_STATEMENT, "POST", data, SystemConstant.HEADER);
+        dispatch(isFetchingTrue());
+        return consume
+            .then(response => {
+                dispatch(sendStatementSuccess());
+                dispatch(alertActions.success(modelStateErrorHandler({ message: "Your request has been sent successfully" })));
             })
             .catch(error => {
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
 
-    function success(data) { 
-        return { 
-            type: actionTypes.FETCHING_HISTORY_SUCCESS, 
+    function success() {
+        return {
+            type: actionTypes.SEND_STATEMENT_SUCCESS,
+        }
+    }
+};
+
+export const getTransactionLimit = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.GET_TRANSACTION_LIMIT, "POST", data, SystemConstant.HEADER);
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                dispatch(failed({ LimitToCompare: "--Limit not retreived" }));
+            });
+    };
+
+    function success(data) {
+        return {
+            type: actionTypes.GET_LIMIT_SUCCESS,
             data: data
-        } 
+        }
+    }
+
+    function failed(data) {
+        return {
+            type: actionTypes.GET_LIMIT_FAILED,
+            data: data
+        }
+    }
+};
+
+export const getOtpForCustomer = (token, data, isResending = false) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        dispatch(isFetchingTrue());
+        let consume = ApiService.request(routes.GET_OTP_FOR_CUSTOMER, "POST", data, SystemConstant.HEADER);
+        return consume
+            .then(response => {
+                dispatch(isFetchingFalse());
+                console.log(response.data);
+                console.log("response.data");
+                if (isResending == false) {
+                    dispatch(success(response.data));
+                }
+            })
+            .catch(error => {
+                dispatch(isFetchingFalse());
+                console.log(error);
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+    function success(response) {
+        return {
+            type: actionTypes.SUCCESS_NEXT_PAGE,
+            data: response
+        }
     }
 };
