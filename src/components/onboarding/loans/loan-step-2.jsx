@@ -110,10 +110,11 @@ class LoanOboardingStep2 extends React.Component {
 
     calcRepayment = (loanAmount, interestRate, tenure) => {
         //[P x R x (1+R)^N]/[(1+R)^N-1]
-        let _intRate = interestRate / 12;
+        let _intRate = interestRate/100;
+        _intRate = 0.29/12;//_intRate/12;
        let _interestRate = 1 + _intRate;
        //console.log(_interestRate);
-      
+       //console.log(_intRate);
        let _tenure = tenure - 1;
      
         let numerator = loanAmount * _interestRate *_intRate;

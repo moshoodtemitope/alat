@@ -165,12 +165,12 @@ export const generateStatement =(token, url)=>{
     function failure(error) { return { type: loanOnboardingConstants.LOAN_GENERATE_STATEMENT_FAILURE, error } }
 }
 
-export const requestStatement =(token, url)=>{
-    let paramsurl = `${routes.LOAN_REQUEST_STATEMENT}?${url}`;
-    SystemConstant.HEADER['alat-token'] = token;
+export const requestStatement =(token, data)=>{
+    //let paramsurl = `${routes.LOAN_REQUEST_STATEMENT}?${url}`;
+    //SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(paramsurl,
-             "GET", null, SystemConstant.HEADER);
+        let consume = ApiService.request(routes.LOAN_REQUEST_STATEMENT,
+             "GET", data, SystemConstant.HEADER);
         dispatch(request(consume));
         return consume
             .then(response => {
@@ -189,7 +189,7 @@ export const requestStatement =(token, url)=>{
 
     function request(request) { return { type: loanOnboardingConstants.LOAN_REQUEST_STATEMENT_PENDING, request } }
     // function success(response, request) { return { type: loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS, data: { response : response, request: request } }}
-    function success(response) { return { type: loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS, data: { response : response } }}
+    function success(response, request) { return { type: loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS, data: { response : response, request : request } }}
     function failure(error) { return { type: loanOnboardingConstants.LOAN_REQUEST_STATEMENT_FAILURE, error } }
 }
 
