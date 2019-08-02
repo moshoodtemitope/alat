@@ -33,6 +33,20 @@ export const routes = {
     //goals and savings
     CUSTOMERGOALS: BASEURL + '/Savings.WebApi/api/Savings/CustomergoalsV2',
 
+    //Virtual Cards
+    GET_VC_EXCHENGE_RATE: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/GetCurrentExchangeRateV2',
+    CREAT_VIRTUAL_CARD_INITIAL: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/CreateVirtualCardInit',
+    CREAT_VIRTUAL_CARD_FINAL: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/CreateVirtualCardFinal',
+    GET_CURRENT_VC: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/GetCurrrentVirtualCardWeb',
+    GET_SINGLE_VC: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/GetSingleVirtualCardWeb',
+    DELETE_VIRTUAL_CARD: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/Delete',
+    TOPUP_VIRTUAL_CARD_INITIAL: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/FundVirtualCardInit',
+    TOPUP_VIRTUAL_CARD_FINAL: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/FundVirtualCardFinal',
+    LIQUIDATE_VIRTUAL_CARD: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/LiquidateVirtualCard',
+    VIRTUAL_CARD_HISTORY: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/VirtualCardHistory',
+    VIRTUAL_CARD_CHANGE_STATE: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/ChangeVirtualCardState',
+    VIRTUAL_CARD_ENCRYPTED_NUMBER: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/GetEncryptedNumberList',
+
     //Payment
 
     //FundAccount 

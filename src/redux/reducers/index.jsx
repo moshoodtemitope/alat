@@ -1,7 +1,14 @@
 import {combineReducers} from "redux";
 import {authentication} from "./authentication.reducer";
 import { alert} from "./alert.reducer";
-import {dashboard, transfer, onboarding, airtime, global, fundAccount, loanOnboarding} from "./export";
+import {dashboard, 
+        transfer, 
+        onboarding, 
+        airtime, 
+        global, 
+        fundAccount, 
+        loanOnboarding,
+        alatCards} from "./export";
 import {bankListRequest, beneficiariesRequest} from "./transfer.reducer";
 import {accountHistoryReducer} from "./dashboard.reducer";
 import { userConstants } from "../constants/onboarding/user.constants";
@@ -12,6 +19,7 @@ import { airtimeConstants } from "../constants/airtime/airtime.constants";
 import { TRANSFER_REDUCER_CLEAR } from "../constants/transfer.constants";
 import { fundAccountConstants } from "../constants/fund-account/fund-account.constant";
 import { loanOnboardingConstants } from '../constants/onboarding/loan.constants';
+import { ALATCARD_REDUCER_CLEAR } from '../constants/cards/cards.constants';
 //import { saveCardReducer } from "./fund-account.reducer";
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
@@ -48,6 +56,13 @@ const loanOnboardingReducerPile = (state, action)=>{
         state = undefined;
     }
     return loanOnboardingReducer(state, action);
+}
+
+const alatCardReducersPile = (state, action)=>{
+    if(action.type ===ALATCARD_REDUCER_CLEAR){
+        state = undefined;
+    }
+    return alatCardsReducer(state, action);
 }
 
 
@@ -94,6 +109,10 @@ const loanOnboardingReducer = combineReducers({
     loanOnboardingValidateOTP : loanOnboarding.loanOnboardingValidateOTPReducer
 })
 
+const alatCardsReducer = combineReducers({
+    getVirtualCards: alatCards.geCurrentVirtualCardsRequest  
+})
+
 const appReducer = combineReducers({
     authentication,
     // registration,
@@ -112,6 +131,7 @@ const appReducer = combineReducers({
     transferReducerPile,
     fundAccountReducerPile,
     loanOnboardingReducerPile,
+    alatCardReducersPile,
     accounts: global.debitableAccountsReducer,
     encrypt_rule: global.getEncryptionRuleReducer,
     verify_pan: global.verifyPANReducer,
