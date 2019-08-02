@@ -45,6 +45,20 @@ export const setReceivedTransactions = (number) => {
     }
 }
 
+export const setReceivedTransactionsAlt = (number) => {
+    return {
+        type: actionTypes.SET_RECEIVED_TRANSACTIONS_ALT,
+        count: number
+    }
+}
+
+export const setFilteredTransaction = (number) => {
+    return {
+        type: actionTypes.SET_FILTERED_TRANSACTION,
+        count: number
+    }
+}
+
 export const sendStatementSuccess = () => {
     return {
         type: actionTypes.SEND_STATEMENT_SUCCESS
@@ -79,7 +93,7 @@ export const clearResponse = (status) => {
     };
 };
 
-export const fetchAccountHistory = (token, data) => {
+export const fetchAccountHistory = (token, data, type = "All") => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
         let consume = ApiService.request(routes.GETACCOUNTHISTORY, "POST", data, SystemConstant.HEADER);
@@ -94,8 +108,30 @@ export const fetchAccountHistory = (token, data) => {
                         }
                     }
                 }
-                dispatch(setReceivedTransactions(responseCount));
-                dispatch(success(response.data));
+                
+                if (type == "All") {
+                    dispatch(setReceivedTransactions(responseCount));
+                    dispatch(success(response.data));
+                } else {
+                    let responseData;
+                    let newDataArray = [];
+                    let count = 0;
+                    for (var data of response.data) {
+                        if (type == "Debits") {
+                            
+                            responseData = data.Transactions.filter(transaction => transaction.TransactionType == "D");
+                            // console.log("in Debits", responseData)
+                        }else{
+                            
+                            responseData = data.Transactions.filter(transaction => transaction.TransactionType == "C");
+                            // console.log("in Credits", responseData)
+                        }
+                        newDataArray = [...newDataArray, ...responseData];
+                    }
+                    dispatch(success(newDataArray));
+                    dispatch(setReceivedTransactionsAlt(responseCount));
+                    dispatch(setFilteredTransaction(newDataArray.length));
+                }
             })
             .catch(error => {
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
@@ -157,11 +193,11 @@ export const sendTransactionReceipt = (token, data) => {
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
 
-            function dispatchClearResponse(status) {
-                setTimeout(() => {
-                    dispatch(clearResponse(status));
-                }, 3000);
-            };
+        function dispatchClearResponse(status) {
+            setTimeout(() => {
+                dispatch(clearResponse(status));
+            }, 3000);
+        };
     };
 
     function success() {
@@ -238,11 +274,11 @@ export const sendTransactionLimit = (token, data) => {
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
 
-            function dispatchClearLimitInfo() {
-                setTimeout(() => {
-                    dispatch(clearLimitData());
-                }, 5000);
-            };
+        function dispatchClearLimitInfo() {
+            setTimeout(() => {
+                dispatch(clearLimitData());
+            }, 5000);
+        };
     };
 
     function success() {

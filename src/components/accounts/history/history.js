@@ -39,7 +39,9 @@ class History extends Component {
                 show3: false,
                 show4: false,
             },
-            currentShowedBox: "0"
+            currentShowedBox: "0",
+            showDropOptions: false,
+            currentTransactions: "All"
         };
     }
 
@@ -71,7 +73,7 @@ class History extends Component {
             AccountNumber: this.state.selectedAccount == null && !this.state.accounts[0] && arrayToDisplay[0].value == '' ? arrayToDisplay[0].value : this.state.selectedAccount ? this.state.selectedAccount.value : arrayToDisplay[0].value,
         };
 
-        this.setState({ accounts: arrayToDisplay, accountsLoaded: true }, () => this.fetchTransactionHistory(payload));
+        this.setState({ accounts: arrayToDisplay, accountsLoaded: true, currentTransactions: "All" }, () => this.fetchTransactionHistory(payload));
     }
 
     fetchTransactionHistory = (payload, accountNumber) => {
@@ -87,7 +89,7 @@ class History extends Component {
             };
         }
         console.log("payload", payload)
-        this.props.fetchHistory(this.state.user.token, payload);
+        this.props.fetchHistory(this.state.user.token, payload, this.state.currentTransactions);
     }
 
     accountChangedHandler = (selectedAccount) => {
@@ -95,14 +97,14 @@ class History extends Component {
         let currentAccount = this.state.selectedAccount != null ? this.state.selectedAccount.value : this.state.accounts[0].value;
         if (selectedAccount.value == currentAccount) return;
         this.props.clearHistory();
-        if (this.state.isReceipt) {
-            this.setState({ selectedAccount, skip: 0, isBackendSearch: false }, () => this.props.fetchReceiptTransaction(this.state.user.token, {
+        if (this.state.currentTransactions == "Receipts") {
+            this.setState({ selectedAccount, skip: 0, take: 10, isBackendSearch: false }, () => this.props.fetchReceiptTransaction(this.state.user.token, {
                 take: this.state.take,
                 skip: this.state.skip,
                 accountNumber: selectedAccount.value,
             }));
         }
-        this.setState({ selectedAccount, skip: 0, isBackendSearch: false }, () => this.fetchTransactionHistory(null, selectedAccount.value));
+        this.setState({ selectedAccount, skip: 0, take: 10, isBackendSearch: false, currentTransactions: "All" }, () => this.fetchTransactionHistory(null, selectedAccount.value));
 
         console.log(`Option selected:`, selectedAccount);
     }
@@ -110,8 +112,8 @@ class History extends Component {
     viewMoreTransactions = () => {
         this.checkInfoState();
         let account = this.state.selectedAccount != null ? this.state.selectedAccount.value : this.state.accounts[0].value;
-        if (this.state.isReceipt) {
-            this.setState({ skip: this.state.skip + 10 }, () => this.props.fetchReceiptTransaction(this.state.user.token, {
+        if (this.state.currentTransactions == "Receipts") {
+            this.setState({ skip: this.state.skip + 10, take: 10 }, () => this.props.fetchReceiptTransaction(this.state.user.token, {
                 accountNumber: account,
                 take: this.state.take,
                 skip: this.state.skip,
@@ -119,7 +121,12 @@ class History extends Component {
                 endDate: this.state.endDate,
             }));
         } else {
-            this.setState({ skip: this.state.skip + 10 }, () => this.fetchTransactionHistory(null, account))
+            if (this.state.currentTransactions == "All") {
+                this.setState({ skip: this.state.skip + 10, take: 10 }, () => this.fetchTransactionHistory(null, account))
+            } else {
+                this.setState({ skip: this.state.skip + 30, take: 30 }, () => this.fetchTransactionHistory(null, account))
+            }
+
         }
     }
 
@@ -137,18 +144,55 @@ class History extends Component {
         this.setState({ endDate });
     }
 
+    toggleFilter = (type) => {
+        this.setState({ showDropOptions: !this.state.showDropOptions })
+        this.checkInfoState();
+        if (this.state.currentTransactions == type) return;
+        this.props.clearHistory();
+        switch (type) {
+            case "All":
+                this.setState({ isReceipt: false, skip: 0, take: 10, currentTransactions: "All" }, () => this.fetchTransactionHistory({
+                    Take: this.state.take,
+                    Skip: this.state.skip,
+                    AccountNumber: this.state.selectedAccount != null ? this.state.selectedAccount.value : this.state.accounts[0].value,
+                }));
+                break;
+            case "Debits":
+                this.setState({ isReceipt: false, skip: 0, take: 30, currentTransactions: "Debits" }, () => this.fetchTransactionHistory({
+                    Take: this.state.take,
+                    Skip: this.state.skip,
+                    AccountNumber: this.state.selectedAccount != null ? this.state.selectedAccount.value : this.state.accounts[0].value,
+                }));
+                break;
+            case "Credits":
+                this.setState({ isReceipt: false, skip: 0, take: 30, currentTransactions: "Credits" }, () => this.fetchTransactionHistory({
+                    Take: this.state.take,
+                    Skip: this.state.skip,
+                    AccountNumber: this.state.selectedAccount != null ? this.state.selectedAccount.value : this.state.accounts[0].value,
+                }));
+                break;
+            default:
+                    this.setState({ isReceipt: true, skip: 0, take: 10, currentTransactions: "Receipts" }, () => this.props.fetchReceiptTransaction(this.state.user.token, {
+                        accountNumber: this.state.selectedAccount != null ? this.state.selectedAccount.value : this.state.accounts[0].value,
+                        take: this.state.take,
+                        skip: this.state.skip,
+                    }));
+                break;
+        }
+    }
+
     toggleIsReceipt = (event) => {
         this.checkInfoState();
         event.preventDefault();
-        if (this.state.isReceipt) {
-            this.props.clearHistory();
-            this.setState({ isReceipt: false, skip: 0 }, () => this.fetchTransactionHistory({
+        this.props.clearHistory();
+        if (this.state.currentTransactions == "Receipts") {
+            this.setState({ isReceipt: false, skip: 0, take: 10, currentTransactions: "All" }, () => this.fetchTransactionHistory({
                 Take: this.state.take,
                 Skip: this.state.skip,
                 AccountNumber: this.state.selectedAccount != null ? this.state.selectedAccount.value : this.state.accounts[0].value,
             }));
         } else {
-            this.setState({ isReceipt: true, skip: 0 }, () => this.props.fetchReceiptTransaction(this.state.user.token, {
+            this.setState({ isReceipt: true, skip: 0, take: 10, currentTransactions: "Receipts" }, () => this.props.fetchReceiptTransaction(this.state.user.token, {
                 accountNumber: this.state.selectedAccount != null ? this.state.selectedAccount.value : this.state.accounts[0].value,
                 take: this.state.take,
                 skip: this.state.skip,
@@ -185,8 +229,8 @@ class History extends Component {
         }
         this.setState({ invalidInterval: false }, () => this.props.clearHistory());
         let selected = this.state.selectedAccount ? this.state.selectedAccount.value : this.state.accounts[0].value;
-        if (this.state.isReceipt) {
-            this.setState({ skip: 0, isBackendSearch: true }, () => this.props.fetchReceiptTransaction(this.state.user.token, {
+        if (this.state.currentTransactions == "Receipts") {
+            this.setState({ skip: 0, take: 10, isBackendSearch: true }, () => this.props.fetchReceiptTransaction(this.state.user.token, {
                 accountNumber: selected,
                 take: this.state.take,
                 skip: this.state.skip,
@@ -194,7 +238,7 @@ class History extends Component {
                 endDate: this.state.endDate
             }));
         } else {
-            this.setState({ skip: 0, isBackendSearch: true }, () => this.fetchTransactionHistory(null, selected));
+            this.setState({ skip: 0, take: 10, isBackendSearch: true, currentTransactions: "All" }, () => this.fetchTransactionHistory(null, selected));
         }
     }
 
@@ -210,8 +254,8 @@ class History extends Component {
     }
 
     checkInfoState = () => {
-        if(this.state.currentShowedBox != "0"){
-            this.setState({infoBox : boxDefault, currentShowedBox: "0"})
+        if (this.state.currentShowedBox != "0") {
+            this.setState({ infoBox: boxDefault, currentShowedBox: "0" })
         }
     }
 
@@ -222,8 +266,8 @@ class History extends Component {
             show3: false,
             show4: false,
         };
-        if(this.state.currentShowedBox == boxNo){
-            this.setState({infoBox : box, currentShowedBox: "0"})
+        if (this.state.currentShowedBox == boxNo) {
+            this.setState({ infoBox: box, currentShowedBox: "0" })
             return;
         }
         switch (boxNo) {
@@ -242,7 +286,11 @@ class History extends Component {
             default:
                 break;
         }
-        this.setState({infoBox : box, currentShowedBox: boxNo})
+        this.setState({ infoBox: box, currentShowedBox: boxNo })
+    }
+
+    toggleFilterDropdown = () => {
+        this.setState({ showDropOptions: !this.state.showDropOptions })
     }
 
     render() {
@@ -250,7 +298,7 @@ class History extends Component {
             this.sortAccountsForSelect();
         }
 
-        const { selectedAccount, accounts, startDate, endDate, isReceipt, invalidInterval } = this.state;
+        const { selectedAccount, accounts, startDate, endDate, isReceipt, invalidInterval, showDropOptions, currentTransactions } = this.state;
         return (
             <Fragment>
                 <div class="col-sm-12 col-md-4">
@@ -274,7 +322,7 @@ class History extends Component {
                     />
                     <SendReceipt
                         receipt={this.toggleIsReceipt}
-                        sendReceipt={isReceipt} />
+                        sendReceipt={currentTransactions == "Receipts"} />
                 </div>
                 <div class="col-sm-12 col-md-8">
                     <Search
@@ -290,7 +338,7 @@ class History extends Component {
                         accountsLoaded={accounts.length}
                         history={this.props.historyList}
                         historyLength={this.props.historyList.length}
-                        sendReceipt={isReceipt}
+                        sendReceipt={currentTransactions == "Receipts"}
                         receipt={this.toggleIsReceipt}
                         receiptSending={this.props.isSendingReceipt}
                         response={this.props.receiptRes}
@@ -299,6 +347,11 @@ class History extends Component {
                         viewMore={this.viewMoreTransactions}
                         receiptHistory={this.props.receiptHistoryList}
                         callSendReceipt={this.sendTransReceipt}
+                        showDropdown={this.toggleFilterDropdown}
+                        showOptions={showDropOptions}
+                        optionTofetch={this.toggleFilter}
+                        currentView={currentTransactions}
+                        receivedTransactionsAlt={this.props.receivedTransactionsAlternative}
                     //isSending={}
                     />
                 </div>
@@ -317,6 +370,7 @@ const mapStateToProps = state => {
         historyList: state.accountsM_reducer.history,
         receiptHistoryList: state.accountsM_reducer.receiptHistory,
         noReceived: state.accountsM_reducer.receivedTransactions,
+        receivedTransactionsAlternative: state.accountsM_reducer.receivedTransactionsAlt,
         receiptRes: state.accountsM_reducer.receiptResponse,
         isSendingReceipt: state.accountsM_reducer.sendingReceipt,
     }
@@ -325,7 +379,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchDebitableAccounts: (token, withHistory) => dispatch(getAccounts(token, withHistory)),
-        fetchHistory: (token, payload) => dispatch(actions.fetchAccountHistory(token, payload)),
+        fetchHistory: (token, payload, type) => dispatch(actions.fetchAccountHistory(token, payload, type)),
         clearHistory: () => dispatch(actions.clearCurrentHistory()),
         fetchReceiptTransaction: (token, payload) => dispatch(actions.fetchReceiptEnableTransaction(token, payload)),
         sendTransactionReceipt: (token, payload) => dispatch(actions.sendTransactionReceipt(token, payload)),
