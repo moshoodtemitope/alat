@@ -58,6 +58,14 @@ export const setLimitData = (data) => {
     }
 }
 
+export const clearLimitData = () => {
+    return {
+        type: actionTypes.CLEAR_LIMIT_DATA,
+    }
+}
+
+
+
 export const resetPageState = () => {
     return {
         type: actionTypes.RESET_PAGE_STATE,
@@ -210,6 +218,36 @@ export const getTransactionLimit = (token, data) => {
         return {
             type: actionTypes.GET_LIMIT_FAILED,
             data: data
+        }
+    }
+};
+
+export const sendTransactionLimit = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        dispatch(isFetchingTrue());
+        let consume = ApiService.request(routes.SET_TRANSACTION_LIMIT, "POST", data, SystemConstant.HEADER);
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+                dispatchClearLimitInfo();
+            })
+            .catch(error => {
+                dispatch(isFetchingFalse());
+                console.log(error);
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+
+            function dispatchClearLimitInfo() {
+                setTimeout(() => {
+                    dispatch(clearLimitData());
+                }, 5000);
+            };
+    };
+
+    function success() {
+        return {
+            type: actionTypes.SEND_TRANSACTION_LIMIT_SUCCESS,
         }
     }
 };

@@ -164,29 +164,9 @@ class SetLimit extends Component {
             WemaBankLimit: formData.limit.value,
             Pin: formData.pin.value
         }
-        console.log("setLimitInfo", setLimitInfo);
 
         this.props.fetchOtp(this.state.user.token, payload);
-        this,this.props.setLimitData(setLimitInfo);
-        // if (this.state.startDate == null || this.state.endDate == null) {
-        //     this.setState({ emptyDate: true });
-        //     return;
-        // }
-        // if (this.state.startDate && this.state.endDate) {
-        //     if (Date.parse(this.state.startDate) > Date.parse(this.state.endDate)) {
-        //         this.setState({ invalidInterval: true, emptyDate: false });
-        //         return;
-        //     }
-        // }
-        // this.setState({ emptyDate: false, invalidInterval: false });
-        // let payload = {
-        //     AccountNumber: this.state.selectedAccount == null && !this.state.accounts[0] && this.state.accounts[0].value == '' ? this.state.accounts[0].value : this.state.selectedAccount ? this.state.selectedAccount.value : this.state.accounts[0].value,
-        //     StartDate: this.state.startDate,
-        //     EndDate: this.state.endDate,
-        // }
-
-        // console.log(payload);
-        // this.props.sendStatement(this.state.user.token, payload);
+        this.props.setLimitData(setLimitInfo);
     }
 
     handleClick = () => {
@@ -235,7 +215,6 @@ class SetLimit extends Component {
                                                                     options={formElement.config.elementConfig.options}
                                                                     placeholder={this.props.alert.message ? "Failed. Please try again" : (this.props.accounts.length > 0 ? "Select..." : "Loading Account...")}
                                                                 />
-                                                                {/* {this.state.validation.accountError.hasError ? <small className="text-danger">{this.state.validation.accountError.error}</small> : null} */}
                                                             </div>
                                                         )
                                                     };
@@ -288,12 +267,6 @@ class SetLimit extends Component {
             this.props.resetPageState();
             transLimit = <Redirect to="/account/account-limit/verify" />
         }
-
-        // if(this.props.alert.type == "ALERT_SUCCESS"){
-        //     setTimeout(() => {
-        //         statement=    <Redirect to='/accounts/accounts-history' />;
-        //         }, 5000);
-        //     }
 
         return transLimit;
     }
