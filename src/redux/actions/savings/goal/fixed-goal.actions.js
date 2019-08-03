@@ -11,7 +11,6 @@ export const fetchFixedGoalStep1 = (data) =>{
         return{
             type:fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS,
             data:data
-        
         }
     }
 }

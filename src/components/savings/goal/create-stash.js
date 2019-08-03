@@ -8,8 +8,11 @@ import Select from 'react-select';
 import { connect } from 'react-redux';
 import DatePicker from "react-datepicker";
 import {fixedGoalConstants} from '../../../redux/constants/goal/fixed-goal.constant'
-import * as actions from '../../../redux/actions/savings/goal/fixed-goal.actions'
+import * as actions from '../../../redux/actions/savings/goal/fixed-goal.actions';
+import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
 import "react-datepicker/dist/react-datepicker.css";
+import {stashCash} from '../../../redux/actions/savings/goal/stash-goal-action';
+import { bindActionCreators } from "redux";
 
 const selectedTime = [
     { value: 'No' ,label:"No" },
@@ -27,6 +30,8 @@ class CreateStash extends React.Component {
             Amount: null,
             SelectedtimeSaved:"",
             timeSaved:"",
+            isAccountInvalid: false,
+            selectedAccount:"",
             isSubmitted : false,
             endDateInvalid:false,
             startDateInvalid:false,
@@ -37,6 +42,9 @@ class CreateStash extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.validateAmount = this.validateAmount.bind(this);
+        this.handleSelectDebitableAccounts = this.handleSelectDebitableAccounts.bind(this);
+        this.saveStashToRedux = this.saveStashToRedux.bind(this);
+        this.postStashToApi = this.postStashToApi.bind(this);
     }
 
     validateAmount = () => {
@@ -117,13 +125,57 @@ class CreateStash extends React.Component {
         if (this.state.formsubmitted && SelectedtimeSaved.value != "")
             this.setState({ TimeSavedInvalid: false })
     }
+
+    handleSelectDebitableAccounts(account) {
+        console.log('dss', account);
+        this.setState({ selectedAccount: account })
+        if (this.state.isSubmitted) { 
+            if(account.length == 10)
+            this.setState({ isAccountInvalid: false })
+         }
+    }
     
+    checkAccountNumber() {
+        if (this.state.selectedAccount.length != 10) {
+            this.setState({ isAccountInvalid: true })
+            return true;
+        }
+    }
+
+    postStashToApi(){
+        const data = {
+            GoalName: this.state.goalName,
+            TargetAmount: this.state.Amount,
+            DebitAccount: this.state.selectedAccount,
+            GoalTypeId: 4,
+            IsAutomaticDebit: true,
+            PayOutInterest: true,
+            DebitAmount: this.state.Amount,
+            Id: 2
+        }
+
+        this.props.amount({
+            type: 'SAVE_STASH',
+            payload: data
+        })
+    }
+
+    saveStashToRedux() {
+        this.props.amount({
+            type: 'STASH',
+            payload: {
+                amount: this.state.Amount
+            }
+        })
+    }
     
-  
     onSubmit(event){
         event.preventDefault();
 
         if (this.validateAmount()||this.checkGoalName()||this.valStartDate()||this.valEndDate()||this.checkAmount()||this.checkTimeSaved()) {
+            this.saveStashToRedux();
+            this.postStashToApi();
+            return;
             this.props.history.push('/savings/goal/create-stash-step2');
         } else {
             this.setState({isSubmitted : true });
@@ -197,8 +249,8 @@ class CreateStash extends React.Component {
                                                     <div className= {!theAmount ? "form-group col-md-6 " : "form-group col-md-6 form-error"}>
                                                         <label className="label-text">How much would you like to save</label>
                                                         <input 
-                                                        type="text" 
-                                                        className="form-control" 
+                                                         type="text" 
+                                                         className="form-control" 
                                                          placeholder="December Goal"
                                                          name="Amount"
                                                          onChange={this.handleChange}
@@ -217,6 +269,15 @@ class CreateStash extends React.Component {
                                                             value={timeSaved.label}
                                                           />
                                                           {TimeSavedInvalid && <div className='text-danger'>Enter saving duration</div>}
+                                                    </div>
+
+                                                    <div className='col-sm-12'>
+                                                            <center>
+                                                                <SelectDebitableAccounts
+                                                                    value={this.state.accountNumber}
+                                                                    accountInvalid={this.state.isAccountInvalid}
+                                                                    onChange={this.handleSelectDebitableAccounts} />
+                                                            </center>
                                                     </div>
 
                                                     <div className="col-sm-12">
@@ -259,12 +320,41 @@ class CreateStash extends React.Component {
 
                 </InnerContainer>
 
-
             </Fragment>
         );
     }
 }
+
 const mapStateToProps = state => ({
     fixed_goal_step1: state.fixed_reducer
 })
-export default connect(mapStateToProps)(CreateStash);
+
+const matchDispatchToProps = dispatch => {
+    return bindActionCreators({
+       amount: stashCash
+    }, dispatch);
+}
+export default connect(mapStateToProps, matchDispatchToProps)(CreateStash);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

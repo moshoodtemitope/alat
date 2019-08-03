@@ -30,7 +30,8 @@ import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingV
      loanOnboardingStep3Reducer, loanOnboardingValidateOTPReducer} from './loan-onboarding.reducer';
 
      import {fixedGoalStep1Reducer, fixedGoalStep2Reducer} from './goal/fixed-goal.reducers'
-
+import { groupSavingsTargetGoal, groupDetails, deleteGroup, contribute, editGroup, findGroup, customerGroup, joinGroup,
+    scheduleContribution, deleteMember, cashOut, continueScheduleGroupPayment, pauseGroup } from './group-savings/group-savings-reducers';
 export const onboarding = {
     userRegistrationRequest,
     bvnDetailsReducer,
@@ -98,4 +99,20 @@ export const fundAccount={
 export const fixedGoal ={
     fixedGoalStep1Reducer,
     fixedGoalStep2Reducer
+}
+
+export const groupSavings = {
+    groupSavingsTargetGoal,
+    groupDetails,
+    deleteGroup, 
+    contribute,
+    editGroup,
+    findGroup,
+    customerGroup,
+    joinGroup,
+    scheduleContribution,
+    deleteMember,
+    cashOut,
+    continueScheduleGroupPayment,
+    pauseGroup
 }

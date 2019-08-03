@@ -30,8 +30,6 @@ class CreateStashContinue extends React.Component {
             isAccountInvalid: false,
             SelectedtimeSaved:"",
             TimeSavedInvalid:false
-
-           
          };
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this)
@@ -60,6 +58,7 @@ class CreateStashContinue extends React.Component {
             return true;
         }
     }
+
     checkTimeSaved = () => {
         if (this.state.timeSaved == "") {
             this.setState({ TimeSavedInvalid: true });
@@ -98,7 +97,7 @@ class CreateStashContinue extends React.Component {
         event.preventDefault();
 
         this.setState({ isSubmitted: true });
-        if (this.checkAccountNumber()|| this.checkTimeSaved()) {
+        if (this.checkAccountNumber() || this.checkTimeSaved()) {
 
         } else {
             this.setState({isSubmitted : true });
@@ -113,6 +112,7 @@ class CreateStashContinue extends React.Component {
         }
     }
 
+
     gotoStep3 = () => {
         if (this.props.fixed_goal_step2)
             if (this.props.fixed_goal_step2.fixed_step2_status == fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS_STEP2) {
@@ -120,9 +120,6 @@ class CreateStashContinue extends React.Component {
             }
     }
     
-
-    
-
 
     render() {
         

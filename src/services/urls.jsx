@@ -99,4 +99,8 @@ export const routes = {
     ADDSTACHGOAL: BASEURL + '/Savings.WebApi/api/Savings/AddStashGoal',
     FETCH_DEBITABLE_ACCOUNTS_WITH_LIMITS: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2',
 
+    // Group Savings
+    CREATEGOAL: BASEURL + '/Savings.WebApi/api/GroupSaving/CreateGroup',
+    GROUPCUSTOMERS: BASEURL + '/Savings.WebApi/api/GroupSaving/GetCustomerGroups',
+    DELETE_GROUP: BASEURL + '/Savings.WebApi/api/GroupSaving/DeleteGroup'
 };
