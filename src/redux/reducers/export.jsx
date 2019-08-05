@@ -29,9 +29,11 @@ import { fundAccountReducer, getTokenizedCardsReducer,
 import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingVerifyBVNReducer,
      loanOnboardingStep3Reducer, loanOnboardingValidateOTPReducer} from './loan-onboarding.reducer';
 
-     import {fixedGoalStep1Reducer, fixedGoalStep2Reducer} from './goal/fixed-goal.reducers'
-import { groupSavingsTargetGoal, groupDetails, deleteGroup, contribute, editGroup, findGroup, customerGroup, joinGroup,
-    scheduleContribution, deleteMember, cashOut, continueScheduleGroupPayment, pauseGroup } from './group-savings/group-savings-reducers';
+ import {fixedGoalStep1Reducer,fixedGoalStep2Reducer,addGoalReducer} from './goal/fixed-goal.reducers'
+ import {flexGoalStep1Reducer,flexGoalStep2Reducer,addFlexGoalReducer} from './goal/flex-goal.reducer'
+ import {groupSavingsTargetGoal, groupDetails, deleteGroup, contribute, editGroup, pauseGroup, findGroup, customerGroup, joinGroup, scheduleContribution, deleteMember, cashOut,
+    continueScheduleGroupPayment} from './group-savings/group-savings-reducers';
+
 export const onboarding = {
     userRegistrationRequest,
     bvnDetailsReducer,
@@ -98,21 +100,29 @@ export const fundAccount={
 }
 export const fixedGoal ={
     fixedGoalStep1Reducer,
-    fixedGoalStep2Reducer
-}
+    fixedGoalStep2Reducer,
+    addGoalReducer
+ }
+ export const flexGoal={
+    flexGoalStep1Reducer,
+    flexGoalStep2Reducer,
+    addFlexGoalReducer
 
-export const groupSavings = {
-    groupSavingsTargetGoal,
-    groupDetails,
+ }
+ export const groupSavings ={
+    groupSavingsTargetGoal, 
+    groupDetails, 
     deleteGroup, 
-    contribute,
-    editGroup,
-    findGroup,
-    customerGroup,
-    joinGroup,
-    scheduleContribution,
-    deleteMember,
+    contribute, 
+    editGroup, 
+    pauseGroup, 
+    findGroup, 
+    customerGroup, 
+    joinGroup, 
+    scheduleContribution, 
+    deleteMember, 
     cashOut,
-    continueScheduleGroupPayment,
-    pauseGroup
+    continueScheduleGroupPayment
 }
+ 
+ 

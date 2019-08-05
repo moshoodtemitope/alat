@@ -24,7 +24,7 @@ class GoalPlan extends React.Component {
             <Fragment>
                 <InnerContainer>
                     <SavingsContainer>
-                    <div className="row">
+                    <div className="row checkSome">
                         <div className="col-sm-12">
                             <p className="page-title">Savings & Goals</p>
                         </div>
@@ -43,11 +43,11 @@ class GoalPlan extends React.Component {
                             </div>
                         </div>
                         <div className="Home-container">
-                            <div className="row">
+                            <div className="choose-goal-plan-row ">
                                 <NavLink to="/savings/fixed-goal">
                                 <div className="fixed-goal">
                                     <img className="goal-icon" src={calender} alt=''/>
-                                    <p className="flex-text">Flex Goal</p>
+                                    <p className="flex-text">Fixed Goal</p>
                                     <p className="info-text3">Save daily, weekly or monthly towards
                                     a target amount, earn 10% interest annually. No withdrawals allowed</p>
                                 </div> 

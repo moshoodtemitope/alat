@@ -11,7 +11,7 @@ class SelectDebitableAccounts extends React.Component {
         this.state = {
             user: JSON.parse(localStorage.getItem("user")),
             debitableAccounts: [],
-            selectedAccount: {},
+            debitAccount: {},
             isAccountsLoaded : false
         };
     }
@@ -90,7 +90,7 @@ class SelectDebitableAccounts extends React.Component {
     handleSelectAccount = (e) => {
        // console.log(e);
         this.props.onChange(e.value, e);
-        this.setState({ selectedAccount: e.value })
+        this.setState({ debitAccount: e.value })
     }
 
     render() {

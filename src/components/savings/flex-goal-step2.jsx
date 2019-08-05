@@ -5,8 +5,8 @@ import SavingsContainer from './container';
 import Select from 'react-select';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
-import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant';
+import {flexGoalConstants} from '../../redux/constants/goal/flex-goal.constant'
+import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
 import SelectDebitableAccounts from '../../shared/components/selectDebitableAccounts';
 
 
@@ -37,7 +37,7 @@ class FlexGoal extends React.Component {
             goalName:"",
             timeSaved:"",
             //accountNumber:"",
-            selectedAccount:"",
+            debitAccount:"",
             isSubmitted: false,
             isAccountInvalid: false,
             SelectedtimeSaved:"",
@@ -63,14 +63,14 @@ class FlexGoal extends React.Component {
     }
     handleSelectDebitableAccounts(account) {
         console.log('dss', account);
-        this.setState({ selectedAccount: account })
+        this.setState({ debitAccount: account })
         if (this.state.isSubmitted) { 
             if(account.length == 10)
             this.setState({ isAccountInvalid: false })
          }
     }
     checkAccountNumber() {
-        if (this.state.selectedAccount.length != 10) {
+        if (this.state.debitAccount.length != 10) {
             this.setState({ isAccountInvalid: true })
             return true;
         }
@@ -86,11 +86,11 @@ class FlexGoal extends React.Component {
     }
 
     init = () => {
-        if (this.props.fixed_goal_step1.fixed_step1_status != fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS)
+        if (this.props.flex_goal_step1.flex_step1_status != flexGoalConstants.FETCH_FLEX_GOAL_SUCCESS)
             this.props.history.push("/savings/flex-goal");
         else {
             var data = {
-                ...this.props.fixed_goal_step1.fixed_step1_data.data
+                ...this.props.flex_goal_step1.flex_step1_data.data
             };
             console.log('tag', data)
 
@@ -116,20 +116,20 @@ class FlexGoal extends React.Component {
 
         } else {
             this.setState({isSubmitted : true });
-            this.props.dispatch(actions.fetchFixedGoalStep2({
+            this.props.dispatch(actions.fetchFlexGoalStep2({
                 "goalName":this.state.goalName,
                 "startDate":this.state.startDate,
                 "endDate":this.state.endDate,
                 "AmountSavedText":this.state.AmountSavedText,
                 "timeSaved":this.state.timeSaved,
-                "selectedAccount":this.state.selectedAccount,
+                "debitAccount":this.state.debitAccount,
             }));
         }
        
     }
     gotoStep3 = () => {
-        if (this.props.fixed_goal_step2)
-            if (this.props.fixed_goal_step2.fixed_step2_status == fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS_STEP2) {
+        if (this.props.flex_goal_step2)
+            if (this.props.flex_goal_step2.flex_step2_status == flexGoalConstants.FETCH_FLEX_GOAL_SUCCESS_STEP2) {
                 return <Redirect to="/savings/flex-goal-summary" />
             }
     }
@@ -239,7 +239,7 @@ class FlexGoal extends React.Component {
     }
 }
 const mapStateToProps = state => ({
-    fixed_goal_step1: state.fixed_reducer,
-    fixed_goal_step2:state.fixed_reducer2
+    flex_goal_step1: state.flex_goal_step1,
+    flex_goal_step2:state.flex_goal_step2
 })
 export default connect(mapStateToProps)(FlexGoal);

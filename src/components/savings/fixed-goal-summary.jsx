@@ -5,6 +5,8 @@ import {Fragment} from "react";
 import { connect } from 'react-redux';
 import moment from 'moment';
 import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant';
+import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
+ 
 
 
 
@@ -20,7 +22,8 @@ import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant
             endDate:"",
             goalName:"",
             timeSaved:"",
-            selectedAccount:""
+            TargetAmount:"",
+            debitAccount:""
 
         }
      }
@@ -45,10 +48,26 @@ import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant
                 endDate: data.endDate,
                 goalName:data.goalName,
                 timeSaved:data.timeSaved,
-                selectedAccount:data.selectedAccount,
+                debitAccount:data.debitAccount,
+                TargetAmount:data.AmountSaved
             });
         }
     }
+    handleSubmit=()=>{
+        event.preventDefault()
+        this.props.dispatch(actions.addFixedGoal({
+            "goalName":this.state.goalName,
+            "startDate":this.state.startDate,
+            "endDate":this.state.endDate,
+            "AmountSavedText":this.state.AmountSavedText,
+            "timeSaved":this.state.timeSaved,
+            "debitAccount":this.state.debitAccount,
+            'TargetAmount':this.state.AmountSavedText
+        }));
+
+    }
+
+    
     render() {
         return (
            <Fragment>
@@ -70,13 +89,19 @@ import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant
                             </div>
                         </div>
                     </div>
-                    <h1 style={{margin:"auto", color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}> Goal Summary</h1>
+
+
+                        {this.props.alert && this.props.alert.message &&
+                            <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                        }
+                    <h1 style={{margin:"auto", color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>Fixed Goal Summary</h1>
                         <div style={{margin:"30px"}}></div>
 
                     <div className="col-sm-12">
                         <div className="row">
                             <div className="col-sm-12">
                                 <div className="max-600">
+                                <form onSubmit={this.handleSubmit}>
                                     <div className="al-card no-pad">
                                         <div className="coverForSummary">
                                             <div className="left">
@@ -106,7 +131,7 @@ import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant
                                             </div>
                                             <div className="right">
                                                 <p className='GoalText'>Account to Debit</p>
-                                                <p className='boldedText'>{this.state.selectedAccount}</p>
+                                                <p className='boldedText'>{this.state.debitAccount}</p>
                                             </div>
                                         </div>
                                     
@@ -114,11 +139,17 @@ import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant
                                     <div className="row">
                                         <div className="col-sm-12">
                                             <center>
-                                                <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Create Goal</button>
+                                                <button disabled={this.props.add_fixed_goal.add_goal_status == fixedGoalConstants.ADD_FIXED_GOAL_PENDING}
+ 
+                                                 type="submit" className="btn-alat m-t-10 m-b-20 text-center">
+                                                 {this.props.add_fixed_goal.add_goal_status == fixedGoalConstants.ADD_FIXED_GOAL_PENDING ? "Processing..." :"Create Goal"}
+
+                                                 </button>
                                             </center>
                                         </div>
                                     
                                     </div>
+                                    </form>
 
                                 
                                 </div>
@@ -129,13 +160,12 @@ import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant
                         
                         
                         </div>
-
-                    
-                    
+                        </div>
                     </div>
+                    
+                    
                 
                 
-                </div>
                 
                 </SavingsContainer>
             </InnerContainer>
@@ -145,8 +175,11 @@ import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant
     }
 }
 const mapStateToProps = state => ({
-    fixed_goal_step1: state.fixed_reducer,
-    fixed_goal_step2:state.fixed_reducer2
+    fixed_goal_step1: state.fixed_goal_step1,
+    fixed_goal_step2:state.fixed_goal_step2,
+    add_fixed_goal:state.add_goal_reducer,
+    alert: state.alert,
+
 })
 export default connect(mapStateToProps)(submitFixedGoal);
 
