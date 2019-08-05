@@ -5,7 +5,18 @@
         justify-content: space-evenly;
     }
 } 
-
+.alatcard-msg{
+    color: #AB2656;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+.conversion-msg {
+    color: #AB2656;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 15px;
+    letter-spacing: 1.2px;
+}
 .atmcard-wrap {
     height: 220px;
     background: linear-gradient(150.04deg, #AB0B28 0%, rgba(127, 6, 78, 0.94953) 98.67%, rgba(126, 6, 79, 0.864442) 100%);

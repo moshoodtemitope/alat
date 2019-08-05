@@ -1,5 +1,5 @@
-//const URL = 'https://api.alat.ng';
-const URL = 'https://196.43.215.170';
+const URL = 'https://api.alat.ng';
+// const URL = 'https://196.43.215.170';
 // const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
@@ -71,6 +71,7 @@ export const routes = {
     INTERBANK_CHARGES: BASEURL + '/PaymentApi/api/InterBankCharges/All',
     GETLIMIT: BASEURL + '/AccountMaintenance/api/transactions/getTransactionlimit', 
     GetAllCustomerAccountsWithLimitsV2: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2', 
+    FETCH_CUSTOMER_ACCOUNTS: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccounts', 
     
     //PaymentApi/api/Accounts/VerifyAccountName
 

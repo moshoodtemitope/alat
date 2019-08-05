@@ -16,14 +16,67 @@ export const getCurrentVirtualCard = (token) => {
         dispatch(request(consume));
         return consume
             .then(response => {
-                // consume.log(response);
-                dispatch(success(response.data));
+                if(response.data.length>=1){
+                    dispatch(success(response.data));
+                }else{
+                    let consume2 = ApiService.request(routes.FETCH_CUSTOMER_ACCOUNTS, "POST", null, SystemConstant.HEADER);
+                    dispatch(request(consume2));
+                    return consume2
+                        .then(response2=>{
+                            
+                            let getLimitPayload = {
+                                AccountNumber: response2.data[0].AccountNumber
+                              };
+
+
+                            let consume3 = ApiService.request(routes.GETLIMIT, "POST", getLimitPayload, SystemConstant.HEADER);
+                            dispatch(request(consume3));
+                            return consume3
+                                .then(response3=>{
+                                    // let result2  = Object.assign({}, response2.data[0], response3.data);
+
+                                    let consume4 = ApiService.request(routes.GET_VC_EXCHENGE_RATE, "GET", null, SystemConstant.HEADER);
+                                    dispatch(request(consume4));
+                                    return consume4
+                                        .then(response4=>{
+                                            let result2  = Object.assign({}, response2.data[0], response3.data, response4.data);
+                                            dispatch(success(result2));
+                                        })
+                                        .catch(error=>{
+                                            if(error.response && typeof(error.response.message) !=="undefined"){
+                                                dispatch(failure(error.response.message.toString()));
+                                            }else{
+                                                dispatch(failure('Unable to get exchange rates'));
+                                            }
+                                        })
+
+                                    
+                                })
+                                .catch(error => {
+                                    if(error.response && typeof(error.response.message) !=="undefined"){
+                                        dispatch(failure(error.response.message.toString()));
+                                    }else{
+                                        dispatch(failure('Unable to load your transaction limits'));
+                                    }
+                                    // dispatch(failure(error.response.data.message.toString()));
+                                });
+                        })
+                        .catch(error => {
+                            if(error.response && typeof(error.response.message) !=="undefined"){
+                                dispatch(failure(error.response.message.toString()));
+                            }else{
+                                dispatch(failure('Unable to load your account details'));
+                            }
+                            // dispatch(failure(error.response.data.message.toString()));
+                        });
+                }
+                
             })
             .catch(error => {
-                if(error.response.message){
+                if(error.response && typeof(error.response.message) !=="undefined"){
                     dispatch(failure(error.response.message.toString()));
                 }else{
-                    dispatch(failure('We are unable to load banks.'));
+                    dispatch(failure('Unable to load your dollar cards.'));
                 }
                 // dispatch(failure(error.response.data.message.toString()));
             });

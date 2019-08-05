@@ -53,7 +53,13 @@ class AmountInput extends React.Component {
     render() {
         return (
             <div className={this.props.AmountInvalid ? "input-ctn form-error" : "input-ctn"}>
-                <label htmlFor={this.props.name}>Amount</label>
+                {this.props.label &&
+                     <label htmlFor={this.props.name}>{this.props.label}</label>
+                }
+                {!(this.props.label) &&
+                    <label htmlFor={this.props.name}>Amount</label>
+                }
+                
                 <input
                     type="text"
                     autoComplete="off"
