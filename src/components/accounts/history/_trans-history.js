@@ -63,10 +63,10 @@ const transactionHistory = (props) => {
                                         <img src={image} />
                                         <p className="desc"><i className="narr-text">{hist.Narration}</i><span class="date">{FormartDate(hist.TransactionDate)}</span></p>
                                         {hist.TransactionType == "C" ? 
-                                        <p class="balance credit"><span className="amount-s" style={{ display: "none" }}>{hist.Amount}</span>{`₦${formatAmount(parseInt(hist.Amount))}`}</p> :
+                                        <p class="balance credit"><span className="amount-s" style={{ display: "none" }}>{hist.Amount}</span>{`${props.currency}${formatAmount(parseInt(hist.Amount))}`}</p> :
                                         
                                         
-                                        <p class="balance debit"><span className="amount-s" style={{ display: "none" }}>{hist.Amount}</span>{`₦${formatAmount(parseInt(hist.Amount))}`} </p>}
+                                        <p class="balance debit"><span className="amount-s" style={{ display: "none" }}>{hist.Amount}</span>{`${props.currency}${formatAmount(parseInt(hist.Amount))}`} </p>}
                                     </div>
                                 </div>)
                         
@@ -104,7 +104,7 @@ const transactionHistory = (props) => {
                                     <div className="history-list clearfix">
                                         <img src={image} />
                                         <p className="desc"><i className="narr-text">{histData.Narration}</i><span class="date">{FormartDate(hist.TransactionDate)}</span></p>
-                                        {histData.TransactionType == "C" ? <p class="balance" style={{ color: `${props.sendReceipt ? "#444444" : "#5BB746"}` }}><span className="amount-s" style={{ display: "none" }}>{histData.Amount}</span>{`₦${formatAmount(parseInt(histData.Amount))}`} {props.sendReceipt ? props.isSending ? <span class="receipt" style={{ cursor: "not-allowed", color: "#444444" }}>Sending...</span> : <span class="receipt" onClick={props.callSendReceipt()} >Send Receipt</span> : null}</p> : <p class="balance" style={{ textAlign: "right", color: `${props.sendReceipt ? "#444444" : "#AB2656"}` }}><span className="amount-s" style={{ display: "none" }}>{histData.Amount}</span>{`₦${formatAmount(parseInt(histData.Amount))}`} {props.sendReceipt ? <span class="receipt" onClick={() => props.callSendReceipt(histData.Identifier, histData.IdentifierId)} onClick={() => props.callSendReceipt(histData.Identifier, histData.IdentifierId)} >Send Receipt</span> : null} </p>}
+                                        {histData.TransactionType == "C" ? <p class="balance" style={{ color: `${props.sendReceipt ? "#444444" : "#5BB746"}` }}><span className="amount-s" style={{ display: "none" }}>{histData.Amount}</span>{`${props.currency}${formatAmount(parseInt(histData.Amount))}`} {props.sendReceipt ? props.isSending ? <span class="receipt" style={{ cursor: "not-allowed", color: "#444444" }}>Sending...</span> : <span class="receipt" onClick={props.callSendReceipt()} >Send Receipt</span> : null}</p> : <p class="balance" style={{ textAlign: "right", color: `${props.sendReceipt ? "#444444" : "#AB2656"}` }}><span className="amount-s" style={{ display: "none" }}>{histData.Amount}</span>{`${props.currency}${formatAmount(parseInt(histData.Amount))}`} {props.sendReceipt ? <span class="receipt" onClick={() => props.callSendReceipt(histData.Identifier, histData.IdentifierId)} onClick={() => props.callSendReceipt(histData.Identifier, histData.IdentifierId)} >Send Receipt</span> : null} </p>}
                                     </div>
                                 </div>)
                         })

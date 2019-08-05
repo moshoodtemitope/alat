@@ -6,7 +6,7 @@ import Search from './_search';
 import TransactionHistory from './_trans-history';
 import * as actions from '../../../redux/actions/accounts/export';
 
-import { formatAmount } from '../../../shared/utils';
+import { formatAmount, mapCurrency } from '../../../shared/utils';
 import { connect } from 'react-redux';
 import { getAccounts } from "../../../redux/actions/dashboard/dashboard.actions";
 import './history.css';
@@ -41,7 +41,8 @@ class History extends Component {
             },
             currentShowedBox: "0",
             showDropOptions: false,
-            currentTransactions: "All"
+            currentTransactions: "All",
+            currency: "\u20A6"
         };
     }
 
@@ -57,7 +58,8 @@ class History extends Component {
         if (this.props.accounts.length >= 1) {
             this.props.accounts.map((data => arrayToDisplay.push({
                 value: data.AccountNumber,
-                label: data.AccountType + " - ₦" + formatAmount(data.AvailableBalance),
+                label: data.AccountType + " - "+ mapCurrency(data.Currency) + formatAmount(data.AvailableBalance),
+                currency: data.Currency,
                 available: data.AvailableBalance,
                 book: data.BookBalance,
                 liened: data.LienAmount,
@@ -73,7 +75,7 @@ class History extends Component {
             AccountNumber: this.state.selectedAccount == null && !this.state.accounts[0] && arrayToDisplay[0].value == '' ? arrayToDisplay[0].value : this.state.selectedAccount ? this.state.selectedAccount.value : arrayToDisplay[0].value,
         };
 
-        this.setState({ accounts: arrayToDisplay, accountsLoaded: true, currentTransactions: "All" }, () => this.fetchTransactionHistory(payload));
+        this.setState({ accounts: arrayToDisplay, currency: mapCurrency(arrayToDisplay[0].currency) || "\u20A6", accountsLoaded: true, currentTransactions: "All" }, () => this.fetchTransactionHistory(payload));
     }
 
     fetchTransactionHistory = (payload, accountNumber) => {
@@ -200,7 +202,7 @@ class History extends Component {
         }
     }
 
-    searchTransactions(e) {
+    searchTransactions = (e) => {
         this.checkInfoState();
         let searchText = e.target.value;
         document.querySelectorAll('.history-ctn').forEach((historyctn) => {
@@ -298,7 +300,7 @@ class History extends Component {
             this.sortAccountsForSelect();
         }
 
-        const { selectedAccount, accounts, startDate, endDate, isReceipt, invalidInterval, showDropOptions, currentTransactions } = this.state;
+        const { selectedAccount, accounts, startDate, endDate, isReceipt, invalidInterval, showDropOptions, currentTransactions, currency } = this.state;
         return (
             <Fragment>
                 <div class="col-sm-12 col-md-4">
@@ -310,10 +312,10 @@ class History extends Component {
                         aLength={this.props.accounts.length}
                         retryFetch={() => this.props.fetchDebitableAccounts(this.state.user.token, false)} />
                     <Info
-                        available={!this.props.accounts.length ? "---" : !accounts[0] ? "---" : selectedAccount == null ? `₦${formatAmount(accounts[0].available)}` : `₦${formatAmount(selectedAccount.available)}`}
-                        book={!this.props.accounts.length ? "---" : !accounts[0] ? "---" : selectedAccount == null ? `₦${formatAmount(accounts[0].book)}` : `₦${formatAmount(selectedAccount.book)}`}
-                        liened={!this.props.accounts.length ? "---" : !accounts[0] ? "---" : selectedAccount == null ? `₦${formatAmount(accounts[0].liened)}` : `₦${formatAmount(selectedAccount.liened)}`}
-                        uncleared={!this.props.accounts.length ? "---" : !accounts[0] ? "---" : selectedAccount == null ? `₦${formatAmount(accounts[0].uncleared)}` : `₦${formatAmount(selectedAccount.uncleared)}`}
+                        available={!this.props.accounts.length ? "---" : !accounts[0] ? "---" : selectedAccount == null ? `${currency}${formatAmount(accounts[0].available)}` : `${currency}${formatAmount(selectedAccount.available)}`}
+                        book={!this.props.accounts.length ? "---" : !accounts[0] ? "---" : selectedAccount == null ? `${currency}${formatAmount(accounts[0].book)}` : `${currency}${formatAmount(selectedAccount.book)}`}
+                        liened={!this.props.accounts.length ? "---" : !accounts[0] ? "---" : selectedAccount == null ? `${currency}${formatAmount(accounts[0].liened)}` : `${currency}${formatAmount(selectedAccount.liened)}`}
+                        uncleared={!this.props.accounts.length ? "---" : !accounts[0] ? "---" : selectedAccount == null ? `${currency}${formatAmount(accounts[0].uncleared)}` : `${currency}${formatAmount(selectedAccount.uncleared)}`}
                         show1={this.state.infoBox.show1}
                         show2={this.state.infoBox.show2}
                         show3={this.state.infoBox.show3}
@@ -352,6 +354,7 @@ class History extends Component {
                         optionTofetch={this.toggleFilter}
                         currentView={currentTransactions}
                         receivedTransactionsAlt={this.props.receivedTransactionsAlternative}
+                        currency={currency}
                     //isSending={}
                     />
                 </div>
