@@ -5,83 +5,16 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import * as actions from '../../../redux/actions/onboarding/loan.actions';
 import { loanOnboardingConstants } from '../../../redux/constants/onboarding/loan.constants';
-import LoanOnboardingContainer from './loanOnboarding-container';
 
-class LoanOnboardingScoreCard extends React.Component {
+class ScoreCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             user: JSON.parse(localStorage.getItem("user")),
-            // EducationQualifications : [],
-            // YearsOfExperience: [],
-            // NumberOfDependants: [],
-            EducationQualifications: [
-                // {
-                //     "Id": 1,
-                //     "Text": "Primary School"
-                // },
-                // {
-                //     "Id": 2,
-                //     "Text": "Secondary School"
-                // },
-                // {
-                //     "Id": 3,
-                //     "Text": "Diploma"
-                // },
-                // {
-                //     "Id": 4,
-                //     "Text": "Graduate"
-                // },
-                // {
-                //     "Id": 5,
-                //     "Text": "Post Graduate"
-                // },
-                // {
-                //     "Id": 6,
-                //     "Text": "Professional/Technhnical Degree"
-                // }
-            ],
-            YearsOfExperience: [
-                // {
-                //     "Id": 1,
-                //     "Text": "< 2 Years"
-                // },
-                // {
-                //     "Id": 2,
-                //     "Text": "2 - 5 Years"
-                // },
-                // {
-                //     "Id": 3,
-                //     "Text": "5 - 10 Years"
-                // },
-                // {
-                //     "Id": 4,
-                //     "Text": "10 - 15 Years"
-                // },
-                // {
-                //     "Id": 5,
-                //     "Text": "> 15 Years"
-                // }
-            ],
-            NumberOfDependants: [
-                // {
-                //     "Id": 1,
-                //     "Text": "No Dependants"
-                // },
-                // {
-                //     "Id": 2,
-                //     "Text": "1-2 Dependants"
-                // },
-                // {
-                //     "Id": 3,
-                //     "Text": "3-4 Dependants"
-                // },
-                // {
-                //     "Id": 4,
-                //     "Text": "> 4 Dependants"
-                // }
-            ],
 
+            EducationQualifications: [],
+            YearsOfExperience: [],
+            NumberOfDependants: [],
 
             selectedDependant: null,
             selectedYOE: null,
@@ -100,7 +33,7 @@ class LoanOnboardingScoreCard extends React.Component {
             if (this.props.salary_entry.loan_salEnt_status == loanOnboardingConstants.LOAN_SALARYENTRY_SUCCESS) {
                 this.props.dispatch(actions.getScoreCard(this.state.user.token));
             } else {
-                return (this.props.history.push("/loan/salary-entry"));
+                return (this.props.history.push(this.props.backwardUrl));
             }
     }
 
@@ -117,7 +50,7 @@ class LoanOnboardingScoreCard extends React.Component {
                         EducationQualifications: data.EducationQualifications,
                         YearsOfExperience: data.YearsOfExperience,
                         NumberOfDependants: data.NumberOfDependants,
-                        isPopulated : true
+                        isPopulated: true
                     })
                 }
         }
@@ -142,10 +75,10 @@ class LoanOnboardingScoreCard extends React.Component {
             else return false;
     }
 
-    getScoreCardAnswerPendingStatus =()=>{
+    getScoreCardAnswerPendingStatus = () => {
         if (this.props.score_card_A)  //loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS
             if (this.props.score_card_A.loan_scoreA_status == loanOnboardingConstants.LOAN_SCORECARD_ANSWER_PENDING)
-            return true;
+                return true;
             else return false
     }
 
@@ -173,15 +106,15 @@ class LoanOnboardingScoreCard extends React.Component {
     gotoNextPage = () => {
         if (this.props.score_card_A)  //loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS
             if (this.props.score_card_A.loan_scoreA_status == loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS
-                ||  this.props.score_card_A.loan_scoreA_status == loanOnboardingConstants.LOAN_SCORECARD_ANSWER_FAILURE) {
-                this.props.history.push("/loan/card-result");
+                || this.props.score_card_A.loan_scoreA_status == loanOnboardingConstants.LOAN_SCORECARD_ANSWER_FAILURE) {
+                this.props.history.push(this.props.forwardUrl);
             }
     }
 
     render() {
         const { YearsOfExperience, NumberOfDependants, EducationQualifications, selectedQualification, selectedDependant, selectedYOE } = this.state;
         return (
-            <LoanOnboardingContainer UserName={this.state.user.firstname}>
+            <Fragment>
                 {this.populateOptions()}
                 {this.gotoNextPage()}
                 <div className="col-sm-12">
@@ -245,7 +178,7 @@ class LoanOnboardingScoreCard extends React.Component {
                         </center> */}
                     </div>
                 </div>
-            </LoanOnboardingContainer>
+            </Fragment>
         );
     }
 }
@@ -253,11 +186,7 @@ class LoanOnboardingScoreCard extends React.Component {
 function mapStateToProps(state) {
     return {
         alert: state.alert,
-        //loan_step2: state.loanOnboardingReducerPile.loanOnboardingStep2,
-        //loan_val_otp: state.loanOnboardingReducerPile.loanOnboardingValidateOTP,
-        //loan_bvn: state.loanOnboardingReducerPile.loanOnboardingBVN,
-        //loan_step3: state.loanOnboardingReducerPile.loanOnboardingStep3,
-        //bankList: state.transferReducerPile.transfer_bankList,
+
         loan_reqStat: state.loanOnboardingReducerPile.loanOnboardingRequestStatement,
         loan_genStat: state.loanOnboardingReducerPile.loanOnboardingGenerateStatement,
         salary_trans: state.loanOnboardingReducerPile.loanOnboardingSalaryTransaction,
@@ -267,4 +196,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(LoanOnboardingScoreCard);
+export default connect(mapStateToProps)(ScoreCard);

@@ -8,7 +8,7 @@ import * as actions from '../../../redux/actions/onboarding/loan.actions';
 import { loanOnboardingConstants } from '../../../redux/constants/onboarding/loan.constants';
 import LoanOnboardingContainer from './loanOnboarding-container';
 
-class LoanOnboardingScoreResult extends React.Component {
+class ScoreResult extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -26,6 +26,7 @@ class LoanOnboardingScoreResult extends React.Component {
 		if (this.props.score_card_A.loan_scoreA_data)  //loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS
 			if (this.props.score_card_A.loan_scoreA_status != loanOnboardingConstants.LOAN_SCORECARD_ANSWER_PENDING) {
 				// this.props.history.push("/loan/card-result");
+				// this.props.history.push(this.props.backwardUrl);
 				var data = {
 					...this.props.score_card_A.loan_scoreA_data.data.response
 				}
@@ -47,7 +48,7 @@ class LoanOnboardingScoreResult extends React.Component {
 
 	render() {
 		return (
-			<LoanOnboardingContainer UserName={this.state.user.firstname}>
+			
 				<div className="col-sm-12">
 					<div className="max-460">
 						<div className="loan-header-text text-center">
@@ -89,7 +90,7 @@ class LoanOnboardingScoreResult extends React.Component {
 
 					</div>
 				</div>
-			</LoanOnboardingContainer>
+			
 		)
 	}
 }
@@ -108,7 +109,7 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps)(LoanOnboardingScoreResult);
+export default connect(mapStateToProps)(ScoreResult);
 
 
 

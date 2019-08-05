@@ -4,10 +4,9 @@ import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import * as actions from '../../../redux/actions/onboarding/loan.actions';
 import { loanOnboardingConstants } from '../../../redux/constants/onboarding/loan.constants';
-import LoanOnboardingContainer from './loanOnboarding-container';
-import OtpValidation from '../../../shared/components/otpvalidation';
+import OtpValidation from '../otpvalidation';
 
-class LoanOnboardingTicket extends React.Component {
+class Ticket extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -25,12 +24,12 @@ class LoanOnboardingTicket extends React.Component {
     }
 
     init = () => {
-        console.log("in init");
+       
         if (this.props.loan_reqStat)
             if (this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS) {
             
-            } else this.props.history.push("/loan/salary-detail");
-        else this.props.history.push("/loan/salary-detail");
+            } else this.props.history.push(this.props.backwardUrl);
+        else this.props.history.push(this.props.backwardUrl);
     }
 
     handleChange = (e) => {
@@ -83,7 +82,11 @@ class LoanOnboardingTicket extends React.Component {
     gotoNextPage() {
         if (this.props.loan_genStat)
             if (this.props.loan_genStat.loan_genStat_status == loanOnboardingConstants.LOAN_GENERATE_STATEMENT_SUCCESS)
-                this.props.history.push("/loan/salary-entry")
+                this.props.history.push(this.props.forwardUrl);
+    }
+
+    gotoPreviousPage(){
+        this.props.history.push(this.props.backwardUrl);
     }
 
     returnGenPendingStat(){
@@ -97,8 +100,7 @@ class LoanOnboardingTicket extends React.Component {
         const { ticketNumber, ticketPassword, ticketNumberInvalid, ticketPasswordInvalid } = this.state;
         let props = this.props;
         return (
-            <LoanOnboardingContainer UserName={this.state.user.firstname}>
-                {/* {this.init()} */}
+                <Fragment>
                 {this.gotoNextPage()}
                 <div className="row">
                     <div className="col-sm-12">
@@ -136,23 +138,21 @@ class LoanOnboardingTicket extends React.Component {
                                 </div>
                             </div>
                             <center>
-                                <Link to={'/loan/salary-detail'} className="add-bene m-t-50">Go Back</Link>
+                                <a onClick={this.gotoPreviousPage} className="add-bene m-t-50">Go Back</a>
                             </center>
                         </div></div></div>
-            </LoanOnboardingContainer>
+                        </Fragment>
         )
     };
 }
 function mapStateToProps(state) {
     return {
         alert: state.alert,
-        //loan_step2: state.loanOnboardingReducerPile.loanOnboardingStep2,
-        //loan_val_otp: state.loanOnboardingReducerPile.loanOnboardingValidateOTP,
+       
         loan_bvn: state.loanOnboardingReducerPile.loanOnboardingBVN,
         loan_step3: state.loanOnboardingReducerPile.loanOnboardingStep3,
-        //bankList: state.transferReducerPile.transfer_bankList,
         loan_reqStat: state.loanOnboardingReducerPile.loanOnboardingRequestStatement,
         loan_genStat: state.loanOnboardingReducerPile.loanOnboardingGenerateStatement
     };
 }
-export default connect(mapStateToProps)(LoanOnboardingTicket);
+export default connect(mapStateToProps)(Ticket);

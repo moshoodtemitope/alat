@@ -4,26 +4,25 @@ import * as LoanActions from '../../../redux/actions/loans/loans.action';
 import * as OnbaordingActions from '../../../redux/actions/onboarding/loan.actions';
 import { loanConstants } from '../../../redux/constants/loans/loans.constants';
 import { Route, Switch } from "react-router-dom";
-import SalaryEntry from '../../../shared/components/loans/_salary-entry';
+import ScoreResult from '../../../shared/components/loans/_card-result';
 
-class LoanSalaryEntry extends React.Component{
+class LoanCardResult extends React.Component{
     constructor(props){
         super(props);
     }
 
     render(){
-        return(<SalaryEntry
-              forwardUrl = {'/loan/salary/score-card'}
-              backwardUrl= {'/loan/salary/detail'}
-            />);
+        return(<ScoreResult 
+            forwardUrl={}
+            backwardUrl={}
+        />);
     }
 }
 
 function mapStateToProps(state){
-    return {
-        state: state.alert,
-        loan_apply: state.loanReducerPile.loanApply,
+    return{
+
     }
 }
 
-export default connect (mapStateToProps)(LoanSalaryEntry);
+export default LoanCardResult;

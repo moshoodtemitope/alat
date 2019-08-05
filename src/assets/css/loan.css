@@ -1,0 +1,18 @@
+
+
+.fund-option-ctn.loan{
+    display: flex !important;
+}
+
+.fund-option.loan{
+    width: unset !important;
+    height: unset !important;
+}
+
+.grey-text{
+    color: #4D4D4D;
+}
+
+.loan-header-text.loan{
+ padding-left : 15px;
+}

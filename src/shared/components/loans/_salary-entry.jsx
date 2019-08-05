@@ -6,28 +6,16 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import * as actions from '../../../redux/actions/onboarding/loan.actions';
 import { loanOnboardingConstants } from '../../../redux/constants/onboarding/loan.constants';
-import LoanOnboardingContainer from './loanOnboarding-container';
 import { alertActions } from '../../../redux/actions/alert.actions';
 
-class LoanOnboardingSalaryEntry extends React.Component {
+class SalaryEntry extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             user: JSON.parse(localStorage.getItem("user")),
             //FirstName: "",
             enytrList: [
-                //     {
-                //     "TransactionId": 1,
-                //     "Description" : "My own salary joo",
-                //     "TransactionDate" : "12-12-2009",
-                //     "amount" : "100,000,000:00"
-                // },
-                // {
-                //     "TransactionId": 2,
-                //     "Description" : "My own salary joo",
-                //     "TransactionDate" : "12-12-2009",
-                //     "Amount" : "1,000,000:00"
-                // },
+                
             ],
             selectedEntryList: [],
         }
@@ -166,8 +154,7 @@ class LoanOnboardingSalaryEntry extends React.Component {
 function mapStateToProps(state) {
     return {
         alert: state.alert,
-        //loan_step2: state.loanOnboardingReducerPile.loanOnboardingStep2,
-        //loan_val_otp: state.loanOnboardingReducerPile.loanOnboardingValidateOTP,
+       
         loan_bvn: state.loanOnboardingReducerPile.loanOnboardingBVN,
         loan_step3: state.loanOnboardingReducerPile.loanOnboardingStep3,
         //bankList: state.transferReducerPile.transfer_bankList,
@@ -178,5 +165,5 @@ function mapStateToProps(state) {
         //user_detail: state.loanOnboardingReducerPile.loanUserDetails,
     };
 }
-export default connect(mapStateToProps)(LoanOnboardingSalaryEntry);
+export default connect(mapStateToProps)(SalaryEntry);
 
