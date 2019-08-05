@@ -89,9 +89,22 @@
     padding-top: 15px;
     padding-bottom: 15px;
 }
-.subNav .left p {
+/* .subNav .left p {
+    border-bottom: 1px solid #AB2656;
+} */
+
+.subNav #middle p {
     border-bottom: 1px solid #AB2656;
 }
+
+.subNav #left p {
+    border-bottom: 1px solid #AB2656;
+}
+
+.subNav #right p {
+    border-bottom: 1px solid #AB2656;
+}
+
 .firstSubHead p {
     text-align: center;
 }
@@ -305,9 +318,16 @@ color: #4D4D4D;
     margin-bottom: 30px;
 }
 
+.listedItemMembers .right p {
+    padding-right: 10px;
+}
+
 .listedItemMembers .left p {
-    padding-top: 30px;
+    padding-top: 25px;
     margin-left: 5px;
+    padding-left: 5px;
+    color: black;
+    font-size: bold !important;
 }
 
 .listedItems p:first-child {
@@ -315,6 +335,28 @@ color: #4D4D4D;
     font-size: 14px;
     line-height: 17px;
     color: #FFFFFF;
+
+}
+
+.listedItems .right p { 
+    padding-right: 10px;
+}
+
+.listedItems .right p:first-child {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.listedItems .right p:last-child {
+}
+
+.listedItems .left p:first-child {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.listedItems .left p {
+    margin-left: 10px;
 }
 
 .listedItems p:last-child {
@@ -322,6 +364,28 @@ color: #4D4D4D;
     font-size: 12px;
     line-height: 14px;
     color: #9C9C9C;
+}
+
+.listedItemMembers .left p {
+    font-family: Proxima Nova;
+    font-size: 14px;
+    line-height: 17px;
+    color: #444444;
+}
+
+.listedItemMembers .right  p:first-child {
+    font-family: Proxima Nova;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: right;
+    color:black;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+.listedItemMembers .right p:last-child {
+    margin-bottom: 5px;
 }
 
 #manageButton {

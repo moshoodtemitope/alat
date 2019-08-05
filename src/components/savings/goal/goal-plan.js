@@ -32,7 +32,7 @@ class GoalPlan extends React.Component {
                             <div className="tab-overflow">
                                 <div className="sub-tab-nav">
                                     <ul>
-                                        <li><a href="accounts.html" className="active">Goals</a></li>
+                                        <li><a href="" className="active">Goals</a></li>
                                         <NavLink to='/savings/goal/group-savings-selection'>
                                             <li><a id="forGroupLink">Group Savings</a></li>
                                         </NavLink>

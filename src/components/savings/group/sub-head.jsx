@@ -8,15 +8,15 @@ export default (props) => {
             return(
                 
                      <div className='subNav row'>
-                            <div className='col-sm-4 left'>
+                            <div className='col-sm-4 left' id={props.left}>
                                 <p onClick={props.groupsummarywasclicked}>{props.rightname}</p>
                             </div>
                            
-                            <div className='col-sm-4 middle'>
+                            <div className='col-sm-4 middle' id={props.middle}>
                                 <p onClick={props.memberClicked}>{props.middlename}</p>
                             </div>
                         
-                            <div className='col-sm-4 right'>
+                            <div className='col-sm-4 right' id={props.right}>
                                 <p onClick={props.automatedwasclicked}>{props.leftName}</p>
                             </div>
                            

@@ -57,7 +57,7 @@ class FixedGoal extends React.Component {
                                     <div className="sub-tab-nav">
                                         <ul>
                                             <li><a href="accounts.html" className="active">Goals</a></li>
-                                            <li><a href="statement.html" className="active">Group Savings</a></li>
+                                            <li><a href="statement.html">Group Savings</a></li>
                                             <li><a href="#">Investments</a></li>
 
                                         </ul>

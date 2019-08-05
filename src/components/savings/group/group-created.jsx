@@ -44,8 +44,12 @@ class GroupCreated extends React.Component {
                                 <div className="tab-overflow">
                                     <div className="sub-tab-nav">
                                         <ul>
-                                            <li><a href="accounts.html">Goals</a></li>
+                                        <NavLink to='/savings/choose-goal-plan'>
+                                            <li><a href="#">Goals</a></li>
+                                        </NavLink>
+                                        <NavLink to="/savings/goal/group-savings-selection">
                                             <li><a className="active">Group Savings</a></li>
+                                        </NavLink>
                                             <li><a href="#">Investments</a></li>
                                         </ul>
                                     </div>
