@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import Select from "react-select";
 import { Redirect } from 'react-router-dom';
-import { formatAmount } from '../../../shared/utils';
+import { formatAmount, mapCurrency } from '../../../shared/utils';
 import { connect } from 'react-redux';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -35,7 +35,7 @@ class Statement extends Component {
         if (this.props.accounts.length >= 1) {
             this.props.accounts.map((data => arrayToDisplay.push({
                 value: data.AccountNumber,
-                label: data.AccountType + " - ₦" + formatAmount(data.AvailableBalance),
+                label: data.AccountType + " - "+mapCurrency(data.Currency) + formatAmount(data.AvailableBalance),
             })));
         } else {
             arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account Available' }];

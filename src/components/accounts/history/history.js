@@ -42,7 +42,7 @@ class History extends Component {
             currentShowedBox: "0",
             showDropOptions: false,
             currentTransactions: "All",
-            currency: "\u20A6"
+            currency: ""
         };
     }
 
@@ -59,7 +59,7 @@ class History extends Component {
             this.props.accounts.map((data => arrayToDisplay.push({
                 value: data.AccountNumber,
                 label: data.AccountType + " - "+ mapCurrency(data.Currency) + formatAmount(data.AvailableBalance),
-                currency: data.Currency,
+                currency: mapCurrency(data.Currency),
                 available: data.AvailableBalance,
                 book: data.BookBalance,
                 liened: data.LienAmount,
@@ -75,7 +75,7 @@ class History extends Component {
             AccountNumber: this.state.selectedAccount == null && !this.state.accounts[0] && arrayToDisplay[0].value == '' ? arrayToDisplay[0].value : this.state.selectedAccount ? this.state.selectedAccount.value : arrayToDisplay[0].value,
         };
 
-        this.setState({ accounts: arrayToDisplay, currency: mapCurrency(arrayToDisplay[0].currency) || "\u20A6", accountsLoaded: true, currentTransactions: "All" }, () => this.fetchTransactionHistory(payload));
+        this.setState({ accounts: arrayToDisplay, currency: mapCurrency(arrayToDisplay[0].currency) || "*", accountsLoaded: true, currentTransactions: "All" }, () => this.fetchTransactionHistory(payload));
     }
 
     fetchTransactionHistory = (payload, accountNumber) => {
@@ -106,7 +106,7 @@ class History extends Component {
                 accountNumber: selectedAccount.value,
             }));
         }
-        this.setState({ selectedAccount, skip: 0, take: 10, isBackendSearch: false, currentTransactions: "All" }, () => this.fetchTransactionHistory(null, selectedAccount.value));
+        this.setState({ selectedAccount, skip: 0, take: 10, isBackendSearch: false, currentTransactions: "All", currency : selectedAccount.currency }, () => this.fetchTransactionHistory(null, selectedAccount.value));
 
         console.log(`Option selected:`, selectedAccount);
     }

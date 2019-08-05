@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import Select from "react-select";
 import { Redirect, Link } from 'react-router-dom';
-import { formatAmountNoDecimal, formatAmount } from '../../../shared/utils';
+import { formatAmountNoDecimal, formatAmount, mapCurrency } from '../../../shared/utils';
 import { connect } from 'react-redux';
 import { Input } from '../../airtime-bills/data/input';
 import { alertActions } from "../../../redux/actions/alert.actions";
@@ -61,6 +61,7 @@ class SetLimit extends Component {
                 }
             },
             user: JSON.parse(localStorage.getItem("user")),
+            disable: false
         };
     }
     componentDidMount() {
@@ -75,7 +76,7 @@ class SetLimit extends Component {
         if (this.props.accounts.length >= 1) {
             this.props.accounts.map((data => arrayToDisplay.push({
                 value: data.AccountNumber,
-                label: data.AccountType + " - ₦" + formatAmount(data.AvailableBalance),
+                label: data.AccountType + " - " + mapCurrency(data.Currency) + formatAmount(data.AvailableBalance),
             })));
         } else {
             arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account Available' }];
@@ -155,6 +156,7 @@ class SetLimit extends Component {
             this.setState({ validation });
             return;
         }
+        this.setState({disable: true})
         let payload = {
             PhoneNo: this.props.phoneNumber
         }
@@ -249,7 +251,7 @@ class SetLimit extends Component {
                                                 </div>
                                                 <div className="col-sm-12">
                                                     <center>
-                                                        <button onClick={this.onSubmitData} disabled={this.props.sending} className="btn-alat m-t-10 m-b-20 text-center">{this.props.sending ? "Processing..." : "Set New Limit"}</button>
+                                                        <button onClick={this.onSubmitData} disabled={this.state.disable} className="btn-alat m-t-10 m-b-20 text-center">{this.props.sending ? "Processing..." : "Set New Limit"}</button>
                                                     </center>
                                                 </div>
                                             </div>
