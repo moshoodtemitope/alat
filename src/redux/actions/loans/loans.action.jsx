@@ -102,3 +102,53 @@ export const getEmployers =(token, data)=>{
     function success(response) { return { type: loanConstants.LOAN_EMPLOYER_SUCCESS, response} }
     function failure(error) { return { type: loanConstants.LOAN_EMPLOYER_FAILURE, error } }
 }
+
+export const loanHistory =(token)=>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.LOAN_APPLICATION_HISTORY,
+             "GET", null, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                //TODO: edit localDB accounts object
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+               // console.log("error in here");
+               // dispatch(success(response.data, request));
+                 dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // throw(error);
+            });
+    };
+
+    function request(request) { return { type: loanConstants.LOAN_HISTORY_PENDING, request } }
+    function success(response) { return { type: loanConstants.LOAN_HISTORY_SUCCESS, response }}
+    function failure(error) { return { type: loanConstants.LOAN_HISTORY_FAILURE, error } }
+}
+
+export const loanCurrent =(token) =>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.LOAN_CURRENT,
+             "GET", null, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                //TODO: edit localDB accounts object
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+               // console.log("error in here");
+               // dispatch(success(response.data, request));
+                 dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // throw(error);
+            });
+    };
+
+    function request(request) { return { type: loanConstants.LOAN_CURRENT_PENDING, request } }
+    function success(response) { return { type: loanConstants.LOAN_CURRENT_SUCCESS, response }}
+    function failure(error) { return { type: loanConstants.LOAN_CURRENT_FAILURE, error } }
+}

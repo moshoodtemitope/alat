@@ -170,7 +170,7 @@ export const requestStatement =(token, data)=>{
     //SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
         let consume = ApiService.request(routes.LOAN_REQUEST_STATEMENT,
-             "GET", data, SystemConstant.HEADER);
+             "POST", data, SystemConstant.HEADER);
         dispatch(request(consume));
         return consume
             .then(response => {

@@ -51,7 +51,7 @@ export function loanApplyReducer(state = {}, action) {
     }
 }
 
-export function GetIndustriesReducer(state={}, action) {
+export function GetIndustriesReducer(state = {}, action) {
     switch (action.type) {
         case loanConstants.LOAN_GETINDUSTRIES_SUCCESS:
             return {
@@ -75,7 +75,7 @@ export function GetIndustriesReducer(state={}, action) {
     }
 }
 
-export function GetEmployerReducer(state={}, action) {
+export function GetEmployerReducer(state = {}, action) {
     switch (action.type) {
         case loanConstants.LOAN_EMPLOYER_SUCCESS:
             return {
@@ -94,6 +94,54 @@ export function GetEmployerReducer(state={}, action) {
             };
         default:
             return {
+                ...state,
+            };
+    }
+}
+
+export function CurrentLoanReducer(state = {}, action) {
+    switch (action.type) {
+        case loanConstants.LOAN_CURRENT_SUCCESS:
+            return {
+                loan_current_status: loanConstants.LOAN_CURRENT_SUCCESS,
+                loan_current_data: action
+            };
+        case loanConstants.LOAN_CURRENT_PENDING:
+            return {
+                loan_current_status: loanConstants.LOAN_CURRENT_PENDING,
+                loan_current_data: action
+            };
+        case loanConstants.LOAN_CURRENT_FAILURE:
+            return {
+                loan_current_status: loanConstants.LOAN_CURRENT_FAILURE,
+                loan_current_data: action
+            };
+        default:
+            return{
+                ...state,
+            };
+    }
+}
+
+export function LoanHistoryReducer(state = {}, action) {
+    switch (action.type) {
+        case loanConstants.LOAN_HISTORY_SUCCESS:
+            return {
+                loan_history_status: loanConstants.LOAN_HISTORY_SUCCESS,
+                loan_history_data: action
+            };
+        case loanConstants.LOAN_HISTORY_PENDING:
+            return {
+                loan_history_status: loanConstants.LOAN_HISTORY_PENDING,
+                loan_history_data: action
+            };
+        case loanConstants.LOAN_HISTORY_FAILURE:
+            return {
+                loan_history_status: loanConstants.LOAN_HISTORY_FAILURE,
+                loan_history_data: action
+            };
+        default:
+            return{
                 ...state,
             };
     }

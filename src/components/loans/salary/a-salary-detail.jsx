@@ -36,8 +36,8 @@ class LoanSalaryDetail extends React.Component{
         return(
             <SalaryDetail
              token={this.state.user.token}
-             ticketUrl={'/loans/salary/entry'}
-                salaryEntryUrl={'/loans/salary/ticket'}
+             ticketUrl={'/loans/salary/ticket'}
+             salaryEntryUrl={'/loans/salary/entry'}
             />
         );
     }

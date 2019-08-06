@@ -28,8 +28,8 @@ class Ticket extends React.Component {
         if (this.props.loan_reqStat)
             if (this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS) {
             
-            } else this.props.history.push(this.props.backwardUrl);
-        else this.props.history.push(this.props.backwardUrl);
+            } else return(<Redirect to={this.props.backwardUrl}/>)//this.props.history.push(this.props.backwardUrl);
+        else return(<Redirect to={this.props.backwardUrl}/>) //this.props.history.push(this.props.backwardUrl);
     }
 
     handleChange = (e) => {
@@ -82,11 +82,12 @@ class Ticket extends React.Component {
     gotoNextPage() {
         if (this.props.loan_genStat)
             if (this.props.loan_genStat.loan_genStat_status == loanOnboardingConstants.LOAN_GENERATE_STATEMENT_SUCCESS)
-                this.props.history.push(this.props.forwardUrl);
+            return (<Redirect to={this.props.forwardUrl}/>);
+                //this.props.history.push(this.props.forwardUrl); 
     }
 
     gotoPreviousPage(){
-        this.props.history.push(this.props.backwardUrl);
+        //this.props.history.push(this.props.backwardUrl);
     }
 
     returnGenPendingStat(){
@@ -138,7 +139,7 @@ class Ticket extends React.Component {
                                 </div>
                             </div>
                             <center>
-                                <a onClick={this.gotoPreviousPage} className="add-bene m-t-50">Go Back</a>
+                                {/* <a onClick={this.gotoPreviousPage} className="add-bene m-t-50">Go Back</a> */}
                             </center>
                         </div></div></div>
                         </Fragment>

@@ -25,7 +25,7 @@ class ScoreCard extends React.Component {
     }
 
     componentDidMount = () => {
-        this.init();
+        //this.init();
     }
 
     init = () => {
@@ -33,7 +33,7 @@ class ScoreCard extends React.Component {
             if (this.props.salary_entry.loan_salEnt_status == loanOnboardingConstants.LOAN_SALARYENTRY_SUCCESS) {
                 this.props.dispatch(actions.getScoreCard(this.state.user.token));
             } else {
-                return (this.props.history.push(this.props.backwardUrl));
+                return (<Redirect to={this.props.backwardUrl}/>);  //this.props.history.push());
             }
     }
 
@@ -115,6 +115,7 @@ class ScoreCard extends React.Component {
         const { YearsOfExperience, NumberOfDependants, EducationQualifications, selectedQualification, selectedDependant, selectedYOE } = this.state;
         return (
             <Fragment>
+                {this.init()}
                 {this.populateOptions()}
                 {this.gotoNextPage()}
                 <div className="col-sm-12">

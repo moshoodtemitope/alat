@@ -153,7 +153,7 @@ class LoanEstimator extends React.Component {
                                             maxLength={10}
                                             type="text" />
                                         {this.state.LoanAmountInvalid &&
-                                            <div className="text-danger">{`Amount to borrow must be greater than ${util.formatAmount(this.props.minimumLoanAmount)} and more than ${util.formatAmount(this.props.maxAmount)}`} </div>
+                                            <div className="text-danger">{`Amount to borrow must be greater than ${util.formatAmount(this.props.minimumLoanAmount)} and not more than ${util.formatAmount(this.props.maxAmount)}`} </div>
                                         }
                                     </div>
                                     <p>Payment Terms(months) <span>{this.state.Term}</span></p>

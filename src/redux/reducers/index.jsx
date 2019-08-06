@@ -114,7 +114,9 @@ const loansReducer = combineReducers({
     loanCalcData : loans.loanCalcDataReducer,
     loanApply : loans.loanApplyReducer,
     loanIndustries: loans.GetIndustriesReducer,
-    loanEmployer: loans.GetEmployerReducer
+    loanEmployer: loans.GetEmployerReducer,
+    loanCurrent: loans.CurrentLoanReducer,
+    loanHistory: loans.LoanHistoryReducer,
 })
 
 const appReducer = combineReducers({

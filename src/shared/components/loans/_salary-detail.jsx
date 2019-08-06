@@ -32,9 +32,9 @@ class SalaryDetails extends React.Component {
             isAccepted: false,
             selectedBank: null,
             isSubmitted: false,
-            selectedIndustry: { label: "", value:""},
+            selectedIndustry: { label: "", value: "" },
             EmployerList: [],
-            selectedEmployer: {label: "", value:""},
+            selectedEmployer: { label: "", value: "" },
             employerActionFired: false,
 
             employerNameInvalid: false,
@@ -70,15 +70,15 @@ class SalaryDetails extends React.Component {
     handleIndustryChange = (Industry) => {
         this.setState({ selectedIndustry: Industry, employerActionFired: true },
             () => { this.getEmployers(Industry.value); })
-        this.setState({ selectedEmployer: { value : "", label:""}, EmployerList: [] });
-        if(Industry.label != "")
-         this.setState({ IndustryNameInvalid : false })
+        this.setState({ selectedEmployer: { value: "", label: "" }, EmployerList: [] });
+        if (Industry.label != "")
+            this.setState({ IndustryNameInvalid: false })
     }
 
     handleEmployerChange = (Employer) => {
         this.setState({ selectedEmployer: Employer });
-        if(Employer.value != ""){
-            this.setState({ employerNameInvalid : false });
+        if (Employer.value != "") {
+            this.setState({ employerNameInvalid: false });
         }
     }
 
@@ -99,23 +99,23 @@ class SalaryDetails extends React.Component {
         }
 
         //selected Industry validation
-        if(this.state.selectedIndustry.label.length == 0 || this.state.selectedIndustry.label==""){
-            this.setState({ IndustryNameInvalid : true});
+        if (this.state.selectedIndustry.label.length == 0 || this.state.selectedIndustry.label == "") {
+            this.setState({ IndustryNameInvalid: true });
             industryInvalid = true
         }
 
-        if(this.state.selectedIndustry.label.length != 0){
-            this.setState({ IndustryNameInvalid : false});
+        if (this.state.selectedIndustry.label.length != 0) {
+            this.setState({ IndustryNameInvalid: false });
             industryInvalid = false
         }
 
         //selected Employer Validation
-        if(this.state.selectedEmployer.label.length == 0 || this.state.selectedEmployer.label==""){
+        if (this.state.selectedEmployer.label.length == 0 || this.state.selectedEmployer.label == "") {
             this.setState({ employerNameInvalid: true })
             employerNameInvalid = true;
         }
 
-        if(this.state.selectedEmployer.label.length != 0){
+        if (this.state.selectedEmployer.label.length != 0) {
             this.setState({ employerNameInvalid: false })
             employerNameInvalid = false;
         }
@@ -124,8 +124,12 @@ class SalaryDetails extends React.Component {
             this.setState({ employNameOthersInvalid: true })
             otherEmployerInvalid = true;
         }
-       
-        if(this.state.selectedEmployer.label == "Others" && this.state.employerName.length > 0){
+
+        if (this.state.selectedEmployer.label == "Others" && this.state.employerName.length > 0) {
+            this.setState({ employNameOthersInvalid: false })
+            otherEmployerInvalid = false;
+        }
+        if(this.state.selectedEmployer.label != "Others"){
             this.setState({ employNameOthersInvalid: false })
             otherEmployerInvalid = false;
         }
@@ -262,23 +266,23 @@ class SalaryDetails extends React.Component {
         e.preventDefault();
         this.setState({ isSubmitted: true });
         if (this.validateFields()) {
-                console.log("Validate fields return true");
+            
         } else {
-          
-          var data =  {
+
+            var data = {
                 AccountNumber: this.state.accountNumber,
                 BankId: this.state.bankCode,
                 EmployerName: this.state.selectedEmployer.label,
                 EmployerIndustryId: this.state.selectedIndustry.value,
                 EmployerId: this.state.selectedEmployer.value
-              };
-              if(data.EmployerName == "Others"){
-                  data.EmployerName = this.state.employerName;
-                  data.EmployerId = "999";
-              }
+            };
+            if (data.EmployerName == "Others") {
+                data.EmployerName = this.state.employerName;
+                data.EmployerId = "999";
+            }
             //let url = `accountNumber=${this.state.accountNumber}&bankId=${this.state.bankCode}&employersName=${this.state.employerName}`;
-           // this.props.dispatch(onboardingActions.requestStatement(this.props.loan_step3.loan_step3_data.data.response.token, url));
-           this.props.dispatch(onboardingActions.requestStatement(this.props.token, data));
+            // this.props.dispatch(onboardingActions.requestStatement(this.props.loan_step3.loan_step3_data.data.response.token, url));
+            this.props.dispatch(onboardingActions.requestStatement(this.props.token, data));
         }
     }
 
@@ -319,21 +323,22 @@ class SalaryDetails extends React.Component {
                 var data = {
                     ...this.props.loan_reqStat.loan_reqStat_data.data
                 };
-                if (data.response.Response.NextScreen == 0)
-                    this.props.history.push("/loan/ticket");
-                if (data.response.Response.NextScreen == 2)
-                    this.props.history.push("/loan/salary-entry");
+                if (data.response.Response.NextScreen == 0)  {return ( <Redirect to={this.props.ticketUrl} />)}
+                    //this.props.history.push("/loan/ticket");
+                   
+                if (data.response.Response.NextScreen == 2) return (<Redirect to={this.props.salaryEntryUrl}/>)
+                    //this.props.history.push("/loan/salary-entry");
             }
     }
 
     testSelectedEmployer = () => {
         if (this.state.selectedEmployer == null) {
             return false
-        } else {  return true; }
+        } else { return true; }
     }
 
     render() {
-        const { employerName, accountNumber, employerNameInvalid,IndustryNameInvalid, employNameOthersInvalid, accountNumberInvalid, selectedEmployer,
+        const { employerName, accountNumber, employerNameInvalid, IndustryNameInvalid, employNameOthersInvalid, accountNumberInvalid, selectedEmployer,
             selectedBankInvalid } = this.state;
         let props = this.props;
         return (

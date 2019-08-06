@@ -65,7 +65,8 @@ class SalaryEntry extends React.Component {
     gotoNextPage = () => {
         if (this.props.salary_entry.loan_salEnt_status) {
             if (this.props.salary_entry.loan_salEnt_status == loanOnboardingConstants.LOAN_SALARYENTRY_SUCCESS) {
-                this.props.history.push("/loan/score-card");
+               // return (<Redirect to={this.props.forwardUrl}/>) // this.props.history.push("/loan/score-card");
+               this.props.NextPageMethod()
             }
         }
     }
@@ -118,7 +119,6 @@ class SalaryEntry extends React.Component {
         render = () => {
             this.gotoNextPage();
             return (
-                <LoanOnboardingContainer UserName={this.state.user.firstname}>
                     <div className="row">
                         <div className="col-sm-12">
                             <div className="max-650">
@@ -146,7 +146,6 @@ class SalaryEntry extends React.Component {
                             </div>
                         </div>
                     </div>
-                </LoanOnboardingContainer>
             );
         }
     }
