@@ -2618,3 +2618,49 @@ p.acc-view-more {
   cursor: pointer !important;
   text-decoration: underline !important;
 }
+/* //OVERRIDE date picker */
+.react-datepicker__header{
+  background-color: #AB2656 !important;
+}
+
+.react-datepicker__navigation--previous{
+  border-right-color: #ffffff !important;
+}
+
+.react-datepicker__navigation--next{
+  border-left-color: #ffffff !important;
+}
+
+.react-datepicker__current-month{
+  color: #ffffff
+}
+
+.react-datepicker__day-name {
+  color: #ffffff
+}
+
+.react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle, .react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle::before {
+  border-bottom-color: #AB2656;
+}
+
+.react-datepicker__day--keyboard-selected, .react-datepicker__month-text--keyboard-selected {
+  background-color: #AB2656
+}
+
+.react-datepicker__month-dropdown-container select {
+  color: #ffffff;
+}
+
+.react-datepicker__year-dropdown-container select {
+  color: #ffffff;
+}
+
+.react-datepicker__month-dropdown-container select *{
+  color: #000000;
+}
+
+.react-datepicker__year-dropdown-container select *{
+  color: #000000;
+}
+
+/* End react date picker css */

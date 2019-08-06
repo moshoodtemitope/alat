@@ -19,11 +19,14 @@ const initialState = {
     isFetching: false,
     isFetchingHistory: false,
     receivedTransactions: 0,
+    receivedTransactionsAlt: 0,
     limits: { LimitToCompare: "--Fetching max limit--" },
     limitData: null,
     pageState: 2,
     sendingReceipt: false,
     receiptResponse: 2, //0 success,1 open, 2 close
+    filteredLength: 0,
+
 };
 
 const reducer = (state = initialState, action) => {
@@ -39,9 +42,13 @@ const reducer = (state = initialState, action) => {
         case actionTypes.IS_FETCHING_HISTORY:
             return updateObject(state, { isFetchingHistory: true });
         case actionTypes.CLEAR_CURRENT_HISTORY:
-            return updateObject(state, { history: [], receiptHistory: [], receivedTransactions: 0 });
+            return updateObject(state, { history: [], receiptHistory: [], receivedTransactions: 0, receivedTransactionsAlt: 0, filteredLength: 0});
         case actionTypes.SET_RECEIVED_TRANSACTIONS:
             return updateObject(state, { receivedTransactions: action.count });
+        case actionTypes.SET_RECEIVED_TRANSACTIONS_ALT:
+            return updateObject(state, { receivedTransactionsAlt: action.count });
+        case actionTypes.SET_FILTERED_TRANSACTION:
+            return updateObject(state, { filteredLength: action.count });
         case actionTypes.SEND_STATEMENT_SUCCESS:
             return updateObject(state, { isFetching: false });
         case actionTypes.GET_LIMIT_SUCCESS:
@@ -61,9 +68,9 @@ const reducer = (state = initialState, action) => {
         case actionTypes.CLEAR_RESPONSE:
             return updateObject(state, { receiptResponse: action.status });
         case actionTypes.CLEAR_LIMIT_DATA:
-            return updateObject(state, { limitData: null, pageState : 2 });
+            return updateObject(state, { limitData: null, pageState: 2 });
         case actionTypes.SEND_TRANSACTION_LIMIT_SUCCESS:
-            return updateObject(state, { pageState: 0, isFetching : false });
+            return updateObject(state, { pageState: 0, isFetching: false });
         default: return state;
     }
 }

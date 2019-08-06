@@ -1,3 +1,6 @@
+/* .react-datepicker__input-container input {
+    width: 200px !important;
+ } */
 .quote {
     width: 200px;
     background-color: #ffffff;
@@ -12,21 +15,22 @@
     font-weight: 600;
 }
 
-.q1{
+.q1 {
     margin-top: -22%;
 }
 
-.q2{
+.q2 {
     margin-top: -39%;
 }
 
-.q3{
+.q3 {
     margin-top: -27%;
 }
 
-.q4{
+.q4 {
     margin-top: -19%;
 }
+
 /* Reset */
 
 blockquote {
@@ -48,4 +52,23 @@ blockquote::after {
     -o-transform: rotate(270deg);
     -ms-transform: rotate(270deg);
     transform: rotate(270deg);
+}
+
+.trans-drop {
+    width: 100px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    /* border: #AB2656 2px solid; */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    color: #AB2656;
+    margin: 0;
+    padding: 15px 10px 0 15px;
+    font-size: 14px;
+    position: absolute;
+    font-weight: 600;
+}
+
+.trans-drop p:hover {
+    cursor: pointer;
+    text-decoration: underline;
 }
