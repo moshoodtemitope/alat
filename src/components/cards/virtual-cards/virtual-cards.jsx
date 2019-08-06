@@ -21,6 +21,7 @@ import "./../cards.scss";
 import * as utils from '../../../shared/utils';
 import AlatPinInput from '../../../shared/components/alatPinInput';
 import AmountInput from '../../../shared/components/amountInput';
+import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
 const options = [
 ];
 
@@ -29,10 +30,14 @@ class VirtualCards extends React.Component {
         super(props);
         this.state = {
             user: JSON.parse(localStorage.getItem("user")),
-            showNewCard: false
+            showNewCard: false,
+            isPinInvalid: false,
+            isStep1Done: false,
+            isAccountInvalid: false,
         };
 
         this.getCurrentVirtualCards = this.getCurrentVirtualCards.bind(this);
+        this.handleSelectDebitableAccounts = this.handleSelectDebitableAccounts.bind(this);
         
     }
 
@@ -45,16 +50,24 @@ class VirtualCards extends React.Component {
         dispatch(getCurrentVirtualCard(this.state.user.token));
     }
 
-    renderTopUpCard(){
+    submitStep1(e){
+        e.preventDefault();
+    }
+
+    renderVirtualCard(){
         let {cardHolderAddress,
              nameOnCard,
              amountInNaira,
              amountInUsd,
+             computedDollarAmount,
              amountFormatted,
              dollarAmountFormatted,
              cardHolderCity,
              cardHolderState,
              cardHolderZipcode,
+             amountError,
+             dollarAmountError,
+             isStep1Done,
         } = this.state;
 
         let props = this.props,
@@ -194,27 +207,30 @@ class VirtualCards extends React.Component {
                                             <div className="col-sm-12">
                                                 <div className="max-600">
                                                     <div className="al-card no-pad">
+                                                        {/* If no card exists*/}
                                                         {this.state.showNewCard ===false &&
                                                             <div className="transfer-ctn text-center">
-                                                            <center>
-                                                                <svg width="70" height="69" viewBox="0 0 105 69" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <g opacity="0.269531">
-                                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M2.17665 26.1617H102.299C103.605 26.1617 104.476 27.0186 104.476 28.3037V58.2905C104.476 64.2877 99.6872 69 93.5927 69H10.8828C4.78854 69 0 64.2879 0 58.2905V28.3037C0 27.0186 0.870699 26.1617 2.17665 26.1617ZM32.649 43.2971H15.2366C13.9307 43.2971 13.06 44.1538 13.06 45.4389C13.06 46.7241 13.9307 47.5809 15.2366 47.5811H32.649C33.9549 47.5811 34.8256 46.7243 34.8256 45.4391C34.8256 44.154 33.9549 43.2971 32.649 43.2971ZM45.7085 56.1489H15.2367C13.9307 56.1489 13.06 55.292 13.06 54.0069C13.06 52.7217 13.9307 51.8649 15.2367 51.8649H45.7085C47.0144 51.8649 47.8851 52.7217 47.8851 54.0069C47.8851 55.292 47.0144 56.1489 45.7085 56.1489ZM78.3567 54.8637C79.6626 55.7205 80.9686 56.1488 82.7097 56.1488C87.4982 56.1488 91.416 52.2933 91.416 47.5811C91.416 42.8688 87.4982 39.0133 82.7097 39.0133C80.9686 39.0133 79.6626 39.4416 78.3567 40.2985C77.0508 39.4416 75.7448 39.0133 74.0036 39.0133C69.2152 39.0133 65.2974 42.8688 65.2974 47.5811C65.2974 52.2933 69.2152 56.1488 74.0036 56.1488C75.7448 56.1488 77.0508 55.7205 78.3567 54.8637Z" fill="black"/>
-                                                                    <path d="M93.5928 0H10.8828C4.78853 0 0 4.71229 0 10.7097V14.9935C0 16.2787 0.870698 17.1355 2.17664 17.1355H102.299C103.605 17.1355 104.476 16.2787 104.476 14.9935V10.7097C104.476 4.71229 99.6871 0 93.5928 0Z" fill="black"/>
-                                                                    </g>
-                                                                </svg>
-                                                                <p> You do not have an active card</p>
-                                                                <button type="submit" onClick={()=>this.setState({showNewCard: true, nameOnCard: virtualCardsList.AccountName})}   
-                                                                    className="btn-alat m-t-10 m-b-20 text-center">Create Card</button>
-                                                            </center>
+                                                                <center>
+                                                                    <svg width="70" height="69" viewBox="0 0 105 69" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <g opacity="0.269531">
+                                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M2.17665 26.1617H102.299C103.605 26.1617 104.476 27.0186 104.476 28.3037V58.2905C104.476 64.2877 99.6872 69 93.5927 69H10.8828C4.78854 69 0 64.2879 0 58.2905V28.3037C0 27.0186 0.870699 26.1617 2.17665 26.1617ZM32.649 43.2971H15.2366C13.9307 43.2971 13.06 44.1538 13.06 45.4389C13.06 46.7241 13.9307 47.5809 15.2366 47.5811H32.649C33.9549 47.5811 34.8256 46.7243 34.8256 45.4391C34.8256 44.154 33.9549 43.2971 32.649 43.2971ZM45.7085 56.1489H15.2367C13.9307 56.1489 13.06 55.292 13.06 54.0069C13.06 52.7217 13.9307 51.8649 15.2367 51.8649H45.7085C47.0144 51.8649 47.8851 52.7217 47.8851 54.0069C47.8851 55.292 47.0144 56.1489 45.7085 56.1489ZM78.3567 54.8637C79.6626 55.7205 80.9686 56.1488 82.7097 56.1488C87.4982 56.1488 91.416 52.2933 91.416 47.5811C91.416 42.8688 87.4982 39.0133 82.7097 39.0133C80.9686 39.0133 79.6626 39.4416 78.3567 40.2985C77.0508 39.4416 75.7448 39.0133 74.0036 39.0133C69.2152 39.0133 65.2974 42.8688 65.2974 47.5811C65.2974 52.2933 69.2152 56.1488 74.0036 56.1488C75.7448 56.1488 77.0508 55.7205 78.3567 54.8637Z" fill="black"/>
+                                                                        <path d="M93.5928 0H10.8828C4.78853 0 0 4.71229 0 10.7097V14.9935C0 16.2787 0.870698 17.1355 2.17664 17.1355H102.299C103.605 17.1355 104.476 16.2787 104.476 14.9935V10.7097C104.476 4.71229 99.6871 0 93.5928 0Z" fill="black"/>
+                                                                        </g>
+                                                                    </svg>
+                                                                    <p> You do not have an active card</p>
+                                                                    <button type="submit" onClick={()=>this.setState({showNewCard: true, nameOnCard: virtualCardsList.AccountName})}   
+                                                                        className="btn-alat m-t-10 m-b-20 text-center">Create Card</button>
+                                                                </center>
                                                             </div>
                                                         }
+
+                                                        {/* Show new card form*/}
                                                         {this.state.showNewCard ===true &&
                                                             <div>
                                                                 <h4 className="m-b-10 center-text hd-underline">Create  ALAT Dollar Card</h4>
                                                                 <div className="transfer-ctn">
                                                                     <h3 className="alatcard-msg">This card cannot be used on 3D secured sites and for money transfer</h3>
-                                                                    <form>
+                                                                    <form onSubmit={this.submitStep1}>
                                                                         <div className="atmcard-wrap">
                                                                             <div className="top-info">
                                                                                 <div className="balanceinfo">
@@ -225,7 +241,7 @@ class VirtualCards extends React.Component {
                                                                                 </div>
                                                                             </div>
                                                                             <div className="cardnum-digits">
-                                                                                7433 **** **** 7872
+                                                                                **** **** **** ****
                                                                             </div>
                                                                             <div className="carddata">
                                                                                 <div className="each-carddata">
@@ -244,98 +260,138 @@ class VirtualCards extends React.Component {
                                                                         <div className="conversion-msg">
                                                                             $1 =  &#8358;{virtualCardsList.ngnAmountOfOneUsd}
                                                                         </div>
-                                                                        <div className="input-ctn inputWrap">
-                                                                            <label>Name on Card</label>
-                                                                            <Textbox
-                                                                                tabIndex="2"
-                                                                                id={'nameOnCard'}
-                                                                                name="nameOnCard"
-                                                                                value={nameOnCard}
-                                                                                onChange= {(nameOnCard, e)=>{ 
-                                                                                    console.log('value is', nameOnCard);
-                                                                                    this.setState({nameOnCard});
-                                                                                }}
-                                                                                
-                                                                            />
-                                                                        </div>
-                                                                        <div className="input-ctn inputWrap">
-                                                                            {/* <label>Amount in Naira (Maximum  &#8358;2,000,000)</label> */}
-                                                                            <AmountInput value={amountInNaira} 
-                                                                                        intValue={amountFormatted}  name="Amount" 
-                                                                                        label="Amount in Naira (Maximum  &#8358;2,000,000)"
-                                                                                        onKeyUp={(e)=>{
-                                                                                            
-                                                                                            let dollarConversion = utils.formatAmount( amountFormatted / virtualCardsList.ngnAmountOfOneUsd);
-                                                                                            this.setState({amountInNaira: amountFormatted, amountInUsd: dollarConversion, amountFormatted:e});
+
+                                                                        {/* Provide step 1 details */}
+                                                                        {isStep1Done===false &&
+                                                                            <div>
+                                                                                <div className="input-ctn inputWrap">
+                                                                                    <label>Name on Card</label>
+                                                                                    <Textbox
+                                                                                        tabIndex="2"
+                                                                                        id={'nameOnCard'}
+                                                                                        name="nameOnCard"
+                                                                                        value={nameOnCard}
+                                                                                        onChange= {(nameOnCard, e)=>{ 
+                                                                                            console.log('value is', nameOnCard);
+                                                                                            this.setState({nameOnCard});
                                                                                         }}
-                                                                                        onChange={(e)=>{
-                                                                                            let dollarConversion = utils.formatAmount( amountFormatted / virtualCardsList.ngnAmountOfOneUsd);
+                                                                                        
+                                                                                    />
+                                                                                </div>
+                                                                                <div className="input-ctn inputWrap">
+                                                                                    <label>Amount in Naira (Maximum  &#8358;2,000,000)</label>
+                                                                                    {/* <AmountInput value={amountInNaira} 
+                                                                                                intValue={amountFormatted}  name="Amount" 
+                                                                                                label="Amount in Naira (Maximum  &#8358;2,000,000)"
+                                                                                                onKeyUp={(e)=>{
+                                                                                                    
+                                                                                                    let dollarConversion = utils.formatAmount( amountFormatted / virtualCardsList.ngnAmountOfOneUsd);
+                                                                                                    this.setState({amountInNaira: amountFormatted, computedDollarAmount:dollarConversion.toString(),  amountInUsd: dollarConversion, amountFormatted:e});
+                                                                                                }}
+                                                                                                onChange={(e)=>{
+                                                                                                    let dollarConversion = utils.formatAmount( amountFormatted / virtualCardsList.ngnAmountOfOneUsd);
+                                                                                                    
+                                                                                                    this.setState({amountInNaira: amountFormatted,  computedDollarAmount:dollarConversion.toString(), amountInUsd: dollarConversion,  amountFormatted:e});
+                                                                                                }} 
+                                                                                                /> */}
+                                                                                    <Textbox
+                                                                                        tabIndex="2"
+                                                                                        id={'amountInNaira'}
+                                                                                        name="amountInNaira"
+                                                                                        value={amountInNaira}
+                                                                                        onChange= {(amountInNaira, e)=>{ 
                                                                                             
-                                                                                            this.setState({amountInNaira: amountFormatted, amountInUsd: dollarConversion,  amountFormatted:e});
-                                                                                        }} />
-                                                                            {/* <Textbox
-                                                                                tabIndex="2"
-                                                                                id={'amountInNaira'}
-                                                                                name="amountInNaira"
-                                                                                value={amountInNaira}
-                                                                                onChange= {(amountInNaira, e)=>{ 
+                                                                                            let dollarConversion = utils.formatAmount( amountInNaira / virtualCardsList.ngnAmountOfOneUsd);
+
+                                                                                            
+                                                                                                dollarConversion = parseFloat(dollarConversion.replace(/,/g, '')).toFixed(2).toString();
+
+                                                                                                
+                                                                                            if(dollarConversion !=='NaN'){
+                                                                                                this.setState({amountInNaira, amountInUsd: dollarConversion, amountError:false});
+                                                                                            }else{
+                                                                                                this.setState({amountError:true})
+                                                                                            }
+                                                                                            
+                                                                                        }}
+                                                                                        
+                                                                                    />
+                                                                                    {amountError===true &&
+                                                                                        <small className="error-msg">Only a valid amount allowed</small>
+                                                                                    }
+                                                                                </div>
+                                                                                <div className="input-ctn inputWrap">
+                                                                                    <label>Amount in USD (Minimum $10)</label>
+                                                                                    <Textbox
+                                                                                        tabIndex="3"
+                                                                                        id={'amountInUsd'}
+                                                                                        name="amountInUsd"
+                                                                                        value={amountInUsd}
+                                                                                        onChange= {(amountInUsd, e)=>{ 
+                                                                                        
+                                                                                            let nairaConversion =  utils.formatAmount(amountInUsd * virtualCardsList.ngnAmountOfOneUsd);
+                                                                                            
+
+                                                                                                nairaConversion = parseFloat(nairaConversion.replace(/,/g, '')).toFixed(2).toString();
+
+                                                                                            if(nairaConversion !=='NaN'){
+                                                                                                this.setState({amountInUsd, amountInNaira: nairaConversion, dollarAmountError:false});
+                                                                                            }else{
+                                                                                                this.setState({dollarAmountError:true})
+                                                                                            }
+                                                                                        }}
+                                                                                        
+                                                                                    />
+                                                                                    {dollarAmountError===true &&
+                                                                                        <small className="error-msg">Only a valid amount allowed</small>
+                                                                                    }
                                                                                     
-                                                                                    let dollarConversion = utils.formatAmount( amountInNaira / virtualCardsList.ngnAmountOfOneUsd);
-                                                                                    this.setState({amountInNaira, amountInUsd: dollarConversion});
-                                                                                }}
-                                                                                
-                                                                            /> */}
-                                                                        </div>
-                                                                        <div className="input-ctn inputWrap">
-                                                                            {/* <label>Amount in USD (Minimum $10)</label>
-                                                                            <Textbox
-                                                                                tabIndex="2"
-                                                                                id={'amountInUsd'}
-                                                                                name="amountInUsd"
-                                                                                value={amountInUsd}
-                                                                                onChange= {(amountInUsd, e)=>{ 
-                                                                                   
-                                                                                    let nairaConversion = amountInUsd * virtualCardsList.ngnAmountOfOneUsd;
-                                                                                    this.setState({amountInUsd, amountInNaira: nairaConversion});
-                                                                                }}
-                                                                                
-                                                                            /> */}
-                                                                            <AmountInput value={amountInUsd} 
-                                                                                        intValue={dollarAmountFormatted}  name="Amount" 
-                                                                                        label="Amount in USD (Minimum $10)"
-                                                                                        onKeyUp={(e)=>{
+                                                                                </div>
+                                                                                <div className="input-ctn inputWrap">
+                                                                                    <center>
+                                                                                        <button type="button" onClick={()=>this.setState({isStep1Done: true})}   className="btn-alat m-t-10 m-b-20 text-center">Create Card</button>
+                                                                                    </center>
+                                                                                </div>
+                                                                            </div>
+                                                                        }
 
-                                                                                            let nairaConversion = amountInUsd * virtualCardsList.ngnAmountOfOneUsd;
-                                                                                            this.setState({amountInUsd, amountInNaira: nairaConversion});
+                                                                        {/* Provide step 2 details */}
 
-                                                                                            // let dollarConversion = utils.formatAmount( dollarAmountFormatted / virtualCardsList.ngnAmountOfOneUsd);
-                                                                                            // this.setState({amountInUsd: dollarAmountFormatted, amountInUsd: dollarConversion, dollarAmountFormatted:e});
-                                                                                        }}
-                                                                                        onChange={(e)=>{
-
-                                                                                            let nairaConversion = amountInUsd * virtualCardsList.ngnAmountOfOneUsd;
-                                                                                            this.setState({amountInUsd, amountInNaira: nairaConversion});
-                                                                                            
-                                                                                            // let dollarConversion = utils.formatAmount( dollarAmountFormatted / virtualCardsList.ngnAmountOfOneUsd);
-                                                                                            // this.setState({amountInUsd: dollarAmountFormatted, amountInUsd: dollarConversion, dollarAmountFormatted:e});
-                                                                                        }} />
-                                                                        </div>
-                                                                        <div className="input-ctn inputWrap">
-                                                                            <AlatPinInput
-                                                                                value={this.state.Pin}
-                                                                                onChange={this.handleAlatPinChange}
-                                                                                PinInvalid={this.state.isPinInvalid}
-                                                                                maxLength={4} />
-                                                                        </div>
-                                                                        <div className="input-ctn inputWrap">
-                                                                            <center>
-                                                                                <button type="submit" onClick={()=>this.setState({showNewCard: true})}   className="btn-alat m-t-10 m-b-20 text-center">Create Card</button>
-                                                                            </center>
-                                                                        </div>
+                                                                        {isStep1Done===true &&
+                                                                            <div>
+                                                                                <div className="inputctn-wrap">
+                                                                                    <SelectDebitableAccounts
+                                                                                        value={this.state.accountNumber}
+                                                                                        // currency={currencySelected}
+                                                                                        // requestType = "forBankTransfer"
+                                                                                        accountInvalid={this.state.isAccountInvalid}
+                                                                                        onChange={this.handleSelectDebitableAccounts} />
+                                                                                    {/* {isSelectChanged===true &&
+                                                                                        <span className="limit-text">Your daily transfer limit is ₦{transferLimit} </span>
+                                                                                    } */}
+                                                                                </div>
+                                                                                <div className="input-ctn inputWrap">
+                                                                                    <AlatPinInput
+                                                                                        value={this.state.Pin}
+                                                                                        onChange={this.handleAlatPinChange}
+                                                                                        PinInvalid={this.state.isPinInvalid}
+                                                                                        maxLength={4} 
+                                                                                    />
+                                                                                </div>
+                                                                                <div className="input-ctn inputWrap">
+                                                                                    <center>
+                                                                                        <button type="submit" onClick={()=>this.setState({showNewCard: true})}   className="btn-alat m-t-10 m-b-20 text-center">Proceed</button>
+                                                                                        <div> <a className="back-cta" onClick={()=>this.setState({isStep1Done:false})}>Back</a> </div>
+                                                                                       
+                                                                                    </center>
+                                                                                </div>
+                                                                            </div>
+                                                                        }
                                                                     </form>
                                                                 </div>
                                                             </div>
                                                         }
+                                                        {/* If no card exists*/}
                                                     </div>
                                                 </div>
                                             </div>
@@ -372,11 +428,37 @@ class VirtualCards extends React.Component {
         // }
     }
 
+    handleSelectDebitableAccounts(account) {
+        let allDebitableAccounts = this.props.debitable_accounts.debitable_accounts_data.data,
+            selectedDebitableAccount = allDebitableAccounts.filter(accountDetails=>accountDetails.AccountNumber ===account),
+            transferLimit;
+
+            // this.setState({isErrorExisting:false, isMorthanLimit: false });
+            // if(this.props.transfer_info.transfer_info_data.data.BankCode ==="035" || this.props.transfer_info.transfer_info_data.data.BankCode=== "000017"){
+                
+            //     transferLimit =selectedDebitableAccount[0].MaxIntraBankTransferLimit;
+            // }else{
+            //     transferLimit =selectedDebitableAccount[0].MaxInterBankTransferLimit;
+            // }
+            
+        this.setState({ selectedAccount: account, selectedDebitableAccount}, ()=>{
+            console.log("selected account is", selectedDebitableAccount);
+        });
+
+        const {dispatch} = this.props;
+        // dispatch(getTransactionLimit(this.state.user.token, account))
+        
+        // if (this.state.isSubmitted) { 
+        //     if(account.length == 10)
+        //     this.setState({ isAccountInvalid: false })
+        //  }
+    }
+
     
     render() {
         return (
             <Fragment>
-               { this.renderTopUpCard()}
+               { this.renderVirtualCard()}
             </Fragment>
         );
     }
@@ -386,6 +468,7 @@ class VirtualCards extends React.Component {
 function mapStateToProps(state){
     return {
         virtualCards: state.alatCardReducersPile.getVirtualCards,
+        debitable_accounts: state.accounts,
     };
 }
 

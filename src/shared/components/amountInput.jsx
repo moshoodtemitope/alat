@@ -17,13 +17,24 @@ class AmountInput extends React.Component {
     onChange(event) {
         var intVal = event.target.value.replace(/,/g, '');
         //console.log(intVal);
-         if (/^\d+(\.\d+)?$/g.test(intVal)) {
-            this.props.onChange(event.target.value);
-                this.setState({
-                    formartedValue: this.toCurrency(intVal),
-                    intValue: intVal
-                })
+        if(/^\d+(\.\d+)?$/g.test(intVal)) {
+
+            if(this.props.onChange){
+                this.props.onChange(event.target.value);
+                    this.setState({
+                        formartedValue: this.toCurrency(intVal),
+                        intValue: intVal
+                    })
+            }else{
+                if(this.props.onKeyUp){
+                    this.props.onKeyUp(event.target.value);
+                    this.setState({
+                        formartedValue: this.toCurrency(intVal),
+                        intValue: intVal
+                    })
+                }
             }
+        }
          else if (intVal == '') {
             this.setState({
                 formartedValue: '',
@@ -59,15 +70,27 @@ class AmountInput extends React.Component {
                 {!(this.props.label) &&
                     <label htmlFor={this.props.name}>Amount</label>
                 }
-                
-                <input
-                    type="text"
-                    autoComplete="off"
-                    name={this.props.name}
-                    value={this.state.formartedValue}
-                    onKeyUp={this.onChange.bind(this)}
-                    onChange={this.onChange.bind(this)}
-                />
+                {this.props.onChange && 
+                    <input
+                        type="text"
+                        autoComplete="off"
+                        name={this.props.name}
+                        value={this.state.formartedValue||this.props.computedValue}
+                        onKeyUp={this.onChange.bind(this)}
+                        onChange={this.onChange.bind(this)}
+                    />
+                }
+
+                {!(this.props.onChange) && 
+                    <input
+                        type="text"
+                        autoComplete="off"
+                        name={this.props.name}
+                        value={this.state.formartedValue||this.props.computedValue}
+                        onKeyUp={this.onChange.bind(this)}
+                    />
+                }
+
                 {this.props.AmountInvalid &&
                                                 <div className="text-danger">Please supply an amount</div>
                                             }
@@ -79,6 +102,7 @@ class AmountInput extends React.Component {
 AmountInput.propTypes = {
     name: PropTypes.string,
     value: PropTypes.string,
+    computedValue: PropTypes.string,
     onChange: PropTypes.func,
     intValue: PropTypes.string,
     AmountInvalid: PropTypes.bool

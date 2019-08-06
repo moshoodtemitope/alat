@@ -40,6 +40,7 @@ export const getCurrentVirtualCard = (token) => {
                                     return consume4
                                         .then(response4=>{
                                             let result2  = Object.assign({}, response2.data[0], response3.data, response4.data);
+                                          
                                             dispatch(success(result2));
                                         })
                                         .catch(error=>{
