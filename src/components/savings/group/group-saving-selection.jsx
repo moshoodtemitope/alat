@@ -58,7 +58,7 @@ class GroupSavingsSelection extends React.Component {
                                 <NavLink to="/savings/group/goin-a-group">
                                     <div className="stash-goal">
                                         <img className="goal-icon" src={stash} alt=''/>
-                                        <p className="plan-text">Goin a group</p>
+                                        <p className="plan-text">Join a group</p>
                                         <p className="info-text2">Join an existing savings group with a group code.</p>
                                     </div>
                                 </NavLink>
