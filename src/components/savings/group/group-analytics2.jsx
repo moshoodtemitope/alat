@@ -45,6 +45,36 @@ class GroupAnalytics2 extends React.Component {
         this.props.history.push('/savings/group/group-analytics');
     }
 
+    // GetMembers = () => {
+    //    const allMembers = this.props.groupDetails.response.members.map(element => {
+    //         if(element.isAdmin == false){
+    //             <Members 
+    //             userType="members"
+    //             fullname={element.lastName.concat(" ", element.firstName)}
+
+    //             amount={element.amountSaved}
+    //             intent="Contribution"/>
+    //         }
+    //     });
+    //     return allMembers;
+    // }
+
+    // GetAmin = () => {
+    //     const admin = this.props.groupDetails.response.members.map(element => {
+    //         if(element.isAdmin == true){
+    //             <Members 
+    //                 userType="admin"
+    //                 name={element.lastName.concat(" ", element.firstName)}
+    //                 position="Admin"
+    //                 amount={element.amountSaved}
+    //                 intent="Contribution"/>
+
+    //         }
+    //     });
+
+    //     return admin;
+    // }
+
   
     render() {
 
@@ -118,7 +148,6 @@ class GroupAnalytics2 extends React.Component {
                                                 <Members 
                                                    userType="members"
                                                    fullname="Odelade Hammed"
-                                    
                                                    amount="N10, 000"
                                                    intent="Contribution"/>
 
@@ -150,8 +179,15 @@ class GroupAnalytics2 extends React.Component {
     }
 }
 
+function mapStateToProps(state){
+    return {
+      groupDetails: state.groupDetails.data
+    }
+}
 
-export default GroupAnalytics2;
+export default connect(mapStateToProps)(GroupAnalytics2)
+
+//export default GroupAnalytics2;
  
 
 

@@ -102,5 +102,6 @@ export const routes = {
     // Group Savings
     CREATEGOAL: BASEURL + '/Savings.WebApi/api/GroupSaving/CreateGroup',
     GROUPCUSTOMERS: BASEURL + '/Savings.WebApi/api/GroupSaving/GetCustomerGroups',
-    DELETE_GROUP: BASEURL + '/Savings.WebApi/api/GroupSaving/DeleteGroup'
+    DELETE_GROUP: BASEURL + '/Savings.WebApi/api/GroupSaving/DeleteGroup',
+    GETGROUPDETAILS: BASEURL + '/Savings.WebApi/api/GroupSaving/GetGroupDetails'
 };

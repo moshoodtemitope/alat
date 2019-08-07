@@ -9,29 +9,104 @@ import DatePicker from "react-datepicker";
 import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
+import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
+
+const selectedTime = [
+    { value: 'Daily' ,label:"Daily" },
+    {  value: 'Weekly' , label:"Weekly" },
+    {  value: 'Monthly' , label:"Monthly" }
+];
 
 class AutomateGroupSavings extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            endDate:null,
-            stdInvalid:false,
-            edtInvalid:false,
+            user: JSON.parse(localStorage.getItem("user")),
             isSubmitted: null,
-            endDateInvalid:false,
             isAccountInvalid: null,
             accountNumber: null,
-            selectedAccount: null
+            selectedAccount: null,
+
+            howMuchValidity:false,
+            endDateValidity:false,
+            startDateValidity:false,
+            amountToContributeValidity:false,
+
+            startDate: new Date(),
+            endDate: new Date(),
+            amountToBeWithDrawn:null,
+            howOftenDoYouWantToSave: null
+
         }
     }
 
-    validateEndDate=()=>{
-        if(this.state.endDate == null){
-            this.setState({endDateInvalid: true});
-            return true;
+    checkingUserInputs = () => {
+        var result = "valid";
+        for(var x in this.state){
+            switch(x){
+                case 'endDate':
+                   if(this.state[x] == new Date() || this.state[x] == ""){
+                      console.log(x)
+                      result = null;
+                      break;
+                   }     
+                case 'amountToContributeValidity':
+                   if(this.state[x] == null || this.state[x] == ""){
+                       console.log(x)
+                       result = null;
+                       break;
+                   }
+                case 'howOftenDoYouWantToSave':
+                   if(this.state[x] == null || this.state[x] == ""){
+                      console.log(x)
+                      result = null;
+                      break;
+                   }
+                case 'selectedAccount':
+                   if(this.state[x] == null || this.state[x] == ""){
+                      console.log(x)
+                      result = null;
+                      break;
+                   }
+            }
         }
-            else {this.setState({endDateInvalid : false});
-        return false;
+        console.log(result);
+        return result;
+    }
+
+    validateEndDate=()=>{
+        if(this.state.endDate == null || this.state.endDate == ""){
+            this.setState({endDateValidity: true});
+            return true;
+        }else {this.setState({endDateValidity : false});
+           return false;
+        }
+    }
+
+    validateStartDate=()=>{
+        if(this.state.startDate == null || this.state.startDate == ""){
+            this.setState({startDateValidity: true});
+            return true;
+        }else {this.setState({startDateValidity : false});
+            return false;
+        }
+    }
+
+    validateFrequencyOfWithdrawals=()=>{
+        if(this.state.howOftenDoYouWantToSave == null || this.state.howOftenDoYouWantToSave == ""){
+            this.setState({howMuchValidity: true});
+            return true;
+        }else {this.setState({howMuchValidity : false});
+            return false;
+        }
+    }
+
+    validateAmountToBeWithDrawn=()=>{
+        if(this.state.amountToBeWithDrawn == null || this.state.amountToBeWithDrawn == ""){
+            this.setState({amountToContributeValidity: true});
+            return true;
+        }else {this.setState({amountToContributeValidity : false});
+            return false;
         }
     }
 
@@ -51,14 +126,28 @@ class AutomateGroupSavings extends React.Component {
         }
     }
 
+    SubmitAutomatedGroupSavings = () => {
+        const data = {
+            GroupId: this.props.groupDetails.response.id,
+            StartDate: this.state.startDate,
+            Frequency: this.state.howOftenDoYouWantToSave,
+            Amount: this.state.amountToBeWithDrawn,
+            DebitAccount: this.state.selectedAccount
+        }
+        console.log(data)
+        return;
+        this.props.dispatch(actions.scheduleContribution(this.state.user.token, data));
+    }
+
+
     handleSubmit(event) {
         event.preventDefault();
         console.log('what');
     }
 
-
     render() {
-        const {endDate,endDateInvalid} = this.state;
+        const {endDate,amountToContributeValidity, endDateValidity, startDateValidity, howMuchValidity,
+        } = this.state;
 
         return (
             <Fragment>
@@ -94,11 +183,16 @@ class AutomateGroupSavings extends React.Component {
 
                                             <form onSubmit={this.handleSubmit}>
                                                 <div className="form-row">
-                                                    <div className="form-group col-md-6">
+                                                    <div className={howMuchValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                         <label className="label-text">How would you like to save?</label>
-                                                        <input type="text" className="form-control"  placeholder="Raise Money"/>
+                                                         <Select type="text" 
+                                                            options={selectedTime}
+                                                            name="timeSaved"
+                                                            onChange={this.handleSelectChange}
+                                                            value={timeSaved.label}
+                                                          />
                                                     </div>
-                                                    <div className="form-group col-md-6">
+                                                    <div className={endDateValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                             
                                                         <label className="label-text">the group target date is?</label>
                                                         <DatePicker className="form-control" selected={endDate}
@@ -107,14 +201,13 @@ class AutomateGroupSavings extends React.Component {
                                                         showMonthDropdown
                                                         showYearDropdown
                                                         dropdownMode="select"
-                                                        maxDate={new Date()}
+                                                       
                                                         />
-                                                        {endDateInvalid &&
-                                                            <div className="text-danger">select a valid date</div>}
+                                        
                                                     </div>
                                                 </div>
                                                 <div className="form-row">
-                                                    <div className="form-group col-md-6">
+                                                    <div className={startDateValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                         <label className="label-text">when should we start taking the money</label>
                                                         <DatePicker className="form-control" selected={endDate}
                                                         placeholder="October 31, 2017"
@@ -122,12 +215,11 @@ class AutomateGroupSavings extends React.Component {
                                                         showMonthDropdown
                                                         showYearDropdown
                                                         dropdownMode="select"
-                                                        maxDate={new Date()}
+                                                        
                                                         />
-                                                        {endDateInvalid &&
-                                                            <div className="text-danger">select a valid date</div>}
+                                                        
                                                     </div>
-                                                    <div className="form-group col-md-6">
+                                                    <div className={amountToContributeValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                         <label className="label-text">how much should we take from your account?</label>
                                                         <input type="text" className="form-control"  placeholder="E.g. ₦100,000"/>
                                                     </div>
@@ -180,7 +272,7 @@ class AutomateGroupSavings extends React.Component {
 
 function mapStateToProps(state){
     return {
-
+        groupDetails: state.groupDetails.data
     }
 }
 export default connect(null, mapStateToProps)(AutomateGroupSavings);

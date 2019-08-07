@@ -16,7 +16,6 @@ class CreateATargetGoal extends React.Component {
         super(props);
         this.state= {
             user: JSON.parse(localStorage.getItem("user")),
-
             isAccountInvalid: null,
             // accountNumber: null,
             selectedAccount: null,
@@ -118,6 +117,8 @@ class CreateATargetGoal extends React.Component {
     }
 
     SetStartDate = (targetDate) => {
+        // console.log(targetDate);
+        // console.log("44444444444444444")
        this.setState({
            targetDate:targetDate
        })
@@ -190,28 +191,26 @@ class CreateATargetGoal extends React.Component {
 
     SubmitTargetGoal = () => {
         const data = {
-            name:this.state.groupName,
-            targetAmount: this.state.targetAmount,
-            targetDate: this.state.startDate,
-            minimumIndividualAmount: this.state.minimumIndividualAmount,
-            debitAccount: this.state.selectedAccount,
-            purpose: this.state.groupPurpose,
-            
-           
+            Name:this.state.groupName,
+            TargetAmount: parseFloat(this.state.targetAmount),
+            TargetDate: this.state.targetDate,
+            minimumIndividualAmount: parseFloat(this.state.minimumIndividualAmount),
+            DebitAccount: this.state.selectedAccount,
+            Purpose: this.state.groupPurpose,
         }
         console.log(data)
-
+        // return;
         this.props.dispatch(actions.groupSavingsTargetGoal(this.state.user.token, data));
     }
 
-
+    
     handleSubmit = (event) => {
          event.preventDefault();
         //console.log("handleSubmit was triggered");
         // if(this.checkMinimumAccountToContribute() || this.checkTheSelectedAccount()||this.checkTheEndDate()||this.checkGroupPurpose()||this.checkGroupName()||this.checkTheTargetAmount()){
         //     console.log(this.checkMinimumAccountToContribute())
-        // }
-        // this.SubmitTargetGoal();
+        // } 
+        this.SubmitTargetGoal();
         // console.log('did the code ever got here')
         // console.log(this.state)
         // switch(this.checkingUserInputs()){
@@ -223,7 +222,6 @@ class CreateATargetGoal extends React.Component {
         //         console.log("no empty feilds found")
         //         break;
         // }
-
     }
 
     render() {
@@ -279,13 +277,13 @@ class CreateATargetGoal extends React.Component {
                                                     <div className={GroupEndDate ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                         <label className="label-text">when does the group want to meet this goal</label>
                                                         <DatePicker className="form-control" selected={targetDate} 
-                                                        placeholder="October 31, 2017"
+                                                        placeholder="June 31, 2019"
                                                         dateFormat=" MMMM d, yyyy"
                                                         showMonthDropdown
                                                         showYearDropdown
                                                         onChange={this.SetStartDate}
                                                         dropdownMode="select"
-                                                        maxDate={new Date()}
+                                                        
                                                         />
                                                        
                                                     </div>
@@ -312,9 +310,9 @@ class CreateATargetGoal extends React.Component {
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <center>
-                                                            <NavLink to='/savings/group/group-created'>
+                                                            {/* <NavLink to='/savings/group/group-created'> */}
                                                                   <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Next</button>
-                                                            </NavLink>
+                                                            {/* </NavLink> */}
                                                         </center>
                                                     </div>
                                                 </div>

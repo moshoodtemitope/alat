@@ -2,6 +2,7 @@ import * as React from "react";
 import {Fragment} from "react";
 import InnerContainer from '../../shared/templates/inner-container';
 import SavingsContainer from './container';
+import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant'
 import {NavLink, Route} from "react-router-dom";
 import {Switch} from "react-router";
 import Select from 'react-select';
@@ -10,7 +11,13 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import * as util from '../../shared/utils'
 
-
+const selectedTime = [
+           
+    { value: 'monthly' ,label:"Monthly" },
+    {  value: 'weekly' , label:"Weekly" },
+    {  value: 'daily', label:"Daily"},
+   
+];
 
 class FixedGoal extends React.Component {
 
@@ -23,7 +30,6 @@ class FixedGoal extends React.Component {
             AmountSaved:1000,
             SelectedtimeSaved:"",
             frequencyGoal:"",
-            stdInvalid:"",
             isSubmitted : false,
             endDateInvalid:false,
             startDateInvalid:false,
@@ -69,15 +75,7 @@ class FixedGoal extends React.Component {
         }
     }
 
-    validateStartDate=()=>{
-        if(this.state.startDate == null){
-            this.setState({stdInvalid: true});
-            return true;
-        }
-            else {this.setState({stdInvalid : false});
-        return false;
-        }
-    }
+    
     checkTimeSaved = () => {
         if (this.state.frequencyGoal == "") {
             this.setState({ TimeSavedInvalid: true });
@@ -201,7 +199,7 @@ class FixedGoal extends React.Component {
 
     render() {
         
-        let {GoalNameInvalid,endDateInvalid,startDateInvalid,AmountSavedInvalid,TimeSavedInvalid,AmountSavedText,frequencyGoal}=this.state
+        let {GoalNameInvalid,stdInvalid,edtInvalid,endDateInvalid,startDateInvalid,AmountSavedInvalid,TimeSavedInvalid,AmountSavedText,frequencyGoal}=this.state
         let props = this.props;
 
         return (
@@ -216,8 +214,11 @@ class FixedGoal extends React.Component {
                                 <div className="tab-overflow">
                                     <div className="sub-tab-nav">
                                         <ul>
-                                            <li><a href="accounts.html" className="active">Goals</a></li>
-                                            <li><a href="statement.html">Group Savings</a></li>
+                                            <li><a href="#" className="active">Goals</a></li>
+                                            <NavLink to="/savings/goal/group-savings-selection">
+                                            <li><a href="#">Group Savings</a></li>
+                                            </NavLink>
+                                            
                                             <li><a href="#">Investments</a></li>
 
                                         </ul>
@@ -238,7 +239,7 @@ class FixedGoal extends React.Component {
                                                     <input type="text" className="form-control"  placeholder="Dubai Goal"/>
                                                     </div>
                                                 <div className="form-row">
-                                                    <div className={ !stdInvalid ? "form-group col-md-6" : "input-ctn form-error"}>
+                                                    <div className={ !startDateInvalid ? "form-group col-md-6" : "input-ctn form-error"}>
                                                         <label className="label-text">When would you like to start</label>
                                                         <DatePicker 
                                                             className="form-control"
@@ -260,7 +261,7 @@ class FixedGoal extends React.Component {
                                                             }
                                         
                                                     </div>
-                                                    <div className={ !edtInvalid ? "form-group col-md-6" : "input-ctn form-error"}>
+                                                    <div className={ !endDateInvalid ? "form-group col-md-6" : "input-ctn form-error"}>
                                                         <label className="label-text">When do you want to achieve this</label>
                                                         <DatePicker  
                                                             selected={this.state.endDate}

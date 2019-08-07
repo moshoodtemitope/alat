@@ -8,7 +8,7 @@ export function groupSavingsTargetGoal(state=[], action){
                message: GROUPSAVINGSCONSTANT.CREATEGROUPSAINGS,
                data: action
            }
-        case GROUPSAVINGSCONSTANT.CREATEGROUPSAINGS_SUCCESS:
+        case GROUPSAVINGSCONSTANT.CREATEGROUPSAVINGS_SUCCESS:
            return {
                message: GROUPSAVINGSCONSTANT.CREATEGROUPSAINGS_SUCCESS,
                data: action

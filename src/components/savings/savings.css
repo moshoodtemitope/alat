@@ -193,3 +193,7 @@
 .selectionTray {
    justify-content: center;
 }
+
+.forGroupLink {
+   color: #666 !important;
+}

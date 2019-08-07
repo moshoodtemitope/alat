@@ -8,12 +8,12 @@ import {GROUPSAVINGSCONSTANT} from "../../../constants/savings/group/index";
 export const groupSavingsTargetGoal = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.CREATEGOAL, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.CREATEGOAL, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
-                history.push("/savings/group/group-created");
                 dispatch(success(response.data));
+                history.push("/savings/group/group-created");
             })
             .catch(error => {
                 if(error.response.message){
@@ -30,12 +30,12 @@ export const groupSavingsTargetGoal = (token, data) => {
     function failure(error) { return {type:GROUPSAVINGSCONSTANT.CREATEGROUPSAVINGS_ERROR, error} }
 };
 
-export const groupDetails = (token, id) => {
-    const data = {}
+export const groupDetails = (token, data) => {
+   //const dataLoad = {}
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        const url = "/Savings.WebApi/api/GroupSaving/GetGroupDetails?groupId={".concat(id).concat("}");
-        let consume = ApiService.request(url, "GET", data, SystemConstant.HEADER, true);
+        //const url = "/Savings.WebApi/api/GroupSaving/GetGroupDetails?groupId={".concat(data.groupId, "}");
+        let consume = ApiService.request(routes.GETGROUPDETAILS.concat("?groupId=", parseInt(data.groupId)), "GET", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {

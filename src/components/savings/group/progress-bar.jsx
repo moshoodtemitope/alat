@@ -21,7 +21,7 @@ export default (props) => {
                      <Progress color="success" value={props.percentage}></Progress>
                      <div className='bottomDiscription topDiscription row'>
                          <div className='left'>
-                             <p>{props.discBottom}<span>{props.discSpan}</span></p>
+                             <p class="perc">{props.discBottom}<span>{props.discSpan}</span></p>
                              <p>{props.discBottomSib}</p>
                          </div>
                          <div className='right'>

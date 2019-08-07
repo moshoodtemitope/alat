@@ -3,6 +3,7 @@ import {Fragment} from "react";
 import InnerContainer from '../../../shared/templates/inner-container';
 import SavingsContainer from '../container';
 import {NavLink, Route} from "react-router-dom";
+import { connect } from "react-redux";
 import {Switch} from "react-router";
 import Select from 'react-select';
 import DatePicker from "react-datepicker";
@@ -19,12 +20,17 @@ class GroupCreated extends React.Component {
 
     GetGroupSummary = () => {
         console.log('Getting CustomerGroups');
-        this.props.dispatch(actions.groupDetails(this.state.user))
+        const id = this.props.payload.response.id;
+        const data = {
+            groupId: id
+        }
+        this.props.dispatch(actions.groupDetails(this.state.user.token, data));
     }
 
-    // componentDidMount(){
-    //     this.GetGroupSummary();
-    // }
+    componentDidMount(){
+        // console.log(this.state.user);
+        this.GetGroupSummary();
+    }
 
     handleSubmit = (event) => {
         event.preventDefault();
@@ -68,7 +74,7 @@ class GroupCreated extends React.Component {
                                                 </div>
                                                 <div className="forCode">
                                                         <div className="left">
-                                                            <h2>GRP92A2UE</h2>
+                                                            <h2>{this.props.payload.response.referralCode}</h2>
                                                         </div>
                                                         <div className="right">
                                                             <i></i>
@@ -107,5 +113,9 @@ class GroupCreated extends React.Component {
     }
 }
 
-
-export default GroupCreated;
+function mapStateToProps(state){
+    return {
+        payload: state.groupSavings.data
+    }
+}
+export default connect(mapStateToProps)(GroupCreated);

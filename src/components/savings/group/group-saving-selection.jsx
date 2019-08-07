@@ -45,14 +45,14 @@ class GroupSavingsSelection extends React.Component {
                                 <div className="fixed-goal">
                                     <img className="goal-icon" src={calender} alt=''/>
                                     <p className="flex-text">Save Towards a target</p>
-                                    <p className="info-text3">Invite an unlimited number of people to save with you towards a goal.</p>
+                                    <p className="info-text3">Invite an unlimited number of people to save with you towards a goal and earn 10% interest provided the savings target is met</p>
                                 </div> 
                                 </NavLink> 
                                 <NavLink to="/savings/group/create-rotating">                      
                                 <div className="flex-goal">
                                     <img className="goal-icon" src={graph} alt=''/>
                                     <p className="plan-text">Rotating Saving Groups</p>
-                                    <p className="info-text2">Save with up to 10 friends, recieve the collective savings automatically when its your turn.<span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days.</p>
+                                    <p className="info-text2">Save with up to 10 friends, recieve the collective savings automatically when its your turn.</p>
                                 </div>
                                 </NavLink>
                                 <NavLink to="/savings/group/goin-a-group">
