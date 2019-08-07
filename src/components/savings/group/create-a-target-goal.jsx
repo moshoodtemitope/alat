@@ -203,7 +203,7 @@ class CreateATargetGoal extends React.Component {
         this.props.dispatch(actions.groupSavingsTargetGoal(this.state.user.token, data));
     }
 
-    
+
     handleSubmit = (event) => {
          event.preventDefault();
         //console.log("handleSubmit was triggered");
@@ -295,7 +295,7 @@ class CreateATargetGoal extends React.Component {
                                                 
                                                 <div className={NoAccountSelectionWasDon ? "form-error" : "accountSelection"}>
                                                     <div className='col-sm-12'>
-                                                                <center>
+                                                              
                                                                     <SelectDebitableAccounts
                                                                         options={selectedAccount}
                                                                         // value={this.state.selectedAccount}
@@ -303,7 +303,7 @@ class CreateATargetGoal extends React.Component {
                                                                         onChange={this.handleSelectDebitableAccounts}
                                                                         options={selectedAccount}
                                                                         labelText="Select Account to debit" />
-                                                                </center>
+                                                              
                                                     </div>
                                                 </div>
                                                 

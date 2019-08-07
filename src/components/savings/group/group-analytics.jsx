@@ -108,7 +108,7 @@ class GroupAnalytics extends React.Component {
         console.log(month);
         console.log(year);
         console.log("000000000000000000000000000000000");
-        return day.concat(month, " ", year);
+        return day.concat(" ", month, " ", year);
     }
 
     GetGroupInterest = () => {
@@ -207,7 +207,7 @@ class GroupAnalytics extends React.Component {
                                                 <ProgressBar 
                                                     discTopSpan="Your Progress"
                                                     discTopRight=""
-                                                    percentage="5"
+                                                    percentage="0"
                                                     discBottom={this.GetIndividualSavedAmount()}
                                                     discSpan={this.GetGroupTargetAmount()}
                                                     discBottomSib="Amount Saved"

@@ -338,6 +338,17 @@ color: #4D4D4D;
 
 }
 
+
+.checkSome {
+    justify-content: center !important;
+}
+
+@media screen and (min-width: 992px) {
+    .Home-container {
+        margin: auto;
+    }
+}
+
 .listedItems .right p { 
     padding-right: 10px;
 }
