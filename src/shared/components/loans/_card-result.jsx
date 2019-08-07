@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import * as actions from '../../../redux/actions/onboarding/loan.actions';
 import { loanOnboardingConstants } from '../../../redux/constants/onboarding/loan.constants';
-import LoanOnboardingContainer from './loanOnboarding-container';
+import * as util from '../../utils';
 
-class LoanOnboardingScoreResult extends React.Component {
+class ScoreResult extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -22,21 +22,22 @@ class LoanOnboardingScoreResult extends React.Component {
 	}
 
 	init = () => {
-		//console.log(this.props);
+		//I made the call on the previous page, checking here to see the call is not busy
 		if (this.props.score_card_A.loan_scoreA_data)  //loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS
 			if (this.props.score_card_A.loan_scoreA_status != loanOnboardingConstants.LOAN_SCORECARD_ANSWER_PENDING) {
-				// this.props.history.push("/loan/card-result");
+				//this.props.gotoPreviousPageMethod();// this.props.history.push("/loan/card-result");
+				// this.props.history.push(this.props.backwardUrl);
+				
 				var data = {
 					...this.props.score_card_A.loan_scoreA_data.data.response.Response
 				}
-				//console.log(data);
 				this.setState({ loanDetails: data });
 			}
 	}
 
 	doneClick=()=>{
 		this.props.dispatch(actions.clearLoanOnboardingStore());
-		this.props.history.push("/");
+		this.props.doneClick();
 	}
 
 	returnScoreCardSuccessStatus = () => {
@@ -47,7 +48,7 @@ class LoanOnboardingScoreResult extends React.Component {
 
 	render() {
 		return (
-			<LoanOnboardingContainer UserName={this.state.user.fullName}>
+			
 				<div className="col-sm-12">
 					<div className="max-460">
 						<div className="loan-header-text text-center">
@@ -58,7 +59,7 @@ class LoanOnboardingScoreResult extends React.Component {
 								<div className={this.returnScoreCardSuccessStatus() ? "col-sm-12 upper-line-success" : "col-sm-12 upper-line-failure"}></div>
 								<div className="result-msg">
 									
-									<p>Dear Customer</p>
+									<p>Dear {this.state.user.fullName}</p>
 											{this.returnScoreCardSuccessStatus() && <Fragment><p>Congratulations!!! you have been granted a loan of <b>{util.formatAmount(this.state.loanDetails.LoanAmountGranted)}</b></p>
 											<p>Click Accept to proceed</p></Fragment>}
 
@@ -89,7 +90,7 @@ class LoanOnboardingScoreResult extends React.Component {
 
 					</div>
 				</div>
-			</LoanOnboardingContainer>
+			
 		)
 	}
 }
@@ -108,7 +109,7 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps)(LoanOnboardingScoreResult);
+export default connect(mapStateToProps)(ScoreResult);
 
 
 

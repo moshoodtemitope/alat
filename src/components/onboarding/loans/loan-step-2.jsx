@@ -41,7 +41,8 @@ class LoanOboardingStep2 extends React.Component {
             this.setState({
                 MaxAmount: data.response.maxAmount,
                 InterestRate: data.response.interestRate,
-                PhoneNumber: data.request.PhoneNumber
+                PhoneNumber: data.request.PhoneNumber,
+                minimumAmount: data.response.minAmount
             });
         }
     }
@@ -87,7 +88,7 @@ class LoanOboardingStep2 extends React.Component {
     LoanAplyClick = () => {
      this.setState({isSubmitted : true});
         if (this.state.Term >= 1) {
-            if (this.state.LoanAmount > 0 && this.state.LoanAmount<= this.state.MaxAmount) {
+            if (this.state.LoanAmount >= this.state.minimumAmount && this.state.LoanAmount<= this.state.MaxAmount) {
                 this.props.dispatch(actions.loanOnbaordingStep2({
                     "LoanAmount": this.state.LoanAmount,
                     "Term": this.state.Term,
@@ -108,27 +109,10 @@ class LoanOboardingStep2 extends React.Component {
         this.setState({ repaymentAmount: this.CalculateMonthlyRepayment(this.state.LoanAmount, this.state.InterestRate, this.state.Term) })
     }
 
-    calcRepayment = (loanAmount, interestRate, tenure) => {
-        //[P x R x (1+R)^N]/[(1+R)^N-1]
-        let _intRate = interestRate / 12;
-       let _interestRate = 1 + _intRate;
-       //console.log(_interestRate);
-      
-       let _tenure = tenure - 1;
-     
-        let numerator = loanAmount * _interestRate *_intRate;
-        let finalNumerator =  Math.pow(numerator, tenure);
-        let denominator = Math.pow(_interestRate, _tenure);
-
-        let monthlyRepayment = finalNumerator / denominator;
-        //console.log(monthlyRepayment);
-        return monthlyRepayment;
-    }
-
     CalculateMonthlyRepayment(loanAmount, percentageInterestRate, numberOfPayments)
         {
              // rate of interest and number of payments for monthly payments
-            var rateOfInterest = percentageInterestRate / 12;
+             var rateOfInterest = (percentageInterestRate/100) / 12;
 
             // loan amount = (interest rate * loan amount) / (1 - (1 + interest rate)^(number of payments * -1))
             var paymentAmount = (rateOfInterest * loanAmount) / (1 - Math.pow(1 + rateOfInterest, numberOfPayments * -1));
@@ -174,7 +158,7 @@ class LoanOboardingStep2 extends React.Component {
                                         maxLength={10}
                                         type="text" />
                                         {this.state.LoanAmountInvalid &&
-                                    <div className="text-danger">{`Amount to borrow must be greater than ${0} and more than ${util.formatAmount(this.state.MaxAmount)}`} </div>
+                                    <div className="text-danger">{`Amount to borrow must be greater than ${0} and not more than ${util.formatAmount(this.state.MaxAmount)}`} </div>
                                 }
                                 </div>
                                 <p>Payment Terms(months) <span>{this.state.Term}</span></p>

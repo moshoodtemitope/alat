@@ -1,6 +1,6 @@
-// const URL = 'https://api.alat.ng';
-const URL = 'https://196.43.215.170';
-// const URL = 'https://196.43.215.157';
+//const URL = 'https://api.alat.ng';
+//const URL = 'https://196.43.215.170';
+const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
 
@@ -106,4 +106,12 @@ export const routes = {
     LOAN_GET_SCORECARD_QUESTIONS : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GetScoreCardQuestions',
     LOAN_POST_SCORECARD_ANSWER: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/PostScoreCardResponse',
     LOAN_BANK_LIST: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GetBankList',
+
+    //Loan InApp
+    LOAN_APPLICATION_HISTORY : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/DashboardLoanApplicationHistory',
+    LOAN_CALCULATOR_DATA :BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GetLoanCalculatorData',
+    LOAN_CURRENT: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/DashBoardCurrentLoanFinacle',
+    LOAN_EMPLOYMENT_INDUSTRIES: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GetEmploymentIndustries',
+    LOAN_EMPLOYER: BASEURL +  '/DL_LoanRequest.WebApi/api/AccountDetails/GetEmployers',
+    LOAN_APPLY : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/RequestLoan',
 };
