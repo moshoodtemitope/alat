@@ -29,10 +29,12 @@ import { fundAccountReducer, getTokenizedCardsReducer,
 import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingVerifyBVNReducer,
      loanOnboardingStep3Reducer, loanOnboardingValidateOTPReducer} from './loan-onboarding.reducer';
 
- import {fixedGoalStep1Reducer,fixedGoalStep2Reducer,addGoalReducer} from './goal/fixed-goal.reducers'
- import {flexGoalStep1Reducer,flexGoalStep2Reducer,addFlexGoalReducer} from './goal/flex-goal.reducer'
- import {groupSavingsTargetGoal, groupDetails, deleteGroup, contribute, editGroup, pauseGroup, findGroup, customerGroup, joinGroup, scheduleContribution, deleteMember, cashOut,
+     import {fixedGoalStep1Reducer,fixedGoalStep2Reducer,addGoalReducer} from './goal/fixed-goal.reducers';
+     import {flexGoalStep1Reducer,flexGoalStep2Reducer,addFlexGoalReducer} from './goal/flex-goal.reducer';
+     import {createStashGoalReducer,createStashGoalStep1Reducer} from './goal/create-stash.reducer'
+    import {groupSavingsTargetGoal, groupDetails, deleteGroup, contribute, editGroup, pauseGroup, findGroup, customerGroup, joinGroup, scheduleContribution, deleteMember, cashOut,
     continueScheduleGroupPayment} from './group-savings/group-savings-reducers';
+
 
 export const onboarding = {
     userRegistrationRequest,
@@ -110,8 +112,8 @@ export const fixedGoal ={
 
  }
  export const groupSavings ={
-    groupSavingsTargetGoal, 
-    groupDetails, 
+    groupSavingsTargetGoal,
+    groupDetails,
     deleteGroup, 
     contribute, 
     editGroup, 
@@ -123,6 +125,11 @@ export const fixedGoal ={
     deleteMember, 
     cashOut,
     continueScheduleGroupPayment
+}
+export const stashGoal={
+    createStashGoalStep1Reducer,
+    createStashGoalReducer,
+    
 }
  
  

@@ -4,13 +4,16 @@ import SavingsContainer from './container';
 import {Fragment} from "react";
 import { connect } from 'react-redux';
 import moment from 'moment';
-import {flexGoalConstants} from '../../redux/constants/goal/flex-goal.constant'
-import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
+import * as util from '../../shared/utils'
+import {createGoalConstants} from '../../redux/constants/goal/create-stash.constant';
+import * as actions from '../../redux/actions/savings/goal/create-stash-goal.actions'
+ 
+
 
 
  
 
- class FlexGoalSummary extends Component {
+ class StashSummmary extends Component {
      constructor(props){
          super(props)
 
@@ -20,9 +23,9 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
             endDate:"",
             goalName:"",
             goalFrequency:"",
+            payOutInterest:"",
             debitAccount:"",
-            debitAmount	:"",
-            showInterests:"",
+            debitAmount:"",
 
         }
      }
@@ -33,39 +36,45 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
     }
 
     init = () => {
-        if (this.props.flex_goal_step2.flex_step2_status != flexGoalConstants.FETCH_FLEX_GOAL_SUCCESS_STEP2)
-            this.props.history.push("/savings/flex-goal-step2");
+        if (this.props.create_stash_goal_step1.stash_goal_step1_status != createGoalConstants.CREATE_STASH_GOAL_SUCCESS_STEP1)
+            this.props.history.push("/savings/create-stash_step1");
         else {
             var data = {
-                ...this.props.flex_goal_step2.flex_step2_data.data
+                ...this.props.create_stash_goal_step1.stash_goal_step1_data.data
             };
             console.log('tag', data)
 
             this.setState({
                 targetAmount:data.targetAmount,
                 startDate: data.startDate,
-                endDate: data.endDate,  
                 goalName:data.goalName,
-                goalFrequency:data.goalFrequency,
+                payOutInterest:data.payOutInterest,
                 debitAccount:data.debitAccount,
-                debitAmount	:data.showInterests
-
             });
         }
     }
     handleSubmit=()=>{
         event.preventDefault()
-        this.props.dispatch(actions.addFlexGoal({
+        this.props.dispatch(actions.CreateStashGoal({
             "goalName":this.state.goalName,
             "startDate":this.state.startDate,
-            "endDate":this.state.endDate,
             "targetAmount":this.state.targetAmount,
-            "goalFrequency":this.state.goalFrequency,
             "debitAccount":this.state.debitAccount,
-            'debitAmount':this.state.showInterests
+            "payOutInterest":this.state.payOutInterest,  
+            "FrequencyId":this.state.FrequencyId,
+            "FrequencyDurationId":this.state.FrequencyDurationId,
+            'debitAmount':100,
+            "startDate":moment().format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
+            "isAutomaticDebit": true,
+
+            // 'StartDate': moment.format(this.state.startDate('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
+
+
         }));
 
     }
+
+    
     render() {
         return (
            <Fragment>
@@ -87,10 +96,12 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
                             </div>
                         </div>
                     </div>
-                    {this.props.alert && this.props.alert.message &&
-                        <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
-                    }
-                    <h1 style={{margin:"auto", color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>Flexi Goal Summary</h1>
+
+
+                        {this.props.alert && this.props.alert.message &&
+                            <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                        }
+                    <h1 style={{margin:"auto", color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>Stash Goal Summary</h1>
                         <div style={{margin:"30px"}}></div>
 
                     <div className="col-sm-12">
@@ -115,15 +126,16 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
                                                     <p className='boldedText'>{moment(this.state.startDate).format('MMMM,D,YYYY')}</p>
                                                 </div>
                                                 <div className="right">
-                                                    <p className='GoalText'>End Date</p>
-                                                    <p className='boldedText'>{moment(this.state.endDate).format('MMMM,D,YYYY')} </p>
-                                                </div>  
+                                                <p className='GoalText'>Start Date</p>
+                                                <p className='boldedText'>{moment(this.state.startDate).format('MMMM,D,YYYY')}</p>
+                                                </div>
+                            
                                         </div>
 
                                         <div className="coverForSummary">
                                             <div className="left">
                                                 <p className='GoalText'>Contributions</p>
-                                                <p className='boldedText'>₦{this.state.debitAmount}/{this.state.goalFrequency}</p>
+                                                <p className='boldedText'>₦{this.state.payOutInterest}</p>
                                             </div>
                                             <div className="right">
                                                 <p className='GoalText'>Account to Debit</p>
@@ -135,7 +147,12 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
                                     <div className="row">
                                         <div className="col-sm-12">
                                             <center>
-                                                <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Create Goal</button>
+                                                <button disabled={this.props.create_stash_goal.create_stash_goal_status == createGoalConstants.CREATE_STASH_GOAL_PENDING}
+ 
+                                                 type="submit" className="btn-alat m-t-10 m-b-20 text-center">
+                                                 {this.props.create_stash_goal.create_stash_goal_status == createGoalConstants.CREATE_STASH_GOAL_PENDING ? "Processing..." :"Create Goal"}
+
+                                                 </button>
                                             </center>
                                         </div>
                                     
@@ -151,13 +168,12 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
                         
                         
                         </div>
-
-                    
-                    
+                        </div>
                     </div>
+                    
+                    
                 
                 
-                </div>
                 
                 </SavingsContainer>
             </InnerContainer>
@@ -167,10 +183,10 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
     }
 }
 const mapStateToProps = state => ({
-    flex_goal_step1: state.flex_goal_step1,
-    flex_goal_step2:state.flex_goal_step2,
+    create_stash_goal_step1:state.create_stash_step1,
+    create_stash_goal:state.create_stash_goal,
     alert: state.alert,
 
 })
-export default connect(mapStateToProps)(FlexGoalSummary);
+export default connect(mapStateToProps)(StashSummmary);
 

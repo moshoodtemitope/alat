@@ -20,11 +20,11 @@ import ChooseGoalPlan from './savings/goal/goal-plan';
 import FixedGoal from './savings/fixed-goal_step1'
 import FixedGoalComplete from './savings/fixed-goal-step2';
 import FixedGoalSummary from './savings/fixed-goal-summary';
-import FlexGoal from './savings/flex-goal';
+import FlexGoal from './savings/flex-goal-step1';
 import FlexGoalStep2 from './savings/flex-goal-step2';
-import FlexGoalSummary from './savings/flex-goal-summary'
-// import CreateStash from './savings/goal/create-stash';
-// import CreateStashContinue from './savings/goal/create-stash-step2';
+import FlexGoalSummary from './savings/flex-goal-summary';
+import CreateStashGoal from './savings/create-stash_step1';
+import CreateStashGoalStep2 from './savings/create-stash-step2'
 import GroupSavingsSelection from './savings/group/group-saving-selection';
 import CreateATargetGoal from './savings/group/create-a-target-goal';
 import GroupCreated from './savings/group/group-created';
@@ -36,6 +36,8 @@ import SuccessMessage from './savings/group/success-message';
 import RotatingGroup from './savings/group/rotating-savings-group';
 import RotatingGroupCreated from './savings/group/rotating-group-created';
 import GroupAnalyticsMini from './savings/group/group-analytics-mini';
+
+
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
     return (
@@ -86,8 +88,8 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path='/savings/flex-goal' authed={this.props.user} component={FlexGoal}/>
                     <PrivateRoute path='/savings/flex-goal-step2' authed={this.props.user} component={FlexGoalStep2}/>
                     <PrivateRoute path='/savings/flex-goal-summary' authed={this.props.user} component={FlexGoalSummary}/>
-                    {/* <PrivateRoute path='/savings/goal/create-stash' authed={this.props.user} component={CreateStash} /> */}
-                    {/* <PrivateRoute path='/savings/goal/create-stash-step2' authed={this.props.user} component={CreateStashContinue} /> */}
+                    <PrivateRoute path='/savings/create-stash_step1' authed={this.props.user} component={CreateStashGoal}/>
+                    <PrivateRoute path='/savings/create-stash_step2' authed={this.props.user} component={CreateStashGoalStep2}/>
                     <PrivateRoute path='/savings/goal/group-savings-selection' authed={this.props.user} component={GroupSavingsSelection} />
                     <PrivateRoute path='/savings/group/save-towards-a-target' authed={this.props.user} component={CreateATargetGoal} />
                     <PrivateRoute path='/savings/group/group-created' authed={this.props.user} component={GroupCreated} />
@@ -99,6 +101,14 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path="/savings/group/create-rotating" authed={this.props.user} component={RotatingGroup} />
                     <PrivateRoute path="/savings/ratating-group" authed={this.props.user} component={RotatingGroupCreated} />
                     <PrivateRoute path='/savings/group-analytics-mini' authed={this.props.user} component={GroupAnalyticsMini} />
+=======
+
+
+
+
+
+
+
                 </Switch>
             </Router>
             
