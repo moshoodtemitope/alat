@@ -127,7 +127,13 @@ class GroupAnalytics3 extends React.Component {
 }
 
 
-export default GroupAnalytics3;
+function mapStateToProps(state){
+    return {
+        groupDetails: state.groupDetails.data
+    }
+}
+
+export default connect(mapStateToProps)(GroupAnalytics3);
  
 
 

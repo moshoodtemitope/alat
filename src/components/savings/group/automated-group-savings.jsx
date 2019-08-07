@@ -26,6 +26,8 @@ class AutomateGroupSavings extends React.Component {
             isAccountInvalid: null,
             accountNumber: null,
             selectedAccount: null,
+            goalFrequency: "",
+            Frequency:"",
 
             howMuchValidity:false,
             endDateValidity:false,
@@ -126,6 +128,14 @@ class AutomateGroupSavings extends React.Component {
         }
     }
 
+    handleSelectChange = (Frequency) => {
+        this.setState({ "goalFrequency": Frequency.value,
+                        "goalFrequency" : Frequency.label
+              });
+         if (this.state.formsubmitted && Frequency.value != "")
+          this.setState({ TimeSavedInvalid: false })
+    }
+
     SubmitAutomatedGroupSavings = () => {
         const data = {
             GroupId: this.props.groupDetails.response.id,
@@ -146,7 +156,7 @@ class AutomateGroupSavings extends React.Component {
     }
 
     render() {
-        const {endDate,amountToContributeValidity, endDateValidity, startDateValidity, howMuchValidity,
+        const {endDate,amountToContributeValidity,goalFrequency, endDateValidity, startDateValidity, howMuchValidity,
         } = this.state;
 
         return (
@@ -187,9 +197,9 @@ class AutomateGroupSavings extends React.Component {
                                                         <label className="label-text">How would you like to save?</label>
                                                          <Select type="text" 
                                                             options={selectedTime}
-                                                            name="timeSaved"
+                                                            name="goalFrequency"
                                                             onChange={this.handleSelectChange}
-                                                            value={timeSaved.label}
+                                                            value={goalFrequency.label}
                                                           />
                                                     </div>
                                                     <div className={endDateValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
@@ -275,4 +285,4 @@ function mapStateToProps(state){
         groupDetails: state.groupDetails.data
     }
 }
-export default connect(null, mapStateToProps)(AutomateGroupSavings);
+export default connect(mapStateToProps)(AutomateGroupSavings);

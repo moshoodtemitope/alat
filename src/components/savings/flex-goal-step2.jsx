@@ -20,12 +20,6 @@ const selectedTime = [
    
 ];
 
-
-
-
-
-
-
 class FlexGoal extends React.Component {
 
     constructor(props){
