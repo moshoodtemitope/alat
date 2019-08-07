@@ -21,7 +21,8 @@ class LoanEstimator extends React.Component {
             PhoneNumber: "",
             InterestRate: "",
             LoanAmountInvalid: false,
-            isSubmitted: false
+            isSubmitted: false,
+            applyButtonDisabled : false
         }
     }
 
@@ -75,11 +76,13 @@ class LoanEstimator extends React.Component {
         this.setState({ isSubmitted: true });
         if (this.state.Term >= 1) {
             if (this.state.LoanAmount >= this.props.minimumLoanAmount && this.state.LoanAmount <= this.props.maxAmount) {
-                this.props.LoanApplyClick({
+                this.setState({applyButtonDisabled :  true},()=>{
+                    this.props.LoanApplyClick({
                         "LoanAmount": this.state.LoanAmount,
                         "Term": this.state.Term,
                         "PhoneNumber": this.state.PhoneNumber
                     });
+                })
             } else {
                 this.setState({ LoanAmountInvalid: true })
             }
@@ -174,7 +177,7 @@ class LoanEstimator extends React.Component {
 											</span>
                                 </div>
                                 <div className="row loan-btn">
-                                    <a onClick={this.LoanAplyClick} style={{ cursor: 'pointer' }}><button className="btn-alat m-t-10 text-center"
+                                    <a onClick={this.LoanAplyClick} disabled={this.state.applyButtonDisabled} style={{ cursor: 'pointer' }}><button className="btn-alat m-t-10 text-center"
                                         type="submit">Apply for Loan</button></a>
                                 </div>
                             </div>

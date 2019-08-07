@@ -19,52 +19,6 @@ class LoansDashboard extends React.Component {
             user: JSON.parse(localStorage.getItem("user")),
             currentLoan: null,
             LoanHistory: [
-                {
-                    "Id": 1,
-                    "AmountRequested": 2.0,
-                    "TenureMonths": 64,
-                    "AmountOffered": 4.0,
-                    "InterestRate": 5.1,
-                    "Status": 64,
-                    "DueDate": "2019-08-05T20:37:44.5477545+01:00",
-                    "DateCreated": "2019-08-05T20:37:44.5477545+01:00",
-                    "OutStandingAmount": 9.0,
-                    "InterestAccrued": 10.0,
-                    "LastInterestExecutionDate": "2019-08-05T20:37:44.5477545+01:00",
-                    "ScheduledPaymentArchive": "sample string 12",
-                    "FailureReason": "sample string 13",
-                    "NextLoanRepaymentReminderDate": "2019-08-05T20:37:44.5477545+01:00",
-                    "TotalInterestAccrued": 15.0,
-                    "CreditAccount": "sample string 16",
-                    "DebitAccount": "sample string 17",
-                    "DebitBankId": "sample string 18",
-                    "EndDate": "2019-08-05T20:37:44.5477545+01:00",
-                    "MonthlyRepaymentAmount": 20.0,
-                    "LoanStatus": 1
-                },
-                {
-                    "Id": 1,
-                    "AmountRequested": 2.0,
-                    "TenureMonths": 64,
-                    "AmountOffered": 4.0,
-                    "InterestRate": 5.1,
-                    "Status": 64,
-                    "DueDate": "2019-08-05T20:37:44.5477545+01:00",
-                    "DateCreated": "2019-08-05T20:37:44.5477545+01:00",
-                    "OutStandingAmount": 9.0,
-                    "InterestAccrued": 10.0,
-                    "LastInterestExecutionDate": "2019-08-05T20:37:44.5477545+01:00",
-                    "ScheduledPaymentArchive": "sample string 12",
-                    "FailureReason": "sample string 13",
-                    "NextLoanRepaymentReminderDate": "2019-08-05T20:37:44.5477545+01:00",
-                    "TotalInterestAccrued": 15.0,
-                    "CreditAccount": "sample string 16",
-                    "DebitAccount": "sample string 17",
-                    "DebitBankId": "sample string 18",
-                    "EndDate": "2019-08-05T20:37:44.5477545+01:00",
-                    "MonthlyRepaymentAmount": 20.0,
-                    "LoanStatus": 1
-                }
             ],
             currentLoanSet: false,
         }
@@ -97,6 +51,18 @@ class LoansDashboard extends React.Component {
             }
     }
 
+    movetoCalculator =()=>{
+        if (this.props.loan_current && this.props.loan_history)
+            if (this.props.loan_current.loan_current_status == loanConstants.LOAN_CURRENT_SUCCESS && 
+                this.props.loan_history.loan_history_status == loanConstants.LOAN_HISTORY_SUCCESS) {
+                    if(this.props.loan_history.loan_history_data.response.Response.length == 0 
+                        && this.props.loan_current.loan_current_data.response.Response ==null)
+                        {
+                            this.props.history.push('/loans/salary/calc');
+                        }
+            }
+    }
+
     returnPastLoans = () => {
         if (this.props.loan_history)
             if (this.props.loan_history.loan_history_status == loanConstants.LOAN_HISTORY_SUCCESS) {
@@ -104,11 +70,28 @@ class LoansDashboard extends React.Component {
                     ...this.props.loan_history.loan_history_data.response.Response
                     //..this.state.LoanHistory
                 ];
-                if (data.length >= 1)
+                if (data.length >= 1){
                     return (<Fragment>
                         {this.renderLoanList(data)}
                     </Fragment>);
+                } else return(<Fragment><span class="grey-text big">You dont have Past Loans</span>   </Fragment>)
             }
+    }
+
+    returnCurrentLoanPendingStatus = () => {
+        if (this.props.loan_current)
+            if (this.props.loan_current.loan_current_status == loanConstants.LOAN_CURRENT_PENDING) {
+                return loanConstants.LOAN_CURRENT_PENDING;
+            } else if(this.props.loan_current.loan_current_status == loanConstants.LOAN_CURRENT_FAILURE){
+                return loanConstants.LOAN_CURRENT_FAILURE;
+            }
+    }
+
+    returnLoanHistoryPendingStatus = () => {
+        if (this.props.loan_history)
+            if (this.props.loan_history.loan_history_status == loanConstants.LOAN_HISTORY_PENDING) {
+                return true;
+            } else return false;
     }
 
     renderLoanList = (data) => {
@@ -152,6 +135,7 @@ class LoansDashboard extends React.Component {
 
     render() {
         this.initCurrentLoan();
+        this.movetoCalculator();
         const { currentLoan } = this.state;
         return (<Fragment>
             <div className="row">
@@ -210,7 +194,9 @@ class LoansDashboard extends React.Component {
                                 </div>
                             </div>}
                             {currentLoan == null && <div className="shd-box seg empty">
-                                <span class="grey-text big">You dont have a current loan!</span>
+                                {this.returnCurrentLoanPendingStatus() == loanConstants.LOAN_CURRENT_SUCCESS && <span class="grey-text big">You dont have a current loan!</span>}
+                                {this.returnCurrentLoanPendingStatus() == loanConstants.LOAN_CURRENT_PENDING && <span class="grey-text big">Loading...</span>}
+                                {this.returnCurrentLoanPendingStatus() == loanConstants.LOAN_CURRENT_FAILURE && <span class="grey-text big"><a onClick={this.getCurrentLoan} style={{cursor : "pointer"}}>Click to try again</a></span>}
                             </div>}
                             <input type="button" disabled={currentLoan == null} value="Liquidate Current Loan" className="btn-alat btn-block" />
                             <input type="button" value="Apply For Loan" onClick={() => this.props.history.push("/loans/salary/calc")}

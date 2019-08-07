@@ -10,11 +10,21 @@ class LoanCardResult extends React.Component{
     constructor(props){
         super(props);
     }
+     goForward=()=>{
 
+     }
+
+     doneClick=()=>{
+        this.props.history.push('/loans');
+     }
+
+     goBackWard=()=>{
+      this.props.history.push('/loans/salary/score-card');
+     }
     render(){
         return(<ScoreResult 
-            forwardUrl={}
-            backwardUrl={}
+            gotoPreviousPageMethod={this.goBackWard}
+            doneClick={this.doneClick}
         />);
     }
 }
@@ -25,4 +35,4 @@ function mapStateToProps(state){
     }
 }
 
-export default LoanCardResult;
+export default connect(mapStateToProps)(LoanCardResult);

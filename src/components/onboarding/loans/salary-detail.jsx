@@ -33,7 +33,7 @@ class LoanOnbaordingSalaryDetails extends React.Component {
         if (this.props.loan_step3)
             if (this.props.loan_step3.loan_step3_status == loanOnboardingConstants.LOAN_STEP3_SUCCESS) {
                // this.fetchBanks();
-              this.setState({ FirstName :this.props.user_detail.loan_userdetails_data.data.FirstName });   
+              //this.setState({ FirstName :this.props.user_detail.loan_userdetails_data.data.FirstName });   
             } else this.props.history.push("/loan/bvn-info");
         else { this.props.history.push("/loan/bvn-info") }
     }
@@ -61,9 +61,9 @@ class LoanOnbaordingSalaryDetails extends React.Component {
     render() {
         const { employerName, accountNumber, employerNameInvalid, accountNumberInvalid,
             selectedBankInvalid } = this.state;
-        let props = this.props; //UserName={this.state.user.firstname} // meant to be on LoanOnboardingContainer
+        let props = this.props;
         return (
-            <LoanOnboardingContainer >
+            <LoanOnboardingContainer UserName={this.state.user.firstname}>
                 {/* //{this.gotoNextPage()} */}
                 <SalaryDetail
                 token={this.returnToken()}

@@ -7,6 +7,7 @@ import LoanSalaryDetail from './salary/a-salary-detail';
 import LoanSalaryEntry from './salary/a-salary-entry';
 import LoanSalaryTicket from './salary/a-ticket';
 import LoanScoreCard from './salary/a-score-card';
+import LoanCardResult from './salary/a-card-result';
 
 import InnerContainer from '../../shared/templates/inner-container';
 
@@ -34,6 +35,7 @@ class LoansIndex extends React.Component {
                                                <Route path={'/loans/salary/entry'} component={LoanSalaryEntry} />
                                                <Route path={'/loans/salary/ticket'} component={LoanSalaryTicket} />
                                                <Route path={'/loans/salary/score-card'} component={LoanScoreCard} />
+                                               <Route path={'/loans/salary/card-result'} component={LoanCardResult} />
                             
                                 </div>
 

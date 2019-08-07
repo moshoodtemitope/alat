@@ -13,7 +13,7 @@ class LoanOnboardingScoreResult extends React.Component {
 		super(props);
 		this.state = {
 			user: JSON.stringify(localStorage.getItem("user")),
-			data: ""
+			loanDetails:{}
 		}
 	}
 
@@ -27,10 +27,10 @@ class LoanOnboardingScoreResult extends React.Component {
 			if (this.props.score_card_A.loan_scoreA_status != loanOnboardingConstants.LOAN_SCORECARD_ANSWER_PENDING) {
 				// this.props.history.push("/loan/card-result");
 				var data = {
-					...this.props.score_card_A.loan_scoreA_data.data.response
+					...this.props.score_card_A.loan_scoreA_data.data.response.Response
 				}
 				//console.log(data);
-				this.setState({ data: data });
+				this.setState({ loanDetails: data });
 			}
 	}
 
@@ -47,7 +47,7 @@ class LoanOnboardingScoreResult extends React.Component {
 
 	render() {
 		return (
-			<LoanOnboardingContainer UserName={this.state.user.firstname}>
+			<LoanOnboardingContainer UserName={this.state.user.fullName}>
 				<div className="col-sm-12">
 					<div className="max-460">
 						<div className="loan-header-text text-center">
@@ -59,7 +59,7 @@ class LoanOnboardingScoreResult extends React.Component {
 								<div className="result-msg">
 									
 									<p>Dear Customer</p>
-											{this.returnScoreCardSuccessStatus() && <Fragment><p>Congratulations!!! you have been granted a loan of <b>{this.state.data.Response.LoanAmountGranted}</b></p>
+											{this.returnScoreCardSuccessStatus() && <Fragment><p>Congratulations!!! you have been granted a loan of <b>{util.formatAmount(this.state.loanDetails.LoanAmountGranted)}</b></p>
 											<p>Click Accept to proceed</p></Fragment>}
 
 											{!this.returnScoreCardSuccessStatus() && <Fragment><p>Apologies!!! loan was not granted</p>

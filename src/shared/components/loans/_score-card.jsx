@@ -25,7 +25,7 @@ class ScoreCard extends React.Component {
     }
 
     componentDidMount = () => {
-        //this.init();
+        this.init();
     }
 
     init = () => {
@@ -33,7 +33,8 @@ class ScoreCard extends React.Component {
             if (this.props.salary_entry.loan_salEnt_status == loanOnboardingConstants.LOAN_SALARYENTRY_SUCCESS) {
                 this.props.dispatch(actions.getScoreCard(this.state.user.token));
             } else {
-                return (<Redirect to={this.props.backwardUrl}/>);  //this.props.history.push());
+                // return (<Redirect to={this.props.backwardUrl}/>);  //this.props.history.push());
+                this.props.gotoPreviosuPageMethod();
             }
     }
 
@@ -107,7 +108,8 @@ class ScoreCard extends React.Component {
         if (this.props.score_card_A)  //loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS
             if (this.props.score_card_A.loan_scoreA_status == loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS
                 || this.props.score_card_A.loan_scoreA_status == loanOnboardingConstants.LOAN_SCORECARD_ANSWER_FAILURE) {
-                this.props.history.push(this.props.forwardUrl);
+               // this.props.history.push(this.props.forwardUrl);
+               this.props.gotoNextPageMethod();
             }
     }
 
@@ -115,7 +117,6 @@ class ScoreCard extends React.Component {
         const { YearsOfExperience, NumberOfDependants, EducationQualifications, selectedQualification, selectedDependant, selectedYOE } = this.state;
         return (
             <Fragment>
-                {this.init()}
                 {this.populateOptions()}
                 {this.gotoNextPage()}
                 <div className="col-sm-12">

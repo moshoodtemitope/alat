@@ -11,10 +11,21 @@ class LoanScoreCard extends React.Component{
         super(props);
     }
 
+    goForward=()=>{
+        this.props.history.push('/loans/salary/card-result');
+    }
+
+    goBackward=()=>{
+        this.props.history.push('/loans/salary/entry');
+    }
+
+
     render(){
         return(<ScoreCard 
                 forwardUrl={'/loan/salary/card-result'}
                 backwardUrl={'/loan/salary/entry'}
+                gotoNextPageMethod={this.goForward}
+                gotoPreviosuPageMethod={this.goBackward}
         />);
     }
 }
