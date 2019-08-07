@@ -7,8 +7,6 @@ import {ApiService} from "../../../services/apiService";
 import {routes} from "../../../services/urls";
 
 
-
-
 export const isFetchingTrue = () => {
     return {
         type: actionTypes.IS_FETCHING_TRUE
@@ -20,6 +18,7 @@ export const isFetchingFalse = () => {
         type: actionTypes.IS_FETCHING_FALSE
     }
 }
+
 
 export const fetchAllUnexpiredPaycodes = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
@@ -107,8 +106,6 @@ export const cardlessOtpVerification = (token, data) => {
                 console.log(error);
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
-
-            
     };
     function success(response) { return { 
         type : actionTypes.SUCCESS_NEXT_PAGE,

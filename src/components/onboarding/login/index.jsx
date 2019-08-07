@@ -75,7 +75,7 @@ class Login extends React.Component{
           else{
               this.setState({ submitted: false });
           }
-    }
+      }
 
       render(){
         const { email, password, submitted, error } = this.state;

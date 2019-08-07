@@ -31,6 +31,8 @@ import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingV
 
  import {fixedGoalStep1Reducer,fixedGoalStep2Reducer,addGoalReducer} from './goal/fixed-goal.reducers'
  import {flexGoalStep1Reducer,flexGoalStep2Reducer,addFlexGoalReducer} from './goal/flex-goal.reducer'
+ import {groupSavingsTargetGoal, groupDetails, deleteGroup, contribute, editGroup, pauseGroup, findGroup, customerGroup, joinGroup, scheduleContribution, deleteMember, cashOut,
+    continueScheduleGroupPayment} from './group-savings/group-savings-reducers';
 
 export const onboarding = {
     userRegistrationRequest,
@@ -96,7 +98,7 @@ export const fundAccount={
     //fundFromCardWithPinReducer
     saveCardAfterTranReducer
 }
- export const fixedGoal={
+export const fixedGoal ={
     fixedGoalStep1Reducer,
     fixedGoalStep2Reducer,
     addGoalReducer
@@ -107,3 +109,20 @@ export const fundAccount={
     addFlexGoalReducer
 
  }
+ export const groupSavings ={
+    groupSavingsTargetGoal, 
+    groupDetails, 
+    deleteGroup, 
+    contribute, 
+    editGroup, 
+    pauseGroup, 
+    findGroup, 
+    customerGroup, 
+    joinGroup, 
+    scheduleContribution, 
+    deleteMember, 
+    cashOut,
+    continueScheduleGroupPayment
+}
+ 
+ 

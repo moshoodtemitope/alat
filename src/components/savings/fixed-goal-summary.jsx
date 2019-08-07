@@ -45,7 +45,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
             this.setState({
                 AmountSavedText:data.AmountSavedText,
                 startDate: data.startDate,
-                endDate: data.endDate,  
+                endDate: data.endDate,
                 goalName:data.goalName,
                 timeSaved:data.timeSaved,
                 debitAccount:data.debitAccount,

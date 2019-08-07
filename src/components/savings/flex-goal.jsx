@@ -19,10 +19,6 @@ const selectedTime = [
    
 ];
 
-
-
-
-
 class FlexGoal extends React.Component {
 
     constructor(props){
@@ -46,11 +42,11 @@ class FlexGoal extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleStartDatePicker = this.handleStartDatePicker.bind(this);
         this.handleEndDatePicker = this.handleEndDatePicker.bind(this)
-
         
       
 
     }
+    
     valStartDate = () => {
         if (this.state.startDate == null) {
             this.setState({ startDateInvalid: true });
@@ -60,6 +56,7 @@ class FlexGoal extends React.Component {
             return false;
         }
     }
+
     valEndDate = () => {
         if (this.state.endDate == null) {
             this.setState({ endDateInvalid: true });
@@ -69,16 +66,19 @@ class FlexGoal extends React.Component {
             return false;
         }
     }
+
     handleChange = (e) => {
         let name = e.target.name;
         this.setState({ [name]: e.target.value })
     }
+
     checkGoalName = () => {
         if (this.state.goalName == "") {
             this.setState({ GoalNameInvalid: true });
             return true;
         }
     }
+
     handleStartDatePicker = (startDate) => {
         startDate.setHours(startDate.getHours() + 1);
         this.setState({ startDate: startDate });
@@ -100,6 +100,7 @@ class FlexGoal extends React.Component {
             return true;
         }
     }
+
     handleAmount = (e) => {
         // console.log
          var intVal = e.target.value.replace(/,/g, '');
@@ -159,8 +160,6 @@ class FlexGoal extends React.Component {
     }
     
     
-    
-  
     onSubmit(event){
         event.preventDefault();
 
@@ -187,10 +186,6 @@ class FlexGoal extends React.Component {
             }
     }
     
-
-    
-
-
     render() {
         
         let {GoalNameInvalid,endDateInvalid,startDateInvalid,AmountSavedInvalid,TimeSavedInvalid,AmountSavedText,timeSaved}=this.state
@@ -276,7 +271,6 @@ class FlexGoal extends React.Component {
                                                             onChange={this.handleEndDatePicker}
                                                             maxDate={new Date()}
                                                             value={this.state.endDate}
-
                                                         />
                                                         {endDateInvalid &&
                                                             <div className="text-danger">select a valid date</div>
@@ -313,7 +307,6 @@ class FlexGoal extends React.Component {
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <center>
-
                                                             <button 
                                                             disabled={this.props.flex_goal_step1.flex_step1_status == flexGoalConstants.FETCH_FLEX_GOAL_PENDING}
 

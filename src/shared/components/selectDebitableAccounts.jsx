@@ -127,7 +127,6 @@ class SelectDebitableAccounts extends React.Component {
                     </div>
                 }
 
-
                 {this.props.accounts &&
                     this.props.accounts.debitable_accounts ==
                     airtimeConstants.GET_DEBTABLE_ACCOUNTS_FAILURE

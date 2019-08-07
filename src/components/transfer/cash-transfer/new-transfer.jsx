@@ -1,25 +1,25 @@
 import * as React from "react";
 import {Router} from "react-router";
 // import * as utils from "../../shared/utils";
-import {accountEnquiry, 
-        getBanks, 
-        getBeneficiaries, 
+import {accountEnquiry,
+        getBanks,
+        getBeneficiaries,
         deleteTransferBeneficiary,
         cashTransferData,
         clearTransferStore} from "../../../redux/actions/transfer/cash-transfer.actions";
-import {FETCH_BANK_PENDING, 
-        FETCH_BANK_SUCCESS, 
-        FETCH_BANK_FAILURE, 
+import {FETCH_BANK_PENDING,
+        FETCH_BANK_SUCCESS,
+        FETCH_BANK_FAILURE,
         GET_ACCOUNT_DETAILS_PENDING,
         GET_ACCOUNT_DETAILS_SUCCESS,
         GET_ACCOUNT_DETAILS_FAILURE,
-        FETCH_TRANSFER_BENEFICIARY_SUCCESS, 
+        FETCH_TRANSFER_BENEFICIARY_SUCCESS,
         FETCH_TRANSFER_BENEFICIARY_PENDING,
         FETCH_TRANSFER_BENEFICIARY_FAILURE,
         TRANSFER__BANK_DETAILS,
         TRANSFER__BANK_DETAILS_FAILURE,
         TRANSFER__BANK_DETAILS_SUCCESS,
-        DELETE_TRANSFER_BENEFICIARY_SUCCESS, 
+        DELETE_TRANSFER_BENEFICIARY_SUCCESS,
         DELETE_TRANSFER_BENEFICIARY_PENDING,
         DELETE_TRANSFER_BENEFICIARY_FAILURE} from "../../../redux/constants/transfer.constants";
 import {Fragment} from "react";
@@ -71,8 +71,6 @@ class NewTransfer extends React.Component {
         // this.handleDetailsStatus();
     }
 
-
-
     getBeneficiaries(){
         const { dispatch } = this.props;
         // dispatch(accountEnquiry(this.state.user.token, {}))
@@ -83,8 +81,6 @@ class NewTransfer extends React.Component {
         e.preventDefault();
         this.props.history.push("/transfer/provide-details");
     }
-
-    
 
     editTransfer(e){
         e.preventDefault();
@@ -114,7 +110,7 @@ class NewTransfer extends React.Component {
         // }
 
         this.props.dispatch(clearTransferStore());
-        
+
     }
 
     toggleModal=(beneficiary, key, e)=>{
@@ -123,7 +119,7 @@ class NewTransfer extends React.Component {
             e.stopPropagation();
             this.setState({ beneficiaryToDelete : beneficiary, elemToDelete: key});
         }
-        
+
         if(this.state.openModal){
            this.setState( {openModal : false  })
         }else {
@@ -133,11 +129,11 @@ class NewTransfer extends React.Component {
 
     beneficiaryToshow(beneficiary){
         return (beneficiary.Currency==="NGN");
-                                                        
+
     }
 
     renderBeneficiaries(){
-        
+
         let props = this.props;
         // console.info('props is:', this.props);
         let beneficiaryListStatus = props.beneficiaries.beneficiaries;
@@ -154,20 +150,20 @@ class NewTransfer extends React.Component {
                 let beneficiaries = props.beneficiaries.beneficiaries_data.response.data,
                 filteredBeneficiaries = beneficiaries.filter(this.beneficiaryToshow);
                     // this.setState({beneficairiesList: beneficiaries});
-                
+
                 return(
                     <div>
-                        {(filteredBeneficiaries.length>1) && 
+                        {(filteredBeneficiaries.length>1) &&
                             <div className="col-sm-12 col-md-10 offset-md-1 search-wrap hide">
                                 <div className="search-beneficiary">
                                     <input type="text" onChange={this.searchBeneficiaries} placeholder="Search beneficiary"/>
                                 </div>
                             </div>
-                            
+
                         }
                         {filteredBeneficiaries.map((ben, key) => {
                             return (
-                                
+
                                 <Fragment>
                                     <div className={(key>=1)?"col-sm-12 col-md-10 offset-md-1 each-beneficiary hide": "col-sm-12 col-md-10 each-beneficiary offset-md-1"} key={key} id={"beneficiary-"+key}>
                                         <div className="al-card beneficiary-card" onClick={()=>this.proceedWithSelectBeneficary(ben, false)}>
@@ -184,18 +180,18 @@ class NewTransfer extends React.Component {
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
-                                    
+
                                 </Fragment>
                             )
                         })
                         }
-                        {(filteredBeneficiaries.length>1) && 
+                        {(filteredBeneficiaries.length>1) &&
                             <div className="see-more-cta"><a onClick={this.showAllBeneficiaries} >See all beneficiaries</a> </div>
                         }
                     </div>
-                    
+
                 );
             case FETCH_TRANSFER_BENEFICIARY_FAILURE:
                 // this.fetchBeneficiariesRetry();
@@ -206,20 +202,20 @@ class NewTransfer extends React.Component {
     }
 
     searchBeneficiaries(e){
-        
+
         let searchText = e.target.value;
         // if(searchText.length>=1){
             document.querySelectorAll('.each-beneficiary').forEach((eachBeneficiary)=>{
-                
+
                 if(eachBeneficiary.querySelector('.nickname-text').textContent.toLowerCase().indexOf(searchText.toLowerCase()) > -1){
-                    
+
                     if(eachBeneficiary.classList.contains('hide')){
                         eachBeneficiary.classList.remove('hide');
                     }
                 }
                 else{
                     eachBeneficiary.classList.add('hide');
-                    
+
                 }
                 // if(eachBeneficiary.classList.contains('hide')){
                 //     eachBeneficiary.classList.remove('hide');
@@ -242,46 +238,46 @@ class NewTransfer extends React.Component {
     endBeneficiaryDelete(){
         // this.toggleModal();
         // if(this.state.beneficiaryToDelete){
-            
+
             let props = this.props;
             const {dispatch} = this.props;
             if(this.state.deletingBeneficiary ===true && props.beneficiary_delete_state.beneficiary_delete_state === DELETE_TRANSFER_BENEFICIARY_SUCCESS){
             // let benDeleteStatus = props.beneficiary_delete_state;
             // let beneficiaries = props.beneficiaries.beneficiaries_data.response.data;
             // let deleteIndex = beneficiaries.findIndex(item=>{item.AccountNumber === this.state.beneficiaryToDelete.AccountNumber});
-            
+
             //     beneficiaries.splice(deleteIndex,1);
             //     console.error('remainning ones', beneficiaries);
-        
-                // 
+
+                //
                 // console.log('to remove is', this.state.elemToDelete);
                 // if(document.getElementById(''+this.state.elemToDelete)){
                 //     document.getElementById(''+this.state.elemToDelete).remove();
                 //     this.toggleModal();
                 // }
-               
-                
+
+
                 // dispatch(getBeneficiaries(this.state.user.token));
                 // this.props.dispatch(clearTransferStore());
                 this.getBeneficiaries();
                 this.toggleModal();
                 this.setState({deletingBeneficiary:false});
             }
-        
+
     }
-    
-    
+
+
     confirmDeleteTransferBeneficiary(){
         const { dispatch } = this.props;
-       
+
         let beneficiary = this.state.beneficiaryToDelete;
             beneficiary.TransactionPin = '0000';
             this.setState({beneficiaryToDelete: beneficiary, deletingBeneficiary: true});
-            
+
             dispatch(deleteTransferBeneficiary((this.state.user.token), this.state.beneficiaryToDelete));
     }
 
-    
+
 
     fetchBanks(){
         const { dispatch } = this.props;
@@ -313,7 +309,7 @@ class NewTransfer extends React.Component {
             }else{
                 this.setState({existingBeneficiaryError: true});
             }
-            
+
         }else{
             dispatch(cashTransferData({
                 AccountNumber: this.state.accountNumber,
@@ -324,7 +320,7 @@ class NewTransfer extends React.Component {
             },false, null));
             this.props.history.push("/transfer/provide-details");
         }
-        
+
     }
 
     proceedWithSelectBeneficary(beneficiary){
@@ -338,17 +334,17 @@ class NewTransfer extends React.Component {
             BankCode: beneficiary.BankCode,
             Currency: beneficiary.Currency
         }, false, this.state.user.token));
-        
+
     }
 
     handleSubmit(e, props) {
-        
+
         e.preventDefault();
         // console.log('select bank is,', this.state.selectedBank);
         // return false;
         const { selectedBank, accountNumber } = this.state;
         const { dispatch } = this.props;
-       
+
         if (selectedBank && accountNumber) {
             this.setState({ submitted: true, submitButtonState: true, inputState: true });
             let payload = {
@@ -358,11 +354,11 @@ class NewTransfer extends React.Component {
             dispatch(accountEnquiry(this.state.user.token, payload));
             // this.handleDetailsStatus();
             let accountFetchStatus = this.props.account_details;
-           
+
 
             let props = this.props,
             accountInfo = props.account_details;
-        
+
             {accountInfo.account_detail===GET_ACCOUNT_DETAILS_SUCCESS &&
                 this.setState({ submitted: false, submitButtonState: false })
             }
@@ -372,8 +368,8 @@ class NewTransfer extends React.Component {
             }
 
             console.log('account details will be', accountInfo);
-            
-            
+
+
         }
         else{
             this.setState({ submitted: false, submitButtonState: false });
@@ -397,19 +393,19 @@ class NewTransfer extends React.Component {
         );
     }
 
-   
+
 
     handleChange(selectedBank){
         this.setState({ selectedBank });
     }
 
     // accountDetails
-    
+
 
     renderBankDropdown(props){
         // console.error(props);
         let banksStatus = props.bankList.banks; //FETCH_BANK_PENDING;
-       
+
         switch(banksStatus){
             case FETCH_BANK_PENDING:
                 return (
@@ -431,7 +427,7 @@ class NewTransfer extends React.Component {
                         // onInputChange={this.handleChange}
                         onChange={this.handleChange}
                     />
-                    
+
                 );
             case FETCH_BANK_FAILURE:
                 return(
@@ -445,11 +441,11 @@ class NewTransfer extends React.Component {
         }
     }
 
-    
+
     render() {
-        const {accountNumber, 
-                error, 
-                accountInputError, 
+        const {accountNumber,
+                error,
+                accountInputError,
                 submitButtonState,
                 detailVerificacationStatus,
                 existingBeneficiaryError} = this.state;
@@ -459,9 +455,9 @@ class NewTransfer extends React.Component {
             beneficiaryListStatus = props.beneficiaries,
             accountInfo = props.account_details,
             benDeleteStatus = props.beneficiary_delete_state;
-            
-            
-             
+
+
+
             // {accountInfo.account_detail===GET_ACCOUNT_DETAILS_SUCCESS &&
             //     this.setState({ submitted: false, submitButtonState: false })
             // }
@@ -469,9 +465,9 @@ class NewTransfer extends React.Component {
 
         return (
             <Fragment>
-                
+
                         {/* here */}
-                        
+
                             {/* to here */}
                             <div className="col-sm-12">
                                 <div className="row">
@@ -498,7 +494,7 @@ class NewTransfer extends React.Component {
                                                                 name="accountNumber"
                                                                 type="text"
                                                                 autoComplete ="off"
-                                                                
+
                                                                 value={accountNumber}
                                                                 disabled={accountInfo.fetchStatus}
                                                                 maxLength="11"
@@ -529,11 +525,11 @@ class NewTransfer extends React.Component {
                                                                 <small className="error-msg">{accountInfo.account_detail_data.error}</small>
                                                             }
                                                             {/*<input type="tel"/>*/}
-                                                            
+
                                                         </div>
-                                                        
-                                                        
-                                                        
+
+
+
                                                     {accountInfo.account_detail===GET_ACCOUNT_DETAILS_SUCCESS &&
                                                         this.renderAccountDetail(accountInfo.account_detail_data.response)
                                                     }
@@ -549,8 +545,8 @@ class NewTransfer extends React.Component {
                                                             </div>
                                                         </div>
                                                     }
-                                                        
-                                                        
+
+
                                                     </form>
                                                     {accountInfo.account_detail===GET_ACCOUNT_DETAILS_SUCCESS &&
                                                         <div className="proceed-ctas">
@@ -567,10 +563,10 @@ class NewTransfer extends React.Component {
                                                                 </div>
                                                                 <div className="col-sm-12">
                                                                     <center> <a onClick={this.editTransfer} className="edit-cta">Edit details</a></center>
-                                                                    
+
                                                                 </div>
                                                             </div>
-                                                            
+
                                                         </div>
                                                     }
                                                     {existingBeneficiaryError ===true &&
@@ -597,15 +593,15 @@ class NewTransfer extends React.Component {
                                                                     className="btn-alat" disabled={benDeleteStatus.beneficiaryDeleteStatus}>{ (benDeleteStatus.beneficiaryDeleteStatus===false)|| (!benDeleteStatus.beneficiaryDeleteStatus) ? "Proceed" : "Deleting..." }</button>
                                                             </div>
                                                         </div>
-                                                         
+
                                                     }
-                                                    
+
                                                     {/* {benDeleteStatus.beneficiary_delete_state ===DELETE_TRANSFER_BENEFICIARY_SUCCESS &&
                                                         <div className="modal-text">
                                                             Beneficiary successfully deleted
                                                         </div>
                                                     } */}
-                                                   
+
                                                 </div>
                                             </Modal>
                                             {beneficiaryListStatus.beneficiaries===FETCH_TRANSFER_BENEFICIARY_FAILURE &&
@@ -616,7 +612,6 @@ class NewTransfer extends React.Component {
                                 </div>
                                 {/* here down */}
                             </div>
-                        
             </Fragment>
         );
     }

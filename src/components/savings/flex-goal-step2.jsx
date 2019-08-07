@@ -210,9 +210,7 @@ class FlexGoal extends React.Component {
                                             </div>
                                             
                                             </div>
-                                                
-                                               
-                                            
+                                                                      
                                             </form>
 
                                             

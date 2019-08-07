@@ -13,17 +13,10 @@ import SelectDebitableAccounts from '../../shared/components/selectDebitableAcco
 
 import "react-datepicker/dist/react-datepicker.css";
 const selectedTime = [
-           
     { value: 'monthly' ,label:"Monthly" },
     {  value: 'weekly' , label:"Weekly" },
     {  value: 'daily', label:"Daily"},
-   
 ];
-
-
-
-
-
 
 
 class FixedGoal extends React.Component {
@@ -48,11 +41,6 @@ class FixedGoal extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this)
         this.handleSelectDebitableAccounts = this.handleSelectDebitableAccounts.bind(this);
-
-
-        
-      
-
     }
     handleSelectChange = (SelectedtimeSaved) => {
         this.setState({ "timeSaved": SelectedtimeSaved.value,

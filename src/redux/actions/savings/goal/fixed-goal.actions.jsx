@@ -8,6 +8,7 @@ import {routes} from "../../../../services/urls";
 
 
 
+
 // add FixedGoal
 export const fetchFixedGoalStep1 = (data) =>{
     return(dispatch)=>{
@@ -17,7 +18,6 @@ export const fetchFixedGoalStep1 = (data) =>{
         return{
             type:fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS,
             data:data
-        
         }
     }
 }
