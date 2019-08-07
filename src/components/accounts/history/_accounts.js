@@ -13,7 +13,7 @@ const accounts = (props) => {
                     options={props.options}
                     placeholder={props.error ? "Failed. Please try again" : (props.aLength > 0 ? "Select..." : "Loading Account...")}
                 />
-                {props.error ? <small className="text-danger">Failed to fetch. <span onClick={props.retryFetch} style={{ textDecoration: "underline", cursor: "pointer" }}>Click to retry</span></small> : null}
+                {props.error ? <small className="text-danger">{props.error} <span onClick={props.retryFetch} style={{ textDecoration: "underline", cursor: "pointer" }}>Click to retry</span></small> : null}
             </div>
         </div>)
 }
