@@ -17,12 +17,12 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
          super(props)
 
         this.state={
-            AmountSavedText:"",
+            targetAmount:"",
             startDate:"",
             endDate:"",
             goalName:"",
-            timeSaved:"",
-            TargetAmount:"",
+            goalFrequency:"",
+            showInterests:"",
             debitAccount:""
 
         }
@@ -43,13 +43,13 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
             console.log('tag', data)
 
             this.setState({
-                AmountSavedText:data.AmountSavedText,
+                targetAmount:data.targetAmount,
                 startDate: data.startDate,
                 endDate: data.endDate,  
                 goalName:data.goalName,
-                timeSaved:data.timeSaved,
+                showInterests:data.showInterests,
                 debitAccount:data.debitAccount,
-                TargetAmount:data.AmountSaved
+                goalFrequency:data.goalFrequency
             });
         }
     }
@@ -59,10 +59,10 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
             "goalName":this.state.goalName,
             "startDate":this.state.startDate,
             "endDate":this.state.endDate,
-            "AmountSavedText":this.state.AmountSavedText,
-            "timeSaved":this.state.timeSaved,
+            "targetAmount":this.state.targetAmount,
+            "goalFrequency":this.state.goalFrequency,
             "debitAccount":this.state.debitAccount,
-            'TargetAmount':this.state.AmountSavedText
+            "showInterests":this.state.showInterests,
         }));
 
     }
@@ -110,7 +110,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
                                             </div>
                                             <div className="right">
                                                 <p className='GoalText'>Target Amount</p>
-                                                <p className='boldedText'>₦{this.state.AmountSavedText}</p>
+                                                <p className='boldedText'>₦{this.state.targetAmount}</p>
                                             </div>
                                         </div>
                                         <div className="coverForSummary">
@@ -127,7 +127,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
                                         <div className="coverForSummary">
                                             <div className="left">
                                                 <p className='GoalText'>Contributions</p>
-                                                <p className='boldedText'>₦{this.state.AmountSavedText}/{this.state.timeSaved}</p>
+                                                <p className='boldedText'>₦{this.state.showInterests}/{this.state.goalFrequency}</p>
                                             </div>
                                             <div className="right">
                                                 <p className='GoalText'>Account to Debit</p>

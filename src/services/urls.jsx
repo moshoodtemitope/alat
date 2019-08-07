@@ -1,6 +1,6 @@
-const URL = 'https://api.alat.ng';
- //const URL = 'https://196.43.215.170';
- //const URL = 'https://196.43.215.157';
+//const URL = 'https://api.alat.ng';
+//const URL = 'https://196.43.215.170';
+ const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
 
@@ -100,7 +100,6 @@ export const routes = {
     FETCH_DEBITABLE_ACCOUNTS_WITH_LIMITS: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2',
     GOALTYPE: BASEURL + '/Savings.WebApi/api/Savings/GoalType',
     GOAL_FORMULAR: BASEURL + '/Savings.WebApi/api/savings/GetValues',
-    GETCUSTOMERGOALSUMMARY: BASEURL + '/AccountMaintenance/api/transactions/savings',
 
 
 

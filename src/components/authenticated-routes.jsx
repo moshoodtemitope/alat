@@ -22,7 +22,9 @@ import FixedGoalComplete from './savings/fixed-goal-step2';
 import FixedGoalSummary from './savings/fixed-goal-summary';
 import FlexGoal from './savings/flex-goal-step1';
 import FlexGoalStep2 from './savings/flex-goal-step2';
-import FlexGoalSummary from './savings/flex-goal-summary'
+import FlexGoalSummary from './savings/flex-goal-summary';
+import CreateStashGoal from './savings/create-stash_step1';
+import CreateStashGoalStep2 from './savings/create-stash-step2'
 
 
 
@@ -75,6 +77,9 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path='/savings/flex-goal' authed={this.props.user} component={FlexGoal}/>
                     <PrivateRoute path='/savings/flex-goal-step2' authed={this.props.user} component={FlexGoalStep2}/>
                     <PrivateRoute path='/savings/flex-goal-summary' authed={this.props.user} component={FlexGoalSummary}/>
+                    <PrivateRoute path='/savings/create-stash_step1' authed={this.props.user} component={CreateStashGoal}/>
+                    <PrivateRoute path='/savings/create-stash_step2' authed={this.props.user} component={CreateStashGoalStep2}/>
+
 
 
 

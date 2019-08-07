@@ -96,6 +96,8 @@
     display: block;
     padding-left: 50px;
     padding-right: 50px;
+    font-style: inherit
+
 } 
 .label-text{
     font-family: "proxima_novasemibold";
@@ -172,10 +174,6 @@
     font-size:14px;
     margin:auto;
     padding-top: 3px;
-    font-family:"proxima_novaregular"
-
-
-
+    font-family:"proxima_novaregular";
 }
-
 

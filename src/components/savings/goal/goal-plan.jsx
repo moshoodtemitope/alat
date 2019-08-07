@@ -33,7 +33,7 @@ class GoalPlan extends React.Component {
                             </div>
                         </div>
                         <div className="Home-container">
-                            <div className="choose-goal-plan-row ">
+                            <div className="choose-goal-plan-row">
                                 <NavLink to="/savings/fixed-goal">
                                 <div className="fixed-goal">
                                     <img className="goal-icon" src={calender} alt=''/>
@@ -49,11 +49,13 @@ class GoalPlan extends React.Component {
                                     <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days.</p>
                                 </div>
                                 </NavLink>
+                                <NavLink to="/savings/create-stash_step1">
                                 <div className="stash-goal">
                                     <img className="goal-icon" src={stash} alt=''/>
                                     <p className="plan-text">Stash</p>
                                     <p className="info-text2">Save whatever you want whenever you want and earn 10% interest with the option to withdraw your interest on monthly basis</p>
                                 </div>
+                                </NavLink>
                             </div>
                         </div>
                     

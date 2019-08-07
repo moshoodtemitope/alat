@@ -29,8 +29,9 @@ import { fundAccountReducer, getTokenizedCardsReducer,
 import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingVerifyBVNReducer,
      loanOnboardingStep3Reducer, loanOnboardingValidateOTPReducer} from './loan-onboarding.reducer';
 
- import {fixedGoalStep1Reducer,fixedGoalStep2Reducer,addGoalReducer} from './goal/fixed-goal.reducers'
- import {flexGoalStep1Reducer,flexGoalStep2Reducer,addFlexGoalReducer} from './goal/flex-goal.reducer'
+ import {fixedGoalStep1Reducer,fixedGoalStep2Reducer,addGoalReducer} from './goal/fixed-goal.reducers';
+ import {flexGoalStep1Reducer,flexGoalStep2Reducer,addFlexGoalReducer} from './goal/flex-goal.reducer';
+ import {createStashGoalReducer,createStashGoalStep1Reducer} from './goal/create-stash.reducer'
 
 export const onboarding = {
     userRegistrationRequest,
@@ -105,5 +106,10 @@ export const fundAccount={
     flexGoalStep1Reducer,
     flexGoalStep2Reducer,
     addFlexGoalReducer
+
+ }
+ export const stashGoal={
+    createStashGoalStep1Reducer,
+    createStashGoalReducer,
 
  }

@@ -16,9 +16,9 @@ import moment from 'moment';
 
 const selectedTime = [
            
-    { value: 'monthly' ,label:"Monthly" },
-    {  value: 'weekly' , label:"Weekly" },
-    {  value: 'daily', label:"Daily"},
+    { "id":3, value: 'monthly',label:"Monthly" },
+    { "id":2, value: 'weekly', label:"Weekly" },
+    { "id":1, value: 'daily', label:"Daily"},
    
 ];
 
@@ -61,7 +61,7 @@ class FixedGoal extends React.Component {
 
     }
     componentDidMount(){
-        console.log('interest loan rate',this.state.InterestRate)
+        console.log('interest loan rate',this.state.targetAmount)
     }
     valStartDate = () => {
         if (this.state.startDate == null) {
@@ -101,8 +101,8 @@ class FixedGoal extends React.Component {
     }
     
     checkAmount = () => {
-        if (this.state.AmountSavedText == "") {
-            this.setState({ AmountSavedInvalid: true });
+        if (this.state.targetAmount == "") {
+            this.setState({ targetAmountInvalid: true });
             return true;
         }
     }
@@ -129,7 +129,7 @@ class FixedGoal extends React.Component {
          if(this.state.isSubmitted == true)
          if (this.state.formsubmitted) {
                     if (e != "")
-                        this.setState( {  AmountSavedInvalid: false });
+                        this.setState( {  targetAmountInvalid: false });
                 }
     }
  
@@ -156,11 +156,8 @@ class FixedGoal extends React.Component {
             this.setState({ goalFrequencyInvalid: false })
     }
     setFregValue = () => {
-        this.setState({ showInterests: this.calculateInterest(this.state.targetAmount, this.state.startDate, this.state.endDate) })
-        console.log('test',this.calculateInterest(this.state.targetAmount, this.state.startDate, this.state.endDate))
-        console.log('amount saved',this.state.targetAmount)
-        console.log('interest rate',this.state.startDate)
-        console.log('term',this.state.endDate)
+        this.setState({ showInterests: this.calculateMonthly(this.state.targetAmount, this.state.startDate, this.state.endDate) })
+        
        
 
     } 
@@ -187,14 +184,38 @@ class FixedGoal extends React.Component {
           return monthDiff + 1;
       }
     }
+   
+    GetFixedGoalFutureValue(debitAmount, annualInterestRate, months){
+        let futureValue= 0;
+        var result;
+        let rate = ((annualInterestRate - 0.01) / 12);
+        for (let n = 1; n <= months; n++)
+        {
+            var multiplier = (1 + rate);
+            futureValue += debitAmount * (Math.pow(multiplier, n));     
+        }
+        result = futureValue - (debitAmount * months); //I dont even know why, with the /6.02, it matched with mobile calc
+        return this.toCurrency2(parseFloat(result).toFixed(2));
+    }
+    toCurrency2 =(currency) =>{
+        if (currency) {
+          currency = typeof currency !== 'string' ? currency.toString() : currency;
+          let numberValueArray = currency.split('.');
+          let numberValue = this.removeComma(numberValueArray[0]);
+          currency = numberValueArray.length > 1 ? numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+            + '.' + numberValueArray[1] : numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+        }
+        return currency;
+    }
     getAbsoulteMonths(momentDate) {
         var months = Number(momentDate.format("MM"));
         var years = Number(momentDate.format("YYYY"));
         return months + (years * 12);
     }
+     
     calculateMonthly(){
         let days = null;
-        let res;;
+        let res;
         let finalInterest;
         let amount= parseFloat(this.removeComma(this.state.targetAmount));
         let startDate = moment(this.state.startDate, 'DD MMMM, YYYY');
@@ -204,37 +225,13 @@ class FixedGoal extends React.Component {
         let months = Math.round((res/365) * 12);
         let debitAmount = (amount/months).toFixed(2);
         let debitValue = amount/this.getMonthsBetween(startDate, enddate);
-        finalInterest = this.utils.GetFixedGoalFutureValue(debitValue, this.formula.interestRate, months);
+        finalInterest = this.GetFixedGoalFutureValue(debitValue, 0.10, months);
         this.interest = finalInterest;
-        this.showInterest = true;
+        this.showInterests = true;
         this.frequencyAmount = (amount/months).toFixed(2);
+        return this.interest;
       }
-
-    calculateInterest = () => {
-        let days = null;
-        let res;
-        if(this.state.targetAmount && this.state.endDate && this.state.goalFrequency && this.state.startDate){
-          let startDate = moment(this.state.startDate).format('DD MMMM, YYYY');
-          let enddate = moment(this.state.endDate, 'DD MMMM, YYYY');
-          res = enddate.diff(startDate, 'days');
-          let amount = this.removeComma(this.state.targetAmount);
-          let ia = ((amount / 365) * this.formula.interestRate );
-          let diff_in_months = Math.floor(moment(enddate).diff(moment(startDate), 'months', true));
-          let dailycontribution;
-          if(diff_in_months > 1){
-           this.interest = this.util.GetGoalFutureValue((amount / diff_in_months),this.formula.interestRate, diff_in_months);
-          }else{
-            let ia = ((amount / 365) * this.formula.interestRate );
-            dailycontribution = res * ( ia - (this.formula.tax) *ia);
-            this.interest =  parseFloat(dailycontribution).toFixed(2);
-          }
-          this.showInterests = true;
-        }else{
-          this.showInterests = false;
-        }
-       
-    }
-    
+   
   
     onSubmit(event){
         event.preventDefault();
@@ -248,7 +245,8 @@ class FixedGoal extends React.Component {
                 "startDate":this.state.startDate,
                 "endDate":this.state.endDate,
                 "targetAmount":this.state.targetAmount,
-                "frequencyGoal":this.state.frequencyGoal
+                "goalFrequency":this.state.goalFrequency,
+                "showInterests":this.state.showInterests
             }));
             console.log('tag', '')
         }
@@ -273,7 +271,7 @@ class FixedGoal extends React.Component {
 
     render() {
         
-        let {GoalNameInvalid,endDateInvalid,startDateInvalid,targetAmountInvalid,goalFrequencyInvalid,AmountSavedText,goalFrequency}=this.state
+        let {GoalNameInvalid,endDateInvalid,startDateInvalid,targetAmountInvalid,goalFrequencyInvalid,goalFrequency}=this.state
         let props = this.props;
 
         return (
@@ -307,9 +305,10 @@ class FixedGoal extends React.Component {
 
                                             <form onSubmit={this.onSubmit}>
                                                 <div className={GoalNameInvalid ? "form-group form-error" : "form-group"}>
-                                                    <label>Give your goal a name</label>
+                                                    <label className="label-text">Give your goal a name</label>
                                                     <input 
                                                         type="text" 
+                                                        autoComplete="off" 
                                                         className="form-control" 
                                                          placeholder="Dubai Goal"
                                                          name="goalName"
@@ -326,6 +325,7 @@ class FixedGoal extends React.Component {
                                                         <DatePicker 
                                                             className="form-control"
                                                             selected={this.state.startDate}
+                                                            autoComplete="off" 
                                                             placeholderText="Goal start Date"
                                                             dateFormat=" MMMM d, yyyy"
                                                             name="startDate"
@@ -333,12 +333,14 @@ class FixedGoal extends React.Component {
                                                             showMonthDropdown
                                                             showYearDropdown
                                                             dropdownMode="select"
-                                                            maxDate={new Date()}
+                                                            useShortMonthInDropdown
+                                                            dropdownMode="select"
+                                                            showWeekNumbers
                                                             onChange={this.handleStartDatePicker}
                                                             value={this.state.startDate}
                                                             
                                                             />
-                                                            <i class="mdi mdi-calendar-range"></i>
+                                                            <i className="mdi mdi-calendar-range"></i>
 
                                                             {startDateInvalid &&
                                                                 <div className="text-danger">select a valid date</div>
@@ -350,15 +352,18 @@ class FixedGoal extends React.Component {
                                                         <DatePicker  
                                                             selected={this.state.endDate}
                                                             className="form-control"
+                                                            autoComplete="off" 
                                                             placeholderText="Goal end Date"
                                                             dateFormat=" MMMM d, yyyy"
-                                                            peekNextMonth
                                                             name="endDate"
+                                                            peekNextMonth
+                                                            dropdownMode="select"
                                                             showMonthDropdown
                                                             showYearDropdown
-                                                            dropdownMode="select"
+                                                            useShortMonthInDropdown
+                                                            dropdownMode="select" 
+                                                            showWeekNumbers
                                                             onChange={this.handleEndDatePicker}
-                                                            maxDate={new Date()}
                                                             value={this.state.endDate}
 
                                                         />
@@ -374,8 +379,8 @@ class FixedGoal extends React.Component {
                                                         <label className="label-text">How much would you like to save</label>
                                                         <input 
                                                             onKeyUp= {this.showInterest}
-                                                             
                                                             className="form-control" 
+                                                            autoComplete="off" 
                                                             name="targetAmount"
                                                             onChange={this.handleAmount}
                                                             placeholder="E.g. ₦100,000"
@@ -400,6 +405,8 @@ class FixedGoal extends React.Component {
                                                         <Select type="text" 
                                                             options={selectedTime}
                                                             name="goalFrequency"
+                                                            autoComplete="off" 
+
                                                             onChange={this.handleSelectChange}
                                                             value={goalFrequency.label}
                                                           />
