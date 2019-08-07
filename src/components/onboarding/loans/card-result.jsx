@@ -7,6 +7,7 @@ import { Redirect, Link } from 'react-router-dom';
 import * as actions from '../../../redux/actions/onboarding/loan.actions';
 import { loanOnboardingConstants } from '../../../redux/constants/onboarding/loan.constants';
 import LoanOnboardingContainer from './loanOnboarding-container';
+import * as util from '../../../shared/utils';
 
 class LoanOnboardingScoreResult extends React.Component {
 	constructor(props) {
