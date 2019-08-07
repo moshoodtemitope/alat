@@ -7,6 +7,9 @@ import { loanOnboardingConstants } from '../../../redux/constants/onboarding/loa
 
 import * as loanActions from '../../../redux/actions/loans/loans.action';
 import { loanConstants } from '../../../redux/constants/loans/loans.constants';
+
+import ImageUploader from 'react-images-upload';
+import '../../../assets/css/docupload/custom-upload.css';
 //import LoanOnboardingContainer from './loanOnboarding-container';
 //import OtpValidation from '../../../shared/components/otpvalidation';
 import Select from 'react-select';
@@ -129,7 +132,7 @@ class SalaryDetails extends React.Component {
             this.setState({ employNameOthersInvalid: false })
             otherEmployerInvalid = false;
         }
-        if(this.state.selectedEmployer.label != "Others"){
+        if (this.state.selectedEmployer.label != "Others") {
             this.setState({ employNameOthersInvalid: false })
             otherEmployerInvalid = false;
         }
@@ -266,7 +269,7 @@ class SalaryDetails extends React.Component {
         e.preventDefault();
         this.setState({ isSubmitted: true });
         if (this.validateFields()) {
-            
+
         } else {
 
             var data = {
@@ -323,11 +326,11 @@ class SalaryDetails extends React.Component {
                 var data = {
                     ...this.props.loan_reqStat.loan_reqStat_data.data
                 };
-                if (data.response.Response.NextScreen == 0)  {return ( <Redirect to={this.props.ticketUrl} />)}
-                    //this.props.history.push("/loan/ticket");
-                   
-                if (data.response.Response.NextScreen == 2) return (<Redirect to={this.props.salaryEntryUrl}/>)
-                    //this.props.history.push("/loan/salary-entry");
+                if (data.response.Response.NextScreen == 0) { return (<Redirect to={this.props.ticketUrl} />) }
+                //this.props.history.push("/loan/ticket");
+
+                if (data.response.Response.NextScreen == 2) return (<Redirect to={this.props.salaryEntryUrl} />)
+                //this.props.history.push("/loan/salary-entry");
             }
     }
 
@@ -381,6 +384,27 @@ class SalaryDetails extends React.Component {
                                             }
                                         </div>
                                     }
+
+                                    <ImageUploader
+                                        withIcon={false}
+                                        singleImage={true}
+                                        withPreview={false}
+                                        label=''
+                                        className="selfieBtn"
+                                        buttonText='Choose image'
+                                        onChange={this.onProfileUpload}
+                                        imgExtension={['.jpg', '.png', '.jpeg']}
+                                        maxFileSize={5242880}
+                                    />
+
+                                    <div className={accountNumberInvalid ? "input-ctn form-error" : "input-ctn"}>
+                                        <label>Work ID(Front) </label>
+                                        <input type="text" name="accountNumber" disabled={true}
+                                            onChange={this.handleInputChange} />
+                                        {accountNumberInvalid &&
+                                            <div className="text-danger">A valid account number is needed</div>
+                                        }
+                                    </div>
 
                                     <div className={accountNumberInvalid ? "input-ctn form-error" : "input-ctn"}>
                                         <label>Account Number</label>

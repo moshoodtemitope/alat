@@ -1,0 +1,47 @@
+.fileContainer{
+    background: #9B9B9B !important;
+    padding: 0 !important;
+    max-height: 45px !important;
+    box-shadow: none;
+    border-radius: unset;
+
+    position: relative;
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0px;
+    transition: all 0.3s ease-in;
+}
+
+.fileContainer .errorsContainer {
+    max-width: 300px;
+    font-size: 12px;
+    color: red;
+    text-align: left;
+
+    /* added */
+    position: absolute;
+    bottom: -18px;
+}
+
+.fileContainer .chooseFileButton {
+    background: none;
+    display: block;
+    width: 100%;
+    margin-top: 0;
+    border-radius: unset;
+
+
+    background: none;
+    /* border-radius: 30px; */
+    color: white;
+    font-weight: 300;
+    font-size: 14px;
+    margin: 10px 0;
+    transition: all 0.2s ease-in;
+    cursor: pointer;
+    outline: none;
+    border: none !important;
+}
