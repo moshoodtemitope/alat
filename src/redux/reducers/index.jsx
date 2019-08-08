@@ -14,6 +14,7 @@ import { fundAccountConstants } from "../constants/fund-account/fund-account.con
 import { loanOnboardingConstants } from '../constants/onboarding/loan.constants';
 import stashRedux from './goal/stash-reducer';
 import { findGroup, joinGroup } from "./group-savings/group-savings-reducers";
+import { joinAGroup } from "./group-savings/rotating-group-reducers";
 //import { saveCardReducer } from "./fund-account.reducer";
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
@@ -173,7 +174,8 @@ const appReducer = combineReducers({
    
     /// ESUSU (GROUP SAVINGS)
     createRotatingGroupSavings: rotatingSavings.createRotatingSavings,
-    rotatingGroupDetails: rotatingSavings.rotatingGroupDetails
+    rotatingGroupDetails: rotatingSavings.rotatingGroupDetails,
+    joinAGroup: rotatingSavings.joinAGroup
 });
 
 //export defualt appReducer;

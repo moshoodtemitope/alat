@@ -1,5 +1,5 @@
-//const URL = 'https://api.alat.ng';
-const URL = 'https://196.43.215.170';
+const URL = 'https://api.alat.ng';
+//const URL = 'https://196.43.215.170';
  //const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
@@ -113,5 +113,6 @@ export const routes = {
 
     // ROTATING SAVINGS (ESUSU)
     CREATE_ROTATING_SAVINGS: BASEURL + '/Savings.WebApi/api/EsusuSaving/CreateGroup',
-    ROTATING_GROUP_DETAILS: BASEURL +  '/Savings.WebApi/api/EsusuSaving/GetGroupDetails'
+    ROTATING_GROUP_DETAILS: BASEURL +  '/Savings.WebApi/api/EsusuSaving/GetGroupDetails',
+    JOIN_A_GROUP: BASEURL + '/Savings.WebApi/api/EsusuSaving/JoinGroup'
 };

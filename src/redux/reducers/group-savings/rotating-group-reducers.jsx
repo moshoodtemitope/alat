@@ -45,3 +45,26 @@ export function rotatingGroupDetails(state=[], action){
     }
 }
 
+export function joinAGroup(state=[], action){
+    switch(action.type){
+        case GROUPSAVINGSCONSTANT.JOIN_A_GROUP: 
+           return {
+               message: GROUPSAVINGSCONSTANT.JOIN_A_GROUP,
+               data: action
+           }
+        case GROUPSAVINGSCONSTANT.JOIN_A_GROUP_SUCCESS:
+           return {
+               message: GROUPSAVINGSCONSTANT.JOIN_A_GROUP_SUCCESS,
+               data: action
+           }
+        case GROUPSAVINGSCONSTANT.JOIN_A_GROUP_ERROR:
+           return {
+               message: GROUPSAVINGSCONSTANT.JOIN_A_GROUP_ERROR,
+               data: action
+           }
+        default: 
+           return {... state}
+    }
+}
+
+

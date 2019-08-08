@@ -55,7 +55,7 @@ class GroupSavingsSelection extends React.Component {
                                     <p className="info-text2">Save with up to 10 friends, recieve the collective savings automatically when its your turn.</p>
                                 </div>
                                 </NavLink>
-                                <NavLink to="/savings/group/goin-a-group">
+                                <NavLink to="/savings/group/join-a-group">
                                     <div className="stash-goal">
                                         <img className="goal-icon" src={stash} alt=''/>
                                         <p className="plan-text">Join a group</p>

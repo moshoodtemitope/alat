@@ -14,6 +14,7 @@ export const createRotatingSavings = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                history.push("/savings/rotating-group");
             }) 
             .catch(error => {
                 if(error.response.message){
@@ -52,4 +53,28 @@ export const rotatingGroupDetails = (token, data) => {
     function request(request) { return {type:GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS, request} }
     function success(response) { return {type:GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS_SUCCESS, response} }
     function failure(error) { return {type:GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS_ERROR, error} }
+};
+
+export const joinAGroup = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.JOIN_A_GROUP, "POST", data, SystemConstant.HEADER, false);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+            }) 
+            .catch(error => {
+                if(error.response.message){
+                    dispatch(failure(error.response.message.toString()));
+                }else{
+                    dispatch(failure('We are unable to create rotating group now!'));
+                }
+                // dispatch(failure(error.response.data.message.toString()));
+            });
+    };
+    
+    function request(request) { return {type:GROUPSAVINGSCONSTANT.JOIN_A_GROUP, request} }
+    function success(response) { return {type:GROUPSAVINGSCONSTANT.JOIN_A_GROUP_SUCCESS, response} }
+    function failure(error) { return {type:GROUPSAVINGSCONSTANT.JOIN_A_GROUP_ERROR, error} }
 };

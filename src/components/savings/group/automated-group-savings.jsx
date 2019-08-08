@@ -277,16 +277,13 @@ class AutomateGroupSavings extends React.Component {
                                                     </div>
                                                 </div>
                                                 
-                                                <div className="accountSelection">
-                                                    <div className='col-sm-12'>
-                                                                
+                                                <div className="form-row">
+                                                    <div className='form-group'>
                                                                     <SelectDebitableAccounts
-                                                                    
                                                                         accountInvalid={this.state.isAccountInvalid}
                                                                         onChange={this.handleSelectDebitableAccounts}
                                                                         labelText="Select Account to debit" 
                                                                         options={selectedAccount}/>
-                                                                
                                                     </div>
                                                 </div>
                                                 

@@ -9,7 +9,7 @@ import DatePicker from "react-datepicker";
 import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
-import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
+import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 
 const quantityOfMembers = [
     { value: '1' ,label:"1" },
@@ -199,9 +199,9 @@ class RotatingGroup extends React.Component {
             DebitAccount: this.state.selectedAccount
         }
 
-        console.log(data)
-        return;
-        this.props.dispatch(actions.scheduleContribution(this.state.user.token, data));
+        console.log(data);
+        //return
+        this.props.dispatch(actions.createRotatingSavings(this.state.user.token, data));
     }
 
 
@@ -299,9 +299,9 @@ class RotatingGroup extends React.Component {
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <center>
-                                                            <NavLink to='/savings/rotating-group'>
+                                                            {/* <NavLink to='/savings/rotating-group'> */}
                                                                   <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Create Group</button>
-                                                            </NavLink>
+                                                            {/* </NavLink> */}
                                                         </center>
                                                     </div>
                                                 </div>
@@ -331,7 +331,7 @@ class RotatingGroup extends React.Component {
 
 function mapStateToProps(state){
     return {
-
+        createGroupSavings: state.createRotatingGroupSavings
     }
 }
-export default connect(null, mapStateToProps)(RotatingGroup);
+export default connect(mapStateToProps)(RotatingGroup);
