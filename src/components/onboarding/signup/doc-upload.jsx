@@ -69,7 +69,7 @@ class DocumentUplaod extends React.Component{
         let userDetails = props.user_details;
 
         if(props.user_details.registration_data==null || props.user_details.registration_data==undefined || props.user_details.registration_data =='undefined'){
-           // history.push('/register');
+            history.push('/register');
             return;
         }
 
@@ -83,11 +83,11 @@ class DocumentUplaod extends React.Component{
              });
             }
             else {
-                //history.push('/register');
+                history.push('/register');
             }
         }
         else{
-           //history.push('/register');
+           history.push('/register');
         }
     }
 

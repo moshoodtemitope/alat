@@ -10,6 +10,8 @@ import { loanConstants } from '../../../redux/constants/loans/loans.constants';
 
 import ImageUploader from 'react-images-upload';
 import '../../../assets/css/docupload/custom-upload.css';
+
+import * as util from '../../utils'
 //import LoanOnboardingContainer from './loanOnboarding-container';
 //import OtpValidation from '../../../shared/components/otpvalidation';
 import Select from 'react-select';
@@ -23,7 +25,7 @@ const industriesOptions = [
 const _employerList = [];
 const options = [];
 
-class SalaryDetails extends React.Component {
+class EmployerDetails extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -39,21 +41,45 @@ class SalaryDetails extends React.Component {
             EmployerList: [],
             selectedEmployer: { label: "", value: "" },
             employerActionFired: false,
+            workIDFront : { file:'', name:''},
+            workIDBack : {file: '', name:''},
+            workIDFrontUploadCount: 0,
+            workIDBackUploadCount : 0,
 
             employerNameInvalid: false,
-            accountNumberInvalid: false,
-            selectedBankInvalid: false,
             IndustryNameInvalid: false,
             employNameOthersInvalid: false
         }
     }
+
+    onIDUpload=(picture, e)=>{
+        console.log(e);
+        //if(picture.length > this.state.SignupPicCount){
+            if(picture.length>=1){
+               
+                util.getBase64(picture[picture.length-1], (result) => {
+                        this.setState({workIDFront: {file: result, name:picture[picture.length-1].name}},()=>{
+                            console.log(this.state.workIDFront);
+                        });
+                 });
+            }
+            else {
+                this.setState({workIDFront: { file: '', name: ''}});
+                this.props.dispatch(alertActions.error("You need to add a signature"));
+            }
+        //   }else if(picture.length <= this.state.SignupPicCount){
+        //     this.setState({signUp: { file: '', name: ''}});
+        //     this.props.dispatch(alertActions.error("You need to add a signature"));
+        //   }
+        //   this.setState({SignupPicCount : picture.length});
+    }
+
     componentDidMount = () => {
         this.init();
     }
 
     init = () => {
         this.getIndustries();
-        this.fetchBanks();
         // if (this.props.loan_step3)
         //     if (this.props.loan_step3.loan_step3_status == loanOnboardingConstants.LOAN_STEP3_SUCCESS) {
         //         this.fetchBanks();
@@ -86,20 +112,9 @@ class SalaryDetails extends React.Component {
     }
 
     validateFields = () => {
-        var acctNumberInvalid = false;
         var employerNameInvalid = false;
-        var selectedBankInvalid = false;
         var industryInvalid = false;
         var otherEmployerInvalid = false;
-        if (this.state.accountNumber.length != 10) {
-            this.setState({ accountNumberInvalid: true })
-            acctNumberInvalid = true;
-        }
-
-        if (this.state.accountNumber.length == 10) {
-            this.setState({ accountNumberInvalid: false })
-            acctNumberInvalid = false;
-        }
 
         //selected Industry validation
         if (this.state.selectedIndustry.label.length == 0 || this.state.selectedIndustry.label == "") {
@@ -137,65 +152,25 @@ class SalaryDetails extends React.Component {
             otherEmployerInvalid = false;
         }
 
-        if (this.state.bankCode == "") {
-            this.setState({ selectedBankInvalid: true });
-            selectedBankInvalid = true;
-        }
-        if (this.state.bankCode != "") {
-            this.setState({ selectedBankInvalid: false });
-            selectedBankInvalid = false;
-        }
-
-        if (acctNumberInvalid || industryInvalid || otherEmployerInvalid || employerNameInvalid || selectedBankInvalid)
+        if (industryInvalid || otherEmployerInvalid || employerNameInvalid )
             return true;
         else return false;
     }
 
-    fetchBanks = () => {
-        this.props.dispatch(onboardingActions.getBanks(this.state.user.token));
-    }
-
-    renderBankDropdown = (props) => {
-        let banksStatus = props.bankList.banks; //FETCH_BANK_PENDING;
-
-        switch (banksStatus) {
-            case FETCH_BANK_PENDING:
-                return (
-                    <select disabled>
-                        <option>Fetching Banks...</option>
-                    </select>
-                );
-            case FETCH_BANK_SUCCESS:
-                let banksList = props.bankList.banks_data.response.Response;
-                //var options = [];
-                for (var bank in banksList) {
-                    options.push({ value: banksList[bank].Id, label: banksList[bank].Name });
-                }
-                const { selectedBank, selectedBankInvalid } = this.state;
-                return (
-                    <Fragment>
-                        <Select
-                            options={options}
-                            // isDisabled={this.state.submitButtonState}
-                            isDisabled={false}
-                            //onInputChange={this.handleChange}
-                            onChange={this.handleChange}
-                        />
-                        {selectedBankInvalid &&
-                            <div className="text-danger">Select a Bank</div>
-                        }
-                    </Fragment>
-                );
-            case FETCH_BANK_FAILURE:
-                return (
-                    <div>
-                        <select className="error-field" disabled>
-                            <option>Unable to load banks</option>
-                        </select>
-                        <a className="cta-link to-right" onClick={this.fetchBanks}>Try again</a>
-                    </div>
-                );
+    getImageToUpload=(uploadType, imageToUpload)=>{
+        var imageFile = new FormData();
+    
+        if(uploadType ==='dp'){
+            imageFile.set('DocumentType', SystemConstant.DOCUMENT_TYPE.passport);
         }
+    
+        if(uploadType ==='userSignature'){
+            imageFile.set('DocumentType', SystemConstant.DOCUMENT_TYPE.signature);
+        }
+        
+        imageFile.append('File', utils.canvasToFile(imageToUpload.file), imageToUpload.name)
+       
+        return imageFile;
     }
 
     renderIndustries = (props) => {
@@ -289,10 +264,6 @@ class SalaryDetails extends React.Component {
         }
     }
 
-    handleChange = (selectedBank) => {
-        this.setState({ selectedBank, bankCode: selectedBank.value });
-    }
-
     handleInputChange = (e) => {
         if (e.target.name == "employerName") {
             this.setState({ employerName: e.target.value }, () => {
@@ -300,25 +271,8 @@ class SalaryDetails extends React.Component {
                     this.validateFields();
             });
         }
-        else if (e.target.name == "accountNumber") {
-            if (/^\d+$/.test(e.target.value)) {
-                this.setState({ accountNumber: e.target.value }, () => {
-                    if (this.state.isSubmitted)
-                        this.validateFields();
-                });
-            }
-            else if (e.target.value == "") {
-                this.setState({ accountNumber: "" }, () => {
-                    if (this.state.isSubmitted)
-                        this.validateFields();
-                })
-            }
-        }
     }
 
-    handleCheckBox = (e) => {
-        this.setState({ isAccepted: e.target.checked });
-    }
 
     gotoNextPage = () => {
         if (this.props.loan_reqStat)
@@ -391,6 +345,7 @@ class SalaryDetails extends React.Component {
                                             withIcon={false}
                                             singleImage={true}
                                             withPreview={false}
+                                            name="frontID"
                                             label=''
                                             className="selfieBtn"
                                             buttonText='Click here to upload work ID (Front)'
@@ -406,6 +361,7 @@ class SalaryDetails extends React.Component {
                                             withIcon={false}
                                             singleImage={true}
                                             withPreview={false}
+                                            name="backID"
                                             label=''
                                             className="selfieBtn"
                                             buttonText='Click here to upload work ID (Back)'
@@ -413,31 +369,6 @@ class SalaryDetails extends React.Component {
                                             imgExtension={['.jpg', '.png', '.jpeg']}
                                             maxFileSize={5242880}
                                         />
-                                    </div>
-
-                                    <div className={accountNumberInvalid ? "input-ctn form-error" : "input-ctn"}>
-                                        <label>Account Number</label>
-                                        <input type="text" name="accountNumber" maxLength={10} value={accountNumber}
-                                            onChange={this.handleInputChange} />
-                                        {accountNumberInvalid &&
-                                            <div className="text-danger">A valid account number is needed</div>
-                                        }
-                                    </div>
-
-                                    <div className={selectedBankInvalid ? "input-ctn form-error" : "input-ctn"}>
-                                        <label>Select Bank</label>
-                                        {this.renderBankDropdown(props)}
-                                        <div className="pw-hint pw-terms">
-                                            <input type="checkbox" checked={this.state.isAccepted}
-                                                onChange={this.handleCheckBox}
-                                                style={{ opacity: "unset", position: "unset" }} />
-                                            <div>
-                                                I agree that the account information provided above should be used to request for my
-                                                account statement
-																	<p className="m-t-10"><b>Please note that a fee will be charged for this service</b></p>
-                                            </div>
-
-                                        </div>
                                     </div>
 
                                     <div className="row">
@@ -478,7 +409,7 @@ function mapStateToProps(state) {
         employer: state.loanReducerPile.loanEmployer
     };
 }
-export default connect(mapStateToProps)(SalaryDetails);
+export default connect(mapStateToProps)(EmployerDetails);
 
 
 

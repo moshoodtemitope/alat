@@ -1,18 +1,21 @@
 .fileContainer{
     background: #9B9B9B !important;
-    padding: 0 !important;
+    padding: unset !important;
     max-height: 45px !important;
     box-shadow: none;
     border-radius: unset;
 
     position: relative;
-    padding: 20px 0;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     margin: 0px;
     transition: all 0.3s ease-in;
+}
+
+.fileContainer >p {
+    display: none;
 }
 
 .fileContainer .errorsContainer {
@@ -30,16 +33,19 @@
     background: none;
     display: block;
     width: 100%;
-    margin-top: 0;
+    height: 45px;
+    margin: unset;
     border-radius: unset;
+    background:url(../../img/camera.svg) no-repeat 20px center !important;
 
 
     background: none;
     /* border-radius: 30px; */
     color: white;
     font-weight: 300;
-    font-size: 14px;
-    margin: 10px 0;
+    font-size: 12px !important;
+    line-height: 0px !important;
+    
     transition: all 0.2s ease-in;
     cursor: pointer;
     outline: none;

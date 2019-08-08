@@ -148,7 +148,7 @@ class LoanEstimator extends React.Component {
                                     {this.props.alert && this.props.alert.message &&
                                         <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                                     }
-                                    <p>How much do you want to borrow? (max N20million)</p>
+                                    <p>How much do you want to borrow? (max {util.formatAmountNoDecimal(this.props.maxAmount)})</p>
                                     <div className={this.state.LoanAmountInvalid ? "input-ctn form-error" : "input-ctn"}>
                                         <span className="input-span">N</span>
                                         <input value={this.state.LoanAmountText} className="input-borderless"
