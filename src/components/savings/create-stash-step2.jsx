@@ -54,7 +54,7 @@ import * as actions from '../../redux/actions/savings/goal/create-stash-goal.act
             });
         }
     }
-    handleSubmit=()=>{
+    handleSubmit=(event)=>{
         event.preventDefault()
         this.props.dispatch(actions.CreateStashGoal({
             "goalName":this.state.goalName,

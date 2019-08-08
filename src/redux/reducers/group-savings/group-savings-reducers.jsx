@@ -3,9 +3,10 @@ import { GROUPSAVINGSCONSTANT } from "../../constants/savings/group";
 
 export function groupSavingsTargetGoal(state=[], action){
     switch(action.type){
-        case GROUPSAVINGSCONSTANT.CREATEGROUPSAINGS: 
+        
+        case GROUPSAVINGSCONSTANT.CREATEGROUPSAINGSPENDING: 
            return {
-               message: GROUPSAVINGSCONSTANT.CREATEGROUPSAINGS,
+               message: GROUPSAVINGSCONSTANT.CREATEGROUPSAINGSPENDING,
                data: action
            }
         case GROUPSAVINGSCONSTANT.CREATEGROUPSAVINGS_SUCCESS:
@@ -46,7 +47,7 @@ export function groupDetails(state=[], action){
 }
 
 export function deleteGroup(state=[], action){
-    switch(action.type){
+    switch(action.type){ 
         case GROUPSAVINGSCONSTANT.DELETEGROUP: 
            return {
                message: GROUPSAVINGSCONSTANT.DELETEGROUP,

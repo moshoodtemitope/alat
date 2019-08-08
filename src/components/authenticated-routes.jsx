@@ -99,7 +99,7 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path="/savings/group/automate-group-savings" authed={this.props.user} component={AutomateGroupSavings} /> 
                     <PrivateRoute path="/savings/group/success-message" authed={this.props.user} component={SuccessMessage} />
                     <PrivateRoute path="/savings/group/create-rotating" authed={this.props.user} component={RotatingGroup} />
-                    <PrivateRoute path="/savings/ratating-group" authed={this.props.user} component={RotatingGroupCreated} />
+                    <PrivateRoute path="/savings/rotating-group" authed={this.props.user} component={RotatingGroupCreated} />
                     <PrivateRoute path='/savings/group-analytics-mini' authed={this.props.user} component={GroupAnalyticsMini} />
 =======
 

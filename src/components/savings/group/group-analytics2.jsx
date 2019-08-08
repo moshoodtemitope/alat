@@ -45,21 +45,7 @@ class GroupAnalytics2 extends React.Component {
         this.props.history.push('/savings/group/group-analytics');
     }
 
-    GetMembers = () => {
-       const allMembers = this.props.groupDetails.response.members.map(element => {
-            console.log("Get Members was called =========  3435");
-            if(element['isAdmin'] == false){
-                console.log("whats going on");
-                <Members 
-                  userType="members"
-                  fullname={ element['lastName'] + " " + element['firstName'] }
-                  
-                  amount={element['amountSaved']}
-                  intent="Contribution"/>
-            }
-        });
-        return allMembers;
-    }
+    
 
   
     render() {

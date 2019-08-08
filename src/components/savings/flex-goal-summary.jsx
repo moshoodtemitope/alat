@@ -4,6 +4,7 @@ import SavingsContainer from './container';
 import {Fragment} from "react";
 import { connect } from 'react-redux';
 import moment from 'moment';
+import {NavLink} from 'react-router-dom'
 import {flexGoalConstants} from '../../redux/constants/goal/flex-goal.constant'
 import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
 
@@ -56,7 +57,7 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
             });
         }
     }
-    handleSubmit=()=>{
+    handleSubmit=(event)=>{
         event.preventDefault()
         this.props.dispatch(actions.addFlexGoal({
             "goalName":this.state.goalName,

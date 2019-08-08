@@ -1,7 +1,7 @@
 import {combineReducers} from "redux";
 import {authentication} from "./authentication.reducer";
 import { alert} from "./alert.reducer";
-import {dashboard, transfer, onboarding, airtime, global,fixedGoal,flexGoal,stashGoal,groupSavings,fundAccount, loanOnboarding} from "./export";
+import {dashboard, transfer, onboarding, airtime, global,fixedGoal,flexGoal,stashGoal,groupSavings,rotatingSavings,fundAccount, loanOnboarding} from "./export";
 import {bankListRequest, beneficiariesRequest} from "./transfer.reducer";
 import {accountHistoryReducer} from "./dashboard.reducer";
 import { userConstants } from "../constants/onboarding/user.constants";
@@ -169,8 +169,11 @@ const appReducer = combineReducers({
     automateContributionStartDate: groupSavings.setAutomateSavingsStartDate,
     automateContributionEndDate: groupSavings.setAutomateSavingsEndDate,
     setFrequency: groupSavings.setFrequency,
-    setAmountToWithDraw: groupSavings.setAmountToWithDraw
+    setAmountToWithDraw: groupSavings.setAmountToWithDraw,
+   
     /// ESUSU (GROUP SAVINGS)
+    createRotatingGroupSavings: rotatingSavings.createRotatingSavings,
+    rotatingGroupDetails: rotatingSavings.rotatingGroupDetails
 });
 
 //export defualt appReducer;

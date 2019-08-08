@@ -10,6 +10,8 @@ import SelectDebitableAccounts from '../../../shared/components/selectDebitableA
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
+import {GROUPSAVINGSCONSTANT} from "../../../redux/constants/savings/group/index";
+
 
 class CreateATargetGoal extends React.Component {
     constructor(props){
@@ -19,8 +21,6 @@ class CreateATargetGoal extends React.Component {
             isAccountInvalid: null,
             // accountNumber: null,
             selectedAccount: null,
-           
-
             groupName: null,
             groupPurpose: null,
             targetAmount: null,
@@ -249,6 +249,9 @@ class CreateATargetGoal extends React.Component {
                                     </div>
                                 </div>
                             </div>
+                            {this.props.alert && this.props.alert.message &&
+                            <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                            }
                             <div className="col-sm-12">
                                 <div className="row">
                                     <div className="col-sm-12">
@@ -311,7 +314,12 @@ class CreateATargetGoal extends React.Component {
                                                     <div className="col-sm-12">
                                                         <center>
                                                             {/* <NavLink to='/savings/group/group-created'> */}
-                                                                  <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Next</button>
+                                                                  <button
+                                                                  disabled={this.props.data.message == GROUPSAVINGSCONSTANT.CREATEGROUPSAINGSPENDING}
+                                                                   type="submit" className="btn-alat m-t-10 m-b-20 text-center">
+                                                                   {this.props.data.message == GROUPSAVINGSCONSTANT.CREATEGROUPSAINGSPENDING ? "Processing..." :"Next"}
+
+                                                                   </button>
                                                             {/* </NavLink> */}
                                                         </center>
                                                     </div>
@@ -342,7 +350,8 @@ class CreateATargetGoal extends React.Component {
 
 function mapStateToProps(state){
     return {
-        data: state.groupSavings
+        data: state.groupSavings,
+        alert: state.alert,
     }
 }
 export default connect(mapStateToProps)(CreateATargetGoal);

@@ -202,7 +202,7 @@ class FlexGoal extends React.Component {
         this.setState({ "goalFrequency": frequency.value,
                         "goalFrequency" : frequency.label
               });
-        if (this.state.formsubmitted && SelectedtimeSaved.value != "")
+        if (this.state.formsubmitted && frequency.value != "")
             this.setState({ goalFrequencyInvalid: false })
 
             if (frequency.value.toLowerCase() == "daily") {

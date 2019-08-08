@@ -25,7 +25,7 @@ export const groupSavingsTargetGoal = (token, data) => {
             });
     };
 
-    function request(request) { return {type:GROUPSAVINGSCONSTANT.CREATEGROUPSAVINGS, request} }
+    function request(request) { return {type:GROUPSAVINGSCONSTANT.CREATEGROUPSAINGSPENDING, request} }
     function success(response) { return {type:GROUPSAVINGSCONSTANT.CREATEGROUPSAVINGS_SUCCESS, response} }
     function failure(error) { return {type:GROUPSAVINGSCONSTANT.CREATEGROUPSAVINGS_ERROR, error} }
 };
@@ -374,6 +374,8 @@ export const setFrequency =(data) =>{
         }
     }
 }
+
+
 
 
 
