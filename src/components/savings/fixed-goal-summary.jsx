@@ -52,9 +52,9 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
                 goalFrequency:data.goalFrequency
             });
         }
-    }
+    };
     handleSubmit=()=>{
-        event.preventDefault()
+        event.preventDefault();
         this.props.dispatch(actions.addFixedGoal({
             "goalName":this.state.goalName,
             "startDate":this.state.startDate,

@@ -42,7 +42,7 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
             console.log('tag', data)
 
             this.setState({
-                targetAmount:data.targetAmount,
+                targetAmount:parseFloat(data.targetAmount),
                 startDate: data.startDate,
                 endDate: data.endDate,  
                 goalName:data.goalName,
@@ -59,7 +59,7 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
             "goalName":this.state.goalName,
             "startDate":this.state.startDate,
             "endDate":this.state.endDate,
-            "targetAmount":this.state.targetAmount,
+            "targetAmount":parseFloat(this.state.targetAmount),
             "goalFrequency":this.state.goalFrequency,
             "debitAccount":this.state.debitAccount,
             'debitAmount':this.state.showInterests
