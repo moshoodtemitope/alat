@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function description(){
+export function description(props){
     return(<div>
                <div className="col-xs-6">
                    <p>{this.props.leftHeader}</p>

@@ -8,6 +8,8 @@ import Select from 'react-select';
 import DatePicker from "react-datepicker";
 import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
 import "react-datepicker/dist/react-datepicker.css";
+import { connect } from "react-redux";
+import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 
 class RotatingGroupCreated extends React.Component {
     constructor(props){
@@ -61,7 +63,7 @@ class RotatingGroupCreated extends React.Component {
                                                 </div>
                                                 <div className="forCode">
                                                         <div className="left">
-                                                            <h2>GRP92A2UE</h2>
+                                                            <h2>{this.props.createdGroupSavings.response.referralCode}</h2>
                                                         </div>
                                                         <div className="right">
                                                             <i></i>
@@ -100,4 +102,10 @@ class RotatingGroupCreated extends React.Component {
     }
 }
 
-export default RotatingGroupCreated;
+function mapStateToProps(state){
+   return {
+       createdGroupSavings: state.createRotatingGroupSavings.data
+   }
+}
+
+export default connect(mapStateToProps)(RotatingGroupCreated);

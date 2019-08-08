@@ -3,9 +3,10 @@ import { GROUPSAVINGSCONSTANT } from "../../constants/savings/group";
 
 export function groupSavingsTargetGoal(state=[], action){
     switch(action.type){
-        case GROUPSAVINGSCONSTANT.CREATEGROUPSAINGS: 
+        
+        case GROUPSAVINGSCONSTANT.CREATEGROUPSAINGSPENDING: 
            return {
-               message: GROUPSAVINGSCONSTANT.CREATEGROUPSAINGS,
+               message: GROUPSAVINGSCONSTANT.CREATEGROUPSAINGSPENDING,
                data: action
            }
         case GROUPSAVINGSCONSTANT.CREATEGROUPSAVINGS_SUCCESS:
@@ -46,7 +47,7 @@ export function groupDetails(state=[], action){
 }
 
 export function deleteGroup(state=[], action){
-    switch(action.type){
+    switch(action.type){ 
         case GROUPSAVINGSCONSTANT.DELETEGROUP: 
            return {
                message: GROUPSAVINGSCONSTANT.DELETEGROUP,
@@ -287,6 +288,70 @@ export function continueScheduleGroupPayment (state=[], action){
            }
         default: 
            return {... state}
+    }
+}
+
+export function setAutomateSavingsStartDate (state=[], action){
+    switch(action.type){
+        case GROUPSAVINGSCONSTANT.GROUPSAVINGS_STARTDATE:
+           return {
+               message: GROUPSAVINGSCONSTANT.GROUPSAVINGS_STARTDATE,
+               data: action.data
+           }
+       
+        default: 
+        return {
+            message: GROUPSAVINGSCONSTANT.GROUPSAVINGS_ENDATE,
+            data: new Date()
+        }
+    }
+}
+
+export function setAutomateSavingsEndDate (state=[], action){
+    switch(action.type){
+        case GROUPSAVINGSCONSTANT.GROUPSAVINGS_ENDATE:
+           return {
+               message: GROUPSAVINGSCONSTANT.GROUPSAVINGS_ENDATE,
+               data: action.data
+           }
+       
+        default: 
+        return {
+            message: GROUPSAVINGSCONSTANT.GROUPSAVINGS_ENDATE,
+            data: new Date()
+        }
+    }
+}
+
+export function setAmountToWithDraw (state=[], action){
+    switch(action.type){
+        case GROUPSAVINGSCONSTANT.SETAMOUNT_TO_WITHDRAW:
+           return {
+               message: GROUPSAVINGSCONSTANT.SETAMOUNT_TO_WITHDRAW,
+               data: action.data
+           }
+       
+        default: 
+        return {
+            message: GROUPSAVINGSCONSTANT.SETAMOUNT_TO_WITHDRAW,
+            data: ""
+        }
+    }
+}
+
+export function setFrequency (state=[], action){
+    switch(action.type){
+        case GROUPSAVINGSCONSTANT.SET_FREQUENCY:
+           return {
+               message: GROUPSAVINGSCONSTANT.SET_FREQUENCY,
+               data: action.data
+           }
+       
+        default: 
+        return {
+            message: GROUPSAVINGSCONSTANT.SET_FREQUENCY,
+            data: ""
+        }
     }
 }
 

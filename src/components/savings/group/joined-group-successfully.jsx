@@ -7,7 +7,7 @@ import {Switch} from "react-router";
 import Members from './list-item';
 import { connect } from "react-redux";
 
-class SuccessMessage extends React.Component {
+class JoinedGroupSuccessfully extends React.Component {
     constructor(props){
         super(props);
         this.state={
@@ -51,16 +51,10 @@ class SuccessMessage extends React.Component {
 
                                             <form>
                                                 <div className="form-group">
-                                                    <label id="sucMessage">Scheduling was successfull</label>
+                                                    <label id="sucMessage">Group Joined Successfully</label>
                                                 </div>
                                                 <div className="form-row">
-                                                <Members 
-                                                   userType="admin"
-                                                   name="Group Savings"
-                                                   position="Status: running"
-                                                   amount={this.props.setAmountToWithDraw}
-                                                   intent={this.props.setFrequency}
-                                                   id="autoSummary"/>
+                                                
                                                 </div>
                                             </form>
 
@@ -88,8 +82,7 @@ class SuccessMessage extends React.Component {
 
 function mapStateToProps(state){
     return {
-        setAmountToWithDraw: state.setAmountToWithDraw.data,
-        setFrequency: state.setFrequency.data
+        
     }
 }
-export default connect(mapStateToProps)(SuccessMessage);
+export default connect(mapStateToProps)(JoinedGroupSuccessfully);

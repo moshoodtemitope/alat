@@ -1,10 +1,9 @@
- @import '../../assets/css/font.css';
+  @import '../../assets/css/font.css';
  
  .choose-goal-plan-row{
     display: flex;
     flex-wrap: wrap;
-    
-   
+    width: 90% !important;
  }
 .fixed-goal{
    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
@@ -16,6 +15,10 @@
    height: 250px;
    margin-left:10px;
    margin-right:10px;
+}
+
+.forGroupLink {
+   color: #444444 !important;
 }
 
 .goal-icon{
@@ -91,13 +94,15 @@
    font-style: normal;
 }
 .header-info{
-   font-family: "proxima_novasemibold";
-   font-size: 18px;
-   color: #444444;
-   display: block;
-   padding-left: 50px;
-   padding-right: 50px;
-}
+    font-family: "proxima_novasemibold";
+    font-size: 18px;
+    color: #444444;
+    display: block;
+    padding-left: 50px;
+    padding-right: 50px;
+    font-style: inherit
+
+} 
 .label-text{
    font-family: "proxima_novasemibold";
    font-size: 14px;
@@ -118,7 +123,7 @@
 
 }
 .coverForSummary {
-    /* padding-top: 20px; */
+   
     display: flex;
     flex-wrap: nowrap;
     padding-bottom: 20px;
@@ -176,24 +181,6 @@
     font-size:14px;
     margin:auto;
     padding-top: 3px;
-    font-family:"proxima_novaregular"
-
-
-
+    font-family:"proxima_novaregular";
 }
 
-.coverForSummary .left {
-
-}
-
-.coverForSummary .right {
-
-}
-
-.selectionTray {
-   justify-content: center;
-}
-
-.forGroupLink {
-   color: #666 !important;
-}

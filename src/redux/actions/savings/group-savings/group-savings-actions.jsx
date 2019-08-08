@@ -25,7 +25,7 @@ export const groupSavingsTargetGoal = (token, data) => {
             });
     };
 
-    function request(request) { return {type:GROUPSAVINGSCONSTANT.CREATEGROUPSAVINGS, request} }
+    function request(request) { return {type:GROUPSAVINGSCONSTANT.CREATEGROUPSAINGSPENDING, request} }
     function success(response) { return {type:GROUPSAVINGSCONSTANT.CREATEGROUPSAVINGS_SUCCESS, response} }
     function failure(error) { return {type:GROUPSAVINGSCONSTANT.CREATEGROUPSAVINGS_ERROR, error} }
 };
@@ -229,7 +229,7 @@ export const joinGroup = (token, data) => {
 export const scheduleContribution = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.DELETE_GROUP, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.SCHEDULE_CONTRIBUTION, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
@@ -239,7 +239,7 @@ export const scheduleContribution = (token, data) => {
                 if(error.response.message){
                     dispatch(failure(error.response.message.toString()));
                 }else{
-                    dispatch(failure('WE are unable to PAUSE GROUP NOW!'));
+                    dispatch(failure('WE are unable to Schedule Group Contribution Now!'));
                 }
                 // dispatch(failure(error.response.data.message.toString()));
             });
@@ -322,6 +322,60 @@ export const continueScheduleGroupPayment = (token, data) => {
     function success(response) { return {type:GROUPSAVINGSCONSTANT.CONTINUE_SCHEDULEGROUP_PAYMENT_SUCCESS, response} }
     function failure(error) { return {type:GROUPSAVINGSCONSTANT.CONTINUE_SCHEDULEGROUP_PAYMENT_ERROR, error} }
 };
+
+export const setAutomateSavingsStartDate =(data) =>{
+    return(dispatch)=>{
+        dispatch(success(data))
+
+    }
+    function success(data){
+        return{
+            type:GROUPSAVINGSCONSTANT.GROUPSAVINGS_STARTDATE,
+            data:data
+        }
+    }
+}
+
+export const setAutomateSavingsEndDate =(data) =>{
+    return(dispatch)=>{
+        dispatch(success(data))
+
+    }
+    function success(data){
+        return{
+            type:GROUPSAVINGSCONSTANT.GROUPSAVINGS_ENDATE,
+            data:data
+        }
+    }
+}
+
+export const setAmountToWithDraw =(data) =>{
+    return(dispatch)=>{
+        dispatch(success(data))
+
+    }
+    function success(data){
+        return{
+            type:GROUPSAVINGSCONSTANT.SETAMOUNT_TO_WITHDRAW,
+            data:data
+        }
+    }
+}
+
+export const setFrequency =(data) =>{
+    return(dispatch)=>{
+        dispatch(success(data))
+
+    }
+    function success(data){
+        return{
+            type:GROUPSAVINGSCONSTANT.SET_FREQUENCY,
+            data:data
+        }
+    }
+}
+
+
 
 
 

@@ -44,18 +44,18 @@ class GroupAnalytics extends React.Component {
        this.setState({
            groupDetails: details
        })
-       setTimeout(function(){
-           if(this.state.groupDetails == null){
-              this.GetGroupData();
-           }
-       }, 60000);
+    //    setTimeout(function(){
+    //        if(this.state.groupDetails == null){
+    //           this.GetGroupData();
+    //        }
+    //    }, 60000);
     //    console.log("group details was outputted!")
     //    console.log(this.state.groupDetails);
     }
 
-    GetGroupData = () => {
-        this.props.dispatch(action.GetCustomerGroups(this.state.user));
-    }
+    // GetGroupData = () => {
+    //     this.props.dispatch(actions.GetCustomerGroups(this.state.user));
+    // }
 
 
     HandleNavigation = () => {

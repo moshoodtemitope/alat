@@ -45,35 +45,7 @@ class GroupAnalytics2 extends React.Component {
         this.props.history.push('/savings/group/group-analytics');
     }
 
-    // GetMembers = () => {
-    //    const allMembers = this.props.groupDetails.response.members.map(element => {
-    //         if(element.isAdmin == false){
-    //             <Members 
-    //             userType="members"
-    //             fullname={element.lastName.concat(" ", element.firstName)}
-
-    //             amount={element.amountSaved}
-    //             intent="Contribution"/>
-    //         }
-    //     });
-    //     return allMembers;
-    // }
-
-    // GetAmin = () => {
-    //     const admin = this.props.groupDetails.response.members.map(element => {
-    //         if(element.isAdmin == true){
-    //             <Members 
-    //                 userType="admin"
-    //                 name={element.lastName.concat(" ", element.firstName)}
-    //                 position="Admin"
-    //                 amount={element.amountSaved}
-    //                 intent="Contribution"/>
-
-    //         }
-    //     });
-
-    //     return admin;
-    // }
+    
 
   
     render() {
@@ -125,39 +97,32 @@ class GroupAnalytics2 extends React.Component {
                                                 />
                                            
                                              <div className='statContainer'>
-                                               <Members 
-                                                   userType="admin"
-                                                   name="Hasan Danfodio"
-                                                   position="admin"
-                                                   amount="N10, 000"
-                                                   intent="Contribution"/>
+                             
+                                                   <div>
+                                                      {this.props.groupDetails.response.members.map((element, index) => {
+                                                          if(element.isAdmin == true){
+                                                            return <Members 
+                                                                key={index}
+                                                                userType="admin"
+                                                                name={element['lastName'] + " " + element['firstName']}
+                                                                position="Admin"
+                                                                amount={element['amountSaved']}
+                                                                intent="Contribution"/>
+                                                          }
 
-                                               <Members 
-                                                   userType="members"
-                                                   fullname="Stan Lee"
-                                    
-                                                   amount="N10, 000"
-                                                   intent="Contribution"/>
-
-                                                <Members 
-                                                   userType="members"
-                                                   fullname="Christopher Columbus"
-                                    
-                                                   amount="N10, 000"
-                                                   intent="Contribution"/>
-                                                <Members 
-                                                   userType="members"
-                                                   fullname="Odelade Hammed"
-                                                   amount="N10, 000"
-                                                   intent="Contribution"/>
-
-                                                <Members 
-                                                   userType="members"
-                                                   fullname="Stallion Zin"
-                                    
-                                                   amount="N10, 000"
-                                                   intent="Contribution"/>
-
+                                                      })} {this.props.groupDetails.response.members.map((element, index) => {
+                                                        if(element.isAdmin == false){
+                                                            return  <Members 
+                                                                        key={index}
+                                                                        userType="members"
+                                                                        fullname={ element['lastName'] + " " + element['firstName'] }
+                                                                        
+                                                                        amount={element['amountSaved']}
+                                                                        intent="Contribution"/>
+                                                          }
+                                                      })}
+                                                   </div>
+                                                   <div></div>
                                                    <p id="manageButton">Manage</p>
                                              </div>
                                         </div>

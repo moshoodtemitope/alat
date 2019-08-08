@@ -43,34 +43,29 @@ class GoalPlan extends React.Component {
                             </div>
                         </div>
                         <div className="Home-container">
-                        <div className="col-sm-12 groupHeading">
-                            <center>
-                                <h4>SELECT A GOAL PLAN</h4>
-                            </center>
-                        </div>
-                            <div className="choose-goal-plan-row ">
-                                {/* <NavLink to="/savings/fixed-goal"> */}
+                            <div className="row">
+                                <NavLink to="/savings/fixed-goal">
                                 <div className="fixed-goal">
                                     <img className="goal-icon" src={calender} alt=''/>
                                     <p className="flex-text">Fixed Goal</p>
                                     <p className="info-text3">Save daily, weekly or monthly towards
                                     a target amount, earn 10% interest annually. No withdrawals allowed and you will lose your interest if you don't meet your target</p>
                                 </div> 
-                                {/* </NavLink>  */}
-                                {/* <NavLink to="/savings/flex-goal">                       */}
+                                </NavLink> 
+                                <NavLink to="/savings/flex-goal">                      
                                 <div className="flex-goal">
                                     <img className="goal-icon" src={graph} alt=''/>
-                                    <p className="plan-text">Flexi Goal</p>
-                                    <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days, but you will lose your interest if you don't meet your target</p>
+                                    <p className="plan-text">Flex Goal</p>
+                                    <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days.</p>
                                 </div>
-                                {/* </NavLink> */}
-                                {/* <NavLink to="/savings/goal/create-stash"> */}
-                                    <div className="stash-goal">
-                                        <img className="goal-icon" src={stash} alt=''/>
-                                        <p className="plan-text">Stash</p>
-                                        <p className="info-text2">Save whatever you want whenever you want for a minimum of 30 days and earn 10% interest with the option to withdraw your interest on monthly basis, but you will lose your interest if you don't save up to 30 days</p>
-                                    </div>
-                                {/* </NavLink> */}
+                                </NavLink>
+                                <NavLink to="/savings/create-stash_step1">
+                                <div className="stash-goal">
+                                    <img className="goal-icon" src={stash} alt=''/>
+                                    <p className="plan-text">Stash</p>
+                                    <p className="info-text2">Save whatever you want whenever you want and earn 10% interest with the option to withdraw your interest on monthly basis</p>
+                                </div>
+                                </NavLink>
                             </div>
                         </div>
                     </div>

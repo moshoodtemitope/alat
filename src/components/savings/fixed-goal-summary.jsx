@@ -17,13 +17,16 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
          super(props)
 
         this.state={
-            AmountSavedText:"",
+            targetAmount:"",
             startDate:"",
             endDate:"",
             goalName:"",
-            timeSaved:"",
-            TargetAmount:"",
-            debitAccount:""
+            goalFrequency:"",
+            showInterests:"",
+            debitAccount:"",
+            GoalTypeId:6,
+            frequencyId: 11,
+
 
         }
      }
@@ -43,26 +46,29 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
             console.log('tag', data)
 
             this.setState({
-                AmountSavedText:data.AmountSavedText,
+                targetAmount:data.targetAmount,
                 startDate: data.startDate,
                 endDate: data.endDate,
                 goalName:data.goalName,
-                timeSaved:data.timeSaved,
+                showInterests:data.showInterests,
                 debitAccount:data.debitAccount,
-                TargetAmount:data.AmountSaved
+                goalFrequency:data.goalFrequency,
+                
             });
         }
     }
-    handleSubmit=()=>{
+    handleSubmit=(event)=>{
         event.preventDefault()
         this.props.dispatch(actions.addFixedGoal({
             "goalName":this.state.goalName,
             "startDate":this.state.startDate,
             "endDate":this.state.endDate,
-            "AmountSavedText":this.state.AmountSavedText,
-            "timeSaved":this.state.timeSaved,
+            "targetAmount":this.state.targetAmount,
+            "goalFrequency":this.state.goalFrequency,
             "debitAccount":this.state.debitAccount,
-            'TargetAmount':this.state.AmountSavedText
+            "showInterests":this.state.showInterests,
+            "GoalTypeId":this.state.GoalTypeId,
+            "frequencyId":this.state.frequencyId,
         }));
 
     }
@@ -92,7 +98,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
 
 
                         {this.props.alert && this.props.alert.message &&
-                            <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                            <div style={{width: "100%", marginRight:"120px",marginLeft:"120px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                         }
                     <h1 style={{margin:"auto", color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>Fixed Goal Summary</h1>
                         <div style={{margin:"30px"}}></div>
@@ -110,9 +116,9 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
                                             </div>
                                             <div className="right">
                                                 <p className='GoalText'>Target Amount</p>
-                                                <p className='boldedText'>₦{this.state.AmountSavedText}</p>
+                                                <p className='boldedText'>₦{this.state.targetAmount}</p>
                                             </div>
-                                        </div>
+                                        </div> 
                                         <div className="coverForSummary">
                                                 <div className="left">
                                                     <p className='GoalText'>Start Date</p>
@@ -127,7 +133,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
                                         <div className="coverForSummary">
                                             <div className="left">
                                                 <p className='GoalText'>Contributions</p>
-                                                <p className='boldedText'>₦{this.state.AmountSavedText}/{this.state.timeSaved}</p>
+                                                <p className='boldedText'>₦{this.state.showInterests}/{this.state.goalFrequency}</p>
                                             </div>
                                             <div className="right">
                                                 <p className='GoalText'>Account to Debit</p>

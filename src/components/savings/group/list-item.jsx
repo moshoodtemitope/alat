@@ -8,7 +8,7 @@ export default (props) => {
                             <p>{props.name}</p>
                             <p>{props.position}</p>
                         </div>
-                            
+                        
                         <div className='right'>
                             <p>{props.amount}</p>
                             <p>{props.intent}</p>
