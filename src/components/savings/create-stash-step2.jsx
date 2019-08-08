@@ -68,11 +68,7 @@ import * as actions from '../../redux/actions/savings/goal/create-stash-goal.act
             "startDate":moment().format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
             "isAutomaticDebit": true,
             "GoalTypeId":this.state.GoalTypeId
-            
-
-            // 'StartDate': moment.format(this.state.startDate('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
-
-
+    
         }));
 
     }

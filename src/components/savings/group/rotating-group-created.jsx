@@ -15,10 +15,17 @@ class RotatingGroupCreated extends React.Component {
     constructor(props){
         super(props)
         this.state= {
-            
+            user: JSON.parse(localStorage.getItem("user"))
         }
+    }
 
-        this.handleSubmit = this.handleSubmit.bind(this);
+    componentDidMount = () => {
+       const data = {
+           groupId: this.props.createdGroupSavings.response.id
+       }
+       console.log(data);
+       //return;
+       this.props.dispatch(actions.rotatingGroupDetails(this.state.user.token, data))
     }
 
     handleSubmit = (event) => {

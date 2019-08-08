@@ -34,7 +34,7 @@ export const createRotatingSavings = (token, data) => {
 export const rotatingGroupDetails = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.DELETE_GROUP, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.ROTATING_GROUP_DETAILS.concat("?groupId=", parseInt(data.groupId)), "GET", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {

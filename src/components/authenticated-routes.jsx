@@ -38,6 +38,7 @@ import RotatingGroupCreated from './savings/group/rotating-group-created';
 import GroupAnalyticsMini from './savings/group/group-analytics-mini';
 import JoinAGroup from './savings/group/join-a-group';
 import JoinedGroupSuccessfully from './savings/group/joined-group-successfully';
+import GroupAnalyticsMini2 from './savings/group/group-analytics-mini2';
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
     return (
@@ -101,26 +102,11 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path="/savings/group/create-rotating" authed={this.props.user} component={RotatingGroup} />
                     <PrivateRoute path="/savings/rotating-group" authed={this.props.user} component={RotatingGroupCreated} />
                     <PrivateRoute path='/savings/group-analytics-mini' authed={this.props.user} component={GroupAnalyticsMini} />
+                    <PrivateRoute path='/savings/group-mini2' authed={this.props.user} component={GroupAnalyticsMini2} />
                     <PrivateRoute path='/savings/group/join-a-group' authed={this.props.user} component={JoinAGroup} />
                     <PrivateRoute path="/savings/group/joingroup-success-message" authed={this.props.user} component={JoinedGroupSuccessfully} />
-
-
-
-
-
                 </Switch>
             </Router>
-            
-            // <Router history={history}>
-            //     <Switch>
-            //         {/*<PrivateRoute authed={this.state.authed} exact path='/dashboard' component={Dashboard} />*/}
-            //         <Route path="/dashboard" component={Dashboard} />
-            //         {/*<TransferRoute />*/}
-            //         {/*<Route exact path="/transfer" component={TransferComponent} />*/}
-            //     </Switch>
-            //  bills/airtime => bills/airtime/buy-airtime => bills/airtime/comfirm-aritme
-            // </Router>
-
         )
     }
 }
