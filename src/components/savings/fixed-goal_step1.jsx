@@ -2,15 +2,17 @@ import * as React from "react";
 import {Fragment} from "react";
 import InnerContainer from '../../shared/templates/inner-container';
 import SavingsContainer from './container';
-import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant'
-import {NavLink, Route} from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
 import {Switch} from "react-router";
 import Select from 'react-select';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux';
 import DatePicker from "react-datepicker";
+import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant'
+import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
 import "react-datepicker/dist/react-datepicker.css";
 import * as util from '../../shared/utils'
 import moment from 'moment';
+
 
 const selectedTime = [
            
@@ -20,11 +22,16 @@ const selectedTime = [
    
 ];
 
+
+
+
+
 class FixedGoal extends React.Component {
 
     constructor(props){
         super(props)
         this.state={
+            goalName:"",
             startDate:null,
             endDate:null,
             AmountSavedText:"",
@@ -74,7 +81,24 @@ class FixedGoal extends React.Component {
             return false;
         }
     }
-
+    handleChange = (e) => {
+        let name = e.target.name;
+        this.setState({ [name]: e.target.value })
+    }
+    checkGoalName = () => {
+        if (this.state.goalName == "") {
+            this.setState({ GoalNameInvalid: true });
+            return true;
+        }
+    }
+    handleStartDatePicker = (startDate) => {
+        startDate.setHours(startDate.getHours() + 1);
+        this.setState({ startDate: startDate });
+    }
+    handleEndDatePicker = (endDate) => {
+        endDate.setHours(endDate.getHours() + 1);
+        this.setState({ endDate: endDate });
+    }
     
     checkAmount = () => {
         if (this.state.targetAmount == "") {
@@ -254,6 +278,7 @@ class FixedGoal extends React.Component {
             <Fragment>
                 <InnerContainer>
                     <SavingsContainer>
+                    {this.gotoStep2()}
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -262,13 +287,12 @@ class FixedGoal extends React.Component {
                                 <div className="tab-overflow">
                                     <div className="sub-tab-nav">
                                         <ul>
-                                            <li><a href="#" className="active">Goals</a></li>
+                                            <li><a href="accounts.html" className="active">Goals</a></li>
                                             <NavLink to="/savings/goal/group-savings-selection">
-                                            <li><a href="#">Group Savings</a></li>
+                                            <li><a href="statement.html">Group Savings</a></li>
                                             </NavLink>
-                                            
                                             <li><a href="#">Investments</a></li>
-
+                                        
                                         </ul>
                                     </div>
                                 </div>
@@ -298,7 +322,7 @@ class FixedGoal extends React.Component {
                                                     
                                                     </div>
                                                 <div className="form-row">
-                                                    <div className={ !startDateInvalid ? "form-group col-md-6" : "input-ctn form-error"}>
+                                                    <div className= {!startDateInvalid ? "form-group col-md-6 " : "form-group col-md-6 form-error"}>
                                                         <label className="label-text">When would you like to start</label>
                                                         <DatePicker 
                                                             className="form-control"
@@ -325,7 +349,7 @@ class FixedGoal extends React.Component {
                                                             }
                                         
                                                     </div>
-                                                    <div className={ !endDateInvalid ? "form-group col-md-6" : "input-ctn form-error"}>
+                                                    <div className={!endDateInvalid ? "form-group col-md-6" : "form-group col-md-6 form-error"}>
                                                         <label className="label-text">When do you want to achieve this</label>
                                                         <DatePicker  
                                                             selected={this.state.endDate}
@@ -406,26 +430,25 @@ class FixedGoal extends React.Component {
                                                         </center>
                                                     </div>
                                                 </div>
-
-
-
+                                            
                                             </form>
 
-
-
+                                            
+                                            
                                         </div>
 
-
+                                       
                                        </div>
-
+                                      
                                       </div>
-
+                                    
                                 </div>
-
+                            
                             </div>
-
+                        
                         </div>
 
+                    
                     </SavingsContainer>
 
                 </InnerContainer>

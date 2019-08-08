@@ -21,7 +21,6 @@ export const createStashGoalStep1 =(data) =>{
 }
 
 
-
 // add StashGoal
 export const CreateStashGoal =(data)=>{
     return (dispatch) => {

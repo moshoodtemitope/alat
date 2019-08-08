@@ -290,6 +290,70 @@ export function continueScheduleGroupPayment (state=[], action){
     }
 }
 
+export function setAutomateSavingsStartDate (state=[], action){
+    switch(action.type){
+        case GROUPSAVINGSCONSTANT.GROUPSAVINGS_STARTDATE:
+           return {
+               message: GROUPSAVINGSCONSTANT.GROUPSAVINGS_STARTDATE,
+               data: action.data
+           }
+       
+        default: 
+        return {
+            message: GROUPSAVINGSCONSTANT.GROUPSAVINGS_ENDATE,
+            data: new Date()
+        }
+    }
+}
+
+export function setAutomateSavingsEndDate (state=[], action){
+    switch(action.type){
+        case GROUPSAVINGSCONSTANT.GROUPSAVINGS_ENDATE:
+           return {
+               message: GROUPSAVINGSCONSTANT.GROUPSAVINGS_ENDATE,
+               data: action.data
+           }
+       
+        default: 
+        return {
+            message: GROUPSAVINGSCONSTANT.GROUPSAVINGS_ENDATE,
+            data: new Date()
+        }
+    }
+}
+
+export function setAmountToWithDraw (state=[], action){
+    switch(action.type){
+        case GROUPSAVINGSCONSTANT.SETAMOUNT_TO_WITHDRAW:
+           return {
+               message: GROUPSAVINGSCONSTANT.SETAMOUNT_TO_WITHDRAW,
+               data: action.data
+           }
+       
+        default: 
+        return {
+            message: GROUPSAVINGSCONSTANT.SETAMOUNT_TO_WITHDRAW,
+            data: ""
+        }
+    }
+}
+
+export function setFrequency (state=[], action){
+    switch(action.type){
+        case GROUPSAVINGSCONSTANT.SET_FREQUENCY:
+           return {
+               message: GROUPSAVINGSCONSTANT.SET_FREQUENCY,
+               data: action.data
+           }
+       
+        default: 
+        return {
+            message: GROUPSAVINGSCONSTANT.SET_FREQUENCY,
+            data: ""
+        }
+    }
+}
+
 
 
 

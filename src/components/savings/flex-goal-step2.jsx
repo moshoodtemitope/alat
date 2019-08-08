@@ -4,11 +4,11 @@ import InnerContainer from '../../shared/templates/inner-container';
 import SavingsContainer from './container';
 import Select from 'react-select';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import {flexGoalConstants} from '../../redux/constants/goal/flex-goal.constant'
 import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
 import SelectDebitableAccounts from '../../shared/components/selectDebitableAccounts';
 import moment from 'moment';
+import {NavLink, Redirect} from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 const selectedTime = [
            
@@ -327,7 +327,9 @@ class FlexGoal extends React.Component {
                                     <div className="sub-tab-nav">
                                         <ul>
                                             <li><a href="accounts.html" className="active">Goals</a></li>
+                                            <NavLink to="/savings/goal/group-savings-selection">
                                             <li><a href="statement.html">Group Savings</a></li>
+                                            </NavLink>                                            
                                             <li><a href="#">Investments</a></li>
                                         
                                         </ul>

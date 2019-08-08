@@ -23,7 +23,10 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
             goalName:"",
             goalFrequency:"",
             showInterests:"",
-            debitAccount:""
+            debitAccount:"",
+            GoalTypeId:6,
+            frequencyId: 11,
+
 
         }
      }
@@ -49,7 +52,8 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
                 goalName:data.goalName,
                 showInterests:data.showInterests,
                 debitAccount:data.debitAccount,
-                goalFrequency:data.goalFrequency
+                goalFrequency:data.goalFrequency,
+                
             });
         }
     }
@@ -63,6 +67,8 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
             "goalFrequency":this.state.goalFrequency,
             "debitAccount":this.state.debitAccount,
             "showInterests":this.state.showInterests,
+            "GoalTypeId":this.state.GoalTypeId,
+            "frequencyId":this.state.frequencyId,
         }));
 
     }
@@ -112,7 +118,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
                                                 <p className='GoalText'>Target Amount</p>
                                                 <p className='boldedText'>₦{this.state.targetAmount}</p>
                                             </div>
-                                        </div>
+                                        </div> 
                                         <div className="coverForSummary">
                                                 <div className="left">
                                                     <p className='GoalText'>Start Date</p>

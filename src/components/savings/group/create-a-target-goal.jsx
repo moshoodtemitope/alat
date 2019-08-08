@@ -194,12 +194,12 @@ class CreateATargetGoal extends React.Component {
             Name:this.state.groupName,
             TargetAmount: parseFloat(this.state.targetAmount),
             TargetDate: this.state.targetDate,
-            minimumIndividualAmount: parseFloat(this.state.minimumIndividualAmount),
+            MinimumIndividualAmount: parseFloat(this.state.minimumIndividualAmount),
             DebitAccount: this.state.selectedAccount,
-            Purpose: this.state.groupPurpose,
+            Purpose: this.state.groupPurpose, 
         }
         console.log(data)
-        // return;
+        //return;
         this.props.dispatch(actions.groupSavingsTargetGoal(this.state.user.token, data));
     }
 

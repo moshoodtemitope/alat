@@ -21,8 +21,11 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
             goalName:"",
             goalFrequency:"",
             debitAccount:"",
-            debitAmount	:"",
+            debitAmount:"",
             showInterests:"",
+            GoalTypeId:3,
+            frequencyId:6,
+
 
         }
      }
@@ -43,8 +46,8 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
 
             this.setState({
                 targetAmount:data.targetAmount,
-                startDate: data.startDate,
-                endDate: data.endDate,  
+                startDate:data.startDate,
+                endDate:data.endDate,  
                 goalName:data.goalName,
                 goalFrequency:data.goalFrequency,
                 debitAccount:data.debitAccount,
@@ -58,11 +61,12 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
         this.props.dispatch(actions.addFlexGoal({
             "goalName":this.state.goalName,
             "startDate":this.state.startDate,
-            "endDate":this.state.endDate,
             "targetAmount":this.state.targetAmount,
             "goalFrequency":this.state.goalFrequency,
             "debitAccount":this.state.debitAccount,
-            'debitAmount':this.state.showInterests
+            "debitAmount":this.state.debitAmount,
+            "GoalTypeId":this.state.GoalTypeId,
+            "frequencyId":this.state.frequencyId
         }));
 
     }
@@ -80,7 +84,9 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
                             <div className="sub-tab-nav">
                                 <ul>
                                     <li><a href="accounts.html" className="active">Goals</a></li>
+                                    <NavLink to="/savings/goal/group-savings-selection">
                                     <li><a href="statement.html">Group Savings</a></li>
+                                    </NavLink>                                    
                                     <li><a href="#">Investments</a></li>
                                 
                                 </ul>
@@ -114,10 +120,10 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
                                                     <p className='GoalText'>Start Date</p>
                                                     <p className='boldedText'>{moment(this.state.startDate).format('MMMM,D,YYYY')}</p>
                                                 </div>
-                                                <div className="right">
+                                                {/* <div className="right">
                                                     <p className='GoalText'>End Date</p>
                                                     <p className='boldedText'>{moment(this.state.endDate).format('MMMM,D,YYYY')} </p>
-                                                </div>  
+                                                </div>   */}
                                         </div>
 
                                         <div className="coverForSummary">

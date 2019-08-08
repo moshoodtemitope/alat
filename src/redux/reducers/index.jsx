@@ -165,11 +165,12 @@ const appReducer = combineReducers({
     deleteMember: groupSavings.deleteMember,
     cashOut: groupSavings.cashOut,
     continueScheduleGroupPayment: groupSavings.continueScheduleGroupPayment,
-    pauseGroup: groupSavings.pauseGroup
-
+    pauseGroup: groupSavings.pauseGroup,
+    automateContributionStartDate: groupSavings.setAutomateSavingsStartDate,
+    automateContributionEndDate: groupSavings.setAutomateSavingsEndDate,
+    setFrequency: groupSavings.setFrequency,
+    setAmountToWithDraw: groupSavings.setAmountToWithDraw
     /// ESUSU (GROUP SAVINGS)
-
-
 });
 
 //export defualt appReducer;

@@ -5,56 +5,16 @@ import SavingsContainer from './../container';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import {Switch} from "react-router";
 import Members from './list-item';
-import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
-import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 
 class SuccessMessage extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            endDate:null,
-            stdInvalid:false,
-            edtInvalid:false,
-            isSubmitted: null,
-            endDateInvalid:false,
-            isAccountInvalid: null,
-            accountNumber: null,
-            selectedAccount: null
         }
     }
 
-    validateEndDate=()=>{
-        if(this.state.endDate == null){
-            this.setState({endDateInvalid: true});
-            return true;
-        }
-            else {this.setState({endDateInvalid : false});
-        return false;
-        }
-    }
-
-    handleSelectDebitableAccounts(account) {
-        console.log('dss', account);
-        this.setState({ selectedAccount: account })
-        if (this.state.isSubmitted) { 
-            if(account.length == 10)
-            this.setState({ isAccountInvalid: false })
-         }
-    }
     
-    checkAccountNumber() {
-        if (this.state.selectedAccount.length != 10) {
-            this.setState({ isAccountInvalid: true })
-            return true;
-        }
-    }
-
-    handleSubmit(event) {
-        event.preventDefault();
-        console.log('what');
-    }
-
 
     render() {
         const {endDate,endDateInvalid} = this.state;
@@ -89,7 +49,7 @@ class SuccessMessage extends React.Component {
                                       <div className="max-600">
                                        <div className="al-card no-pad">
 
-                                            <form onSubmit={this.handleSubmit}>
+                                            <form>
                                                 <div className="form-group">
                                                     <label id="sucMessage">Scheduling was successfull</label>
                                                 </div>
@@ -98,8 +58,8 @@ class SuccessMessage extends React.Component {
                                                    userType="admin"
                                                    name="Group Savings"
                                                    position="Status: running"
-                                                   amount="N10, 000"
-                                                   intent="Daily"
+                                                   amount={this.props.setAmountToWithDraw}
+                                                   intent={this.props.setFrequency}
                                                    id="autoSummary"/>
                                                 </div>
                                             </form>
@@ -128,7 +88,8 @@ class SuccessMessage extends React.Component {
 
 function mapStateToProps(state){
     return {
-
+        setAmountToWithDraw: state.setAmountToWithDraw.data,
+        setFrequency: state.setFrequency.data
     }
 }
-export default connect(null, mapStateToProps)(SuccessMessage);
+export default connect(mapStateToProps)(SuccessMessage);

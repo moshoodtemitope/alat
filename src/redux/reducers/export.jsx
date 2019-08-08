@@ -33,7 +33,7 @@ import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingV
      import {flexGoalStep1Reducer,flexGoalStep2Reducer,addFlexGoalReducer} from './goal/flex-goal.reducer';
      import {createStashGoalReducer,createStashGoalStep1Reducer} from './goal/create-stash.reducer'
     import {groupSavingsTargetGoal, groupDetails, deleteGroup, contribute, editGroup, pauseGroup, findGroup, customerGroup, joinGroup, scheduleContribution, deleteMember, cashOut,
-    continueScheduleGroupPayment} from './group-savings/group-savings-reducers';
+    continueScheduleGroupPayment, setAutomateSavingsEndDate, setAutomateSavingsStartDate, setAmountToWithDraw, setFrequency} from './group-savings/group-savings-reducers';
 
 
 export const onboarding = {
@@ -124,7 +124,11 @@ export const fixedGoal ={
     scheduleContribution, 
     deleteMember, 
     cashOut,
-    continueScheduleGroupPayment
+    continueScheduleGroupPayment,
+    setAutomateSavingsEndDate,
+    setAutomateSavingsStartDate,
+    setAmountToWithDraw,
+    setFrequency
 }
 export const stashGoal={
     createStashGoalStep1Reducer,

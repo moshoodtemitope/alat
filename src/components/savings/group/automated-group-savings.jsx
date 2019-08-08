@@ -33,7 +33,6 @@ class AutomateGroupSavings extends React.Component {
             endDateValidity:false,
             startDateValidity:false,
             amountToContributeValidity:false,
-
             startDate: new Date(),
             endDate: new Date(),
             amountToBeWithDrawn:null,
@@ -85,6 +84,20 @@ class AutomateGroupSavings extends React.Component {
         }
     }
 
+    handleSelectedDate = (startDate) => {
+        this.setState({
+            startDate: startDate
+        });
+        // this.props.dispatch(actions.setAutomateSavingsStartDate(startDate));
+    }
+
+    handleEndDate = (endDate) => {
+        this.setState({
+            endDate: endDate
+        })
+        // this.props.dispatch(actions.setAutomateSavingsEndDate(endDate));
+    }
+
     validateStartDate=()=>{
         if(this.state.startDate == null || this.state.startDate == ""){
             this.setState({startDateValidity: true});
@@ -112,51 +125,79 @@ class AutomateGroupSavings extends React.Component {
         }
     }
 
-    handleSelectDebitableAccounts(account) {
+    handleSelectDebitableAccounts = (account) => {
         console.log('dss', account);
-        this.setState({ selectedAccount: account })
+        this.setState({ selectedAccount: account });
         if (this.state.isSubmitted) { 
             if(account.length == 10)
             this.setState({ isAccountInvalid: false })
          }
     }
     
-    checkAccountNumber() {
+    checkAccountNumber = () => {
         if (this.state.selectedAccount.length != 10) {
             this.setState({ isAccountInvalid: true })
             return true;
         }
     }
 
+    handleSetAmount = (event) => {
+        this.setState({
+            amountToBeWithDrawn: event.target.value
+        })
+
+        this.props.dispatch(actions.setAmountToWithDraw(event.target.value));
+    }
+
     handleSelectChange = (Frequency) => {
-        this.setState({ "goalFrequency": Frequency.value,
-                        "goalFrequency" : Frequency.label
+        this.setState({ "goalFrequency": Frequency.value
               });
-         if (this.state.formsubmitted && Frequency.value != "")
-          this.setState({ TimeSavedInvalid: false })
+        //  if (this.state.formsubmitted && Frequency.value != "")
+        //   this.setState({ TimeSavedInvalid: false })
+        this.props.dispatch(actions.setFrequency(Frequency.value))
+    }
+    
+    CheckFrequency = (param) => {
+       switch(param){
+           case 'Daily':
+              return 0;
+           case 'Weekly':
+              return 1;
+           case 'Monthly':
+              return 2;
+       }
     }
 
     SubmitAutomatedGroupSavings = () => {
+        // console.log(this.state.startDate)
+        // const theStartDate = this.state.startDate.split("-");
+        // const day = theStartDate[2].split('T')[0];
+        // const month = theStartDate[1] - 1;
+        // const year = theStartDate[0];
+        // const actualDate = new Date(year, month, day);
+        
         const data = {
-            GroupId: this.props.groupDetails.response.id,
+            GroupId: parseInt(this.props.groupDetails.response.id),
             StartDate: this.state.startDate,
-            Frequency: this.state.howOftenDoYouWantToSave,
-            Amount: this.state.amountToBeWithDrawn,
+            Frequency: parseInt(this.CheckFrequency(this.state.goalFrequency)),
+            Amount: parseFloat(this.state.amountToBeWithDrawn),
             DebitAccount: this.state.selectedAccount
         }
+
         console.log(data)
-        return;
+        //return;
         this.props.dispatch(actions.scheduleContribution(this.state.user.token, data));
     }
 
 
-    handleSubmit(event) {
+    handleSubmit = (event) => {
         event.preventDefault();
+        this.SubmitAutomatedGroupSavings();
         console.log('what');
     }
 
     render() {
-        const {endDate,amountToContributeValidity,goalFrequency, endDateValidity, startDateValidity, howMuchValidity,
+        const {selectedAccount,startDate,endDate,amountToContributeValidity,goalFrequency, endDateValidity, startDateValidity, howMuchValidity,
         } = this.state;
 
         return (
@@ -205,45 +246,47 @@ class AutomateGroupSavings extends React.Component {
                                                     <div className={endDateValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                             
                                                         <label className="label-text">the group target date is?</label>
-                                                        <DatePicker className="form-control" selected={endDate}
+                                                        <DatePicker className="form-control" selected={this.state.endDate}
                                                         placeholder="October 31, 2017"
                                                         dateFormat=" MMMM d, yyyy"
                                                         showMonthDropdown
+                                                        onChange={this.handleEndDate}
+                                                        value={this.state.endDate}
                                                         showYearDropdown
                                                         dropdownMode="select"
-                                                       
                                                         />
-                                        
                                                     </div>
                                                 </div>
                                                 <div className="form-row">
                                                     <div className={startDateValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                         <label className="label-text">when should we start taking the money</label>
-                                                        <DatePicker className="form-control" selected={endDate}
+                                                        <DatePicker className="form-control" selected={this.state.startDate}
                                                         placeholder="October 31, 2017"
                                                         dateFormat=" MMMM d, yyyy"
                                                         showMonthDropdown
+                                                        onChange={this.handleSelectedDate}
                                                         showYearDropdown
+                                                        value={this.state.startDate}
                                                         dropdownMode="select"
-                                                        
                                                         />
                                                         
                                                     </div>
                                                     <div className={amountToContributeValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                         <label className="label-text">how much should we take from your account?</label>
-                                                        <input type="text" className="form-control"  placeholder="E.g. ₦100,000"/>
+                                                        <input type="text" className="form-control"  placeholder="E.g. ₦100,000" onChange={this.handleSetAmount}/>
                                                     </div>
                                                 </div>
                                                 
                                                 <div className="accountSelection">
                                                     <div className='col-sm-12'>
-                                                                <center>
+                                                                
                                                                     <SelectDebitableAccounts
-                                                                        value={this.state.accountNumber}
+                                                                    
                                                                         accountInvalid={this.state.isAccountInvalid}
                                                                         onChange={this.handleSelectDebitableAccounts}
-                                                                        labelText="Select Account to debit" />
-                                                                </center>
+                                                                        labelText="Select Account to debit" 
+                                                                        options={selectedAccount}/>
+                                                                
                                                     </div>
                                                 </div>
                                                 
@@ -282,7 +325,9 @@ class AutomateGroupSavings extends React.Component {
 
 function mapStateToProps(state){
     return {
-        groupDetails: state.groupDetails.data
+        groupDetails: state.groupDetails.data,
+        startDate: state.automateContributionStartDate.data,
+        endDate: state.automateContributionEndDate.data
     }
 }
 export default connect(mapStateToProps)(AutomateGroupSavings);

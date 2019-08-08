@@ -44,7 +44,7 @@ class GoalPlan extends React.Component {
                         </div>
                         <div className="Home-container">
                             <div className="row">
-                                <NavLink to="./savings/fixed-goal_step1">
+                                <NavLink to="/savings/fixed-goal">
                                 <div className="fixed-goal">
                                     <img className="goal-icon" src={calender} alt=''/>
                                     <p className="flex-text">Fixed Goal</p>
@@ -52,7 +52,7 @@ class GoalPlan extends React.Component {
                                     a target amount, earn 10% interest annually. No withdrawals allowed and you will lose your interest if you don't meet your target</p>
                                 </div> 
                                 </NavLink> 
-                                <NavLink to="./savings/flex-goal-step1">                      
+                                <NavLink to="/savings/flex-goal">                      
                                 <div className="flex-goal">
                                     <img className="goal-icon" src={graph} alt=''/>
                                     <p className="plan-text">Flex Goal</p>

@@ -26,6 +26,7 @@ import * as actions from '../../redux/actions/savings/goal/create-stash-goal.act
             payOutInterest:"",
             debitAccount:"",
             debitAmount:"",
+            GoalTypeId:4
 
         }
      }
@@ -60,12 +61,14 @@ import * as actions from '../../redux/actions/savings/goal/create-stash-goal.act
             "startDate":this.state.startDate,
             "targetAmount":this.state.targetAmount,
             "debitAccount":this.state.debitAccount,
-            "payOutInterest":this.state.payOutInterest,  
+            "debitAmount":this.state.payOutInterest,  
             "FrequencyId":this.state.FrequencyId,
             "FrequencyDurationId":this.state.FrequencyDurationId,
             'debitAmount':100,
             "startDate":moment().format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
             "isAutomaticDebit": true,
+            "GoalTypeId":this.state.GoalTypeId
+            
 
             // 'StartDate': moment.format(this.state.startDate('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
 
