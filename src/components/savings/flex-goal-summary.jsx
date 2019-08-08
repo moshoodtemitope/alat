@@ -16,7 +16,7 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
          super(props)
 
         this.state={
-            targetAmount:"",
+            targetAmount:null,
             startDate:"",
             endDate:"",
             goalName:"",
@@ -58,11 +58,11 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
         }
     }
     handleSubmit=(event)=>{
-        event.preventDefault()
+        event.preventDefault();
         this.props.dispatch(actions.addFlexGoal({
             "goalName":this.state.goalName,
             "startDate":this.state.startDate,
-            "targetAmount":this.state.targetAmount,
+            "targetAmount": parseFloat(this.state.targetAmount),
             "goalFrequency":this.state.goalFrequency,
             "debitAccount":this.state.debitAccount,
             "debitAmount":this.state.debitAmount,
