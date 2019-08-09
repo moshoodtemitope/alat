@@ -7,7 +7,6 @@ import moment from 'moment';
 import {NavLink} from 'react-router-dom'
 import {flexGoalConstants} from '../../redux/constants/goal/flex-goal.constant'
 import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
-import {fixedGoalConstants} from "../../redux/constants/goal/fixed-goal.constant";
 
 
  
@@ -64,11 +63,7 @@ import {fixedGoalConstants} from "../../redux/constants/goal/fixed-goal.constant
         this.props.dispatch(actions.addFlexGoal({
             "goalName":this.state.goalName,
             "startDate":this.state.startDate,
-<<<<<<< Updated upstream
             "targetAmount": parseFloat(this.state.targetAmount),
-=======
-            "targetAmount":parseFloat(this.state.targetAmount),
->>>>>>> Stashed changes
             "goalFrequency":this.state.goalFrequency,
             "debitAccount":this.state.debitAccount,
             "debitAmount":parseFloat(this.state.debitAmount),

@@ -14,7 +14,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
 
  class submitFixedGoal extends Component {
      constructor(props){
-         super(props)
+         super(props);
 
         this.state={
             targetAmount:"",
@@ -66,11 +66,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
             "targetAmount":parseFloat(this.state.targetAmount),
             "goalFrequency":this.state.goalFrequency,
             "debitAccount":this.state.debitAccount,
-<<<<<<< Updated upstream
             "debitAmount":parseFloat(this.state.showInterests),
-=======
-            "debitAmount":this.state.showInterests,
->>>>>>> Stashed changes
             "GoalTypeId":this.state.GoalTypeId,
             "frequencyId":this.state.frequencyId,
         }));

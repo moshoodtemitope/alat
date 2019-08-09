@@ -59,18 +59,18 @@ export function addFlexGoalReducer(state = [], action) {
             return{
                 add_flex_goal_status:flexGoalConstants.ADD_FLEX_GOAL_SUCCESS,
                 add_flex_goal_data:action,
-            }
+            };
         case flexGoalConstants.ADD_FLEX_GOAL_PENDING:
             return{
                 add_flex_goal_status:flexGoalConstants.ADD_FLEX_GOAL_PENDING,
                 add_flex_goal_data:action,
-            }
+            };
         case flexGoalConstants.ADD_FLEX_GOAL_FAILURE:
             return{
                 add_flex_goal_status:flexGoalConstants.ADD_FLEX_GOAL_FAILURE,
                 add_flex_goal_data:action,
 
-        }
+        };
         
         default: return {
             ...state

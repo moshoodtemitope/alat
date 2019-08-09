@@ -1,25 +1,38 @@
 import React from 'react';
 import {Fragment} from "react";
 import SavingsContainer from '../container';
-import { Redirect } from 'react-router-dom';
 import InnerContainer from '../../../shared/templates/inner-container';
 import calender from '../../../assets/img/calender.svg' ;
 import graph from '../../../assets/img/graph.svg';
 import stash from '../../../assets/img/stash.svg';
+import {NavLink} from "react-router-dom";
 import '../savings.css';
-import {NavLink, Route} from "react-router-dom";
+import { connect } from "react-redux";
+
+import {getCustomerGoalTransHistory} from '../../../redux/actions/savings/goal/get-customer-transaction-history.actions'
+
 
 class GoalPlan extends React.Component {
-    // constructor(props){
-    //    super(props);
-    // }
-    // redirectToGroupSavings = () => {
-    //     console.log('whislslslsl')
-    //     this.props.push("/savings/goal/group-savings-selection");
-    //    // return <Redirect to="/savings/goal/group-savings-selection"/>
-    // }
+    constructor(props){
+        super(props);
+        this.state = {
+            user: JSON.parse(localStorage.getItem("user"))
+        };
+        this.fetchCustomerTransHistoryGoals();
+    }
+
+    componentDidMount() {
+        console.log('customer-goal'+this.props.customerGoalTransHistory)
+    }
+    fetchCustomerTransHistoryGoals(){
+        const { dispatch } = this.props;
+        dispatch(getCustomerGoalTransHistory(this.state.user.token));
+    };
+
+
 
     render() {
+        const {customerGoalTransHistory}= this.props.customerGoalTransHistory;
         return (
             <Fragment>
                 <InnerContainer>
@@ -49,21 +62,22 @@ class GoalPlan extends React.Component {
                                     <img className="goal-icon" src={calender} alt=''/>
                                     <p className="flex-text">Fixed Goal</p>
                                     <p className="info-text3">Save daily, weekly or monthly towards
-                                    a target amount, earn 10% interest annually. No withdrawals allowed and you will lose your interest if you don't meet your target</p>
+                                    a target amount, earn 10% interest. No withdrawals allowed and you will lose your interest if you don't meet your target.</p>
                                 </div> 
                                 </NavLink> 
                                 <NavLink to="/savings/flex-goal">                      
                                 <div className="flex-goal">
                                     <img className="goal-icon" src={graph} alt=''/>
                                     <p className="plan-text">Flex Goal</p>
-                                    <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days.</p>
+                                    <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days
+                                    but you will lose your interest if you don't meet your target</p>
                                 </div>
                                 </NavLink>
                                 <NavLink to="/savings/create-stash_step1">
                                 <div className="stash-goal">
                                     <img className="goal-icon" src={stash} alt=''/>
                                     <p className="plan-text">Stash</p>
-                                    <p className="info-text2">Save whatever you want whenever you want and earn 10% interest with the option to withdraw your interest on monthly basis</p>
+                                    <p className="info-text2">Save whatever you want whenever you want and earn 10% interest with cashout interest every month but you will lose your interest if you don't save for a minimum of 30 days</p>
                                 </div>
                                 </NavLink>
                             </div>
@@ -75,4 +89,8 @@ class GoalPlan extends React.Component {
         );
     }
 }
-export default GoalPlan;
+const mapStateToProps = state => ({
+    customerGoalTransHistory:state.customerGoalTransHistory,
+});
+
+export default connect (mapStateToProps)(GoalPlan);

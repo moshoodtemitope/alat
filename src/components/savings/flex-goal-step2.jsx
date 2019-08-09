@@ -255,7 +255,7 @@ class FlexGoal extends React.Component {
     }
 
     init = () => {
-        if (this.props.flex_goal_step1.flex_step1_status != flexGoalConstants.FETCH_FLEX_GOAL_SUCCESS)
+        if (this.props.flex_goal_step1.flex_step1_status !== flexGoalConstants.FETCH_FLEX_GOAL_SUCCESS)
             this.props.history.push("/savings/flex-goal");
         else {
             var data = {

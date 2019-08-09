@@ -6,7 +6,6 @@ import successLogo from '../../../assets/img/success.svg';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import Members from '../../savings/group/list-item';
 import { connect } from "react-redux";
-import {createGoalConstants} from "../../../redux/constants/goal/create-stash.constant";
 
 class CreateStashSuccessMessage extends React.Component {
     constructor(props){
@@ -66,7 +65,7 @@ class CreateStashSuccessMessage extends React.Component {
                                                    userType="admin"
                                                    name="Stash"
                                                    position="Status: Completed"
-                                                    amount={JSON.stringify(this.props.create_stash_goal.targetAmount)}
+                                                    amount={JSON.stringify(this.props.create_stash_goal)}
                                                    // intent={this.props.setFrequency}
                                                    id="autoSummary"/>
                                                 </div>
