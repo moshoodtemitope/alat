@@ -12,7 +12,6 @@ import { airtimeConstants } from "../constants/airtime/airtime.constants";
 import { TRANSFER_REDUCER_CLEAR } from "../constants/transfer.constants";
 import { fundAccountConstants } from "../constants/fund-account/fund-account.constant";
 import { loanOnboardingConstants } from '../constants/onboarding/loan.constants';
-import stashRedux from './goal/stash-reducer';
 import { findGroup, joinGroup } from "./group-savings/group-savings-reducers";
 import { joinAGroup } from "./group-savings/rotating-group-reducers";
 //import { saveCardReducer } from "./fund-account.reducer";
@@ -30,16 +29,6 @@ const airtimeReducerPile = (state, action)=>{
     return airtimeReducer(state, action);
 }
 
-const stashReducerPile = (state, action) => {
-    if(action.type === 'stash'){
-        state = undefined;
-    }
-
-    if(action.type === 'saveStash'){
-        state = undefined;
-    }
-    return stashReducers(state, action);
-}
 
 const transferReducerPile =(state, action)=>{
     if(action.type === TRANSFER_REDUCER_CLEAR){
@@ -62,9 +51,7 @@ const loanOnboardingReducerPile = (state, action)=>{
     return loanOnboardingReducer(state, action);
 }
 
-const stashReducers = combineReducers({
-    amount: stashRedux
-})
+
 
 
 const transferReducers = combineReducers({
@@ -125,7 +112,6 @@ const appReducer = combineReducers({
     dashboard_userGoals: dashboard.userGoalsReducer,
     dashboard_userOnboardingPriority: dashboard.onboardingPriorityReducer,
     dashboard_announcementCard: dashboard.announcementReducer,
-    stashReducerPile,
     airtimeReducerPile,
     transferReducerPile,
     fundAccountReducerPile,

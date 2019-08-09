@@ -2,7 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b67c801-8811-450d-8187-b5c523cf8e04" name="Default Changelist" comment="">
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/src/components/authenticated-routes.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/authenticated-routes.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/savings/create-stash-step2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/savings/create-stash-step2.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/savings/create-stash_step1.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/savings/create-stash_step1.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/savings/fixed-goal-summary.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/savings/fixed-goal-summary.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/savings/flex-goal-step1.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/savings/flex-goal-step1.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/savings/flex-goal-summary.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/savings/flex-goal-summary.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/savings/savings.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/savings/savings.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/savings/goal/create-stash-goal.actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/savings/goal/create-stash-goal.actions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/goal/create-stash.reducer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/goal/create-stash.reducer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/goal/stash-reducer.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/index.jsx" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -11,6 +25,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
+<<<<<<< Updated upstream
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/savings/container.jsx">
@@ -18,11 +33,22 @@
             <state>
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
+=======
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/savings/create-stash-step2.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1687">
+              <caret line="56" column="6" lean-forward="true" selection-start-line="56" selection-start-column="6" selection-end-line="56" selection-end-column="6" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+>>>>>>> Stashed changes
               </folding>
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< Updated upstream
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/savings/create-stash-step2.jsx">
           <provider selected="true" editor-type-id="text-editor">
@@ -30,6 +56,15 @@
               <caret line="191" lean-forward="true" selection-start-line="191" selection-end-line="191" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
+=======
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/redux/reducers/goal/create-stash.reducer.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="571">
+              <caret line="40" column="38" selection-start-line="40" selection-start-column="16" selection-end-line="40" selection-end-column="38" />
+              <folding>
+                <element signature="e#0#84#0" expanded="true" />
+>>>>>>> Stashed changes
               </folding>
             </state>
           </provider>
@@ -38,8 +73,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/redux/actions/savings/goal/create-stash-goal.actions.js">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
             <state relative-caret-position="544">
               <caret line="34" column="14" selection-start-line="34" selection-start-column="14" selection-end-line="34" selection-end-column="14" />
+=======
+            <state relative-caret-position="265">
+              <caret line="34" column="72" selection-start-line="34" selection-start-column="72" selection-end-line="34" selection-end-column="72" />
+>>>>>>> Stashed changes
               <folding>
                 <element signature="e#0#88#0" expanded="true" />
               </folding>
@@ -48,27 +88,46 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+<<<<<<< Updated upstream
         <entry file="file://$PROJECT_DIR$/src/redux/actions/savings/goal/fixed-goal.actions.jsx">
           <provider selected="true" editor-type-id="text-editor">
             <state>
               <folding>
                 <element signature="e#0#85#0" expanded="true" />
+=======
+        <entry file="file://$PROJECT_DIR$/src/components/savings/create-stash_step1.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="5189">
+              <caret line="334" column="52" selection-start-line="334" selection-start-column="34" selection-end-line="334" selection-end-column="52" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+>>>>>>> Stashed changes
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+<<<<<<< Updated upstream
         <entry file="file://$PROJECT_DIR$/src/redux/actions/savings/goal/flex-goal.actions.jsx">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-245">
               <folding>
                 <element signature="e#0#83#0" expanded="true" />
+=======
+        <entry file="file://$PROJECT_DIR$/src/components/savings/flex-goal-step1.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-91">
+              <caret line="165" column="6" selection-start-line="165" selection-start-column="6" selection-end-line="165" selection-end-column="6" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+>>>>>>> Stashed changes
               </folding>
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< Updated upstream
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/redux/actions/savings/goal/flexi-goal-success.jsx">
           <provider selected="true" editor-type-id="text-editor" />
@@ -96,6 +155,60 @@
               <caret line="9" column="25" lean-forward="true" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
               <folding>
                 <element signature="e#0#49#0" expanded="true" />
+=======
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/savings/flex-goal-summary.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="152">
+              <caret line="65" column="62" selection-start-line="65" selection-start-column="62" selection-end-line="65" selection-end-column="62" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/savings/group/create-a-target-goal.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="155">
+              <caret line="194" column="36" selection-start-line="194" selection-start-column="26" selection-end-line="194" selection-end-column="36" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/savings/goal/create-stash-success.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="217">
+              <caret line="68" column="116" selection-start-line="68" selection-start-column="116" selection-end-line="68" selection-end-column="116" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/airtime-bills/data/success.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1370">
+              <caret line="5" column="47" selection-start-line="5" selection-end-line="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/savings/fixed-goal-summary.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="333">
+              <caret line="66" column="53" lean-forward="true" selection-start-line="66" selection-start-column="53" selection-end-line="66" selection-end-column="53" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+>>>>>>> Stashed changes
               </folding>
             </state>
           </provider>
@@ -106,7 +219,10 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>checkPayOutInterest</find>
+<<<<<<< Updated upstream
       <find>parseFloat</find>
+=======
+>>>>>>> Stashed changes
       <find>init</find>
     </findStrings>
   </component>
@@ -116,6 +232,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+<<<<<<< Updated upstream
         <option value="$PROJECT_DIR$/src/components/authenticated-routes.jsx" />
         <option value="$PROJECT_DIR$/src/components/savings/savings.css" />
         <option value="$PROJECT_DIR$/src/redux/actions/savings/goal/create-stash-goal.actions.js" />
@@ -209,12 +326,170 @@
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
               <item name="services" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+=======
+        <option value="$PROJECT_DIR$/src/components/savings/flex-goal-step1.jsx" />
+        <option value="$PROJECT_DIR$/src/components/authenticated-routes.jsx" />
+        <option value="$PROJECT_DIR$/src/components/savings/savings.css" />
+        <option value="$PROJECT_DIR$/src/redux/actions/savings/goal/create-stash-goal.actions.js" />
+        <option value="$PROJECT_DIR$/src/components/savings/create-stash-step2.jsx" />
+        <option value="$PROJECT_DIR$/src/components/savings/create-stash_step1.jsx" />
+        <option value="$PROJECT_DIR$/src/redux/reducers/goal/create-stash.reducer.jsx" />
+        <option value="$PROJECT_DIR$/src/components/savings/goal/create-stash-success.jsx" />
+        <option value="$PROJECT_DIR$/src/components/savings/fixed-goal-summary.jsx" />
+        <option value="$PROJECT_DIR$/src/components/savings/flex-goal-summary.jsx" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="width" value="1280" />
+    <option name="height" value="800" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="ALATWebV2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ALATWebV2" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ALATWebV2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ALATWebV2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ALATWebV2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ALATWebV2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ALATWebV2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ALATWebV2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="airtime-bills" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ALATWebV2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ALATWebV2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="airtime-bills" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ALATWebV2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ALATWebV2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="savings" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ALATWebV2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ALATWebV2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="savings" type="462c0819:PsiDirectoryNode" />
+              <item name="goal" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ALATWebV2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ALATWebV2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="savings" type="462c0819:PsiDirectoryNode" />
+              <item name="group" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ALATWebV2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ALATWebV2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="redux" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ALATWebV2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ALATWebV2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="redux" type="462c0819:PsiDirectoryNode" />
+              <item name="actions" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ALATWebV2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ALATWebV2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="redux" type="462c0819:PsiDirectoryNode" />
+              <item name="actions" type="462c0819:PsiDirectoryNode" />
+              <item name="savings" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ALATWebV2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ALATWebV2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="redux" type="462c0819:PsiDirectoryNode" />
+              <item name="actions" type="462c0819:PsiDirectoryNode" />
+              <item name="savings" type="462c0819:PsiDirectoryNode" />
+              <item name="goal" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ALATWebV2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ALATWebV2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="redux" type="462c0819:PsiDirectoryNode" />
+              <item name="actions" type="462c0819:PsiDirectoryNode" />
+              <item name="savings" type="462c0819:PsiDirectoryNode" />
+              <item name="group-savings" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ALATWebV2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ALATWebV2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="redux" type="462c0819:PsiDirectoryNode" />
+              <item name="reducers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ALATWebV2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ALATWebV2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="redux" type="462c0819:PsiDirectoryNode" />
+              <item name="reducers" type="462c0819:PsiDirectoryNode" />
+              <item name="goal" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ALATWebV2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ALATWebV2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="shared" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ALATWebV2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ALATWebV2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="shared" type="462c0819:PsiDirectoryNode" />
+              <item name="elements" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ALATWebV2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ALATWebV2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="shared" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+>>>>>>> Stashed changes
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+<<<<<<< Updated upstream
       <pane id="ProjectPane" />
+=======
+>>>>>>> Stashed changes
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -249,11 +524,16 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1565274684649</updated>
+<<<<<<< Updated upstream
       <workItem from="1565274719884" duration="16929000" />
+=======
+      <workItem from="1565274719884" duration="13457000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< Updated upstream
     <option name="totallyTimeSpent" value="18358000" />
   </component>
   <component name="ToolWindowManager">
@@ -268,6 +548,45 @@
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
       <window_info active="true" anchor="bottom" id="Version Control" order="3" visible="true" weight="0.32919255" />
       <window_info anchor="bottom" id="Docker" order="4" show_stripe_button="false" />
+=======
+    <option name="totallyTimeSpent" value="13457000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="23" width="1280" height="752" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="npm" side_tool="true" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24959612" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Terminal" weight="0.32919255" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Database" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="npm" order="0" side_tool="true" />
+      <window_info id="Favorites" order="1" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.24959612" />
+      <window_info id="Structure" order="3" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="1" weight="0.32919255" />
+      <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Database Changes" order="3" />
+      <window_info anchor="bottom" id="Version Control" order="4" />
+>>>>>>> Stashed changes
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" />
       <window_info anchor="bottom" id="Run" order="7" />
@@ -279,6 +598,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
+<<<<<<< Updated upstream
     </layout>
     <layout-to-restore>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24959612" />
@@ -301,11 +621,14 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Database" order="3" />
+=======
+>>>>>>> Stashed changes
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+<<<<<<< Updated upstream
   <component name="Vcs.Log.History.Properties">
     <option name="COLUMN_ORDER">
       <list>
@@ -343,6 +666,27 @@
     </option>
   </component>
   <component name="editorHistoryManager">
+=======
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/components/savings/flex-goal-step2.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/savings/container.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+>>>>>>> Stashed changes
     <entry file="file://$PROJECT_DIR$/src/components/airtime-bills/data/confirm-data.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-508">
@@ -363,8 +707,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/savings/savings.css">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state relative-caret-position="553">
           <caret line="186" selection-start-line="186" selection-end-line="186" />
+=======
+        <state relative-caret-position="737">
+          <caret line="188" lean-forward="true" selection-start-line="188" selection-end-line="188" />
+>>>>>>> Stashed changes
         </state>
       </provider>
     </entry>
@@ -388,6 +737,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/src/components/airtime-bills/data/success.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1370">
@@ -421,12 +771,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="127">
           <caret line="302" column="87" selection-start-line="302" selection-start-column="16" selection-end-line="302" selection-end-column="87" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/components/savings/fixed-goal-step2.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-305">
+>>>>>>> Stashed changes
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/src/redux/reducers/goal/flex-goal.reducer.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="265">
@@ -441,41 +797,73 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
           <caret line="151" column="17" selection-start-line="151" selection-start-column="4" selection-end-line="151" selection-end-column="17" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/redux/reducers/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="138" column="21" selection-start-line="138" selection-start-column="4" selection-end-line="138" selection-end-column="21" />
+>>>>>>> Stashed changes
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/src/components/savings/flex-goal-step1.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="284">
           <caret line="391" column="109" selection-start-line="391" selection-start-column="109" selection-end-line="391" selection-end-column="109" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/redux/reducers/goal/create-stash.reducer.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="571">
+          <caret line="40" column="38" selection-start-line="40" selection-start-column="16" selection-end-line="40" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#84#0" expanded="true" />
+>>>>>>> Stashed changes
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/src/components/savings/fixed-goal-step2.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-4881">
           <folding>
             <element signature="e#0#31#0" expanded="true" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/redux/actions/savings/goal/create-stash-goal.actions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="34" column="72" selection-start-line="34" selection-start-column="72" selection-end-line="34" selection-end-column="72" />
+          <folding>
+            <element signature="e#0#88#0" expanded="true" />
+>>>>>>> Stashed changes
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/src/components/savings/fixed-goal-summary.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="523">
           <caret line="39" column="62" selection-start-line="39" selection-start-column="62" selection-end-line="39" selection-end-column="62" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/components/savings/create-stash-step2.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1687">
+          <caret line="56" column="6" lean-forward="true" selection-start-line="56" selection-start-column="6" selection-end-line="56" selection-end-column="6" />
+>>>>>>> Stashed changes
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/src/services/urls.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="32">
@@ -505,12 +893,26 @@
     <entry file="file://$PROJECT_DIR$/src/components/savings/group/success-message.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1031">
+=======
+    <entry file="file://$PROJECT_DIR$/src/components/airtime-bills/data/success.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1370">
+          <caret line="5" column="47" selection-start-line="5" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/savings/goal/create-stash-success.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="68" column="116" selection-start-line="68" selection-start-column="116" selection-end-line="68" selection-end-column="116" />
+>>>>>>> Stashed changes
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/src/redux/reducers/goal/create-stash.reducer.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="328">
@@ -522,12 +924,19 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-105">
           <caret line="73" column="5" selection-start-line="73" selection-start-column="4" selection-end-line="73" selection-end-column="5" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/components/savings/fixed-goal-summary.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="333">
+          <caret line="66" column="53" lean-forward="true" selection-start-line="66" selection-start-column="53" selection-end-line="66" selection-end-column="53" />
+>>>>>>> Stashed changes
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/src/components/savings/goal/goal-plan.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="258">
@@ -541,12 +950,19 @@
     <entry file="file://$PROJECT_DIR$/src/components/savings/container.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state>
+=======
+    <entry file="file://$PROJECT_DIR$/src/components/savings/flex-goal-step1.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-91">
+          <caret line="165" column="6" selection-start-line="165" selection-start-column="6" selection-end-line="165" selection-end-column="6" />
+>>>>>>> Stashed changes
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/src/redux/actions/savings/goal/create-stash-goal.actions.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="544">
@@ -575,10 +991,19 @@
           <caret line="9" column="25" lean-forward="true" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
           <folding>
             <element signature="e#0#49#0" expanded="true" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/components/savings/create-stash_step1.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5189">
+          <caret line="334" column="52" selection-start-line="334" selection-start-column="34" selection-end-line="334" selection-end-column="52" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+>>>>>>> Stashed changes
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/src/redux/actions/savings/goal/flexiGoalCreationSaving.jsx">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -590,10 +1015,19 @@
         <state relative-caret-position="-245">
           <folding>
             <element signature="e#0#83#0" expanded="true" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/components/savings/group/create-a-target-goal.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="194" column="36" selection-start-line="194" selection-start-column="26" selection-end-line="194" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+>>>>>>> Stashed changes
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/src/redux/actions/savings/goal/flexi-goal-success.jsx">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -601,6 +1035,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="213">
           <caret line="191" lean-forward="true" selection-start-line="191" selection-end-line="191" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/components/savings/flex-goal-summary.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="65" column="62" selection-start-line="65" selection-start-column="62" selection-end-line="65" selection-end-column="62" />
+>>>>>>> Stashed changes
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>

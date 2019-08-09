@@ -20,13 +20,14 @@ import {fixedGoalConstants} from "../../redux/constants/goal/fixed-goal.constant
             targetAmount:null,
             startDate:"",
             endDate:"",
-            goalName:"",
+            goalName:"flex",
             goalFrequency:"",
             debitAccount:"",
             debitAmount:null,
             showInterests:"",
             GoalTypeId:3,
             frequencyId:6,
+            FrequencyDurationId:4
 
 
         }
@@ -57,13 +58,17 @@ import {fixedGoalConstants} from "../../redux/constants/goal/fixed-goal.constant
 
             });
         }
-    }
+    };
     handleSubmit=(event)=>{
         event.preventDefault();
         this.props.dispatch(actions.addFlexGoal({
             "goalName":this.state.goalName,
             "startDate":this.state.startDate,
+<<<<<<< Updated upstream
             "targetAmount": parseFloat(this.state.targetAmount),
+=======
+            "targetAmount":parseFloat(this.state.targetAmount),
+>>>>>>> Stashed changes
             "goalFrequency":this.state.goalFrequency,
             "debitAccount":this.state.debitAccount,
             "debitAmount":parseFloat(this.state.debitAmount),
@@ -71,7 +76,7 @@ import {fixedGoalConstants} from "../../redux/constants/goal/fixed-goal.constant
             "frequencyId":this.state.frequencyId
         }));
 
-    }
+    };
     render() {
         return (
            <Fragment>

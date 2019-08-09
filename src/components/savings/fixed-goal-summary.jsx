@@ -43,7 +43,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
             var data = {
                 ...this.props.fixed_goal_step2.fixed_step2_data.data
             };
-            console.log('tag', data)
+            console.log('tag', data);
 
             this.setState({
                 targetAmount:data.targetAmount,
@@ -56,7 +56,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
                 
             });
         }
-    }
+    };
     handleSubmit=(event)=>{
         event.preventDefault();
         this.props.dispatch(actions.addFixedGoal({
@@ -66,12 +66,16 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
             "targetAmount":parseFloat(this.state.targetAmount),
             "goalFrequency":this.state.goalFrequency,
             "debitAccount":this.state.debitAccount,
+<<<<<<< Updated upstream
             "debitAmount":parseFloat(this.state.showInterests),
+=======
+            "debitAmount":this.state.showInterests,
+>>>>>>> Stashed changes
             "GoalTypeId":this.state.GoalTypeId,
             "frequencyId":this.state.frequencyId,
         }));
 
-    }
+    };
 
     
     render() {
@@ -119,7 +123,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
                                                 <p className='boldedText'>₦{this.state.targetAmount}</p>
                                             </div>
                                         </div> 
-                                        <div className="coverForSummary">
+                                      <div className="coverForSummary">
                                                 <div className="left">
                                                     <p className='GoalText'>Start Date</p>
                                                     <p className='boldedText'>{moment(this.state.startDate).format('MMMM,D,YYYY')}</p>

@@ -38,7 +38,11 @@ export function createStashGoalReducer(state = [], action) {
         case createGoalConstants.CREATE_STASH_GOAL_PENDING:
             return{
                 create_stash_goal_status:createGoalConstants.CREATE_STASH_GOAL_PENDING,
+<<<<<<< Updated upstream
                 create_stash_data:action,
+=======
+                create_stash_goal_data:action,
+>>>>>>> Stashed changes
             };
         case createGoalConstants.CREATE_STASH_GOAL_FAILURE:
             return{

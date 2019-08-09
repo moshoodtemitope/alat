@@ -27,7 +27,7 @@ const selectedTime = [
 class CreateStash extends React.Component {
 
     constructor(props){
-        super(props)
+        super(props);
         this.state={
             goalName:"",
             targetAmount:"",
@@ -39,11 +39,14 @@ class CreateStash extends React.Component {
             isSubmitted : false,
             targetAmountInvalid:false,
             GoalNameInvalid:false,
+            PayOutInterestInvalid:false,
+            goalFrequencyInvalid:false,
             showMessage: false,
             StartDate:  moment().format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
             FrequencyId: 8,
             FrequencyDurationId: 1,
-            showMessage: false,
+            isAccountInvalid:false,
+
 
         };
         this.onSubmit = this.onSubmit.bind(this);
@@ -57,26 +60,26 @@ class CreateStash extends React.Component {
     handleChange = (e) => {
         let name = e.target.name;
         this.setState({ [name]: e.target.value })
-    }
+    };
     checkGoalName = () => {
-        if (this.state.goalName == "") {
+        if (this.state.goalName === "") {
             this.setState({ GoalNameInvalid: true });
             return true;
         }
-    }
+    };
     
     checkAmount = () => {
-        if (this.state.targetAmount == "") {
+        if (this.state.targetAmount === "") {
             this.setState({ targetAmountInvalid: true });
             return true;
         }
-    }
+    };
     checkPayOutInterest = () => {
-        if (this.state.goalFrequency == "") {
+        if (this.state.goalFrequency === "") {
             this.setState({ PayOutInterestInvalid: true });
             return true;
         }
-    }
+    };
     
     handleAmount = (e) => {
         // console.log
@@ -86,17 +89,17 @@ class CreateStash extends React.Component {
              this.setState({ targetAmount: intVal, targetAmount: this.toCurrency(intVal) },
                  () => this.setFregValue());
              // }
-         } else if (e.target.value == "") {
+         } else if (e.target.value === "") {
              this.setState({ targetAmount: "", targetAmount: "" },
                  () => this.setFregValue());
          }
  
-         if(this.state.isSubmitted == true)
+         if(this.state.isSubmitted === true)
          if (this.state.formsubmitted) {
-                    if (e != "")
+                    if (e !== "")
                         this.setState( { targetAmountInvalid: false });
         }
-    }
+    };
  
     toCurrency(number) {
          // console.log(number);
@@ -114,21 +117,21 @@ class CreateStash extends React.Component {
     
  
     handleSelectChange = (InterestCashout) => {
-        this.setState({ "showInterest": InterestCashout.value,
+        this.setState({ "showInterests": InterestCashout.value,
                         "showInterest" : InterestCashout.label
               });
-        if (this.state.formsubmitted && InterestCashout.value != "")
-            this.setState({ goalFrequencyInvalid: false })
-    }
+        if (this.state.formsubmitted && InterestCashout.value !== "")
+            this.setState({ PayOutInterestInvalid: false })
+    };
     setFregValue = () => {
-        this.setState({ payOutInterest: this.calculateInterest() })
-        console.log('test',this.calculateInterest(this.state.targetAmount, this.state.startDate, this.state.endDate))
-        console.log('target Amount',this.state.targetAmount)
-        console.log('start date',this.state.startDate)
+        this.setState({ payOutInterest: this.calculateInterest() });
+        console.log('test',this.calculateInterest(this.state.targetAmount, this.state.startDate, this.state.endDate));
+        console.log('target Amount',this.state.targetAmount);
+        console.log('start date',this.state.startDate);
         console.log('end Date',this.state.endDate)
        
 
-    } 
+    };
     calculateInterest(){
     
         var days = null;
@@ -144,13 +147,13 @@ class CreateStash extends React.Component {
           this.showInterests= false;
           return this.interest
         }
-      }
+    }
     
     handleSelectDebitableAccounts(account) {
         console.log('dss', account);
-        this.setState({ debitAccount: account })
+        this.setState({ debitAccount: account });
         if (this.state.isSubmitted) { 
-            if(account.length == 10)
+            if(account.length === 10)
             this.setState({ isAccountInvalid: false })
          }
     }
@@ -183,17 +186,17 @@ class CreateStash extends React.Component {
     
     gotoStep2 = () => {
         if (this.props.create_stash_goal_step1)
-            if (this.props.create_stash_goal_step1.stash_goal_step1_status == createGoalConstants.CREATE_STASH_GOAL_SUCCESS_STEP1) {
+            if (this.props.create_stash_goal_step1.stash_goal_step1_status === createGoalConstants.CREATE_STASH_GOAL_SUCCESS_STEP1) {
                 return <Redirect to="/savings/create-stash_step2" />
             }
-    }
+    };
 
     showInterest = () =>  {
         this.setState({showMessage: true})
-    }
+    };
     render() {
         
-        let {GoalNameInvalid,targetAmountInvalid,showInterest,PayOutInterestInvalid}=this.state
+        let {GoalNameInvalid,targetAmountInvalid,showInterest,PayOutInterestInvalid}=this.state;
 
         return (
             <Fragment>
@@ -222,7 +225,9 @@ class CreateStash extends React.Component {
                                       <div className="max-600">
                                        <div className="al-card no-pad">
                                        <h4 className="m-b-10 center-text hd-underline">Create a Stash</h4>
-                                       <p className="header-info">Save what ever you want, earn and<span style={{color:"#AB2656"}}> 10% interest</span></p>
+                                           <center>
+                                                <p className="header-info">Save what ever you want, earn and<span style={{color:"#AB2656"}}> 10% interest</span></p>
+                                           </center>
 
                                             <form onSubmit={this.onSubmit}>
                                                 <div className={GoalNameInvalid ? "form-group form-error" : "form-group"}>
@@ -289,10 +294,10 @@ class CreateStash extends React.Component {
 
 
                                                             <button 
-                                                            disabled={this.props.create_stash_goal_step1.stash_goal_step1_status == createGoalConstants.CREATE_STASH_GOAL_PENDING_STEP1}
+                                                            disabled={this.props.create_stash_goal_step1.stash_goal_step1_status === createGoalConstants.CREATE_STASH_GOAL_PENDING_STEP1}
 
                                                             type="submit" className="btn-alat m-t-10 m-b-20 text-center">
-                                                            {this.props.create_stash_goal_step1.stash_goal_step1_status == createGoalConstants.CREATE_STASH_GOAL_PENDING_STEP1 ? "Processing..." :"Next"}
+                                                            {this.props.create_stash_goal_step1.stash_goal_step1_status === createGoalConstants.CREATE_STASH_GOAL_PENDING_STEP1 ? "Processing..." :"Next"}
 
                                                             </button>
                                                         </center>
@@ -328,5 +333,5 @@ class CreateStash extends React.Component {
 }
 const mapStateToProps = state => ({
     create_stash_goal_step1:state.create_stash_step1
-})
+});
 export default connect(mapStateToProps)(CreateStash);
