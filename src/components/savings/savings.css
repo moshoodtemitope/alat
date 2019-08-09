@@ -17,6 +17,21 @@
    margin-right:10px;
 }
 
+.dashboardCards {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100% !important;
+}
+
+#parentCard{
+    width: 100% !important;
+}
+
+.dashboardCards .eachCard {
+     max-width: 100px;
+     margin-left: 20px;
+}
+
 .forGroupLink {
    color: #444444 !important;
 }
@@ -186,4 +201,5 @@
   .successIcon{
       padding-top: 20px;
   }
+
 

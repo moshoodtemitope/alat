@@ -11,6 +11,7 @@ import Buttons from './button';
 import { NavButtons } from './component';
 import MoreDetails from './details';
 import Members from './list-item';
+import { connect } from "react-redux";
 
 class GroupAnalyticsMini2 extends React.Component {
     constructor(props){
@@ -21,18 +22,17 @@ class GroupAnalyticsMini2 extends React.Component {
             buttonType: "bigButton",
             discTopSpan: 'something'
         }
-        
-        this.HandleNavigation = this.HandleNavigation.bind(this);
-        this.Automated = this.Automated.bind(this);
+    
     }
 
-    HandleNavigation = () => {
-        
+    ShowMembers = () => {
+        this.props.history.push("/savings/group-mini2");
+    }
+    
+    GroupSummary = () => {
+        this.props.history.push("/savings/group-analytics-mini");
     }
 
-    Automated = () => {
-
-    }
 
     render() {
         const {endDate,endDateInvalid} = this.state;
@@ -71,45 +71,39 @@ class GroupAnalyticsMini2 extends React.Component {
                                                   <p>Summer Trip To Africa</p>
                                                   
                                              </div>
-                                                <SubHead 
-                                                type={this.state.type}
-                                                rightname="Group Summary"
-                                                middlename="Members"
-                                                leftName="Automate Contributions"
-                                                memberClicked={this.HandleNavigation}
-                                                automatedwasclicked={this.Automated}
-                                                />
+                                              <SubHead 
+                                                    type={this.state.type}
+                                                    rightname="Group Summary"
+                                                    middlename="Members"
+                                                    leftName="Members"
+                                                    memberClicked={this.ShowMembers}
+                                                    groupSummaryWasClicked={this.GroupSummary}
+                                                    />
                                            
                                              <div className='statContainer'>
-                                             <Members 
-                                                   userType="admin"
-                                                   name="Hasan Danfodio"
-                                                   position="admin"
-                                                   amount="N10, 000"
-                                                   intent="Contribution"/>
+                                             
+                                                   {this.props.groupDetails.response.members.map((element,index) => {
+                                                       if(element['isAdmin'] == true){
+                                                           return <Members 
+                                                            key={index}
+                                                            userType="admin"
+                                                            name={ element['lastName'] + " " + element['firstName'] }
+                                                            position="admin"
+                                                            />
+                                                      }
+                                                   })}
 
-                                               <Members 
-                                                   userType="members"
-                                                   fullname="Stan Lee"
-                                    
-                                                   amount="N10, 000"
-                                                   intent="Contribution"/>
-
-                                                <Members 
-                                                   userType="members"
-                                                   fullname="Christopher Columbus"
-                                    
-                                                   amount="N10, 000"
-                                                   intent="Contribution"/>
-                                                <Members 
-                                                   userType="members"
-                                                   fullname="Odelade Hammed"
-                                    
-                                                   amount="N10, 000"
-                                                   intent="Contribution"/>
+                                                   {this.props.groupDetails.response.members.map((element, index) => {
+                                                       if(element['isAdmin'] == false){
+                                                           return <Members 
+                                                                        key={index}
+                                                                        userType="members"
+                                                                        fullname={ element['lastName'] + " " + element['firstName'] }
+                                                                        />
+                                                       }
+                                                   })}
                                              </div>
-                                             
-                                             
+            
                                         </div>
 
                                        </div>
@@ -129,8 +123,14 @@ class GroupAnalyticsMini2 extends React.Component {
     }
 }
 
+function mapStateToProps(state){
+   return {
+       groupDetails: state.rotatingGroupDetails.data
+   }
+}
 
-export default GroupAnalyticsMini2;
+export default connect(mapStateToProps)(GroupAnalyticsMini2)
+//export default GroupAnalyticsMini2;
 
 
 

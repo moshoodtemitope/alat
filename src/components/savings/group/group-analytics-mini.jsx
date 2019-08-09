@@ -8,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import SubHead from './sub-head';
 import ProgressBar from './progress-bar';
 import Buttons from './button';
+import { connect } from "react-redux";
 import { NavButtons } from './component';
 import MoreDetails from './details';
 
@@ -20,19 +21,56 @@ class GroupAnalyticsMini extends React.Component {
             buttonType: "bigButton",
             discTopSpan: 'something'
         }
-        
-        this.HandleNavigation = this.HandleNavigation.bind(this);
-        this.Automated = this.Automated.bind(this);
     }
 
-    HandleNavigation = () => {
-        
+    ShowMembers = () => {
+        this.props.history.push("/savings/group-mini2");
+    }
+    
+    GroupSummary = () => {
+        this.props.history.push("/savings/group-analytics-mini");
     }
 
-    Automated = () => {
-
+    PotContribution = () =>{
+        return this.props.groupDetails.response.potContribution;
     }
 
+    UpNext = () => {
+        const data = this.props.groupDetails.response.members;
+        const currentSlot = this.props.groupDetails.response.currentSlot;
+        var nextCollector;
+        for(var i=0; i<data.length; i++){
+            if(data[i]['slot'] == currentSlot)
+                nextCollector = data[i]['firstName']; 
+        }
+        return nextCollector;
+    }
+
+    GetStatusOfGroupMessage = () => {
+        return this.props.groupDetails.response.status + "% completion";
+    }
+    GetStatusOfGroup = () => {
+        return this.props.groupDetails.response.status;
+    }
+    GetReferalCode = () => {
+        return this.props.groupDetails.response.referralCode;
+    }
+
+    GetStartDate = () => {
+        return this.props.groupDetails.response.startDate
+    }
+
+    GroupName = () => {
+        return this.props.groupDetails.response.name;
+    }
+
+    GetMonthlyContribution = () => {
+        return this.props.groupDetails.response.monthlyContribution;
+    }
+
+    MemberCount = () => {
+        return this.props.groupDetails.response.memberCount;
+    }
 
     render() {
         const {endDate,endDateInvalid} = this.state;
@@ -73,32 +111,37 @@ class GroupAnalyticsMini extends React.Component {
                                                   
                                              </div>
                                                 <SubHead 
-                                                type={this.state.type}
-                                                rightname="Group Summary"
-                                                middlename="Members"
-                                                leftName="Automate Contributions"
-                                                memberClicked={this.HandleNavigation}
-                                                automatedwasclicked={this.Automated}
-                                                />
-                                           
+                                                    type={this.state.type}
+                                                    rightname="Group Summary"
+                                                    middlename="Members"
+                                                    leftName="Automate Contributions"
+                                                    memberClicked={this.ShowMembers}
+                                                    groupSummaryWasClicked={this.GroupSummary}
+                                                    />
+                                                
                                              <div className='statContainer'>
                                                 <ProgressBar 
                                                     discTopSpan="Group Progress"
-                                                    discTopRight="40% completion"
-                                                    percentage="40"
-                                                    discBottom="N20,0000 of "
-                                                    discSpan="N2,000,000"
+                                                    discTopRight={this.GetStatusOfGroupMessage()}
+                                                    percentage={this.GetStatusOfGroup()}
+                                                    
+                                                    discSpan={this.PotContribution()}
                                                     discBottomSib="Pot Total"
-                                                    />        
+                                                    />               
                                                     <p id="firstPoint">Payment</p>
-                                                    <p id='secondPoint'>Francis Key</p>
+                                                    <p id='secondPoint'>{this.UpNext}</p>
                                                     <p id='thirdPoint'>Up Next</p>
-                                                
+                                                    
+                                                    <MoreDetails 
+                                                      lefthead={this.GetStartDate()}
+                                                      leftBottom="Target Date"
+                                                      rightContent={this.GetReferalCode()}
+                                                      rightContentBottom="Group Code"
+                                                     />
                                                     <Buttons
                                                         buttonType={this.state.buttonType}
-                                                        buttonName="Start"
-                                                        
-                                                        />  
+                                                        buttonName="Start"          
+                                                        />
                                                     
                                                     <div className='miniNav'>
                                                         <div className='left'>
@@ -130,9 +173,14 @@ class GroupAnalyticsMini extends React.Component {
     }
 }
 
-
-export default GroupAnalyticsMini;
-
+function mapStateToProps(state){
+    return {
+        groupDetails: state.rotatingGroupDetails.data
+    }
+ }
+ 
+ export default connect(mapStateToProps)(GroupAnalyticsMini);
+ 
 
 
 

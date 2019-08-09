@@ -256,11 +256,13 @@ class GroupAnalytics extends React.Component {
     }
 }
 
+
 function mapStateToProps(state) {
    return {
        groupDetails: state.groupDetails.data
    }
 }
+
 export default connect(mapStateToProps)(GroupAnalytics);
 
 //export default GroupAnalytics

@@ -8,7 +8,7 @@ import {alertActions} from "../../alert.actions";
 export const getCustomerGoalTransHistory = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.CUSTOMERGOALS, "POST", data, null, SystemConstant.HEADER);
+        let consume = ApiService.request(routes.CUSTOMERGOALS, "GET", data, null, SystemConstant.HEADER);
         dispatch(request(consume));
         return consume
             .then(response => {
@@ -21,7 +21,47 @@ export const getCustomerGoalTransHistory = (token, data) => {
             });
     };
 
-    function request(request) { return { type:customerGoalConstants.FETCH_CUSTOMER_GOAL_TRANS_History_PENDING, request} }
+    function request(request) { return { type:customerGoalConstants.FETCH_CUSTOMER_GOAL_TRANS_HISTORY_PENDING, request} }
     function success(response) { return {type:customerGoalConstants.FETCH_CUSTOMER_GOAL_TRANS_HISTORY_SUCCESS, response} }
-    function failure(error) { return {type:customerGoalConstants.FETCH_CUSTOMER_GOAL_TRANS_History_FAILURE, error} }
+    function failure(error) { return {type:customerGoalConstants.FETCH_CUSTOMER_GOAL_TRANS_HISTORY_FAILURE, error} }
+};
+export const GoalFormula = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.GOAL_FORMULAR, "GET", data, null, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                // consume.error(response);
+                dispatch(success(response));
+            })
+            .catch(error => {
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function request(request) { return { type:customerGoalConstants.GET_GOAL_FORMULAR_PENDING, request} }
+    function success(response) { return {type:customerGoalConstants.GET_GOAL_FORMULAR_SUCCESS, response} }
+    function failure(error) { return {type:customerGoalConstants.GET_GOAL_FORMULAR_FAILURE, error} }
+};
+export const GoalType = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.GOALTYPE, "GET", data, null, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                // consume.error(response);
+                dispatch(success(response));
+            })
+            .catch(error => {
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function request(request) { return { type:customerGoalConstants.GET_GOAL_TYPE_PENDING, request} }
+    function success(response) { return {type:customerGoalConstants.GET_GOAL_TYPE_SUCCESS, response} }
+    function failure(error) { return {type:customerGoalConstants.GET_GOAL_TYPE_SUCCESS, error} }
 };

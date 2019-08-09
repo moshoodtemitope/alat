@@ -365,7 +365,6 @@ export const setAmountToWithDraw =(data) =>{
 export const setFrequency =(data) =>{
     return(dispatch)=>{
         dispatch(success(data))
-
     }
     function success(data){
         return{

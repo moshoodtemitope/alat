@@ -10,6 +10,8 @@ import '../savings.css';
 import { connect } from "react-redux";
 
 import {getCustomerGoalTransHistory} from '../../../redux/actions/savings/goal/get-customer-transaction-history.actions'
+import savemoney from "../../../assets/img/save-money.svg";
+import * as utils from "../../../shared/utils";
 
 
 class GoalPlan extends React.Component {
@@ -26,13 +28,101 @@ class GoalPlan extends React.Component {
     }
     fetchCustomerTransHistoryGoals(){
         const { dispatch } = this.props;
-        dispatch(getCustomerGoalTransHistory(this.state.user.token));
+        dispatch(getCustomerGoalTransHistory());
     };
+    renderGoalsElement(customerGoalTransHistory){
+        if(!customerGoalTransHistory){
+            return(
+                <div className="row">
+                    <NavLink to="/savings/fixed-goal">
+                        <div className="fixed-goal">
+                            <img className="goal-icon" src={calender} alt=''/>
+                            <p className="flex-text">Fixed Goal</p>
+                            <p className="info-text3">Save daily, weekly or monthly towards
+                                a target amount, earn 10% interest. No withdrawals allowed and you will lose your interest if you don't meet your target.</p>
+                        </div>
+                    </NavLink>
+                    <NavLink to="/savings/flex-goal">
+                        <div className="flex-goal">
+                            <img className="goal-icon" src={graph} alt=''/>
+                            <p className="plan-text">Flex Goal</p>
+                            <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days
+                                but you will lose your interest if you don't meet your</p>
+                        </div>
+                    </NavLink>
+                    <NavLink to="/savings/create-stash_step1">
+                        <div className="stash-goal">
+                            <img className="goal-icon" src={stash} alt=''/>
+                            <p className="plan-text">Stash</p>
+                            <p className="info-text2">Save whatever you want whenever you want and earn 10% interest with cashout interest every month but you will lose your interest if you don't save for a minimum of 30 days</p>
+                        </div>
+                    </NavLink>
+                </div>
+            );
+        }
+        else{
+            if(customerGoalTransHistory.customer_goal === 'FETCH_CUSTOMER_GOAL_TRANS_HISTORY_PENDING'){
+                return(
+                    <h4 className="text-center" style={{ marginTop: '65px'}}>Loading customer goals ...</h4>
+                );
+            }
+            else if(customerGoalTransHistory.customer_goal === 'FETCH_CUSTOMER_GOAL_TRANS_HISTORY_SUCCESS'){
+                let goals = customerGoalTransHistory.customer_goal_data.response.data;
 
+                let achieved = 0;
+                let totalPercentage = 0;
+                let rounded = 0;
+                let classname = "progress-circle p";
+                for(let result of goals){
+                    totalPercentage += result.percentageCompleted;
+                    if(totalPercentage == 0){
+                        achieved = 0;
+                    }
+                }
+                achieved = totalPercentage/goals.length;
+                rounded = Math.round( achieved * 10 ) / 10;
+                classname = classname + achieved.toFixed();
+                return(
+                    // user has goals
+                    <div id="parentCard">
+                        {goals.map((hist, key)=> (
+                            <div className="dashboardCards">
+                                    <div className=" eachCard">
+                                        <p>{hist.goalName}</p>
+                                        <p>{hist.goalTypeName}</p>
 
+                                        {/*<div className="clearfix">*/}
+                                            {/*<div className={classname}>*/}
+                                                {/*<span>{rounded}%</span>*/}
+                                                {/*<div className="left-half-clipper">*/}
+                                                    {/*<div className="first50-bar"></div>*/}
+                                                    {/*<div className="value-bar"></div>*/}
+                                                {/*</div>*/}
+                                            {/*</div>   <p className="desc">{hist.goalName}<span className="date">{utils.FormartDate(hist.targetDate)}</span>*/}
+                                            {/*</p>*/}
+                                            {/*<p className={hist.goalName ==='D' ? "balance debit" : "balance credit"}>₦{utils.formatAmount(hist.startDate)}</p>*/}
+                                        {/*</div>*/}
+                                    </div>
+                                {/*</div>*/}
+                            </div>
+                            )
+                        )}
+                    </div>
+                );
+            }
+            else if(customerGoalTransHistory.customer_goal === 'FETCH_CUSTOMER_GOAL_TRANS_HISTORY_FAILURE'){
+                return (
+                    <div>
+                        <h4>{customerGoalTransHistory.customer_goal_data.error}</h4>
+                        {/*<button onClick={this.fetchuserGoals.bind(this)}>Retry</button>*/}
+                    </div>
+                )
+            }
 
+        }
+    }
     render() {
-        const {customerGoalTransHistory}= this.props.customerGoalTransHistory;
+        const GoalTransHistory = this.props.customerGoalTransHistory;
         return (
             <Fragment>
                 <InnerContainer>
@@ -56,31 +146,8 @@ class GoalPlan extends React.Component {
                             </div>
                         </div>
                         <div className="Home-container">
-                            <div className="row">
-                                <NavLink to="/savings/fixed-goal">
-                                <div className="fixed-goal">
-                                    <img className="goal-icon" src={calender} alt=''/>
-                                    <p className="flex-text">Fixed Goal</p>
-                                    <p className="info-text3">Save daily, weekly or monthly towards
-                                    a target amount, earn 10% interest. No withdrawals allowed and you will lose your interest if you don't meet your target.</p>
-                                </div> 
-                                </NavLink> 
-                                <NavLink to="/savings/flex-goal">                      
-                                <div className="flex-goal">
-                                    <img className="goal-icon" src={graph} alt=''/>
-                                    <p className="plan-text">Flex Goal</p>
-                                    <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days
-                                    but you will lose your interest if you don't meet your target</p>
-                                </div>
-                                </NavLink>
-                                <NavLink to="/savings/create-stash_step1">
-                                <div className="stash-goal">
-                                    <img className="goal-icon" src={stash} alt=''/>
-                                    <p className="plan-text">Stash</p>
-                                    <p className="info-text2">Save whatever you want whenever you want and earn 10% interest with cashout interest every month but you will lose your interest if you don't save for a minimum of 30 days</p>
-                                </div>
-                                </NavLink>
-                            </div>
+                            {this.renderGoalsElement(GoalTransHistory)}
+
                         </div>
                     </div>
                     </SavingsContainer>
