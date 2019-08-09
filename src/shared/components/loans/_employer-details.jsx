@@ -329,8 +329,8 @@ class EmployerDetails extends React.Component {
         } else {
 
             var data = {
-                AccountNumber: this.state.accountNumber,
-                BankId: this.state.bankCode,
+                //AccountNumber: this.state.accountNumber,
+                //BankId: this.state.bankCode,
                 EmployerName: this.state.selectedEmployer.label,
                 EmployerIndustryId: this.state.selectedIndustry.value,
                 EmployerId: this.state.selectedEmployer.value
@@ -340,7 +340,7 @@ class EmployerDetails extends React.Component {
                 data.EmployerId = "999";
             }
             //let url = `accountNumber=${this.state.accountNumber}&bankId=${this.state.bankCode}&employersName=${this.state.employerName}`;
-            // this.props.dispatch(onboardingActions.requestStatement(this.props.loan_step3.loan_step3_data.data.response.token, url));
+            //this.props.dispatch(onboardingActions.requestStatement(this.props.loan_step3.loan_step3_data.data.response.token, url));
             this.props.dispatch(onboardingActions.requestStatement(this.props.token, data));
         }
     }
