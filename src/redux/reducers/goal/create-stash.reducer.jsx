@@ -34,18 +34,18 @@ export function createStashGoalReducer(state = [], action) {
             return{
                 create_stash_goal_status:createGoalConstants.CREATE_STASH_GOAL_SUCCESS,
                 create_stash_goal_data:action,
-            }
+            };
         case createGoalConstants.CREATE_STASH_GOAL_PENDING:
             return{
                 create_stash_goal_status:createGoalConstants.CREATE_STASH_GOAL_PENDING,
                 create_stash_data:action,
-            }
+            };
         case createGoalConstants.CREATE_STASH_GOAL_FAILURE:
             return{
                 create_stash_goal_status:createGoalConstants.CREATE_STASH_GOAL_FAILURE,
                 create_stash_goal_data:action,
 
-        }
+        };
         
         default: return {
             ...state

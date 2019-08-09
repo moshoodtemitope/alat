@@ -37,7 +37,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
     }
 
     init = () => {
-        if (this.props.fixed_goal_step2.fixed_step2_status != fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS_STEP2)
+        if (this.props.fixed_goal_step2.fixed_step2_status !== fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS_STEP2)
             this.props.history.push("/savings/fixed-goal-complete");
         else {
             var data = {
@@ -58,15 +58,15 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
         }
     }
     handleSubmit=(event)=>{
-        event.preventDefault()
+        event.preventDefault();
         this.props.dispatch(actions.addFixedGoal({
             "goalName":this.state.goalName,
             "startDate":this.state.startDate,
-            "endDate":this.state.endDate,
-            "targetAmount":this.state.targetAmount,
+            "TargetDate":this.state.endDate,
+            "targetAmount":parseFloat(this.state.targetAmount),
             "goalFrequency":this.state.goalFrequency,
             "debitAccount":this.state.debitAccount,
-            "showInterests":this.state.showInterests,
+            "debitAmount":parseFloat(this.state.showInterests),
             "GoalTypeId":this.state.GoalTypeId,
             "frequencyId":this.state.frequencyId,
         }));

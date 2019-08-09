@@ -386,10 +386,10 @@ class FlexGoal extends React.Component {
                                                     <div className="col-sm-12">
                                                         <center>
                                                             <button 
-                                                            disabled={this.props.flex_goal_step1.flex_step1_status == flexGoalConstants.FETCH_FLEX_GOAL_PENDING}
+                                                            disabled={this.props.flex_goal_step1.flex_step1_status === flexGoalConstants.FETCH_FLEX_GOAL_PENDING}
 
                                                             type="submit" className="btn-alat m-t-10 m-b-20 text-center">
-                                                            {this.props.flex_goal_step1.flex_step1_status == flexGoalConstants.FETCH_FLEX_GOAL_PENDING ? "Processing..." :"Next"}
+                                                            {this.props.flex_goal_step1.flex_step1_status === flexGoalConstants.FETCH_FLEX_GOAL_PENDING ? "Processing..." :"Next"}
 
                                                             </button>
                                                         </center>

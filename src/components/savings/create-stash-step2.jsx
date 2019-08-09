@@ -190,6 +190,6 @@ const mapStateToProps = state => ({
     create_stash_goal:state.create_stash_goal,
     alert: state.alert,
 
-})
+});
 export default connect(mapStateToProps)(StashSummmary);
 
