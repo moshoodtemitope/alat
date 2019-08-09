@@ -6,7 +6,9 @@ import * as onboardingActions from '../../../redux/actions/onboarding/loan.actio
 import { loanOnboardingConstants } from '../../../redux/constants/onboarding/loan.constants';
 
 import * as loanActions from '../../../redux/actions/loans/loans.action';
+import * as userActions from '../../../redux/actions/onboarding/user.actions';
 import { loanConstants } from '../../../redux/constants/loans/loans.constants';
+import { SystemConstant } from "../../../shared/constants";
 
 import ImageUploader from 'react-images-upload';
 import '../../../assets/css/docupload/custom-upload.css';
@@ -24,6 +26,9 @@ const industriesOptions = [
 ];
 const _employerList = [];
 const options = [];
+const frontSide = "FrontSide";
+const backSide = "BackSide";
+
 
 class EmployerDetails extends React.Component {
     constructor(props) {
@@ -41,37 +46,93 @@ class EmployerDetails extends React.Component {
             EmployerList: [],
             selectedEmployer: { label: "", value: "" },
             employerActionFired: false,
-            workIDFront : { file:'', name:''},
-            workIDBack : {file: '', name:''},
+            workIDFront: { file: '', name: '' },
+            workIDBack: { file: '', name: '' },
             workIDFrontUploadCount: 0,
-            workIDBackUploadCount : 0,
+            workIDBackUploadCount: 0,
 
             employerNameInvalid: false,
             IndustryNameInvalid: false,
-            employNameOthersInvalid: false
+            employNameOthersInvalid: false,
+            workIdFrontUploadInvalid : false,
+            workIdBackUploadInvalid: false,
+            actions: {
+                pending: "",
+                success: "",
+                failure: ""
+            }
+        }
+
+        this.onIDUpload = this.onIDUpload.bind(this);
+    }
+
+    onIDUpload = (picture, e) => {
+        if (picture.length >= 1) {
+            util.getBase64(picture[picture.length - 1], (result) => {
+                this.setState({ [e]: { file: result, name: picture[picture.length - 1].name } }, () => {
+                    console.log(this.state[e]);
+                    this.uploadImage(this.getImageToUpload(e, this.state[e]));
+                });
+            });
+        }
+        else {
+            this.setState({ [e]: { file: '', name: '' } });
+            this.props.dispatch(alertActions.error("You need to upload a work id"));
         }
     }
 
-    onIDUpload=(picture, e)=>{
-        console.log(e);
-        //if(picture.length > this.state.SignupPicCount){
-            if(picture.length>=1){
-               
-                util.getBase64(picture[picture.length-1], (result) => {
-                        this.setState({workIDFront: {file: result, name:picture[picture.length-1].name}},()=>{
-                            console.log(this.state.workIDFront);
-                        });
-                 });
+    onFrontUpload = (picture) => {
+        if (this.props.workid_front.loan_frontId_status !== loanConstants.LOAN_WORkID_FRONT_PENDING 
+            || this.props.workid_front.loan_frontId_status !== loanConstants.LOAN_WORkID_FRONT_SUCCESS )
+            this.setState({
+                actions: {
+                    pending: loanConstants.LOAN_WORkID_FRONT_PENDING,
+                    success: loanConstants.LOAN_WORkID_FRONT_SUCCESS,
+                    failure: loanConstants.LOAN_WORkID_FRONT_FAILURE
+                }
+            }, () => {
+                this.onIDUpload(picture, "workIDBack");
+            })
+    }
+
+    returnOnFrontUploadText = () => {
+        if (this.props.workid_front.loan_frontId_status == loanConstants.LOAN_WORkID_FRONT_PENDING) {
+            return "Upload in Progress...";
+        }
+        else if (this.props.workid_front.loan_frontId_status == loanConstants.LOAN_WORkID_FRONT_SUCCESS) {
+            return "Work ID (Front) Upload Successful";
+        } else if (this.props.workid_front.loan_frontId_status == loanConstants.LOAN_WORkID_FRONT_FAILURE) {
+            return "Upload Failed, Click to try again";
+        } else {
+            return "Click here to upload work ID (Front)";
+        }
+    }
+
+    onBackUpload = (picture) => {
+        if (this.props.workid_back.loan_backId_status !== loanConstants.LOAN_WORkID_BACK_PENDING 
+            || this.props.workid_back.loan_backId_status !== loanConstants.LOAN_WORkID_BACK_SUCCESS )
+        this.setState({
+            actions: {
+                pending: loanConstants.LOAN_WORkID_BACK_PENDING,
+                success: loanConstants.LOAN_WORkID_BACK_SUCCESS,
+                failure: loanConstants.LOAN_WORkID_BACK_FAILURE
             }
-            else {
-                this.setState({workIDFront: { file: '', name: ''}});
-                this.props.dispatch(alertActions.error("You need to add a signature"));
-            }
-        //   }else if(picture.length <= this.state.SignupPicCount){
-        //     this.setState({signUp: { file: '', name: ''}});
-        //     this.props.dispatch(alertActions.error("You need to add a signature"));
-        //   }
-        //   this.setState({SignupPicCount : picture.length});
+        }, () => {
+            this.onIDUpload(picture, "workIDBack");
+        })
+    }
+
+    returnOnBackUploadText = () => {
+        if (this.props.workid_back.loan_backId_status == loanConstants.LOAN_WORkID_BACK_PENDING) {
+            return "Upload in Progress...";
+        }
+        else if (this.props.workid_back.loan_backId_status == loanConstants.LOAN_WORkID_BACK_SUCCESS) {
+            return "Work ID (Back) Upload Successful";
+        } else if (this.props.workid_back.loan_backId_status == loanConstants.LOAN_WORkID_BACK_FAILURE) {
+            return "Upload Failed, Click to try again";
+        } else {
+            return "Click here to upload work ID (Back)";
+        }
     }
 
     componentDidMount = () => {
@@ -115,6 +176,8 @@ class EmployerDetails extends React.Component {
         var employerNameInvalid = false;
         var industryInvalid = false;
         var otherEmployerInvalid = false;
+        var workIdFrontUploadInvalid = false;
+        var workIdBackUploadInvalid = false;
 
         //selected Industry validation
         if (this.state.selectedIndustry.label.length == 0 || this.state.selectedIndustry.label == "") {
@@ -152,24 +215,42 @@ class EmployerDetails extends React.Component {
             otherEmployerInvalid = false;
         }
 
-        if (industryInvalid || otherEmployerInvalid || employerNameInvalid )
+        if(this.state.workIDBack.file===''){
+            this.setState({workIdBackUploadInvalid :true});
+            workIdBackUploadInvalid = true
+        }
+        if(this.state.workIDFront.file===''){
+            this.setState({workIdFrontUploadInvalid :true});
+            workIdFrontUploadInvalid = true;
+        }
+
+        if(this.state.workIDBack.file!==''){
+            this.setState({workIdBackUploadInvalid :false});
+            workIdBackUploadInvalid = false;
+        }
+        if(this.state.workIDFront.file!==''){
+            this.setState({workIdFrontUploadInvalid :false});
+            workIdFrontUploadInvalid = false;
+        }
+
+        if (industryInvalid || otherEmployerInvalid || employerNameInvalid || workIdBackUploadInvalid || workIdFrontUploadInvalid)
             return true;
         else return false;
     }
 
-    getImageToUpload=(uploadType, imageToUpload)=>{
+    getImageToUpload = (uploadType, imageToUpload) => {
         var imageFile = new FormData();
-    
-        if(uploadType ==='dp'){
-            imageFile.set('DocumentType', SystemConstant.DOCUMENT_TYPE.passport);
+
+        if (uploadType === 'workIDFront') {
+            imageFile.set('DocumentType', SystemConstant.DOCUMENT_TYPE.workid);
         }
-    
-        if(uploadType ==='userSignature'){
-            imageFile.set('DocumentType', SystemConstant.DOCUMENT_TYPE.signature);
-        }
-        
-        imageFile.append('File', utils.canvasToFile(imageToUpload.file), imageToUpload.name)
-       
+        else
+            if (uploadType === 'workIDBack') {
+                imageFile.set('DocumentType', SystemConstant.DOCUMENT_TYPE.workidBack);
+            }
+
+        imageFile.append('File', util.canvasToFile(imageToUpload.file), imageToUpload.name)
+
         return imageFile;
     }
 
@@ -197,7 +278,7 @@ class EmployerDetails extends React.Component {
                     <select className="error-field" disabled>
                         <option>Unable to load Industries</option>
                     </select>
-                    <a className="cta-link to-right" onClick={this.getIndustries()}>Try again</a>
+                    <a className="cta-link to-right" onClick={this.getIndustries}>Try again</a>
                 </Fragment>)
         }
     }
@@ -294,10 +375,15 @@ class EmployerDetails extends React.Component {
         } else { return true; }
     }
 
+    uploadImage = (data) => {
+        this.props.dispatch(userActions.uploadDocument(this.state.user.token, data, this.state.actions))
+    }
+
     render() {
         const { employerName, accountNumber, employerNameInvalid, IndustryNameInvalid, employNameOthersInvalid, accountNumberInvalid, selectedEmployer,
             selectedBankInvalid } = this.state;
         let props = this.props;
+        let frontp = "frontside";
         return (
             <Fragment>
                 {this.gotoNextPage()}
@@ -342,15 +428,15 @@ class EmployerDetails extends React.Component {
                                     <div className="input-ctn">
                                         <label>Work ID (Front)</label>
                                         <ImageUploader
+                                            disbaled={true}
                                             withIcon={false}
                                             singleImage={true}
                                             withPreview={false}
-                                            name="frontID"
+                                            name="frontId"
                                             label=''
                                             className="selfieBtn"
-                                            buttonText='Click here to upload work ID (Front)'
-                                            onChange={this.onProfileUpload}
-                                            imgExtension={['.jpg', '.png', '.jpeg']}
+                                            buttonText={this.returnOnFrontUploadText()}
+                                            imgExtension={['.jpg', '.png', '.jpeg']}s
                                             maxFileSize={5242880}
                                         />
                                     </div>
@@ -364,8 +450,8 @@ class EmployerDetails extends React.Component {
                                             name="backID"
                                             label=''
                                             className="selfieBtn"
-                                            buttonText='Click here to upload work ID (Back)'
-                                            onChange={this.onProfileUpload}
+                                            buttonText={this.returnOnBackUploadText()}
+                                            onChange={this.onBackUpload}
                                             imgExtension={['.jpg', '.png', '.jpeg']}
                                             maxFileSize={5242880}
                                         />
@@ -374,7 +460,7 @@ class EmployerDetails extends React.Component {
                                     <div className="row">
                                         <div className="col-sm-12">
                                             <center>
-                                                <button type="submit" disabled={!this.state.isAccepted || this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_PENDING} className="btn-alat m-t-10 m-b-20 text-center">
+                                                <button type="submit" disabled={this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_PENDING} className="btn-alat m-t-10 m-b-20 text-center">
                                                     {this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_PENDING ?
                                                         "Proceesing..." : "Proceed"}
                                                 </button>
@@ -406,7 +492,9 @@ function mapStateToProps(state) {
         //user_detail: state.loanOnboardingReducerPile.loanUserDetails,
 
         industries: state.loanReducerPile.loanIndustries,
-        employer: state.loanReducerPile.loanEmployer
+        employer: state.loanReducerPile.loanEmployer,
+        workid_front: state.loanReducerPile.loanFrontId,
+        workid_back: state.loanReducerPile.loanBackId
     };
 }
 export default connect(mapStateToProps)(EmployerDetails);

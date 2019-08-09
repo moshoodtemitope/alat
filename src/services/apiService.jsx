@@ -82,8 +82,6 @@ export class ApiService {
                 axios.defaults.headers.common['alat-client-apiKey'] = 'ERTojertoijertoijert';
                 axios.defaults.headers.common['Content-Type'] = 'application/json';
             }
-            
-           
             else if(headers !== undefined){
                 for (let [key, value] of Object.entries(headers)) {
                     axios.defaults.headers.common[key] = value;
