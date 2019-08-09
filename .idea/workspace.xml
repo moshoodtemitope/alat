@@ -2,9 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b67c801-8811-450d-8187-b5c523cf8e04" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/savings/create-stash-step2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/savings/create-stash-step2.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/savings/fixed-goal-summary.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/savings/fixed-goal-summary.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/savings/flex-goal-step1.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/savings/flex-goal-step1.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/savings/flex-goal-summary.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/savings/flex-goal-summary.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/goal/create-stash.reducer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/goal/create-stash.reducer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/savingsReducers/flexi-goal-success-reducer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/savingsReducers/flexiGoalCreationSaving.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/savingsReducers/flexiSummaryReducer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/savingsReducers/savings.reducers.js" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,93 +22,23 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/savings/create-stash-step2.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="152" column="78" selection-start-line="152" selection-end-line="153" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/savings/create-stash_step1.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2841">
-              <caret line="329" column="52" selection-start-line="329" selection-start-column="52" selection-end-line="329" selection-end-column="52" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/savings/flex-goal-step1.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="284">
-              <caret line="391" column="109" selection-start-line="391" selection-start-column="109" selection-end-line="391" selection-end-column="109" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/savings/flex-goal-step2.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="127">
-              <caret line="302" column="87" selection-start-line="302" selection-start-column="16" selection-end-line="302" selection-end-column="87" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/redux/reducers/goal/flex-goal.reducer.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="64" column="36" selection-start-line="64" selection-start-column="16" selection-end-line="64" selection-end-column="36" />
-              <folding>
-                <element signature="e#0#79#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/redux/reducers/index.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="151" column="17" selection-start-line="151" selection-start-column="4" selection-end-line="151" selection-end-column="17" />
-              <folding>
-                <element signature="e#0#38#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/redux/reducers/goal/create-stash.reducer.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="40" column="38" selection-start-line="40" selection-start-column="38" selection-end-line="40" selection-end-column="38" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/savings/flex-goal-summary.jsx">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-105">
               <caret line="73" column="5" selection-start-line="73" selection-start-column="4" selection-end-line="73" selection-end-column="5" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/savings/goal/goal-plan.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-860">
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -114,17 +51,6 @@
               <caret line="39" column="62" selection-start-line="39" selection-start-column="62" selection-end-line="39" selection-end-column="62" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/savings/fixed-goal-step2.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4881">
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -148,20 +74,21 @@
         <option value="$PROJECT_DIR$/src/components/authenticated-routes.jsx" />
         <option value="$PROJECT_DIR$/src/components/savings/savings.css" />
         <option value="$PROJECT_DIR$/src/redux/actions/savings/goal/create-stash-goal.actions.js" />
-        <option value="$PROJECT_DIR$/src/components/savings/create-stash-step2.jsx" />
         <option value="$PROJECT_DIR$/src/components/savings/create-stash_step1.jsx" />
-        <option value="$PROJECT_DIR$/src/redux/reducers/goal/create-stash.reducer.jsx" />
         <option value="$PROJECT_DIR$/src/components/savings/goal/create-stash-success.jsx" />
         <option value="$PROJECT_DIR$/src/services/urls.jsx" />
         <option value="$PROJECT_DIR$/src/components/savings/flex-goal-step1.jsx" />
         <option value="$PROJECT_DIR$/src/components/savings/fixed-goal-summary.jsx" />
         <option value="$PROJECT_DIR$/src/components/savings/flex-goal-summary.jsx" />
+        <option value="$PROJECT_DIR$/src/redux/reducers/goal/create-stash.reducer.jsx" />
+        <option value="$PROJECT_DIR$/src/components/savings/create-stash-step2.jsx" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
     <option name="width" value="1280" />
-    <option name="height" value="800" />
+    <option name="height" value="752" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -222,6 +149,14 @@
               <item name="ALATWebV2" type="b2602c69:ProjectViewProjectNode" />
               <item name="ALATWebV2" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="savings" type="462c0819:PsiDirectoryNode" />
+              <item name="group" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ALATWebV2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ALATWebV2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="redux" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -253,6 +188,15 @@
               <item name="ALATWebV2" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="redux" type="462c0819:PsiDirectoryNode" />
+              <item name="actions" type="462c0819:PsiDirectoryNode" />
+              <item name="savings" type="462c0819:PsiDirectoryNode" />
+              <item name="group-savings" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ALATWebV2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ALATWebV2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="redux" type="462c0819:PsiDirectoryNode" />
               <item name="reducers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -262,6 +206,14 @@
               <item name="redux" type="462c0819:PsiDirectoryNode" />
               <item name="reducers" type="462c0819:PsiDirectoryNode" />
               <item name="goal" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ALATWebV2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ALATWebV2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="redux" type="462c0819:PsiDirectoryNode" />
+              <item name="reducers" type="462c0819:PsiDirectoryNode" />
+              <item name="group-savings" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ALATWebV2" type="b2602c69:ProjectViewProjectNode" />
@@ -320,21 +272,21 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1565274684649</updated>
-      <workItem from="1565274719884" duration="16429000" />
+      <workItem from="1565274719884" duration="16929000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16429000" />
+    <option name="totallyTimeSpent" value="16929000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="752" extended-state="6" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info id="npm" order="1" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.24959612" />
+      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.24959612" />
       <window_info id="Structure" order="3" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="0" weight="0.32919255" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="0" visible="true" weight="0.32919255" />
       <window_info anchor="bottom" id="Database Changes" order="1" />
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="3" />
@@ -466,36 +418,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/urls.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="32">
-          <caret line="2" column="3" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/savings/flex-goal-step2.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="127">
           <caret line="302" column="87" selection-start-line="302" selection-start-column="16" selection-end-line="302" selection-end-column="87" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/redux/reducers/goal/create-stash.reducer.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="40" column="38" selection-start-line="40" selection-start-column="38" selection-end-line="40" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/savings/create-stash-step2.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="152" column="78" selection-start-line="152" selection-end-line="153" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -549,12 +477,73 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/services/urls.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="32">
+          <caret line="2" column="3" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/redux/reducers/data.reducer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-169">
+          <folding>
+            <element signature="e#0#72#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/redux/reducers/dashboard.reducer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1196" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/redux/reducers/group-savings/group-savings-reducers.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1786" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/savings/group/success-message.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1031">
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/savings/create-stash-step2.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="192" column="3" selection-start-line="192" selection-start-column="3" selection-end-line="192" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/redux/reducers/goal/create-stash.reducer.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="328">
+          <caret line="40" column="33" selection-start-line="40" selection-start-column="16" selection-end-line="40" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/savings/flex-goal-summary.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-105">
           <caret line="73" column="5" selection-start-line="73" selection-start-column="4" selection-end-line="73" selection-end-column="5" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/savings/goal/goal-plan.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-860">
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
