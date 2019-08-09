@@ -8,12 +8,67 @@ import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import SlotSelection from './members-slot';
 
+var theMembers = [];
+var element = {};
+var arraysOfSlot = [];
+var membersAccordingToSlot = []; // accending order
+var slot = [];
 class MemberSlots extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-
+            
         }
+    }
+
+    componentDidMount = () => {
+        const members = this.props.groupDetails.response.members; // an array
+
+        for(var i=0; i<members.length; i++){
+            arraysOfSlot.push(members[i]['slot']);
+        }
+        
+        /// sorting in accending order!
+        arraysOfSlot.sort((a, b) => {
+            return a - b;
+        });
+
+        const setMember = (aMember) => {
+             for(var i=0; i<members.length; i++){
+                  if(aMember == members[i]['slot'])
+                        membersAccordingToSlot.push(members[i]);
+             }
+        }
+
+        for(var i=0; i<arraysOfSlot.length; i++){
+              setMember(arraysOfSlot[i]);
+        }
+
+        const setOptions = (members) => {
+            for(var i=0; i<members.length; i++){
+                   element.value = members[i].firstName + " " + members[i].lastName;
+                   element.label = members[i].firstName + " " + members[i].lastName;
+                   theMembers.push(element);
+                   element = {};
+            }
+       }
+
+       setOptions(membersAccordingToSlot);
+
+       //default slot that came from server!
+       for(var i=0; i<members.length; i++){
+            var acustomer = {};
+            acustomer.customerId = members[i]['customerId'];
+            acustomer.slot = members[i]['slot'];
+            slot.push(acustomer);
+       }
+    }
+
+    handleSelectChange = (member) => {
+       const groupMembers = this.props.groupDetails.response.members;
+       slot.map((element, index) => {
+          // if(element.)
+       });
     }
 
     render(){
@@ -56,7 +111,8 @@ class MemberSlots extends React.Component{
                                                     <div className='form-row'>
 
                                                         <SlotSelection 
-                                                           members={this.props.groupDetails.response.members}
+                                                           groupMembers={theMembers}
+                                                           handleSelectChange={this.handleSelectChange()}
                                                         />
                                             
                                                     </div>
