@@ -39,6 +39,10 @@ import GroupAnalyticsMini from './savings/group/group-analytics-mini';
 import JoinAGroup from './savings/group/join-a-group';
 import JoinedGroupSuccessfully from './savings/group/joined-group-successfully';
 import GroupAnalyticsMini2 from './savings/group/group-analytics-mini2';
+import ParentDashBoard from './savings/group/parent-dashboard';
+
+
+// import MemberSlots from './savings/group/members-slot';
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
     return (
@@ -105,6 +109,8 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path='/savings/group-mini2' authed={this.props.user} component={GroupAnalyticsMini2} />
                     <PrivateRoute path='/savings/group/join-a-group' authed={this.props.user} component={JoinAGroup} />
                     <PrivateRoute path="/savings/group/joingroup-success-message" authed={this.props.user} component={JoinedGroupSuccessfully} />
+                    <PrivateRoute path='/savings/activityDashBoard' authed={this.props.user} component={ParentDashBoard} />
+                    {/* <PrivateRoute path='/group-savings/edit-members-slots' authed={this.props.user} component={MemberSlots} /> */}
                 </Switch>
             </Router>
         )

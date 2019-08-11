@@ -175,7 +175,8 @@ const appReducer = combineReducers({
     /// ESUSU (GROUP SAVINGS)
     createRotatingGroupSavings: rotatingSavings.createRotatingSavings,
     rotatingGroupDetails: rotatingSavings.rotatingGroupDetails,
-    joinAGroup: rotatingSavings.joinAGroup
+    joinAGroup: rotatingSavings.joinAGroup,
+    editSlot: rotatingSavings.EditSlots
 });
 
 //export defualt appReducer;

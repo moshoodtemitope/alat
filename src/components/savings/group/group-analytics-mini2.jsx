@@ -102,6 +102,10 @@ class GroupAnalyticsMini2 extends React.Component {
                                                                         />
                                                        }
                                                    })}
+                                                   <NavLink to='/group-savings/edit-members-slots'>
+                                                         <p id='editSlots'>Edit Slot</p>
+                                                   </NavLink>
+                                                   
                                              </div>
             
                                         </div>

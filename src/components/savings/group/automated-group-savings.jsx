@@ -231,7 +231,6 @@ class AutomateGroupSavings extends React.Component {
                                       <div className="max-600">
                                        <div className="al-card no-pad">
                                        <h4 className="m-b-10 center-text hd-underline">Automate Group Savings</h4>
-
                                             <form onSubmit={this.handleSubmit}>
                                                 <div className="form-row">
                                                     <div className={howMuchValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>

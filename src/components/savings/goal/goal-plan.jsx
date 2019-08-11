@@ -52,7 +52,7 @@ class GoalPlan extends React.Component {
                                     a target amount, earn 10% interest annually. No withdrawals allowed and you will lose your interest if you don't meet your target</p>
                                 </div> 
                                 </NavLink> 
-                                <NavLink to="/savings/flex-goal">                      
+                                <NavLink to="/savings/activityDashBoard">                      
                                 <div className="flex-goal">
                                     <img className="goal-icon" src={graph} alt=''/>
                                     <p className="plan-text">Flex Goal</p>
