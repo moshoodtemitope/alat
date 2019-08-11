@@ -26,7 +26,7 @@ class GroupAnalytics2 extends React.Component {
             navType: 1,
             buttonType: "bigButton",
             discTopSpan: 'something'
-        }
+        };
 
         this.HandleNavigation = this.HandleNavigation.bind(this);
         this.Automated = this.Automated.bind(this);
@@ -35,15 +35,15 @@ class GroupAnalytics2 extends React.Component {
 
     HandleNavigation = () => {
         this.props.history.push("/savings/group/group-analytics2");
-    }
+    };
 
     Automated = () => {
         this.props.history.push('/savings/group/automate-contributions');
-    }
+    };
 
     NavigateToGroupSummary = () => {
         this.props.history.push('/savings/group/group-analytics');
-    }
+    };
 
     
 

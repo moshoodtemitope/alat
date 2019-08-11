@@ -63,5 +63,5 @@ export const GoalType = (token, data) => {
 
     function request(request) { return { type:customerGoalConstants.GET_GOAL_TYPE_PENDING, request} }
     function success(response) { return {type:customerGoalConstants.GET_GOAL_TYPE_SUCCESS, response} }
-    function failure(error) { return {type:customerGoalConstants.GET_GOAL_TYPE_SUCCESS, error} }
+    function failure(error) { return {type:customerGoalConstants.GET_GOAL_TYPE_FAILURE, error} }
 };

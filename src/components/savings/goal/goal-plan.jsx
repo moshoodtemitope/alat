@@ -8,10 +8,7 @@ import stash from '../../../assets/img/stash.svg';
 import {NavLink} from "react-router-dom";
 import '../savings.css';
 import { connect } from "react-redux";
-
 import {getCustomerGoalTransHistory} from '../../../redux/actions/savings/goal/get-customer-transaction-history.actions'
-import savemoney from "../../../assets/img/save-money.svg";
-import * as utils from "../../../shared/utils";
 
 
 class GoalPlan extends React.Component {

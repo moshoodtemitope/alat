@@ -65,8 +65,8 @@ class CreateStashSuccessMessage extends React.Component {
                                                    userType="admin"
                                                    name="Stash"
                                                    position="Status: Completed"
-                                                    amount={JSON.stringify(this.props.create_stash_goal.response.targetAmount)}
-                                                   // intent={this.props.setFrequency}
+                                                    amount={JSON.stringify(this.props.create_stash_goal.response.data.targetAmount)}
+                                                   intent="Amount Saved"
                                                    id="autoSummary"/>
                                                 </div>
                                             </form>
