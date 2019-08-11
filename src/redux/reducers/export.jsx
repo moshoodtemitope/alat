@@ -29,9 +29,13 @@ import { fundAccountReducer, getTokenizedCardsReducer,
 import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingVerifyBVNReducer,
      loanOnboardingStep3Reducer, loanOnboardingValidateOTPReducer} from './loan-onboarding.reducer';
 
- import {fixedGoalStep1Reducer,fixedGoalStep2Reducer,addGoalReducer} from './goal/fixed-goal.reducers';
- import {flexGoalStep1Reducer,flexGoalStep2Reducer,addFlexGoalReducer} from './goal/flex-goal.reducer';
- import {createStashGoalReducer,createStashGoalStep1Reducer} from './goal/create-stash.reducer'
+     import {fixedGoalStep1Reducer,fixedGoalStep2Reducer,addGoalReducer} from './goal/fixed-goal.reducers';
+     import {flexGoalStep1Reducer,flexGoalStep2Reducer,addFlexGoalReducer} from './goal/flex-goal.reducer';
+     import {createStashGoalReducer,createStashGoalStep1Reducer} from './goal/create-stash.reducer'
+    import {groupSavingsTargetGoal, groupDetails, deleteGroup, contribute, editGroup, pauseGroup, findGroup, customerGroup, joinGroup, scheduleContribution, deleteMember, cashOut,
+    continueScheduleGroupPayment, setAutomateSavingsEndDate, setAutomateSavingsStartDate, setAmountToWithDraw, setFrequency} from './group-savings/group-savings-reducers';
+     import {getCustomerGoalTransHistoryReducer,GET_FORMULAR,GET_GOAL_TYPE} from './goal/get-customer-goal-trans-history-reducers';
+    import {createRotatingSavings, rotatingGroupDetails, joinAGroup, EditSlots} from './group-savings/rotating-group-reducers';
 
 export const onboarding = {
     userRegistrationRequest,
@@ -78,13 +82,13 @@ export const airtime ={
     buyAirtimeWebPinOTPReducer,
     airtimeSaveBeneficiaryReducer
     
-}
+};
 
 export const global ={
     debitableAccountsReducer,
     getEncryptionRuleReducer,
     verifyPANReducer
-}
+};
 
 export const fundAccount={
     fundAccountReducer,
@@ -96,20 +100,54 @@ export const fundAccount={
     //fundFromTokenisedCardReducer,
     //fundFromCardWithPinReducer
     saveCardAfterTranReducer
-}
- export const fixedGoal={
+};
+export const fixedGoal ={
     fixedGoalStep1Reducer,
     fixedGoalStep2Reducer,
     addGoalReducer
- }
+ };
  export const flexGoal={
     flexGoalStep1Reducer,
     flexGoalStep2Reducer,
     addFlexGoalReducer
 
- }
- export const stashGoal={
+ };
+ export const groupSavings ={
+    groupSavingsTargetGoal,
+    groupDetails,
+    deleteGroup, 
+    contribute, 
+    editGroup, 
+    pauseGroup, 
+    findGroup, 
+    customerGroup, 
+    joinGroup, 
+    scheduleContribution, 
+    deleteMember, 
+    cashOut,
+    continueScheduleGroupPayment,
+    setAutomateSavingsEndDate,
+    setAutomateSavingsStartDate,
+    setAmountToWithDraw,
+    setFrequency
+};
+
+export const rotatingSavings = {
+    createRotatingSavings,
+    rotatingGroupDetails,
+    joinAGroup,
+    EditSlots
+};
+export const stashGoal={
     createStashGoalStep1Reducer,
     createStashGoalReducer,
+};
 
- }
+export const customerGoal={
+    getCustomerGoalTransHistoryReducer,
+    GET_FORMULAR,
+    GET_GOAL_TYPE
+
+};
+ 
+ 

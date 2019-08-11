@@ -129,7 +129,7 @@ class Dashboard extends React.Component{
         let props = this.props;
         let accounts = props.accounts;
         let userAccounts = accounts.user_account_data.response.Accounts;
-        let edAccount = userAccounts[accountIndex.slideIndex];
+        let selectedAccount = userAccounts[accountIndex.slideIndex];
         console.log(selectedAccount);
         let payload = {
             Take: 10,

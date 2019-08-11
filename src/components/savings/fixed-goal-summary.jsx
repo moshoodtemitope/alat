@@ -14,7 +14,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
 
  class submitFixedGoal extends Component {
      constructor(props){
-         super(props)
+         super(props);
 
         this.state={
             targetAmount:"",
@@ -23,7 +23,10 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
             goalName:"",
             goalFrequency:"",
             showInterests:"",
-            debitAccount:""
+            debitAccount:"",
+            GoalTypeId:6,
+            frequencyId: 11,
+
 
         }
      }
@@ -34,38 +37,42 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
     }
 
     init = () => {
-        if (this.props.fixed_goal_step2.fixed_step2_status != fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS_STEP2)
+        if (this.props.fixed_goal_step2.fixed_step2_status !== fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS_STEP2)
             this.props.history.push("/savings/fixed-goal-complete");
         else {
             var data = {
                 ...this.props.fixed_goal_step2.fixed_step2_data.data
             };
-            console.log('tag', data)
+            console.log('tag', data);
 
             this.setState({
                 targetAmount:data.targetAmount,
                 startDate: data.startDate,
-                endDate: data.endDate,  
+                endDate: data.endDate,
                 goalName:data.goalName,
                 showInterests:data.showInterests,
                 debitAccount:data.debitAccount,
-                goalFrequency:data.goalFrequency
+                goalFrequency:data.goalFrequency,
+                
             });
         }
     };
-    handleSubmit=()=>{
+
+    handleSubmit=(event)=>{
         event.preventDefault();
         this.props.dispatch(actions.addFixedGoal({
             "goalName":this.state.goalName,
             "startDate":this.state.startDate,
-            "endDate":this.state.endDate,
-            "targetAmount":this.state.targetAmount,
+            "TargetDate":this.state.endDate,
+            "targetAmount":parseFloat(this.state.targetAmount),
             "goalFrequency":this.state.goalFrequency,
             "debitAccount":this.state.debitAccount,
-            "showInterests":this.state.showInterests,
+            "debitAmount":parseFloat(this.state.showInterests),
+            "GoalTypeId":this.state.GoalTypeId,
+            "frequencyId":this.state.frequencyId,
         }));
 
-    }
+    };
 
     
     render() {
@@ -92,7 +99,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
 
 
                         {this.props.alert && this.props.alert.message &&
-                            <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                            <div style={{width: "100%", marginRight:"120px",marginLeft:"120px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                         }
                     <h1 style={{margin:"auto", color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>Fixed Goal Summary</h1>
                         <div style={{margin:"30px"}}></div>
@@ -112,8 +119,8 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
                                                 <p className='GoalText'>Target Amount</p>
                                                 <p className='boldedText'>₦{this.state.targetAmount}</p>
                                             </div>
-                                        </div>
-                                        <div className="coverForSummary">
+                                        </div> 
+                                      <div className="coverForSummary">
                                                 <div className="left">
                                                     <p className='GoalText'>Start Date</p>
                                                     <p className='boldedText'>{moment(this.state.startDate).format('MMMM,D,YYYY')}</p>
@@ -180,6 +187,6 @@ const mapStateToProps = state => ({
     add_fixed_goal:state.add_goal_reducer,
     alert: state.alert,
 
-})
+});
 export default connect(mapStateToProps)(submitFixedGoal);
 

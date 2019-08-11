@@ -1,93 +1,111 @@
- @import '../../assets/css/font.css';
+  @import '../../assets/css/font.css';
  
  .choose-goal-plan-row{
     display: flex;
     flex-wrap: wrap;
-    
-   
  }
 .fixed-goal{
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
-    border-radius: 6px;
-    background: #9D0F3E;
-    border: 0.95px solid #FFF4F4;
-    box-sizing: border-box;
-    width: 300px;
-    height: 250px;
-    margin-left:10px;
-    margin-right:10px;
+   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
+   border-radius: 6px;
+   background: #9D0F3E;
+   border: 0.95px solid #FFF4F4;
+   box-sizing: border-box;
+   width: 300px;
+   height: 250px;
+   margin-left:10px;
+   margin-right:10px;
 }
+
+.dashboardCards {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100% !important;
+}
+
+#parentCard{
+    width: 100% !important;
+}
+
+.dashboardCards .eachCard {
+     max-width: 100px;
+     margin-left: 20px;
+}
+
+.forGroupLink {
+   color: #444444 !important;
+}
+
 .goal-icon{
-    padding-top: 20px;
-    margin: 25px;
+   padding-top: 20px;
+   margin: 25px;
 }
 
 .checkSome{
  justify-content: center;
 }
 .flex-text{
-    font-weight: bold;
-    font-size: 18px;
-    display: block;
-    color: #ffffff;
-    margin-left: 25px;
-    line-height: 22px;
-    font-family:"proxima_novasemibold";
-    font-style: normal;
+   font-weight: bold;
+   font-size: 18px;
+   display: block;
+   color: #ffffff;
+   margin-left: 25px;
+   line-height: 22px;
+   font-family:"proxima_novasemibold";
+   font-style: normal;
 }
 .info-text3{
-    color: #fff;  
-    font-size: 14px;
-    line-height: 20px;
-    display: block;
-    margin-left: 15px;
-    padding-left: 10px;
-    padding-right: 20px;
-    font-family:"proxima_novaregular";
-  
+   color: #fff;
+   font-size: 14px;
+   line-height: 20px;
+   display: block;
+   margin-left: 15px;
+   padding-left: 10px;
+   padding-right: 20px;
+   font-family:"proxima_novaregular";
+
 }
 .info-text2{
-    color: #4D4D4D;  
-    font-size: 14px;
-    line-height: 20px;
-    display: block;
-    margin-left: 15px;
-    padding-left: 10px;
-    padding-right: 20px;
-    font-family:"proxima_novaregular";
-  
+   color: #4D4D4D;
+   font-size: 14px;
+   line-height: 20px;
+   display: block;
+   margin-left: 15px;
+   padding-left: 10px;
+   padding-right: 20px;
+   font-family:"proxima_novaregular";
+
 }
 .flex-goal{
-    box-shadow: 3px 8px 24px rgba(255, 255, 255, 0.3221); 
-    border-radius: 6px;
-    background: #ffffff;
-    border: 0.95px solid #FFF4F4;
-    box-sizing: border-box;
-    width: 300px;
-    height: 250px;
-    margin-left:10px;
-    margin-right:10px;
+   box-shadow: 3px 8px 24px rgba(255, 255, 255, 0.3221);
+   border-radius: 6px;
+   background: #ffffff;
+   border: 0.95px solid #FFF4F4;
+   box-sizing: border-box;
+   width: 300px;
+   height: 250px;
+   margin-left:10px;
+   margin-right:10px;
 }
 .stash-goal{
-    border-radius: 6px;
-    background: #ffffff;
-    box-shadow: 0px 8px 24px rgba(185, 185, 185, 0.162138);
-    border: 0.95px solid #FFF4F4;
-    box-sizing: border-box;
-    width: 300px;
-    height: 250px;
-    margin-left:10px;
-    margin-right:10px;
+   border-radius: 6px;
+   background: #ffffff;
+   box-shadow: 0px 8px 24px rgba(185, 185, 185, 0.162138);
+   border: 0.95px solid #FFF4F4;
+   box-sizing: border-box;
+   width: 300px;
+   height: 250px;
+   margin-left:10px;
+   margin-right:10px;
 }
 .plan-text{
-    font-weight: bold;
-    font-size: 18px;
-    display: block;
-    color: #AB2656;
-    margin-left: 25px;
-    line-height: 22px;
-    font-family:"proxima_novasemibold";
-    font-style: normal;
+   font-weight: bold;
+   font-size: 18px;
+   display: block;
+   color: #AB2656;
+   margin-left: 25px;
+   line-height: 22px;
+   font-family:"proxima_novasemibold";
+   font-style: normal;
 }
 .header-info{
     font-family: "proxima_novasemibold";
@@ -100,25 +118,25 @@
 
 } 
 .label-text{
-    font-family: "proxima_novasemibold";
-    font-size: 14px;
-    line-height: 17px;
-    color: #7C7C7C;
+   font-family: "proxima_novasemibold";
+   font-size: 14px;
+   line-height: 17px;
+   color: #7C7C7C;
 }
+
 .form-row{
-    padding-right:50px;
-    padding-left: 50px;
+   padding-right:50px;
+   padding-left: 50px;
 }
 .form-group{
-    padding-left: 50px;
-    padding-right: 50px;
+   padding-left: 50px;
+   padding-right: 50px;
 }
 .react-datepicker__header{
-         color: #AB2656;
+        color: #AB2656;
 
 }
 .coverForSummary {
-    /* padding-top: 20px; */
     display: flex;
     flex-wrap: nowrap;
     padding-bottom: 20px;
@@ -126,7 +144,7 @@
     padding-bottom: 0px;
 }
 .coverForSummary .right, .coverForSummary .left {
-    width: 50%;
+   width: 50%;
 }
 .coverForSummary .left {
     padding-left: 10%;
@@ -134,33 +152,35 @@
     padding-top: 15px;
     padding-bottom: 15px;
 }
-  
+
 .coverForSummary .right {
     padding-left: 5%;
     border-left: 1px solid #eeeeee;
     padding-top: 15px;
     padding-bottom: 15px;
 }
-  
+
 .coverForSummary .boldedText {
-    font-weight: bold;
-    margin-bottom: 0px;
-    font-size: 16px;
-    font-family: "proxima_novasemibold"
-  
+   font-weight: bold;
+   margin-bottom: 0px;
+   font-size: 16px;
+   font-family: "proxima_novasemibold";
+   padding-bottom: 20px;
+
 }
 .coverForSummary .GoalText {
-    font-size: 14px;
-    line-height: 17px;
-    color: #4D4D4D;
-    margin-bottom: 10px;
-    font-family:"proxima_novaregular"
+   font-size: 14px;
+   line-height: 17px;
+   color: #4D4D4D;
+   margin-bottom: 10px;
+   font-family:"proxima_novaregular";
+   padding-top: 20px;
 }
 .css-vj8t7z{
-    height:25px;
+   height:25px;
 }
 .css-19bqh2r{
-    height: 25px;
+   height: 25px;
 }
 .date-picker-icon {
     float: right;
@@ -176,4 +196,16 @@
     padding-top: 3px;
     font-family:"proxima_novaregular";
 }
+  .successIcon{
+      padding-top: 20px;
+  }
+  .btn-create-new-goal{
+      color: #FFFFFF;
+      font-family:"proxima_novasemibold";
+      font-size:18px;
+
+
+
+  }
+
 

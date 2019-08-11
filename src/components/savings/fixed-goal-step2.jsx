@@ -4,7 +4,7 @@ import InnerContainer from '../../shared/templates/inner-container';
 import SavingsContainer from './container';
 import Select from 'react-select';
 import { connect } from 'react-redux';
-import { Redirect,Link } from 'react-router-dom';
+import { Redirect,Link,NavLink } from 'react-router-dom';
 import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
 import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant';
 import SelectDebitableAccounts from '../../shared/components/selectDebitableAccounts';
@@ -22,11 +22,6 @@ const selectedTime = [
     { "id":7, value: 'daily', label:"Daily"},
    
 ];
-
-
-
-
-
 
 
 class FixedGoal extends React.Component {
@@ -362,7 +357,9 @@ class FixedGoal extends React.Component {
                                     <div className="sub-tab-nav">
                                         <ul>
                                             <li><a href="accounts.html" className="active">Goals</a></li>
+                                            <NavLink to="/savings/goal/group-savings-selection">
                                             <li><a href="statement.html">Group Savings</a></li>
+                                            </NavLink>                                            
                                             <li><a href="#">Investments</a></li>
                                         
                                         </ul>
