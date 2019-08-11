@@ -13,21 +13,24 @@ var element = {};
 var arraysOfSlot = [];
 var membersAccordingToSlot = []; // accending order
 var slot = [];
+var groupMembers;
+
 class MemberSlots extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            
+            user: JSON.parse(localStorage.getItem("user")),
+            members: null
         }
     }
 
     componentDidMount = () => {
         const members = this.props.groupDetails.response.members; // an array
-
+        groupMembers = members;
         for(var i=0; i<members.length; i++){
             arraysOfSlot.push(members[i]['slot']);
         }
-        
+
         /// sorting in accending order!
         arraysOfSlot.sort((a, b) => {
             return a - b;
@@ -44,7 +47,7 @@ class MemberSlots extends React.Component{
               setMember(arraysOfSlot[i]);
         }
 
-        const setOptions = (members) => {
+        const setOptions = (members) => {  
             for(var i=0; i<members.length; i++){
                    element.value = members[i].firstName + " " + members[i].lastName;
                    element.label = members[i].firstName + " " + members[i].lastName;
@@ -54,21 +57,48 @@ class MemberSlots extends React.Component{
        }
 
        setOptions(membersAccordingToSlot);
-
-       //default slot that came from server!
-       for(var i=0; i<members.length; i++){
-            var acustomer = {};
-            acustomer.customerId = members[i]['customerId'];
-            acustomer.slot = members[i]['slot'];
-            slot.push(acustomer);
-       }
+       this.setState({members: theMembers})
     }
 
     handleSelectChange = (member) => {
-       const groupMembers = this.props.groupDetails.response.members;
-       slot.map((element, index) => {
-          // if(element.)
-       });
+       const allGroupMembers = this.props.groupDetails.response.members;
+       const SetSlot = (aMember, memberSlot) => {
+            for(var i=0; i<groupMembers; i++){
+                if(element.firstName == aMember.firstName && element.lastName == aMember.lastName)
+                    groupMembers[i].slot = memberSlot;
+            } 
+       }
+
+       for(var i=0; i<allGroupMembers.length; i++){
+            if(allGroupMembers[i].firstName == member.value.split(' ')[0] && allGroupMembers[i].lastName == member.value.split(' ')[1]){
+                SetSlot(allGroupMembers[i], member.key);
+            }
+       }
+    }
+
+    SubmitNewSlots = () => {
+        const theSlots = [];
+ 
+        for(var i=0; i<groupMembers.length; i++){
+            var acustomer = {};
+            acustomer.customerId = groupMembers[i]['customerId'];
+            acustomer.slot = groupMembers[i]['slot'];
+            theSlots.push(acustomer);
+        }
+        
+        const data = {
+            groupId: this.props.groupDetails.response.id,
+            slots: theSlots
+        }
+        console.log(theSlots);
+        return;
+        this.props.dispatch(actions.EditSlot(this.state.user.token, data));
+    }
+
+    handleSubmit = () => {
+        event.preventDefault();
+        return;
+        this.SubmitNewSlots();
     }
 
     render(){
@@ -113,12 +143,12 @@ class MemberSlots extends React.Component{
                                                         <SlotSelection 
                                                            groupMembers={theMembers}
                                                            handleSelectChange={this.handleSelectChange()}
+                                                           value={}
                                                         />
                                             
                                                     </div>
                                                 </div>
-                                                
-                                              
+                        
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <center>

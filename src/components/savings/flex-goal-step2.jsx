@@ -202,10 +202,10 @@ class FlexGoal extends React.Component {
         this.setState({ "goalFrequency": frequency.value,
                         "goalFrequency" : frequency.label
               });
-        if (this.state.formsubmitted && frequency.value != "")
-            this.setState({ goalFrequencyInvalid: false })
+        if (this.state.formsubmitted && frequency.value !== "")
+            this.setState({ goalFrequencyInvalid: false });
 
-            if (frequency.value.toLowerCase() == "daily") {
+            if (frequency.value.toLowerCase() === "daily") {
           
                 // let {frequency, targetAmount, endDate} = this.state;
                  this.setState({
@@ -213,7 +213,7 @@ class FlexGoal extends React.Component {
     
                 })
             }
-            if (frequency.value.toLowerCase() == "weekly") {
+            if (frequency.value.toLowerCase() === "weekly") {
           
                 // let {frequency, targetAmount, endDate} = this.state;
                  this.setState({
@@ -221,7 +221,7 @@ class FlexGoal extends React.Component {
     
                 })
             }
-            if (frequency.value.toLowerCase() == "monthly") {
+            if (frequency.value.toLowerCase() === "monthly") {
           
                 // let {frequency, targetAmount, endDate} = this.state;
                  this.setState({
@@ -232,15 +232,15 @@ class FlexGoal extends React.Component {
     }
     handleSelectDebitableAccounts(account) {
         console.log('dss', account);
-        this.setState({ debitAccount: account })
+        this.setState({ debitAccount: account });
         if (this.state.isSubmitted) { 
-            if(account.length == 10)
+            if(account.length === 10)
             this.setState({ isAccountInvalid: false })
          }
     }
     checkAccountNumber() {
-        if (this.state.debitAccount.length != 10) {
-            this.setState({ isAccountInvalid: true })
+        if (this.state.debitAccount.length !== 10) {
+            this.setState({ isAccountInvalid: true });
             return true;
         }
     }
@@ -261,7 +261,7 @@ class FlexGoal extends React.Component {
             var data = {
                 ...this.props.flex_goal_step1.flex_step1_data.data
             };
-            console.log('tag', data)
+            console.log('tag', data);
 
             this.setState({
                 targetAmount:data.targetAmount,
@@ -271,12 +271,12 @@ class FlexGoal extends React.Component {
                 showInterests:data.showInterests,
             });
         }
-    }
+    };
 
     handleChange = (e) => {
         let name = e.target.name;
         this.setState({ [name]: e.target.value })
-    }
+    };
     
     onSubmit(event){
         event.preventDefault();

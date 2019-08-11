@@ -78,3 +78,28 @@ export const joinAGroup = (token, data) => {
     function success(response) { return {type:GROUPSAVINGSCONSTANT.JOIN_A_GROUP_SUCCESS, response} }
     function failure(error) { return {type:GROUPSAVINGSCONSTANT.JOIN_A_GROUP_ERROR, error} }
 };
+
+export const EditSlots = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.EDIT_SLOTS, "POST", data, SystemConstant.HEADER, false);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+            }) 
+            .catch(error => {
+                if(error.response.message){
+                    dispatch(failure(error.response.message.toString()));
+                }else{
+                    dispatch(failure('We are unable to create rotating group now!'));
+                }
+                // dispatch(failure(error.response.data.message.toString()));
+            });
+    };
+    
+    function request(request) { return {type:GROUPSAVINGSCONSTANT.EDIT_SLOTS, request} }
+    function success(response) { return {type:GROUPSAVINGSCONSTANT.EDIT_SLOTS_SUCCESS, response} }
+    function failure(error) { return {type:GROUPSAVINGSCONSTANT.EDIT_SLOTS_ERROR, error} }
+};
+

@@ -67,4 +67,25 @@ export function joinAGroup(state=[], action){
     }
 }
 
+export function EditSlots(state=[], action){
+    switch(action.type){
+        case GROUPSAVINGSCONSTANT.EDIT_SLOTS: 
+           return {
+               message: GROUPSAVINGSCONSTANT.EDIT_SLOTS,
+               data: action
+           }
+        case GROUPSAVINGSCONSTANT.EDIT_SLOTS_SUCCESS:
+           return {
+               message: GROUPSAVINGSCONSTANT.EDIT_SLOTS_SUCCESS,
+               data: action
+           }
+        case GROUPSAVINGSCONSTANT.EDIT_SLOTS_ERROR:
+           return {
+               message: GROUPSAVINGSCONSTANT.EDIT_SLOTS_ERROR,
+               data: action
+           }
+        default: 
+           return {... state}
+    }
+}
 

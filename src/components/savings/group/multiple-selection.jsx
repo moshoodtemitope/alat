@@ -8,11 +8,11 @@ export default (props) => {
                     return  <div className='col-sm-12'>
                                 <label>Slot {count}</label>
                                 <Select type="text" 
-                                     key={index}
+                                     key={index} 
                                      options={props.groupMembers}
                                      name={props.name}
                                      onChange={props.handleSelectChange}
-                                     value={props.value}
+                                     value='lssf'
                                 />
                             </div>          
         });

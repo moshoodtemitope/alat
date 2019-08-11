@@ -66,6 +66,85 @@
     padding-bottom: 25px;
 }
 
+.compContainer {
+    width: 100%;
+    background-color: transparent;
+    /*padding-top: 20px;*/
+    /*padding-bottom: 20px;*/
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.forDetailsComp {
+    margin-left: 0px;
+    margin-right: 0px;
+    position: absolute;
+    width: 100%;
+    top: 150px;
+}
+
+.row {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.forDetailsComp .upper {
+    margin-bottom: 2px;
+    font-weight: bold;
+    font-family: Proxima Nova;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0.168px;
+    color: #4D4D4D;
+}
+
+.forDetailsComp div {
+    width: 33%;
+}
+
+.forDetailsComp {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.compContainer .eachComp {
+    width: 330px;
+    height: 250px;
+    border-radius: 2%;
+    background-color: white;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    /* border: 1px solid black; */
+}
+
+.compContainer .eachComp .upper {
+    font-family: Proxima Nova;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0.168px;
+    color: #4D4D4D;
+    margin-bottom: 5px;
+}
+
+.compContainer .eachComp .lower {
+    font-family: Proxima Nova;
+    font-size: 10.4px;
+    line-height: 12px;
+    letter-spacing: 0.1248px;
+}
+
+#editSlots {
+    padding-top: 30px;
+    padding-bottom: 20px;
+    text-align: center;
+    font-family: Proxima Nova;
+    font-size: 12px;
+    line-height: 14px;
+    color: #444444;
+}
+
 #enterCode {
     padding: 20px 20px;
     font-size: 20px;
@@ -74,9 +153,148 @@
     margin-top: 30px;
 }
 
+/* .bottomDiscription {
+    display: flex;
+    flex-wrap: nowrap;
+    position: absolute;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+    top: 180px;
+} */
+
+.topCard {
+    display: flex;
+    flex-wrap: nowrap;
+    position: absolute;
+    padding-left: 15px;
+    border: 0.8px solid #F1F1F1;
+    width: 100%;
+}
+
+.topCard .left {
+    width: 80%;
+}
+
+.topCard .left .top {
+  color: #A90836;
+  width: 100%;
+  margin-bottom: 0px;
+  font-family: Proxima Nova;
+font-size: 8px;
+line-height: 10px;
+text-transform: uppercase;
+color: #A90836;
+padding-bottom: 5px;
+padding-top: 20px;
+font-weight: bold;
+}
+
+.topCard .left .bottom {
+    font-family: Proxima Nova;
+font-size: 12px;
+line-height: 14px;
+color: #4D4D4D;
+width: 100% !important;
+font-weight: bold;
+}
+
+
+.topCard .right {
+
+}
+
+/* .bottomDiscription .right {
+    width: 40%;
+    position: relative;
+} */
+
+#progressBarDashBoard {
+    padding-left: 15px;
+    padding-right: 15px;
+    position: absolute;
+    width: 100%;
+    top: 25px;
+}
+
 .joinButton button{
   justify-content: center !important;
 }
+
+.bottomDiscriptionDashBoard {
+    position: absolute;
+    top: 150px;
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+.bottomDiscriptionDashBoard .left p {
+    background: #F8E8E8;
+    border: 0.8px solid rgba(228, 226, 226, 0.172186);
+    box-sizing: border-box;
+    border-radius: 38px;
+}
+
+.bottomDiscriptionDashBoard .left {
+    width: 60%;
+}
+
+.bottomDiscriptionDashBoard .right {
+    width: 30%;
+}
+
+.bottomDiscriptionDashBoard .left p {
+    display: relative;
+    margin-top: 57px;
+    margin-left: 15px;
+    padding-left: 10px;
+}
+
+.bottomDiscriptionDashBoard .left #date {
+    font-family: Proxima Nova;
+    font-size: 10px;
+    line-height: 12px;
+    letter-spacing: 0.96px;
+    color: #4A4A4A;
+    margin-left: 20px;
+    font-weight: bold;
+}
+
+.bottomDiscriptionDashBoard .right {
+    position: absolute;
+    left: 250px;
+    top: 60px;
+    font-family: Proxima Nova;
+    font-size: 12px;
+    line-height: 14px;
+    color: #AB2656;
+    font-weight: bold;
+}
+
+.bottomDiscriptionDashBoard .left #message {
+    /* padding-left: 10px; */
+    font-family: Proxima Nova;
+    font-size: 10px;
+    line-height: 12px;
+    color: #000000;
+    mix-blend-mode: normal;
+    opacity: 0.36;
+    padding-left: 10px;
+}
+
+.bottomDiscriptionDashBoard .left #dot {
+    font-size: 70px;
+    color: #A90836 !important;
+    /* padding-left: 15px; */
+    position: absolute;
+    top: 0px;
+    z-index: 5;
+    left: 17px;
+}
+
 
 .butRight button {
     background-color: transparent;
@@ -84,7 +302,6 @@
     font-family: Proxima Nova;
     font-size: 16px;
     line-height: 19px;
-    /* identical to box height */
     text-align: center;
     color: #AB2656;
     width: 100%;
