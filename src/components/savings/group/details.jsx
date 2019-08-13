@@ -7,6 +7,10 @@ export default (props) => {
                 <p>{props.lefthead}</p>
                 <p>{props.leftBottom}</p>
             </div>
+            <div className='col-xs-6 middle'>
+                <p>{props.middleContent}</p>
+                <p>{props.middleContentButtom}</p>
+            </div>
             <div className='right col-xs-6'>
                 <p>{props.rightContent}</p>
                 <p>{props.rightContentBottom}</p>

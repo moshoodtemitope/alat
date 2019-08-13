@@ -203,9 +203,44 @@
       color: #FFFFFF;
       font-family:"proxima_novasemibold";
       font-size:18px;
-
-
-
+  }
+  .btn-position{
+      display: flex;
+      flex-direction: row;
+      margin: 5px;
+      justify-content: space-between;
+  ;
+  }
+  .btn-withdraw-goal{
+      /*margin-top: 40px;*/
+      background:#AB2656;
+      color:#ffffff;
+      display: inline-block;
+      border:none;
+      font-size: 1em;
+      cursor: pointer;
+      text-align: center;
+      padding-left: 11px;
+      min-width:150px;
+      box-shadow: 0px 4px 4px rgba(255, 255, 255, 0.25);
+      border-radius: 3px;
+      cursor: pointer;
+  }
+  .btn-top-up-goal{
+      background:#AB2656;
+      color:#ffffff;
+      display: inline-block;
+      border:none;
+      font-size: 1em;
+      cursor: pointer;
+      text-align: center;
+      padding-left: 11px;
+      min-width:150px;
+      box-shadow: 0px 4px 4px rgba(255, 255, 255, 0.25);
+      border-radius: 3px;
+  }
+  .col-sm-4{
+      border-bottom: 1px solid #AB2656;
   }
 
 

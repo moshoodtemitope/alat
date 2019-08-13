@@ -15,8 +15,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
  class submitFixedGoal extends Component {
      constructor(props){
          super(props);
-
-        this.state={
+         this.state={
             targetAmount:"",
             startDate:"",
             endDate:"",
@@ -26,8 +25,6 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
             debitAccount:"",
             GoalTypeId:6,
             frequencyId: 11,
-
-
         }
      }
 

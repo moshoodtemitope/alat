@@ -11,8 +11,7 @@ import { connect } from "react-redux";
 import {getCustomerGoalTransHistory} from '../../../redux/actions/savings/goal/get-customer-transaction-history.actions'
 import moment from 'moment';
 import ProgressBar from '../../savings/group/progress-bar';
-import savemoney from "../../../assets/img/save-money.svg";
-import * as util from "../../../shared/utils";
+import ViewGoalSummary from '../../savings/goal/view-goal-summary'
 
 
 
@@ -26,9 +25,6 @@ class GoalPlan extends React.Component {
         this.fetchCustomerTransHistoryGoals();
     }
 
-    componentDidMount() {
-        console.log('customer-goal'+this.props.customerGoalTransHistory)
-    }
     fetchCustomerTransHistoryGoals(){
         const { dispatch } = this.props;
         dispatch(getCustomerGoalTransHistory());
@@ -43,7 +39,8 @@ class GoalPlan extends React.Component {
                             <img className="goal-icon" src={calender} alt=''/>
                             <p className="flex-text">Fixed Goal</p>
                             <p className="info-text3">Save daily, weekly or monthly towards
-                                a target amount, earn 10% interest. No withdrawals allowed and you will lose your interest if you don't meet your target.</p>
+                                a target amount, earn 10% interest. No withdrawals allowed and you will lose your interest if you don't meet your target.
+                            </p>
                         </div>
                     </NavLink>
                     <NavLink to="/savings/flex-goal">
@@ -111,33 +108,37 @@ class GoalPlan extends React.Component {
                                                 discSpan={ "of"+"₦"+hist.amountSaved}
                                                 discBottomSib='Amount Saved'
                                                 discBottomRight={rounded}
-
                                             />
                                         </div>
                                         <div className='row forDetailsComp'>
                                             <div className="col-xs-4">
-                                                <p className="upper">N{hist.targetAmount}</p>
+                                                <p className="upper">₦{hist.targetAmount}</p>
                                                 <p className="lower">Weekly Savings</p>
                                             </div>
                                             <div className="col-xs-4">
-                                                <p className="upper">N{hist.interestEarned}</p>
+                                                <p className="upper">₦{hist.interestEarned}</p>
                                                 <p className="lower">Interest Gained</p>
                                             </div>
                                             <div className="col-xs-4">
-                                                <p className="upper">N{hist.interestAccrued}</p>
+                                                <p className="upper">₦{hist.interestAccrued}</p>
                                                 <p className="lower">Interest Accrued</p>
                                             </div>
                                         </div>
                                         <div className='bottomDiscriptionDashBoard'>
                                             <div className="left">
                                                 <div className="innerLeft">
-                                                    <p><span id="dot">.</span> <span id='message'>Next Payment</span> <span id="date">{ moment(hist.nextstandingDate).format('L')}</span></p>
+                                                    <p><span id="dot">.</span> <span id='message'>Next Payment</span> <span id="date">{moment(hist.nextstandingDate).format('L')}</span></p>
                                                 </div>
 
                                             </div>
                                             <div className="right">
-                                                <Link to={`/profile/${hist}`} className="btn btn-info">
-                                                    <p>View Details</p>
+                                                <Link to={{
+                                                    pathname:'/savings/view-goal-summary',
+                                                    state:{
+                                                        name:hist
+                                                    }
+                                                } }>
+                                                    <a>View Details</a>
                                                 </Link>
 
                                             </div>
@@ -183,15 +184,13 @@ class GoalPlan extends React.Component {
                                         
                                         <li><a href="#">Investments</a></li>
 
-                                        <li className="btn-create-new-goal"> { GoalTransHistory ? <a className="btn-alat m-t-20 ">Create a New Goal</a>  :null
-                                        }  </li>
 
 
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                        <div className="Home-container">
+                        <div className="row">
                             {this.renderGoalsElement(GoalTransHistory)}
                         </div>
                     </div>

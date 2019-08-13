@@ -41,6 +41,7 @@ import JoinedGroupSuccessfully from './savings/group/joined-group-successfully';
 import  CreateStashSuccessMessage from './savings/goal/create-stash-success';
 import GroupAnalyticsMini2 from './savings/group/group-analytics-mini2';
 import ParentDashBoard from './savings/group/parent-dashboard';
+import ViewGoalSummary from './savings/goal/view-goal-summary'
 
 
 // import MemberSlots from './savings/group/members-slot';
@@ -112,6 +113,8 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path="/savings/group/joingroup-success-message" authed={this.props.user} component={JoinedGroupSuccessfully} />
                     <PrivateRoute path="/savings/goal/create-stash-success-message" authed={this.props.user} component={CreateStashSuccessMessage} />
                     <PrivateRoute path='/savings/activityDashBoard' authed={this.props.user} component={ParentDashBoard} />
+                    <PrivateRoute path='/savings/view-goal-summary' authed={this.props.user} component={ViewGoalSummary} />
+
                     {/* <PrivateRoute path='/group-savings/edit-members-slots' authed={this.props.user} component={MemberSlots} /> */}
                 </Switch>
             </Router>

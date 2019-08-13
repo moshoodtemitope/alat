@@ -70,16 +70,12 @@ class CreateStashSuccessMessage extends React.Component {
                                                    id="autoSummary"/>
                                                 </div>
                                             </form>
-
-
-
-                                        </div>
-
-
                                        </div>
+
 
                                       </div>
 
+                                      </div>
                                 </div>
 
                             </div>

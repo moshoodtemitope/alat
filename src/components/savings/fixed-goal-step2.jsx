@@ -72,21 +72,21 @@ class FixedGoal extends React.Component {
             this.setState({ goalFrequencyInvalid: true });
             return true;
         }
-    }
+    };
     componentDidMount = () => {
         this.init();
-    }
+    };
     
   
 
     init = () => {
-        if (this.props.fixed_goal_step1.fixed_step1_status != fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS)
+        if (this.props.fixed_goal_step1.fixed_step1_status !== fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS)
             this.props.history.push("/savings/fixed-goal");
         else {
             var data = {
                 ...this.props.fixed_goal_step1.fixed_step1_data.data
             };
-            console.log('tag', data)
+            console.log('tag', data);
 
             this.setState({
                 targetAmount:util.formatAmount(data.targetAmount),
@@ -263,7 +263,7 @@ class FixedGoal extends React.Component {
         }
         
 
-        if (frequency.value.toLowerCase() == "daily") {
+        if (frequency.value.toLowerCase() === "daily") {
           
             // let {frequency, targetAmount, endDate} = this.state;
              this.setState({
@@ -271,7 +271,7 @@ class FixedGoal extends React.Component {
 
             })
         }
-        if(frequency.value.toLowerCase() == "weekly"){ 
+        if(frequency.value.toLowerCase() === "weekly"){
             this.setState({
                 showInterests:this.calculateWeekly(this.state.frequency,this.state.targetAmount,this.state.startDate,this.state.endDate),
 
@@ -280,7 +280,7 @@ class FixedGoal extends React.Component {
 
 
         }
-        if(frequency.value.toLowerCase()== "monthly"){ 
+        if(frequency.value.toLowerCase()=== "monthly"){
             this.setState({
                 showInterests:this.ComputeDebitAmount(this.state.frequency,this.state.targetAmount,this.state.startDate,this.state.endDate)
 
@@ -324,13 +324,13 @@ class FixedGoal extends React.Component {
     }
     gotoStep3 = () => {
         if (this.props.fixed_goal_step2)
-            if (this.props.fixed_goal_step2.fixed_step2_status == fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS_STEP2) {
+            if (this.props.fixed_goal_step2.fixed_step2_status === fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS_STEP2) {
                 return <Redirect to="/savings/fixed-goal-summary" />
             }
-    }
+    };
     goback =()=>{
         if(this.props.fixed_goal_step2)
-            if(this.props.fixed_goal_step2.fixed_step2_status == fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS_STEP2){
+            if(this.props.fixed_goal_step2.fixed_step2_status === fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS_STEP2){
                 return<Redirect to="/savings/fixed-goal"/>
             }
     }
