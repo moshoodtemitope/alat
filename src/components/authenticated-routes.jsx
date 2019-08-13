@@ -43,7 +43,7 @@ import GroupAnalyticsMini2 from './savings/group/group-analytics-mini2';
 import ParentDashBoard from './savings/group/parent-dashboard';
 import ViewGoalSummary from './savings/goal/view-goal-summary';
 import WithDrawFromGoal from './savings/goal/withdraw-from-goal';
-import TopUpGoal from './savings/goal/top-up-goal'
+import TopUpGoal from './savings/goal/Top-up-goal'
 
 
 // import MemberSlots from './savings/group/members-slot';

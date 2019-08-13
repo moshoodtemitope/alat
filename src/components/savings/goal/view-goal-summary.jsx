@@ -122,8 +122,8 @@ class ViewGroupSummary extends React.Component {
                                                 <div className='statContainer'>
                                                     <ProgressBar
                                                         discTopSpan="Goal Progress"
-                                                        discTopRight={details.status +"%"+" Completed"}
-                                                        percentage={details.status}
+                                                        discTopRight={details.percentageCompleted +"%"+" Completed"}
+                                                        percentage={details.percentageCompleted}
                                                         discBottom={"₦"+details.amountSaved}
                                                         discSpan={"of"+"₦"+details.targetAmount}
                                                         discBottomSib="Amount Saved"

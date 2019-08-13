@@ -148,7 +148,7 @@ class FixedGoal extends React.Component {
     }
     //  this method is to get the weekly interest value for every amount entered
     GetWeeklyFutureValue(debitAmount, annualInterestRate, days){
-        let futureValue = debitAmount;  
+        let futureValue = this.state.targetAmount;
         let dailyRate = (annualInterestRate * 100) / 36500;
         let interestAccrued = 0;
         for (let i = 1; i <= days; i++)
@@ -172,23 +172,19 @@ class FixedGoal extends React.Component {
     }
     // this method is to get the weekly interest value for every amount entered
     calculateDaily(){
-       
-        let days = null;
-        let res;
-        let finalInterest;
-        let amount= parseFloat(this.removeComma(this.state.showInterests));
-        let startDate = moment(this.state.startDate, 'DD MMMM, YYYY');
-        let enddate = moment(this.state.endDate, 'DD MMMM, YYYY');
-        // let date = moment(enddate, 'DD-MM-YYYY').add(res, 'days');
-        res = enddate.diff(startDate, 'days');
-        let months = Math.round((res/365) * 12);
-        let debitAmount = (amount/months).toFixed(2);
-        let debitValue = amount/this.getMonthsBetween(startDate, enddate);
-        finalInterest = this.GetDailyFutureValue(debitValue, 0.10, months);
-        this.interest = finalInterest;
-        this.showInterests = true;
-        this.frequencyAmount = (amount/months).toFixed(2);
-        return parseFloat(this.interest).toFixed(2);
+            let days =null;
+            let res;
+            if(this.state.targetAmount){
+                let amount=this.removeComma(this.state.targetAmount);
+
+                let dailycontribution = 7;
+                let ia = ((amount / 365) * 0.10 );
+                dailycontribution = 1 * ( ia - (0.10) *ia);
+               return this.interest =  parseFloat(dailycontribution).toFixed(2);
+
+
+            }
+
 
     }
     //this method is to get the weekly interest value for every amount entered
@@ -372,7 +368,7 @@ class FixedGoal extends React.Component {
                                       <div className="max-600">
                                        <div className="al-card no-pad">
                                        <h4 className="m-b-10 center-text hd-underline">Create a Fixed Goal</h4>
-                                       <p className="header-info">To achieve your target of <span style={{color:'#AB2656'}}>N{this.state.targetAmount} <span style={{color:'#444444'}}>by</span>  Dec 12,2018</span></p>
+                                       <p className="header-info">To achieve your target of <span style={{color:'#AB2656'}}>N{this.state.targetAmount} <span style={{color:'#444444'}}>by</span> {moment(this.state.endDate).format("d, MMMM, YYYY")}</span></p>
 
                                             <form onSubmit={this.onSubmit}>
                                             

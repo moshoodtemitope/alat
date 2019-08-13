@@ -337,6 +337,7 @@ class FixedGoal extends React.Component {
                                                             dropdownMode="select"
                                                             useShortMonthInDropdown
                                                             dropdownMode="select"
+                                                            minDate={new Date()}
                                                             showWeekNumbers
                                                             onChange={this.handleStartDatePicker}
                                                             value={this.state.startDate}
