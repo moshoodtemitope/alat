@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 
-class WithDrawGoal extends Component {
+class WithdrawFromGoal extends Component {
     render() {
         return (
             <div>
-                
+                <p>Top up goal</p>
+
             </div>
         );
     }
 }
 
-export default WithDrawGoal;
+export default WithdrawFromGoal;

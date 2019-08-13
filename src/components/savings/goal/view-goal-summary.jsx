@@ -136,8 +136,14 @@ class ViewGroupSummary extends React.Component {
                                                          rightContent={moment(details.nextstandingDate).format("L")}
                                                          rightContentBottom="Next Payment"/>
                                                     <div className="btn-position">
-                                                        <a href="#" className="btn-withdraw-goal btn-sm border-btn">Withdraw</a>
-                                                        <a href="#"  className="btn-top-up-goal btn-sm border-btn">Top Up Goal</a>
+                                                        <NavLink to="/savings/withdraw-from-goal">
+                                                         <a href="#" className="btn-withdraw-goal btn-sm border-btn">Withdraw</a>
+                                                         </NavLink>
+
+                                                         <NavLink to="/savings/top-up-goal">
+                                                         <a href="#"  className="btn-top-up-goal btn-sm border-btn">Top Up Goal</a>
+                                                        </NavLink>
+
                                                      </div>
 
 
