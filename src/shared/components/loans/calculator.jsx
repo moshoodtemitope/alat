@@ -148,9 +148,9 @@ class LoanEstimator extends React.Component {
                                     {this.props.alert && this.props.alert.message &&
                                         <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                                     }
-                                    <p>How much do you want to borrow? (max N20million)</p>
+                                    <p>How much do you want to borrow? (max {util.mapCurrency('NGN')}{util.formatAmountNoDecimal(this.props.maxAmount)})</p>
                                     <div className={this.state.LoanAmountInvalid ? "input-ctn form-error" : "input-ctn"}>
-                                        <span className="input-span">N</span>
+                                        <span className="input-span">{util.mapCurrency('NGN')}</span>
                                         <input value={this.state.LoanAmountText} className="input-borderless"
                                             onChange={this.handleAmount}
                                             maxLength={10}
@@ -170,7 +170,7 @@ class LoanEstimator extends React.Component {
                             <div className="col-5 al-card-left">
                                 <div className="inner-div m-b-20">
                                     <p className="m-b-0">Estimated monthly repayment</p>
-                                    <h3 className="text-white m-b-55">N{util.formatAmount(this.state.repaymentAmount)}</h3>
+                                    <h3 className="text-white m-b-55">{util.mapCurrency('NGN')}{util.formatAmount(this.state.repaymentAmount)}</h3>
                                     <span className="al-text">Please note that the loan is granted based on your
                                         credit score rating.
                                         Other relivant information can be provided here.

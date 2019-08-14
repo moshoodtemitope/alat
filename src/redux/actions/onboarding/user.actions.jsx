@@ -1,6 +1,7 @@
 import {ApiService} from "../../../services/apiService";
 import {routes} from "../../../services/urls";
 import {alertActions} from "../alert.actions";
+import {SystemConstant} from "../../../shared/constants";
 import {history} from './../../../_helpers/history';
 import {handleError, modelStateErrorHandler} from './../../../shared/utils';
 import {USER_REGISTER_FETCH, USER_REGISTER_SAVE, userConstants, BVN_VERIFICATION_PENDING, 
@@ -199,5 +200,38 @@ function register(user, action) {
     function fetch(user) { return { type: USER_REGISTER_FETCH, user } }
     function save(user) { return { type: USER_REGISTER_SAVE, user } }
 }
+
+
+export const uploadDocument =(token, data, action)=>{
+    const requestHeaders =  Object.assign({},SystemConstant.HEADER);
+    delete  requestHeaders['Content-Type'];
+    delete requestHeaders['Accept'];  
+    requestHeaders['alat-token'] =  token;
+    requestHeaders['Content-Type'] =  false;
+      return (dispatch) => {
+          let consume = ApiService.request(routes.DOCUMENT_UPLOAD,
+               "POST", data, requestHeaders);
+          dispatch(request(consume));
+          return consume
+              .then(response => {
+                  //TODO: edit localDB accounts object
+                //   dispatch(success(response.data, data));
+                dispatch(success(response.data));
+              })
+              .catch(error => {
+                 // console.log("error in here");
+                 // dispatch(success(response.data, request));
+                   dispatch(failure(modelStateErrorHandler(error)));
+                   dispatch(alertActions.error(modelStateErrorHandler(error)));
+                  // throw(error);
+              });
+      };
+  
+      function request(request) { return { type: action.pending, request } }
+    //   function success(response, request) { return { type: loanOnboardingConstants.LOAN_SALARYTRANSACTION_SUCCESS, data: { response : response, request: request } }}
+      function success(response) { return { type: action.success, data: { response : response } }}
+      function failure(error) { return { type: action.failure, error } }
+  }
+
 
 
