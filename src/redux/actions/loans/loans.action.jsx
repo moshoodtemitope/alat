@@ -103,6 +103,14 @@ export const getEmployers =(token, data)=>{
     function failure(error) { return { type: loanConstants.LOAN_EMPLOYER_FAILURE, error } }
 }
 
+export const saveWorkDetails =(data)=>{
+    return (dispatch) =>{
+        dispatch(workDetails(data));
+    }
+
+    function workDetails(data){ return { type: loanConstants.LOAN_REQUEST_STATEMENT_SUCCESS, data : data } }
+}
+
 export const loanHistory =(token)=>{
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {

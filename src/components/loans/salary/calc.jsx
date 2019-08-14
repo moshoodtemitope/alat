@@ -46,7 +46,7 @@ class LoanCalculator extends React.Component {
     goToNextPage=()=>{
         if(this.props.loan_apply)
         if(this.props.loan_apply.loan_apply_status == loanConstants.LOAN_APPLY_SUCCESS){
-            this.props.history.push("/loans/salary/detail"); //update path
+            this.props.history.push("/loans/salary/employer"); //update path
         }
     }
 

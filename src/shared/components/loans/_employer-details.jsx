@@ -75,15 +75,15 @@ class EmployerDetails extends React.Component {
                 });
             });
         }
-        else {
-            this.setState({ [e]: { file: '', name: '' } });
-            this.props.dispatch(alertActions.error("You need to upload a work id"));
-        }
+        // else {
+        //     this.setState({ [e]: { file: '', name: '' } });
+        //     this.props.dispatch(alertActions.error("You need to upload a work id"));
+        // }
     }
 
     onFrontUpload = (picture) => {
-        if (this.props.workid_front.loan_frontId_status !== loanConstants.LOAN_WORkID_FRONT_PENDING 
-            || this.props.workid_front.loan_frontId_status !== loanConstants.LOAN_WORkID_FRONT_SUCCESS )
+        if (this.props.workid_front.loan_frontId_status != loanConstants.LOAN_WORkID_FRONT_PENDING 
+            || this.props.workid_front.loan_frontId_status != loanConstants.LOAN_WORkID_FRONT_SUCCESS )
             this.setState({
                 actions: {
                     pending: loanConstants.LOAN_WORkID_FRONT_PENDING,
@@ -91,7 +91,7 @@ class EmployerDetails extends React.Component {
                     failure: loanConstants.LOAN_WORkID_FRONT_FAILURE
                 }
             }, () => {
-                this.onIDUpload(picture, "workIDBack");
+                this.onIDUpload(picture, "workIDFront");
             })
     }
 
@@ -109,8 +109,8 @@ class EmployerDetails extends React.Component {
     }
 
     onBackUpload = (picture) => {
-        if (this.props.workid_back.loan_backId_status !== loanConstants.LOAN_WORkID_BACK_PENDING 
-            || this.props.workid_back.loan_backId_status !== loanConstants.LOAN_WORkID_BACK_SUCCESS )
+        if (this.props.workid_back.loan_backId_status != loanConstants.LOAN_WORkID_BACK_PENDING 
+            || this.props.workid_back.loan_backId_status != loanConstants.LOAN_WORkID_BACK_SUCCESS )
         this.setState({
             actions: {
                 pending: loanConstants.LOAN_WORkID_BACK_PENDING,
@@ -224,11 +224,11 @@ class EmployerDetails extends React.Component {
             workIdFrontUploadInvalid = true;
         }
 
-        if(this.state.workIDBack.file!==''){
+        if(this.state.workIDBack.file!=''){
             this.setState({workIdBackUploadInvalid :false});
             workIdBackUploadInvalid = false;
         }
-        if(this.state.workIDFront.file!==''){
+        if(this.state.workIDFront.file!=''){
             this.setState({workIdFrontUploadInvalid :false});
             workIdFrontUploadInvalid = false;
         }
@@ -333,7 +333,8 @@ class EmployerDetails extends React.Component {
                 //BankId: this.state.bankCode,
                 EmployerName: this.state.selectedEmployer.label,
                 EmployerIndustryId: this.state.selectedIndustry.value,
-                EmployerId: this.state.selectedEmployer.value
+                EmployerId: this.state.selectedEmployer.value,
+                Page: "WorkDetails"
             };
             if (data.EmployerName == "Others") {
                 data.EmployerName = this.state.employerName;
@@ -341,7 +342,8 @@ class EmployerDetails extends React.Component {
             }
             //let url = `accountNumber=${this.state.accountNumber}&bankId=${this.state.bankCode}&employersName=${this.state.employerName}`;
             //this.props.dispatch(onboardingActions.requestStatement(this.props.loan_step3.loan_step3_data.data.response.token, url));
-            this.props.dispatch(onboardingActions.requestStatement(this.props.token, data));
+            //this.props.dispatch(onboardingActions.requestStatement(this.props.token, data));
+            this.props.dispatch(loanActions.saveWorkDetails(data));
         }
     }
 
@@ -358,14 +360,7 @@ class EmployerDetails extends React.Component {
     gotoNextPage = () => {
         if (this.props.loan_reqStat)
             if (this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS) {
-                var data = {
-                    ...this.props.loan_reqStat.loan_reqStat_data.data
-                };
-                if (data.response.Response.NextScreen == 0) { return (<Redirect to={this.props.ticketUrl} />) }
-                //this.props.history.push("/loan/ticket");
-
-                if (data.response.Response.NextScreen == 2) return (<Redirect to={this.props.salaryEntryUrl} />)
-                //this.props.history.push("/loan/salary-entry");
+              return (<Redirect to={this.props.forwardUrl} />)
             }
     }
 
@@ -386,7 +381,7 @@ class EmployerDetails extends React.Component {
         let frontp = "frontside";
         return (
             <Fragment>
-                {this.gotoNextPage()}
+             {this.gotoNextPage()}
                 <div className="col-sm-12">
                     <div className="max-500">
                         <div className="loan-header-text text-center">
@@ -425,7 +420,7 @@ class EmployerDetails extends React.Component {
                                         </div>
                                     }
 
-                                    <div className="input-ctn">
+                                    <div className={this.state.workIdFrontUploadInvalid ? "input-ctn form-error" : "input-ctn"}>
                                         <label>Work ID (Front)</label>
                                         <ImageUploader
                                             disbaled={true}
@@ -436,19 +431,20 @@ class EmployerDetails extends React.Component {
                                             label=''
                                             className="selfieBtn"
                                             buttonText={this.returnOnFrontUploadText()}
+                                            onChange={this.onFrontUpload}
                                             imgExtension={['.jpg', '.png', '.jpeg']}s
                                             maxFileSize={5242880}
                                         />
                                     </div>
 
-                                    <div className="input-ctn">
+                                    <div className={this.state.workIdBackUploadInvalid ? "input-ctn form-error" : "input-ctn"}>
                                         <label>Work ID (Back)</label>
                                         <ImageUploader
                                             withIcon={false}
                                             singleImage={true}
                                             withPreview={false}
                                             name="backID"
-                                            label=''
+                                            label=''  
                                             className="selfieBtn"
                                             buttonText={this.returnOnBackUploadText()}
                                             onChange={this.onBackUpload}
@@ -481,7 +477,7 @@ class EmployerDetails extends React.Component {
 }
 
 function mapStateToProps(state) {
-    return {
+    return {   
         alert: state.alert,
         //loan_step2: state.loanOnboardingReducerPile.loanOnboardingStep2,
         loan_val_otp: state.loanOnboardingReducerPile.loanOnboardingValidateOTP,
@@ -498,9 +494,3 @@ function mapStateToProps(state) {
     };
 }
 export default connect(mapStateToProps)(EmployerDetails);
-
-
-
-
-
-

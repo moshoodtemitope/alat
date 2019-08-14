@@ -28,23 +28,16 @@ class SalaryDetails extends React.Component {
         super(props);
         this.state = {
             user: JSON.parse(localStorage.getItem("user")),
-            employerName: "",
             accountNumber: "",
             isTermChecked: "",
             bankCode: "",
             isAccepted: false,
             selectedBank: null,
             isSubmitted: false,
-            selectedIndustry: { label: "", value: "" },
-            EmployerList: [],
-            selectedEmployer: { label: "", value: "" },
-            employerActionFired: false,
+            employerDetails: {},
 
-            employerNameInvalid: false,
             accountNumberInvalid: false,
             selectedBankInvalid: false,
-            IndustryNameInvalid: false,
-            employNameOthersInvalid: false
         }
     }
     componentDidMount = () => {
@@ -52,45 +45,19 @@ class SalaryDetails extends React.Component {
     }
 
     init = () => {
-        this.getIndustries();
         this.fetchBanks();
-        // if (this.props.loan_step3)
-        //     if (this.props.loan_step3.loan_step3_status == loanOnboardingConstants.LOAN_STEP3_SUCCESS) {
-        //         this.fetchBanks();
-        //         // this.setState({ FirstName :this.props.user_detail.loan_userdetails_data.data.FirstName });   
-        //     } else this.props.history.push("/loan/bvn-info");
-        // else { this.props.history.push("/loan/bvn-info") }
-    }
-
-    getIndustries = () => {
-        this.props.dispatch(loanActions.getIndustries(this.state.user.token));
-    }
-
-    getEmployers = (industryId) => {
-        this.props.dispatch(loanActions.getEmployers(this.state.user.token, industryId));
-    }
-
-    handleIndustryChange = (Industry) => {
-        this.setState({ selectedIndustry: Industry, employerActionFired: true },
-            () => { this.getEmployers(Industry.value); })
-        this.setState({ selectedEmployer: { value: "", label: "" }, EmployerList: [] });
-        if (Industry.label != "")
-            this.setState({ IndustryNameInvalid: false })
-    }
-
-    handleEmployerChange = (Employer) => {
-        this.setState({ selectedEmployer: Employer });
-        if (Employer.value != "") {
-            this.setState({ employerNameInvalid: false });
+        if (this.props.loan_reqStat)
+        if (this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS) {
+           let data = {
+            ...this.props.loan_reqStat.loan_reqStat_data.data
+           };
+           this.setState({ employerDetails: data});
         }
     }
 
     validateFields = () => {
         var acctNumberInvalid = false;
-        var employerNameInvalid = false;
         var selectedBankInvalid = false;
-        var industryInvalid = false;
-        var otherEmployerInvalid = false;
         if (this.state.accountNumber.length != 10) {
             this.setState({ accountNumberInvalid: true })
             acctNumberInvalid = true;
@@ -99,42 +66,6 @@ class SalaryDetails extends React.Component {
         if (this.state.accountNumber.length == 10) {
             this.setState({ accountNumberInvalid: false })
             acctNumberInvalid = false;
-        }
-
-        //selected Industry validation
-        if (this.state.selectedIndustry.label.length == 0 || this.state.selectedIndustry.label == "") {
-            this.setState({ IndustryNameInvalid: true });
-            industryInvalid = true
-        }
-
-        if (this.state.selectedIndustry.label.length != 0) {
-            this.setState({ IndustryNameInvalid: false });
-            industryInvalid = false
-        }
-
-        //selected Employer Validation
-        if (this.state.selectedEmployer.label.length == 0 || this.state.selectedEmployer.label == "") {
-            this.setState({ employerNameInvalid: true })
-            employerNameInvalid = true;
-        }
-
-        if (this.state.selectedEmployer.label.length != 0) {
-            this.setState({ employerNameInvalid: false })
-            employerNameInvalid = false;
-        }
-
-        if (this.state.selectedEmployer.label == "Others" && this.state.employerName.length == 0 || this.state.employerName == "") {
-            this.setState({ employNameOthersInvalid: true })
-            otherEmployerInvalid = true;
-        }
-
-        if (this.state.selectedEmployer.label == "Others" && this.state.employerName.length > 0) {
-            this.setState({ employNameOthersInvalid: false })
-            otherEmployerInvalid = false;
-        }
-        if (this.state.selectedEmployer.label != "Others") {
-            this.setState({ employNameOthersInvalid: false })
-            otherEmployerInvalid = false;
         }
 
         if (this.state.bankCode == "") {
@@ -146,7 +77,7 @@ class SalaryDetails extends React.Component {
             selectedBankInvalid = false;
         }
 
-        if (acctNumberInvalid || industryInvalid || otherEmployerInvalid || employerNameInvalid || selectedBankInvalid)
+        if (acctNumberInvalid  || selectedBankInvalid)
             return true;
         else return false;
     }
@@ -198,73 +129,6 @@ class SalaryDetails extends React.Component {
         }
     }
 
-    renderIndustries = (props) => {
-        let industStatus = this.props.industries.loan_industries_status
-        switch (industStatus) {
-            case loanConstants.LOAN_GETINDUSTRIES_SUCCESS:
-                let industriesList = this.props.industries.loan_industries_data.response.Response;
-                // var  = [];
-                for (var industry in industriesList) {
-                    // console.log(industry);
-                    industriesOptions.push({ value: industriesList[industry].Id, label: industriesList[industry].Name });
-                }
-                return (<Select
-                    options={industriesOptions}
-                    onChange={this.handleIndustryChange}
-                />);
-            case loanConstants.LOAN_GETINDUSTRIES_PENDING:
-                return (<select disabled>
-                    <option>Fetching Industries...</option>
-                </select>
-                );
-            case loanConstants.LOAN_GETINDUSTRIES_FAILURE:
-                return (<Fragment>
-                    <select className="error-field" disabled>
-                        <option>Unable to load Industries</option>
-                    </select>
-                    <a className="cta-link to-right" onClick={this.getIndustries()}>Try again</a>
-                </Fragment>)
-        }
-    }
-
-    renderEmployer = (props) => {
-        let employerStatus = this.props.employer.loan_employer_status;
-        switch (employerStatus) {
-            case loanConstants.LOAN_EMPLOYER_SUCCESS:
-                let employerList = this.props.employer.loan_employer_data.response.Response;
-                var _employerList = [];
-                for (var employer in employerList) {
-                    _employerList.push({ value: employerList[employer].Id, label: employerList[employer].Name });
-                }
-                _employerList.push({ value: employerList.length + 1, label: "Others" })
-                if (this.state.employerActionFired) {
-                    this.setState({ EmployerList: _employerList, employerActionFired: false })
-                }
-                return (
-                    <Fragment>
-                        <Select
-                            options={_employerList}
-                            onChange={this.handleEmployerChange}
-                        />
-                    </Fragment>)
-            case loanConstants.LOAN_EMPLOYER_PENDING:
-                return (<select disabled>
-                    <option>Fetching employers...</option>
-                </select>
-                );
-            case loanConstants.LOAN_EMPLOYER_FAILURE:
-                return (<Fragment>
-                    <select className="error-field" disabled>
-                        <option>Unable to load Industries</option>
-                    </select>
-                    <a className="cta-link to-right" onClick={this.getEmployers(this.state.selectedIndustry.value)}>Try again</a>
-                </Fragment>);
-            default: return (<select className="" disabled>
-                <option>select industry first</option>
-            </select>)
-        }
-    }
-
     onSubmit = (e) => {
         e.preventDefault();
         this.setState({ isSubmitted: true });
@@ -275,16 +139,8 @@ class SalaryDetails extends React.Component {
             var data = {
                 AccountNumber: this.state.accountNumber,
                 BankId: this.state.bankCode,
-                EmployerName: this.state.selectedEmployer.label,
-                EmployerIndustryId: this.state.selectedIndustry.value,
-                EmployerId: this.state.selectedEmployer.value
+                ...this.state.employerDetails
             };
-            if (data.EmployerName == "Others") {
-                data.EmployerName = this.state.employerName;
-                data.EmployerId = "999";
-            }
-            //let url = `accountNumber=${this.state.accountNumber}&bankId=${this.state.bankCode}&employersName=${this.state.employerName}`;
-            // this.props.dispatch(onboardingActions.requestStatement(this.props.loan_step3.loan_step3_data.data.response.token, url));
             this.props.dispatch(onboardingActions.requestStatement(this.props.token, data));
         }
     }
@@ -294,13 +150,7 @@ class SalaryDetails extends React.Component {
     }
 
     handleInputChange = (e) => {
-        if (e.target.name == "employerName") {
-            this.setState({ employerName: e.target.value }, () => {
-                if (this.state.isSubmitted)
-                    this.validateFields();
-            });
-        }
-        else if (e.target.name == "accountNumber") {
+         if (e.target.name == "accountNumber") {
             if (/^\d+$/.test(e.target.value)) {
                 this.setState({ accountNumber: e.target.value }, () => {
                     if (this.state.isSubmitted)
@@ -326,22 +176,20 @@ class SalaryDetails extends React.Component {
                 var data = {
                     ...this.props.loan_reqStat.loan_reqStat_data.data
                 };
+                if(data.response){
                 if (data.response.Response.NextScreen == 0) { return (<Redirect to={this.props.ticketUrl} />) }
                 //this.props.history.push("/loan/ticket");
 
                 if (data.response.Response.NextScreen == 2) return (<Redirect to={this.props.salaryEntryUrl} />)
+                }
                 //this.props.history.push("/loan/salary-entry");
             }
     }
 
-    testSelectedEmployer = () => {
-        if (this.state.selectedEmployer == null) {
-            return false
-        } else { return true; }
-    }
+  
 
     render() {
-        const { employerName, accountNumber, employerNameInvalid, IndustryNameInvalid, employNameOthersInvalid, accountNumberInvalid, selectedEmployer,
+        const { employerName, accountNumber, accountNumberInvalid, selectedEmployer,
             selectedBankInvalid } = this.state;
         let props = this.props;
         return (
@@ -359,62 +207,6 @@ class SalaryDetails extends React.Component {
                                     <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                                 }
                                 <form onSubmit={this.onSubmit}>
-                                    <div className={IndustryNameInvalid ? "input-ctn form-error" : "input-ctn"}>
-                                        <label>Industry</label>
-                                        {this.renderIndustries()}
-                                        {IndustryNameInvalid &&
-                                            <div className="text-danger">You have to select an Industry</div>
-                                        }
-                                    </div>
-                                    <div className={employerNameInvalid ? "input-ctn form-error" : "input-ctn"}>
-                                        <label>Employer</label>
-                                        {this.renderEmployer()}
-                                        {employerNameInvalid &&
-                                            <div className="text-danger">You have to select an Employer or select Others so you can type in your employers name</div>
-                                        }
-                                    </div>
-                                    {this.testSelectedEmployer() &&
-                                        selectedEmployer.label == "Others" &&
-                                        <div className={employNameOthersInvalid ? "input-ctn form-error" : "input-ctn"}>
-                                            <label>Employer Name if Others</label>
-                                            <input type="text" name="employerName"
-                                                value={employerName} onChange={this.handleInputChange} />
-                                            {employNameOthersInvalid &&
-                                                <div className="text-danger">A valid employer name is required</div>
-                                            }
-                                        </div>
-                                    }
-
-                                    <div className="input-ctn">
-                                        <label>Work ID (Front)</label>
-                                        <ImageUploader
-                                            withIcon={false}
-                                            singleImage={true}
-                                            withPreview={false}
-                                            label=''
-                                            className="selfieBtn"
-                                            buttonText='Click here to upload work ID (Front)'
-                                            onChange={this.onProfileUpload}
-                                            imgExtension={['.jpg', '.png', '.jpeg']}
-                                            maxFileSize={5242880}
-                                        />
-                                    </div>
-
-                                    <div className="input-ctn">
-                                        <label>Work ID (Back)</label>
-                                        <ImageUploader
-                                            withIcon={false}
-                                            singleImage={true}
-                                            withPreview={false}
-                                            label=''
-                                            className="selfieBtn"
-                                            buttonText='Click here to upload work ID (Back)'
-                                            onChange={this.onProfileUpload}
-                                            imgExtension={['.jpg', '.png', '.jpeg']}
-                                            maxFileSize={5242880}
-                                        />
-                                    </div>
-
                                     <div className={accountNumberInvalid ? "input-ctn form-error" : "input-ctn"}>
                                         <label>Account Number</label>
                                         <input type="text" name="accountNumber" maxLength={10} value={accountNumber}
