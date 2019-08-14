@@ -176,7 +176,11 @@ const appReducer = combineReducers({
     createRotatingGroupSavings: rotatingSavings.createRotatingSavings,
     rotatingGroupDetails: rotatingSavings.rotatingGroupDetails,
     joinAGroup: rotatingSavings.joinAGroup,
-    editSlot: rotatingSavings.EditSlots
+    editSlot: rotatingSavings.EditSlots,
+    getGroupSavingsEsusu: rotatingSavings.GetGroupsEsusu,
+    editGroupEsusu: rotatingSavings.editGroupEsusu,
+    deleteGroupEsusu: rotatingSavings.deleteGroupEsusu,
+    // pauseGroupEsusu: rotatingSavings.pauseGroupEsusu
 });
 
 //export defualt appReducer;

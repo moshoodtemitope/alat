@@ -24,7 +24,6 @@ class RotatingGroupCreated extends React.Component {
            groupId: this.props.createdGroupSavings.response.id
        }
        console.log(data);
-       //return;
        this.props.dispatch(actions.rotatingGroupDetails(this.state.user.token, data))
     }
 

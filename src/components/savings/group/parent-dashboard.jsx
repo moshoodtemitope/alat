@@ -11,16 +11,113 @@ import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
 import ProgressBar from './progress-bar';
+// import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
+import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 
 class ParentDashBoard extends React.Component {
     constructor(props){
         super(props);
         this.state={
             user: JSON.parse(localStorage.getItem("user")),
-
+            clicked: false
         }
     }
+
+    // GetGroups = () => {
+    //     let groups = this.props.groups.response.map((element, index) => {
+    //          return  <div className="eachComp">
+    //                         <div className='topCard'>
+    //                                 <div className="left">
+    //                                     <p className='top'>Your Group Target</p>
+    //                                     <p className='bottom'>{element.purpose}</p>
+    //                                 </div>
+    //                                 <div className="right">
+    //                                     <i></i>
+    //                                 </div>
+    //                         </div>
+    //                         <div id="progressBarDashBoard">
+    //                         <ProgressBar 
+    //                         percentage={element.groupStatus}
+    //                         discBottom={element.yourSavedAmount}
+    //                         discSpan={element.targetAmount}
+    //                         discBottomSib='Amount Saved'
+    //                         discBottomRight={element.groupStatus + '%' + ' ' + 'Completed'}
+    //                         />
+    //                         </div>
+    //                         <div className='bottomDisCriptionTray'>
+    //                             <div className='left'>
+    //                                 <p>{element.memberCount}</p>
+    //                                 <p>Members</p>
+    //                             </div>
+    //                             <div className='right'>
+    //                                 <p id={element.id} onClick={this.GoToGroup}>View Details</p>
+    //                             </div>
+    //                         </div>
+    //                </div>
+    //     });
+
+    //     return groups;
+    // }
+
+    // GetRotatingGroup = () => {
+    //     let rotatingGroups = this.props.groupSavingsEsusu.response.map((element, index) => {
+    //         return <div className="eachComp">
+    //                     <div className='topCard'>
+    //                             <div className="left">
+    //                                 <p className='top'>Your Rotating Savings Group</p>
+    //                                 <p className='bottom'>{element.name}</p>
+    //                             </div>
+    //                             <div className="right">
+    //                                 <i></i>
+    //                             </div>
+    //                     </div>
+    //                     <div id="progressBarDashBoard">
+    //                         <ProgressBar 
+    //                         percentage={element.status}
+    //                         discBottom='N20,000'
+    //                         discSpan={"N" + element.potTotal}
+    //                         discBottomSib='PotTotal'
+    //                         discBottomRight={element.status + "%" + " " + 'Completed'}
+    //                         />
+    //                     </div>
+                        
+    //                     <div className='bottomDisCriptionTray'>
+    //                         <div className='left'>
+    //                             <p>{element.memberUpNext}</p>
+    //                             <p>Up Next</p>
+    //                         </div>
+    //                         <div className='right'>
+    //                             <p id={element.id} onClick={this.GoToRotatingGroup}>View Details</p>
+    //                         </div>
+    //                     </div>
+    //                </div>
+    //     });
+
+    //     return rotatingGroups;
+    // }
+
+    // GoToGroup = (event) => {
+    //    let groupId = parseInt(event.target.id);
+    //    let data = {
+    //        groupId: groupId,
+    //        parent: 'parent'
+    //    }
+
+    //    this.props.dispatch(actions.groupDetails(this.state.user.token, data));
+    //   // this.props.dispatch(actions.customerGroup(this.state.user.token, data));
+    // }
+
+    // GoToRotatingGroup = (event) => {
+    //     let groupId = parseInt(event.target.id);
+    //     let data = {
+    //         groupId: groupId,
+    //         parent: 'parent'
+    //     }
     
+    //     this.props.dispatch(actions1.rotatingGroupDetails(this.state.user.token, data));
+    // }
+
+
     render() {
         return (
             <Fragment>
@@ -35,13 +132,13 @@ class ParentDashBoard extends React.Component {
                                     <div className="sub-tab-nav">
                                         <ul>
                                         <NavLink to='/savings/choose-goal-plan'>
-                                            <li><a href="#">Goals</a></li>
+                                            <li><a id='parentGoal'>Goals</a></li>
                                         </NavLink>
                                         <NavLink to="/savings/goal/group-savings-selection">
-                                            <li><a href="#">Group Savings</a></li>
+                                            <li><a className="active">Group Savings</a></li>
                                         </NavLink>
                                             
-                                        <li><a href="#">Investments</a></li>
+                                        <li><a>Investments</a></li>
 
                                         </ul>
                                     </div>
@@ -49,12 +146,26 @@ class ParentDashBoard extends React.Component {
                             </div>
                            
                                 <div className="row">
-                                    <div className="">
-                                    
+                    
+                                    <div className="bodyDetails">
+                                          <div className="row smallnavtop">
+                                                    <ul>
+                                                        <NavLink to='/savings/group/save-towards-a-target'>
+                                                             <li>Create A Group Savings Goal</li>
+                                                        </NavLink>
+                                                        <NavLink to='/savings/group/join-a-group'>
+                                                             <li>Join A Group</li>
+                                                        </NavLink>
+                                                        
+                                                        
+                                                    </ul>  
+                                          </div>
                                           <h4 className="m-b-10 center-text hd-underline">Automate Group Savings</h4>
 
                                           <div className="compContainer">
-                                               <div className="eachComp">
+                                               {/* {this.GetRotatingGroup()} */}
+                                               {/* {this.GetGroups()} */}
+                                               {/* <div className="eachComp">
                                                     <div className='topCard'>
                                                             <div className="left">
                                                                 <p className='top'>FIXED GOAL</p>
@@ -71,430 +182,19 @@ class ParentDashBoard extends React.Component {
                                                       discSpan='N200,000'
                                                       discBottomSib='Amount Saved'
                                                       discBottomRight='45% completed'
-                                                      
                                                       />
                                                    </div>
-                                                   <div className='row forDetailsComp'>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N2000</p>
-                                                          <p className="lower">Weekly Savings</p>
-                                                      </div>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N1,234</p>
-                                                          <p className="lower">Interest Gained</p>
-                                                      </div>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N234</p>
-                                                          <p className="lower">Interest Accrued</p>
-                                                      </div>
-                                                      
-                                                   </div>
-
-                                                   <div className='bottomDiscriptionDashBoard'>
-                                                       <div className="left">
-                                                            <div className="innerLeft">
-                                                                <p><span id="dot">.</span> <span id='message'>Next Payment</span> <span id="date">12/08/2017</span></p>
-                                                            </div>
-                                                            
+                                                   <div className='bottomDisCriptionTray'>
+                                                       <div className='left'>
+                                                           <p>20</p>
+                                                           <p>Members</p>
                                                        </div>
-                                                       <div className="right">
-                                                                <p>View Details</p>
+                                                       <div className='right'>
+                                                           <p>View Details</p>
                                                        </div>
                                                    </div>
                                                </div>
-
-                                               <div className="eachComp">
-                                                    <div className='topCard'>
-                                                            <div className="left">
-                                                                <p className='top'>FIXED GOAL</p>
-                                                                <p className='bottom'>New MacBook Pro</p>
-                                                            </div>
-                                                            <div className="right">
-                                                                <i></i>
-                                                            </div>
-                                                    </div>
-                                                   <div id="progressBarDashBoard">
-                                                      <ProgressBar 
-                                                      percentage="50" 
-                                                      discBottom='N20,000'
-                                                      discSpan='N200,000'
-                                                      discBottomSib='Amount Saved'
-                                                      discBottomRight='45% completed'
-                                                      
-                                                      />
-                                                   </div>
-                                                   <div className='row forDetailsComp'>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N2000</p>
-                                                          <p className="lower">Weekly Savings</p>
-                                                      </div>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N1,234</p>
-                                                          <p className="lower">Interest Gained</p>
-                                                      </div>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N234</p>
-                                                          <p className="lower">Interest Accrued</p>
-                                                      </div>
-                                                      
-                                                   </div>
-
-                                                   <div className='bottomDiscriptionDashBoard'>
-                                                       <div className="left">
-                                                            <div className="innerLeft">
-                                                                <p><span id="dot">.</span> <span id='message'>Next Payment</span> <span id="date">12/08/2017</span></p>
-                                                            </div>
-                                                            
-                                                       </div>
-                                                       <div className="right">
-                                                                <p>View Details</p>
-                                                       </div>
-                                                   </div>
-                                               </div>
-
-                                               <div className="eachComp">
-                                                    <div className='topCard'>
-                                                            <div className="left">
-                                                                <p className='top'>FIXED GOAL</p>
-                                                                <p className='bottom'>New MacBook Pro</p>
-                                                            </div>
-                                                            <div className="right">
-                                                                <i></i>
-                                                            </div>
-                                                    </div>
-                                                   <div id="progressBarDashBoard">
-                                                      <ProgressBar 
-                                                      percentage="50" 
-                                                      discBottom='N20,000'
-                                                      discSpan='N200,000'
-                                                      discBottomSib='Amount Saved'
-                                                      discBottomRight='45% completed'
-                                                      
-                                                      />
-                                                   </div>
-                                                   <div className='row forDetailsComp'>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N2000</p>
-                                                          <p className="lower">Weekly Savings</p>
-                                                      </div>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N1,234</p>
-                                                          <p className="lower">Interest Gained</p>
-                                                      </div>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N234</p>
-                                                          <p className="lower">Interest Accrued</p>
-                                                      </div>
-                                                      
-                                                   </div>
-
-                                                   <div className='bottomDiscriptionDashBoard'>
-                                                       <div className="left">
-                                                            <div className="innerLeft">
-                                                                <p><span id="dot">.</span> <span id='message'>Next Payment</span> <span id="date">12/08/2017</span></p>
-                                                            </div>
-                                                            
-                                                       </div>
-                                                       <div className="right">
-                                                                <p>View Details</p>
-                                                       </div>
-                                                   </div>
-                                               </div>
-
-                                               <div className="eachComp">
-                                                    <div className='topCard'>
-                                                            <div className="left">
-                                                                <p className='top'>FIXED GOAL</p>
-                                                                <p className='bottom'>New MacBook Pro</p>
-                                                            </div>
-                                                            <div className="right">
-                                                                <i></i>
-                                                            </div>
-                                                    </div>
-                                                   <div id="progressBarDashBoard">
-                                                      <ProgressBar 
-                                                      percentage="50" 
-                                                      discBottom='N20,000'
-                                                      discSpan='N200,000'
-                                                      discBottomSib='Amount Saved'
-                                                      discBottomRight='45% completed'
-                                                      
-                                                      />
-                                                   </div>
-                                                   <div className='row forDetailsComp'>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N2000</p>
-                                                          <p className="lower">Weekly Savings</p>
-                                                      </div>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N1,234</p>
-                                                          <p className="lower">Interest Gained</p>
-                                                      </div>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N234</p>
-                                                          <p className="lower">Interest Accrued</p>
-                                                      </div>
-                                                      
-                                                   </div>
-
-                                                   <div className='bottomDiscriptionDashBoard'>
-                                                       <div className="left">
-                                                            <div className="innerLeft">
-                                                                <p><span id="dot">.</span> <span id='message'>Next Payment</span> <span id="date">12/08/2017</span></p>
-                                                            </div>
-                                                            
-                                                       </div>
-                                                       <div className="right">
-                                                                <p>View Details</p>
-                                                       </div>
-                                                   </div>
-                                               </div>
-
-                                               <div className="eachComp">
-                                                    <div className='topCard'>
-                                                            <div className="left">
-                                                                <p className='top'>FIXED GOAL</p>
-                                                                <p className='bottom'>New MacBook Pro</p>
-                                                            </div>
-                                                            <div className="right">
-                                                                <i></i>
-                                                            </div>
-                                                    </div>
-                                                   <div id="progressBarDashBoard">
-                                                      <ProgressBar 
-                                                      percentage="50" 
-                                                      discBottom='N20,000'
-                                                      discSpan='N200,000'
-                                                      discBottomSib='Amount Saved'
-                                                      discBottomRight='45% completed'
-                                                      
-                                                      />
-                                                   </div>
-                                                   <div className='row forDetailsComp'>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N2000</p>
-                                                          <p className="lower">Weekly Savings</p>
-                                                      </div>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N1,234</p>
-                                                          <p className="lower">Interest Gained</p>
-                                                      </div>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N234</p>
-                                                          <p className="lower">Interest Accrued</p>
-                                                      </div>
-                                                      
-                                                   </div>
-
-                                                   <div className='bottomDiscriptionDashBoard'>
-                                                       <div className="left">
-                                                            <div className="innerLeft">
-                                                                <p><span id="dot">.</span> <span id='message'>Next Payment</span> <span id="date">12/08/2017</span></p>
-                                                            </div>
-                                                            
-                                                       </div>
-                                                       <div className="right">
-                                                                <p>View Details</p>
-                                                       </div>
-                                                   </div>
-                                               </div>
-
-                                               <div className="eachComp">
-                                                    <div className='topCard'>
-                                                            <div className="left">
-                                                                <p className='top'>FIXED GOAL</p>
-                                                                <p className='bottom'>New MacBook Pro</p>
-                                                            </div>
-                                                            <div className="right">
-                                                                <i></i>
-                                                            </div>
-                                                    </div>
-                                                   <div id="progressBarDashBoard">
-                                                      <ProgressBar 
-                                                      percentage="50" 
-                                                      discBottom='N20,000'
-                                                      discSpan='N200,000'
-                                                      discBottomSib='Amount Saved'
-                                                      discBottomRight='45% completed'
-                                                      
-                                                      />
-                                                   </div>
-                                                   <div className='row forDetailsComp'>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N2000</p>
-                                                          <p className="lower">Weekly Savings</p>
-                                                      </div>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N1,234</p>
-                                                          <p className="lower">Interest Gained</p>
-                                                      </div>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N234</p>
-                                                          <p className="lower">Interest Accrued</p>
-                                                      </div>
-                                                      
-                                                   </div>
-
-                                                   <div className='bottomDiscriptionDashBoard'>
-                                                       <div className="left">
-                                                            <div className="innerLeft">
-                                                                <p><span id="dot">.</span> <span id='message'>Next Payment</span> <span id="date">12/08/2017</span></p>
-                                                            </div>
-                                                            
-                                                       </div>
-                                                       <div className="right">
-                                                                <p>View Details</p>
-                                                       </div>
-                                                   </div>
-                                               </div>
-
-                                               <div className="eachComp">
-                                                    <div className='topCard'>
-                                                            <div className="left">
-                                                                <p className='top'>FIXED GOAL</p>
-                                                                <p className='bottom'>New MacBook Pro</p>
-                                                            </div>
-                                                            <div className="right">
-                                                                <i></i>
-                                                            </div>
-                                                    </div>
-                                                   <div id="progressBarDashBoard">
-                                                      <ProgressBar 
-                                                      percentage="50" 
-                                                      discBottom='N20,000'
-                                                      discSpan='N200,000'
-                                                      discBottomSib='Amount Saved'
-                                                      discBottomRight='45% completed'
-                                                      
-                                                      />
-                                                   </div>
-                                                   <div className='row forDetailsComp'>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N2000</p>
-                                                          <p className="lower">Weekly Savings</p>
-                                                      </div>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N1,234</p>
-                                                          <p className="lower">Interest Gained</p>
-                                                      </div>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N234</p>
-                                                          <p className="lower">Interest Accrued</p>
-                                                      </div>
-                                                      
-                                                   </div>
-
-                                                   <div className='bottomDiscriptionDashBoard'>
-                                                       <div className="left">
-                                                            <div className="innerLeft">
-                                                                <p><span id="dot">.</span> <span id='message'>Next Payment</span> <span id="date">12/08/2017</span></p>
-                                                            </div>
-                                                            
-                                                       </div>
-                                                       <div className="right">
-                                                                <p>View Details</p>
-                                                       </div>
-                                                   </div>
-                                               </div>
-
-                                               <div className="eachComp">
-                                                    <div className='topCard'>
-                                                            <div className="left">
-                                                                <p className='top'>FIXED GOAL</p>
-                                                                <p className='bottom'>New MacBook Pro</p>
-                                                            </div>
-                                                            <div className="right">
-                                                                <i></i>
-                                                            </div>
-                                                    </div>
-                                                   <div id="progressBarDashBoard">
-                                                      <ProgressBar 
-                                                      percentage="50" 
-                                                      discBottom='N20,000'
-                                                      discSpan='N200,000'
-                                                      discBottomSib='Amount Saved'
-                                                      discBottomRight='45% completed'
-                                                      
-                                                      />
-                                                   </div>
-                                                   <div className='row forDetailsComp'>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N2000</p>
-                                                          <p className="lower">Weekly Savings</p>
-                                                      </div>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N1,234</p>
-                                                          <p className="lower">Interest Gained</p>
-                                                      </div>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N234</p>
-                                                          <p className="lower">Interest Accrued</p>
-                                                      </div>
-                                                      
-                                                   </div>
-
-                                                   <div className='bottomDiscriptionDashBoard'>
-                                                       <div className="left">
-                                                            <div className="innerLeft">
-                                                                <p><span id="dot">.</span> <span id='message'>Next Payment</span> <span id="date">12/08/2017</span></p>
-                                                            </div>
-                                                            
-                                                       </div>
-                                                       <div className="right">
-                                                                <p>View Details</p>
-                                                       </div>
-                                                   </div>
-                                               </div>
-
-                                               <div className="eachComp">
-                                                    <div className='topCard'>
-                                                            <div className="left">
-                                                                <p className='top'>FIXED GOAL</p>
-                                                                <p className='bottom'>New MacBook Pro</p>
-                                                            </div>
-                                                            <div className="right">
-                                                                <i></i>
-                                                            </div>
-                                                    </div>
-                                                   <div id="progressBarDashBoard">
-                                                      <ProgressBar 
-                                                      percentage="50" 
-                                                      discBottom='N20,000'
-                                                      discSpan='N200,000'
-                                                      discBottomSib='Amount Saved'
-                                                      discBottomRight='45% completed'
-                                                      
-                                                      />
-                                                   </div>
-                                                   <div className='row forDetailsComp'>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N2000</p>
-                                                          <p className="lower">Weekly Savings</p>
-                                                      </div>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N1,234</p>
-                                                          <p className="lower">Interest Gained</p>
-                                                      </div>
-                                                      <div className="col-xs-4">
-                                                          <p className="upper">N234</p>
-                                                          <p className="lower">Interest Accrued</p>
-                                                      </div>
-                                                      
-                                                   </div>
-
-                                                   <div className='bottomDiscriptionDashBoard'>
-                                                       <div className="left">
-                                                            <div className="innerLeft">
-                                                                <p><span id="dot">.</span> <span id='message'>Next Payment</span> <span id="date">12/08/2017</span></p>
-                                                            </div>
-                                                            
-                                                       </div>
-                                                       <div className="right">
-                                                                <p>View Details</p>
-                                                       </div>
-                                                   </div>
-                                               </div>
-                                            
+                                             */}
                                             </div>
                                           </div>
                                     </div>
@@ -507,6 +207,13 @@ class ParentDashBoard extends React.Component {
     }
 }
 
-export default ParentDashBoard;
+function mapStateToProps(state){
+    return {
+        groupSavingsEsusu: state.getGroupSavingsEsusu.data,
+        groups: state.customerGroup.data
+    }
+ }
+
+export default connect(mapStateToProps)(ParentDashBoard);
 
 

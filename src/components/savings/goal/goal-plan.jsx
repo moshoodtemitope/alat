@@ -8,16 +8,43 @@ import graph from '../../../assets/img/graph.svg';
 import stash from '../../../assets/img/stash.svg';
 import '../savings.css';
 import {NavLink, Route} from "react-router-dom";
+import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
+import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
+import { connect } from 'react-redux';
+import {history} from '../../../_helpers/history';
 
 class GoalPlan extends React.Component {
-    // constructor(props){
-    //    super(props);
-    // }
-    // redirectToGroupSavings = () => {
-    //     console.log('whislslslsl')
-    //     this.props.push("/savings/goal/group-savings-selection");
-    //    // return <Redirect to="/savings/goal/group-savings-selection"/>
-    // }
+    constructor(props){
+       super(props);
+       this.state = {
+          user: JSON.parse(localStorage.getItem("user"))
+       }
+    }
+
+    componentDidMount = () => {
+        this.CheckGroupSavingsAvailability();
+        this.CheckRotatingSavingsAvailability();
+    }
+
+    CheckRotatingSavingsAvailability = () => {
+        this.props.dispatch(actions1.GetGroupsEsusu(this.state.user.token, null));
+    }
+
+    CheckGroupSavingsAvailability = () => {
+        this.props.dispatch(actions.customerGroup(this.state.user.token, null));
+    }
+
+    NavigateToGroupSavings = () => {
+        //console.log('Navigating')
+        let groupSavings = Object.keys(this.props.groups.response); //returns an array
+        console.log(groupSavings.length);
+        let rotatingSavings = Object.keys(this.props.groupSavingsEsusu.response); //returns an array
+        if(groupSavings.length != 0 || rotatingSavings.length != 0){
+            history.push('/savings/activityDashBoard');
+            return;
+        }
+        history.push('/savings/goal/group-savings-selection');
+    }
 
     render() {
         return (
@@ -33,9 +60,9 @@ class GoalPlan extends React.Component {
                                 <div className="sub-tab-nav">
                                     <ul>
                                         <li><a href="" className="active">Goals</a></li>
-                                        <NavLink to='/savings/goal/group-savings-selection'>
-                                            <li><a class="forGroupLink">Group Savings</a></li>
-                                        </NavLink>
+                                        {/* <NavLink to='/savings/goal/group-savings-selection'> */}
+                                            <li onClick={this.NavigateToGroupSavings}><a class="forGroupLink">Group Savings</a></li>
+                                        {/* </NavLink> */}
                                         
                                         <li><a href="#">Investments</a></li>
                                     </ul>
@@ -75,4 +102,11 @@ class GoalPlan extends React.Component {
         );
     }
 }
-export default GoalPlan;
+
+function mapStateToProps(state){
+   return {
+       groupSavingsEsusu: state.getGroupSavingsEsusu.data,
+       groups: state.customerGroup.data
+   }
+}
+export default connect(mapStateToProps)(GoalPlan);
