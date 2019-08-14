@@ -146,3 +146,51 @@ export function LoanHistoryReducer(state = {}, action) {
             };
     }
 }
+
+export function WorkIdFrontReducer(state = {}, action) {
+    switch (action.type) {
+        case loanConstants.LOAN_WORkID_FRONT_SUCCESS:
+            return {
+                loan_frontId_status: loanConstants.LOAN_WORkID_FRONT_SUCCESS,
+                loan_frontId_data: action
+            };
+        case loanConstants.LOAN_WORkID_FRONT_PENDING:
+            return {
+                loan_frontId_status: loanConstants.LOAN_WORkID_FRONT_PENDING,
+                loan_frontId_data: action
+            };
+        case loanConstants.LOAN_WORkID_FRONT_FAILURE:
+            return {
+                loan_frontId_status: loanConstants.LOAN_WORkID_FRONT_FAILURE,
+                loan_frontId_data: action
+            };
+        default:
+            return{
+                ...state,
+            };
+    }
+}
+
+export function WorkIdBackReducer(state = {}, action) {
+    switch (action.type) {
+        case loanConstants.LOAN_WORkID_BACK_SUCCESS:
+            return {
+                loan_backId_status: loanConstants.LOAN_WORkID_BACK_SUCCESS,
+                loan_backId_data: action
+            };
+        case loanConstants.LOAN_WORkID_BACK_PENDING:
+            return {
+                loan_backId_status: loanConstants.LOAN_WORkID_BACK_PENDING,
+                loan_backId_data: action
+            };
+        case loanConstants.LOAN_WORkID_BACK_FAILURE:
+            return {
+                loan_backId_status: loanConstants.LOAN_WORkID_BACK_FAILURE,
+                loan_backId_data: action
+            };
+        default:
+            return{
+                ...state,
+            };
+    }
+}

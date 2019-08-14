@@ -20,7 +20,10 @@ export const SystemConstant = {
         identity: 'Identity',
         passport: 'Passport',
         utility: 'Utility',
-        residentPermit: 'ResidentPermit'
+        residentPermit: 'ResidentPermit',
+        workid: 'WorkId',
+        workidBack: 'WorkIdBack',
+        otherIdentityType: 'Others'
     },
     RELATIONS: [{
         'Name': 'Father'},

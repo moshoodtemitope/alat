@@ -13,7 +13,7 @@ class ScoreResult extends React.Component {
 		super(props);
 		this.state = {
 			user: JSON.stringify(localStorage.getItem("user")),
-			loanDetails:{}
+			loanDetails: {}
 		}
 	}
 
@@ -27,15 +27,16 @@ class ScoreResult extends React.Component {
 			if (this.props.score_card_A.loan_scoreA_status != loanOnboardingConstants.LOAN_SCORECARD_ANSWER_PENDING) {
 				//this.props.gotoPreviousPageMethod();// this.props.history.push("/loan/card-result");
 				// this.props.history.push(this.props.backwardUrl);
-				
+
 				var data = {
 					...this.props.score_card_A.loan_scoreA_data.data.response.Response
 				}
+				console.log(data);
 				this.setState({ loanDetails: data });
 			}
 	}
 
-	doneClick=()=>{
+	doneClick = () => {
 		this.props.dispatch(actions.clearLoanOnboardingStore());
 		this.props.doneClick();
 	}
@@ -48,49 +49,55 @@ class ScoreResult extends React.Component {
 
 	render() {
 		return (
-			
-				<div className="col-sm-12">
-					<div className="max-460">
-						<div className="loan-header-text text-center">
-							<h4 className="text-black">Score Card</h4>
-						</div>
-						<div className="al-card no-pad">
-							<div className="transfer-ctn no-pad unset-pad">
-								<div className={this.returnScoreCardSuccessStatus() ? "col-sm-12 upper-line-success" : "col-sm-12 upper-line-failure"}></div>
-								<div className="result-msg">
-									
-									<p>Dear {this.state.user.fullName}</p>
-											{this.returnScoreCardSuccessStatus() && <Fragment><p>Congratulations!!! you have been granted a loan of <b>{util.formatAmount(this.state.loanDetails.LoanAmountGranted)}</b></p>
-											<p>Click Accept to proceed</p></Fragment>}
 
-											{!this.returnScoreCardSuccessStatus() && <Fragment><p>Apologies!!! loan was not granted</p>
-											<p>Click Done to proceed</p></Fragment>}
-								</div>
-							</div>
-						</div>
-						{this.returnScoreCardSuccessStatus() && <div className="row">
-							<div className="col-sm-6">
-								<input type="button" value="Accept"
-									className="btn-alat  m-b-20 text-center" />
-							</div>
-							<div className="col-sm-6">
-								<input type="button" value="Decline"
-									className="btn-alat  m-b-20 text-center btn-alat-outline grey" />
-							</div>
-						</div>}
-						{!this.returnScoreCardSuccessStatus() && <div className="row">
-							<div className="col-sm-12">
-								<center>
-									<input type="button" value="Done" onClick={this.doneClick}
-										className="btn-alat  m-b-20 text-center btn-alat-outline grey" />
-								</center>
-							</div>
-						</div>}
-
-
+			<div className="col-sm-12">
+				<div className="max-460">
+					<div className="loan-header-text text-center">
+						<h4 className="text-black">Score Card Result</h4>
 					</div>
+					<div className="al-card no-pad">
+						<div className="transfer-ctn no-pad unset-pad">
+							<div className={this.returnScoreCardSuccessStatus() ? "col-sm-12 upper-line-success" : "col-sm-12 upper-line-failure"}></div>
+							<div className="result-msg">
+
+								<p>Dear {this.state.user.fullName}</p>
+								{this.returnScoreCardSuccessStatus() && <Fragment><p>Congratulations!!! your loan have been granted.View Details Below </p>
+									<p><b>Loan Amount:{util.mapCurrency("NGN")} : {this.state.loanDetails.LoanAmountGranted}</b>
+									<br/>
+										<b>Loan Tenure: {this.state.loanDetails.LoanTenure} Months</b>
+										<br/>
+										<b>Monthly Repayment: : {this.state.loanDetails.MonthlyRepaymentAmount}</b>
+									</p>
+									<p>Click Accept to proceed</p></Fragment>}
+
+								{!this.returnScoreCardSuccessStatus() && <Fragment><p>Apologies!!! loan was not granted</p>
+									<p>Click Done to proceed</p></Fragment>}
+							</div>
+						</div>
+					</div>
+					{this.returnScoreCardSuccessStatus() && <div className="row">
+						<div className="col-sm-6">
+							<input type="button" value="Accept"
+								className="btn-alat  m-b-20 text-center" />
+						</div>
+						<div className="col-sm-6">
+							<input type="button" value="Decline"
+								className="btn-alat  m-b-20 text-center btn-alat-outline grey" />
+						</div>
+					</div>}
+					{!this.returnScoreCardSuccessStatus() && <div className="row">
+						<div className="col-sm-12">
+							<center>
+								<input type="button" value="Done" onClick={this.doneClick}
+									className="btn-alat  m-b-20 text-center btn-alat-outline grey" />
+							</center>
+						</div>
+					</div>}
+
+
 				</div>
-			
+			</div>
+
 		)
 	}
 }

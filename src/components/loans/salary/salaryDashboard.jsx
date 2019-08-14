@@ -55,7 +55,7 @@ class LoansDashboard extends React.Component {
         if (this.props.loan_current && this.props.loan_history)
             if (this.props.loan_current.loan_current_status == loanConstants.LOAN_CURRENT_SUCCESS && 
                 this.props.loan_history.loan_history_status == loanConstants.LOAN_HISTORY_SUCCESS) {
-                    if(this.props.loan_history.loan_history_data.response.Response.length == 0 
+                    if(this.props.loan_history.loan_history_data.response.Response == null 
                         && this.props.loan_current.loan_current_data.response.Response ==null)
                         {
                             this.props.history.push('/loans/salary/calc');
@@ -66,15 +66,17 @@ class LoansDashboard extends React.Component {
     returnPastLoans = () => {
         if (this.props.loan_history)
             if (this.props.loan_history.loan_history_status == loanConstants.LOAN_HISTORY_SUCCESS) {
-                var data = [
-                    ...this.props.loan_history.loan_history_data.response.Response
-                    //..this.state.LoanHistory
-                ];
-                if (data.length >= 1){
-                    return (<Fragment>
-                        {this.renderLoanList(data)}
-                    </Fragment>);
-                } else return(<Fragment><span class="grey-text big">You dont have Past Loans</span>   </Fragment>)
+                if(this.props.loan_history.loan_history_data.response.Response != null){
+                    var data = [
+                        ...this.props.loan_history.loan_history_data.response.Response
+                        //..this.state.LoanHistory
+                    ];
+                    if (data.length >= 1){
+                        return (<Fragment>
+                            {this.renderLoanList(data)}
+                        </Fragment>);
+                }
+                } else return(<Fragment><span className="grey-text big">You dont have Past Loans</span>   </Fragment>)
             }
     }
 
@@ -145,7 +147,7 @@ class LoansDashboard extends React.Component {
                             <h4 className="red-text m-b-20">Current Loan</h4>
                             {currentLoan != null && <div className="shd-box seg">
                                 <div className="header">
-                                    <h3 className="red-text">N{currentLoan.AmountRemaining}
+                                    <h3 className="red-text">{util.mapCurrency("NGN")}{util.formatAmount(currentLoan.AmountRemaining)}
                                         <span className="text-grey-span">Balance</span>
                                     </h3>
                                 </div>
@@ -194,9 +196,9 @@ class LoansDashboard extends React.Component {
                                 </div>
                             </div>}
                             {currentLoan == null && <div className="shd-box seg empty">
-                                {this.returnCurrentLoanPendingStatus() == loanConstants.LOAN_CURRENT_SUCCESS && <span class="grey-text big">You dont have a current loan!</span>}
-                                {this.returnCurrentLoanPendingStatus() == loanConstants.LOAN_CURRENT_PENDING && <span class="grey-text big">Loading...</span>}
-                                {this.returnCurrentLoanPendingStatus() == loanConstants.LOAN_CURRENT_FAILURE && <span class="grey-text big"><a onClick={this.getCurrentLoan} style={{cursor : "pointer"}}>Click to try again</a></span>}
+                                {this.returnCurrentLoanPendingStatus() == loanConstants.LOAN_CURRENT_SUCCESS && <span className="grey-text big">You dont have a current loan!</span>}
+                                {this.returnCurrentLoanPendingStatus() == loanConstants.LOAN_CURRENT_PENDING && <span className="grey-text big">Loading...</span>}
+                                {this.returnCurrentLoanPendingStatus() == loanConstants.LOAN_CURRENT_FAILURE && <span className="grey-text big"><a onClick={this.getCurrentLoan} style={{cursor : "pointer"}}>Click to try again</a></span>}
                             </div>}
                             <input type="button" disabled={currentLoan == null} value="Liquidate Current Loan" className="btn-alat btn-block" />
                             <input type="button" value="Apply For Loan" onClick={() => this.props.history.push("/loans/salary/calc")}
