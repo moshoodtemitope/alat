@@ -381,7 +381,7 @@ class VirtualCards extends React.Component {
                                                                                 <div className="input-ctn inputWrap">
                                                                                     <center>
                                                                                         <button type="submit" onClick={()=>this.setState({showNewCard: true})}   className="btn-alat m-t-10 m-b-20 text-center">Proceed</button>
-                                                                                        <div> <a className="back-cta" onClick={()=>this.setState({isStep1Done:false})}>Back</a> </div>
+                                                                                        <div> <a href="" className="back-cta" onClick={()=>this.setState({isStep1Done:false})}>Back</a> </div>
                                                                                        
                                                                                     </center>
                                                                                 </div>
