@@ -10,9 +10,16 @@
     font-size: 14px;
     margin-bottom: 20px;
 }
+.nocards-icon {
+    width: 70px;
+    margin: 20px 0;
+}
 .back-cta{
-    color: #AB2656;
-    text-decoration: underline;
+    color: #AB2656!important;
+    text-decoration: underline!important;
+    &:hover{
+        cursor: pointer;
+    }
 }
 .conversion-msg {
     color: #AB2656;

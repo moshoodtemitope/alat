@@ -110,7 +110,9 @@ const loanOnboardingReducer = combineReducers({
 })
 
 const alatCardsReducer = combineReducers({
-    getVirtualCards: alatCards.geCurrentVirtualCardsRequest  
+    getVirtualCards: alatCards.geCurrentVirtualCardsRequest ,
+    sendVCNewCardinfo: alatCards.sendVCNewCardinfo ,
+
 })
 
 const appReducer = combineReducers({

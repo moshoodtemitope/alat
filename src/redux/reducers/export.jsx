@@ -29,7 +29,8 @@ import { fundAccountReducer, getTokenizedCardsReducer,
 import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingVerifyBVNReducer,
      loanOnboardingStep3Reducer, loanOnboardingValidateOTPReducer} from './loan-onboarding.reducer';
 
-import { geCurrentVirtualCardsRequest} from './alatcards.reducer'
+import { geCurrentVirtualCardsRequest,
+         sendVCNewCardinfo} from './alatcards.reducer'
 
 export const onboarding = {
     userRegistrationRequest,
@@ -97,5 +98,6 @@ export const fundAccount={
 }
 
 export const alatCards={
-    geCurrentVirtualCardsRequest
+    geCurrentVirtualCardsRequest,
+    sendVCNewCardinfo
 }

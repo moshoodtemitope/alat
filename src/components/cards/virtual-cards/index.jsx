@@ -3,6 +3,7 @@ import React, { Component, Fragment } from 'react';
 import {Link, NavLink, Route} from 'react-router-dom';
 import { connect } from "react-redux";
 import VirtualCards from "./virtual-cards";
+import TopUpVirtualCards from "./topup-card";
 import DeleteCard from "./delete-card";
 import TransactionHistory from "./transaction-history";
 import LiquidateCard from "./liquidate-card";
@@ -18,8 +19,8 @@ class VirtualCardsContainer extends Component {
     }
 
     componentDidMount() {
-     
     }
+    
    render() {
        return(
            <Fragment>
@@ -28,6 +29,7 @@ class VirtualCardsContainer extends Component {
 
                 {this.props.children}
                 <Route exact path='/virtual-cards' render={(props) => <VirtualCards {...props} />} />
+                <Route exact path='/virtual-cards/topup' render={(props) => <TopUpVirtualCards {...props} />} />
                 <Route exact path='/virtual-cards/delete' render={(props) => <DeleteCard {...props} />} />
                 <Route exact path='/virtual-cards/history' render={(props) => <TransactionHistory {...props} />} />
                 <Route exact path='/virtual-cards/liquidate' render={(props) => <LiquidateCard {...props} />} />
