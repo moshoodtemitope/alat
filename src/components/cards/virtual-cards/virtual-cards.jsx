@@ -72,7 +72,7 @@ class VirtualCards extends React.Component {
     postNewVirtualCardDInfo(newVirtualCardData){
         const {dispatch} = this.props;
         // console.log('erorrr', payload, this.state.user.token)
-        dispatch(sendNewVirtualCardInfo(newVirtualCardData, this.state.user.token))
+        dispatch(sendNewVirtualCardInfo(newVirtualCardData, this.state.user.token,false))
     }
 
     handleAlatPinChange(pin) {

@@ -5,26 +5,17 @@ import {Fragment} from "react";
 import {connect} from "react-redux";
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
-import * as utils from '../../../shared/utils';
-import AlatPinInput from '../../../shared/components/alatPinInput';
 import Modal from 'react-responsive-modal';
 import {Textbox} from "react-inputs-validation";
-import "./../cards.scss";
 import whitelogo from "../../../assets/img/white-logo.svg"; 
 import {getCurrentVirtualCard,
-        topUpVirtualCard
 } from "../../../redux/actions/cards/cards.actions";
-import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
 
 import { FETCH_CURRENTCARD_SUCCESS,
     FETCH_CURRENTCARD_PENDING,
-    FETCH_CURRENTCARD_FAILURE,
-   SEND_TOPUP_DATA_SUCCESS,
-   SEND_TOPUP_DATA_PENDING,
-   SEND_TOPUP_DATA_FAILURE
-} from "../../../redux/constants/cards/cards.constants";
+    FETCH_CURRENTCARD_FAILURE} from "../../../redux/constants/cards/cards.constants";
 
-class TopUpVirtualCards extends React.Component {
+class VirtualCardDetails extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -36,10 +27,6 @@ class TopUpVirtualCards extends React.Component {
             isStep1Done: false,
             isAccountInvalid: false,
         };
-
-        this.getCurrentVirtualCards             = this.getCurrentVirtualCards.bind(this);
-        this.handleAlatPinChange                = this.handleAlatPinChange.bind(this);
-        this.handleSelectDebitableAccounts      = this.handleSelectDebitableAccounts.bind(this);
 
         
     }
@@ -57,22 +44,6 @@ class TopUpVirtualCards extends React.Component {
         }
     }
 
-    validatePinAndAccount(payload){
-        if(payload.Pin.length==4){
-            this.setState({stage2Error: false, cardPayload: payload});
-            
-            this.postVirtualCardTopUpInfo(payload);
-        }else{
-            this.setState({stage2Error: true, stage2ErrorMsg:'Enter a Valid ALAT Pin'});
-        }
-    }
-
-    postVirtualCardTopUpInfo(topUpVirtualCardData){
-        const {dispatch} = this.props;
-        // console.log('erorrr', payload, this.state.user.token)
-        dispatch(topUpVirtualCard(topUpVirtualCardData, this.state.user.token, false))
-    }
-
     
     getCurrentVirtualCards(){
         const { dispatch } = this.props;
@@ -81,18 +52,6 @@ class TopUpVirtualCards extends React.Component {
             dispatch(getCurrentVirtualCard(this.state.user.token, 'topup'));
         }
         
-    }
-
-    handleSelectDebitableAccounts(account) {
-        let allDebitableAccounts = this.props.debitable_accounts.debitable_accounts_data.data,
-            selectedDebitableAccount = allDebitableAccounts.filter(accountDetails=>accountDetails.AccountNumber ===account),
-            transferLimit;
-
-            
-        this.setState({ selectedAccount: account, selectedDebitableAccount}, ()=>{
-            console.log("selected account is", this.state.selectedAccount);
-        });
-
     }
 
     renderStep1Form(virtualCardsList){
@@ -111,7 +70,20 @@ class TopUpVirtualCards extends React.Component {
             dollarAmountError} = this.state;
         return(
             <div>
-                
+                <div className="input-ctn inputWrap">
+                    <label>Name on Card</label>
+                    <Textbox
+                        tabIndex="2"
+                        id={'nameOnCard'}
+                        name="nameOnCard"
+                        value={nameOnCard}
+                        onChange= {(nameOnCard, e)=>{ 
+                            console.log('value is', nameOnCard);
+                            this.setState({nameOnCard});
+                        }}
+                        
+                    />
+                </div>
                 <div className="input-ctn inputWrap">
                     <label>Amount in Naira (Maximum  &#8358;2,000,000)</label>
                     
@@ -122,7 +94,7 @@ class TopUpVirtualCards extends React.Component {
                         value={amountInNaira}
                         onChange= {(amountInNaira, e)=>{ 
                             
-                            let dollarConversion = utils.formatAmount( amountInNaira / virtualCardsList.exchangeRates.ngnAmountOfOneUsd);
+                            let dollarConversion = utils.formatAmount( amountInNaira / virtualCardsList.ngnAmountOfOneUsd);
 
                             
                                 dollarConversion = parseFloat(dollarConversion.replace(/,/g, '')).toFixed(2).toString();
@@ -150,7 +122,7 @@ class TopUpVirtualCards extends React.Component {
                         value={amountInUsd}
                         onChange= {(amountInUsd, e)=>{ 
                         
-                            let nairaConversion =  utils.formatAmount(amountInUsd * virtualCardsList.exchangeRates.ngnAmountOfOneUsd);
+                            let nairaConversion =  utils.formatAmount(amountInUsd * virtualCardsList.ngnAmountOfOneUsd);
                             
 
                                 nairaConversion = parseFloat(nairaConversion.replace(/,/g, '')).toFixed(2).toString();
@@ -171,7 +143,7 @@ class TopUpVirtualCards extends React.Component {
                 <div className="input-ctn inputWrap">
                     <center>
                         <button type="button" onClick={()=>{
-                                                            if((amountInNaira !=='' && amountInNaira !==undefined ) && (amountInUsd !=='' && amountInUsd !==undefined)){
+                                                            if((nameOnCard !=='' && nameOnCard !==undefined) && (amountInNaira !=='' && amountInNaira !==undefined ) && (amountInUsd !=='' && amountInUsd !==undefined)){
                                                                 
                                                                 if(Math.abs(amountInUsd)>=10){
                                                                     console.log('valid', amountInUsd );
@@ -184,70 +156,8 @@ class TopUpVirtualCards extends React.Component {
                                                                 this.setState({showStep1Error: true, step1ErrorMessage:'All fields are required'});
                                                             }
                                                     }}   
-                            className="btn-alat m-t-10 m-b-20 text-center">Proceed</button>
+                            className="btn-alat m-t-10 m-b-20 text-center">Create Card</button>
                             {showStep1Error===true && <div className="error-msg">{step1ErrorMessage}</div> }
-                    </center>
-                </div>
-            </div>
-        )
-    }
-
-    renderAccountAndPin(virtualCardsList){
-        let props = this.props,
-        topupOtpRequestStatus = props.sendTopVCCardinfo;
-
-        return(
-            <div>
-                <div className="inputctn-wrap">
-                    <SelectDebitableAccounts
-                        value={this.state.accountNumber}
-                        // currency={currencySelected}
-                        // requestType = "forBankTransfer"
-                        accountInvalid={this.state.isAccountInvalid}
-                        onChange={this.handleSelectDebitableAccounts} />
-                </div>
-                <div className="input-ctn inputWrap">
-                    <AlatPinInput
-                        value={this.state.Pin}
-                        onChange={this.handleAlatPinChange}
-                        PinInvalid={this.state.isPinInvalid}
-                        maxLength={4} 
-                    />
-                </div>
-                <div className="input-ctn inputWrap">
-                    <center>
-                        {this.state.stage2Error===true &&
-                            <div className="error-msg">{this.state.stage2ErrorMsg}</div>
-                        }
-                        {(topupOtpRequestStatus.is_processing===false && topupOtpRequestStatus.fetch_status===SEND_TOPUP_DATA_FAILURE)&&
-                            <div className="error-msg">{otpRequestStatus.new_vc_info.error}</div>
-                        }
-
-                        <button type="button" onClick={()=>{
-                                                            
-                                                            if(this.state.selectedAccount!=='' && this.state.Pin!==''){
-                                                           
-                                                                this.setState({stage2Error: false});
-                                                                let payload ={
-                                                                    AccountNo: this.state.selectedAccount,
-                                                                    Amount: this.state.amountInNaira,
-                                                                    Dollar: this.state.amountInUsd,
-                                                                    Name: this.state.nameOnCard,
-                                                                    Type: 'topup',
-                                                                    Pin: this.state.Pin,
-                                                                    VirtualCardId: virtualCardsList.virtualCardData.id, 
-                                                                    rateId: virtualCardsList.exchangeRates.rateId
-                                                                };
-                                                                this.validatePinAndAccount(payload);
-                                                                
-                                                            }else{
-                                                                this.setState({stage2Error: true, stage2ErrorMsg:'Please provide all details'});
-                                                            }
-                                                }} 
-                                            className="btn-alat m-t-10 m-b-20 text-center"
-                                            disabled={topupOtpRequestStatus.is_processing}> { topupOtpRequestStatus.is_processing ? "Processing..." : "Top up" }</button>
-                        <div>{(topupOtpRequestStatus.is_processing ===false || topupOtpRequestStatus.is_processing==undefined ) && <a className="back-cta" onClick={()=>this.setState({isStep1Done:false})}>Back</a> } </div>
-                        
                     </center>
                 </div>
             </div>
@@ -293,7 +203,7 @@ class TopUpVirtualCards extends React.Component {
                 case FETCH_CURRENTCARD_SUCCESS:
                         let virtualCardsList =  props.virtualCards.virtualcard_data.response;
                         
-                       
+                        console.log(' cards details', virtualCardsList);
                         // return ;
                         if(Object.keys(this.props.virtualCards).length >1){
                             return(
@@ -304,20 +214,18 @@ class TopUpVirtualCards extends React.Component {
                                                 <div className="al-card no-pad">
                                                     <div className="sub-tab-nav inpage-nav">
                                                         <ul>
-                                                            <li> <Link to={'/virtual-cards/topup'}>Top Up</Link></li>
-                                                            <li> <Link to={'/virtual-cards'}>View Details</Link></li>
+                                                            <li> <Link to={'virtual-cards'}>Top Up</Link></li>
                                                             <li> <Link to={'/virtual-cards/history'}> Transaction History</Link></li>
                                                             <li> <Link to={'/virtual-cards/liquidate'}>Liquidate Card</Link></li>
                                                             <li> <Link to={'/virtual-cards/delete'}>Delete Card</Link></li>
                                                         </ul>
                                                     </div>
                                                     <div className="transfer-ctn">
-                                                    <h3 className="alatcard-msg">This card cannot be used on 3D secured sites and for money transfer</h3>
                                                         <form>
                                                             <div className="atmcard-wrap">
                                                                 <div className="top-info">
                                                                     <div className="balanceinfo">
-                                                                        Balance: ${virtualCardsList.virtualCardData.balance}
+                                                                        Balance: ${virtualCardsList.virtualCardData.balance} ***,**.**
                                                                     </div>
                                                                     <div className="logo-icon">
                                                                         <img src={whitelogo} />
@@ -340,17 +248,60 @@ class TopUpVirtualCards extends React.Component {
                                                                     {virtualCardsList.virtualCardData.alias}
                                                                 </div>
                                                             </div>
-                                                            <div className="conversion-msg">
-                                                                $1 =  &#8358;{virtualCardsList.exchangeRates.ngnAmountOfOneUsd}
+                                                            <div className="input-ctn inputWrap">
+                                                                <label>Address</label>
+                                                                <Textbox
+                                                                    tabIndex="2"
+                                                                    id={'cardHolderAddress'}
+                                                                    name="cardHolderAddress"
+                                                                    value={cardHolderAddress}
+                                                                    onChange= {(cardHolderAddress, e)=>{ 
+                                                                        console.log('value is', cardHolderAddress);
+                                                                    }}
+                                                                    
+                                                                />
                                                             </div>
-                                                            {isStep1Done===false &&
-                                                                this.renderStep1Form(virtualCardsList)
-                                                            }
-
-                                                            {isStep1Done===true &&
-                                                                this.renderAccountAndPin(virtualCardsList)
-                                                            }
-                                                            
+                                                            <div className="other-addressinfo">
+                                                                <div className="input-ctn inputWrap">
+                                                                    <label>City</label>
+                                                                    <Textbox
+                                                                        tabIndex="3"
+                                                                        id={'cardHolderCity'}
+                                                                        name="cardHolderCity"
+                                                                        value={cardHolderCity}
+                                                                        onChange= {(cardHolderCity, e)=>{ 
+                                                                            console.log('value is', cardHolderCity);
+                                                                        }}
+                                                                        
+                                                                    />
+                                                                </div>
+                                                                <div className="input-ctn inputWrap">
+                                                                    <label>State</label>
+                                                                    <Textbox
+                                                                        tabIndex="4"
+                                                                        id={'cardHolderState'}
+                                                                        name="cardHolderState"
+                                                                        value={cardHolderState}
+                                                                        onChange= {(cardHolderState, e)=>{ 
+                                                                            console.log('value is', cardHolderState);
+                                                                        }}
+                                                                        
+                                                                    />
+                                                                </div>
+                                                                <div className="input-ctn inputWrap">
+                                                                    <label>Zip code</label>
+                                                                    <Textbox
+                                                                        tabIndex="5"
+                                                                        id={'cardHolderZipcode'}
+                                                                        name="cardHolderZipcode"
+                                                                        value={cardHolderZipcode}
+                                                                        onChange= {(cardHolderZipcode, e)=>{ 
+                                                                            console.log('value is', cardHolderZipcode);
+                                                                        }}
+                                                                        
+                                                                    />
+                                                                </div>
+                                                            </div>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -386,7 +337,9 @@ class TopUpVirtualCards extends React.Component {
             }
     }
 
-   
+    renderAccountAndPin(){
+
+    }
 
 
     render(){
@@ -401,9 +354,8 @@ class TopUpVirtualCards extends React.Component {
 function mapStateToProps(state){
     return {
         virtualCards        : state.alatCardReducersPile.getVirtualCards,
-        sendTopVCCardinfo   : state.alatCardReducersPile.sendTopVCCardinfo,
         debitable_accounts  : state.accounts,
     };
 }
 
-export default connect(mapStateToProps)(TopUpVirtualCards);
+export default connect(mapStateToProps)(VirtualCardDetails);

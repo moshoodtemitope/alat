@@ -4,7 +4,10 @@ import {
     FETCH_CURRENTCARD_FAILURE,
     SEND_NEWVC_DATA_SUCCESS,
     SEND_NEWVC_DATA_PENDING,
-    SEND_NEWVC_DATA_FAILURE
+    SEND_NEWVC_DATA_FAILURE,
+    SEND_TOPUP_DATA_SUCCESS,
+    SEND_TOPUP_DATA_PENDING,
+    SEND_TOPUP_DATA_FAILURE
 } from "../constants/cards/cards.constants";
 
 export function geCurrentVirtualCardsRequest(state=[], action) {
@@ -49,6 +52,32 @@ export function sendVCNewCardinfo(state=[], action) {
                 is_fetching: false,
                 fetch_status: SEND_NEWVC_DATA_FAILURE,
                 new_vc_info: action
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+export function sendTopVCCardinfo(state=[], action) {
+    switch (action.type) {
+        case SEND_TOPUP_DATA_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: SEND_TOPUP_DATA_PENDING,
+                topup_vc_info: action
+            };
+        case SEND_TOPUP_DATA_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: SEND_TOPUP_DATA_SUCCESS,
+                topup_vc_info: action
+            };
+        case SEND_TOPUP_DATA_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: SEND_TOPUP_DATA_FAILURE,
+                topup_vc_info: action
             };
 
         default:

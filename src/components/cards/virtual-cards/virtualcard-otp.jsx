@@ -5,6 +5,7 @@ import {Router, NavLink} from "react-router";
 
 import {getCurrentVirtualCard,
         sendNewVirtualCardInfo,
+        topUpVirtualCard
 } from "../../../redux/actions/cards/cards.actions";
 
 import { FETCH_CURRENTCARD_SUCCESS,
@@ -12,7 +13,10 @@ import { FETCH_CURRENTCARD_SUCCESS,
          FETCH_CURRENTCARD_FAILURE,
          SEND_NEWVC_DATA_SUCCESS,
          SEND_NEWVC_DATA_PENDING,
-         SEND_NEWVC_DATA_FAILURE} from "../../../redux/constants/cards/cards.constants";
+         SEND_NEWVC_DATA_FAILURE,
+         SEND_TOPUP_DATA_SUCCESS,
+         SEND_TOPUP_DATA_PENDING,
+         SEND_TOPUP_DATA_FAILURE} from "../../../redux/constants/cards/cards.constants";
 import {Fragment} from "react";
 import {connect} from "react-redux";
 import { Link } from 'react-router-dom';
@@ -25,9 +29,10 @@ class VirtualCardsOtp extends React.Component{
         super(props);
         this.state = {
             user: JSON.parse(localStorage.getItem("user")),
+            isSubmitting: false
         };
 
-        
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
 
@@ -35,25 +40,67 @@ class VirtualCardsOtp extends React.Component{
         this.verifyTransferStage();
     }
 
+    handleSubmit(e) {
+        e.preventDefault();
+        const { dispatch } = this.props;
+        let newCardotpRequestStatus     = this.props.sendVCNewCardinfo,
+            topupOtpRequestStatus       = this.props.sendTopVCCardinfo,
+            payload;
+
+            this.setState({isSubmitting: true});
+
+            //Send payment details for TOP UP Virtual Card
+            if(newCardotpRequestStatus.new_vc_info === undefined 
+                && topupOtpRequestStatus.topup_vc_info!==undefined ){
+
+                    payload = topupOtpRequestStatus.topup_vc_info.cardpayload;
+                    payload.OTP = this.state.OtpValue;
+
+
+                dispatch(topUpVirtualCard(payload, this.state.user.token , true))
+            }
+
+
+             //Send payment details for new Virtual Card
+            if(newCardotpRequestStatus.new_vc_info !== undefined 
+                && topupOtpRequestStatus.topup_vc_info===undefined ){
+
+                    payload = topupOtpRequestStatus.topup_vc_info.cardpayload;
+                    payload.OTP = this.state.OtpValue;
+
+
+                dispatch(sendNewVirtualCardInfo(payload, this.state.user.token , true))
+            }
+    }
+
     verifyTransferStage(){
+        
         let props = this.props,
             fetchVirtualCardsStatus = props.virtualCards.fetch_status,
-            otpRequestStatus = props.sendVCNewCardinfo;
-            console.log('here', otpRequestStatus);
+            newCardotpRequestStatus = props.sendVCNewCardinfo;
+            console.log('here', newCardotpRequestStatus);
             if(fetchVirtualCardsStatus!==FETCH_CURRENTCARD_SUCCESS){
                 this.props.history.push("/virtual-cards");
             }
     }
 
-    resendOTP(payload){
+    resendOTP(cardAction, payload){
         const { dispatch } = this.props;
-        dispatch(sendNewVirtualCardInfo(payload, this.state.user.token))
+        if(cardAction==="newcard"){
+            dispatch(sendNewVirtualCardInfo(payload, this.state.user.token))
+        }
+
+        if(cardAction==="topupcard"){
+            dispatch(topUpVirtualCard(payload, this.state.user.token))
+        }
+        
     }
 
 
     renderOTpForm(otpMsg){
-        let {OtpValue} = this.state,
-            otpRequestStatus = this.props.sendVCNewCardinfo;
+        let {OtpValue, isSubmitting} = this.state,
+            newCardotpRequestStatus = this.props.sendVCNewCardinfo,
+            topupOtpRequestStatus = this.props.sendTopVCCardinfo;
         // console.log('paylod is', this.props.sendVCNewCardinfo);
         return(
             <div className="col-sm-12">
@@ -68,9 +115,23 @@ class VirtualCardsOtp extends React.Component{
                                     </svg>
                                 </center>
                                 <div className="m-t-30 width-300">
-                                  {otpRequestStatus.is_fetching ===true && <p className="m-b-20" >Resending OTP</p> }
-                                  {(otpRequestStatus.new_vc_info!==undefined && otpRequestStatus.new_vc_info.response)  && <p className="m-b-20" >{otpRequestStatus.new_vc_info.response.description}</p> }  
-                                    <form action="">
+                                  {(newCardotpRequestStatus.is_fetching ===true || topupOtpRequestStatus.is_processing===true ) && <p className="m-b-20" >Resending OTP</p> }
+
+                                    {/* Display OTP message for new Virtual Card */}
+                                    {(newCardotpRequestStatus.new_vc_info!==undefined 
+                                    && topupOtpRequestStatus.topup_vc_info===undefined 
+                                    && newCardotpRequestStatus.new_vc_info.response) 
+
+                                    && <p className="m-b-20" >{newCardotpRequestStatus.new_vc_info.response.description}</p> }
+                                    
+
+                                     {/* Display OTP message for TopUp Virtual Card */}
+                                    {(topupOtpRequestStatus.topup_vc_info!==undefined 
+                                    && topupOtpRequestStatus.topup_vc_info.response) 
+
+                                    && <p className="m-b-20" >{topupOtpRequestStatus.topup_vc_info.response.description}</p> }
+
+                                    <form action="" onSubmit={this.handleSubmit}>
                                         <div className="centered-input otpInput">
 
                                             <Textbox
@@ -90,38 +151,51 @@ class VirtualCardsOtp extends React.Component{
 
                                             
                                                 
-                                                <div className="row">
-                                                    <div className="col-sm-12">
-                                                        <center>
-                                                            
-                                                            <button type="submit" 
-                                                                className="btn-alat m-t-10 m-b-20 text-center">
-                                                                    Confirm
-                                                            </button>
-                                                        </center>
+                                            <div className="row">
+                                                <div className="col-sm-12">
+                                                    <center>
+                                                        <button type="submit" disabled={isSubmitting} className="btn-alat m-t-10 m-b-20 text-center">
+                                                               {isSubmitting? 'Processing': 'Confirm'} 
+                                                        </button>
+                                                    </center>
 
-                                                    </div>
                                                 </div>
+                                            </div>
                                                
                                         </div>
                                     </form>  
-                                    
-                                    <div className="failed-otp-ctas">
-                                        {/* <span className="text-right pull-left cta-link">
-                                            <a className="cta-link">Call my phone</a>
-                                        </span> */}
 
-                                        <span className="text-left pull-right cta-link">
-                                        { (otpRequestStatus.fetch_status!==SEND_NEWVC_DATA_PENDING) &&
-                                            <a className="cta-link" onClick={()=>{
-                                                // this.setState({isResendOtp: })
-                                                this.resendOTP(otpRequestStatus.new_vc_info.cardpayload)
-                                                }}>Resend code</a>
-                                        }
+                                    {/* Resend OTP for new Virtual Card */}
+                                    {newCardotpRequestStatus.new_vc_info!==undefined &&
+                                        <div className="failed-otp-ctas">
+                                            <span className="text-left pull-right cta-link">
+                                            { (newCardotpRequestStatus.fetch_status!==SEND_NEWVC_DATA_PENDING) &&
+                                                <a className="cta-link" onClick={()=>{
+                                                    
+                                                    this.resendOTP("newcard",newCardotpRequestStatus.new_vc_info.cardpayload)
+                                                    }}>Resend code</a>
+                                            }
+                                                
                                             
-                                           
-                                        </span>
-                                    </div>
+                                            </span>
+                                        </div>
+                                    }
+
+                                    {/* Resend OTP for TopUP Virtual Card */}
+                                    {topupOtpRequestStatus.topup_vc_info!==undefined &&
+                                        <div className="failed-otp-ctas">
+                                            <span className="text-left pull-right cta-link">
+                                            { (topupOtpRequestStatus.fetch_status!==SEND_TOPUP_DATA_PENDING) &&
+                                                <a className="cta-link" onClick={()=>{
+                                                    
+                                                    this.resendOTP("topupcard", topupOtpRequestStatus.topup_vc_info.cardpayload)
+                                                    }}>Resend code</a>
+                                            }
+                                                
+                                            
+                                            </span>
+                                        </div>
+                                    }
                                 </div>           
                             </div>
                         </div>
@@ -134,17 +208,17 @@ class VirtualCardsOtp extends React.Component{
     render(){
         let props = this.props,
             fetchVirtualCardsStatus = props.virtualCards.fetch_status,
-            otpRequestStatus = props.sendVCNewCardinfo
+            newCardotpRequestStatus = props.sendVCNewCardinfo
         // if(fetchVirtualCardsStatus===FETCH_CURRENTCARD_SUCCESS){
         //     return (
-        //         this.renderOTpForm(otpRequestStatus.new_vc_info.response)
+        //         this.renderOTpForm(newCardotpRequestStatus.new_vc_info.response)
         //     )
         // }
         return(
             <Fragment>
                  {this.renderOTpForm()}
                 {/* { (fetchVirtualCardsStatus===FETCH_CURRENTCARD_SUCCESS) &&
-                     this.renderOTpForm(otpRequestStatus.new_vc_info.response)
+                     this.renderOTpForm(newCardotpRequestStatus.new_vc_info.response)
                 } */}
             </Fragment>
         )
@@ -155,7 +229,8 @@ class VirtualCardsOtp extends React.Component{
 function mapStateToProps(state){
     return {
         virtualCards        : state.alatCardReducersPile.getVirtualCards,
-        sendVCNewCardinfo   : state.alatCardReducersPile.sendVCNewCardinfo
+        sendVCNewCardinfo   : state.alatCardReducersPile.sendVCNewCardinfo,
+        sendTopVCCardinfo   : state.alatCardReducersPile.sendTopVCCardinfo,
     };
 }
 
