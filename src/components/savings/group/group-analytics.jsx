@@ -17,6 +17,7 @@ import Buttons from './button';
 import { NavButtons } from './component';
 import MoreDetails from './details';
 import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
+import history from '../../../_helpers/history';
 
 class GroupAnalytics extends React.Component {
     constructor(props){
@@ -99,15 +100,9 @@ class GroupAnalytics extends React.Component {
 
     GetTargetMonth = () => {
         const dateString = this.props.groupDetails.response.targetDate.split("-");
-        console.log(dateString);
         const day = dateString[2].split("T")[0];
         const month = this.GetMonth(dateString[1]);
         const year = dateString[0];
-        
-        console.log(day);
-        console.log(month);
-        console.log(year);
-        console.log("000000000000000000000000000000000");
         return day.concat(" ", month, " ", year);
     }
 
@@ -143,8 +138,25 @@ class GroupAnalytics extends React.Component {
         return this.props.groupDetails.response.referralCode;
     }
 
+    DeleteThisGroup = () => {
+        let data = {
+            groupId: parseInt(event.target.id),
+            deleteGroup: 'deleteGroup'
+        }
+        this.props.dispatch(actions.deleteGroup(this.state.user.token, data));
+    }
 
+    PauseThisGroup = () => {
+        let data = {
+            groupId: parseInt(event.target.id),
+        }
+        this.props.dispatch(actions.pauseGroup(this.state.user.token, data));
+    }
 
+    EditThisGroup = () => {
+        return this.props.history.push('/group-savings/edit-group');
+    }
+    
     render() {
         const {endDate,endDateInvalid} = this.state;
 
@@ -221,22 +233,27 @@ class GroupAnalytics extends React.Component {
                                                    rightContent={this.GetReferalCode()}
                                                    rightContentBottom="Group Code"
                                                 />
-                                                {/* <NavLink to="/savings/group/group-analytics2"> */}
+                                              
                                                     <Buttons
                                                         buttonType={this.state.buttonType}
                                                         buttonName="contribute"
                                                         
                                                         />
-                                                {/* </NavLink> */}
-
+                                               
                                                 <NavButtons 
                                                     navType={this.state.navType}
                                                     leftName='edit'
                                                     middleName='pause'
-                                                    rightName='delete'/>
+                                                    rightName='delete'
+                                                    edit={this.props.groupDetails.response.id}
+                                                    pause={this.props.groupDetails.response.id}
+                                                    delete={this.props.groupDetails.response.id}
+                                                    DeleteGroup={this.DeleteThisGroup}
+                                                    PauseGroup={this.PauseThisGroup}
+                                                    EditGroup={this.EditThisGroup}
+                                                    />
                                              </div>
-                                             
-                                             
+
                                         </div>
 
                                        </div>
@@ -256,7 +273,6 @@ class GroupAnalytics extends React.Component {
     }
 }
 
-
 function mapStateToProps(state) {
    return {
        groupDetails: state.groupDetails.data
@@ -264,10 +280,6 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(GroupAnalytics);
-
-//export default GroupAnalytics
-// /savings/group/group-analytics2
-// /savings/group/automate-contributions
 
 
 

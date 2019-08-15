@@ -35,9 +35,7 @@ class GoalPlan extends React.Component {
     }
 
     NavigateToGroupSavings = () => {
-        //console.log('Navigating')
         let groupSavings = Object.keys(this.props.groups.response); //returns an array
-        console.log(groupSavings.length);
         let rotatingSavings = Object.keys(this.props.groupSavingsEsusu.response); //returns an array
         if(groupSavings.length != 0 || rotatingSavings.length != 0){
             history.push('/savings/activityDashBoard');
@@ -60,10 +58,7 @@ class GoalPlan extends React.Component {
                                 <div className="sub-tab-nav">
                                     <ul>
                                         <li><a href="" className="active">Goals</a></li>
-                                        {/* <NavLink to='/savings/goal/group-savings-selection'> */}
-                                            <li onClick={this.NavigateToGroupSavings}><a class="forGroupLink">Group Savings</a></li>
-                                        {/* </NavLink> */}
-                                        
+                                        <li onClick={this.NavigateToGroupSavings}><a class="forGroupLink">Group Savings</a></li>
                                         <li><a href="#">Investments</a></li>
                                     </ul>
                                 </div>

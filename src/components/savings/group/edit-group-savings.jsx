@@ -13,7 +13,7 @@ import * as actions from '../../../redux/actions/savings/group-savings/group-sav
 import {GROUPSAVINGSCONSTANT} from "../../../redux/constants/savings/group/index";
 
 
-class CreateATargetGoal extends React.Component {
+class EditGroupSavings extends React.Component {
     constructor(props){
         super(props);
         this.state= {
@@ -32,20 +32,8 @@ class CreateATargetGoal extends React.Component {
             NoAccountSelectionWasDon: false,
             theGroupName: false,
             Purpose: false,
-
-            ///Editing Purpose
-            edit: false
         }
-         
-        //this.checkingUserInputs = this.checkingUserInputs.bind(this);
-        //this.handleSelectDebitableAccounts = this.handleSelectDebitableAccounts.bind(this);
-        //this.checkAccountNumber = this.checkAccountNumber.bind(this);
-        //this.checkMinimumAccountToContribute = this.checkMinimumAccountToContribute.bind(this);
-        //this.checkTheSelectedAccount = this.checkTheSelectedAccount.bind(this);
-        //this.checkTheEndDate = this.checkTheEndDate.bind(this);
-        //this.checkTheTargetAmount = this.checkTheTargetAmount.bind(this);
-        //this.checkGroupPurpose = this.checkGroupPurpose.bind(this);
-        //this.SubmitTargetGoal = this.SubmitTargetGoal.bind(this);
+      
     }
 
     componentDidMount = () => {
@@ -195,18 +183,19 @@ class CreateATargetGoal extends React.Component {
         }
      }
 
-    SubmitTargetGoal = () => {
+    SubmitTargetGoalEdited = () => {
         const data = {
-            Name:this.state.groupName,
-            TargetAmount: parseFloat(this.state.targetAmount),
-            TargetDate: this.state.targetDate,
-            MinimumIndividualAmount: parseFloat(this.state.minimumIndividualAmount),
-            DebitAccount: this.state.selectedAccount,
-            Purpose: this.state.groupPurpose, 
+            groupId: this.props.groupDetails.response.id,
+            name:this.state.groupName,
+            targetAmount: parseFloat(this.state.targetAmount),
+            targetDate: this.state.targetDate,
+            minimumIndividualAmount: parseFloat(this.state.minimumIndividualAmount),
+            debitAccount: this.state.selectedAccount,
+            purpose: this.state.groupPurpose, 
         }
         console.log(data)
         //return;
-        this.props.dispatch(actions.groupSavingsTargetGoal(this.state.user.token, data));
+        this.props.dispatch(actions.editGroup(this.state.user.token, data));
     }
 
     InitialPropertyCheck = () => {
@@ -226,7 +215,7 @@ class CreateATargetGoal extends React.Component {
         // if(this.checkMinimumAccountToContribute() || this.checkTheSelectedAccount()||this.checkTheEndDate()||this.checkGroupPurpose()||this.checkGroupName()||this.checkTheTargetAmount()){
         //     console.log(this.checkMinimumAccountToContribute())
         // } 
-        this.SubmitTargetGoal();
+        this.SubmitTargetGoalEdited();
         // console.log('did the code ever got here')
         // console.log(this.state)
         // switch(this.checkingUserInputs()){
@@ -371,7 +360,7 @@ function mapStateToProps(state){
         groupDetails: state.groupDetails.data
     }
 }
-export default connect(mapStateToProps)(CreateATargetGoal);
+export default connect(mapStateToProps)(EditGroupSavings);
 
 
 

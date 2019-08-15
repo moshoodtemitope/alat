@@ -61,11 +61,13 @@ export const groupDetails = (token, data) => {
 export const deleteGroup = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.DELETE_GROUP, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.DELETE_GROUP, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                if(data.deleteGroup != undefined)
+                     history.push('/savings/group/success-message');
             })
             .catch(error => {
                 if(error.response.message){
@@ -109,11 +111,12 @@ export const contribute = (token, data) => {
 export const editGroup = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.DELETE_GROUP, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.EDIT_GROUP_SAVINGS, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                history.push('/savings/group/success-message');
             })
             .catch(error => {
                 if(error.response.message){
@@ -133,11 +136,12 @@ export const editGroup = (token, data) => {
 export const pauseGroup = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.DELETE_GROUP, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.PAUSE_GROUP, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                history.push('/savings/group/success-message');
             })
             .catch(error => {
                 if(error.response.message){

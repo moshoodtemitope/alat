@@ -161,6 +161,7 @@ export const deleteGroupEsusu = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                history.push('/savings/group/success-message');
             }) 
             .catch(error => {
                 if(error.response.message){

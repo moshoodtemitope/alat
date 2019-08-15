@@ -11,11 +11,13 @@ import Buttons from './button';
 import { connect } from "react-redux";
 import { NavButtons } from './component';
 import MoreDetails from './details';
+import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 
 class GroupAnalyticsMini extends React.Component {
     constructor(props){
         super(props);
         this.state= {
+            user: JSON.parse(localStorage.getItem("user")),
             type: 2,
             navType: 2,
             buttonType: "bigButton",
@@ -70,6 +72,13 @@ class GroupAnalyticsMini extends React.Component {
 
     MemberCount = () => {
         return this.props.groupDetails.response.memberCount;
+    }
+
+    DeleteGroup = () => {
+        let data = {
+            groupId: this.props.groupDetails.response.id
+        }
+        this.props.dispatch(actions.deleteGroupEsusu(this.state.user.token, data));
     }
 
     render() {
@@ -145,10 +154,12 @@ class GroupAnalyticsMini extends React.Component {
                                                     
                                                     <div className='miniNav'>
                                                         <div className='left'>
-                                                            <p>Edit</p>
+                                                           <NavLink to='/group-savings/edit-rotating'>
+                                                               <p>Edit</p>
+                                                           </NavLink>
                                                         </div>
                                                         <div className='right'>
-                                                            <p>Delete</p>
+                                                            <p onClick={this.DeleteGroup}>Delete</p>
                                                         </div>
                                                 </div>        
                                              </div>
