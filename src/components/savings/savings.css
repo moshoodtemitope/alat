@@ -245,5 +245,13 @@
   .col-sm-4{
       border-bottom: 1px solid #AB2656;
   }
+  .top-goal-Message{
+      color: #9F083E;
+      font-size: 14px;
+      font-family: Proxima Nova;
+      line-height: 24px;
+      margin-left: 60px;
+
+  }
 
 

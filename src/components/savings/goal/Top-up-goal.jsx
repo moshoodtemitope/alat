@@ -226,7 +226,7 @@ class TopUPGoal extends Component {
                                                     <div className="text-danger">Enter the amount you want to save</div>}
                                                     {
                                                         this.state.showMessage ?
-                                                            <div className="text-purple"><h3 className="text-purple"> You will earn approximately
+                                                            <div className="text-purple"><h3 className="text-purple"> Base on your previous savings you will earn
                                                                 ₦ {util.formatAmount(this.state.payOutInterest)} in interest daily. Your stash will need to exist for a minimum of 30 days to qualify for interest </h3></div>
                                                             : null
                                                     }

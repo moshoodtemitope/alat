@@ -32,7 +32,12 @@ export const CreateStashGoal =(data)=>{
             .then(response => {
                 //TODO: edit localDB accounts object
                 dispatch(success(response.data, data));
-                history.push("/savings/goal/create-stash-success-message")
+                history.push({
+                    pathname:"/savings/goal/create-stash-success-message",
+                    state:{
+                        details:response.data,
+                    }
+                })
             })
             .catch(error => {
                // console.log("error in here");

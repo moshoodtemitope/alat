@@ -43,8 +43,9 @@ import GroupAnalyticsMini2 from './savings/group/group-analytics-mini2';
 import ParentDashBoard from './savings/group/parent-dashboard';
 import ViewGoalSummary from './savings/goal/view-goal-summary';
 import WithDrawFromGoal from './savings/goal/withdraw-from-goal';
-import TopUpGoal from './savings/goal/Top-up-goal'
-import TopUpGoalSummary from './savings/goal/Top-up-goal-summary'
+import TopUpGoal from './savings/goal/Top-up-goal';
+import TopUpGoalSummary from './savings/goal/Top-up-goal-summary';
+import TopUpGoalSuccess from './savings/goal/top-up-goal-success'
 
 
 // import MemberSlots from './savings/group/members-slot';
@@ -120,6 +121,9 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path='/savings/withdraw-from-goal' authed={this.props.user} component={WithDrawFromGoal} />
                     <PrivateRoute path='/savings/top-up-goal-step1' authed={this.props.user} component={TopUpGoal} />
                     <PrivateRoute path='/savings/top-up-goal-summary' authed={this.props.user} component={TopUpGoalSummary} />
+                    <PrivateRoute path='/savings/top-up-goal-success' authed={this.props.user} component={TopUpGoalSuccess} />
+
+
 
 
 

@@ -15,13 +15,12 @@ class CreateStashSuccessMessage extends React.Component {
         
         }
     }
-    componentDidMount = () => {
-        console.log("data"+ JSON.stringify(this.props.create_stash_goal))
-    };
 
 
 
     render() {
+        const details =this.props.location.state;
+        console.log(details);
 
         return (
             <Fragment>
@@ -65,7 +64,7 @@ class CreateStashSuccessMessage extends React.Component {
                                                    userType="admin"
                                                    name="Stash"
                                                    position="Status: Completed"
-                                                    amount={JSON.stringify(this.props.create_stash_goal.response.data.targetAmount)}
+                                                    amount={this.props.create_stash_goal.response.data.targetAmount}
                                                    intent="Amount Saved"
                                                    id="autoSummary"/>
                                                 </div>
