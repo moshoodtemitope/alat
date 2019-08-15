@@ -143,6 +143,8 @@ const appReducer = combineReducers({
     customerGoalTransHistory:customerGoal.getCustomerGoalTransHistoryReducer,
     customerGoalType:customerGoal.GET_GOAL_TYPE,
     customerGoalFormular:customerGoal.GET_FORMULAR,
+    top_up_goal:customerGoal.TopUPGoal,
+    top_up_goal_step1:customerGoal.TopUPGoalStep1,
 
     //Group Savings Reducers (GROUP SAVINGS)
     groupSavings: groupSavings.groupSavingsTargetGoal,

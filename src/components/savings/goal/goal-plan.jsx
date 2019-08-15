@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import {getCustomerGoalTransHistory} from '../../../redux/actions/savings/goal/get-customer-transaction-history.actions'
 import moment from 'moment';
 import ProgressBar from '../../savings/group/progress-bar';
+import {history} from "../../../_helpers/history";
 import ViewGoalSummary from '../../savings/goal/view-goal-summary'
 import savemoney from "../../../assets/img/save-money.svg";
 import util from '../../../shared/utils'
@@ -42,6 +43,13 @@ class GoalPlan extends React.Component {
 
         return formatter.format(number);
     }
+    NavigateToCreateNewGoal=()=>{
+        let chooseGoalPlan= Object.keys(this.props.customerGoalTransHistory.customer_goal_data.response.data);
+        console.log(chooseGoalPlan.length);
+        if(chooseGoalPlan.length !=0){
+            history.push('/savings/choose-goal-plan')
+        }
+    };
 
     renderGoalsElement(customerGoalTransHistory){
         if(!customerGoalTransHistory){
@@ -137,7 +145,7 @@ class GoalPlan extends React.Component {
                                     <div className="eachComp ">
                                         <div className='topCard'>
                                             <div className="left" key={key}>
-                                                <p className='top'>{hist.goalTypeName}</p>
+                                                <p className='top' >{hist.goalTypeName}</p>
                                                 <p className='bottom'>{hist.goalName}</p>
                                             </div>
                                             <div className="right">
@@ -181,7 +189,7 @@ class GoalPlan extends React.Component {
                                                         name:hist
                                                     }
                                                 } }>
-                                                    <a>View Details</a>
+                                                    <span>View Details</span>
                                                 </Link>
 
                                             </div>
@@ -239,6 +247,7 @@ class GoalPlan extends React.Component {
     render() {
         const GoalTransHistory = this.props.customerGoalTransHistory;
 
+
         return (
             <Fragment>
                 <InnerContainer>
@@ -255,8 +264,17 @@ class GoalPlan extends React.Component {
                                         <NavLink to='/savings/goal/group-savings-selection'>
                                             <li><a className="forGroupLink">Group Savings</a></li>
                                         </NavLink>
-                                        
                                         <li><a href="#">Investments</a></li>
+
+
+                                        {
+                                            GoalTransHistory.length > 0 ?
+                                            <li> <a className="btn-alat">Create a Savings Goal</a> </li>
+                                            :null
+                                        }
+
+
+
 
 
 

@@ -101,6 +101,12 @@ export const routes = {
     GOAL_FORMULAR: BASEURL + '/Savings.WebApi/api/savings/GetValues',
     GOALTRANSACTIONHISTORY: BASEURL + '/Savings.WebApi/api/Savings/GetCustomerGoalTransHistory',
     CUSTOMERGOALDASHBOARD: BASEURL + '/Savings.WebApi/api/Savings/CustomergoalDashBoard',
+    TOPUPGOAL: BASEURL + '/Savings.WebApi/api/Savings/TopUpGoal',
+    UNPAUSEGOAL: BASEURL + '/Savings.WebApi/api/Savings/ContinueGoal',
+    WITHDRAWFROMGOAL: BASEURL + '/Savings.WebApi/api/Savings/WithDrawal',
+
+
+
 
 
 

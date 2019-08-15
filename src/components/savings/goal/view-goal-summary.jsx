@@ -2,7 +2,7 @@ import * as React from "react";
 import {Fragment} from "react";
 import InnerContainer from '../../../shared/templates/inner-container';
 import SavingsContainer from './../container';
-import {NavLink, Route, Redirect} from "react-router-dom";
+import {NavLink, Link, Route, Redirect} from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import SubHead from '../../savings/group/sub-head';
@@ -35,9 +35,10 @@ class ViewGroupSummary extends React.Component {
     componentDidMount(){
         const details = this.props.location.state.name;
         this.setState({
-            customerGoalTransHistory: details
+            customerGoalTransHistory: details,
+
+        },()=>{  localStorage.setItem('goal', JSON.stringify(details))
         });
-        console.log(details)
 
     }
 
@@ -131,18 +132,24 @@ class ViewGroupSummary extends React.Component {
                                                     <MoreDetails
                                                         lefthead={"₦"+details.interestAccrued}
                                                         leftBottom="Interest Accrued"
-                                                        // middleContent={"₦"+ details.interestEarned}
-                                                        // middleContentButtom="Interest Earned"
+                                                        middleTop={"₦"+ details.interestEarned}
+                                                        middleBottom="Interest Earned"
                                                          rightContent={moment(details.nextstandingDate).format("L")}
                                                          rightContentBottom="Next Payment"/>
                                                     <div className="btn-position">
                                                         <NavLink to="/savings/withdraw-from-goal">
-                                                         <a href="#" className="btn-withdraw-goal btn-sm border-btn">Withdraw</a>
+                                                         <span href="#" className="btn-withdraw-goal btn-sm border-btn">Withdraw</span>
                                                          </NavLink>
 
-                                                         <NavLink to="/savings/top-up-goal">
-                                                         <a href="#"  className="btn-top-up-goal btn-sm border-btn">Top Up Goal</a>
-                                                        </NavLink>
+                                                         <Link to={{
+                                                             pathname:"/savings/top-up-goal-step1",
+                                                             state:{
+                                                                 name:details,
+
+                                                             }
+                                                         }}>
+                                                         <span href="#"  className="btn-top-up-goal btn-sm border-btn">Top Up Goal</span>
+                                                        </Link>
 
                                                      </div>
 

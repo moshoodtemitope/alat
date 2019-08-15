@@ -28,7 +28,7 @@ export const fundAlatWemaAccount =(token, data)=>{
     function request(request) { return { type: fundAccountConstants.FUND_ALAT_WEMA_PENDING, request } }
     function success(response, request) { return { type: fundAccountConstants.FUND_ALAT_WEMA_SUCCESS, response : response, data: request } }
     function failure(error) { return { type: fundAccountConstants.FUND_ALAT_WEMA_FAILURE, error } }
-}
+};
 
 export const saveCardAfterTransaction =(token, data)=>{
     SystemConstant.HEADER['alat-token'] = token;

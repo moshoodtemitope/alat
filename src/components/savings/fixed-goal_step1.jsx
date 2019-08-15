@@ -364,7 +364,8 @@ class FixedGoal extends React.Component {
                                                             showMonthDropdown
                                                             showYearDropdown
                                                             useShortMonthInDropdown
-                                                            dropdownMode="select" 
+                                                            dropdownMode="select"
+                                                            minDate={new Date()}
                                                             showWeekNumbers
                                                             onChange={this.handleEndDatePicker}
                                                             value={this.state.endDate}

@@ -40,7 +40,7 @@ class FixedGoal extends React.Component {
             isAccountInvalid: false,
             frequency:"",
             goalFrequencyInvalid:false,
-            showInterests:""
+            showInterests:"",
             // frequencyAmount:"",
 
            
@@ -97,7 +97,7 @@ class FixedGoal extends React.Component {
 
             });
         }
-    }
+    };
     getAbsoulteMonths(momentDate) {
         var months = Number(momentDate.format("MM"));
         var years = Number(momentDate.format("YYYY"));
@@ -176,16 +176,11 @@ class FixedGoal extends React.Component {
             let res;
             if(this.state.targetAmount){
                 let amount=this.removeComma(this.state.targetAmount);
-
-                let dailycontribution = 7;
+                let dailycontribution;
                 let ia = ((amount / 365) * 0.10 );
                 dailycontribution = 1 * ( ia - (0.10) *ia);
                return this.interest =  parseFloat(dailycontribution).toFixed(2);
-
-
             }
-
-
     }
     //this method is to get the weekly interest value for every amount entered
     calculateWeekly(){
@@ -216,7 +211,7 @@ class FixedGoal extends React.Component {
     
       if (frequency.value == "daily")
       {
-         timeBetween = enddate.diff(startDate,'days') + 1
+         timeBetween = enddate.diff(startDate,'days') + 1;
           console.log(timeBetween)
 
       }
@@ -290,13 +285,13 @@ class FixedGoal extends React.Component {
         // this.frequencyAmount = util.toCurrency(this.showInterests.toFixed(2));
         // this.formatAmount();
         // return this.frequencyAmount;
-    }
+    };
     
 
     handleChange = (e) => {
         let name = e.target.name;
         this.setState({ [name]: e.target.value })
-    }
+    };
     
     onSubmit(event){
         event.preventDefault();
@@ -329,7 +324,7 @@ class FixedGoal extends React.Component {
             if(this.props.fixed_goal_step2.fixed_step2_status === fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS_STEP2){
                 return<Redirect to="/savings/fixed-goal"/>
             }
-    }
+    };
     
 
     
@@ -337,7 +332,7 @@ class FixedGoal extends React.Component {
 
     render() {
         
-        let { goalFrequency, goalFrequencyInvalid} =this.state
+        let { goalFrequency, goalFrequencyInvalid} =this.state;
        
         return (
             <Fragment>

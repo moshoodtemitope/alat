@@ -83,7 +83,7 @@ class CreateStash extends React.Component {
     
     handleAmount = (e) => {
         // console.log
-         var intVal = e.target.value.replace(/,/g, '');
+         let intVal = e.target.value.replace(/,/g, '');
          if (/^\d+(\.\d+)?$/g.test(intVal)) {
              // if (parseInt(intVal, 10) <= 2000000) {
              this.setState({ targetAmount: intVal, targetAmount: this.toCurrency(intVal) },
@@ -125,11 +125,7 @@ class CreateStash extends React.Component {
     };
     setFregValue = () => {
         this.setState({ payOutInterest: this.calculateInterest() });
-        console.log('test',this.calculateInterest(this.state.targetAmount, this.state.startDate, this.state.endDate));
-        console.log('target Amount',this.state.targetAmount);
-        console.log('start date',this.state.startDate);
-        console.log('end Date',this.state.endDate)
-       
+
 
     };
     calculateInterest(){

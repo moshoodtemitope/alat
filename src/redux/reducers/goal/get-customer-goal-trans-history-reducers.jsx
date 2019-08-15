@@ -69,5 +69,53 @@ export function GET_GOAL_TYPE(state=[], action) {
             return { ...state }
     }
 }
+export function TopUPGoal(state=[], action) {
+    switch (action.type) {
+        case customerGoalConstants.TOP_UP_GOAL_PENDING:
+            return {
+                top_up_goal_status:customerGoalConstants.TOP_UP_GOAL_PENDING,
+                top_up_goal_data: action
+            };
+        case customerGoalConstants.TOP_UP_GOAL_SUCCESS:
+            return {
+                top_up_goal_status: customerGoalConstants.TOP_UP_GOAL_SUCCESS,
+                top_up_goal_data: action
+            };
+        case customerGoalConstants.TOP_UP_GOAL_FAILURE:
+            return {
+                top_up_goal_status: customerGoalConstants.TOP_UP_GOAL_FAILURE,
+                top_up_goal_data: action
+            };
+
+
+        default:
+            return { ...state }
+    }
+}
+export function TopUPGoalStep1(state=[], action) {
+    switch (action.type) {
+        case customerGoalConstants.TOP_UP_GOAL_PENDING_STEP1:
+            return {
+                top_up_goal_status_step1:customerGoalConstants.TOP_UP_GOAL_PENDING_STEP1,
+                top_up_goal_data_step1: action
+            };
+        case customerGoalConstants.TOP_UP_GOAL_SUCCESS_STEP1:
+            return {
+                top_up_goal_status_step1: customerGoalConstants.TOP_UP_GOAL_SUCCESS_STEP1,
+                top_up_goal_data_step1: action
+            };
+        case customerGoalConstants.TOP_UP_GOAL_FAILURE_STEP1:
+            return {
+                top_up_goal_status_step1: customerGoalConstants.TOP_UP_GOAL_FAILURE_STEP1,
+                top_up_goal_data_step1: action
+            };
+
+
+        default:
+            return { ...state }
+    }
+}
+
+
 
 

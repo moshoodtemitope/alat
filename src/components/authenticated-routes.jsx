@@ -44,6 +44,7 @@ import ParentDashBoard from './savings/group/parent-dashboard';
 import ViewGoalSummary from './savings/goal/view-goal-summary';
 import WithDrawFromGoal from './savings/goal/withdraw-from-goal';
 import TopUpGoal from './savings/goal/Top-up-goal'
+import TopUpGoalSummary from './savings/goal/Top-up-goal-summary'
 
 
 // import MemberSlots from './savings/group/members-slot';
@@ -117,7 +118,9 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path='/savings/activityDashBoard' authed={this.props.user} component={ParentDashBoard} />
                     <PrivateRoute path='/savings/view-goal-summary' authed={this.props.user} component={ViewGoalSummary} />
                     <PrivateRoute path='/savings/withdraw-from-goal' authed={this.props.user} component={WithDrawFromGoal} />
-                    <PrivateRoute path='/savings/top-up-goal' authed={this.props.user} component={TopUpGoal} />
+                    <PrivateRoute path='/savings/top-up-goal-step1' authed={this.props.user} component={TopUpGoal} />
+                    <PrivateRoute path='/savings/top-up-goal-summary' authed={this.props.user} component={TopUpGoalSummary} />
+
 
 
 
