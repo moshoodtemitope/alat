@@ -138,7 +138,7 @@ class ViewGroupSummary extends React.Component {
                                                     <div className="btn-position">
                                                         <NavLink to="/savings/withdraw-from-goal_step1">
                                                          <span href="#" className="btn-withdraw-goal btn-sm border-btn">Withdraw</span>
-                                                         </NavLink>
+                                                        </NavLink>
 
                                                          <Link to={{
                                                              pathname:"/savings/top-up-goal-step1",

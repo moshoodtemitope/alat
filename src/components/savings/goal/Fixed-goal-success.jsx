@@ -71,7 +71,7 @@ class CreateStashSuccessMessage extends React.Component {
                                                             userType="admin"
                                                             name={details.goalTypeName}
                                                             position="Status: Completed"
-                                                            amount={"₦"+details.amountSaved}
+                                                            amount={"₦"+details.targetAmount}
                                                             intent="Amount Saved"
                                                             id="autoSummary"/>
                                                     </div>

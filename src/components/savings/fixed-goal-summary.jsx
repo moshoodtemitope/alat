@@ -69,8 +69,15 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
 
     };
 
+    goalFrequencyLabel () {
+        if (this.state.goalFrequency == 1) return "Daily";
+        if (this.state.goalFrequency == 2) return "Weekly";
+        if(this.state.goalFrequency == 3) return "Monthly";
+    }
+
     
     render() {
+
         return (
            <Fragment>
            <InnerContainer>
@@ -129,7 +136,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
                                         <div className="coverForSummary">
                                             <div className="left">
                                                 <p className='GoalText'>Contributions</p>
-                                                <p className='boldedText'>₦{this.state.showInterests}/{this.state.goalFrequency}</p>
+                                                <p className='boldedText'>₦{this.state.showInterests}/{this.goalFrequencyLabel()} </p>
                                             </div>
                                             <div className="right">
                                                 <p className='GoalText'>Account to Debit</p>

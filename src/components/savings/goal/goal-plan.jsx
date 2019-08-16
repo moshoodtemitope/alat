@@ -8,13 +8,9 @@ import stash from '../../../assets/img/stash.svg';
 import {NavLink, Link} from "react-router-dom";
 import '../savings.css';
 import { connect } from "react-redux";
-import {getCustomerGoalTransHistory} from '../../../redux/actions/savings/goal/get-customer-transaction-history.actions'
+import {getCustomerGoalTransHistory, GoalType, GoalFormula} from '../../../redux/actions/savings/goal/get-customer-transaction-history.actions'
 import moment from 'moment';
 import ProgressBar from '../../savings/group/progress-bar';
-import {history} from "../../../_helpers/history";
-import ViewGoalSummary from '../../savings/goal/view-goal-summary'
-import savemoney from "../../../assets/img/save-money.svg";
-import util from '../../../shared/utils'
 
 
 
@@ -27,12 +23,24 @@ class GoalPlan extends React.Component {
 
         };
         this.fetchCustomerTransHistoryGoals();
+        this.fetchGoalType();
+        this.fetchGoalFormular();
     }
 
     fetchCustomerTransHistoryGoals(){
         const { dispatch } = this.props;
         dispatch(getCustomerGoalTransHistory());
     };
+
+    fetchGoalType(){
+        const {dispatch}= this.props;
+        dispatch(GoalType())
+    }
+
+    fetchGoalFormular(){
+        const {dispatch}=this.props;
+        dispatch(GoalFormula)
+    }
 
     toCurrency(number) {
         // console.log(number);
@@ -44,13 +52,7 @@ class GoalPlan extends React.Component {
 
         return formatter.format(number);
     }
-    NavigateToCreateNewGoal=()=>{
-        let chooseGoalPlan= Object.keys(this.props.customerGoalTransHistory.customer_goal_data.response.data);
-        console.log(chooseGoalPlan.length);
-        if(chooseGoalPlan.length !=0){
-            history.push('/savings/choose-goal-plan')
-        }
-    };
+
     togglePage =()=>{
         this.setState({visible: false})
     };

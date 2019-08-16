@@ -44,18 +44,40 @@ class WithDrawFromGoalSummmary extends Component {
                 goalName:data.goalName,
                 goalId:data.goalId,
                 debitAccount:data.accountNumber,
-                amountSaved:data.amountSaved
+                amountSaved:data.amountSaved,
+                partialWithdrawal:true
             });
         }
     };
+    removeComma(currencyValue) {
+        return currencyValue.replace(/,/g, '');
+    }
+    toCurrency(number) {
+        // console.log(number);
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: "decimal",
+            currency: "USD",
+            maximumFractionDigits: 2
+        });
+
+        return formatter.format(number);
+    }
+    maskAccountNumber(accountNumber) {
+        for (let index = 3; index < 6; index++) {
+            accountNumber =  accountNumber.substr(0, index) + '*' + accountNumber.substr(index + 1,  accountNumber.length);
+        }
+        return accountNumber;
+    }
     handleSubmit=(event)=>{
+        let amountInNumber =this.toCurrency(parseFloat(this.removeComma(this.state.Amount)).toFixed(2)) ;
+
         event.preventDefault();
         this.props.dispatch(actions.WithDrawFromGoal({
             "goalId":parseInt(this.state.goalId),
-            // "amount":parseFloat(this.state.Amount),
+            "amount":parseFloat(amountInNumber),
             "amountNumber":this.state.debitAccount,
-            "amount":this.state.amountSaved,
-            "partialWithdrawal": true
+            // "amount":this.state.amountSaved,
+            "partialWithdrawal":this.state.partialWithdrawal
 
         }));
 
@@ -112,7 +134,7 @@ class WithDrawFromGoalSummmary extends Component {
                                                         </div>
                                                         <div className="right">
                                                             <p className='GoalText'>Amount</p>
-                                                            <p className='boldedText'>₦{this.state.amountSaved}</p>
+                                                            <p className='boldedText'>₦{this.state.Amount}</p>
                                                         </div>
                                                     </div>
                                                     <div className="coverForSummary">
@@ -131,7 +153,7 @@ class WithDrawFromGoalSummmary extends Component {
 
                                                         <div className="right">
                                                             <p className='GoalText'>Account to Debit</p>
-                                                            <p className='boldedText'>{this.state.debitAccount}</p>
+                                                            <p className='boldedText'>{this.maskAccountNumber(this.state.debitAccount)}</p>
                                                         </div>
                                                     </div>
 

@@ -243,10 +243,10 @@ class FixedGoal extends React.Component {
     }
 
     handleSelectChange = (frequency) => {
-        
+        // let label = frequency.id.split("/")[0]
         this.setState({ "goalFrequency": frequency.value,
                         "goalFrequency" : frequency.label,
-                        "goalFrequency":frequency.id
+                        "goalFrequency": `${frequency.id}`
         });
 
         
