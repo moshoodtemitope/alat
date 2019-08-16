@@ -3,14 +3,10 @@ import {Router, NavLink} from "react-router";
 // import * as utils from "../../shared/utils";
 
 
-import {getCurrentVirtualCard,
-        sendNewVirtualCardInfo,
-        topUpVirtualCard
+import {
+        clearCardsStore
 } from "../../../redux/actions/cards/cards.actions";
 
-import { 
-         SEND_NEWVC_DATA_SUCCESS,
-         SEND_TOPUP_DATA_SUCCESS} from "../../../redux/constants/cards/cards.constants";
 import {Fragment} from "react";
 import {connect} from "react-redux";
 import { Link } from 'react-router-dom';
@@ -35,10 +31,10 @@ class VirtualCardsFundSuccess extends React.Component{
     }
 
     verifyTransferStage(){
-        let props = this.props,
-            newCardCompletionStatus = props.sendVCNewCardinfo.isCompleted ||undefined,
-            topUpCardStatus = props.sendTopVCCardinfo.isCompleted ||undefined;
-            console.log('some is ', newCardCompletionStatus, );
+        let props                   = this.props,
+        newCardCompletionStatus     = props.sendVCNewCardinfo.new_vc_info!==undefined? this.props.sendVCNewCardinfo.new_vc_info.isCompleted : undefined,
+        topUpCardStatus             = props.sendTopVCCardinfo.topup_vc_info!==undefined? this.props.sendTopVCCardinfo.topup_vc_info.isCompleted : undefined;
+            console.log('some is ', topUpCardStatus, );
             if((newCardCompletionStatus===false || newCardCompletionStatus===undefined) 
                 && ( topUpCardStatus===false ||  topUpCardStatus===undefined)){
                 this.props.history.push("/virtual-cards");
@@ -51,16 +47,16 @@ class VirtualCardsFundSuccess extends React.Component{
     renderSuccess(){
         let newCardFundResponse         = this.props.sendVCNewCardinfo,
             topupFundResponse           = this.props.sendTopVCCardinfo,
-            newCardCompletionStatus     = this.props.sendVCNewCardinfo.isCompleted,
-            topUpCardStatus             = this.props.sendTopVCCardinfo.isCompleted,
+            newCardCompletionStatus     = this.props.sendVCNewCardinfo.new_vc_info!==undefined? this.props.sendVCNewCardinfo.new_vc_info.isCompleted : undefined,
+            topUpCardStatus             = this.props.sendTopVCCardinfo.topup_vc_info!==undefined? this.props.sendTopVCCardinfo.topup_vc_info.isCompleted : undefined,
             amountPaid;
 
-            if(newCardCompletionStatus===true){
-                amountPaid = newCardFundResponse.cardpayload.Amount;
+            if(newCardCompletionStatus!==undefined && newCardCompletionStatus===true){
+                amountPaid = newCardFundResponse.new_vc_info.cardpayload.Amount;
             }
 
-            if(topUpCardStatus===true){
-                amountPaid = topupFundResponse.cardpayload.Amount;
+            if(topUpCardStatus!==undefined && topUpCardStatus===true){
+                amountPaid = topupFundResponse.topup_vc_info.cardpayload.Amount;
             }
 
         return(
@@ -68,15 +64,25 @@ class VirtualCardsFundSuccess extends React.Component{
                 <div className="row">
                     <div className="col-sm-12">
                         <div className="max-600">
-                            <div className="al-card no-pad  otpform">
-                                <center>
-                                    <img src={successIcon} />
-                                </center>
-                                <div className="m-t-30 width-300">
-                                    <h4 className="success-heading">Transaction Successful</h4>
-                                    You just funded your ALAT account with ${amountPaid} 
-                                </div>           
+                            <div className="al-card no-pad otpform m-b-30">
+                                <div className="transfer-ctn">
+                                    <center>
+                                        <img src={successIcon} />
+                                    </center>
+                                    <div className="m-t-30 width-300">
+                                        <h4 className="success-heading">Transaction Successful</h4>
+                                        <div className="success-mg">
+                                        You just funded your ALAT account with <span> ${amountPaid}</span> 
+                                        </div>
+                                        
+                                        
+                                    </div>  
+                                </div>         
                             </div>
+                            <div class="return-text"><a onClick={(e)=>{e.preventDefault();
+                                                                        this.props.dispatch(clearCardsStore()); 
+                                                                        this.props.history.push("/dashboard");
+                                                                }}> Return to dashboard</a></div>
                         </div>
                     </div>
                 </div>

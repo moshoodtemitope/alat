@@ -86,12 +86,10 @@ class TopUpVirtualCards extends React.Component {
     handleSelectDebitableAccounts(account) {
         let allDebitableAccounts = this.props.debitable_accounts.debitable_accounts_data.data,
             selectedDebitableAccount = allDebitableAccounts.filter(accountDetails=>accountDetails.AccountNumber ===account),
-            transferLimit;
+            transferLimit =selectedDebitableAccount[0].MaxIntraBankTransferLimit;
 
             
-        this.setState({ selectedAccount: account, selectedDebitableAccount}, ()=>{
-            console.log("selected account is", this.state.selectedAccount);
-        });
+        this.setState({ selectedAccount: account, selectedDebitableAccount, isSelectChanged:true, transferLimit});
 
     }
 
@@ -175,7 +173,7 @@ class TopUpVirtualCards extends React.Component {
                                                                 
                                                                 if(Math.abs(amountInUsd)>=10){
                                                                     console.log('valid', amountInUsd );
-                                                                    this.setState({isStep1Done: true, showStep1Error: false});
+                                                                    this.setState({isStep1Done: true, showStep1Error: false, isSelectChanged:false});
                                                                 }else{
                                                                     this.setState({showStep1Error: true, step1ErrorMessage:'Minimum amount in USD is $10'});
                                                                 }
@@ -193,6 +191,7 @@ class TopUpVirtualCards extends React.Component {
     }
 
     renderAccountAndPin(virtualCardsList){
+        let {transferLimit, isSelectChanged} = this.state;
         let props = this.props,
         topupOtpRequestStatus = props.sendTopVCCardinfo;
 
@@ -205,6 +204,9 @@ class TopUpVirtualCards extends React.Component {
                         // requestType = "forBankTransfer"
                         accountInvalid={this.state.isAccountInvalid}
                         onChange={this.handleSelectDebitableAccounts} />
+                        {isSelectChanged===true &&
+                            <span className="limit-text">Your daily transaction limit for the selected account is ₦{transferLimit} </span>
+                        }
                 </div>
                 <div className="input-ctn inputWrap">
                     <AlatPinInput
@@ -226,19 +228,30 @@ class TopUpVirtualCards extends React.Component {
                         <button type="button" onClick={()=>{
                                                             
                                                             if(this.state.selectedAccount!=='' && this.state.Pin!==''){
-                                                           
-                                                                this.setState({stage2Error: false});
-                                                                let payload ={
-                                                                    AccountNo: this.state.selectedAccount,
-                                                                    Amount: this.state.amountInNaira,
-                                                                    Dollar: this.state.amountInUsd,
-                                                                    Name: this.state.nameOnCard,
-                                                                    Type: 'topup',
-                                                                    Pin: this.state.Pin,
-                                                                    VirtualCardId: virtualCardsList.virtualCardData.id, 
-                                                                    rateId: virtualCardsList.exchangeRates.rateId
-                                                                };
-                                                                this.validatePinAndAccount(payload);
+                                                                // if(selectedDebitableAccount.)
+                                                                if(this.state.selectedDebitableAccount[0].AvailableBalance >= this.state.amountInNaira){
+                                                                    
+                                                                   if(this.state.selectedDebitableAccount[0].MaxIntraBankTransferLimit < this.state.amountInNaira){
+                                                                        this.setState({stage2Error: false});
+                                                                        let payload ={
+                                                                            AccountNo: this.state.selectedAccount,
+                                                                            Amount: this.state.amountInNaira,
+                                                                            Dollar: this.state.amountInUsd,
+                                                                            Name: this.state.nameOnCard,
+                                                                            Type: 'topup',
+                                                                            Pin: this.state.Pin,
+                                                                            VirtualCardId: virtualCardsList.virtualCardData.id, 
+                                                                            rateId: virtualCardsList.exchangeRates.rateId
+                                                                        };
+                                                                        this.validatePinAndAccount(payload);
+                                                                    }
+                                                                    else{
+                                                                        this.setState({stage2Error: true, stage2ErrorMsg:'Amount exceeds daily transaction limit for selected account'});
+                                                                    }
+                                                                }
+                                                                else{
+                                                                    this.setState({stage2Error: true, stage2ErrorMsg:'Selected account has insufficient funds'});
+                                                                }
                                                                 
                                                             }else{
                                                                 this.setState({stage2Error: true, stage2ErrorMsg:'Please provide all details'});
