@@ -25,7 +25,7 @@ const quantityOfMembers = [
     {  value: '10', label: "10"}
 ];
 
-class RotatingGroup extends React.Component {
+class EditRotatingGroup extends React.Component {
     constructor(props){
         super(props);
         this.state={
@@ -152,13 +152,13 @@ class RotatingGroup extends React.Component {
         }
     }
 
-    // handleSetAmount = (event) => {
-    //     this.setState({
-    //         amountToBeWithDrawn: event.target.value
-    //     })
-    //
-    //     this.props.dispatch(actions.setAmountToWithDraw(event.target.value));
-    // }
+    handleSetAmount = (event) => {
+        this.setState({
+            amountToBeWithDrawn: event.target.value
+        })
+
+        this.props.dispatch(actions.setAmountToWithDraw(event.target.value));
+    }
 
     handleSelectChange = (Frequency) => {
         this.setState({ numberOfMembers: Frequency.value
@@ -220,8 +220,7 @@ class RotatingGroup extends React.Component {
             return;
         }
         history.push('/savings/goal/group-savings-selection');
-    }
-    
+   }
 
     render() {
         const {selectedAccount,startDate,endDate,amountToContributeValidity,numberOfMembers, endDateValidity, startDateValidity, howMuchValidity,
@@ -348,4 +347,4 @@ function mapStateToProps(state){
         groups: state.customerGroup.data
     }
 }
-export default connect(mapStateToProps)(RotatingGroup);
+export default connect(mapStateToProps)(EditRotatingGroup);

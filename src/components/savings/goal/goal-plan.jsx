@@ -6,13 +6,15 @@ import calender from '../../../assets/img/calender.svg' ;
 import graph from '../../../assets/img/graph.svg';
 import stash from '../../../assets/img/stash.svg';
 import {NavLink, Link} from "react-router-dom";
+import {history} from '../../../_helpers/history';
+import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
+import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
+
 import '../savings.css';
 import { connect } from "react-redux";
 import {getCustomerGoalTransHistory} from '../../../redux/actions/savings/goal/get-customer-transaction-history.actions'
 import moment from 'moment';
 import ProgressBar from '../../savings/group/progress-bar';
-import savemoney from "../../../assets/img/save-money.svg";
-import * as util from "../../../shared/utils";
 
 
 
@@ -26,13 +28,32 @@ class GoalPlan extends React.Component {
         this.fetchCustomerTransHistoryGoals();
     }
 
-    componentDidMount() {
-        console.log('customer-goal'+this.props.customerGoalTransHistory)
-    }
     fetchCustomerTransHistoryGoals(){
         const { dispatch } = this.props;
         dispatch(getCustomerGoalTransHistory());
     };
+    componentDidMount = () => {
+        this.CheckGroupSavingsAvailability();
+        this.CheckRotatingSavingsAvailability();
+    }
+
+    CheckRotatingSavingsAvailability = () => {
+        this.props.dispatch(actions1.GetGroupsEsusu(this.state.user.token, null));
+    }
+
+    CheckGroupSavingsAvailability = () => {
+        this.props.dispatch(actions.customerGroup(this.state.user.token, null));
+    }
+
+    NavigateToGroupSavings = () => {
+        let groupSavings = Object.keys(this.props.groups.response); //returns an array
+        let rotatingSavings = Object.keys(this.props.groupSavingsEsusu.response); //returns an array
+        if(groupSavings.length != 0 || rotatingSavings.length != 0){
+            history.push('/savings/activityDashBoard');
+            return;
+        }
+        history.push('/savings/goal/group-savings-selection');
+    }
 
     renderGoalsElement(customerGoalTransHistory){
         if(!customerGoalTransHistory){
@@ -139,7 +160,6 @@ class GoalPlan extends React.Component {
                                                 <Link to={`/profile/${hist}`} className="btn btn-info">
                                                     <p>View Details</p>
                                                 </Link>
-
                                             </div>
                                         </div>
                                     </div>
@@ -177,10 +197,7 @@ class GoalPlan extends React.Component {
                                 <div className="sub-tab-nav">
                                     <ul>
                                         <li><a href="" className="active">Goals</a></li>
-                                        <NavLink to='/savings/goal/group-savings-selection'>
-                                            <li><a class="forGroupLink">Group Savings</a></li>
-                                        </NavLink>
-                                        
+                                        <li onClick={this.NavigateToGroupSavings}><a class="forGroupLink">Group Savings</a></li>
                                         <li><a href="#">Investments</a></li>
 
                                         <li className="btn-create-new-goal"> { GoalTransHistory ? <a className="btn-alat m-t-20 ">Create a New Goal</a>  :null
@@ -203,6 +220,9 @@ class GoalPlan extends React.Component {
 }
 const mapStateToProps = state => ({
     customerGoalTransHistory:state.customerGoalTransHistory,
+    groupSavingsEsusu: state.getGroupSavingsEsusu.data,
+    groups: state.customerGroup.data
+
 });
 
 export default connect (mapStateToProps)(GoalPlan);

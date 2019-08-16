@@ -35,8 +35,9 @@ import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingV
     import {groupSavingsTargetGoal, groupDetails, deleteGroup, contribute, editGroup, pauseGroup, findGroup, customerGroup, joinGroup, scheduleContribution, deleteMember, cashOut,
     continueScheduleGroupPayment, setAutomateSavingsEndDate, setAutomateSavingsStartDate, setAmountToWithDraw, setFrequency} from './group-savings/group-savings-reducers';
      import {getCustomerGoalTransHistoryReducer,GET_FORMULAR,GET_GOAL_TYPE} from './goal/get-customer-goal-trans-history-reducers';
-    import {createRotatingSavings, rotatingGroupDetails, joinAGroup, EditSlots} from './group-savings/rotating-group-reducers';
-
+     import {createRotatingSavings, rotatingGroupDetails, joinAGroup, EditSlots, 
+        editGroupEsusu, deleteGroupEsusu, GetGroupsEsusu, joinGroupEsusu} from './group-savings/rotating-group-reducers';
+    
 export const onboarding = {
     userRegistrationRequest,
     bvnDetailsReducer,
@@ -111,8 +112,8 @@ export const fixedGoal ={
     flexGoalStep2Reducer,
     addFlexGoalReducer
 
- };
- export const groupSavings ={
+ }
+ export const groupSavings = {
     groupSavingsTargetGoal,
     groupDetails,
     deleteGroup, 
@@ -130,14 +131,18 @@ export const fixedGoal ={
     setAutomateSavingsStartDate,
     setAmountToWithDraw,
     setFrequency
-};
-
+}
+ 
 export const rotatingSavings = {
     createRotatingSavings,
     rotatingGroupDetails,
     joinAGroup,
-    EditSlots
-};
+    EditSlots,
+    GetGroupsEsusu,
+    editGroupEsusu,
+    deleteGroupEsusu,
+    joinGroupEsusu
+}
 export const stashGoal={
     createStashGoalStep1Reducer,
     createStashGoalReducer,

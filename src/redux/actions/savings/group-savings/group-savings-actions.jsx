@@ -40,6 +40,8 @@ export const groupDetails = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                if(data.parent != undefined)
+                    history.push('/savings/group/group-analytics');
             })
             .catch(error => {
                 if(error.response.message){
@@ -59,11 +61,13 @@ export const groupDetails = (token, data) => {
 export const deleteGroup = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.DELETE_GROUP, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.DELETE_GROUP, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                if(data.deleteGroup != undefined)
+                     history.push('/savings/group/success-message');
             })
             .catch(error => {
                 if(error.response.message){
@@ -107,11 +111,12 @@ export const contribute = (token, data) => {
 export const editGroup = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.DELETE_GROUP, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.EDIT_GROUP_SAVINGS, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                history.push('/savings/group/success-message');
             })
             .catch(error => {
                 if(error.response.message){
@@ -131,11 +136,12 @@ export const editGroup = (token, data) => {
 export const pauseGroup = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.DELETE_GROUP, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.PAUSE_GROUP, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                history.push('/savings/group/success-message');
             })
             .catch(error => {
                 if(error.response.message){
@@ -177,20 +183,22 @@ export const findGroup = (token, data) => {
     function failure(error) { return {type:GROUPSAVINGSCONSTANT.FIND_GROUP_ERROR, error} }
 };
 
-export const customerGroup = (token, data) => {
+export const customerGroup = (token, data = null) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.DELETE_GROUP, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.GROUPCUSTOMERS, "GET", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                // if(data.parent != undefined)
+                //     history.push('/savings/group/group-analytics');
             })
             .catch(error => {
                 if(error.response.message){
                     dispatch(failure(error.response.message.toString()));
                 }else{
-                    dispatch(failure('WE are unable to PAUSE GROUP NOW!'));
+                    dispatch(failure('WE are unable to GET CUSTOMER GROUPS NOW!'));
                 }
                 // dispatch(failure(error.response.data.message.toString()));
             });

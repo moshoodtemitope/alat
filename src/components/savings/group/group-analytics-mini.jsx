@@ -11,11 +11,14 @@ import Buttons from './button';
 import { connect } from "react-redux";
 import { NavButtons } from './component';
 import MoreDetails from './details';
+import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
+import {history} from '../../../_helpers/history';
 
 class GroupAnalyticsMini extends React.Component {
     constructor(props){
         super(props);
         this.state= {
+            user: JSON.parse(localStorage.getItem("user")),
             type: 2,
             navType: 2,
             buttonType: "bigButton",
@@ -72,6 +75,23 @@ class GroupAnalyticsMini extends React.Component {
         return this.props.groupDetails.response.memberCount;
     }
 
+    DeleteGroup = () => {
+        let data = {
+            groupId: this.props.groupDetails.response.id
+        }
+        this.props.dispatch(actions.deleteGroupEsusu(this.state.user.token, data));
+    }
+
+    NavigateToGroupSavings = () => {
+        let groupSavings = Object.keys(this.props.groups); //returns an array
+        let rotatingSavings = Object.keys(this.props.groupSavingsEsusu); //returns an array
+        if(groupSavings.length != 0 || rotatingSavings.length != 0){
+            history.push('/savings/activityDashBoard');
+            return;
+        }
+        history.push('/savings/goal/group-savings-selection');
+    }
+
     render() {
         const {endDate,endDateInvalid} = this.state;
 
@@ -90,9 +110,9 @@ class GroupAnalyticsMini extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a href="#">Goals</a></li>
                                         </NavLink>
-                                        <NavLink to="/savings/goal/group-savings-selection">
-                                            <li><a className="active">Group Savings</a></li>
-                                        </NavLink>
+                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
+                                            <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                        {/* </NavLink> */}
                                             <li><a href="#">Investments</a></li>
 
                                         </ul>
@@ -145,10 +165,12 @@ class GroupAnalyticsMini extends React.Component {
                                                     
                                                     <div className='miniNav'>
                                                         <div className='left'>
-                                                            <p>Edit</p>
+                                                           <NavLink to='/group-savings/edit-rotating'>
+                                                               <p>Edit</p>
+                                                           </NavLink>
                                                         </div>
                                                         <div className='right'>
-                                                            <p>Delete</p>
+                                                            <p onClick={this.DeleteGroup}>Delete</p>
                                                         </div>
                                                 </div>        
                                              </div>
@@ -175,7 +197,9 @@ class GroupAnalyticsMini extends React.Component {
 
 function mapStateToProps(state){
     return {
-        groupDetails: state.rotatingGroupDetails.data
+        groupDetails: state.rotatingGroupDetails.data,
+        groupSavingsEsusu: state.getGroupSavingsEsusu.data,
+        groups: state.customerGroup.data
     }
  }
  

@@ -46,8 +46,6 @@ class CreateStash extends React.Component {
             FrequencyId: 8,
             FrequencyDurationId: 1,
             isAccountInvalid:false,
-
-
         };
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -125,11 +123,7 @@ class CreateStash extends React.Component {
     };
     setFregValue = () => {
         this.setState({ payOutInterest: this.calculateInterest() });
-        console.log('test',this.calculateInterest(this.state.targetAmount, this.state.startDate, this.state.endDate));
-        console.log('target Amount',this.state.targetAmount);
-        console.log('start date',this.state.startDate);
-        console.log('end Date',this.state.endDate)
-       
+
 
     };
     calculateInterest(){

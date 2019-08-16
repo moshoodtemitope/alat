@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Fragment} from "react";
 import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from './../container';
+import SavingsContainer from '../container';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import {Switch} from "react-router";
 import Select from 'react-select';
@@ -14,7 +14,7 @@ import {GROUPSAVINGSCONSTANT} from "../../../redux/constants/savings/group/index
 import {history} from '../../../_helpers/history';
 
 
-class CreateATargetGoal extends React.Component {
+class EditGroupSavings extends React.Component {
     constructor(props){
         super(props);
         this.state= {
@@ -33,20 +33,8 @@ class CreateATargetGoal extends React.Component {
             NoAccountSelectionWasDon: false,
             theGroupName: false,
             Purpose: false,
-
-            ///Editing Purpose
-            edit: false
         }
-         
-        //this.checkingUserInputs = this.checkingUserInputs.bind(this);
-        //this.handleSelectDebitableAccounts = this.handleSelectDebitableAccounts.bind(this);
-        //this.checkAccountNumber = this.checkAccountNumber.bind(this);
-        //this.checkMinimumAccountToContribute = this.checkMinimumAccountToContribute.bind(this);
-        //this.checkTheSelectedAccount = this.checkTheSelectedAccount.bind(this);
-        //this.checkTheEndDate = this.checkTheEndDate.bind(this);
-        //this.checkTheTargetAmount = this.checkTheTargetAmount.bind(this);
-        //this.checkGroupPurpose = this.checkGroupPurpose.bind(this);
-        //this.SubmitTargetGoal = this.SubmitTargetGoal.bind(this);
+      
     }
 
     componentDidMount = () => {
@@ -196,18 +184,19 @@ class CreateATargetGoal extends React.Component {
         }
      }
 
-    SubmitTargetGoal = () => {
+    SubmitTargetGoalEdited = () => {
         const data = {
-            Name:this.state.groupName,
-            TargetAmount: parseFloat(this.state.targetAmount),
-            TargetDate: this.state.targetDate,
-            MinimumIndividualAmount: parseFloat(this.state.minimumIndividualAmount),
-            DebitAccount: this.state.selectedAccount,
-            Purpose: this.state.groupPurpose, 
+            groupId: this.props.groupDetails.response.id,
+            name:this.state.groupName,
+            targetAmount: parseFloat(this.state.targetAmount),
+            targetDate: this.state.targetDate,
+            minimumIndividualAmount: parseFloat(this.state.minimumIndividualAmount),
+            debitAccount: this.state.selectedAccount,
+            purpose: this.state.groupPurpose, 
         }
         console.log(data)
         //return;
-        this.props.dispatch(actions.groupSavingsTargetGoal(this.state.user.token, data));
+        this.props.dispatch(actions.editGroup(this.state.user.token, data));
     }
 
     InitialPropertyCheck = () => {
@@ -227,7 +216,7 @@ class CreateATargetGoal extends React.Component {
         // if(this.checkMinimumAccountToContribute() || this.checkTheSelectedAccount()||this.checkTheEndDate()||this.checkGroupPurpose()||this.checkGroupName()||this.checkTheTargetAmount()){
         //     console.log(this.checkMinimumAccountToContribute())
         // } 
-        this.SubmitTargetGoal();
+        this.SubmitTargetGoalEdited();
         // console.log('did the code ever got here')
         // console.log(this.state)
         // switch(this.checkingUserInputs()){
@@ -242,14 +231,15 @@ class CreateATargetGoal extends React.Component {
     }
 
     NavigateToGroupSavings = () => {
-         let groupSavings = Object.keys(this.props.groups); //returns an array
-         let rotatingSavings = Object.keys(this.props.groupSavingsEsusu); //returns an array
-         if(groupSavings.length != 0 || rotatingSavings.length != 0){
-             history.push('/savings/activityDashBoard');
-             return;
-         }
-         history.push('/savings/goal/group-savings-selection');
+        let groupSavings = Object.keys(this.props.groups); //returns an array
+        let rotatingSavings = Object.keys(this.props.groupSavingsEsusu); //returns an array
+        if(groupSavings.length != 0 || rotatingSavings.length != 0){
+            history.push('/savings/activityDashBoard');
+            return;
+        }
+        history.push('/savings/goal/group-savings-selection');
     }
+
 
     render() {
         const {targetDate, theGroupName, Purpose, howMuchValidity, GroupEndDate, AmountToContribute, NoAccountSelectionWasDon, selectedAccount} = this.state;
@@ -384,7 +374,7 @@ function mapStateToProps(state){
         groups: state.customerGroup.data
     }
 }
-export default connect(mapStateToProps)(CreateATargetGoal);
+export default connect(mapStateToProps)(EditGroupSavings);
 
 
 

@@ -39,6 +39,8 @@ export const rotatingGroupDetails = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                if(data.parent != undefined)
+                     history.push('/savings/group-analytics-mini');
             }) 
             .catch(error => {
                 if(error.response.message){
@@ -102,4 +104,126 @@ export const EditSlots = (token, data) => {
     function success(response) { return {type:GROUPSAVINGSCONSTANT.EDIT_SLOTS_SUCCESS, response} }
     function failure(error) { return {type:GROUPSAVINGSCONSTANT.EDIT_SLOTS_ERROR, error} }
 };
+
+export const GetGroupsEsusu = (token, data = null) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.GET_GROUPS, "GET", data, SystemConstant.HEADER, false);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+            }) 
+            .catch(error => {
+                if(error.response.message){
+                    dispatch(failure(error.response.message.toString()));
+                }else{
+                    dispatch(failure('We are unable to create rotating group now!'));
+                }
+                // dispatch(failure(error.response.data.message.toString()));
+            });
+    };
+    
+    function request(request) { return {type:GROUPSAVINGSCONSTANT.GET_GROUPS_ESUSU, request} }
+    function success(response) { return {type:GROUPSAVINGSCONSTANT.GET_GROUPS_ESUSU_SUCCESS, response} }
+    function failure(error) { return {type:GROUPSAVINGSCONSTANT.GET_GROUPS_ESUSU_ERROR, error} }
+};
+
+export const editGroupEsusu = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.EDIT_GROUP_ESUSU, "POST", data, SystemConstant.HEADER, false);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+            }) 
+            .catch(error => {
+                if(error.response.message){
+                    dispatch(failure(error.response.message.toString()));
+                }else{
+                    dispatch(failure('We are unable to EDIT GROUP NOW!'));
+                }
+                // dispatch(failure(error.response.data.message.toString()));
+            });
+    };
+    
+    function request(request) { return {type:GROUPSAVINGSCONSTANT.EDIT_GROUP_ESUSU, request} }
+    function success(response) { return {type:GROUPSAVINGSCONSTANT.EDIT_GROUP_ESUSU_SUCCESS, response} }
+    function failure(error) { return {type:GROUPSAVINGSCONSTANT.EDIT_GROUP_ESUSU_ERROR, error} }
+};
+
+export const deleteGroupEsusu = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.DELETE_GROUP_ESUSU, "POST", data, SystemConstant.HEADER, false);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+                history.push('/savings/group/success-message');
+            }) 
+            .catch(error => {
+                if(error.response.message){
+                    dispatch(failure(error.response.message.toString()));
+                }else{
+                    dispatch(failure('We are unable to DELETE GROUP NOW!'));
+                }
+                // dispatch(failure(error.response.data.message.toString()));
+            });
+    };
+    
+    function request(request) { return {type:GROUPSAVINGSCONSTANT.DELETE_GROUP_ESUSU, request} }
+    function success(response) { return {type:GROUPSAVINGSCONSTANT.DELETE_GROUP_ESUSU_SUCCESS, response} }
+    function failure(error) { return {type:GROUPSAVINGSCONSTANT.DELETE_GROUP_ESUSU_ERROR, error} }
+};
+
+export const joinGroupEsusu = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.DELETE_GROUP_ESUSU, "POST", data, SystemConstant.HEADER, false);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+            }) 
+            .catch(error => {
+                if(error.response.message){
+                    dispatch(failure(error.response.message.toString()));
+                }else{
+                    dispatch(failure('You are unable to Join NOW!'));
+                }
+                // dispatch(failure(error.response.data.message.toString()));
+            });
+    };
+    
+    function request(request) { return {type:GROUPSAVINGSCONSTANT.JOIN_GROUP_ESUSU, request} }
+    function success(response) { return {type:GROUPSAVINGSCONSTANT.JOIN_GROUP_ESUSU_SUCCESS, response} }
+    function failure(error) { return {type:GROUPSAVINGSCONSTANT.JOIN_GROUP_ESUSU_ERROR, error} }
+};
+
+// export const pauseGroupEsusu = (token, data) => {
+//     SystemConstant.HEADER['alat-token'] = token;
+//     return (dispatch) => {
+//         let consume = ApiService.request(routes.DELETE_GROUP_ESUSU, "POST", data, SystemConstant.HEADER, false);
+//         dispatch(request(consume));
+//         return consume
+//             .then(response => {
+//                 dispatch(success(response.data));
+//             }) 
+//             .catch(error => {
+//                 if(error.response.message){
+//                     dispatch(failure(error.response.message.toString()));
+//                 }else{
+//                     dispatch(failure('You are unable to Join NOW!'));
+//                 }
+//                 // dispatch(failure(error.response.data.message.toString()));
+//             });
+//     };
+    
+//     function request(request) { return {type:GROUPSAVINGSCONSTANT.JOIN_GROUP_ESUSU, request} }
+//     function success(response) { return {type:GROUPSAVINGSCONSTANT.JOIN_GROUP_ESUSU_SUCCESS, response} }
+//     function failure(error) { return {type:GROUPSAVINGSCONSTANT.JOIN_GROUP_ESUSU_ERROR, error} }
+// };
+
 

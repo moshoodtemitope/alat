@@ -41,9 +41,9 @@ import JoinedGroupSuccessfully from './savings/group/joined-group-successfully';
 import  CreateStashSuccessMessage from './savings/goal/create-stash-success';
 import GroupAnalyticsMini2 from './savings/group/group-analytics-mini2';
 import ParentDashBoard from './savings/group/parent-dashboard';
-
-
-// import MemberSlots from './savings/group/members-slot';
+import MemberSlots from './savings/group/members-slot';
+import EditGroupSavings from './savings/group/edit-group-savings';
+import EditRotatingGroup from './savings/group/edit-rotating-savings-group';
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
     return (
@@ -112,7 +112,9 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path="/savings/group/joingroup-success-message" authed={this.props.user} component={JoinedGroupSuccessfully} />
                     <PrivateRoute path="/savings/goal/create-stash-success-message" authed={this.props.user} component={CreateStashSuccessMessage} />
                     <PrivateRoute path='/savings/activityDashBoard' authed={this.props.user} component={ParentDashBoard} />
-                    {/* <PrivateRoute path='/group-savings/edit-members-slots' authed={this.props.user} component={MemberSlots} /> */}
+                    <PrivateRoute path='/group-savings/edit-members-slots' authed={this.props.user} component={MemberSlots} />
+                    <PrivateRoute path='/group-savings/edit-group' authed={this.props.user} component={EditGroupSavings} />
+                    <PrivateRoute path='/group-savings/edit-rotating' authed={this.props.user} component={EditRotatingGroup} />
                 </Switch>
             </Router>
         )
