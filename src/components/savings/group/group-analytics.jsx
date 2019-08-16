@@ -156,6 +156,16 @@ class GroupAnalytics extends React.Component {
     EditThisGroup = () => {
         return this.props.history.push('/group-savings/edit-group');
     }
+
+    NavigateToGroupSavings = () => {
+        let groupSavings = Object.keys(this.props.groups); //returns an array
+        let rotatingSavings = Object.keys(this.props.groupSavingsEsusu); //returns an array
+        if(groupSavings.length != 0 || rotatingSavings.length != 0){
+            history.push('/savings/activityDashBoard');
+            return;
+        }
+        history.push('/savings/goal/group-savings-selection');
+    }
     
     render() {
         const {endDate,endDateInvalid} = this.state;
@@ -175,9 +185,9 @@ class GroupAnalytics extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a href="#">Goals</a></li>
                                         </NavLink>
-                                        <NavLink to="/savings/goal/group-savings-selection">
-                                            <li><a className="active">Group Savings</a></li>
-                                        </NavLink>
+                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
+                                            <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                        {/* </NavLink> */}
                                             <li><a href="#">Investments</a></li>
                                         </ul>
                                     </div>
@@ -275,7 +285,9 @@ class GroupAnalytics extends React.Component {
 
 function mapStateToProps(state) {
    return {
-       groupDetails: state.groupDetails.data
+       groupDetails: state.groupDetails.data,
+       groupSavingsEsusu: state.getGroupSavingsEsusu.data,
+       groups: state.customerGroup.data
    }
 }
 

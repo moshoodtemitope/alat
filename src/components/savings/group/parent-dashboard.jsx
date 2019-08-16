@@ -134,9 +134,9 @@ class ParentDashBoard extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a id='parentGoal'>Goals</a></li>
                                         </NavLink>
-                                        <NavLink to="/savings/goal/group-savings-selection">
+                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                             <li><a className="active">Group Savings</a></li>
-                                        </NavLink>
+                                        {/* </NavLink> */}
                                             
                                         <li><a>Investments</a></li>
 

@@ -10,6 +10,7 @@ import SelectDebitableAccounts from '../../../shared/components/selectDebitableA
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
+import {history} from '../../../_helpers/history';
 
 class RotatingGroupCreated extends React.Component {
     constructor(props){
@@ -30,6 +31,16 @@ class RotatingGroupCreated extends React.Component {
     handleSubmit = (event) => {
         event.preventDefault();
         return null;
+    } 
+    
+    NavigateToGroupSavings = () => {
+        let groupSavings = Object.keys(this.props.groups); //returns an array
+        let rotatingSavings = Object.keys(this.props.groupSavingsEsusu); //returns an array
+        if(groupSavings.length != 0 || rotatingSavings.length != 0){
+            history.push('/savings/activityDashBoard');
+            return;
+        }
+        history.push('/savings/goal/group-savings-selection');
     }
 
     render() {
@@ -48,9 +59,9 @@ class RotatingGroupCreated extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a href="#">Goals</a></li>
                                         </NavLink>
-                                        <NavLink to='/savings/goal/group-savings-selection'>
-                                            <li><a className="active">Group Savings</a></li>
-                                        </NavLink>
+                                        {/* <NavLink to='/savings/goal/group-savings-selection'> */}
+                                            <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                        {/* </NavLink> */}
                                             <li><a href="#">Investments</a></li>
                                         </ul>
                                     </div>
@@ -110,7 +121,9 @@ class RotatingGroupCreated extends React.Component {
 
 function mapStateToProps(state){
    return {
-       createdGroupSavings: state.createRotatingGroupSavings.data
+       createdGroupSavings: state.createRotatingGroupSavings.data,
+       groupSavingsEsusu: state.getGroupSavingsEsusu.data,
+       groups: state.customerGroup.data
    }
 }
 

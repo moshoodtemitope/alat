@@ -16,6 +16,7 @@ import Buttons from './button';
 import { NavButtons } from './component';
 import MoreDetails from './details';
 import Members from './list-item';
+import {history} from '../../../_helpers/history';
 
 class GroupAnalytics2 extends React.Component {
     constructor(props){
@@ -45,7 +46,15 @@ class GroupAnalytics2 extends React.Component {
         this.props.history.push('/savings/group/group-analytics');
     }
 
-    
+    NavigateToGroupSavings = () => {
+        let groupSavings = Object.keys(this.props.groups); //returns an array
+        let rotatingSavings = Object.keys(this.props.groupSavingsEsusu); //returns an array
+        if(groupSavings.length != 0 || rotatingSavings.length != 0){
+            history.push('/savings/activityDashBoard');
+            return;
+        }
+        history.push('/savings/goal/group-savings-selection');
+    }
 
   
     render() {
@@ -65,9 +74,9 @@ class GroupAnalytics2 extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a href="#">Goals</a></li>
                                         </NavLink>
-                                        <NavLink to="/savings/goal/group-savings-selection">
-                                            <li><a className="active">Group Savings</a></li>
-                                        </NavLink>
+                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
+                                            <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                        {/* </NavLink> */}
                                             <li><a href="#">Investments</a></li>
 
                                         </ul>
@@ -146,7 +155,9 @@ class GroupAnalytics2 extends React.Component {
 
 function mapStateToProps(state){
     return {
-      groupDetails: state.groupDetails.data
+      groupDetails: state.groupDetails.data,
+      groupSavingsEsusu: state.getGroupSavingsEsusu.data,
+      groups: state.customerGroup.data
     }
 }
 

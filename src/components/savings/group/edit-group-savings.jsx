@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Fragment} from "react";
 import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from './../container';
+import SavingsContainer from '../container';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import {Switch} from "react-router";
 import Select from 'react-select';
@@ -11,6 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
 import {GROUPSAVINGSCONSTANT} from "../../../redux/constants/savings/group/index";
+import {history} from '../../../_helpers/history';
 
 
 class EditGroupSavings extends React.Component {
@@ -229,6 +230,17 @@ class EditGroupSavings extends React.Component {
         // }
     }
 
+    NavigateToGroupSavings = () => {
+        let groupSavings = Object.keys(this.props.groups); //returns an array
+        let rotatingSavings = Object.keys(this.props.groupSavingsEsusu); //returns an array
+        if(groupSavings.length != 0 || rotatingSavings.length != 0){
+            history.push('/savings/activityDashBoard');
+            return;
+        }
+        history.push('/savings/goal/group-savings-selection');
+    }
+
+
     render() {
         const {targetDate, theGroupName, Purpose, howMuchValidity, GroupEndDate, AmountToContribute, NoAccountSelectionWasDon, selectedAccount} = this.state;
         return (
@@ -246,9 +258,9 @@ class EditGroupSavings extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a href="#">Goals</a></li>
                                         </NavLink>
-                                        <NavLink to="/savings/goal/group-savings-selection">
-                                            <li><a className="active">Group Savings</a></li>
-                                        </NavLink>
+                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
+                                            <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                        {/* </NavLink> */}
                                             <li><a href="#">Investments</a></li>
                                         </ul>
                                     </div>
@@ -357,7 +369,9 @@ function mapStateToProps(state){
     return {
         data: state.groupSavings,
         alert: state.alert,
-        groupDetails: state.groupDetails.data
+        groupDetails: state.groupDetails.data,
+        groupSavingsEsusu: state.getGroupSavingsEsusu.data,
+        groups: state.customerGroup.data
     }
 }
 export default connect(mapStateToProps)(EditGroupSavings);
