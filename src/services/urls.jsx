@@ -111,18 +111,22 @@ export const routes = {
 
 
 
-
-
     // Group Savings
     CREATEGOAL: BASEURL + '/Savings.WebApi/api/GroupSaving/CreateGroup',
     GROUPCUSTOMERS: BASEURL + '/Savings.WebApi/api/GroupSaving/GetCustomerGroups',
     DELETE_GROUP: BASEURL + '/Savings.WebApi/api/GroupSaving/DeleteGroup',
     GETGROUPDETAILS: BASEURL + '/Savings.WebApi/api/GroupSaving/GetGroupDetails',
     SCHEDULE_CONTRIBUTION: BASEURL + '/Savings.WebApi/api/GroupSaving/ScheduleContribution',
+    EDIT_GROUP_SAVINGS: BASEURL + '/Savings.WebApi/api/GroupSaving/EditGroup',
+    PAUSE_GROUP: BASEURL + '/Savings.WebApi/api/GroupSaving/PauseScheduledGroupPayemnt',
 
     // ROTATING SAVINGS (ESUSU)
     CREATE_ROTATING_SAVINGS: BASEURL + '/Savings.WebApi/api/EsusuSaving/CreateGroup',
     ROTATING_GROUP_DETAILS: BASEURL +  '/Savings.WebApi/api/EsusuSaving/GetGroupDetails',
     JOIN_A_GROUP: BASEURL + '/Savings.WebApi/api/EsusuSaving/JoinGroup',
-    EDIT_SLOTS: BASEURL + '/Savings.WebApi/api/EsusuSaving/EditSlots'
+    EDIT_SLOTS: BASEURL + '/Savings.WebApi/api/EsusuSaving/EditSlots',
+    GET_GROUPS: BASEURL + '/Savings.WebApi/api/EsusuSaving/GetGroups',
+    EDIT_GROUP_ESUSU: BASEURL + '/Savings.WebApi/api/EsusuSaving/EditGroup',
+    DELETE_GROUP_ESUSU: BASEURL + '/Savings.WebApi/api/EsusuSaving/DeleteGroup',
+    JOIN_GROUP_ESUSU: BASEURL + '/Savings.WebApi/api/EsusuSaving/JoinGroup'
 };

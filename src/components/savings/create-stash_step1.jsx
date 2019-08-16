@@ -46,8 +46,6 @@ class CreateStash extends React.Component {
             FrequencyId: 8,
             FrequencyDurationId: 1,
             isAccountInvalid:false,
-
-
         };
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);

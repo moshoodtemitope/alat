@@ -31,13 +31,13 @@ export function NavButtons(props){
         case 3:
             return(<div className='row butNav'>
                         <div className="col-xs-4 navLeft">
-                            <p>{props.leftName}</p>
+                            <p id={props.edit} onClick={props.EditGroup}>{props.leftName}</p>
                         </div>
                         <div className="col-xs-4 navMiddle">
-                            <p>{props.middleName}</p>
+                            <p id={props.pause} onClick={props.PauseGroup}>{props.middleName}</p>
                         </div>
                         <div className="col-xs-4 navRight">
-                            <p>{props.rightName}</p>
+                            <p id={props.delete} onClick={props.DeleteGroup}>{props.rightName}</p>
                         </div>
                 </div>);
     }

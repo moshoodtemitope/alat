@@ -6,6 +6,8 @@ import {NavLink, Route} from "react-router-dom";
 import {Switch} from "react-router";
 import "react-datepicker/dist/react-datepicker.css";
 import Members from './multiple-selection';
+import {history} from '../../../_helpers/history';
+
 class MembersSlot extends React.Component {
     constructor(props){
         super(props)
@@ -49,6 +51,17 @@ class MembersSlot extends React.Component {
     handleSelectChange = (event) => {
         event.preventDefault();
     }
+
+    NavigateToGroupSavings = () => {
+        let groupSavings = Object.keys(this.props.groups); //returns an array
+        let rotatingSavings = Object.keys(this.props.groupSavingsEsusu); //returns an array
+        if(groupSavings.length != 0 || rotatingSavings.length != 0){
+            history.push('/savings/activityDashBoard');
+            return;
+        }
+        history.push('/savings/goal/group-savings-selection');
+    }
+
    
     render() {
         return (
@@ -66,9 +79,9 @@ class MembersSlot extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a href="#">Goals</a></li>
                                         </NavLink>
-                                        <NavLink to="/savings/goal/group-savings-selection">
-                                            <li><a className="active">Group Savings</a></li>
-                                        </NavLink>
+                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
+                                            <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                        {/* </NavLink> */}
                                             <li><a href="#">Investments</a></li>
                                         </ul>
                                     </div>
@@ -123,4 +136,11 @@ class MembersSlot extends React.Component {
         );
     }
 }
-export default MembersSlot;
+
+function mapStateToProps(state){
+    return {
+        groupSavingsEsusu: state.getGroupSavingsEsusu.data,
+        groups: state.customerGroup.data
+    }
+}
+export default connect(mapStateToProps)(MembersSlot);

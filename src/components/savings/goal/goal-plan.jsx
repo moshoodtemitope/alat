@@ -6,6 +6,10 @@ import calender from '../../../assets/img/calender.svg' ;
 import graph from '../../../assets/img/graph.svg';
 import stash from '../../../assets/img/stash.svg';
 import {NavLink, Link} from "react-router-dom";
+import {history} from '../../../_helpers/history';
+import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
+import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
+
 import '../savings.css';
 import { connect } from "react-redux";
 import {getCustomerGoalTransHistory, GoalType, GoalFormula} from '../../../redux/actions/savings/goal/get-customer-transaction-history.actions'
@@ -31,6 +35,28 @@ class GoalPlan extends React.Component {
         const { dispatch } = this.props;
         dispatch(getCustomerGoalTransHistory());
     };
+    componentDidMount = () => {
+        this.CheckGroupSavingsAvailability();
+        this.CheckRotatingSavingsAvailability();
+    }
+
+    CheckRotatingSavingsAvailability = () => {
+        this.props.dispatch(actions1.GetGroupsEsusu(this.state.user.token, null));
+    }
+
+    CheckGroupSavingsAvailability = () => {
+        this.props.dispatch(actions.customerGroup(this.state.user.token, null));
+    }
+
+    NavigateToGroupSavings = () => {
+        let groupSavings = Object.keys(this.props.groups.response); //returns an array
+        let rotatingSavings = Object.keys(this.props.groupSavingsEsusu.response); //returns an array
+        if(groupSavings.length != 0 || rotatingSavings.length != 0){
+            history.push('/savings/activityDashBoard');
+            return;
+        }
+        history.push('/savings/goal/group-savings-selection');
+    }
 
     fetchGoalType(){
         const {dispatch}= this.props;
@@ -198,7 +224,6 @@ class GoalPlan extends React.Component {
                                                 } }>
                                                     <span>View Details</span>
                                                 </Link>
-
                                             </div>
                                         </div>
                                     </div>
@@ -298,6 +323,9 @@ class GoalPlan extends React.Component {
 }
 const mapStateToProps = state => ({
     customerGoalTransHistory:state.customerGoalTransHistory,
+    groupSavingsEsusu: state.getGroupSavingsEsusu.data,
+    groups: state.customerGroup.data
+
 });
 
 export default connect (mapStateToProps)(GoalPlan);
