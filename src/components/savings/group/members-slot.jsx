@@ -143,7 +143,7 @@ class MemberSlots extends React.Component{
        let memberSlot = event.target.id;
        let memberName = event.target.value;
        let parent = this.state.sortedMembers;
-
+       
        for(let count=0; count<parent.length; count++){
              if(parent[count].firstName == memberName.split(' ')[0] && parent[count].lastName == memberName.split(' ')[1])
                     parent[count].slot = memberSlot;
