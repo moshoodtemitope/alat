@@ -45,15 +45,16 @@ class VirtualCardsOtp extends React.Component{
         const { dispatch } = this.props;
         let newCardotpRequestStatus     = this.props.sendVCNewCardinfo,
             topupOtpRequestStatus       = this.props.sendTopVCCardinfo,
-            payload;
+            payload ={};
 
             this.setState({isSubmitting: true});
-
+            console.log('going on', topupOtpRequestStatus.topup_vc_info.cardpayload);
             //Send payment details for TOP UP Virtual Card
             if(newCardotpRequestStatus.new_vc_info === undefined 
                 && topupOtpRequestStatus.topup_vc_info!==undefined ){
 
                     payload = topupOtpRequestStatus.topup_vc_info.cardpayload;
+                    
                     payload.OTP = this.state.OtpValue;
 
 
@@ -65,7 +66,7 @@ class VirtualCardsOtp extends React.Component{
             if(newCardotpRequestStatus.new_vc_info !== undefined 
                 && topupOtpRequestStatus.topup_vc_info===undefined ){
 
-                    payload = topupOtpRequestStatus.topup_vc_info.cardpayload;
+                    payload = newCardotpRequestStatus.new_vc_info.cardpayload;
                     payload.OTP = this.state.OtpValue;
 
 
@@ -87,11 +88,11 @@ class VirtualCardsOtp extends React.Component{
     resendOTP(cardAction, payload){
         const { dispatch } = this.props;
         if(cardAction==="newcard"){
-            dispatch(sendNewVirtualCardInfo(payload, this.state.user.token))
+            dispatch(sendNewVirtualCardInfo(payload, this.state.user.token, false))
         }
 
         if(cardAction==="topupcard"){
-            dispatch(topUpVirtualCard(payload, this.state.user.token))
+            dispatch(topUpVirtualCard(payload, this.state.user.token, false))
         }
         
     }
@@ -122,14 +123,14 @@ class VirtualCardsOtp extends React.Component{
                                     && topupOtpRequestStatus.topup_vc_info===undefined 
                                     && newCardotpRequestStatus.new_vc_info.response) 
 
-                                    && <p className="m-b-20" >{newCardotpRequestStatus.new_vc_info.response.description}</p> }
+                                    && <p className="m-b-20" >{newCardotpRequestStatus.new_vc_info.response.data.description}</p> }
                                     
 
                                      {/* Display OTP message for TopUp Virtual Card */}
                                     {(topupOtpRequestStatus.topup_vc_info!==undefined 
                                     && topupOtpRequestStatus.topup_vc_info.response) 
 
-                                    && <p className="m-b-20" >{topupOtpRequestStatus.topup_vc_info.response.description}</p> }
+                                    && <p className="m-b-20" >{topupOtpRequestStatus.topup_vc_info.response.data.description}</p> }
 
                                     <form action="" onSubmit={this.handleSubmit}>
                                         <div className="centered-input otpInput">

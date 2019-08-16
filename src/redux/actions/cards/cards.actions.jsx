@@ -12,7 +12,8 @@ import {
     SEND_NEWVC_DATA_FAILURE,
     SEND_TOPUP_DATA_SUCCESS,
     SEND_TOPUP_DATA_PENDING,
-    SEND_TOPUP_DATA_FAILURE
+    SEND_TOPUP_DATA_FAILURE,
+    ALATCARD_REDUCER_CLEAR
 } from "../../constants/cards/cards.constants";
 
 export const getCurrentVirtualCard = (token, source) => {
@@ -156,11 +157,13 @@ export const sendNewVirtualCardInfo = (newVirtualCardInfo, token, hasOtp)=>{
         dispatch(request(consume));
         return consume
             .then(response=>{
-                dispatch(success(response.data));
+                
                 if(hasOtp===true){
                     isCompleted = true;
+                    dispatch(success(response.data));
                     history.push("/virtual-cards/fund-success");
                 }else{
+                    dispatch(success(response.data));
                     history.push("/virtual-cards/otp");
                 }
                 
@@ -199,12 +202,14 @@ export const topUpVirtualCard = (cardTopUpDetails, token, hasOtp)=>{
         dispatch(request(consume));
         return consume
             .then(response=>{
-                dispatch(success(response.data));
-
+                
+                
                 if(hasOtp===true){
                     isCompleted = true;
+                    dispatch(success(response))
                     history.push("/virtual-cards/fund-success");
                 }else{
+                    dispatch(success(response))
                     history.push("/virtual-cards/otp");
                 }
             })
@@ -253,3 +258,10 @@ export const topUpVirtualCard = (cardTopUpDetails, token, hasOtp)=>{
 //     function success(response) { return {type:SEND_TOPUP_DATA_SUCCESS, response, cardpayload: cardTopUpDetails} }
 //     function failure(error) { return {type:SEND_TOPUP_DATA_FAILURE, error} }
 // }
+
+export const clearCardsStore =()=>{
+    return (dispatch) => { 
+        dispatch(clear());
+    }
+    function clear(){return {type: ALATCARD_REDUCER_CLEAR, clear_data: "" }}
+}
