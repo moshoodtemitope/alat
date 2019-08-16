@@ -7,13 +7,29 @@ import {Switch} from "react-router";
 import Members from './list-item';
 import { connect } from "react-redux";
 import {history} from '../../../_helpers/history';
-
+import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
+import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 class JoinedGroupSuccessfully extends React.Component {
     constructor(props){
         super(props);
         this.state={
+            user: JSON.parse(localStorage.getItem("user"))
         }
     }
+
+    componentDidMount = () => {
+        this.CheckGroupSavingsAvailability();
+        this.CheckRotatingSavingsAvailability();
+     }
+ 
+     CheckRotatingSavingsAvailability = () => {
+         this.props.dispatch(actions1.GetGroupsEsusu(this.state.user.token, null));
+     }
+ 
+     CheckGroupSavingsAvailability = () => {
+         this.props.dispatch(actions.customerGroup(this.state.user.token, null));
+     }
+ 
 
     NavigateToGroupSavings = () => {
         let groupSavings = Object.keys(this.props.groups); //returns an array

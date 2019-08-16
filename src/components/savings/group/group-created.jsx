@@ -10,6 +10,7 @@ import DatePicker from "react-datepicker";
 import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
 import "react-datepicker/dist/react-datepicker.css";
 import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
+import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import {history} from '../../../_helpers/history';
 
 class GroupCreated extends React.Component {
@@ -20,20 +21,29 @@ class GroupCreated extends React.Component {
         }
     }
 
+    componentDidMount(){
+        this.GetGroupSummary();
+        this.CheckGroupSavingsAvailability();
+        this.CheckRotatingSavingsAvailability();
+    }
+
+    CheckRotatingSavingsAvailability = () => {
+        this.props.dispatch(actions1.GetGroupsEsusu(this.state.user.token, null));
+    }
+
+    CheckGroupSavingsAvailability = () => {
+        this.props.dispatch(actions.customerGroup(this.state.user.token, null));
+    }
+
+
     GetGroupSummary = () => {
-        console.log('Getting CustomerGroups');
         const id = this.props.payload.response.id;
         const data = {
             groupId: id
         }
         this.props.dispatch(actions.groupDetails(this.state.user.token, data));
     }
-
-    componentDidMount(){
-        // console.log(this.state.user);
-        this.GetGroupSummary();
-    }
-
+    
     handleSubmit = (event) => {
         event.preventDefault();
         return null;
