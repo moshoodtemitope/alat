@@ -166,12 +166,19 @@ export const sendNewVirtualCardInfo = (newVirtualCardInfo, token, hasOtp)=>{
                 
             })
             .catch(error =>{
+                console.log('Error name is', error.response);
                 if(error.response && typeof(error.response.message) !=="undefined"){
                     dispatch(failure(error.response.message.toString()));
                 }
-                // else if((error.response.data.Message) || ((error.response.data.message))){
+                else if((error.response.data.Message) || ((error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
 
-                // }
+                    if(error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
                 else{
                     dispatch(failure('An error occured. Please try again '));
                 }
@@ -212,9 +219,15 @@ export const topUpVirtualCard = (cardTopUpDetails, token, hasOtp)=>{
                 if(error.response && typeof(error.response.message) !=="undefined"){
                     dispatch(failure(error.response.message.toString()));
                 }
-                // else if((error.response.data.Message) || ((error.response.data.message))){
+                else if((error.response.data.Message) || ((error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
 
-                // }
+                    if(error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
                 else{
                     dispatch(failure('An error occured. Please try again '));
                 }
