@@ -12,7 +12,7 @@ class CreateStashSuccessMessage extends React.Component {
         super(props);
         this.state={
             targetAmount:"",
-        
+
         }
     }
     componentDidMount(){
@@ -41,12 +41,12 @@ class CreateStashSuccessMessage extends React.Component {
                                 <div className="tab-overflow">
                                     <div className="sub-tab-nav">
                                         <ul>
-                                        <NavLink to='/savings/choose-goal-plan'>
-                                            <li><a className="active">Goals</a></li>
-                                        </NavLink>
-                                        <NavLink to="/savings/goal/group-savings-selection">
-                                            <li><a>Group Savings</a></li>
-                                        </NavLink>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li><a className="active">Goals</a></li>
+                                            </NavLink>
+                                            <NavLink to="/savings/goal/group-savings-selection">
+                                                <li><a>Group Savings</a></li>
+                                            </NavLink>
                                             <li><a href="#">Investments</a></li>
 
                                         </ul>
@@ -56,32 +56,32 @@ class CreateStashSuccessMessage extends React.Component {
                             <div className="col-sm-12">
                                 <div className="row">
                                     <div className="col-sm-12">
-                                      <div className="max-600">
-                                       <div className="al-card no-pad">
+                                        <div className="max-600">
+                                            <div className="al-card no-pad">
 
-                                            <form>
-                                                <div className="form-group">
-                                                    <center>
-                                                    <img className="successIcon"    alt="" src={successLogo}/>
-                                                    </center>
-                                                    <label id="sucMessage">Stash creation was successful</label>
-                                                </div>
-                                                <div className="form-row">
-                                                <Members 
-                                                   userType="admin"
-                                                   name={details.goalTypeName}
-                                                   position="Status: Completed"
-                                                    amount={"₦"+details.amountSaved}
-                                                   intent="Amount Saved"
-                                                   id="autoSummary"/>
-                                                </div>
-                                            </form>
-                                       </div>
+                                                <form>
+                                                    <div className="form-group">
+                                                        <center>
+                                                            <img className="successIcon"    alt="" src={successLogo}/>
+                                                        </center>
+                                                        <label id="sucMessage">Fixed Goal created  successfully</label>
+                                                    </div>
+                                                    <div className="form-row">
+                                                        <Members
+                                                            userType="admin"
+                                                            name={details.goalTypeName}
+                                                            position="Status: Completed"
+                                                            amount={"₦"+details.amountSaved}
+                                                            intent="Amount Saved"
+                                                            id="autoSummary"/>
+                                                    </div>
+                                                </form>
+                                            </div>
 
 
-                                      </div>
+                                        </div>
 
-                                      </div>
+                                    </div>
                                 </div>
 
                             </div>

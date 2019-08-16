@@ -23,6 +23,7 @@ class GoalPlan extends React.Component {
         super(props);
         this.state = {
             user: JSON.parse(localStorage.getItem("user")),
+            visible: true
 
         };
         this.fetchCustomerTransHistoryGoals();
@@ -49,6 +50,9 @@ class GoalPlan extends React.Component {
         if(chooseGoalPlan.length !=0){
             history.push('/savings/choose-goal-plan')
         }
+    };
+    togglePage =()=>{
+        this.setState({visible: false})
     };
 
     renderGoalsElement(customerGoalTransHistory){
@@ -88,9 +92,10 @@ class GoalPlan extends React.Component {
                     <h4 className="text-center" style={{ marginTop: '65px'}}>Loading customer goals ...</h4>
                 );
             }
-            else if(customerGoalTransHistory.customer_goal === 'FETCH_CUSTOMER_GOAL_TRANS_HISTORY_SUCCESS'){
+            else if(customerGoalTransHistory.customer_goal === 'FETCH_CUSTOMER_GOAL_TRANS_HISTORY_SUCCESS' && this.state.visible){
                 let goals = customerGoalTransHistory.customer_goal_data.response.data;
-                if(goals.length === 0){
+
+                if(goals.length === 0 && !this.state.visible){
                     return(
                         <div className="row">
                             <NavLink to="/savings/fixed-goal">
@@ -244,8 +249,11 @@ class GoalPlan extends React.Component {
 
         }
     }
+
     render() {
         const GoalTransHistory = this.props.customerGoalTransHistory;
+
+        console.log("goal-history ",GoalTransHistory.customer_goal_data);
 
 
         return (
@@ -260,24 +268,18 @@ class GoalPlan extends React.Component {
                             <div className="tab-overflow">
                                 <div className="sub-tab-nav">
                                     <ul>
-                                        <li><a href="" className="active">Goals</a></li>
+                                        <li><a onClick={() => this.setState({visible: true})} href="#" className="active">Goals</a></li>
                                         <NavLink to='/savings/goal/group-savings-selection'>
                                             <li><a className="forGroupLink">Group Savings</a></li>
                                         </NavLink>
-                                        <li><a href="#">Investments</a></li>
-
-
+                                        <NavLink to="/savings/fixed-goal">
+                                            <li><a href="#">Investments</a></li>
+                                        </NavLink>
                                         {
-                                            GoalTransHistory.length > 0 ?
-                                            <li> <a className="btn-alat">Create a Savings Goal</a> </li>
-                                            :null
+                                            this.state.visible ?
+                                            <li style={{float:'right',color:'white',fontSize:'16px, font-family:"proxima_novaregular'}}> <a onClick={this.togglePage} className="btn-alat">Create a Savings Goal</a> </li> : null
+ 
                                         }
-
-
-
-
-
-
                                     </ul>
                                 </div>
                             </div>

@@ -23,8 +23,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
             goalFrequency:"",
             showInterests:"",
             debitAccount:"",
-            GoalTypeId:6,
-            frequencyId: 11,
+            GoalTypeId:2,
         }
      }
 
@@ -60,13 +59,12 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
         this.props.dispatch(actions.addFixedGoal({
             "goalName":this.state.goalName,
             "startDate":this.state.startDate,
-            "TargetDate":this.state.endDate,
+            "targetDate":this.state.endDate,
             "targetAmount":parseFloat(this.state.targetAmount),
-            "goalFrequency":this.state.goalFrequency,
             "debitAccount":this.state.debitAccount,
             "debitAmount":parseFloat(this.state.showInterests),
-            "GoalTypeId":this.state.GoalTypeId,
-            "frequencyId":this.state.frequencyId,
+            "goalTypeId":parseInt(this.state.GoalTypeId),
+            "frequencyId":parseInt(this.state.goalFrequency)
         }));
 
     };

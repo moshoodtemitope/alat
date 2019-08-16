@@ -6,6 +6,8 @@ import successLogo from '../../../assets/img/success.svg';
 import {NavLink} from "react-router-dom";
 import Members from '../../savings/group/list-item';
 import { connect } from "react-redux";
+import * as actions from "../../../redux/actions/fund-account/fund-acount.action";
+import {fundAccountConstants} from "../../../redux/constants/fund-account/fund-account.constant";
 
 class TopUpGoalSuccess extends React.Component {
     constructor(props){
@@ -15,7 +17,10 @@ class TopUpGoalSuccess extends React.Component {
 
         }
     }
-
+    // redirectHome=()=>{
+    //     this.props.dispatch(actions.ClearAction(fundAccountConstants.FUND_ACCOUNT_REDUCER_CLEAR));
+    //     this.props.history.push("/savings/choose-goal-plan");
+    // };
 
 
     render() {
@@ -60,6 +65,18 @@ class TopUpGoalSuccess extends React.Component {
 
                                                 </form>
                                             </div>
+                                            {/*<div className="row">*/}
+                                                {/*<div className="col-sm-12">*/}
+                                                    {/*<center>*/}
+                                                        {/*<a style={{cursor: "pointer"}}>*/}
+                                                            {/*<button*/}
+                                                                    {/*className="btn-alat m-t-10 m-b-20 text-center"*/}
+                                                                    {/*type="submit">Done*/}
+                                                            {/*</button>*/}
+                                                        {/*</a>*/}
+                                                    {/*</center>*/}
+                                                {/*</div>*/}
+                                            {/*</div>*/}
 
 
                                         </div>

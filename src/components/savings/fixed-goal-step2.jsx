@@ -17,9 +17,9 @@ import * as util from '../../shared/utils'
 import "react-datepicker/dist/react-datepicker.css";
 const selectedTime = [
            
-    { "id":11, value: 'monthly',label:"Monthly" },
-    { "id":7, value: 'weekly', label:"Weekly" },
-    { "id":7, value: 'daily', label:"Daily"},
+    { "id":3, value: 'monthly',label:"Monthly" },
+    { "id":2, value: 'weekly', label:"Weekly" },
+    { "id":1, value: 'daily', label:"Daily"},
    
 ];
 
@@ -245,7 +245,8 @@ class FixedGoal extends React.Component {
     handleSelectChange = (frequency) => {
         
         this.setState({ "goalFrequency": frequency.value,
-                        "goalFrequency" : frequency.label
+                        "goalFrequency" : frequency.label,
+                        "goalFrequency":frequency.id
         });
 
         
@@ -363,7 +364,7 @@ class FixedGoal extends React.Component {
                                       <div className="max-600">
                                        <div className="al-card no-pad">
                                        <h4 className="m-b-10 center-text hd-underline">Create a Fixed Goal</h4>
-                                       <p className="header-info">To achieve your target of <span style={{color:'#AB2656'}}>N{this.state.targetAmount} <span style={{color:'#444444'}}>by</span> {moment(this.state.endDate).format("d, MMMM, YYYY")}</span></p>
+                                       <p className="header-info">To achieve your target of <span style={{color:'#AB2656'}}>N{this.state.targetAmount} <span style={{color:'#444444'}}>by</span> {moment(this.state.endDate).format("DD, MMMM, YYYY")}</span></p>
 
                                             <form onSubmit={this.onSubmit}>
                                             

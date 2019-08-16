@@ -115,6 +115,53 @@ export function TopUPGoalStep1(state=[], action) {
             return { ...state }
     }
 }
+export function WithDrawFromGoalStep1(state=[], action) {
+    switch (action.type) {
+        case customerGoalConstants.WITHDRAW_FROM_GOAL_PENDING_STEP1:
+            return {
+                withdraw_from_goal_status_step1:customerGoalConstants.WITHDRAW_FROM_GOAL_PENDING_STEP1,
+                withdraw_from_goal_data_step1: action
+            };
+        case customerGoalConstants.WITHDRAW_FROM_GOAL_SUCCESS_STEP1:
+            return {
+                withdraw_from_goal_status_step1: customerGoalConstants.WITHDRAW_FROM_GOAL_SUCCESS_STEP1,
+                withdraw_from_goal_data_step1: action
+            };
+        case customerGoalConstants.WITHDRAW_FROM_GOAL_FAILURE_STEP1:
+            return {
+                withdraw_from_goal_status_step1: customerGoalConstants.WITHDRAW_FROM_GOAL_FAILURE_STEP1,
+                withdraw_from_goal_data_step1: action
+            };
+
+
+        default:
+            return { ...state }
+    }
+}
+export function WithDrawFromGoal(state=[], action) {
+    switch (action.type) {
+        case customerGoalConstants.WITHDRAW_FROM_GOAL_PENDING:
+            return {
+                withdraw_from_goal_status:customerGoalConstants.WITHDRAW_FROM_GOAL_PENDING,
+                withdraw_from_goal_data: action
+            };
+        case customerGoalConstants.WITH_DRAW_FROM_GOAL_SUCCESS:
+            return {
+                withdraw_from_goal_status: customerGoalConstants.WITH_DRAW_FROM_GOAL_SUCCESS,
+                withdraw_from_goal_data: action
+            };
+        case customerGoalConstants.WITH_DRAW_FROM_GOAL_FAILURE:
+            return {
+                withdraw_from_goal_status: customerGoalConstants.WITH_DRAW_FROM_GOAL_FAILURE,
+                withdraw_from_goal_data: action
+            };
+
+
+        default:
+            return { ...state }
+    }
+}
+
 
 
 

@@ -8,7 +8,7 @@ import {customerGoalConstants} from "../../../redux/constants/goal/get-customer-
 import {NavLink} from "react-router-dom";
 
 
-class TopUPGoalSummmary extends Component {
+class WithDrawFromGoalSummmary extends Component {
     constructor(props){
         super(props);
 
@@ -19,6 +19,7 @@ class TopUPGoalSummmary extends Component {
             debitAmount:"",
             Amount:"",
             goalId:"",
+            amountSaved:""
 
 
         }
@@ -30,11 +31,11 @@ class TopUPGoalSummmary extends Component {
     };
 
     init = () => {
-        if (this.props.top_up_goal_step1.top_up_goal_status_step1 !== customerGoalConstants.TOP_UP_GOAL_SUCCESS_STEP1)
-            this.props.history.push("/savings/top-up-goal-step1");
+        if (this.props.withdraw_from_goal_step1.withdraw_from_goal_status_step1 !== customerGoalConstants.WITHDRAW_FROM_GOAL_SUCCESS_STEP1)
+            this.props.history.push("/savings/withdraw-from-goal_step1");
         else {
             let data = {
-                ...this.props.top_up_goal_step1.top_up_goal_data_step1.data
+                ...this.props.withdraw_from_goal_step1.withdraw_from_goal_data_step1.data
             };
             console.log('tag', data);
 
@@ -43,15 +44,19 @@ class TopUPGoalSummmary extends Component {
                 goalName:data.goalName,
                 goalId:data.goalId,
                 debitAccount:data.accountNumber,
+                amountSaved:data.amountSaved
             });
         }
     };
     handleSubmit=(event)=>{
         event.preventDefault();
-        this.props.dispatch(actions.TopUPGoal({
-            "goalId":this.state.goalId,
-            "amount":this.state.Amount,
-            "amountNumber":this.state.debitAccount
+        this.props.dispatch(actions.WithDrawFromGoal({
+            "goalId":parseInt(this.state.goalId),
+            // "amount":parseFloat(this.state.Amount),
+            "amountNumber":this.state.debitAccount,
+            "amount":this.state.amountSaved,
+            "partialWithdrawal": true
+
         }));
 
     };
@@ -73,7 +78,7 @@ class TopUPGoalSummmary extends Component {
                                         <ul>
                                             <NavLink to='/savings/choose-goal-plan'>
 
-                                            <li><a href="accounts.html" className="active">Goals</a></li>
+                                                <li><a href="accounts.html" className="active">Goals</a></li>
                                             </NavLink>
                                             <NavLink to='/savings/goal/group-savings-selection'>
                                                 <li><a href="statement.html">Group Savings</a></li>
@@ -90,7 +95,8 @@ class TopUPGoalSummmary extends Component {
                             <div style={{width: "100%",}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                             }
 
-                            <h1 style={{margin:'auto', color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>Top Up Goal Summary</h1>
+                            <h1 style={{margin:'auto',paddingLeft:"20%",
+                                color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>WithDrawal Summary</h1>
                             <div style={{margin:"30px", marginLeft:"120px",marginRight:"120px"}}></div>
 
                             <div className="col-sm-12">
@@ -106,7 +112,7 @@ class TopUPGoalSummmary extends Component {
                                                         </div>
                                                         <div className="right">
                                                             <p className='GoalText'>Amount</p>
-                                                            <p className='boldedText'>₦{this.state.Amount}</p>
+                                                            <p className='boldedText'>₦{this.state.amountSaved}</p>
                                                         </div>
                                                     </div>
                                                     <div className="coverForSummary">
@@ -133,9 +139,9 @@ class TopUPGoalSummmary extends Component {
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <center>
-                                                            <button disabled={this.props.top_up_goal.top_up_goal_status === customerGoalConstants.TOP_UP_GOAL_PENDING}
+                                                            <button disabled={this.props.withdraw_from_goal.withdraw_from_goal_status === customerGoalConstants.WITHDRAW_FROM_GOAL_PENDING}
                                                                     type="submit" className="btn-alat m-t-10 m-b-20 text-center">
-                                                                {this.props.top_up_goal.top_up_goal_status === customerGoalConstants.TOP_UP_GOAL_PENDING ? "Processing..." :"Top Up Goal"}
+                                                                {this.props.withdraw_from_goal.withdraw_from_goal_status === customerGoalConstants.WITHDRAW_FROM_GOAL_PENDING ? "Processing..." :"WithDraw"}
                                                             </button>
                                                         </center>
                                                     </div>
@@ -167,13 +173,12 @@ class TopUPGoalSummmary extends Component {
     }
 }
 const mapStateToProps = state => ({
-    top_up_goal_step1:state.top_up_goal_step1,
-    top_up_goal:state.top_up_goal,
-    create_stash_goal:state.create_stash_goal,
     alert: state.alert,
+    withdraw_from_goal:state.withdraw_from_goal,
+    withdraw_from_goal_step1:state.withdraw_from_goal_step1,
     accounts: state.dashboard_accounts
 
 
 });
-export default connect(mapStateToProps)(TopUPGoalSummmary);
+export default connect(mapStateToProps)(WithDrawFromGoalSummmary);
 

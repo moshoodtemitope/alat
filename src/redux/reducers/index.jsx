@@ -145,6 +145,8 @@ const appReducer = combineReducers({
     customerGoalFormular:customerGoal.GET_FORMULAR,
     top_up_goal:customerGoal.TopUPGoal,
     top_up_goal_step1:customerGoal.TopUPGoalStep1,
+    withdraw_from_goal_step1:customerGoal.WithDrawFromGoalStep1,
+    withdraw_from_goal:customerGoal.WithDrawFromGoal,
 
     //Group Savings Reducers (GROUP SAVINGS)
     groupSavings: groupSavings.groupSavingsTargetGoal,

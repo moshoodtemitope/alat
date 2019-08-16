@@ -5,7 +5,7 @@ import {alertActions} from "../../alert.actions";
 import { modelStateErrorHandler } from "../../../../shared/utils";
 import {ApiService} from "../../../../services/apiService";
 import {routes} from "../../../../services/urls";
-
+import {history} from "../../../../_helpers/history";
 
 
 
@@ -13,27 +13,27 @@ import {routes} from "../../../../services/urls";
 export const fetchFixedGoalStep1 = (data) =>{
     return(dispatch)=>{
         dispatch(success(data))
-    }
+    };
     function success(data){
         return{
             type:fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS,
             data:data
         }
     }
-}
+};
 
 export const fetchFixedGoalStep2 =(data) =>{
     return(dispatch)=>{
         dispatch(success(data))
 
-    }
+    };
     function success(data){
         return{
             type:fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS_STEP2,
             data:data
         }
     }
-}
+};
 export const addFixedGoal =(data)=>{
     return (dispatch) => {
         let consume = ApiService.request(routes.ADDGOAL,
@@ -43,6 +43,10 @@ export const addFixedGoal =(data)=>{
             .then(response => {
                 //TODO: edit localDB accounts object
                 dispatch(success(response.data, data));
+                history.push({
+                    pathname:"/savings/fixed-goal-success",
+                    state:{details:response.data}
+                })
             })
             .catch(error => {
                // console.log("error in here");

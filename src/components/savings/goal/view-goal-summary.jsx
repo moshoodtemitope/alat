@@ -7,7 +7,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import SubHead from '../../savings/group/sub-head';
 import ProgressBar from '../../savings/group/progress-bar';
-import Buttons from '../../savings/group/button';
 import moment from 'moment'
 import { NavButtons } from '../../savings/group/component';
 import MoreDetails from '../../savings/group/details';
@@ -93,10 +92,10 @@ class ViewGroupSummary extends React.Component {
                                     <div className="sub-tab-nav">
                                         <ul>
                                             <NavLink to='/savings/choose-goal-plan'>
-                                                <li><a className="active">Goals</a></li>
+                                                <li><a  href="#" className="active">Goals</a></li>
                                             </NavLink>
                                             <NavLink to="/savings/goal/group-savings-selection">
-                                                <li><a >Group Savings</a></li>
+                                                <li><a href="#" >Group Savings</a></li>
                                             </NavLink>
                                             <li><a href="#">Investments</a></li>
                                         </ul>
@@ -137,7 +136,7 @@ class ViewGroupSummary extends React.Component {
                                                          rightContent={moment(details.nextstandingDate).format("L")}
                                                          rightContentBottom="Next Payment"/>
                                                     <div className="btn-position">
-                                                        <NavLink to="/savings/withdraw-from-goal">
+                                                        <NavLink to="/savings/withdraw-from-goal_step1">
                                                          <span href="#" className="btn-withdraw-goal btn-sm border-btn">Withdraw</span>
                                                          </NavLink>
 

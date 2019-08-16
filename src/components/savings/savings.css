@@ -253,5 +253,13 @@
       margin-left: 60px;
 
   }
-
+  .with-draw-goal-header{
+      width: 113%;
+      border: 5px;
+      justify-content: center;
+      padding-left: 50px;
+  }
+  .form-row{
+      justify-content: center;
+  }
 
