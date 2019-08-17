@@ -191,7 +191,7 @@ class CreateATargetGoal extends React.Component {
             this.setState({AmountToContribute: true});
             return false;
         }else{
-            this.setState({AmountToContribute: false})
+            this.setState({AmountToContribute: false});
             return true;
         }
      }

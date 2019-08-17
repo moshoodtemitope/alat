@@ -337,6 +337,7 @@ class FixedGoal extends React.Component {
                                                             dropdownMode="select"
                                                             useShortMonthInDropdown
                                                             dropdownMode="select"
+                                                            minDate={new Date()}
                                                             showWeekNumbers
                                                             onChange={this.handleStartDatePicker}
                                                             value={this.state.startDate}
@@ -363,7 +364,8 @@ class FixedGoal extends React.Component {
                                                             showMonthDropdown
                                                             showYearDropdown
                                                             useShortMonthInDropdown
-                                                            dropdownMode="select" 
+                                                            dropdownMode="select"
+                                                            minDate={new Date()}
                                                             showWeekNumbers
                                                             onChange={this.handleEndDatePicker}
                                                             value={this.state.endDate}
@@ -407,9 +409,9 @@ class FixedGoal extends React.Component {
                                                         <Select type="text" 
                                                             options={selectedTime}
                                                             name="goalFrequency"
-                                                            autoComplete="off" 
+                                                            autoComplete="off"
 
-                                                            onChange={this.handleSelectChange}
+                                                                onChange={this.handleSelectChange}
                                                             value={goalFrequency.label}
                                                           />
                                                           {goalFrequencyInvalid && <div className='text-danger'>Enter saving duration</div>}
@@ -421,10 +423,10 @@ class FixedGoal extends React.Component {
 
 
                                                             <button 
-                                                            disabled={this.props.fixed_goal_step1.fixed_step1_status == fixedGoalConstants.FETCH_FIXED_GOAL_PENDING}
+                                                            disabled={this.props.fixed_goal_step1.fixed_step1_status === fixedGoalConstants.FETCH_FIXED_GOAL_PENDING}
 
                                                             type="submit" className="btn-alat m-t-10 m-b-20 text-center">
-                                                            {this.props.fixed_goal_step1.fixed_step1_status == fixedGoalConstants.FETCH_FIXED_GOAL_PENDING ? "Processing..." :"Next"}
+                                                            {this.props.fixed_goal_step1.fixed_step1_status === fixedGoalConstants.FETCH_FIXED_GOAL_PENDING ? "Processing..." :"Next"}
 
                                                             </button>
                                                         </center>

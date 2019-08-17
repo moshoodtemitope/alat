@@ -3,7 +3,6 @@
  .choose-goal-plan-row{
     display: flex;
     flex-wrap: wrap;
-    width: 90% !important;
  }
 .fixed-goal{
    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
@@ -15,6 +14,21 @@
    height: 250px;
    margin-left:10px;
    margin-right:10px;
+}
+
+.dashboardCards {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100% !important;
+}
+
+#parentCard{
+    width: 100% !important;
+}
+
+.dashboardCards .eachCard {
+     max-width: 100px;
+     margin-left: 20px;
 }
 
 .forGroupLink {
@@ -123,7 +137,6 @@
 
 }
 .coverForSummary {
-   
     display: flex;
     flex-wrap: nowrap;
     padding-bottom: 20px;
@@ -183,4 +196,70 @@
     padding-top: 3px;
     font-family:"proxima_novaregular";
 }
+  .successIcon{
+      padding-top: 20px;
+  }
+  .btn-create-new-goal{
+      color: #FFFFFF;
+      font-family:"proxima_novasemibold";
+      font-size:18px;
+  }
+  .btn-position{
+      display: flex;
+      flex-direction: row;
+      margin: 5px;
+      justify-content: space-between;
+  ;
+  }
+  .btn-withdraw-goal{
+      /*margin-top: 40px;*/
+      background:#AB2656;
+      color:#ffffff;
+      display: inline-block;
+      border:none;
+      font-size: 1em;
+      cursor: pointer;
+      text-align: center;
+      padding-left: 11px;
+      min-width:150px;
+      box-shadow: 0px 4px 4px rgba(255, 255, 255, 0.25);
+      border-radius: 3px;
+      text-decoration: none;
+
+  }
+  .btn-top-up-goal{
+      background:#AB2656;
+      color:#ffffff;
+      display: inline-block;
+      border:none;
+      font-size: 1em;
+      cursor: pointer;
+      text-align: center;
+      padding-left: 11px;
+      min-width:150px;
+      box-shadow: 0px 4px 4px rgba(255, 255, 255, 0.25);
+      border-radius: 3px;
+      text-decoration: none;
+
+  }
+  .col-sm-4{
+      border-bottom: 1px solid #AB2656;
+  }
+  .top-goal-Message{
+      color: #9F083E;
+      font-size: 14px;
+      font-family: Proxima Nova;
+      line-height: 24px;
+      margin-left: 60px;
+
+  }
+  .with-draw-goal-header{
+      width: 113%;
+      border: 5px;
+      justify-content: center;
+      padding-left: 50px;
+  }
+  .form-row{
+      justify-content: center;
+  }
 

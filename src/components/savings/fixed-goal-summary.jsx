@@ -14,9 +14,8 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
 
  class submitFixedGoal extends Component {
      constructor(props){
-         super(props)
-
-        this.state={
+         super(props);
+         this.state={
             targetAmount:"",
             startDate:"",
             endDate:"",
@@ -24,10 +23,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
             goalFrequency:"",
             showInterests:"",
             debitAccount:"",
-            GoalTypeId:6,
-            frequencyId: 11,
-
-
+            GoalTypeId:2,
         }
      }
 
@@ -37,13 +33,13 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
     }
 
     init = () => {
-        if (this.props.fixed_goal_step2.fixed_step2_status != fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS_STEP2)
+        if (this.props.fixed_goal_step2.fixed_step2_status !== fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS_STEP2)
             this.props.history.push("/savings/fixed-goal-complete");
         else {
             var data = {
                 ...this.props.fixed_goal_step2.fixed_step2_data.data
             };
-            console.log('tag', data)
+            console.log('tag', data);
 
             this.setState({
                 targetAmount:data.targetAmount,
@@ -56,25 +52,32 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
                 
             });
         }
-    }
+    };
+
     handleSubmit=(event)=>{
-        event.preventDefault()
+        event.preventDefault();
         this.props.dispatch(actions.addFixedGoal({
             "goalName":this.state.goalName,
             "startDate":this.state.startDate,
-            "endDate":this.state.endDate,
-            "targetAmount":this.state.targetAmount,
-            "goalFrequency":this.state.goalFrequency,
+            "targetDate":this.state.endDate,
+            "targetAmount":parseFloat(this.state.targetAmount),
             "debitAccount":this.state.debitAccount,
-            "showInterests":this.state.showInterests,
-            "GoalTypeId":this.state.GoalTypeId,
-            "frequencyId":this.state.frequencyId,
+            "debitAmount":parseFloat(this.state.showInterests),
+            "goalTypeId":parseInt(this.state.GoalTypeId),
+            "frequencyId":parseInt(this.state.goalFrequency)
         }));
 
+    };
+
+    goalFrequencyLabel () {
+        if (this.state.goalFrequency == 1) return "Daily";
+        if (this.state.goalFrequency == 2) return "Weekly";
+        if(this.state.goalFrequency == 3) return "Monthly";
     }
 
     
     render() {
+
         return (
            <Fragment>
            <InnerContainer>
@@ -119,7 +122,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
                                                 <p className='boldedText'>₦{this.state.targetAmount}</p>
                                             </div>
                                         </div> 
-                                        <div className="coverForSummary">
+                                      <div className="coverForSummary">
                                                 <div className="left">
                                                     <p className='GoalText'>Start Date</p>
                                                     <p className='boldedText'>{moment(this.state.startDate).format('MMMM,D,YYYY')}</p>
@@ -133,7 +136,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
                                         <div className="coverForSummary">
                                             <div className="left">
                                                 <p className='GoalText'>Contributions</p>
-                                                <p className='boldedText'>₦{this.state.showInterests}/{this.state.goalFrequency}</p>
+                                                <p className='boldedText'>₦{this.state.showInterests}/{this.goalFrequencyLabel()} </p>
                                             </div>
                                             <div className="right">
                                                 <p className='GoalText'>Account to Debit</p>
@@ -186,6 +189,6 @@ const mapStateToProps = state => ({
     add_fixed_goal:state.add_goal_reducer,
     alert: state.alert,
 
-})
+});
 export default connect(mapStateToProps)(submitFixedGoal);
 

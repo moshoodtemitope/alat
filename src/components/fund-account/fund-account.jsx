@@ -19,7 +19,7 @@ class FundAccount extends React.Component {
 
     onNavigate=()=>{
         this.props.history.push("/fund/wema");
-    }
+    };
 
     render(){
         return(<div className="al-card fund-al-card no-pad">
@@ -47,12 +47,12 @@ class FundAccount extends React.Component {
     }
 }
 
-function mapStateToProps(state){
-    // const { authentication } = state;
-    // const { user } = authentication;
-    return {
-        state : state
-   };
-}
+    function mapStateToProps(state){
+        // const { authentication } = state;
+        // const { user } = authentication;
+        return {
+            state : state
+       };
+    }
 
 export default connect(mapStateToProps)(FundAccount);

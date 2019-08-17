@@ -38,7 +38,7 @@ class GroupAnalytics extends React.Component {
 
     GetPercenterSaved = (targetAmount, savedAmount) => {
         return (savedAmount / targetAmount) * 100;
-    }
+    };
 
     componentDidMount(){
        const details = this.props.groupDetails.response;
@@ -78,7 +78,7 @@ class GroupAnalytics extends React.Component {
                case '03':
                   return 'March';
                case '04':
-                  return 'April'
+                  return 'April';
                case '05':
                   return 'May';
                case '06':

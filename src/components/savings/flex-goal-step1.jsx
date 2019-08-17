@@ -64,7 +64,7 @@ class FlexGoal extends React.Component {
             this.setState({ startDateInvalid: false });
             return false;
         }
-    }
+    };
 
     valEndDate = () => {
         if (this.state.endDate == null) {
@@ -74,12 +74,12 @@ class FlexGoal extends React.Component {
             this.setState({ endDateInvalid: false });
             return false;
         }
-    }
+    };
 
     handleChange = (e) => {
         let name = e.target.name;
         this.setState({ [name]: e.target.value })
-    }
+    };
 
     checkGoalName = () => {
         if (this.state.goalName == "") {
@@ -91,28 +91,28 @@ class FlexGoal extends React.Component {
     handleStartDatePicker = (startDate) => {
         startDate.setHours(startDate.getHours() + 1);
         this.setState({ startDate: startDate });
-    }
+    };
     handleEndDatePicker = (endDate) => {
         endDate.setHours(endDate.getHours() + 1);
         this.setState({ endDate: endDate });
-    }
+    };
     
     checkAmount = () => {
         if (this.state.targetAmount == "") {
             this.setState({ targetAmountInvalid: true });
             return true;
         }
-    }
+    };
     checkgoalFrequency = () => {
         if (this.state.goalFrequency == "") {
             this.setState({ goalFrequencyInvalid: true });
             return true;
         }
-    }
+    };
 
     handleAmount = (e) => {
         // console.log
-         var intVal = e.target.value.replace(/,/g, '');
+         let intVal = e.target.value.replace(/,/g, '');
          if (/^\d+(\.\d+)?$/g.test(intVal)) {
              // if (parseInt(intVal, 10) <= 2000000) {
              this.setState({ targetAmount: intVal, targetAmount: this.toCurrency(intVal) },
@@ -157,13 +157,13 @@ class FlexGoal extends React.Component {
 
         }
 
-    }
+    };
     setFregValue = () => {
         this.setState({ showInterests: this.calculateInterest(this.state.targetAmount, this.state.startDate, this.state.endDate) })
         
        
 
-    } 
+    };
      GetGoalFutureValue(debitAmount, annualInterestRate, month){
         let months = Math.round(month);
         let futureValue = 0;
@@ -181,20 +181,20 @@ class FlexGoal extends React.Component {
    
     calculateInterest(){
         
-        var days = null;
-        var res;
+        let days = null;
+        let res;
         if(this.state.targetAmount && this.state.endDate && this.state.startDate){
           let startDate = moment(this.state.startDate).format('DD MMMM, YYYY');
           let enddate = moment(this.state.endDate, 'DD MMMM, YYYY');
           res = enddate.diff(startDate, 'days');
           let amount = this.removeComma(this.state.targetAmount);
-          var ia= ((amount / 365) * 0.10 );
+          let ia= ((amount / 365) * 0.10 );
           let diff_in_months = Math.floor(moment(enddate).diff(moment(startDate), 'months', true));
           let dailycontribution;
           if(diff_in_months > 1){
            this.interest = this.GetGoalFutureValue((amount / diff_in_months),0.10, diff_in_months);
           }else{
-            var ia = ((amount / 365) * 0.10 );
+            let ia = ((amount / 365) * 0.10 );
             dailycontribution = res * ( ia - (0.10) *ia);
             this.interest = parseFloat(dailycontribution).toFixed(2);
           }
@@ -208,7 +208,7 @@ class FlexGoal extends React.Component {
     
     showInterest = () =>  {
         this.setState({showMessage: true})
-    }
+    };
     
     onSubmit(event){
         event.preventDefault();
@@ -235,7 +235,7 @@ class FlexGoal extends React.Component {
             if (this.props.flex_goal_step1.flex_step1_status == flexGoalConstants.FETCH_FLEX_GOAL_SUCCESS) {
                 return <Redirect to="/savings/flex-goal-step2" />
             }
-    }
+    };
     
     render() {
         
@@ -386,10 +386,10 @@ class FlexGoal extends React.Component {
                                                     <div className="col-sm-12">
                                                         <center>
                                                             <button 
-                                                            disabled={this.props.flex_goal_step1.flex_step1_status == flexGoalConstants.FETCH_FLEX_GOAL_PENDING}
+                                                            disabled={this.props.flex_goal_step1.flex_step1_status === flexGoalConstants.FETCH_FLEX_GOAL_PENDING}
 
                                                             type="submit" className="btn-alat m-t-10 m-b-20 text-center">
-                                                            {this.props.flex_goal_step1.flex_step1_status == flexGoalConstants.FETCH_FLEX_GOAL_PENDING ? "Processing..." :"Next"}
+                                                            {this.props.flex_goal_step1.flex_step1_status === flexGoalConstants.FETCH_FLEX_GOAL_PENDING ? "Processing..." :"Next"}
 
                                                             </button>
                                                         </center>
@@ -426,5 +426,5 @@ class FlexGoal extends React.Component {
 }
 const mapStateToProps = state => ({
     flex_goal_step1: state.flex_goal_step1
-})
+});
 export default connect(mapStateToProps)(FlexGoal);

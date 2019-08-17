@@ -9,11 +9,6 @@ export const flexGoalConstants ={
     ADD_FLEX_GOAL_SUCCESS:' ADD_FLEX_GOAL_SUCCESS',
     ADD_FLEX_GOAL_FAILURE:'ADD_FLEX_GOAL_FAILURE',
 
-
-
-
-
-
-}
+};
 
 

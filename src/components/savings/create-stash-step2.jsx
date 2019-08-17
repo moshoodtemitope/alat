@@ -4,6 +4,7 @@ import SavingsContainer from './container';
 import {Fragment} from "react";
 import { connect } from 'react-redux';
 import moment from 'moment';
+import {NavLink} from "react-router-dom";
 import * as util from '../../shared/utils'
 import {createGoalConstants} from '../../redux/constants/goal/create-stash.constant';
 import * as actions from '../../redux/actions/savings/goal/create-stash-goal.actions'
@@ -15,7 +16,7 @@ import * as actions from '../../redux/actions/savings/goal/create-stash-goal.act
 
  class StashSummmary extends Component {
      constructor(props){
-         super(props)
+         super(props);
 
         this.state={
             targetAmount:"",
@@ -34,16 +35,16 @@ import * as actions from '../../redux/actions/savings/goal/create-stash-goal.act
 
     componentDidMount = () => {
         this.init();
-    }
+    };
 
     init = () => {
-        if (this.props.create_stash_goal_step1.stash_goal_step1_status != createGoalConstants.CREATE_STASH_GOAL_SUCCESS_STEP1)
+        if (this.props.create_stash_goal_step1.stash_goal_step1_status !== createGoalConstants.CREATE_STASH_GOAL_SUCCESS_STEP1)
             this.props.history.push("/savings/create-stash_step1");
         else {
-            var data = {
+            let data = {
                 ...this.props.create_stash_goal_step1.stash_goal_step1_data.data
             };
-            console.log('tag', data)
+            console.log('tag', data);
 
             this.setState({
                 targetAmount:data.targetAmount,
@@ -53,25 +54,24 @@ import * as actions from '../../redux/actions/savings/goal/create-stash-goal.act
                 debitAccount:data.debitAccount,
             });
         }
-    }
+    };
     handleSubmit=(event)=>{
-        event.preventDefault()
+        event.preventDefault();
         this.props.dispatch(actions.CreateStashGoal({
             "goalName":this.state.goalName,
-            "startDate":this.state.startDate,
+            // "startDate":this.state.startDate,
             "targetAmount":this.state.targetAmount,
             "debitAccount":this.state.debitAccount,
             "debitAmount":this.state.payOutInterest,  
             "FrequencyId":this.state.FrequencyId,
             "FrequencyDurationId":this.state.FrequencyDurationId,
-            'debitAmount':100,
             "startDate":moment().format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
             "isAutomaticDebit": true,
-            "GoalTypeId":this.state.GoalTypeId
-    
+            "GoalTypeId":this.state.GoalTypeId,
+            // 'StartDate': moment.format(this.state.startDate('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
         }));
 
-    }
+    };
 
     
     render() {
@@ -98,10 +98,11 @@ import * as actions from '../../redux/actions/savings/goal/create-stash-goal.act
 
 
                         {this.props.alert && this.props.alert.message &&
-                            <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                            <div style={{width: "100%",}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                         }
-                    <h1 style={{margin:"auto", color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>Stash Goal Summary</h1>
-                        <div style={{margin:"30px"}}></div>
+
+                    <h1 style={{margin:"auto", color:"#AB2656", paddingLeft:"15px", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>Stash Goal Summary</h1>
+                        <div style={{margin:"30px", marginLeft:"120px",marginRight:"120px"}}></div>
 
                     <div className="col-sm-12">
                         <div className="row">
@@ -124,10 +125,10 @@ import * as actions from '../../redux/actions/savings/goal/create-stash-goal.act
                                                     <p className='GoalText'>Start Date</p>
                                                     <p className='boldedText'>{moment(this.state.startDate).format('MMMM,D,YYYY')}</p>
                                                 </div>
-                                                <div className="right">
-                                                <p className='GoalText'>Start Date</p>
-                                                <p className='boldedText'>{moment(this.state.startDate).format('MMMM,D,YYYY')}</p>
-                                                </div>
+                                                {/*<div className="right">*/}
+                                                {/*<p className='GoalText'>Start Date</p>*/}
+                                                {/*<p className='boldedText'>{moment(this.state.startDate).format('MMMM,D,YYYY')}</p>*/}
+                                                {/*</div>*/}
                             
                                         </div>
 
@@ -146,11 +147,9 @@ import * as actions from '../../redux/actions/savings/goal/create-stash-goal.act
                                     <div className="row">
                                         <div className="col-sm-12">
                                             <center>
-                                                <button disabled={this.props.create_stash_goal.create_stash_goal_status == createGoalConstants.CREATE_STASH_GOAL_PENDING}
- 
+                                                <button disabled={this.props.create_stash_goal.create_stash_goal_status === createGoalConstants.CREATE_STASH_GOAL_PENDING}
                                                  type="submit" className="btn-alat m-t-10 m-b-20 text-center">
-                                                 {this.props.create_stash_goal.create_stash_goal_status == createGoalConstants.CREATE_STASH_GOAL_PENDING ? "Processing..." :"Create Goal"}
-
+                                                 {this.props.create_stash_goal.create_stash_goal_status === createGoalConstants.CREATE_STASH_GOAL_PENDING ? "Processing..." :"Create Goal"}
                                                  </button>
                                             </center>
                                         </div>
@@ -186,6 +185,6 @@ const mapStateToProps = state => ({
     create_stash_goal:state.create_stash_goal,
     alert: state.alert,
 
-})
+});
 export default connect(mapStateToProps)(StashSummmary);
 

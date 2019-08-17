@@ -67,10 +67,10 @@
 }
 
 .compContainer {
-    width: 100%;
+    width: 32%;
     background-color: transparent;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    /*padding-top: 20px;*/
+    /*padding-bottom: 20px;*/
     display: flex;
     flex-wrap: wrap;
 }
@@ -573,12 +573,21 @@ font-weight: bold;
 }
 
 .moreDetails .left {
-   width: 50%;
+   width: 33%;
+}
+.moreDetails .middle {
+    width: 33%;
+}
+.moreDetails .middle p {
+    text-align: center;
+    margin-bottom: 0px;
+
 }
 
 .moreDetails .right {
-    width: 50%;
+    width:33%;
 }
+
 
 .moreDetails .right p {
     text-align: right;
@@ -589,7 +598,7 @@ font-weight: bold;
     margin-bottom: 0px;
 }
 
-.moreDetails .left p:first-child, .moreDetails .right p:first-child {
+.moreDetails .left p:first-child, .moreDetails .right p:first-child, .moreDetails .middle p:first-child {
 font-family: Proxima Nova;
 font-size: 14px;
 line-height: 17px;
@@ -607,6 +616,7 @@ color: #4D4D4D;
 .listedItems {
     margin-top: 40px;
     background: #43063C;
+
 }
 
 .listedItems, .listedItemMembers {
