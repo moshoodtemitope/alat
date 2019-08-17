@@ -59,6 +59,11 @@ class GroupCreated extends React.Component {
         history.push('/savings/goal/group-savings-selection');
     }
 
+    CopyCode = (event) => {
+        document.execCommand('copy');
+        event.target.focus();
+    }
+
     render() {
         return (
             <Fragment>
@@ -99,7 +104,7 @@ class GroupCreated extends React.Component {
                                                             <h2>{this.props.payload.response.referralCode}</h2>
                                                         </div>
                                                         <div className="right">
-                                                            <i></i>
+                                                            <i onClick={this.CopyCode}></i>
                                                         </div>
                                                 </div>
                                                 <div className="form-row">
