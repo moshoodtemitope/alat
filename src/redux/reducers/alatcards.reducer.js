@@ -20,6 +20,9 @@ import {
     GET_VIRTUALCARD_HISTORY_SUCCESS,
     GET_VIRTUALCARD_HISTORY_PENDING,
     GET_VIRTUALCARD_HISTORY_FAILURE,
+    CHANGEACTIVESTATUS_VIRTUAL_SUCCESS,
+    CHANGEACTIVESTATUS_VIRTUAL_PENDING,
+    CHANGEACTIVESTATUS_VIRTUAL_FAILURE,
 } from "../constants/cards/cards.constants";
 
 export function geCurrentVirtualCardsRequest(state=[], action) {
@@ -143,6 +146,32 @@ export function liquidateCard(state=[], action){
                 is_processing: false,
                 fetch_status: LIQUIDATE_CARD_FAILURE,
                 liquidate_info: action
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+export function changeCardStatus(state=[], action){
+    switch (action.type) {
+        case CHANGEACTIVESTATUS_VIRTUAL_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: CHANGEACTIVESTATUS_VIRTUAL_PENDING,
+                changecardstatus_info: action
+            };
+        case CHANGEACTIVESTATUS_VIRTUAL_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: CHANGEACTIVESTATUS_VIRTUAL_SUCCESS,
+                changecardstatus_info: action
+            };
+        case CHANGEACTIVESTATUS_VIRTUAL_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: CHANGEACTIVESTATUS_VIRTUAL_FAILURE,
+                changecardstatus_info: action
             };
 
         default:

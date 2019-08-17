@@ -35,7 +35,8 @@ import { geCurrentVirtualCardsRequest,
          getAVirtualCardinfo,
          liquidateCard,
          deleteVirtualCard,
-         getVirtualCardHistoryRequest} from './alatcards.reducer'
+         getVirtualCardHistoryRequest,
+         changeCardStatus} from './alatcards.reducer'
 
 export const onboarding = {
     userRegistrationRequest,
@@ -109,5 +110,6 @@ export const alatCards={
     getAVirtualCardinfo,
     liquidateCard,
     deleteVirtualCard,
-    getVirtualCardHistoryRequest
+    getVirtualCardHistoryRequest,
+    changeCardStatus
 }

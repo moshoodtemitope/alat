@@ -5,6 +5,7 @@ import {Fragment} from "react";
 import {connect} from "react-redux";
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
+import { Switch } from '../../../shared/elements/_toggle';
 import * as utils from '../../../shared/utils';
 import AlatPinInput from '../../../shared/components/alatPinInput';
 import Modal from 'react-responsive-modal';
@@ -12,7 +13,9 @@ import {Textbox} from "react-inputs-validation";
 import "./../cards.scss";
 import whitelogo from "../../../assets/img/white-logo.svg"; 
 import {getCurrentVirtualCard,
-        topUpVirtualCard
+        topUpVirtualCard,
+        changeVirtualCardActiveStatus,
+        clearCardsStore
 } from "../../../redux/actions/cards/cards.actions";
 import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
 
@@ -21,7 +24,10 @@ import { FETCH_CURRENTCARD_SUCCESS,
     FETCH_CURRENTCARD_FAILURE,
    SEND_TOPUP_DATA_SUCCESS,
    SEND_TOPUP_DATA_PENDING,
-   SEND_TOPUP_DATA_FAILURE
+   SEND_TOPUP_DATA_FAILURE,
+   CHANGEACTIVESTATUS_VIRTUAL_SUCCESS,
+    CHANGEACTIVESTATUS_VIRTUAL_PENDING,
+    CHANGEACTIVESTATUS_VIRTUAL_FAILURE,
 } from "../../../redux/constants/cards/cards.constants";
 
 class TopUpVirtualCards extends React.Component {
@@ -34,6 +40,7 @@ class TopUpVirtualCards extends React.Component {
             showNewCard: false,
             isPinInvalid: false,
             isStep1Done: false,
+            showPinForLock: false,
             isAccountInvalid: false,
         };
 
@@ -60,6 +67,28 @@ class TopUpVirtualCards extends React.Component {
             if(fetchVirtualCardsStatus!==FETCH_CURRENTCARD_SUCCESS){
                 this.props.history.push("/virtual-cards");
             }
+    }
+
+    processVirtualCardChangeStatus(){
+        const {dispatch} = this.props;
+        // console.log('erorrr', payload, this.state.user.token)
+        let currentCardStatus = this.props.virtualCards.virtualcard_data.response.virtualCardData.isActive,
+            activeState = !currentCardStatus;
+        let payload={
+            Pin: this.state.Pin,
+            VirtualCardId: this.props.virtualCards.virtualcard_data.response.virtualCardData.id,
+            Activate: activeState
+        }
+        dispatch(changeVirtualCardActiveStatus(payload, this.state.user.token, false))
+        
+    }
+
+    handleLockCardToggle = () => {
+        this.setState({ showPinForLock: !this.state.showPinForLock, isPinRequiredError:false },()=>{
+        //    if(this.state.showPinForLock===true){
+        //         // this.goToSaveBeneficiary();
+        //    }
+        });
     }
 
     handleAlatPinChange(pin) {
@@ -292,6 +321,57 @@ class TopUpVirtualCards extends React.Component {
         )
     }
 
+    renderPinForLock(){
+        let {transferLimit, isSelectChanged} = this.state;
+        let props = this.props,
+        lockRequestStatus = props.changeCardStatus;
+
+        if(lockRequestStatus.is_processing===false && lockRequestStatus.fetch_status===CHANGEACTIVESTATUS_VIRTUAL_SUCCESS){
+            this.props.dispatch(clearCardsStore());
+            this.setState({showPinForLock: false, Pin:''})
+            this.props.dispatch(getCurrentVirtualCard(this.state.user.token, 'topup'));
+            
+        }
+        return(
+            <div>
+                <h3 className="text-center comfirm-heading">Enter Pin to confirm action on your card</h3>
+                <div className="input-ctn inputWrap">
+                    <AlatPinInput
+                        value={this.state.Pin}
+                        onChange={this.handleAlatPinChange}
+                        PinInvalid={this.state.isPinInvalid}
+                        maxLength={4} 
+                    />
+                </div>
+                <div className="input-ctn inputWrap">
+                    <center>
+                       
+                        {(lockRequestStatus.is_processing===false && lockRequestStatus.fetch_status===CHANGEACTIVESTATUS_VIRTUAL_FAILURE)&&
+                            <div className="error-msg">{lockRequestStatus.changecardstatus_info.error}</div>
+                        }
+
+                        {this.state.isPinRequiredError===true&& <div className="error-msg"> Pin is required</div>}
+
+                        <button type="button" onClick={()=>{
+                                                            if(this.state.Pin!=='' && this.state.Pin.length>=4){
+                                                                this.setState({isPinRequiredError: false});
+                                                                // if(selectedDebitableAccount.)
+                                                                this.processVirtualCardChangeStatus();
+                                                            }else{
+                                                                this.setState({isPinRequiredError: true});
+                                                            }
+                                                }} 
+                                            className="btn-alat m-t-10 m-b-20 text-center"
+                                            disabled={lockRequestStatus.is_processing}> { lockRequestStatus.is_processing ? "Processing..." : "Confirm" }</button>
+                        <div> <a className="back-cta"
+                                onClick={()=>{ this.setState({showPinForLock: false})}}>Back</a> </div>
+                        
+                    </center>
+                </div>
+            </div>
+        )
+    }
+
     renderCardToTopUp(){
         let {cardHolderAddress,
             nameOnCard,
@@ -306,6 +386,7 @@ class TopUpVirtualCards extends React.Component {
             amountError,
             dollarAmountError,
             isStep1Done,
+            showPinForLock,
        } = this.state;
 
        let props = this.props,
@@ -352,43 +433,65 @@ class TopUpVirtualCards extends React.Component {
                                                         </ul>
                                                     </div>
                                                     <div className="transfer-ctn">
-                                                    <h3 className="alatcard-msg">This card cannot be used on 3D secured sites and for money transfer</h3>
+                                                    {!showPinForLock && <h3 className="alatcard-msg">This card cannot be used on 3D secured sites and for money transfer</h3>}
                                                         <form>
-                                                            <div className="atmcard-wrap">
-                                                                <div className="top-info">
-                                                                    <div className="balanceinfo">
-                                                                        Balance: ${virtualCardsList.virtualCardData.balance}
+                                                            {!showPinForLock &&
+                                                            <div>
+                                                                <div className="atmcard-wrap">
+                                                                    <div className="top-info">
+                                                                        <div className="balanceinfo">
+                                                                            Balance: ${virtualCardsList.virtualCardData.balance}
+                                                                        </div>
+                                                                        <div className="logo-icon">
+                                                                            <img src={whitelogo} />
+                                                                        </div>
                                                                     </div>
-                                                                    <div className="logo-icon">
-                                                                        <img src={whitelogo} />
+                                                                    <div className="cardnum-digits">
+                                                                        **** **** **** {this.decodedPan(13)}{this.decodedPan(14)}{this.decodedPan(15)}{this.decodedPan(16)}
+                                                                    </div>
+                                                                    <div className="carddata">
+                                                                        <div className="each-carddata">
+                                                                            <span className="card-infotext">Valid Thru</span>
+                                                                            <span className="card-infodetail">**/**</span>
+                                                                        </div>
+                                                                        <div className="each-carddata">
+                                                                            <span className="card-infotext">CVV</span>
+                                                                            <span className="card-infodetail">***</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="cardname">
+                                                                        {virtualCardsList.virtualCardData.alias}
+                                                                    </div>
+                                                                    <div className="activecard-state">
+                                                                        <span className={this.props.virtualCards.
+                                                                                                virtualcard_data.response.
+                                                                                                virtualCardData.isActive===true?'cardstatus activecard':'cardstatus inactivecard'}></span>
+                                                                        {this.props.virtualCards.
+                                                                                                virtualcard_data.response.
+                                                                                                virtualCardData.isActive===true?'Active':'Inactive'}
                                                                     </div>
                                                                 </div>
-                                                                <div className="cardnum-digits">
-                                                                    **** **** **** {this.decodedPan(13)}{this.decodedPan(14)}{this.decodedPan(15)}{this.decodedPan(16)}
+                                                                <div className="lock-cta">
+                                                                    <div className="lock-msg">Activate Card?</div>
+                                                                    <span>No </span>
+                                                                    <Switch isChecked={this.props.virtualCards.virtualcard_data.response.virtualCardData.isActive} handleToggle={this.handleLockCardToggle} />
+                                                                    <span>Yes</span>
                                                                 </div>
-                                                                <div className="carddata">
-                                                                    <div className="each-carddata">
-                                                                        <span className="card-infotext">Valid Thru</span>
-                                                                        <span className="card-infodetail">**/**</span>
-                                                                    </div>
-                                                                    <div className="each-carddata">
-                                                                        <span className="card-infotext">CVV</span>
-                                                                        <span className="card-infodetail">***</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="cardname">
-                                                                    {virtualCardsList.virtualCardData.alias}
+                                                                <div className="conversion-msg">
+                                                                    $1 =  &#8358;{virtualCardsList.exchangeRates.ngnAmountOfOneUsd}
                                                                 </div>
                                                             </div>
-                                                            <div className="conversion-msg">
-                                                                $1 =  &#8358;{virtualCardsList.exchangeRates.ngnAmountOfOneUsd}
-                                                            </div>
-                                                            {isStep1Done===false &&
+                                                            }
+
+                                                            {(isStep1Done===false && !showPinForLock) &&
                                                                 this.renderStep1Form(virtualCardsList)
                                                             }
 
-                                                            {isStep1Done===true &&
+                                                            {(isStep1Done===true && !showPinForLock) &&
                                                                 this.renderAccountAndPin(virtualCardsList)
+                                                            }
+                                                            {showPinForLock &&
+                                                                this.renderPinForLock()
                                                             }
                                                             
                                                         </form>
@@ -442,6 +545,7 @@ function mapStateToProps(state){
     return {
         virtualCards        : state.alatCardReducersPile.getVirtualCards,
         sendTopVCCardinfo   : state.alatCardReducersPile.sendTopVCCardinfo,
+        changeCardStatus    : state.alatCardReducersPile.changeCardStatus,
         debitable_accounts  : state.accounts,
     };
 }

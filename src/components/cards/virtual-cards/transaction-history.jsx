@@ -8,9 +8,10 @@ import {Fragment} from "react";
 import { Link } from 'react-router-dom';
 import {connect} from "react-redux";
 import Select from 'react-select';
-import hstransfer from "../../assets/img/hs-transfer.svg";
-import hsatm from "../../assets/img/hs-atm.svg";
-import hspos from "../../assets/img/hs-pos.svg";
+import hstransfer from "../../../assets/img/hs-transfer.svg";
+import hsatm from "../../../assets/img/hs-atm.svg";
+import hspos from "../../../assets/img/hs-pos.svg";
+import fundvc from "../../../assets/img/fund-vc.svg";
 import Modal from 'react-responsive-modal';
 import {Textbox} from "react-inputs-validation";
 import "./../cards.scss";
@@ -135,15 +136,16 @@ class TransactionHistory extends React.Component {
     }
 
     renderHistoryImage(Transaction){
-        switch(Transaction.TransactionType){
-         case "D" :
-         if (Transaction.Narration.indexOf('ATM WD') >= 0) { 
-            return (<img src={hsatm}/>);
-        } else return (<img src={hstransfer}/>);
+        switch(Transaction.virtualCardTranType){
+         case "Credit" :
+                return (<img src={fundvc}/>);
+        //  if (Transaction.Narration.indexOf('ATM WD') >= 0) { 
+        //     return (<img src={hsatm}/>);
+        // } else return (<img src={hstransfer}/>);
 
         break;
         default :
-        return  (<img src={hspos}/>)
+            return  (<img src={hspos}/>)
         }
     }
     
@@ -161,11 +163,12 @@ class TransactionHistory extends React.Component {
                         <Fragment>
                             {
                                 transactionsList.map((eachTransaction, key)=>(
-                                    <div className="eachhistory" key={k}>
-                                        {this.renderHistoryImage(eachTransaction)}}
-                                        <p className="desc">{trans.Narration}<span className="date">{utils.FormartDate(trans.TransactionDate)}</span>
-                                    </p>
-                                    <p className={trans.TransactionType ==='D' ? "balance debit" : "balance credit"}>₦{utils.formatAmount(trans.Amount)}</p> 
+                                    <div className="eachhistory" key={key}>
+                                        <div className="two-items">{this.renderHistoryImage(eachTransaction)}
+                                            <div className="desc">{eachTransaction.narration.indexOf('|')>-1?eachTransaction.narration.split('|')[1]:eachTransaction.narration}</div>
+                                        </div>
+                                        <div className="date">{utils.FormartDate(eachTransaction.transactionDate)}</div>
+                                        <div className={eachTransaction.virtualCardTranType ==='Credit' ? "balance credit" : "balance debit"}>${utils.formatAmount(eachTransaction.amount)}</div> 
                                     </div>
                                 ))
                             }
@@ -337,7 +340,7 @@ class TransactionHistory extends React.Component {
                                     </div>
                                     <div className="">
                                         {this.renderVirtualCardInfo()}
-                                        {this.renderCardHistory()}
+                                        <div className="history-wrap">{this.renderCardHistory()}</div>
                                     </div>
                                 </div>
                             </div>

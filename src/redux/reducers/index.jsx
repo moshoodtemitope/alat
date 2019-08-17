@@ -116,8 +116,8 @@ const alatCardsReducer = combineReducers({
     getAVirtualCardinfo: alatCards.getAVirtualCardinfo,
     liquidateCard: alatCards.liquidateCard,
     deleteVirtualCard: alatCards.deleteVirtualCard,
-    getCardHistory: alatCards.getVirtualCardHistoryRequest
-
+    getCardHistory: alatCards.getVirtualCardHistoryRequest,
+    changeCardStatus: alatCards.changeCardStatus
 })
 
 const appReducer = combineReducers({

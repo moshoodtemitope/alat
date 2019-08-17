@@ -25,6 +25,9 @@ import {
     GET_VIRTUALCARD_HISTORY_SUCCESS,
     GET_VIRTUALCARD_HISTORY_PENDING,
     GET_VIRTUALCARD_HISTORY_FAILURE,
+    CHANGEACTIVESTATUS_VIRTUAL_SUCCESS,
+    CHANGEACTIVESTATUS_VIRTUAL_PENDING,
+    CHANGEACTIVESTATUS_VIRTUAL_FAILURE,
     ALATCARD_REDUCER_CLEAR
 } from "../../constants/cards/cards.constants";
 
@@ -329,6 +332,40 @@ export const liquidateVirtualCard = (payload, token)=>{
     function request(request) { return { type: LIQUIDATE_CARD_PENDING, request} }
     function success(response) { return {type: LIQUIDATE_CARD_SUCCESS, response} }
     function failure(error) { return {type: LIQUIDATE_CARD_FAILURE, error} }
+}
+
+export const changeVirtualCardActiveStatus = (payload, token)=>{
+    SystemConstant.HEADER['alat-token'] = token;  
+    return (dispatch)=>{
+        let consume =  ApiService.request(routes.VIRTUAL_CARD_CHANGE_STATE, "POST", payload, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{
+                
+                dispatch(success(response));
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+    
+    function request(request) { return { type: CHANGEACTIVESTATUS_VIRTUAL_PENDING, request} }
+    function success(response) { return {type: CHANGEACTIVESTATUS_VIRTUAL_SUCCESS, response} }
+    function failure(error) { return {type: CHANGEACTIVESTATUS_VIRTUAL_FAILURE, error} }
 }
 
 export const deleteAlatVirtualCard = (payload, token)=>{
