@@ -46,7 +46,20 @@ class TopUpVirtualCards extends React.Component {
 
 
     componentDidMount() {
+        this.verifyTransferStage();
         this.getCurrentVirtualCards();
+    }
+
+
+    verifyTransferStage(){
+        
+        let props = this.props,
+            fetchVirtualCardsStatus = props.virtualCards.fetch_status;
+
+            console.log('here', fetchVirtualCardsStatus);
+            if(fetchVirtualCardsStatus!==FETCH_CURRENTCARD_SUCCESS){
+                this.props.history.push("/virtual-cards");
+            }
     }
 
     handleAlatPinChange(pin) {
@@ -91,6 +104,18 @@ class TopUpVirtualCards extends React.Component {
             
         this.setState({ selectedAccount: account, selectedDebitableAccount, isSelectChanged:true, transferLimit});
 
+    }
+
+    replaceAll(str, find, replace) {
+        return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
+    }
+
+
+    decodedPan(pos){
+        let pan= this.props.virtualCards.virtualcard_data.response.virtualCardData.pan;
+            pan = this.replaceAll(pan, '|', '');
+        let str = pan.charAt(pos -1);
+        return this.props.virtualCards.virtualcard_data.response.encryptedCharacters.findIndex(x => x == str);
     }
 
     renderStep1Form(virtualCardsList){
@@ -222,7 +247,7 @@ class TopUpVirtualCards extends React.Component {
                             <div className="error-msg">{this.state.stage2ErrorMsg}</div>
                         }
                         {(topupOtpRequestStatus.is_processing===false && topupOtpRequestStatus.fetch_status===SEND_TOPUP_DATA_FAILURE)&&
-                            <div className="error-msg">{otpRequestStatus.new_vc_info.error}</div>
+                            <div className="error-msg">{topupOtpRequestStatus.topup_vc_info.error}</div>
                         }
 
                         <button type="button" onClick={()=>{
@@ -231,7 +256,7 @@ class TopUpVirtualCards extends React.Component {
                                                                 // if(selectedDebitableAccount.)
                                                                 if(this.state.selectedDebitableAccount[0].AvailableBalance >= this.state.amountInNaira){
                                                                     
-                                                                   if(this.state.selectedDebitableAccount[0].MaxIntraBankTransferLimit < this.state.amountInNaira){
+                                                                   if(this.state.selectedDebitableAccount[0].MaxIntraBankTransferLimit >= this.state.amountInNaira){
                                                                         this.setState({stage2Error: false});
                                                                         let payload ={
                                                                             AccountNo: this.state.selectedAccount,
@@ -308,6 +333,8 @@ class TopUpVirtualCards extends React.Component {
                         
                        
                         // return ;
+                        // console.log('cardsssss are', this.props.virtualCards);
+                        // console.log('response list are',virtualCardsList);
                         if(Object.keys(this.props.virtualCards).length >1){
                             return(
                                 <div className="col-sm-12">
@@ -317,8 +344,8 @@ class TopUpVirtualCards extends React.Component {
                                                 <div className="al-card no-pad">
                                                     <div className="sub-tab-nav inpage-nav">
                                                         <ul>
-                                                            <li> <Link to={'/virtual-cards/topup'}>Top Up</Link></li>
-                                                            <li> <Link to={'/virtual-cards'}>View Details</Link></li>
+                                                            <li> <Link className="active-subnav" to={'/virtual-cards/topup'}>Top Up</Link></li>
+                                                            <li> <Link to={'/virtual-cards/card-details'}>View Details</Link></li>
                                                             <li> <Link to={'/virtual-cards/history'}> Transaction History</Link></li>
                                                             <li> <Link to={'/virtual-cards/liquidate'}>Liquidate Card</Link></li>
                                                             <li> <Link to={'/virtual-cards/delete'}>Delete Card</Link></li>
@@ -337,7 +364,7 @@ class TopUpVirtualCards extends React.Component {
                                                                     </div>
                                                                 </div>
                                                                 <div className="cardnum-digits">
-                                                                    7433 **** **** 7872
+                                                                    **** **** **** {this.decodedPan(13)}{this.decodedPan(14)}{this.decodedPan(15)}{this.decodedPan(16)}
                                                                 </div>
                                                                 <div className="carddata">
                                                                     <div className="each-carddata">
@@ -376,7 +403,7 @@ class TopUpVirtualCards extends React.Component {
                         }
                 case FETCH_CURRENTCARD_FAILURE:
                     let virtualCardError =  props.virtualCards.virtualcard_data;
-                    console.log('error is', virtualCardError);
+                    
                     return(
                         <div className="col-sm-12">
                             <div className="row">

@@ -5,14 +5,52 @@
         justify-content: space-evenly;
     }
 } 
+.minum-bal-msg {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #AB2656;
+    font-weight: 600;
+}
+.amountsummary-text {
+    margin: 20px 0;
+    font-size: 15px;
+    span{
+        font-weight: 600;
+        margin-right: 14px;
+    }
+}
+
+.sub-tab-nav ul li a.active-subnav {
+    color: #AB2656;
+    border-bottom: 3px solid #AB2656;
+}
+
 .alatcard-msg{
     color: #AB2656;
     font-size: 14px;
     margin-bottom: 20px;
 }
+.daterange-options {
+    display: flex;
+}
+.transfer-ctn.nopaddingtop{
+    padding-top: 0
+}
+.eachdate-wrap {
+    flex: 1 1 0;
+    &:nth-child(1){
+        padding-right:10px; 
+    }
+    &:nth-child(2){
+        padding-left:10px; 
+    }
+}
 .nocards-icon {
     width: 70px;
     margin: 20px 0;
+}
+.cardnum-digits.numdetails{
+    letter-spacing: 0.9px;
 }
 .limit-text{
     color: #AB2656;
@@ -59,6 +97,10 @@
     padding: 18px 30px 25px;
     color: #ffffff;
     margin-bottom: 25px;
+    &.shortened{
+        height: 135px;
+        margin-bottom: 0;
+    }
 }
 .other-addressinfo {
     display: flex;

@@ -29,7 +29,8 @@ class VirtualCardsOtp extends React.Component{
         super(props);
         this.state = {
             user: JSON.parse(localStorage.getItem("user")),
-            isSubmitting: false
+            isSubmitting: false,
+            displayButtons: ''
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -48,7 +49,7 @@ class VirtualCardsOtp extends React.Component{
             payload ={};
 
             this.setState({isSubmitting: true});
-            console.log('going on', topupOtpRequestStatus.topup_vc_info.cardpayload);
+
             //Send payment details for TOP UP Virtual Card
             if(newCardotpRequestStatus.new_vc_info === undefined 
                 && topupOtpRequestStatus.topup_vc_info!==undefined ){
@@ -58,7 +59,14 @@ class VirtualCardsOtp extends React.Component{
                     payload.OTP = this.state.OtpValue;
 
 
-                dispatch(topUpVirtualCard(payload, this.state.user.token , true))
+                dispatch(topUpVirtualCard(payload, this.state.user.token , true));
+
+                if(topupOtpRequestStatus.is_processing===false 
+                    && topupOtpRequestStatus.fetch_status===SEND_TOPUP_DATA_FAILURE
+                    && topupOtpRequestStatus.topup_vc_info.hasOtp===true){
+                       
+                    this.setState({isSubmitting: false});
+                }
             }
 
 
@@ -68,9 +76,8 @@ class VirtualCardsOtp extends React.Component{
 
                     payload = newCardotpRequestStatus.new_vc_info.cardpayload;
                     payload.OTP = this.state.OtpValue;
-
-
                 dispatch(sendNewVirtualCardInfo(payload, this.state.user.token , true))
+
             }
     }
 
@@ -78,11 +85,20 @@ class VirtualCardsOtp extends React.Component{
         
         let props = this.props,
             fetchVirtualCardsStatus = props.virtualCards.fetch_status,
+            topupOtpRequestStatus = this.props.sendTopVCCardinfo,
             newCardotpRequestStatus = props.sendVCNewCardinfo;
             console.log('here', newCardotpRequestStatus);
             if(fetchVirtualCardsStatus!==FETCH_CURRENTCARD_SUCCESS){
                 this.props.history.push("/virtual-cards");
             }
+
+
+            // if(topupOtpRequestStatus.is_processing===false 
+            //     && topupOtpRequestStatus.fetch_status===SEND_TOPUP_DATA_FAILURE
+            //     && topupOtpRequestStatus.topup_vc_info.hasOtp===true){
+            //         console.log('shshahshsha');
+            //     this.setState({isSubmitting: false});
+            // }
     }
 
     resendOTP(cardAction, payload){
@@ -99,7 +115,7 @@ class VirtualCardsOtp extends React.Component{
 
 
     renderOTpForm(otpMsg){
-        let {OtpValue, isSubmitting} = this.state,
+        let {OtpValue, isSubmitting, displayButtons} = this.state,
             newCardotpRequestStatus = this.props.sendVCNewCardinfo,
             topupOtpRequestStatus = this.props.sendTopVCCardinfo;
         // console.log('paylod is', this.props.sendVCNewCardinfo);
@@ -123,7 +139,7 @@ class VirtualCardsOtp extends React.Component{
                                     && topupOtpRequestStatus.topup_vc_info===undefined 
                                     && newCardotpRequestStatus.new_vc_info.response) 
 
-                                    && <p className="m-b-20" >{newCardotpRequestStatus.new_vc_info.response.data.description}</p> }
+                                    && <p className="m-b-20" >{newCardotpRequestStatus.new_vc_info.response.description}</p> }
                                     
 
                                      {/* Display OTP message for TopUp Virtual Card */}
@@ -150,14 +166,73 @@ class VirtualCardsOtp extends React.Component{
                                                 }}
                                             />
 
-                                            
+                                            {(topupOtpRequestStatus.topup_vc_info!==undefined && topupOtpRequestStatus.is_processing===false && topupOtpRequestStatus.fetch_status===SEND_TOPUP_DATA_FAILURE)&&
+                                                <div className="error-msg">{topupOtpRequestStatus.topup_vc_info.error}</div>
+                                            }
+
+                                            {(newCardotpRequestStatus.new_vc_info!==undefined && otpRequestStatus.is_fetching===false && otpRequestStatus.fetch_status===SEND_NEWVC_DATA_FAILURE)&&
+                                                <div className="error-msg">{otpRequestStatus.new_vc_info.error}</div>
+                                            }
                                                 
                                             <div className="row">
                                                 <div className="col-sm-12">
                                                     <center>
-                                                        <button type="submit" disabled={isSubmitting} className="btn-alat m-t-10 m-b-20 text-center">
-                                                               {isSubmitting? 'Processing': 'Confirm'} 
+
+                                                    {/* If OTP is being verified for new Virtual Card */}
+
+                                                    {/* { (newCardotpRequestStatus.new_vc_info!==undefined
+                                                        && (otpRequestStatus.is_fetching===undefined || otpRequestStatus.is_fetching===false) 
+                                                        && topupOtpRequestStatus.topup_vc_info===undefined
+                                                        ) &&
+
+                                                        <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Confirm</button>
+                                                    }
+                                                    { (topupOtpRequestStatus.topup_vc_info!==undefined && displayButtons===false
+                                                        &&  (topupOtpRequestStatus.is_processing===undefined || topupOtpRequestStatus.is_processing===true) 
+                                                        && newCardotpRequestStatus.new_vc_info===undefined
+                                                        ) &&
+
+                                                        <button type="submit" className="btn-alat m-t-10 m-b-20 text-center" disabled>Processing...</button>
+                                                    } */}
+
+
+
+                                                    {/* If OTP is being verified for  existing Virtual Card Top UP */}
+                                                    {/* { (topupOtpRequestStatus.topup_vc_info!==undefined
+                                                        && (topupOtpRequestStatus.is_processing===undefined || topupOtpRequestStatus.is_processing===false) 
+                                                        && newCardotpRequestStatus.new_vc_info===undefined
+                                                        ) &&
+
+                                                        <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Confirm</button>
+                                                    }
+                                                    { (topupOtpRequestStatus.topup_vc_info!==undefined && displayButtons===false 
+                                                        &&  (topupOtpRequestStatus.is_processing===undefined || topupOtpRequestStatus.is_processing===true) 
+                                                        && newCardotpRequestStatus.new_vc_info===undefined
+                                                        ) &&
+
+                                                        <button type="submit" className="btn-alat m-t-10 m-b-20 text-center" disabled>Processing...</button>
+                                                    } */}
+
+
+
+
+                                                        <button type="submit" 
+                                                                disabled={(topupOtpRequestStatus.topup_vc_info!==undefined && newCardotpRequestStatus.new_vc_info===undefined) // If OTP is being verified for  existing Virtual Card Top UP
+                                                                                ? topupOtpRequestStatus.is_processing:
+                                                                                (newCardotpRequestStatus.new_vc_info!==undefined && topupOtpRequestStatus.topup_vc_info===undefined) // If OTP is being verified for new Virtual Card
+                                                                                    ? otpRequestStatus.is_fetching: true
+                                                                }
+                                                                className="btn-alat m-t-10 m-b-20 text-center">
+                                                                    {((topupOtpRequestStatus.topup_vc_info!==undefined 
+                                                                        && topupOtpRequestStatus.is_processing===true) ||
+                                                                            (newCardotpRequestStatus.new_vc_info!==undefined 
+                                                                            &&  otpRequestStatus.is_fetching ===true)
+                                                                    )?'Processing':'Confirm'
+                                                                        
+                                                                    }
+                                                               {/* {isSubmitting? 'Processing': 'Confirm'}  */}
                                                         </button>
+                                                        
                                                     </center>
 
                                                 </div>
@@ -172,7 +247,7 @@ class VirtualCardsOtp extends React.Component{
                                             <span className="text-left pull-right cta-link">
                                             { (newCardotpRequestStatus.fetch_status!==SEND_NEWVC_DATA_PENDING) &&
                                                 <a className="cta-link" onClick={()=>{
-                                                    
+                                                    this.setState({displayButtons: false})
                                                     this.resendOTP("newcard",newCardotpRequestStatus.new_vc_info.cardpayload)
                                                     }}>Resend code</a>
                                             }
@@ -188,7 +263,7 @@ class VirtualCardsOtp extends React.Component{
                                             <span className="text-left pull-right cta-link">
                                             { (topupOtpRequestStatus.fetch_status!==SEND_TOPUP_DATA_PENDING) &&
                                                 <a className="cta-link" onClick={()=>{
-                                                    
+                                                    this.setState({displayButtons: false})
                                                     this.resendOTP("topupcard", topupOtpRequestStatus.topup_vc_info.cardpayload)
                                                     }}>Resend code</a>
                                             }
@@ -208,12 +283,21 @@ class VirtualCardsOtp extends React.Component{
 
     render(){
         let props = this.props,
-            fetchVirtualCardsStatus = props.virtualCards.fetch_status,
-            newCardotpRequestStatus = props.sendVCNewCardinfo
+            // fetchVirtualCardsStatus = props.virtualCards.fetch_status,
+            // newCardotpRequestStatus = props.sendVCNewCardinfo,
+            newCardotpRequestStatus     = this.props.sendVCNewCardinfo,
+            topupOtpRequestStatus       = this.props.sendTopVCCardinfo;
         // if(fetchVirtualCardsStatus===FETCH_CURRENTCARD_SUCCESS){
         //     return (
         //         this.renderOTpForm(newCardotpRequestStatus.new_vc_info.response)
         //     )
+        // }
+
+        // if(topupOtpRequestStatus.is_processing===false 
+        //     && topupOtpRequestStatus.fetch_status===SEND_TOPUP_DATA_FAILURE
+        //     && topupOtpRequestStatus.topup_vc_info.hasOtp===true){
+        //         // console.log('shshahshsha');
+        //     this.setState({isSubmitting: false});
         // }
         return(
             <Fragment>

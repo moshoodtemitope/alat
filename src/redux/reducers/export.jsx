@@ -31,7 +31,11 @@ import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingV
 
 import { geCurrentVirtualCardsRequest,
          sendVCNewCardinfo,
-         sendTopVCCardinfo} from './alatcards.reducer'
+         sendTopVCCardinfo,
+         getAVirtualCardinfo,
+         liquidateCard,
+         deleteVirtualCard,
+         getVirtualCardHistoryRequest} from './alatcards.reducer'
 
 export const onboarding = {
     userRegistrationRequest,
@@ -101,5 +105,9 @@ export const fundAccount={
 export const alatCards={
     geCurrentVirtualCardsRequest,
     sendVCNewCardinfo,
-    sendTopVCCardinfo
+    sendTopVCCardinfo,
+    getAVirtualCardinfo,
+    liquidateCard,
+    deleteVirtualCard,
+    getVirtualCardHistoryRequest
 }

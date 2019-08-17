@@ -179,8 +179,8 @@ class VirtualCards extends React.Component {
                                                             if((nameOnCard !=='' && nameOnCard !==undefined) && (amountInNaira !=='' && amountInNaira !==undefined ) && (amountInUsd !=='' && amountInUsd !==undefined)){
                                                                 
                                                                 if(Math.abs(amountInUsd)>=10){
-                                                                    console.log('valid', amountInUsd );
-                                                                    this.setState({isStep1Done: true, showStep1Error: false, isSelectChanged:false});
+                                                                    // console.log('valid', amountInUsd );
+                                                                    this.setState({isStep1Done: true, showStep1Error: false, stage2Error:false, isSelectChanged:false});
                                                                 }else{
                                                                     this.setState({showStep1Error: true, step1ErrorMessage:'Minimum amount in USD is $10'});
                                                                 }
@@ -237,7 +237,7 @@ class VirtualCards extends React.Component {
                                                             
                                                             if(this.state.selectedAccount!=='' && this.state.Pin!==''){
                                                                 if(this.state.selectedDebitableAccount[0].AvailableBalance >= this.state.amountInNaira){
-                                                                    if(this.state.selectedDebitableAccount[0].MaxIntraBankTransferLimit < this.state.amountInNaira){
+                                                                    if(this.state.selectedDebitableAccount[0].MaxIntraBankTransferLimit >= this.state.amountInNaira){
                                                                         this.setState({stage2Error: false});
                                                                         let payload ={
                                                                             AccountNo: this.state.selectedAccount,
@@ -260,7 +260,7 @@ class VirtualCards extends React.Component {
                                                             }
                                                 }} 
                                             className="btn-alat m-t-10 m-b-20 text-center"
-                                            disabled={otpRequestStatus.is_fetching}> { otpRequestStatus.is_fetching ? "Processing..." : "Create Card" }</button>
+                                            disabled={otpRequestStatus.is_fetching}> { otpRequestStatus.is_fetching ? "Processing..." : "Proceed" }</button>
                         <div>{(otpRequestStatus.is_fetching ===false || otpRequestStatus.is_fetching==undefined ) && <a className="back-cta" onClick={()=>this.setState({isStep1Done:false})}>Back</a> } </div>
                         
                     </center>
@@ -308,7 +308,8 @@ class VirtualCards extends React.Component {
                     );
                 case FETCH_CURRENTCARD_SUCCESS:
                     let virtualCardsList =  props.virtualCards.virtualcard_data.response;
-                      
+                        
+                        if((virtualCardsList.virtualCardData===undefined)){
                             return(
                                 <div className="col-sm-12">
                                     <div className="row">
@@ -385,6 +386,8 @@ class VirtualCards extends React.Component {
                                     </div>
                                 </div>
                             );
+                        }
+                        
                         
                 case FETCH_CURRENTCARD_FAILURE:
                         let virtualCardError =  props.virtualCards.virtualcard_data;

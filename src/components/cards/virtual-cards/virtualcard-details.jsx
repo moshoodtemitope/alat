@@ -1,19 +1,27 @@
 import * as React from "react";
 import {Router, NavLink} from "react-router";
-// import * as utils from "../../shared/utils";
 import {Fragment} from "react";
+import * as utils from '../../../shared/utils';
+import AlatPinInput from '../../../shared/components/alatPinInput';
 import {connect} from "react-redux";
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
 import Modal from 'react-responsive-modal';
 import {Textbox} from "react-inputs-validation";
-import whitelogo from "../../../assets/img/white-logo.svg"; 
+import whitelogo from "../../../assets/img/white-logo.svg";
 import {getCurrentVirtualCard,
+    getVirtualDetails
 } from "../../../redux/actions/cards/cards.actions";
 
-import { FETCH_CURRENTCARD_SUCCESS,
+import {
+    FETCH_CURRENTCARD_SUCCESS,
     FETCH_CURRENTCARD_PENDING,
-    FETCH_CURRENTCARD_FAILURE} from "../../../redux/constants/cards/cards.constants";
+    FETCH_CURRENTCARD_FAILURE,
+    FETCH_CARD_DATA_SUCCESS,
+    FETCH_CARD_DATA_PENDING,
+    FETCH_CARD_DATA_FAILURE,
+    ALATCARD_REDUCER_CLEAR
+} from "../../../redux/constants/cards/cards.constants";
 
 class VirtualCardDetails extends React.Component {
     constructor(props) {
@@ -28,6 +36,8 @@ class VirtualCardDetails extends React.Component {
             isAccountInvalid: false,
         };
 
+        this.handleAlatPinChange      = this.handleAlatPinChange.bind(this);
+        this.sendCardData             = this.sendCardData.bind(this);
         
     }
 
@@ -44,308 +54,275 @@ class VirtualCardDetails extends React.Component {
         }
     }
 
+    getVCDetails(payload){
+        const { dispatch } = this.props;
+
+        dispatch(getVirtualDetails(payload, this.state.user.token));
+        
+    }
+
     
     getCurrentVirtualCards(){
         const { dispatch } = this.props;
         
         if(Object.keys(this.props.virtualCards).length <1){
-            dispatch(getCurrentVirtualCard(this.state.user.token, 'topup'));
+            dispatch(getCurrentVirtualCard(this.state.user.token, "fordetails"));
         }
         
     }
 
-    renderStep1Form(virtualCardsList){
-        let {nameOnCard,
-            amountInNaira,
-            amountInUsd,
-            computedDollarAmount,
-            amountFormatted,
-            dollarAmountFormatted,
+    sendCardData(e){
+        e.preventDefault();
+        let props                   = this.props,
+            existingVirtualCard     = props.virtualCards.virtualcard_data.response,
+            payload                 ={
+                pin: this.state.Pin,
+                virtualCardId: existingVirtualCard.virtualCardData.id
+            };
+        
+            this.getVCDetails(payload);
+    }
+
+    replaceAll(str, find, replace) {
+        return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
+    }
+
+
+    decodedPan(pos){
+        let pan= this.props.getAVirtualCardinfo.vc_info.response.data.pan;
+            pan = this.replaceAll(pan, '|', '');
+        let str = pan.charAt(pos -1);
+        return this.props.virtualCards.virtualcard_data.response.encryptedCharacters.findIndex(x => x == str);
+    }
+
+    decodedCcv(pos){
+        let cvv= this.props.getAVirtualCardinfo.vc_info.response.data.cvv;
+            cvv = this.replaceAll(cvv, '|', '');
+
+        let str = cvv.charAt(pos -1);
+        
+        return this.props.virtualCards.virtualcard_data.response.encryptedCharacters.findIndex(x => x == str);
+    
+    }
+
+    decodedexMonth(pos){
+
+        let expiryMonth= this.props.getAVirtualCardinfo.vc_info.response.data.expiryMonth;
+            expiryMonth = this.replaceAll(expiryMonth, '|', '');
+
+        let str = expiryMonth.charAt(pos -1);
+        
+        return this.props.virtualCards.virtualcard_data.response.encryptedCharacters.findIndex(x => x == str);
+
+        
+    }
+
+    decodedexYear(pos){
+
+        let expiryYear= this.props.getAVirtualCardinfo.vc_info.response.data.expiryYear;
+            expiryYear = this.replaceAll(expiryYear, '|', '');
+
+        let str = expiryYear.charAt(pos -1);
+        
+        return this.props.virtualCards.virtualcard_data.response.encryptedCharacters.findIndex(x => x == str);
+      }
+
+    decodeCardNumber(){
+        let counter,
+            cardDigitsCount =16,
+            cardNumbers='';
+
+        for(counter=1; counter<=cardDigitsCount; counter++){
+            if((counter%4===0) && counter<cardDigitsCount){
+                cardNumbers += this.decodedPan(counter)+ ' ';
+            }else{
+                cardNumbers += this.decodedPan(counter);
+            }
+            
+        }
+        
+
+        return cardNumbers;
+    }
+
+
+    renderCardDetails(){
+        let {cardHolderAddress,
+            nameOnCard,
             cardHolderCity,
-            showStep1Error,
-            step1ErrorMessage,
             cardHolderState,
             cardHolderZipcode,
-            amountError,
-            dollarAmountError} = this.state;
-        return(
-            <div>
-                <div className="input-ctn inputWrap">
-                    <label>Name on Card</label>
-                    <Textbox
-                        tabIndex="2"
-                        id={'nameOnCard'}
-                        name="nameOnCard"
-                        value={nameOnCard}
-                        onChange= {(nameOnCard, e)=>{ 
-                            console.log('value is', nameOnCard);
-                            this.setState({nameOnCard});
-                        }}
-                        
-                    />
-                </div>
-                <div className="input-ctn inputWrap">
-                    <label>Amount in Naira (Maximum  &#8358;2,000,000)</label>
-                    
-                    <Textbox
-                        tabIndex="2"
-                        id={'amountInNaira'}
-                        name="amountInNaira"
-                        value={amountInNaira}
-                        onChange= {(amountInNaira, e)=>{ 
-                            
-                            let dollarConversion = utils.formatAmount( amountInNaira / virtualCardsList.ngnAmountOfOneUsd);
+       } = this.state;
 
-                            
-                                dollarConversion = parseFloat(dollarConversion.replace(/,/g, '')).toFixed(2).toString();
-
+       let props = this.props,
+            fetchVirtualCardsStatus = props.virtualCards.fetch_status,
+            existingVirtualCard     = props.virtualCards,
+            getVirtualCardData      = props.getAVirtualCardinfo;
+            
+            
+        return(    
+            <div className="col-sm-12">
+                <div className="row">
+                    <div className="col-sm-12">
+                        <div className="max-600">
+                            <div className="al-card no-pad">
+                                <div className="sub-tab-nav inpage-nav">
+                                    <ul>
+                                        <li> <Link to={'/virtual-cards/topup'}>Top Up</Link></li>
+                                        <li> <Link className="active-subnav" to={'/virtual-cards/card-details'}>View Details</Link></li>
+                                        <li> <Link to={'/virtual-cards/history'}> Transaction History</Link></li>
+                                        <li> <Link to={'/virtual-cards/liquidate'}>Liquidate Card</Link></li>
+                                        <li> <Link to={'/virtual-cards/delete'}>Delete Card</Link></li>
+                                    </ul>
+                                </div>
                                 
-                            if(dollarConversion !=='NaN'){
-                                this.setState({amountInNaira, amountInUsd: dollarConversion, amountError:false});
-                            }else{
-                                this.setState({amountError:true})
-                            }
-                            
-                        }}
-                        
-                    />
-                    {amountError===true &&
-                        <small className="error-msg">Only a valid amount allowed</small>
-                    }
-                </div>
-                <div className="input-ctn inputWrap">
-                    <label>Amount in USD (Minimum $10)</label>
-                    <Textbox
-                        tabIndex="3"
-                        id={'amountInUsd'}
-                        name="amountInUsd"
-                        value={amountInUsd}
-                        onChange= {(amountInUsd, e)=>{ 
-                        
-                            let nairaConversion =  utils.formatAmount(amountInUsd * virtualCardsList.ngnAmountOfOneUsd);
-                            
 
-                                nairaConversion = parseFloat(nairaConversion.replace(/,/g, '')).toFixed(2).toString();
+                                <div className="transfer-ctn">
+                                {fetchVirtualCardsStatus===FETCH_CURRENTCARD_PENDING &&
+                                    <div className="text-center">Please wait</div>
+                                }
 
-                            if(nairaConversion !=='NaN'){
-                                this.setState({amountInUsd, amountInNaira: nairaConversion, dollarAmountError:false});
-                            }else{
-                                this.setState({dollarAmountError:true})
-                            }
-                        }}
-                        
-                    />
-                    {dollarAmountError===true &&
-                        <small className="error-msg">Only a valid amount allowed</small>
-                    }
-                    
-                </div>
-                <div className="input-ctn inputWrap">
-                    <center>
-                        <button type="button" onClick={()=>{
-                                                            if((nameOnCard !=='' && nameOnCard !==undefined) && (amountInNaira !=='' && amountInNaira !==undefined ) && (amountInUsd !=='' && amountInUsd !==undefined)){
-                                                                
-                                                                if(Math.abs(amountInUsd)>=10){
-                                                                    console.log('valid', amountInUsd );
-                                                                    this.setState({isStep1Done: true, showStep1Error: false});
-                                                                }else{
-                                                                    this.setState({showStep1Error: true, step1ErrorMessage:'Minimum amount in USD is $10'});
-                                                                }
-                                                                
-                                                            }else{
-                                                                this.setState({showStep1Error: true, step1ErrorMessage:'All fields are required'});
-                                                            }
-                                                    }}   
-                            className="btn-alat m-t-10 m-b-20 text-center">Create Card</button>
-                            {showStep1Error===true && <div className="error-msg">{step1ErrorMessage}</div> }
-                    </center>
+                                {fetchVirtualCardsStatus=== FETCH_CURRENTCARD_FAILURE &&
+                                    <div className="text-center">
+                                        {this.props.virtualCards.virtualcard_data.error}
+                                        <div>
+                                            <a className="cta-link" onClick={this.getCurrentVirtualCards}> Retry</a>
+                                        </div>
+                                    </div>
+                                }
+
+                                {(getVirtualCardData.fetch_status!==FETCH_CARD_DATA_SUCCESS
+                                  && fetchVirtualCardsStatus === FETCH_CURRENTCARD_SUCCESS) &&
+                                    <form onSubmit={this.sendCardData}>
+                                        <div className="input-ctn inputWrap">
+                                            <AlatPinInput
+                                                value={this.state.Pin}
+                                                onChange={this.handleAlatPinChange}
+                                                PinInvalid={this.state.isPinInvalid}
+                                                maxLength={4} 
+                                            />
+                                        </div>
+
+                                        <div className="input-ctn inputWrap">
+                                            <center>
+                                                <button type="submit"
+                                                        disabled={getVirtualCardData.is_processing}
+                                                        className="btn-alat m-t-10 m-b-20 text-center"> 
+                                                       {getVirtualCardData.is_processing? 'Getting details...':'Get Card details'} 
+                                                    </button>
+                                            </center>
+                                        </div>
+                                    </form>
+                                }
+
+                                    {(getVirtualCardData.fetch_status === FETCH_CARD_DATA_SUCCESS
+                                        && fetchVirtualCardsStatus === FETCH_CURRENTCARD_SUCCESS) &&
+                                        
+                                            <div>
+                                                <div className="atmcard-wrap">
+                                                    <div className="top-info">
+                                                        <div className="balanceinfo">
+                                                        Balance: ${getVirtualCardData.vc_info.response.data.balance}
+                                                            {/* Balance: ${virtualCardsList.virtualCardData.balance} ***,**.** */}
+                                                        </div>
+                                                        <div className="logo-icon">
+                                                            <img src={whitelogo} />
+                                                        </div>
+                                                    </div>
+                                                    <div className="cardnum-digits numdetails">
+                                                    {this.decodeCardNumber()}
+                                                    </div>
+                                                    <div className="carddata">
+                                                        <div className="each-carddata">
+                                                            <span className="card-infotext">Valid Thru</span>
+                                                            <span className="card-infodetail">{this.decodedexMonth(1)}{this.decodedexMonth(2)}/{this.decodedexYear(1)}{this.decodedexYear(2)}{this.decodedexYear(3)}{this.decodedexYear(4)}</span>
+                                                        </div>
+                                                        <div className="each-carddata">
+                                                            <span className="card-infotext">CVV</span>
+                                                            <span className="card-infodetail">{this.decodedCcv(1)}{this.decodedCcv(2)}{this.decodedCcv(3)}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="cardname">
+                                                        {getVirtualCardData.vc_info.response.data.alias}
+                                                    </div>
+                                                </div>
+                                                <div className="input-ctn inputWrap">
+                                                    <label>Address</label>
+                                                    <Textbox
+                                                        tabIndex="2"
+                                                        id={'cardHolderAddress'}
+                                                        name="cardHolderAddress"
+                                                        disabled="true"
+                                                        value={getVirtualCardData.vc_info.response.data.billingAddress}
+                                                        onChange= {(cardHolderAddress, e)=>{ 
+                                                           
+                                                        }}
+                                                        
+                                                    />
+                                                </div>
+                                                <div className="other-addressinfo">
+                                                <div className="input-ctn inputWrap">
+                                                    <label>City</label>
+                                                    <Textbox
+                                                        tabIndex="3"
+                                                        id={'cardHolderCity'}
+                                                        name="cardHolderCity"
+                                                        disabled="true"
+                                                        value={getVirtualCardData.vc_info.response.data.billingCity}
+                                                        onChange= {(cardHolderCity, e)=>{ 
+                                                            
+                                                        }}
+                                                        
+                                                    />
+                                                </div>
+                                                <div className="input-ctn inputWrap">
+                                                    <label>State</label>
+                                                    <Textbox
+                                                        tabIndex="4"
+                                                        id={'cardHolderState'}
+                                                        name="cardHolderState"
+                                                        disabled="true"
+                                                        value={getVirtualCardData.vc_info.response.data.billingState}
+                                                        onChange= {(cardHolderState, e)=>{ 
+                                                            
+                                                        }}
+                                                        
+                                                    />
+                                                </div>
+                                                <div className="input-ctn inputWrap">
+                                                    <label>Zip code</label>
+                                                    <Textbox
+                                                        tabIndex="5"
+                                                        id={'cardHolderZipcode'}
+                                                        name="cardHolderZipcode"
+                                                        disabled="true"
+                                                        value={getVirtualCardData.vc_info.response.data.billingZipCode}
+                                                        onChange= {(cardHolderZipcode, e)=>{ 
+                                                            
+                                                        }}
+                                                        
+                                                    />
+                                                </div>
+                                            </div>
+                                            </div>
+                                        
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
     }
 
-    renderCardToTopUp(){
-        let {cardHolderAddress,
-            nameOnCard,
-            amountInNaira,
-            amountInUsd,
-            computedDollarAmount,
-            amountFormatted,
-            dollarAmountFormatted,
-            cardHolderCity,
-            cardHolderState,
-            cardHolderZipcode,
-            amountError,
-            dollarAmountError,
-            isStep1Done,
-       } = this.state;
-
-       let props = this.props,
-            fetchVirtualCardsStatus = props.virtualCards.fetch_status;
-            
-            switch(fetchVirtualCardsStatus){
-                case FETCH_CURRENTCARD_PENDING:
-                    return(
-                        <div className="col-sm-12">
-                            <div className="row">
-                                    <div className="col-sm-12">
-                                        <div className="max-600">
-                                            <div className="al-card no-pad">
-                                                <div className="transfer-ctn text-center">
-                                                    Loading card details...
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
-                    );
-                case FETCH_CURRENTCARD_SUCCESS:
-                        let virtualCardsList =  props.virtualCards.virtualcard_data.response;
-                        
-                        console.log(' cards details', virtualCardsList);
-                        // return ;
-                        if(Object.keys(this.props.virtualCards).length >1){
-                            return(
-                                <div className="col-sm-12">
-                                    <div className="row">
-                                        <div className="col-sm-12">
-                                            <div className="max-600">
-                                                <div className="al-card no-pad">
-                                                    <div className="sub-tab-nav inpage-nav">
-                                                        <ul>
-                                                            <li> <Link to={'virtual-cards'}>Top Up</Link></li>
-                                                            <li> <Link to={'/virtual-cards/history'}> Transaction History</Link></li>
-                                                            <li> <Link to={'/virtual-cards/liquidate'}>Liquidate Card</Link></li>
-                                                            <li> <Link to={'/virtual-cards/delete'}>Delete Card</Link></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div className="transfer-ctn">
-                                                        <form>
-                                                            <div className="atmcard-wrap">
-                                                                <div className="top-info">
-                                                                    <div className="balanceinfo">
-                                                                        Balance: ${virtualCardsList.virtualCardData.balance} ***,**.**
-                                                                    </div>
-                                                                    <div className="logo-icon">
-                                                                        <img src={whitelogo} />
-                                                                    </div>
-                                                                </div>
-                                                                <div className="cardnum-digits">
-                                                                    7433 **** **** 7872
-                                                                </div>
-                                                                <div className="carddata">
-                                                                    <div className="each-carddata">
-                                                                        <span className="card-infotext">Valid Thru</span>
-                                                                        <span className="card-infodetail">**/**</span>
-                                                                    </div>
-                                                                    <div className="each-carddata">
-                                                                        <span className="card-infotext">CVV</span>
-                                                                        <span className="card-infodetail">***</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="cardname">
-                                                                    {virtualCardsList.virtualCardData.alias}
-                                                                </div>
-                                                            </div>
-                                                            <div className="input-ctn inputWrap">
-                                                                <label>Address</label>
-                                                                <Textbox
-                                                                    tabIndex="2"
-                                                                    id={'cardHolderAddress'}
-                                                                    name="cardHolderAddress"
-                                                                    value={cardHolderAddress}
-                                                                    onChange= {(cardHolderAddress, e)=>{ 
-                                                                        console.log('value is', cardHolderAddress);
-                                                                    }}
-                                                                    
-                                                                />
-                                                            </div>
-                                                            <div className="other-addressinfo">
-                                                                <div className="input-ctn inputWrap">
-                                                                    <label>City</label>
-                                                                    <Textbox
-                                                                        tabIndex="3"
-                                                                        id={'cardHolderCity'}
-                                                                        name="cardHolderCity"
-                                                                        value={cardHolderCity}
-                                                                        onChange= {(cardHolderCity, e)=>{ 
-                                                                            console.log('value is', cardHolderCity);
-                                                                        }}
-                                                                        
-                                                                    />
-                                                                </div>
-                                                                <div className="input-ctn inputWrap">
-                                                                    <label>State</label>
-                                                                    <Textbox
-                                                                        tabIndex="4"
-                                                                        id={'cardHolderState'}
-                                                                        name="cardHolderState"
-                                                                        value={cardHolderState}
-                                                                        onChange= {(cardHolderState, e)=>{ 
-                                                                            console.log('value is', cardHolderState);
-                                                                        }}
-                                                                        
-                                                                    />
-                                                                </div>
-                                                                <div className="input-ctn inputWrap">
-                                                                    <label>Zip code</label>
-                                                                    <Textbox
-                                                                        tabIndex="5"
-                                                                        id={'cardHolderZipcode'}
-                                                                        name="cardHolderZipcode"
-                                                                        value={cardHolderZipcode}
-                                                                        onChange= {(cardHolderZipcode, e)=>{ 
-                                                                            console.log('value is', cardHolderZipcode);
-                                                                        }}
-                                                                        
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* here down */}
-                                </div>
-                            );
-                        }
-                case FETCH_CURRENTCARD_FAILURE:
-                    let virtualCardError =  props.virtualCards.virtualcard_data;
-                    console.log('error is', virtualCardError);
-                    return(
-                        <div className="col-sm-12">
-                            <div className="row">
-                                    <div className="col-sm-12">
-                                        <div className="max-600">
-                                            <div className="al-card no-pad">
-                                                <div className="transfer-ctn text-center">
-                                                    {virtualCardError.error}
-                                                    <div>
-                                                        <a className="cta-link" onClick={this.getCurrentVirtualCards}> Retry</a>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
-                    );
-            }
-    }
-
-    renderAccountAndPin(){
-
-    }
+   
 
 
     render(){
         return(
             <Fragment>
-                {this.renderCardToTopUp()}
+                {this.renderCardDetails()}
             </Fragment>
         )
     }
@@ -354,6 +331,7 @@ class VirtualCardDetails extends React.Component {
 function mapStateToProps(state){
     return {
         virtualCards        : state.alatCardReducersPile.getVirtualCards,
+        getAVirtualCardinfo        : state.alatCardReducersPile.getAVirtualCardinfo,
         debitable_accounts  : state.accounts,
     };
 }

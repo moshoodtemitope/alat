@@ -11,11 +11,15 @@ export const toCurrency = (currency)=>{
     if (currency) {
       currency = typeof currency !== 'string' ? currency.toString() : currency;
       let numberValueArray = currency.split('.');
-      let numberValue = this.removeComma(numberValueArray[0]);
+      let numberValue = removeComma(numberValueArray[0]);
       currency = numberValueArray.length > 1 ? numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,')
         + '.' + numberValueArray[1] : numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,');
     }
     return currency;
+  }
+
+export const removeComma= (currencyValue)=> {
+    return currencyValue.replace(/,/g, '');
   }
 
 export const cc_format = (value) => {

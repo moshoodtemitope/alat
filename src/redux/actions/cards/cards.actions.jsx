@@ -13,6 +13,18 @@ import {
     SEND_TOPUP_DATA_SUCCESS,
     SEND_TOPUP_DATA_PENDING,
     SEND_TOPUP_DATA_FAILURE,
+    FETCH_CARD_DATA_SUCCESS,
+    FETCH_CARD_DATA_PENDING,
+    FETCH_CARD_DATA_FAILURE,
+    LIQUIDATE_CARD_SUCCESS,
+    LIQUIDATE_CARD_PENDING,
+    LIQUIDATE_CARD_FAILURE,
+    DELETE_VIRTUALCARD_SUCCESS,
+    DELETE_VIRTUALCARD_PENDING,
+    DELETE_VIRTUALCARD_FAILURE,
+    GET_VIRTUALCARD_HISTORY_SUCCESS,
+    GET_VIRTUALCARD_HISTORY_PENDING,
+    GET_VIRTUALCARD_HISTORY_FAILURE,
     ALATCARD_REDUCER_CLEAR
 } from "../../constants/cards/cards.constants";
 
@@ -66,15 +78,19 @@ export const getCurrentVirtualCard = (token, source) => {
                                                     return consume5
                                                         .then(response5=>{
                                                             result2={
-                                                                virtualCardData:  response.data[0],
-                                                                accountDetails :  response2.data[0],
-                                                                accountLimits  :  response3.data,
-                                                                exchangeRates  :  response4.data,
-                                                                encryptedCharacters  :  response5.data
+                                                                virtualCardData     :  response.data[0],
+                                                                accountDetails      :  response2.data[0],
+                                                                accountLimits       :  response3.data,
+                                                                exchangeRates       :  response4.data,
+                                                                customerAccounts    :  response2.data,
+                                                                encryptedCharacters :  response5.data
                                                             }
                                                             // result2.encryptedData = response5.data;
                                                             dispatch(success(result2));
-                                                            history.push("/virtual-cards/topup");
+                                                            if(source==="new"){
+                                                                history.push("/virtual-cards/topup");
+                                                            }
+                                                           
                                                         })
                                                         .catch(error=>{
                                                             if(error.response && typeof(error.response.message) !=="undefined"){
@@ -190,7 +206,7 @@ export const sendNewVirtualCardInfo = (newVirtualCardInfo, token, hasOtp)=>{
 
     function request(request) { return { type:SEND_NEWVC_DATA_PENDING, request} }
     function success(response) { return {type:SEND_NEWVC_DATA_SUCCESS, response, cardpayload: newVirtualCardInfo, isCompleted} }
-    function failure(error) { return {type:SEND_NEWVC_DATA_FAILURE, error} }
+    function failure(error) { return {type:SEND_NEWVC_DATA_FAILURE, error, hasOtp, cardpayload: newVirtualCardInfo, isCompleted} }
 }
 
 export const topUpVirtualCard = (cardTopUpDetails, token, hasOtp)=>{
@@ -199,6 +215,9 @@ export const topUpVirtualCard = (cardTopUpDetails, token, hasOtp)=>{
     return (dispatch) =>{
         let consume;
         if(hasOtp===false){
+            if(cardTopUpDetails.hasOwnProperty('OTP')){
+                delete cardTopUpDetails.OTP;
+            }
             consume = ApiService.request(routes.TOPUP_VIRTUAL_CARD_INITIAL, "POST", cardTopUpDetails, SystemConstant.HEADER);
         }
 
@@ -207,6 +226,7 @@ export const topUpVirtualCard = (cardTopUpDetails, token, hasOtp)=>{
         }
         
         dispatch(request(consume));
+        
         return consume
             .then(response=>{
                 
@@ -221,15 +241,16 @@ export const topUpVirtualCard = (cardTopUpDetails, token, hasOtp)=>{
                 }
             })
             .catch(error =>{
+                console.log('log is', error.response);
                 if(error.response && typeof(error.response.message) !=="undefined"){
                     dispatch(failure(error.response.message.toString()));
                 }
-                else if((error.response.data.Message) || ((error.response.data.message))){
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
                     if(error.response.data.Message){
                         dispatch(failure(error.response.data.Message.toString()));
                     }
 
-                    if(error.response.data.message){
+                    if(error.response!==undefined && error.response.data.message){
                         dispatch(failure(error.response.data.message.toString()));
                     }
                 }
@@ -240,8 +261,141 @@ export const topUpVirtualCard = (cardTopUpDetails, token, hasOtp)=>{
     };
 
     function request(request) { return { type:SEND_TOPUP_DATA_PENDING, request} }
-    function success(response) { return {type:SEND_TOPUP_DATA_SUCCESS, response, cardpayload: cardTopUpDetails, isCompleted} }
-    function failure(error) { return {type:SEND_TOPUP_DATA_FAILURE, error} }
+    function success(response) { return {type:SEND_TOPUP_DATA_SUCCESS, response, hasOtp, cardpayload: cardTopUpDetails, isCompleted} }
+    function failure(error) { return {type:SEND_TOPUP_DATA_FAILURE, error, hasOtp, cardpayload: cardTopUpDetails, isCompleted} }
+}
+
+export const getVirtualDetails = (payload, token)=>{
+    SystemConstant.HEADER['alat-token'] = token;  
+    return (dispatch)=>{
+        let consume =  ApiService.request(routes.GET_SINGLE_VC, "POST", payload, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{
+                dispatch(success(response));
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+    
+    function request(request) { return { type:FETCH_CARD_DATA_PENDING, request} }
+    function success(response) { return {type:FETCH_CARD_DATA_SUCCESS, response} }
+    function failure(error) { return {type:FETCH_CARD_DATA_FAILURE, error} }
+}
+
+export const liquidateVirtualCard = (payload, token)=>{
+    SystemConstant.HEADER['alat-token'] = token;  
+    return (dispatch)=>{
+        let consume =  ApiService.request(routes.LIQUIDATE_VIRTUAL_CARD, "POST", payload, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{
+                dispatch(success(response));
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+    
+    function request(request) { return { type: LIQUIDATE_CARD_PENDING, request} }
+    function success(response) { return {type: LIQUIDATE_CARD_SUCCESS, response} }
+    function failure(error) { return {type: LIQUIDATE_CARD_FAILURE, error} }
+}
+
+export const deleteAlatVirtualCard = (payload, token)=>{
+    SystemConstant.HEADER['alat-token'] = token;  
+    return (dispatch)=>{
+        let consume =  ApiService.request(routes.DELETE_VIRTUAL_CARD, "POST", payload, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{
+                dispatch(success(response));
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+    
+    function request(request) { return { type: DELETE_VIRTUALCARD_PENDING, request} }
+    function success(response) { return {type: DELETE_VIRTUALCARD_SUCCESS, response} }
+    function failure(error) { return {type: DELETE_VIRTUALCARD_FAILURE, error} }
+}
+
+export const getCurrentVirtualCardHistory = (payload, token)=>{
+    SystemConstant.HEADER['alat-token'] = token;  
+    let queriedRoute = `${routes.VIRTUAL_CARD_HISTORY}${payload}`;
+    return (dispatch)=>{
+        let consume =  ApiService.request(queriedRoute, "GET", null, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{
+                dispatch(success(response));
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+    
+    function request(request) { return { type:GET_VIRTUALCARD_HISTORY_PENDING, request} }
+    function success(response) { return {type:GET_VIRTUALCARD_HISTORY_SUCCESS, response} }
+    function failure(error) { return {type:GET_VIRTUALCARD_HISTORY_FAILURE, error} }
 }
 
 // export const completeTopUpVirtualCard = (cardTopUpDetails, token)=>{

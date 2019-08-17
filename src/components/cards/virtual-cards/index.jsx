@@ -4,6 +4,7 @@ import {Link, NavLink, Route} from 'react-router-dom';
 import { connect } from "react-redux";
 import VirtualCards from "./virtual-cards";
 import TopUpVirtualCards from "./topup-card";
+import VirtualCardDetails from "./virtualcard-details";
 import VirtualCardsOtp  from "./virtualcard-otp";
 import VirtualCardsFundSuccess  from "./virtualcardfund-success";
 import DeleteCard from "./delete-card";
@@ -31,6 +32,7 @@ class VirtualCardsContainer extends Component {
 
                 {this.props.children}
                 <Route exact path='/virtual-cards' render={(props) => <VirtualCards {...props} />} />
+                <Route exact path='/virtual-cards/card-details' render={(props) => <VirtualCardDetails {...props} />} />
                 <Route exact path='/virtual-cards/topup' render={(props) => <TopUpVirtualCards {...props} />} />
                 <Route exact path='/virtual-cards/otp' render={(props) => <VirtualCardsOtp {...props} />} />
                 <Route exact path='/virtual-cards/fund-success' render={(props) => <VirtualCardsFundSuccess {...props} />} />

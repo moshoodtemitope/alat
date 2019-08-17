@@ -112,7 +112,11 @@ const loanOnboardingReducer = combineReducers({
 const alatCardsReducer = combineReducers({
     getVirtualCards: alatCards.geCurrentVirtualCardsRequest ,
     sendVCNewCardinfo: alatCards.sendVCNewCardinfo ,
-    sendTopVCCardinfo: alatCards.sendTopVCCardinfo
+    sendTopVCCardinfo: alatCards.sendTopVCCardinfo,
+    getAVirtualCardinfo: alatCards.getAVirtualCardinfo,
+    liquidateCard: alatCards.liquidateCard,
+    deleteVirtualCard: alatCards.deleteVirtualCard,
+    getCardHistory: alatCards.getVirtualCardHistoryRequest
 
 })
 

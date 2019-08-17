@@ -56,14 +56,14 @@ class VirtualCardsFundSuccess extends React.Component{
             }
 
             if(topUpCardStatus!==undefined && topUpCardStatus===true){
-                amountPaid = topupFundResponse.topup_vc_info.cardpayload.Amount;
+                amountPaid = topupFundResponse.topup_vc_info.cardpayload.Dollar;
             }
 
         return(
             <div className="col-sm-12">
                 <div className="row">
                     <div className="col-sm-12">
-                        <div className="max-600">
+                        <div className="max-600 m-b-40">
                             <div className="al-card no-pad otpform m-b-30">
                                 <div className="transfer-ctn">
                                     <center>
@@ -72,7 +72,7 @@ class VirtualCardsFundSuccess extends React.Component{
                                     <div className="m-t-30 width-300">
                                         <h4 className="success-heading">Transaction Successful</h4>
                                         <div className="success-mg">
-                                        You just funded your ALAT account with <span> ${amountPaid}</span> 
+                                        You just funded your ALAT Dollar Card with <span> ${amountPaid}</span> 
                                         </div>
                                         
                                         
