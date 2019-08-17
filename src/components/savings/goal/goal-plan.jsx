@@ -38,15 +38,15 @@ class GoalPlan extends React.Component {
     componentDidMount = () => {
         this.CheckGroupSavingsAvailability();
         this.CheckRotatingSavingsAvailability();
-    }
+    };
 
     CheckRotatingSavingsAvailability = () => {
         this.props.dispatch(actions1.GetGroupsEsusu(this.state.user.token, null));
-    }
+    };
 
     CheckGroupSavingsAvailability = () => {
         this.props.dispatch(actions.customerGroup(this.state.user.token, null));
-    }
+    };
 
     NavigateToGroupSavings = () => {
         let groupSavings = Object.keys(this.props.groups.response); //returns an array
@@ -56,7 +56,7 @@ class GoalPlan extends React.Component {
             return;
         }
         history.push('/savings/goal/group-savings-selection');
-    }
+    };
 
     fetchGoalType(){
         const {dispatch}= this.props;
@@ -279,9 +279,6 @@ class GoalPlan extends React.Component {
 
     render() {
         const GoalTransHistory = this.props.customerGoalTransHistory;
-
-        console.log("goal-history ",GoalTransHistory.customer_goal_data);
-
 
         return (
             <Fragment>

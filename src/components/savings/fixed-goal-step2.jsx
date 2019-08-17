@@ -41,6 +41,9 @@ class FixedGoal extends React.Component {
             frequency:"",
             goalFrequencyInvalid:false,
             showInterests:"",
+            goalFrequencyType: "",
+            goalFrequencyLabel: ""
+
             // frequencyAmount:"",
 
            
@@ -55,7 +58,7 @@ class FixedGoal extends React.Component {
    
     handleSelectDebitableAccounts(account) {
         console.log('dss', account);
-        this.setState({ debitAccount: account })
+        this.setState({ debitAccount: account });
         if (this.state.isSubmitted) { 
             if(account.length == 10)
             this.setState({ isAccountInvalid: false })
@@ -63,7 +66,7 @@ class FixedGoal extends React.Component {
     }
     checkAccountNumber() {
         if (this.state.debitAccount.length != 10) {
-            this.setState({ isAccountInvalid: true })
+            this.setState({ isAccountInvalid: true });
             return true;
         }
     }
@@ -208,15 +211,16 @@ class FixedGoal extends React.Component {
       let amount= parseFloat(this.removeComma(this.state.targetAmount));
       let startDate = moment(this.state.startDate, 'DD MMMM, YYYY');
       let enddate = moment(this.state.endDate, 'DD MMMM, YYYY');
-    
-      if (frequency.value == "daily")
+
+
+      if (frequency == "daily")
       {
          timeBetween = enddate.diff(startDate,'days') + 1;
           console.log(timeBetween)
 
       }
 
-      else if (frequency.value == "weekly")
+      else if (frequency == "weekly")
       {
           timeBetween = enddate.diff(startDate, 'week') + 1;
       }
@@ -235,19 +239,20 @@ class FixedGoal extends React.Component {
 
       if (timeBetween < 1){
         timeBetween = 1;
-        console.log('timeBetween', timeBetween)
+        // console.log('timeBetween', timeBetween)
       }
-    //   console.log("monthly" +amount/timeBetween)
-      return parseFloat(amount/timeBetween).toFixed(2)
-      
+      // console.log("monthly" +amount/timeBetween)
+        return this.setState({showInterests:  parseFloat(amount/timeBetween).toFixed(2)});
     }
 
     handleSelectChange = (frequency) => {
+        console.log(frequency);
         // let label = frequency.id.split("/")[0]
-        this.setState({ "goalFrequency": frequency.value,
-                        "goalFrequency" : frequency.label,
+        this.setState({ "goalFrequencyType": frequency.value,
+                        "goalFrequencyLabel" : frequency.label,
                         "goalFrequency": `${frequency.id}`
         });
+        this.ComputeDebitAmount(frequency.value);
 
         
         if (this.state.formsubmitted && frequency.value != "") {
@@ -255,37 +260,15 @@ class FixedGoal extends React.Component {
         }
         
 
-        if (frequency.value.toLowerCase() === "daily") {
-          
-            // let {frequency, targetAmount, endDate} = this.state;
-             this.setState({
-                showInterests:this.calculateDaily(this.state.frequency,this.state.targetAmount,this.state.startDate,this.state.endDate),
-
-            })
-        }
-        if(frequency.value.toLowerCase() === "weekly"){
-            this.setState({
-                showInterests:this.calculateWeekly(this.state.frequency,this.state.targetAmount,this.state.startDate,this.state.endDate),
-
-            })
-
-
-
-        }
-        if(frequency.value.toLowerCase()=== "monthly"){
-            this.setState({
-                showInterests:this.ComputeDebitAmount(this.state.frequency,this.state.targetAmount,this.state.startDate,this.state.endDate)
-
-            })
+        // this.setState({
+        //         // showInterests:this.ComputeDebitAmount(this.state.goalFrequencyType,this.state.targetAmount,this.state.startDate,this.state.endDate)
+        //         showInterests: this.ComputeDebitAmount(this.state.goalFrequencyType)
+        // })
 
             
 
 
-        }
 
-        // this.frequencyAmount = util.toCurrency(this.showInterests.toFixed(2));
-        // this.formatAmount();
-        // return this.frequencyAmount;
     };
     
 
@@ -310,6 +293,7 @@ class FixedGoal extends React.Component {
                 "showInterests":this.state.showInterests,
                 "debitAccount":this.state.debitAccount,
                 "goalFrequency":this.state.goalFrequency,
+                "goalFrequencyType":this.state.goalFrequencyType
             }));
         }
        
@@ -333,7 +317,7 @@ class FixedGoal extends React.Component {
 
     render() {
         
-        let { goalFrequency, goalFrequencyInvalid} =this.state;
+        let { frequency, goalFrequencyLabel,goalFrequencyType, goalFrequency, goalFrequencyInvalid} =this.state;
        
         return (
             <Fragment>
@@ -376,11 +360,12 @@ class FixedGoal extends React.Component {
                                                      onChange={this.handleChange}
                                                       placeholder="E.g. ₦100,000"/>
                                                 </div>
+                                                <p>{ goalFrequencyLabel.label }</p>
                                                 <div className={goalFrequencyInvalid ? "form-group col-md-6 form-error" : "form-group col-md-6"}>
                                                     <label className="label-text">How often would you save</label>
                                                     <Select type="text" 
                                                     options={selectedTime} 
-                                                    value={goalFrequency.label}
+                                                    value={goalFrequencyType.value}
                                                     name="goalFrequency"
                                                     onChange={this.handleSelectChange}/>
                                                     {goalFrequencyInvalid && <div className='text-danger'>Enter duration</div>}
