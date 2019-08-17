@@ -127,9 +127,15 @@ class FlexGoal extends React.Component {
          if (this.state.formsubmitted) {
                     if (e != "")
                         this.setState( { targetAmountInvalid: false });
-                }
-     }
- 
+                     }
+    };
+
+    setFregValue = () => {
+        this.setState({ showInterests: this.calculateMonthly(this.state.targetAmount, this.state.startDate, this.state.endDate) })
+
+
+
+    };
     toCurrency(number) {
          // console.log(number);
          const formatter = new Intl.NumberFormat('en-US', {
@@ -143,7 +149,52 @@ class FlexGoal extends React.Component {
     removeComma(currencyValue) {
         return currencyValue.replace(/,/g, '');
     }
-    
+    GetFixedGoalFutureValue(debitAmount, annualInterestRate, months){
+        let futureValue= 0;
+        var result;
+        let rate = ((annualInterestRate - 0.01) / 12);
+        for (let n = 1; n <= months; n++)
+        {
+            var multiplier = (1 + rate);
+            futureValue += debitAmount * (Math.pow(multiplier, n));
+        }
+        result = futureValue - (debitAmount * months); //I dont even know why, with the /6.02, it matched with mobile calc
+        return this.toCurrency2(parseFloat(result).toFixed(2));
+    }
+    toCurrency2 =(currency) =>{
+        if (currency) {
+            currency = typeof currency !== 'string' ? currency.toString() : currency;
+            let numberValueArray = currency.split('.');
+            let numberValue = this.removeComma(numberValueArray[0]);
+            currency = numberValueArray.length > 1 ? numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+                + '.' + numberValueArray[1] : numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+        }
+        return currency;
+    }
+    getAbsoulteMonths(momentDate) {
+        var months = Number(momentDate.format("MM"));
+        var years = Number(momentDate.format("YYYY"));
+        return months + (years * 12);
+    }
+
+    calculateMonthly(){
+        let days = null;
+        let res;
+        let finalInterest;
+        let amount= parseFloat(this.removeComma(this.state.targetAmount));
+        let startDate = moment(this.state.startDate, 'DD MMMM, YYYY');
+        let enddate = moment(this.state.endDate, 'DD MMMM, YYYY');
+        // let date = moment(enddate, 'DD-MM-YYYY').add(res, 'days');
+        res = enddate.diff(startDate, 'days');
+        let months = Math.round((res/365) * 12);
+        let debitAmount = (amount/months).toFixed(2);
+        let debitValue = amount/this.getMonthsBetween(startDate, enddate);
+        finalInterest = this.GetFixedGoalFutureValue(debitValue, 0.10, months);
+        this.interest = finalInterest;
+        this.showInterests = true;
+        this.frequencyAmount = (amount/months).toFixed(2);
+        return this.interest;
+    }
     
 
     handleSelectChange = (frequency) => {
@@ -158,53 +209,12 @@ class FlexGoal extends React.Component {
         }
 
     };
-    setFregValue = () => {
-        this.setState({ showInterests: this.calculateInterest(this.state.targetAmount, this.state.startDate, this.state.endDate) })
-        
-       
 
-    };
-     GetGoalFutureValue(debitAmount, annualInterestRate, month){
-        let months = Math.round(month);
-        let futureValue = 0;
-        let rate = ((annualInterestRate - 0.01) / 12);
-        for (let n = 1; n <= months; n++)
-        {
-            var multiplier = (1 + rate);
-            futureValue += debitAmount * (Math.pow(multiplier, n));     
-        }
-        let amount = futureValue - (debitAmount * months);
-        return this.toCurrency( parseFloat(amount).toFixed(2));
-  }
+
     
    
    
-    calculateInterest(){
-        
-        let days = null;
-        let res;
-        if(this.state.targetAmount && this.state.endDate && this.state.startDate){
-          let startDate = moment(this.state.startDate).format('DD MMMM, YYYY');
-          let enddate = moment(this.state.endDate, 'DD MMMM, YYYY');
-          res = enddate.diff(startDate, 'days');
-          let amount = this.removeComma(this.state.targetAmount);
-          let ia= ((amount / 365) * 0.10 );
-          let diff_in_months = Math.floor(moment(enddate).diff(moment(startDate), 'months', true));
-          let dailycontribution;
-          if(diff_in_months > 1){
-           this.interest = this.GetGoalFutureValue((amount / diff_in_months),0.10, diff_in_months);
-          }else{
-            let ia = ((amount / 365) * 0.10 );
-            dailycontribution = res * ( ia - (0.10) *ia);
-            this.interest = parseFloat(dailycontribution).toFixed(2);
-          }
-          this.showInterests = true;
-          return this.interest
-        }else{
-          this.showInterests= false;
-          return this.interest
-        }
-      }
+
     
     showInterest = () =>  {
         this.setState({showMessage: true})
@@ -232,7 +242,7 @@ class FlexGoal extends React.Component {
     
     gotoStep2 = () => {
         if (this.props.flex_goal_step1)
-            if (this.props.flex_goal_step1.flex_step1_status == flexGoalConstants.FETCH_FLEX_GOAL_SUCCESS) {
+            if (this.props.flex_goal_step1.flex_step1_status === flexGoalConstants.FETCH_FLEX_GOAL_SUCCESS) {
                 return <Redirect to="/savings/flex-goal-step2" />
             }
     };

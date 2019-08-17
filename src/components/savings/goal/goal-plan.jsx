@@ -56,7 +56,7 @@ class GoalPlan extends React.Component {
             return;
         }
         history.push('/savings/goal/group-savings-selection');
-    };
+    }
 
     fetchGoalType(){
         const {dispatch}= this.props;
