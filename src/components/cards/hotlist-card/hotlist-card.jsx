@@ -37,9 +37,9 @@ class HotlistCard extends React.Component {
 
 function mapStateToProps(state){
     console.error(state);
-    // return {
+    return {
        
-    // };
+    };
 }
 
 export default connect(mapStateToProps)(HotlistCard);

@@ -1,6 +1,6 @@
-//const URL = 'https://api.alat.ng';
-//const URL = 'https://196.43.215.170';
- const URL = 'http://196.43.215.157';
+// const URL = 'https://api.alat.ng';
+// const URL = 'https://196.43.215.170';
+const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
 
@@ -33,6 +33,20 @@ export const routes = {
     //goals and savings
     CUSTOMERGOALS: BASEURL + '/Savings.WebApi/api/Savings/CustomergoalsV2',
 
+    //Virtual Cards
+    GET_VC_EXCHENGE_RATE: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/GetCurrentExchangeRateV2',
+    CREAT_VIRTUAL_CARD_INITIAL: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/CreateVirtualCardInit',
+    CREAT_VIRTUAL_CARD_FINAL: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/CreateVirtualCardFinal',
+    GET_CURRENT_VC: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/GetCurrrentVirtualCardWeb',
+    GET_SINGLE_VC: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/GetSingleVirtualCardWeb',
+    DELETE_VIRTUAL_CARD: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/Delete',
+    TOPUP_VIRTUAL_CARD_INITIAL: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/FundVirtualCardInit',
+    TOPUP_VIRTUAL_CARD_FINAL: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/FundVirtualCardFinal',
+    LIQUIDATE_VIRTUAL_CARD: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/LiquidateVirtualCard',
+    VIRTUAL_CARD_HISTORY: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/VirtualCardHistory',
+    VIRTUAL_CARD_CHANGE_STATE: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/ChangeVirtualCardState',
+    VIRTUAL_CARD_ENCRYPTED_NUMBER: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/GetEncryptedNumberList',
+
     //Payment
 
     //FundAccount 
@@ -57,6 +71,7 @@ export const routes = {
     INTERBANK_CHARGES: BASEURL + '/PaymentApi/api/InterBankCharges/All',
     GETLIMIT: BASEURL + '/AccountMaintenance/api/transactions/getTransactionlimit', 
     GetAllCustomerAccountsWithLimitsV2: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2', 
+    FETCH_CUSTOMER_ACCOUNTS: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccounts', 
     
     //PaymentApi/api/Accounts/VerifyAccountName
 
@@ -89,4 +104,7 @@ export const routes = {
 
     //Loans_Onboarding
     LOANS_STEP_1 :BASEURL +'/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/SignUp',
+    LOANS_STEP_3 :BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/CustomerProfile',
+    LOAN_VERIFY_BVN : BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/CallBvnService',
+    LOAN_VALIDATE_OTP: BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/VerifyOtpForBvn'
 };
