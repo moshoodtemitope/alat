@@ -32,6 +32,15 @@ import {
     HOTLIST_ATMCARD_SUCCESS,
     HOTLIST_ATMCARD_PENDING,
     HOTLIST_ATMCARD_FAILURE,
+    GETRANDOM_SECURITYQUESTION_SUCCESS,
+    GETRANDOM_SECURITYQUESTION_PENDING,
+    GETRANDOM_SECURITYQUESTION_FAILURE,
+    VALIDATE_SECURITYQUESTION_WITHOUTOTP_SUCCESS,
+    VALIDATE_SECURITYQUESTION_WITHOUTOTP_PENDING,
+    VALIDATE_SECURITYQUESTION_WITHOUTOTP_FAILURE,
+    ACTIVATE_ALATCARD_SUCCESS,
+    ACTIVATE_ALATCARD_PENDING,
+    ACTIVATE_ALATCARD_FAILURE,
 } from "../constants/cards/cards.constants";
 
 //VIRTUAL CARD REDUCERS
@@ -314,6 +323,84 @@ export function atmCardHotlistRequest(state=[], action){
                 is_processing: false,
                 fetch_status: HOTLIST_ATMCARD_FAILURE,
                 hotlistcard_info: action
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+export function randomQuestionRequest(state=[], action){
+    switch (action.type) {
+        case GETRANDOM_SECURITYQUESTION_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: GETRANDOM_SECURITYQUESTION_PENDING,
+                random_question: action
+            };
+        case GETRANDOM_SECURITYQUESTION_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: GETRANDOM_SECURITYQUESTION_SUCCESS,
+                random_question: action
+            };
+        case GETRANDOM_SECURITYQUESTION_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: GETRANDOM_SECURITYQUESTION_FAILURE,
+                random_question: action
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+export function answerRandomQuestionRequest(state=[], action){
+    switch (action.type) {
+        case VALIDATE_SECURITYQUESTION_WITHOUTOTP_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: VALIDATE_SECURITYQUESTION_WITHOUTOTP_PENDING,
+                answer_question: action
+            };
+        case VALIDATE_SECURITYQUESTION_WITHOUTOTP_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: VALIDATE_SECURITYQUESTION_WITHOUTOTP_SUCCESS,
+                answer_question: action
+            };
+        case VALIDATE_SECURITYQUESTION_WITHOUTOTP_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: VALIDATE_SECURITYQUESTION_WITHOUTOTP_FAILURE,
+                answer_question: action
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+export function activateALATCardRequest(state=[], action){
+    switch (action.type) {
+        case ACTIVATE_ALATCARD_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: ACTIVATE_ALATCARD_PENDING,
+                activatedcard_info: action
+            };
+        case ACTIVATE_ALATCARD_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: ACTIVATE_ALATCARD_SUCCESS,
+                activatedcard_info: action
+            };
+        case ACTIVATE_ALATCARD_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: ACTIVATE_ALATCARD_FAILURE,
+                activatedcard_info: action
             };
 
         default:

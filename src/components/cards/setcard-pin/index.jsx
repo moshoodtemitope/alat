@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 import {Link, NavLink, Route} from 'react-router-dom';
 import { connect } from "react-redux";
 
-import HotlistCard from "./hotlist-card";
+import SetCardPin from "./setcard-pin";
 // import ProvideDetails from "./provide-details";
 // import ConFirmTransfer from "./confirm";
 // import TransferOtp from "./transfer-otp";
@@ -11,7 +11,7 @@ import HotlistCard from "./hotlist-card";
 // import SaveBeneficiary from "./save-beneficiary";
 // import TransferContainer from "../container"
 
-class HotlistCardContainer extends Component {
+class SetCardPinContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -25,7 +25,7 @@ class HotlistCardContainer extends Component {
        return(
            <Fragment>
                 {this.props.children}
-                <Route exact path='/hotlist' render={(props) => <HotlistCard {...props} />} />
+                <Route exact path='/setcard-pin' render={(props) => <SetCardPin {...props} />} />
                 {/* <Route path='/transfer/provide-details' render={(props) => <ProvideDetails {...props} />}/>
                 <Route path='/transfer/send' render={(props) => <ConFirmTransfer {...props} />}/>
                 <Route path='/transfer/otp' render={(props) => <TransferOtp {...props} />}/>
@@ -44,5 +44,5 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(HotlistCardContainer);
+export default connect(mapStateToProps)(SetCardPinContainer);
 //export default Airtime;
