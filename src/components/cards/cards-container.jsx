@@ -15,7 +15,7 @@ class CardsContainer extends React.Component {
     componentDidMount(){
     }
     render() {
-        // console.log(this.props);
+        // (this.props);
         
         return (
             <Fragment>

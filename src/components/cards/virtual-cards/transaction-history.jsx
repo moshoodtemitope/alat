@@ -80,7 +80,6 @@ class TransactionHistory extends React.Component {
     }
 
     handleStartDatePicker = (startDate) => {
-        console.log('dsdsds', typeof startDate);
         if(typeof startDate ==='object'){
             startDate.setHours(startDate.getHours() + 1);
             

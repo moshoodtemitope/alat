@@ -87,7 +87,7 @@ class VirtualCardsOtp extends React.Component{
             fetchVirtualCardsStatus = props.virtualCards.fetch_status,
             topupOtpRequestStatus = this.props.sendTopVCCardinfo,
             newCardotpRequestStatus = props.sendVCNewCardinfo;
-            console.log('here', newCardotpRequestStatus);
+            
             if(fetchVirtualCardsStatus!==FETCH_CURRENTCARD_SUCCESS){
                 this.props.history.push("/virtual-cards");
             }
@@ -96,7 +96,7 @@ class VirtualCardsOtp extends React.Component{
             // if(topupOtpRequestStatus.is_processing===false 
             //     && topupOtpRequestStatus.fetch_status===SEND_TOPUP_DATA_FAILURE
             //     && topupOtpRequestStatus.topup_vc_info.hasOtp===true){
-            //         console.log('shshahshsha');
+           
             //     this.setState({isSubmitting: false});
             // }
     }
@@ -118,7 +118,7 @@ class VirtualCardsOtp extends React.Component{
         let {OtpValue, isSubmitting, displayButtons} = this.state,
             newCardotpRequestStatus = this.props.sendVCNewCardinfo,
             topupOtpRequestStatus = this.props.sendTopVCCardinfo;
-        // console.log('paylod is', this.props.sendVCNewCardinfo);
+        
         return(
             <div className="col-sm-12">
                 <div className="row">
@@ -296,7 +296,7 @@ class VirtualCardsOtp extends React.Component{
         // if(topupOtpRequestStatus.is_processing===false 
         //     && topupOtpRequestStatus.fetch_status===SEND_TOPUP_DATA_FAILURE
         //     && topupOtpRequestStatus.topup_vc_info.hasOtp===true){
-        //         // console.log('shshahshsha');
+        
         //     this.setState({isSubmitting: false});
         // }
         return(

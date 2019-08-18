@@ -71,7 +71,6 @@ class VirtualCards extends React.Component {
 
     postNewVirtualCardDInfo(newVirtualCardData){
         const {dispatch} = this.props;
-        // console.log('erorrr', payload, this.state.user.token)
         dispatch(sendNewVirtualCardInfo(newVirtualCardData, this.state.user.token,false))
     }
 
@@ -111,7 +110,6 @@ class VirtualCards extends React.Component {
                         name="nameOnCard"
                         value={nameOnCard}
                         onChange= {(nameOnCard, e)=>{ 
-                            console.log('value is', nameOnCard);
                             this.setState({nameOnCard});
                         }}
                         
@@ -179,7 +177,6 @@ class VirtualCards extends React.Component {
                                                             if((nameOnCard !=='' && nameOnCard !==undefined) && (amountInNaira !=='' && amountInNaira !==undefined ) && (amountInUsd !=='' && amountInUsd !==undefined)){
                                                                 
                                                                 if(Math.abs(amountInUsd)>=10){
-                                                                    // console.log('valid', amountInUsd );
                                                                     this.setState({isStep1Done: true, showStep1Error: false, stage2Error:false, isSelectChanged:false});
                                                                 }else{
                                                                     this.setState({showStep1Error: true, step1ErrorMessage:'Minimum amount in USD is $10'});
@@ -391,7 +388,6 @@ class VirtualCards extends React.Component {
                         
                 case FETCH_CURRENTCARD_FAILURE:
                         let virtualCardError =  props.virtualCards.virtualcard_data;
-                        console.log('error is', virtualCardError);
                         return(
                             <div className="col-sm-12">
                                 <div className="row">
