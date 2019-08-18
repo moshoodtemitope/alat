@@ -36,7 +36,10 @@ import { geCurrentVirtualCardsRequest,
          liquidateCard,
          deleteVirtualCard,
          getVirtualCardHistoryRequest,
-         changeCardStatus} from './alatcards.reducer'
+         changeCardStatus,
+         getAtmCardRequest,
+         getAtmCardHotlistReasonsRequest,
+         atmCardHotlistRequest} from './alatcards.reducer'
 
 export const onboarding = {
     userRegistrationRequest,
@@ -111,5 +114,8 @@ export const alatCards={
     liquidateCard,
     deleteVirtualCard,
     getVirtualCardHistoryRequest,
-    changeCardStatus
+    changeCardStatus,
+    getAtmCardRequest,
+    getAtmCardHotlistReasonsRequest,
+    atmCardHotlistRequest
 }

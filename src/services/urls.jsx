@@ -1,6 +1,6 @@
 // const URL = 'https://api.alat.ng';
-// const URL = 'https://196.43.215.170';
-const URL = 'https://196.43.215.157';
+const URL = 'https://196.43.215.170';
+// const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
 
@@ -29,6 +29,7 @@ export const routes = {
     //account maintanance
     CUSTOMERACCOUNTS_ACCOUNT_MAINTANANCE: BASEURL + '/AccountMaintenance/api/account/customeraccounts',
     GETACCOUNTHISTORY: BASEURL + '/AccountMaintenance/api/transactions',
+    
 
     //goals and savings
     CUSTOMERGOALS: BASEURL + '/Savings.WebApi/api/Savings/CustomergoalsV2',
@@ -73,6 +74,23 @@ export const routes = {
     GetAllCustomerAccountsWithLimitsV2: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2', 
     FETCH_CUSTOMER_ACCOUNTS: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccounts', 
     
+    // Card Maintenance
+    GET_CARD_CONTROL_SETTINGS: BASEURL + '/CardMaintenanceApi/api/v1/CardControl/CardSettingFromCardControl',
+    GET_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getpans',
+    ACTIVATE_CARD: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/activatecard',
+    GET_ACTIVE_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getactivepans',
+    GET_CARD_STATES: BASEURL + '/CardMaintenanceApi/api/v1/CardControl/CustomerCardsFromCardControl',
+    GETCARDDESIGN: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/GetJson',
+    HOTLIST_CARD: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/hotlistcard',
+    GETCUSTOMERINFO: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/GetAllCustomerInfo',
+    GETALLACCOUNTS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/GetAllCustomerAccounts',
+    HOTLIST_CARD_REASONS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/gethotlistreasons',
+    SAVECARD: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/Save',
+    UPDATE_CARD_CONTROL: BASEURL + '/CardMaintenanceApi/api/v1/CardControl/UpdateCustomerCardsFromCardControl',
+    CARD_STATUS: BASEURL + '/cardmaintenanceapi/api/v1/CardMaintenance/getcardstatus',
+    CARD_STATUS_ERROR: BASEURL + '/cardmaintenanceapi/api/v1/CardMaintenance/LogCardDeliveryError',
+
+
     //PaymentApi/api/Accounts/VerifyAccountName
 
     //Airtime
