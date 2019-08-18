@@ -16,7 +16,8 @@ import emptyVC from "../../../assets/img/credit-card-2.svg";
 import successIcon from "../../../assets/img/success-tick";
 import {getCurrentATMCard,
     getATMCardHotlistReasons,
-    hotlistATMCard
+    hotlistATMCard,
+    clearCardsStore
 } from "../../../redux/actions/cards/cards.actions";
 
 import { GETCURRENT_ATMCARD_SUCCESS,

@@ -121,6 +121,9 @@ const alatCardsReducer = combineReducers({
     getAtmCard: alatCards.getAtmCardRequest,
     getAtmCardHotlistReasons: alatCards.getAtmCardHotlistReasonsRequest,
     atmCardHotlistRequest: alatCards.atmCardHotlistRequest,
+    randomQuestionRequest: alatCards.randomQuestionRequest,
+    answerRandomQuestionRequest: alatCards.answerRandomQuestionRequest,
+    activateALATCardRequest: alatCards.activateALATCardRequest,
 })
 
 const appReducer = combineReducers({

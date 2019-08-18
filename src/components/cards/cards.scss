@@ -212,8 +212,24 @@
         }
     }
 }
+.return-text a.btn-alat {
+    color: #fff!important;
+}
+.atmpin{
+    input{
+        letter-spacing: 11.5px;
+        font-size: 29px;
+        padding-top: 2px;
+        padding-bottom: 2px
+    }
+}
 .reasonwrap{
     margin: 20px 0;
+}
+.accept-msg span {
+    font-size: 15px;
+    display: block;
+    margin-bottom: 20px;
 }
 .cta-link{
     &.tobottom{

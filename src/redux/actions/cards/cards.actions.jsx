@@ -37,6 +37,15 @@ import {
     HOTLIST_ATMCARD_SUCCESS,
     HOTLIST_ATMCARD_PENDING,
     HOTLIST_ATMCARD_FAILURE,
+    GETRANDOM_SECURITYQUESTION_SUCCESS,
+    GETRANDOM_SECURITYQUESTION_PENDING,
+    GETRANDOM_SECURITYQUESTION_FAILURE,
+    VALIDATE_SECURITYQUESTION_WITHOUTOTP_SUCCESS,
+    VALIDATE_SECURITYQUESTION_WITHOUTOTP_PENDING,
+    VALIDATE_SECURITYQUESTION_WITHOUTOTP_FAILURE,
+    ACTIVATE_ALATCARD_SUCCESS,
+    ACTIVATE_ALATCARD_PENDING,
+    ACTIVATE_ALATCARD_FAILURE,
     ALATCARD_REDUCER_CLEAR
 } from "../../constants/cards/cards.constants";
 
@@ -547,6 +556,108 @@ export const hotlistATMCard = (payload, token)=>{
     function request(request) { return { type: HOTLIST_ATMCARD_PENDING, request} }
     function success(response) { return {type: HOTLIST_ATMCARD_SUCCESS, response} }
     function failure(error) { return {type: HOTLIST_ATMCARD_FAILURE, error} }
+}
+
+export const getRandomSecurityQuestion = (token)=>{
+    SystemConstant.HEADER['alat-token'] = token;  
+
+    return (dispatch)=>{
+        let consume =  ApiService.request(routes.GETRANDOMSECURITYQUESTION, "GET", null, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{
+                dispatch(success(response));
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+    
+    function request(request) { return { type:GETRANDOM_SECURITYQUESTION_PENDING, request} }
+    function success(response) { return {type:GETRANDOM_SECURITYQUESTION_SUCCESS, response} }
+    function failure(error) { return {type:GETRANDOM_SECURITYQUESTION_FAILURE, error} }
+}
+
+export const answerRandomSecurityQuestion = (payload,token)=>{
+    SystemConstant.HEADER['alat-token'] = token;  
+
+    return (dispatch)=>{
+        let consume =  ApiService.request(routes.VERIFY_SECURITY_QUESTION, "POST", payload, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{
+                dispatch(success(response));
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+    
+    function request(request) { return { type:VALIDATE_SECURITYQUESTION_WITHOUTOTP_PENDING, request} }
+    function success(response) { return {type:VALIDATE_SECURITYQUESTION_WITHOUTOTP_SUCCESS, response} }
+    function failure(error) { return {type:VALIDATE_SECURITYQUESTION_WITHOUTOTP_FAILURE, error} }
+}
+
+export const activateALATCard = (payload,token)=>{
+    SystemConstant.HEADER['alat-token'] = token;  
+
+    return (dispatch)=>{
+        let consume =  ApiService.request(routes.ACTIVATE_CARD, "POST", payload, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{
+                dispatch(success(response));
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+    
+    function request(request) { return { type:ACTIVATE_ALATCARD_PENDING, request} }
+    function success(response) { return {type:ACTIVATE_ALATCARD_SUCCESS, response} }
+    function failure(error) { return {type:ACTIVATE_ALATCARD_FAILURE, error} }
 }
 
 

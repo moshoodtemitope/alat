@@ -6,6 +6,7 @@ import { Switch } from "react-router";
 import HotlistCardContainer from './hotlist-card'
 import RequestCardContainer from './request-card'
 import VirtualCardsContainer from './virtual-cards'
+import SetCardPinContainer from './setcard-pin'
 // import CardlessWithdrawal from './cardless-withdrawal/cardless-withdrawal'
 // import fxTransfer from './fx-transfer/fxTransfer'
 
@@ -14,7 +15,7 @@ class CardsContainer extends React.Component {
     componentDidMount(){
     }
     render() {
-        // console.log(this.props);
+        // (this.props);
         
         return (
             <Fragment>
@@ -32,7 +33,7 @@ class CardsContainer extends React.Component {
                                             <ul>
                                                 <li><NavLink to={'/cards'}>Request Card</NavLink></li>
                                                 <li> <a href="#"> Card Control</a></li>
-                                                <li><a href="#">Set Card Pin</a></li>
+                                                <li><NavLink to={'/setcard-pin'}> Set Card Pin</NavLink></li>
                                                 <li><NavLink to={'/hotlist'}>Hotlist Card </NavLink></li>
                                                 <li><NavLink to={"/virtual-cards"}> Alat Dollar Card </NavLink></li>
                                             </ul>
@@ -41,6 +42,7 @@ class CardsContainer extends React.Component {
                                 </div>
                                 {this.props.children}
                                 <Route exact to={'/cards'} component={RequestCardContainer} />
+                                <Route to={'/setcard-pin'} component={SetCardPinContainer} />
                                 <Route to={'/hotlist'} component={HotlistCardContainer} />
                                 <Route to={'/virtual-cards'} component={VirtualCardsContainer} />  
                             </div>

@@ -39,7 +39,10 @@ import { geCurrentVirtualCardsRequest,
          changeCardStatus,
          getAtmCardRequest,
          getAtmCardHotlistReasonsRequest,
-         atmCardHotlistRequest} from './alatcards.reducer'
+         atmCardHotlistRequest,
+         randomQuestionRequest,
+         answerRandomQuestionRequest,
+         activateALATCardRequest} from './alatcards.reducer'
 
 export const onboarding = {
     userRegistrationRequest,
@@ -117,5 +120,8 @@ export const alatCards={
     changeCardStatus,
     getAtmCardRequest,
     getAtmCardHotlistReasonsRequest,
-    atmCardHotlistRequest
+    atmCardHotlistRequest,
+    randomQuestionRequest,
+    answerRandomQuestionRequest,
+    activateALATCardRequest
 }

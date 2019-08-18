@@ -63,7 +63,7 @@ class TopUpVirtualCards extends React.Component {
         let props = this.props,
             fetchVirtualCardsStatus = props.virtualCards.fetch_status;
 
-            console.log('here', fetchVirtualCardsStatus);
+            
             if(fetchVirtualCardsStatus!==FETCH_CURRENTCARD_SUCCESS){
                 this.props.history.push("/virtual-cards");
             }
@@ -71,7 +71,7 @@ class TopUpVirtualCards extends React.Component {
 
     processVirtualCardChangeStatus(){
         const {dispatch} = this.props;
-        // console.log('erorrr', payload, this.state.user.token)
+        
         let currentCardStatus = this.props.virtualCards.virtualcard_data.response.virtualCardData.isActive,
             activeState = !currentCardStatus;
         let payload={
@@ -111,7 +111,7 @@ class TopUpVirtualCards extends React.Component {
 
     postVirtualCardTopUpInfo(topUpVirtualCardData){
         const {dispatch} = this.props;
-        // console.log('erorrr', payload, this.state.user.token)
+        
         dispatch(topUpVirtualCard(topUpVirtualCardData, this.state.user.token, false))
     }
 
@@ -226,7 +226,6 @@ class TopUpVirtualCards extends React.Component {
                                                             if((amountInNaira !=='' && amountInNaira !==undefined ) && (amountInUsd !=='' && amountInUsd !==undefined)){
                                                                 
                                                                 if(Math.abs(amountInUsd)>=10){
-                                                                    console.log('valid', amountInUsd );
                                                                     this.setState({isStep1Done: true, showStep1Error: false, isSelectChanged:false});
                                                                 }else{
                                                                     this.setState({showStep1Error: true, step1ErrorMessage:'Minimum amount in USD is $10'});
@@ -413,9 +412,7 @@ class TopUpVirtualCards extends React.Component {
                         let virtualCardsList =  props.virtualCards.virtualcard_data.response;
                         
                        
-                        // return ;
-                        // console.log('cardsssss are', this.props.virtualCards);
-                        // console.log('response list are',virtualCardsList);
+                        
                         if(Object.keys(this.props.virtualCards).length >1){
                             return(
                                 <div className="col-sm-12">

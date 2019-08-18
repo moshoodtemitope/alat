@@ -34,7 +34,7 @@ class VirtualCardsFundSuccess extends React.Component{
         let props                   = this.props,
         newCardCompletionStatus     = props.sendVCNewCardinfo.new_vc_info!==undefined? this.props.sendVCNewCardinfo.new_vc_info.isCompleted : undefined,
         topUpCardStatus             = props.sendTopVCCardinfo.topup_vc_info!==undefined? this.props.sendTopVCCardinfo.topup_vc_info.isCompleted : undefined;
-            console.log('some is ', topUpCardStatus, );
+            
             if((newCardCompletionStatus===false || newCardCompletionStatus===undefined) 
                 && ( topUpCardStatus===false ||  topUpCardStatus===undefined)){
                 this.props.history.push("/virtual-cards");

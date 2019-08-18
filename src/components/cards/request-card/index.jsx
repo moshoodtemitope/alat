@@ -20,7 +20,7 @@ class RequestCardContainer extends Component {
     }
 
     componentDidMount() {
-      console.log("index is mounted");
+      ("index is mounted");
     }
    render() {
        return(
