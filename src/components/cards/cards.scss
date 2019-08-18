@@ -198,6 +198,29 @@
         height: 135px;
         margin-bottom: 0;
     }
+    &.nonvirtual{
+        position: relative;
+        margin-bottom: 5px;
+        .cardnum-digits{
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .cardname{
+            position: absolute;
+            bottom: 20px;
+        }
+    }
+}
+.reasonwrap{
+    margin: 20px 0;
+}
+.cta-link{
+    &.tobottom{
+        display: block;
+        text-align: center;
+        text-decoration: underline!important;
+    }
 }
 .other-addressinfo {
     display: flex;

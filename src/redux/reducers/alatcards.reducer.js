@@ -23,8 +23,18 @@ import {
     CHANGEACTIVESTATUS_VIRTUAL_SUCCESS,
     CHANGEACTIVESTATUS_VIRTUAL_PENDING,
     CHANGEACTIVESTATUS_VIRTUAL_FAILURE,
+    GETCURRENT_ATMCARD_SUCCESS,
+    GETCURRENT_ATMCARD_PENDING,
+    GETCURRENT_ATMCARD_FAILURE,
+    GET_ATMCARD_HOTLISTREASONS_SUCCESS,
+    GET_ATMCARD_HOTLISTREASONS_PENDING,
+    GET_ATMCARD_HOTLISTREASONS_FAILURE,
+    HOTLIST_ATMCARD_SUCCESS,
+    HOTLIST_ATMCARD_PENDING,
+    HOTLIST_ATMCARD_FAILURE,
 } from "../constants/cards/cards.constants";
 
+//VIRTUAL CARD REDUCERS
 export function geCurrentVirtualCardsRequest(state=[], action) {
     switch (action.type) {
         case FETCH_CURRENTCARD_PENDING:
@@ -224,6 +234,86 @@ export function getVirtualCardHistoryRequest(state=[], action){
                 is_processing: false,
                 fetch_status: GET_VIRTUALCARD_HISTORY_FAILURE,
                 vchistory_info: action
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+//ATM CARD REDUCERS
+
+export function getAtmCardRequest(state=[], action){
+    switch (action.type) {
+        case GETCURRENT_ATMCARD_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: GETCURRENT_ATMCARD_PENDING,
+                atmcards_info: action
+            };
+        case GETCURRENT_ATMCARD_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: GETCURRENT_ATMCARD_SUCCESS,
+                atmcards_info: action
+            };
+        case GETCURRENT_ATMCARD_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: GETCURRENT_ATMCARD_FAILURE,
+                atmcards_info: action
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+export function getAtmCardHotlistReasonsRequest(state=[], action){
+    switch (action.type) {
+        case GET_ATMCARD_HOTLISTREASONS_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: GET_ATMCARD_HOTLISTREASONS_PENDING,
+                hotlistreason_info: action
+            };
+        case GET_ATMCARD_HOTLISTREASONS_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: GET_ATMCARD_HOTLISTREASONS_SUCCESS,
+                hotlistreason_info: action
+            };
+        case GET_ATMCARD_HOTLISTREASONS_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: GET_ATMCARD_HOTLISTREASONS_FAILURE,
+                hotlistreason_info: action
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+export function atmCardHotlistRequest(state=[], action){
+    switch (action.type) {
+        case HOTLIST_ATMCARD_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: HOTLIST_ATMCARD_PENDING,
+                hotlistcard_info: action
+            };
+        case HOTLIST_ATMCARD_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: HOTLIST_ATMCARD_SUCCESS,
+                hotlistcard_info: action
+            };
+        case HOTLIST_ATMCARD_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: HOTLIST_ATMCARD_FAILURE,
+                hotlistcard_info: action
             };
 
         default:

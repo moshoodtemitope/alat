@@ -28,9 +28,19 @@ import {
     CHANGEACTIVESTATUS_VIRTUAL_SUCCESS,
     CHANGEACTIVESTATUS_VIRTUAL_PENDING,
     CHANGEACTIVESTATUS_VIRTUAL_FAILURE,
+    GETCURRENT_ATMCARD_SUCCESS,
+    GETCURRENT_ATMCARD_PENDING,
+    GETCURRENT_ATMCARD_FAILURE,
+    GET_ATMCARD_HOTLISTREASONS_SUCCESS,
+    GET_ATMCARD_HOTLISTREASONS_PENDING,
+    GET_ATMCARD_HOTLISTREASONS_FAILURE,
+    HOTLIST_ATMCARD_SUCCESS,
+    HOTLIST_ATMCARD_PENDING,
+    HOTLIST_ATMCARD_FAILURE,
     ALATCARD_REDUCER_CLEAR
 } from "../../constants/cards/cards.constants";
 
+//VIRTUAL CARD ACTIONS
 export const getCurrentVirtualCard = (token, source) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => { //Load any existing dollar cards
@@ -435,33 +445,111 @@ export const getCurrentVirtualCardHistory = (payload, token)=>{
     function failure(error) { return {type:GET_VIRTUALCARD_HISTORY_FAILURE, error} }
 }
 
-// export const completeTopUpVirtualCard = (cardTopUpDetails, token)=>{
-//     SystemConstant.HEADER['alat-token'] = token;
-//     return (dispatch) =>{
-//         let consume = ApiService.request(routes.TOPUP_VIRTUAL_CARD_FINAL, "POST", cardTopUpDetails, SystemConstant.HEADER);
-//         dispatch(request(consume));
-//         return consume
-//             .then(response=>{
-//                 dispatch(success(response.data));
-//                 history.push("/virtual-cards/otp");
-//             })
-//             .catch(error =>{
-//                 if(error.response && typeof(error.response.message) !=="undefined"){
-//                     dispatch(failure(error.response.message.toString()));
-//                 }
-//                 // else if((error.response.data.Message) || ((error.response.data.message))){
 
-//                 // }
-//                 else{
-//                     dispatch(failure('An error occured. Please try again '));
-//                 }
-//             })
-//     };
+//ATM CARD ACTIONS
+export const getCurrentATMCard = (token)=>{
+    SystemConstant.HEADER['alat-token'] = token;  
 
-//     function request(request) { return { type:SEND_TOPUP_DATA_PENDING, request} }
-//     function success(response) { return {type:SEND_TOPUP_DATA_SUCCESS, response, cardpayload: cardTopUpDetails} }
-//     function failure(error) { return {type:SEND_TOPUP_DATA_FAILURE, error} }
-// }
+    return (dispatch)=>{
+        let consume =  ApiService.request(routes.GET_PANS, "GET", null, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{
+                dispatch(success(response));
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+    
+    function request(request) { return { type:GETCURRENT_ATMCARD_PENDING, request} }
+    function success(response) { return {type:GETCURRENT_ATMCARD_SUCCESS, response} }
+    function failure(error) { return {type:GETCURRENT_ATMCARD_FAILURE, error} }
+}
+
+export const getATMCardHotlistReasons = (token)=>{
+    SystemConstant.HEADER['alat-token'] = token;  
+
+    return (dispatch)=>{
+        let consume =  ApiService.request(routes.HOTLIST_CARD_REASONS, "GET", null, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{
+                dispatch(success(response));
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+    
+    function request(request) { return { type:GET_ATMCARD_HOTLISTREASONS_PENDING, request} }
+    function success(response) { return {type:GET_ATMCARD_HOTLISTREASONS_SUCCESS, response} }
+    function failure(error) { return {type:GET_ATMCARD_HOTLISTREASONS_FAILURE, error} }
+}
+
+export const hotlistATMCard = (payload, token)=>{
+    SystemConstant.HEADER['alat-token'] = token;  
+
+    return (dispatch)=>{
+        let consume =  ApiService.request(routes.HOTLIST_CARD, "POST", payload, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{
+                dispatch(success(response));
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+    
+    function request(request) { return { type: HOTLIST_ATMCARD_PENDING, request} }
+    function success(response) { return {type: HOTLIST_ATMCARD_SUCCESS, response} }
+    function failure(error) { return {type: HOTLIST_ATMCARD_FAILURE, error} }
+}
+
+
 
 export const clearCardsStore =()=>{
     return (dispatch) => { 
