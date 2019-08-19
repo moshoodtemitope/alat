@@ -20,7 +20,7 @@ if(window.performance.navigation.type == 1){
      
 if(window.performance.navigation.type == 1)
     window.location.replace("http://localhost:8080/");
-    
+
 class ParentDashBoard extends React.Component {
     constructor(props){
         super(props);
@@ -162,8 +162,6 @@ class ParentDashBoard extends React.Component {
                                                         <NavLink to='/savings/group/join-a-group'>
                                                              <li id='second'>Join A Group</li>
                                                         </NavLink>
-                                                        
-                                                        
                                                     </ul>  
                                           </div>
                                           <h4 className="m-b-10 center-text hd-underline">Automate Group Savings</h4>
