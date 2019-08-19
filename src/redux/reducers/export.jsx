@@ -34,10 +34,14 @@ import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingV
      import {createStashGoalReducer,createStashGoalStep1Reducer} from './goal/create-stash.reducer'
     import {groupSavingsTargetGoal, groupDetails, deleteGroup, contribute, editGroup, pauseGroup, findGroup, customerGroup, joinGroup, scheduleContribution, deleteMember, cashOut,
     continueScheduleGroupPayment, setAutomateSavingsEndDate, setAutomateSavingsStartDate, setAmountToWithDraw, setFrequency} from './group-savings/group-savings-reducers';
-     import {getCustomerGoalTransHistoryReducer,GET_FORMULAR,GET_GOAL_TYPE,TopUPGoalStep1,TopUPGoal,WithDrawFromGoalStep1,WithDrawFromGoal} from './goal/get-customer-goal-trans-history-reducers';
-    import {createRotatingSavings, rotatingGroupDetails, joinAGroup, EditSlots,
-        GetGroupsEsusu, editGroupEsusu, deleteGroupEsusu, joinGroupEsusu } from './group-savings/rotating-group-reducers';
+     import {getCustomerGoalTransHistoryReducer,GET_FORMULAR,GET_GOAL_TYPE,TopUPGoalStep1,TopUPGoal,WithDrawFromGoalStep1,
+         WithDrawFromGoal,PauseCustomerGoal,unPauseCustomerGoal,EditCustomerGoal,DeleteCustomerGoal} from './goal/get-customer-goal-trans-history-reducers';
+     import {createRotatingSavings, rotatingGroupDetails, joinAGroup, EditSlots, 
+        editGroupEsusu, deleteGroupEsusu, GetGroupsEsusu, joinGroupEsusu} from './group-savings/rotating-group-reducers';
 
+
+
+    
 export const onboarding = {
     userRegistrationRequest,
     bvnDetailsReducer,
@@ -112,8 +116,8 @@ export const fixedGoal ={
     flexGoalStep2Reducer,
     addFlexGoalReducer
 
- };
- export const groupSavings ={
+ }
+ export const groupSavings = {
     groupSavingsTargetGoal,
     groupDetails,
     deleteGroup, 
@@ -131,8 +135,8 @@ export const fixedGoal ={
     setAutomateSavingsStartDate,
     setAmountToWithDraw,
     setFrequency
-};
-
+}
+ 
 export const rotatingSavings = {
     createRotatingSavings,
     rotatingGroupDetails,
@@ -142,7 +146,7 @@ export const rotatingSavings = {
     editGroupEsusu,
     deleteGroupEsusu,
     joinGroupEsusu
-};
+}
 export const stashGoal={
     createStashGoalStep1Reducer,
     createStashGoalReducer,
@@ -155,7 +159,11 @@ export const customerGoal={
     TopUPGoalStep1,
     TopUPGoal,
     WithDrawFromGoalStep1,
-    WithDrawFromGoal
+    WithDrawFromGoal,
+    PauseCustomerGoal,
+    unPauseCustomerGoal,
+    EditCustomerGoal,
+    DeleteCustomerGoal
 
 };
  

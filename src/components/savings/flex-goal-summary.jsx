@@ -38,11 +38,11 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
     };
 
     init = () => {
-        if (this.props.flex_goal_step2.flex_step2_status !== flexGoalConstants.FETCH_FLEX_GOAL_SUCCESS_STEP2)
-            this.props.history.push("/savings/flex-goal-step2");
+        if (this.props.flex_goal_step1.flex_step1_status !== flexGoalConstants.FETCH_FLEX_GOAL_PENDING)
+            this.props.history.push("savings/flex-goal");
         else {
             var data = {
-                ...this.props.flex_goal_step2.flex_step2_data.data
+                ...this.props.flex_goal_step1.flex_step1_data.data
             };
             console.log('tag', data);
 
@@ -181,7 +181,6 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
 }
 const mapStateToProps = state => ({
     flex_goal_step1: state.flex_goal_step1,
-    flex_goal_step2:state.flex_goal_step2,
     alert: state.alert,
     add_flex_goal:state.add_flex_goal
 

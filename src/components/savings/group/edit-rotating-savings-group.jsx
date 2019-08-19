@@ -27,7 +27,7 @@ const quantityOfMembers = [
 
 if(window.performance.navigation.type == 1)
     window.location.replace("http://localhost:8080/");
-    
+
 
 class EditRotatingGroup extends React.Component {
     constructor(props){
@@ -156,13 +156,13 @@ class EditRotatingGroup extends React.Component {
         }
     }
 
-    handleSetAmount = (event) => {
-        this.setState({
-            amountToBeWithDrawn: event.target.value
-        })
+    // handleSetAmount = (event) => {
+    //     this.setState({
+    //         amountToBeWithDrawn: event.target.value
+    //     })
 
-        this.props.dispatch(actions.setAmountToWithDraw(event.target.value));
-    }
+    //     this.props.dispatch(actions.setAmountToWithDraw(event.target.value));
+    // }
 
     handleSelectChange = (Frequency) => {
         this.setState({ numberOfMembers: Frequency.value

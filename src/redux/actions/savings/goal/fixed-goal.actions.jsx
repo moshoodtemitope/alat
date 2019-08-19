@@ -60,4 +60,11 @@ export const addFixedGoal =(data)=>{
     function request(request) { return { type:fixedGoalConstants.ADD_FIXED_GOAL_PENDING,  request } }
     function success(response, request) { return { type: fixedGoalConstants.ADD_FIXED_GOAL_SUCCESS, data: { response : response, request: request } }}
     function failure(error) { return { type: fixedGoalConstants.ADD_FIXED_GOAL_FAILURE, error } }
-}
+};
+
+export const ClearAction=(type)=>{
+    return (dispatch) =>{
+        dispatch(clear(type))
+    };
+    function clear(type){return {type : type}}
+};

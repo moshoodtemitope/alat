@@ -262,4 +262,10 @@
   .form-row{
       justify-content: center;
   }
+.goal-Container{
+    width: 32%;
+    background-color: transparent;
+    display: flex;
+    flex-wrap: wrap;
 
+}

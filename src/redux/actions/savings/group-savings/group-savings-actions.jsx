@@ -3,6 +3,7 @@ import {ApiService} from "../../../../services/apiService";
 import {routes} from "../../../../services/urls";
 import {history} from '../../../../_helpers/history';
 import { modelStateErrorHandler } from "../../../../shared/utils";
+import {alertActions} from "../../alert.actions";
 import {GROUPSAVINGSCONSTANT} from "../../../constants/savings/group/index";
 
 export const groupSavingsTargetGoal = (token, data) => {
@@ -16,12 +17,8 @@ export const groupSavingsTargetGoal = (token, data) => {
                 history.push("/savings/group/group-created");
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to create group savings.'));
-                }
-                // dispatch(failure(error.response.data.message.toString()));
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
 

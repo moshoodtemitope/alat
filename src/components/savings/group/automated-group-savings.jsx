@@ -267,6 +267,7 @@ class AutomateGroupSavings extends React.Component {
                                                         value={this.state.endDate}
                                                         showYearDropdown
                                                         dropdownMode="select"
+                                                        minDate={new Date()}
                                                         />
                                                     </div>
                                                 </div>
@@ -281,6 +282,7 @@ class AutomateGroupSavings extends React.Component {
                                                         showYearDropdown
                                                         value={this.state.startDate}
                                                         dropdownMode="select"
+                                                        minDate={new Date()}
                                                         />
                                                         
                                                     </div>

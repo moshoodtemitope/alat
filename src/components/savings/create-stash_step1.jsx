@@ -46,8 +46,6 @@ class CreateStash extends React.Component {
             FrequencyId: 8,
             FrequencyDurationId: 1,
             isAccountInvalid:false,
-
-
         };
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -207,7 +205,9 @@ class CreateStash extends React.Component {
                                 <div className="tab-overflow">
                                     <div className="sub-tab-nav">
                                         <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
                                             <li><a href="accounts.html" className="active">Goals</a></li>
+                                            </NavLink>
                                             <li><a href="statement.html">Group Savings</a></li>
                                             <li><a href="#">Investments</a></li>
                                         

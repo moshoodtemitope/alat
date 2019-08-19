@@ -11,7 +11,7 @@ import './group.css';
 
 if(window.performance.navigation.type == 1)
     window.location.replace("http://localhost:8080/");
-    
+
 class GroupSavingsSelection extends React.Component {
     render() {
         return (
@@ -55,7 +55,7 @@ class GroupSavingsSelection extends React.Component {
                                 <div className="flex-goal">
                                     <img className="goal-icon" src={graph} alt=''/>
                                     <p className="plan-text">Rotating Saving Groups</p>
-                                    <p className="info-text2">Save with up to 10 friends, recieve the collective savings automatically when its your turn.</p>
+                                    <p className="info-text2">Save with up to 12 friends, recieve the collective savings automatically when its your turn.</p>
                                 </div>
                                 </NavLink>
                                 <NavLink to="/savings/group/join-a-group">

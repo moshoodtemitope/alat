@@ -15,7 +15,7 @@ import {history} from '../../../_helpers/history';
 
 if(window.performance.navigation.type == 1)
     window.location.replace("http://localhost:8080/");
-    
+
 class CreateATargetGoal extends React.Component {
     constructor(props){
         super(props);
@@ -39,16 +39,7 @@ class CreateATargetGoal extends React.Component {
             ///Editing Purpose
             edit: false
         }
-         
-        //this.checkingUserInputs = this.checkingUserInputs.bind(this);
-        //this.handleSelectDebitableAccounts = this.handleSelectDebitableAccounts.bind(this);
-        //this.checkAccountNumber = this.checkAccountNumber.bind(this);
-        //this.checkMinimumAccountToContribute = this.checkMinimumAccountToContribute.bind(this);
-        //this.checkTheSelectedAccount = this.checkTheSelectedAccount.bind(this);
-        //this.checkTheEndDate = this.checkTheEndDate.bind(this);
-        //this.checkTheTargetAmount = this.checkTheTargetAmount.bind(this);
-        //this.checkGroupPurpose = this.checkGroupPurpose.bind(this);
-        //this.SubmitTargetGoal = this.SubmitTargetGoal.bind(this);
+        
     }
 
     componentDidMount = () => {
@@ -68,7 +59,7 @@ class CreateATargetGoal extends React.Component {
     }
     
     checkingUserInputs = () => {
-        var result = "valid";
+        let result = "valid";
         for(var x in this.state){
             switch(x){
                 case 'groupName':
@@ -208,7 +199,7 @@ class CreateATargetGoal extends React.Component {
             Purpose: this.state.groupPurpose, 
         }
         console.log(data)
-        //return;
+        // return;
         this.props.dispatch(actions.groupSavingsTargetGoal(this.state.user.token, data));
     }
 
@@ -225,22 +216,22 @@ class CreateATargetGoal extends React.Component {
 
     handleSubmit = (event) => {
          event.preventDefault();
-        //console.log("handleSubmit was triggered");
-        // if(this.checkMinimumAccountToContribute() || this.checkTheSelectedAccount()||this.checkTheEndDate()||this.checkGroupPurpose()||this.checkGroupName()||this.checkTheTargetAmount()){
-        //     console.log(this.checkMinimumAccountToContribute())
-        // } 
-        this.SubmitTargetGoal();
+        console.log("handleSubmit was triggered");
+        if(this.checkMinimumAccountToContribute() || this.checkTheSelectedAccount()||this.checkTheEndDate()||this.checkGroupPurpose()||this.checkGroupName()||this.checkTheTargetAmount()){
+            console.log(this.checkMinimumAccountToContribute())
+        } 
+        //this.SubmitTargetGoal();
         // console.log('did the code ever got here')
         // console.log(this.state)
-        // switch(this.checkingUserInputs()){
-        //     case null:
-        //        console.log('empty feild found');
-        //        break;
-        //     case "valid":
-        //         // this.SubmitTargetGoal();
-        //         console.log("no empty feilds found")
-        //         break;
-        // }
+        switch(this.checkingUserInputs()){
+            case null:
+               console.log('empty feild found');
+               break;
+            case "valid":
+                this.SubmitTargetGoal();
+                console.log("no empty feilds found")
+                break;
+        }
     }
 
     NavigateToGroupSavings = () => {
@@ -278,9 +269,9 @@ class CreateATargetGoal extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            {this.props.alert && this.props.alert.message &&
+                            {/* {this.props.alert && this.props.alert.message &&
                             <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
-                            }
+                            } */}
                             <div className="col-sm-12">
                                 <div className="row">
                                     <div className="col-sm-12">
@@ -315,7 +306,7 @@ class CreateATargetGoal extends React.Component {
                                                         showYearDropdown
                                                         onChange={this.SetStartDate}
                                                         dropdownMode="select"
-                                                        
+                                                        minDate={new Date()}
                                                         />
                                                        
                                                     </div>
@@ -343,12 +334,7 @@ class CreateATargetGoal extends React.Component {
                                                     <div className="col-sm-12">
                                                         <center>
                                                             {/* <NavLink to='/savings/group/group-created'> */}
-                                                                  <button
-                                                                  disabled={this.props.data.message == GROUPSAVINGSCONSTANT.CREATEGROUPSAINGSPENDING}
-                                                                   type="submit" className="btn-alat m-t-10 m-b-20 text-center">
-                                                                   {this.props.data.message == GROUPSAVINGSCONSTANT.CREATEGROUPSAINGSPENDING ? "Processing..." :"Next"}
-
-                                                                   </button>
+                                                                  <button type="submit">submit</button>
                                                             {/* </NavLink> */}
                                                         </center>
                                                     </div>

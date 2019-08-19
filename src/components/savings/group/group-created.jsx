@@ -15,7 +15,7 @@ import {history} from '../../../_helpers/history';
 
 if(window.performance.navigation.type == 1)
     window.location.replace("http://localhost:8080/");
-    
+
 class GroupCreated extends React.Component {
     constructor(props){
         super(props)
@@ -107,7 +107,7 @@ class GroupCreated extends React.Component {
                                                             <h2>{this.props.payload.response.referralCode}</h2>
                                                         </div>
                                                         <div className="right">
-                                                            <i onClick={this.CopyCode}></i>
+                                                            <i onClick={this.CopyCode} className='glyphicon glyphicon-share'></i>
                                                         </div>
                                                 </div>
                                                 <div className="form-row">

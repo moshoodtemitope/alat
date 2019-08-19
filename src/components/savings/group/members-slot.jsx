@@ -18,7 +18,7 @@ var selectCounter = 0;
 
 if(window.performance.navigation.type == 1)
     window.location.replace("http://localhost:8080/");
-    
+
 class MemberSlots extends React.Component{
     constructor(props){
         super(props);
@@ -200,13 +200,13 @@ class MemberSlots extends React.Component{
 
         console.log(theSlots);
         return;
-        this.props.dispatch(actions.EditSlot(this.state.user.token, data));
+        // this.props.dispatch(actions.EditSlot(this.state.user.token, data));
     }
 
-    handleSubmit = () => {
+    handleSubmit = (event) => {
         event.preventDefault();
         return;
-        this.SubmitNewSlots();
+        //this.SubmitNewSlots();
     }
 
     NavigateToGroupSavings = () => {

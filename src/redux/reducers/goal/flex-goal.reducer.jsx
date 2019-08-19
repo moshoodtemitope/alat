@@ -35,18 +35,18 @@ export function flexGoalStep2Reducer(state = [], action) {
             return{
                 flex_step2_status:flexGoalConstants.FETCH_FLEX_GOAL_SUCCESS_STEP2,
                 flex_step2_data:action,
-            }
+            };
         case flexGoalConstants.FETCH_FLEX_GOAL_PENDING_STEP2:
             return{
                 flex_step2_status:flexGoalConstants.FETCH_FLEX_GOAL_PENDING_STEP2,
                 flex_step2_data:action,
-            }
+            };
         case flexGoalConstants.FETCH_FLEX_GOAL_FAILURE_STEP2:
             return{
                 flex_step2_status:flexGoalConstants.FETCH_FLEX_GOAL_FAILURE_STEP2,
                 flex_step2_data:action,
 
-        }
+        };
         
         default: return {
             ...state
