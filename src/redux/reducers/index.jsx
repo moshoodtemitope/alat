@@ -1,7 +1,7 @@
 import {combineReducers} from "redux";
 import {authentication} from "./authentication.reducer";
 import { alert} from "./alert.reducer";
-import {dashboard, transfer, onboarding, airtime, global, fundAccount, loanOnboarding} from "./export";
+import {dashboard, transfer, onboarding, airtime, global, fundAccount, loanOnboarding, loans} from "./export";
 import {bankListRequest, beneficiariesRequest} from "./transfer.reducer";
 import {accountHistoryReducer} from "./dashboard.reducer";
 import { userConstants } from "../constants/onboarding/user.constants";
@@ -14,6 +14,7 @@ import { airtimeConstants } from "../constants/airtime/airtime.constants";
 import { TRANSFER_REDUCER_CLEAR } from "../constants/transfer.constants";
 import { fundAccountConstants } from "../constants/fund-account/fund-account.constant";
 import { loanOnboardingConstants } from '../constants/onboarding/loan.constants';
+import { loanConstants } from '../constants/loans/loans.constants';
 //import { saveCardReducer } from "./fund-account.reducer";
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
@@ -50,6 +51,13 @@ const loanOnboardingReducerPile = (state, action)=>{
         state = undefined;
     }
     return loanOnboardingReducer(state, action);
+}
+
+const loanReducerPile =(state, action)=>{
+    if(action.type === loanConstants.LOAN_ONBOARDING_CLEAR){
+        state = undefined;
+    }
+    return loansReducer(state, action);
 }
 
 
@@ -103,6 +111,17 @@ const loanOnboardingReducer = combineReducers({
     loanUserDetails: loanOnboarding.saveUserDetailsReducer
 })
 
+const loansReducer = combineReducers({
+    loanCalcData : loans.loanCalcDataReducer,
+    loanApply : loans.loanApplyReducer,
+    loanIndustries: loans.GetIndustriesReducer,
+    loanEmployer: loans.GetEmployerReducer,
+    loanCurrent: loans.CurrentLoanReducer,
+    loanHistory: loans.LoanHistoryReducer,
+    loanFrontId: loans.WorkIdFrontReducer,
+    loanBackId: loans.WorkIdBackReducer,
+})
+
 const appReducer = combineReducers({
     authentication,
     // registration,
@@ -121,6 +140,7 @@ const appReducer = combineReducers({
     transferReducerPile,
     fundAccountReducerPile,
     loanOnboardingReducerPile,
+    loanReducerPile,
     accounts: global.debitableAccountsReducer,
     encrypt_rule: global.getEncryptionRuleReducer,
     verify_pan: global.verifyPANReducer,

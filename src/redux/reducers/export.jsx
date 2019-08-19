@@ -31,12 +31,25 @@ import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingV
       requestStatementReducer,salaryTransactionReducer, salaryEntryReducer, saveUserDetailsReducer, getScoreCardQuestionReducer,
       postScoreCardAnswerReducer} from './loan-onboarding.reducer';
 
+import { loanCalcDataReducer, loanApplyReducer, GetIndustriesReducer, GetEmployerReducer, CurrentLoanReducer, LoanHistoryReducer, WorkIdFrontReducer, WorkIdBackReducer } from './loan.reducer';
+
 export const onboarding = {
     userRegistrationRequest,
     bvnDetailsReducer,
     bvnSkipReducer,
     bvnCustomerDetailsReducer
 };
+
+export const loans = {
+    loanCalcDataReducer,
+    loanApplyReducer,
+    GetIndustriesReducer,
+    GetEmployerReducer,
+    CurrentLoanReducer,
+    LoanHistoryReducer,
+    WorkIdFrontReducer,
+    WorkIdBackReducer
+}
 
 export const loanOnboarding = {
     loanOnboardingStep1Reducer,
