@@ -28,7 +28,6 @@ import * as actions from '../../redux/actions/savings/goal/create-stash-goal.act
             debitAccount:"",
             debitAmount:"",
             GoalTypeId:4
-
         }
      }
 

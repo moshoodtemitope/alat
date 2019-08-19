@@ -68,7 +68,7 @@ class ViewGroupSummary extends React.Component {
         this.props.dispatch(actions.unpauseCustomerGoal(this.state.user.token,data));
     };
     EditCustomerGoal = () => {
-        return this.props.history.push()
+        return this.props.history.push("/savings/edit-goal")
 
     };
 
@@ -145,6 +145,9 @@ class ViewGroupSummary extends React.Component {
                                     </div>
                                 </div>
                             </div>
+                            {this.props.alert && this.props.alert.message &&
+                            <div style={{width: "100%", marginRight:"120px",marginLeft:"120px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                            }
                             <div className="col-sm-12">
                                 <div className="row">
                                     <div className="col-sm-12">
@@ -235,6 +238,8 @@ class ViewGroupSummary extends React.Component {
 function mapStateToProps(state) {
     return {
         customerGoalTransHistory:state.customerGoalTransHistory,
+        alert:state.alert
+
     }
 }
 

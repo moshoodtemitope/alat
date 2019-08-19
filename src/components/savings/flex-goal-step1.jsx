@@ -3,15 +3,12 @@ import {Fragment} from "react";
 import InnerContainer from '../../shared/templates/inner-container';
 import SavingsContainer from './container';
 import {NavLink, Redirect} from "react-router-dom";
-import {Switch} from "react-router";
 import Select from 'react-select';
 import { connect } from 'react-redux';
 import DatePicker from "react-datepicker";
 import {flexGoalConstants} from '../../redux/constants/goal/flex-goal.constant'
 import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
 import "react-datepicker/dist/react-datepicker.css";
-import * as util from '../../shared/utils';
-import moment from 'moment'
 
 
 const selectedTime = [
@@ -23,12 +20,14 @@ const selectedTime = [
 
 
 
- 
 
 
 
 
-class FlexGoal extends React.Component {
+
+
+
+    class FlexGoal extends React.Component {
 
     constructor(props){
         super(props);
@@ -46,6 +45,9 @@ class FlexGoal extends React.Component {
             GoalNameInvalid:false,
             showMessage:false,
             showInterests:"",
+            frequency2:"",
+            goalFrequencyValue:"",
+            goalFrequencyName:  "",
             defaultFreq:[
                 { "id":3, "value": "Monthly","label":"Monthly" },
                 { "id":2, "value": 'Weekly', "label":"Weekly" },
@@ -59,28 +61,20 @@ class FlexGoal extends React.Component {
                 {"id": 10,"name":"10 Month"},{"id":11, "name": "11 Month"} , {"id":12,"name": "12 Month"
                 }
                 ],
-            daysArray:[
-                {"id":7 , "name" :"7 Days"},{"id": 14, "name":"14 Days"}, {"id": 30, "name": "30 Days" }, { "id": 60, "name":"60 Days"},
-                { "id": 90,"name":"90 Days"},{"id":120, "name": "120 Days"},{"id":240,"name":"240 Days"},{"id":360, "name" :"360 Days"}
-            ],
-
-            weekArray:[{
-            "id":2,"name":"2 Weeks", "days": 14},{"id":4,"name":"4 Weeks", "days": 28},{"id":6,"name":"6 Weeks", "days": 42},{"id":8,"name":"8 Weeks", "days": 54},
-            {"id": 12,"name":"12 Weeks", "days": 84},{"id":24,"name":"24 Weeks", "days": 168},{"id":48,"name":"48 Weeks", "days": 336},{"id":52,"name":"52 Weeks", "days": 364
-            }],
-
-            monthsArray: [{
-                "id":1, "name" :"1 Month"},{"id":2,"name":"2 Month"},{"id":3,"name":"3 Month"},{"id": 4,"name": "4 Month"},{"id":5, "name":"5 Month"},
-                {"id": 6,"name": "6 Month"},{"id": 7,"name": "7 Month"},{"id": 8,"name": "8 Month"},{"id":9,"name": "9 Month"},
-                {"id": 10,"name":"10 Month"},{"id":11, "name": "11 Month"} , {"id":12,"name": "12 Month"
-                }],
+            returnItems: [{"id":1, "label" :"1 Month"},{"id":2,"label":"2 Month"},{"id":3,"label":"3 Month"},{"id": 4,"label": "4 Month"},{"id":5, "label":"5 Month"},
+                {"id": 6,"label": "6 Month"},{"id": 7,"label": "7 Month"},{"id": 8,"label": "8 Month"},{"id":9,"label": "9 Month"},
+                {"id": 10,"label":"10 Month"},{"id":11, "label": "11 Month"} , {"id":12,"label": "12 Month"
+            }]
 
 
-    };
+
+
+        };
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleStartDatePicker = this.handleStartDatePicker.bind(this);
         this.handleEndDatePicker = this.handleEndDatePicker.bind(this);
+        this.handleSelectChange=this.handleSelectChange.bind(this);
         console.log(this.state)
 
 
@@ -149,21 +143,56 @@ class FlexGoal extends React.Component {
         });
 
         return formatter.format(number);
-    }
+    };
     removeComma(currencyValue) {
         return currencyValue.replace(/,/g, '');
-    }
+    };
     handleSelectChange = (frequency) => {
-        this.setState({ "goalFrequencyValue": frequency.value,
-                                "goalFrequencyType" : frequency.label,
+        console.log(frequency);
+        this.setState({ "goalFrequencyValue": frequency.label,
+                                "goalFrequencyType" : frequency.id,
         });
-        if (this.state.formsubmitted && frequency.value !== "")
+        if (this.state.formsubmitted && frequency.label !== "")
             this.setState({ goalFrequencyInvalid: false });
 
 
-       this.setFregValue(frequency.value)
+       this.setFregValue(frequency.label)
     };
+    dateSelectChange = (frequency2) => {
 
+        console.log(frequency2);
+            this.setState({
+                "goalFrequencyName": frequency2.label,
+                "goalFrequencyId" : frequency2.id,
+            }, () => {
+                if (frequency2.label === "Monthly") {
+                   // returnItems.push(monthsArray) ;
+                    this.setState({returnItems: [{"id":1, "label" :"1 Month"},{"id":2,"label":"2 Month"},{"id":3,"label":"3 Month"},{"id": 4,"label": "4 Month"},{"id":5, "label":"5 Month"},
+                            {"id": 6,"label": "6 Month"},{"id": 7,"label": "7 Month"},{"id": 8,"label": "8 Month"},{"id":9,"label": "9 Month"},
+                            {"id": 10,"label":"10 Month"},{"id":11, "label": "11 Month"} , {"id":12,"label": "12 Month"
+                            }]})
+                }
+                else  if (frequency2.label === "Daily") {
+                    // returnItems.push(daysArray) ;
+                    this.setState({returnItems: [
+                            {"id":7 , "label" :"7 Days"},{"id": 14, "label":"14 Days"}, {"id": 30, "label": "30 Days" }, { "id": 60, "label":"60 Days"},
+                            { "id": 90,"label":"90 Days"},{"id":120, "label": "120 Days"},{"id":240,"label":"240 Days"},{"id":360, "label" :"360 Days"}
+                        ]})
+                }
+                else if(frequency2.label === "Weekly") {
+                    // returnItems.push(weekArray);
+                    this.setState({returnItems: [{
+                            "id":2,"label":"2 Weeks", "days": 14},{"id":4,"label":"4 Weeks", "days": 28},{"id":6,"label":"6 Weeks", "days": 42},{"id":8,"label":"8 Weeks", "days": 54},
+                            {"id": 12,"label":"12 Weeks", "days": 84},{"id":24,"label":"24 Weeks", "days": 168},{"id":48,"label":"48 Weeks", "days": 336},{"id":52,"label":"52 Weeks", "days": 364
+                            }]})
+                }
+            });
+            if (this.state.formsubmitted && frequency2.label !== "")
+                this.setState({ goalFrequencyInvalid: false });
+
+
+            this.setFregValue(frequency2.name)
+    };
 
     handleAmount = (e) => {
         // console.log
@@ -297,15 +326,15 @@ class FlexGoal extends React.Component {
         if(this.state.defaultFreq && this.state.defaultFreqResult && this.state.targetAmount){
             // if(this.defaultFreq && this.defaultFreqResult && formValue.debitAmount && formValue.dateGroup.startDate){
             if(this.state.defaultFreq === "Monthly"){
-                res = this.state.defaultFreqResult.id;
+                res = this.state.defaultFreqResult;
                 res = +res[0];
                 this.interest = this.GetMonthlyGoalFutureValue(amount, 0.10, res, "");
-            }else if(this.state.defaultFreq=== "Weekly"){
-                res = this.state.defaultFreqResult.id * 7;
+            }else if(this.state.defaultFreq === "Weekly"){
+                res = this.state.defaultFreqResult * 7;
                 this.interest = this.GetWeeklyFutureValue(amount, 0.10, res) - this.savingsValue;
                 this.interest = this.toCurrency(this.interest.toFixed(2));
             }else{
-                res = this.state.defaultFreqResult.id * 1;
+                res = this.state.defaultFreqResult * 1;
                 this.interest = this.GetDailyFutureValue(amount, 0.10, res) - (amount * res);
                 this.interest = this.toCurrency(this.interest.toFixed(2));
             }
@@ -342,13 +371,13 @@ class FlexGoal extends React.Component {
     gotoStep2 = () => {
         if (this.props.flex_goal_step1)
             if (this.props.flex_goal_step1.flex_step1_status === flexGoalConstants.FETCH_FLEX_GOAL_SUCCESS) {
-                return <Redirect to="/savings/flex-goal-step2" />
+                return <Redirect to="/savings/flex-goal-summary" />
             }
     };
     
     render() {
         
-        let {GoalNameInvalid,startDateInvalid,endDateInvalid,goalFrequencyType,targetAmountInvalid,goalFrequencyInvalid,goalFrequency}=this.state;
+        let {GoalNameInvalid,startDateInvalid,goalFrequencyValue,goalFrequencyName,targetAmountInvalid,goalFrequencyInvalid}=this.state;
 
         return (
             <Fragment>
@@ -422,19 +451,22 @@ class FlexGoal extends React.Component {
                                                         }
 
                                                     </div>
-
-
                                                     <div className={goalFrequencyInvalid ? "form-group col-md-6 form-error" : "form-group col-md-6"}>
                                                         <label className="label-text">How often do you want to save</label>
                                                         <Select type="text"
                                                                 options={selectedTime}
                                                                 name="goalFrequency"
                                                                 autoComplete="off"
-                                                                onChange={this.handleSelectChange}
-                                                                value={goalFrequency.label}
+                                                                onChange={this.dateSelectChange}
+                                                                value={goalFrequencyName.label}
                                                         />
                                                         {goalFrequencyInvalid && <div className='text-danger'>Enter saving duration</div>}
                                                     </div>
+
+
+
+
+
                                                 </div>
                                                
                                                 <div className="form-row">
@@ -448,33 +480,30 @@ class FlexGoal extends React.Component {
                                                             dateFormat=" MMMM d, yyyy"
                                                             name="startDate"
                                                             peekNextMonth
-                                                            maxDate={new Date()}
                                                             showMonthDropdown
                                                             minDate={new Date()}
                                                             showYearDropdown
                                                             dropdownMode="select"
-                                                            maxDate={new Date()}
                                                             onChange={this.handleStartDatePicker}
                                                             value={this.state.startDate}
                                                             
                                                             />
-                                                            <i className="mdi mdi-calendar-range"></i>
-
-                                                            {startDateInvalid &&
+                                                            { startDateInvalid &&
                                                                 <div className="text-danger">select a valid date</div>
                                                             }
                                                     </div>
                                                     <div className={goalFrequencyInvalid ? "form-group col-md-6 form-error" : "form-group col-md-6"}>
                                                         <label className="label-text">How often do you want to save</label>
-                                                        {/*<Select type="text"*/}
-                                                                {/*options=""*/}
-                                                                {/*name="goalFrequency"*/}
-                                                                {/*autoComplete="off"*/}
-                                                                {/*onChange={this.handleSelectChange}*/}
-                                                                {/*value={goalFrequency.name}*/}
-                                                        {/*/>*/}
+                                                            <Select type="text"
+                                                            options={this.state.returnItems}
+                                                            name="goalFrequency"
+                                                            autoComplete="off"
+                                                            onChange={this.handleSelectChange}
+                                                            value={goalFrequencyValue.label}
+                                                            />
                                                         {goalFrequencyInvalid && <div className='text-danger'>Enter saving duration</div>}
                                                     </div>
+
 
                                                 </div>
 
