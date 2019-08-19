@@ -7,6 +7,7 @@ import HotlistCardContainer from './hotlist-card'
 import RequestCardContainer from './request-card'
 import VirtualCardsContainer from './virtual-cards'
 import SetCardPinContainer from './setcard-pin'
+import CardsControlContainer from './cards-control'
 // import CardlessWithdrawal from './cardless-withdrawal/cardless-withdrawal'
 // import fxTransfer from './fx-transfer/fxTransfer'
 
@@ -32,7 +33,7 @@ class CardsContainer extends React.Component {
                                         <div className="sub-tab-nav">
                                             <ul>
                                                 <li><NavLink to={'/cards'}>Request Card</NavLink></li>
-                                                <li> <a href="#"> Card Control</a></li>
+                                                <li><NavLink to={'/cards-control'}> Card Control</NavLink></li>
                                                 <li><NavLink to={'/setcard-pin'}> Set Card Pin</NavLink></li>
                                                 <li><NavLink to={'/hotlist'}>Hotlist Card </NavLink></li>
                                                 <li><NavLink to={"/virtual-cards"}> Alat Dollar Card </NavLink></li>
@@ -43,6 +44,7 @@ class CardsContainer extends React.Component {
                                 {this.props.children}
                                 <Route exact to={'/cards'} component={RequestCardContainer} />
                                 <Route to={'/setcard-pin'} component={SetCardPinContainer} />
+                                <Route to={'/cards-control'} component={CardsControlContainer} />
                                 <Route to={'/hotlist'} component={HotlistCardContainer} />
                                 <Route to={'/virtual-cards'} component={VirtualCardsContainer} />  
                             </div>
