@@ -161,6 +161,100 @@ export function WithDrawFromGoal(state=[], action) {
             return { ...state }
     }
 }
+export function PauseCustomerGoal(state=[], action) {
+    switch (action.type) {
+        case customerGoalConstants.PAUSE_CUSTOMER_GOAL_PENDING:
+            return {
+                pause_customer_goal_status:customerGoalConstants.PAUSE_CUSTOMER_GOAL_PENDING,
+                pause_customer_goal_data: action
+            };
+        case customerGoalConstants.PAUSE_CUSTOMER_GOAL_SUCCESS:
+            return {
+                pause_customer_goal_status: customerGoalConstants.PAUSE_CUSTOMER_GOAL_SUCCESS,
+                pause_customer_goal_data: action
+            };
+        case customerGoalConstants.PAUSE_CUSTOMER_GOAL_FAILURE:
+            return {
+                pause_customer_goal_status: customerGoalConstants.PAUSE_CUSTOMER_GOAL_FAILURE,
+                pause_customer_goal_data: action
+            };
+
+
+        default:
+            return { ...state }
+    }
+}
+export function unPauseCustomerGoal(state=[], action) {
+    switch (action.type) {
+        case customerGoalConstants.UNPAUSE_CUSTOMER_GOAL_PENDING:
+            return {
+                unpause_customer_goal_status:customerGoalConstants.UNPAUSE_CUSTOMER_GOAL_PENDING,
+                unpause_customer_goal_data: action
+            };
+        case customerGoalConstants.UNPAUSE_CUSTOMER_GOAL_SUCCESS:
+            return {
+                unpause_customer_goal_status: customerGoalConstants.UNPAUSE_CUSTOMER_GOAL_SUCCESS,
+                unpause_customer_goal_data: action
+            };
+        case customerGoalConstants.UNPAUSE_CUSTOMER_GOAL_FAILURE:
+            return {
+                unpause_customer_goal_status: customerGoalConstants.UNPAUSE_CUSTOMER_GOAL_FAILURE,
+                unpause_customer_goal_data: action
+            };
+
+
+        default:
+            return { ...state }
+    }
+}
+
+export function EditCustomerGoal(state=[], action) {
+    switch (action.type) {
+        case customerGoalConstants.EDIT_CUSTOMER_GOAL_PENDING:
+            return {
+                edit_customer_goal_status:customerGoalConstants.EDIT_CUSTOMER_GOAL_PENDING,
+                edit_customer_goal_data: action
+            };
+        case customerGoalConstants.EDIT_CUSTOMER_GOAL_SUCCESS:
+            return {
+                edit_customer_goal_status: customerGoalConstants.EDIT_CUSTOMER_GOAL_SUCCESS,
+                edit_customer_goal_data: action
+            };
+        case customerGoalConstants.EDIT_CUSTOMER_GOAL_FAILURE:
+            return {
+                edit_customer_goal_status: customerGoalConstants.EDIT_CUSTOMER_GOAL_FAILURE,
+                edit_customer_goal_data: action
+            };
+
+
+        default:
+            return { ...state }
+    }
+}
+export function DeleteCustomerGoal(state=[], action) {
+    switch (action.type) {
+        case customerGoalConstants.DELETE_CUSTOMER_GOAL_PENDING:
+            return {
+                delete_customer_goal_status:customerGoalConstants.DELETE_CUSTOMER_GOAL_PENDING,
+                delete_customer_goal_data: action
+            };
+        case customerGoalConstants.DELETE_CUSTOMER_GOAL_SUCCESS:
+            return {
+                delete_customer_goal_status: customerGoalConstants.DELETE_CUSTOMER_GOAL_SUCCESS,
+                delete_customer_goal_data: action
+            };
+        case customerGoalConstants.DELETE_CUSTOMER_GOAL_FAILURE:
+            return {
+                delete_customer_goal_status: customerGoalConstants.DELETE_CUSTOMER_GOAL_FAILURE,
+                delete_customer_goal_data: action
+            };
+
+
+        default:
+            return { ...state }
+    }
+}
+
 
 
 

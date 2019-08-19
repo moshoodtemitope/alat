@@ -28,15 +28,15 @@ class GroupAnalyticsMini extends React.Component {
 
     ShowMembers = () => {
         this.props.history.push("/savings/group-mini2");
-    }
+    };
     
     GroupSummary = () => {
         this.props.history.push("/savings/group-analytics-mini");
-    }
+    };
 
     PotContribution = () =>{
         return this.props.groupDetails.response.potContribution;
-    }
+    };
 
     UpNext = () => {
         const data = this.props.groupDetails.response.members;
@@ -47,40 +47,40 @@ class GroupAnalyticsMini extends React.Component {
                 nextCollector = data[i]['firstName']; 
         }
         return nextCollector;
-    }
+    };
 
     GetStatusOfGroupMessage = () => {
         return this.props.groupDetails.response.status + "% completion";
-    }
+    };
     GetStatusOfGroup = () => {
         return this.props.groupDetails.response.status;
-    }
+    };
     GetReferalCode = () => {
         return this.props.groupDetails.response.referralCode;
-    }
+    };
 
     GetStartDate = () => {
         return this.props.groupDetails.response.startDate
-    }
+    };
 
     GroupName = () => {
         return this.props.groupDetails.response.name;
-    }
+    };
 
     GetMonthlyContribution = () => {
         return this.props.groupDetails.response.monthlyContribution;
-    }
+    };
 
     MemberCount = () => {
         return this.props.groupDetails.response.memberCount;
-    }
+    };
 
     DeleteGroup = () => {
         let data = {
             groupId: this.props.groupDetails.response.id
-        }
+        };
         this.props.dispatch(actions.deleteGroupEsusu(this.state.user.token, data));
-    }
+    };
 
     NavigateToGroupSavings = () => {
         let groupSavings = Object.keys(this.props.groups); //returns an array
@@ -90,7 +90,7 @@ class GroupAnalyticsMini extends React.Component {
             return;
         }
         history.push('/savings/goal/group-savings-selection');
-    }
+    };
 
     render() {
         const {endDate,endDateInvalid} = this.state;

@@ -15,6 +15,7 @@ import * as util from '../../shared/utils'
 
 
 import "react-datepicker/dist/react-datepicker.css";
+import {fundAccountConstants} from "../../redux/constants/fund-account/fund-account.constant";
 const selectedTime = [
            
     { "id":3, value: 'monthly',label:"Monthly" },
@@ -42,7 +43,7 @@ class FixedGoal extends React.Component {
             goalFrequencyInvalid:false,
             showInterests:"",
             goalFrequencyType: "",
-            goalFrequencyLabel: ""
+            goalFrequencyLabel: "",
 
             // frequencyAmount:"",
 
@@ -51,6 +52,7 @@ class FixedGoal extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this)
         this.handleSelectDebitableAccounts = this.handleSelectDebitableAccounts.bind(this);
+
     }
     removeComma(currencyValue) {
         return currencyValue.replace(/,/g, '');
@@ -101,110 +103,7 @@ class FixedGoal extends React.Component {
             });
         }
     };
-    getAbsoulteMonths(momentDate) {
-        var months = Number(momentDate.format("MM"));
-        var years = Number(momentDate.format("YYYY"));
-        return months + (years * 12);
-    }
-    getMonthsBetween(from,to){
-        if (from > to) return this.getMonthsBetween(to, from);
-        let fromYear = moment(from).year();
-        let toYear = moment(to).year();
-        let toMonth = moment(to).month();
-        let fromMonth = moment(from).month();
-        let fromDay = moment(from).date();
-        let toDay = moment(to).date();
-        fromMonth += 1; //Moment returns January as 0 for instance
-        toMonth += 1;
-        var startMonths = this.getAbsoulteMonths(from);
-        var endMonths = this.getAbsoulteMonths(to);
-        var monthDiff = endMonths - startMonths;
-        let futureDate = moment(from).add(monthDiff, 'months').format('DD MMMM, YYYY');
-        if (futureDate > to || toDay < fromDay)
-        {
-            return monthDiff - 1;
-        }
-        else
-        {
-            return monthDiff + 1;
-        }
-      }
-    GetDailyFutureValue(debitAmount, annualInterestRate, days){
-        let futureValue = debitAmount;
-        let dailyRate = (annualInterestRate * 100) / 36500;
-        let interestAccrued = 0;
-        for (let i = 1; i <= days; i++)
-        {
-            if (i < days)
-            {
-                futureValue += debitAmount;
-            }
-            interestAccrued += dailyRate * futureValue;
-            //Monthly compounding
-            if (i % 30 == 0)
-            {
-                futureValue += interestAccrued;
-                interestAccrued = 0;
-            }
-        }
-        return futureValue += interestAccrued;
-    }
-    //  this method is to get the weekly interest value for every amount entered
-    GetWeeklyFutureValue(debitAmount, annualInterestRate, days){
-        let futureValue = this.state.targetAmount;
-        let dailyRate = (annualInterestRate * 100) / 36500;
-        let interestAccrued = 0;
-        for (let i = 1; i <= days; i++)
-        {
-            //weekly addition
-            if (i < days && i % 7 == 0)
-            {
-                futureValue += debitAmount;
-            }
-            interestAccrued = interestAccrued + (dailyRate * futureValue);
-            //Monthly compounding
-            if (i % 30 == 0)
-            {
-                futureValue += interestAccrued;
-                interestAccrued = 0;
-            }
-        }
-        let result = futureValue += interestAccrued;
-        return result;
-        
-    }
-    // this method is to get the weekly interest value for every amount entered
-    calculateDaily(){
-            let days =null;
-            let res;
-            if(this.state.targetAmount){
-                let amount=this.removeComma(this.state.targetAmount);
-                let dailycontribution;
-                let ia = ((amount / 365) * 0.10 );
-                dailycontribution = 1 * ( ia - (0.10) *ia);
-               return this.interest =  parseFloat(dailycontribution).toFixed(2);
-            }
-    }
-    //this method is to get the weekly interest value for every amount entered
-    calculateWeekly(){
-        let days = null;
-        let res;
-        let finalInterest;
-        let amount= parseFloat(this.removeComma(this.state.showInterests));
-        let startDate = moment(this.state.startDate, 'DD MMMM, YYYY');
-        let enddate = moment(this.state.endDate, 'DD MMMM, YYYY');
-        // let date = moment(enddate, 'DD-MM-YYYY').add(res, 'days');
-        res = enddate.diff(startDate, 'week');
-        let months = Math.round((res/365) * 12);
-        let debitAmount = (amount/months).toFixed(2);
-        let debitValue = amount/this.getMonthsBetween(startDate, enddate);
-        finalInterest = this.GetWeeklyFutureValue(debitValue, 0.10, months);
-        this.interest = finalInterest;
-        this.showInterests = true;
-        this.frequencyAmount = (amount/months).toFixed(2);
-        return parseFloat(this.interest).toFixed(2);
-    }
-   
+
     //this method is to calculate the monthly interest value for every amount entered
     ComputeDebitAmount(frequency){
       let timeBetween;
@@ -265,10 +164,6 @@ class FixedGoal extends React.Component {
         //         showInterests: this.ComputeDebitAmount(this.state.goalFrequencyType)
         // })
 
-            
-
-
-
     };
     
 
@@ -304,15 +199,13 @@ class FixedGoal extends React.Component {
                 return <Redirect to="/savings/fixed-goal-summary" />
             }
     };
-    goback =()=>{
-        if(this.props.fixed_goal_step2)
-            if(this.props.fixed_goal_step2.fixed_step2_status === fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS_STEP2){
-                return<Redirect to="/savings/fixed-goal"/>
-            }
+    OnBackClick = () => {
+        this.props.dispatch(actions.ClearAction(fixedGoalConstants.FIXED_GOAL_REDUCER_CLEAR));
     };
-    
 
-    
+
+
+
 
 
     render() {
@@ -404,7 +297,7 @@ class FixedGoal extends React.Component {
                                        
                                        </div>
                                          <center>
-                                            <Link to={"/savings/fixed-goal"} className="add-bene m-t-50">Go Back</Link>
+                                             <a style={{ cursor: "pointer" }} onClick={this.OnBackClick} className="add-bene m-t-50">Go Back</a>
                                         </center>
                                       
                                       </div>
@@ -428,5 +321,5 @@ class FixedGoal extends React.Component {
 const mapStateToProps = state => ({
     fixed_goal_step1: state.fixed_goal_step1,
     fixed_goal_step2:state.fixed_goal_step2
-})
+});
 export default connect(mapStateToProps)(FixedGoal);

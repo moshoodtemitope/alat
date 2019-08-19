@@ -63,11 +63,11 @@ class GroupAnalytics extends React.Component {
         console.log('was fired');
         //return <Redirect to="/savings/group/group-analytics2" />
         this.props.history.push("/savings/group/group-analytics2");
-    }
+    };
 
     Automated = () => {
         this.props.history.push('/savings/group/automate-contributions');
-    }
+    };
 
     GetMonth = (param) => {
             switch(param){
@@ -96,7 +96,7 @@ class GroupAnalytics extends React.Component {
                case '12':
                   return 'December';
              }
-    }
+    };
 
     GetTargetMonth = () => {
         const dateString = this.props.groupDetails.response.targetDate.split("-");
@@ -104,58 +104,58 @@ class GroupAnalytics extends React.Component {
         const month = this.GetMonth(dateString[1]);
         const year = dateString[0];
         return day.concat(" ", month, " ", year);
-    }
+    };
 
     GetGroupInterest = () => {
        return this.props.groupDetails.response.groupInterest;
-    }
+    };
 
     GetGroupSavedAmount = () => {
         return this.props.groupDetails.response.groupSavedAmount + " of ".toLowerCase();
-    }
+    };
 
     GetGroupTargetAmount = () => {
         return this.props.groupDetails.response.targetAmount;
-    }
+    };
 
     GetIndividualSavedAmount = () => {
         return this.props.groupDetails.response.yourSavedAmount + " of ".toLowerCase();
-    }
+    };
 
     GetGroupStatus = () => {
         return this.props.groupDetails.response.groupStatus + " % Completed! ".toLowerCase();
-    }
+    };
 
     GetGroupStatus2 = () => {
         return this.props.groupDetails.response.groupStatus;
-    }
+    };
 
     GetYourInterest = () => {
         return this.props.groupDetails.response.yourInterest;
-    }
+    };
 
     GetReferalCode = () => {
         return this.props.groupDetails.response.referralCode;
-    }
+    };
 
     DeleteThisGroup = () => {
         let data = {
             groupId: parseInt(event.target.id),
             deleteGroup: 'deleteGroup'
-        }
+        };
         this.props.dispatch(actions.deleteGroup(this.state.user.token, data));
-    }
+    };
 
     PauseThisGroup = () => {
         let data = {
             groupId: parseInt(event.target.id),
-        }
+        };
         this.props.dispatch(actions.pauseGroup(this.state.user.token, data));
-    }
+    };
 
     EditThisGroup = () => {
         return this.props.history.push('/group-savings/edit-group');
-    }
+    };
 
     NavigateToGroupSavings = () => {
         let groupSavings = Object.keys(this.props.groups); //returns an array
@@ -165,7 +165,7 @@ class GroupAnalytics extends React.Component {
             return;
         }
         history.push('/savings/goal/group-savings-selection');
-    }
+    };
     
     render() {
         const {endDate,endDateInvalid} = this.state;

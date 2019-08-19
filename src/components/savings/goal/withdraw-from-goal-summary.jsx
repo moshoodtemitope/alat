@@ -62,6 +62,17 @@ class WithDrawFromGoalSummmary extends Component {
 
         return formatter.format(number);
     }
+    toCurrency(currency) {
+        if (currency) {
+            currency = typeof currency !== 'string' ? currency.toString() : currency;
+            let numberValueArray = currency.split('.');
+            let numberValue = this.removeComma(numberValueArray[0]);
+            currency = numberValueArray.length > 1 ? numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+                + '.' + numberValueArray[1] : numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+        }
+        return currency;
+    }
+
     maskAccountNumber(accountNumber) {
         for (let index = 3; index < 6; index++) {
             accountNumber =  accountNumber.substr(0, index) + '*' + accountNumber.substr(index + 1,  accountNumber.length);
@@ -69,15 +80,14 @@ class WithDrawFromGoalSummmary extends Component {
         return accountNumber;
     }
     handleSubmit=(event)=>{
-        let amountInNumber =this.toCurrency(parseFloat(this.removeComma(this.state.Amount)).toFixed(2)) ;
 
         event.preventDefault();
         this.props.dispatch(actions.WithDrawFromGoal({
             "goalId":parseInt(this.state.goalId),
-            "amount":parseFloat(amountInNumber),
+            "amount":parseFloat(this.state.Amount),
             "amountNumber":this.state.debitAccount,
             // "amount":this.state.amountSaved,
-            "partialWithdrawal":this.state.partialWithdrawal
+            "partialWithdrawal":true
 
         }));
 

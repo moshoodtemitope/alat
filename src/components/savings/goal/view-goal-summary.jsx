@@ -10,6 +10,7 @@ import ProgressBar from '../../savings/group/progress-bar';
 import moment from 'moment'
 import { NavButtons } from '../../savings/group/component';
 import MoreDetails from '../../savings/group/details';
+import * as actions from "../../../redux/actions/savings/goal/get-customer-transaction-history.actions";
 
 class ViewGroupSummary extends React.Component {
     constructor(props){
@@ -22,6 +23,8 @@ class ViewGroupSummary extends React.Component {
             buttonType: "smallButton",
             discTopSpan: 'something',
             customerGoalTransHistory: null,
+            goal:JSON.parse(localStorage.getItem('goal')) || [],
+
 
 
         };
@@ -29,6 +32,45 @@ class ViewGroupSummary extends React.Component {
 
 
     }
+    toCurrency =(currency) =>{
+        if (currency) {
+            currency = typeof currency !== 'string' ? currency.toString() : currency;
+            let numberValueArray = currency.split('.');
+            let numberValue = this.removeComma(numberValueArray[0]);
+            currency = numberValueArray.length > 1 ? numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+                + '.' + numberValueArray[1] : numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+        }
+        return currency;
+    };
+    removeComma(currencyValue) {
+        return currencyValue.replace(/,/g, '');
+    }
+    PauseCustomerGoal= () => {
+        let data = {
+            goalName:this.state.goal.goalName,
+            targetDate:this.state.goal.targetDate,
+            startDate:this.state.goal.startDate,
+            targetAmount:parseFloat(this.state.goal.targetAmount),
+            goalTypeId:parseInt(this.state.goal.goalTypeId),
+            debitAmount:parseFloat(this.state.goal.debitAmount),
+            frequencyId:parseInt(this.state.goal.frequencyId),
+            debitAccount:this.state.goal.debitAmount
+        };
+        this.props.dispatch(actions.PauseCustomerGoal(this.state.user.token, data));
+    };
+    DeleteCustomerGoal = () => {
+        return this.props.history.push('/savings/delete-goal')
+    };
+    UnpauseCustomerGoal = () => {
+        let data = {
+            goalId: parseInt(event.target.id),
+        };
+        this.props.dispatch(actions.unpauseCustomerGoal(this.state.user.token,data));
+    };
+    EditCustomerGoal = () => {
+        return this.props.history.push()
+
+    };
 
 
     componentDidMount(){
@@ -78,6 +120,7 @@ class ViewGroupSummary extends React.Component {
     render() {
 
         const details = this.props.location.state.name;
+        console.log(details);
 
         return (
             <Fragment>
@@ -153,12 +196,18 @@ class ViewGroupSummary extends React.Component {
                                                      </div>
 
 
-
                                                     <NavButtons
                                                        navType={this.state.navType}
                                                         leftName='edit'
                                                         middleName='pause'
                                                         rightName='delete'
+                                                       edit={details.id}
+                                                       delete={details.id}
+                                                       unpause={details.id}
+                                                       DeleteGroup={this.DeleteCustomerGoal}
+                                                       PauseGroup={this.PauseCustomerGoal}
+                                                       EditGroup={this.EditCustomerGoal}
+
                                                     />
                                                 </div>
 

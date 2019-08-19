@@ -15,12 +15,14 @@ import moment from 'moment'
 
 
 const selectedTime = [
-           
     { "id":3, "value": "Monthly","label":"Monthly" },
     { "id":2, "value": 'Weekly', "label":"Weekly" },
     {  "id":1,"value": "Daily", "label":"Daily"},
-   
 ];
+
+
+
+
  
 
 
@@ -29,13 +31,13 @@ const selectedTime = [
 class FlexGoal extends React.Component {
 
     constructor(props){
-        super(props)
+        super(props);
         this.state={
-            goalName:"",
+            goalName:null,
             startDate:null,
             endDate:null,
-            targetAmount:"",
-            frequency:"",
+            targetAmount:null,
+            frequency:null,
             goalFrequency:"",
             isSubmitted : false,
             startDateInvalid:false,
@@ -44,18 +46,47 @@ class FlexGoal extends React.Component {
             GoalNameInvalid:false,
             showMessage:false,
             showInterests:"",
-         
-        
-           
-             
-            
-        };
+            defaultFreq:[
+                { "id":3, "value": "Monthly","label":"Monthly" },
+                { "id":2, "value": 'Weekly', "label":"Weekly" },
+                {  "id":1,"value": "Daily", "label":"Daily"},
+                ],
+             defaultFreqResult:[
+                 {"id":7 , "name" :"7 Days"},{"id": 14, "name":"14 Days"}, {"id": 30, "name": "30 Days" }, { "id": 60, "name":"60 Days"},
+                { "id": 90,"name":"90 Days"},{"id":120, "name": "120 Days"},{"id":240,"name":"240 Days"},{"id":360, "name" :"360 Days"},
+                {"id":1, "name" :"1 Month"},{"id":2,"name":"2 Month"},{"id":3,"name":"3 Month"},{"id": 4,"name": "4 Month"},{"id":5, "name":"5 Month"},
+                {"id": 6,"name": "6 Month"},{"id": 7,"name": "7 Month"},{"id": 8,"name": "8 Month"},{"id":9,"name": "9 Month"},
+                {"id": 10,"name":"10 Month"},{"id":11, "name": "11 Month"} , {"id":12,"name": "12 Month"
+                }
+                ],
+            daysArray:[
+                {"id":7 , "name" :"7 Days"},{"id": 14, "name":"14 Days"}, {"id": 30, "name": "30 Days" }, { "id": 60, "name":"60 Days"},
+                { "id": 90,"name":"90 Days"},{"id":120, "name": "120 Days"},{"id":240,"name":"240 Days"},{"id":360, "name" :"360 Days"}
+            ],
+
+            weekArray:[{
+            "id":2,"name":"2 Weeks", "days": 14},{"id":4,"name":"4 Weeks", "days": 28},{"id":6,"name":"6 Weeks", "days": 42},{"id":8,"name":"8 Weeks", "days": 54},
+            {"id": 12,"name":"12 Weeks", "days": 84},{"id":24,"name":"24 Weeks", "days": 168},{"id":48,"name":"48 Weeks", "days": 336},{"id":52,"name":"52 Weeks", "days": 364
+            }],
+
+            monthsArray: [{
+                "id":1, "name" :"1 Month"},{"id":2,"name":"2 Month"},{"id":3,"name":"3 Month"},{"id": 4,"name": "4 Month"},{"id":5, "name":"5 Month"},
+                {"id": 6,"name": "6 Month"},{"id": 7,"name": "7 Month"},{"id": 8,"name": "8 Month"},{"id":9,"name": "9 Month"},
+                {"id": 10,"name":"10 Month"},{"id":11, "name": "11 Month"} , {"id":12,"name": "12 Month"
+                }],
+
+
+    };
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleStartDatePicker = this.handleStartDatePicker.bind(this);
         this.handleEndDatePicker = this.handleEndDatePicker.bind(this);
+        console.log(this.state)
 
-}
+
+    }
+
+
     valStartDate = () => {
         if (this.state.startDate == null) {
             this.setState({ startDateInvalid: true });
@@ -86,7 +117,7 @@ class FlexGoal extends React.Component {
             this.setState({ GoalNameInvalid: true });
             return true;
         }
-    }
+    };
 
     handleStartDatePicker = (startDate) => {
         startDate.setHours(startDate.getHours() + 1);
@@ -109,59 +140,52 @@ class FlexGoal extends React.Component {
             return true;
         }
     };
+    toCurrency(number) {
+        // console.log(number);
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: "decimal",
+            currency: "USD",
+            maximumFractionDigits: 2
+        });
+
+        return formatter.format(number);
+    }
+    removeComma(currencyValue) {
+        return currencyValue.replace(/,/g, '');
+    }
+    handleSelectChange = (frequency) => {
+        this.setState({ "goalFrequencyValue": frequency.value,
+                                "goalFrequencyType" : frequency.label,
+        });
+        if (this.state.formsubmitted && frequency.value !== "")
+            this.setState({ goalFrequencyInvalid: false });
+
+
+       this.setFregValue(frequency.value)
+    };
+
 
     handleAmount = (e) => {
         // console.log
          let intVal = e.target.value.replace(/,/g, '');
          if (/^\d+(\.\d+)?$/g.test(intVal)) {
              // if (parseInt(intVal, 10) <= 2000000) {
-             this.setState({ targetAmount: intVal, targetAmount: this.toCurrency(intVal) },
+             this.setState({ targetAmount: this.toCurrency(intVal) },
                  () => this.setFregValue());
              // }
-         } else if (e.target.value == "") {
-             this.setState({ targetAmount: "", targetAmount: "" },
+         } else if (e.target.value === "") {
+             this.setState({ targetAmount: "" },
                  () => this.setFregValue());
          }
  
-         if(this.state.isSubmitted == true)
+         if(this.state.isSubmitted === true)
          if (this.state.formsubmitted) {
-                    if (e != "")
+                    if (e !== "")
                         this.setState( { targetAmountInvalid: false });
                      }
     };
 
-    setFregValue = () => {
-        this.setState({ showInterests: this.calculateMonthly(this.state.targetAmount, this.state.startDate, this.state.endDate) })
-
-
-
-    };
-    toCurrency(number) {
-         // console.log(number);
-         const formatter = new Intl.NumberFormat('en-US', {
-             style: "decimal",
-             currency: "USD",
-             maximumFractionDigits: 2
-         });
- 
-         return formatter.format(number);
-    }
-    removeComma(currencyValue) {
-        return currencyValue.replace(/,/g, '');
-    }
-    GetFixedGoalFutureValue(debitAmount, annualInterestRate, months){
-        let futureValue= 0;
-        var result;
-        let rate = ((annualInterestRate - 0.01) / 12);
-        for (let n = 1; n <= months; n++)
-        {
-            var multiplier = (1 + rate);
-            futureValue += debitAmount * (Math.pow(multiplier, n));
-        }
-        result = futureValue - (debitAmount * months); //I dont even know why, with the /6.02, it matched with mobile calc
-        return this.toCurrency2(parseFloat(result).toFixed(2));
-    }
-    toCurrency2 =(currency) =>{
+    toCurrency2=(currency) =>{
         if (currency) {
             currency = typeof currency !== 'string' ? currency.toString() : currency;
             let numberValueArray = currency.split('.');
@@ -170,52 +194,127 @@ class FlexGoal extends React.Component {
                 + '.' + numberValueArray[1] : numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,');
         }
         return currency;
-    }
-    getAbsoulteMonths(momentDate) {
-        var months = Number(momentDate.format("MM"));
-        var years = Number(momentDate.format("YYYY"));
-        return months + (years * 12);
-    }
+    };
+    setFregValue(){
+        let amount = this.state.targetAmount ? this.removeComma(this.state.targetAmount) : null;
+        let selectedFreq = this.state.goalFrequency;
+        if(amount){
+            this.displaySaving=true;
+            if(selectedFreq){
+                this.savingsValue = selectedFreq * amount;
+            }else{
+                let val = this.state.goalFrequency;
+                this.displaySaving=true;
+                if(val === "Daily"){
+                    this.freqDetails = this.state.daysArray;
+                    if(amount) {
+                        this.savingsValue = this.state.daysArray[7].id * amount;
+                        this.defaultFreqResult =this.state.daysArray[7].name;
+                        this.defaultFreqResultId = this.state.daysArray[7].id;
+                        this.defaultFreq = "Daily";
+                    }
+                }else if(val === "Weekly"){
+                    this.freqDetails = this.state.weekArray;
+                    if(amount) {
+                        this.savingsValue = this.state.weekArray[7].id * amount;
+                        this.defaultFreqResult =this.state.weekArray[7].name;
+                        this.defaultFreqResultId = this.state.weekArray[7].id;
+                        this.defaultFreq = "Weekly";
+                    }
+                }else if (val === "Monthly"){
 
-    calculateMonthly(){
-        let days = null;
-        let res;
-        let finalInterest;
-        let amount= parseFloat(this.removeComma(this.state.targetAmount));
-        let startDate = moment(this.state.startDate, 'DD MMMM, YYYY');
-        let enddate = moment(this.state.endDate, 'DD MMMM, YYYY');
-        // let date = moment(enddate, 'DD-MM-YYYY').add(res, 'days');
-        res = enddate.diff(startDate, 'days');
-        let months = Math.round((res/365) * 12);
-        let debitAmount = (amount/months).toFixed(2);
-        let debitValue = amount/this.getMonthsBetween(startDate, enddate);
-        finalInterest = this.GetFixedGoalFutureValue(debitValue, 0.10, months);
-        this.interest = finalInterest;
-        this.showInterests = true;
-        this.frequencyAmount = (amount/months).toFixed(2);
-        return this.interest;
-    }
-    
-
-    handleSelectChange = (frequency) => {
-        this.setState({ "goalFrequency": frequency.value,
-                        "goalFrequency" : frequency.label,
-                    });
-        if (this.state.formsubmitted && frequency.value != "")
-            this.setState({ goalFrequencyInvalid: false })
-        
-        if (frequency.value == "monthly") {
-
+                    this.freqDetails = this.state.monthsArray;
+                    this.savingsValue = this.state.monthsArray[11].id * amount;
+                    this.defaultFreqResult =this.state.monthsArray[11].name;
+                    this.defaultFreqResultId = this.state.monthsArray[11].id;
+                    this.defaultFreq = "Monthly";
+                }
+            }
+        }else{
+            return this.displaySaving=false;
         }
+       return this.setState({ showInterests: this.calculateInterest() })
+
+    }
+    GetMonthlyGoalFutureValue =(debitAmount, annualInterestRate, months, goalType)=>{
+        let futureValue = 0;
+        var result;
+        let rate = (annualInterestRate - 0.01) / 12;
+        for (let n = 1; n <= months; n++)
+        {
+            var multiplier = (1 + rate);
+            futureValue += debitAmount * (Math.pow(multiplier, n));
+        }
+        return (futureValue - (debitAmount * months)).toFixed(2);
+    };
+    GetWeeklyFutureValue =(debitAmount, annualInterestRate, days)=>{
+        let futureValue = debitAmount;
+        let dailyRate = (annualInterestRate * 100) / 36500;
+        let interestAccrued = 0;
+        for (let i = 1; i <= days; i++)
+        {
+            //weekly addition
+            if (i < days && i % 7 == 0)
+            {
+                futureValue += debitAmount;
+            }
+            interestAccrued = interestAccrued + (dailyRate * futureValue);
+            //Monthly compounding
+            if (i % 30 == 0)
+            {
+                futureValue += interestAccrued;
+                interestAccrued = 0;
+            }
+        }
+        let result = futureValue += interestAccrued;
+        return result;
 
     };
+     GetDailyFutureValue =(debitAmount, annualInterestRate, days) =>{
+        let futureValue = debitAmount;
+        let dailyRate = (annualInterestRate * 100) / 36500;
+        let interestAccrued = 0;
+        for (let i = 1; i <= days; i++)
+        {
+            if (i < days)
+            {
+                futureValue += debitAmount;
+            }
+            interestAccrued += dailyRate * futureValue;
+            //Monthly compounding
+            if (i % 30 == 0)
+            {
+                futureValue += interestAccrued;
+                interestAccrued = 0;
+            }
+        }
+        return futureValue += interestAccrued;
+    };
+     calculateInterest(){
+        var days = null;
+        var res;
+        let amount = parseFloat(this.removeComma(this.state.targetAmount));
+        if(this.state.defaultFreq && this.state.defaultFreqResult && this.state.targetAmount){
+            // if(this.defaultFreq && this.defaultFreqResult && formValue.debitAmount && formValue.dateGroup.startDate){
+            if(this.state.defaultFreq === "Monthly"){
+                res = this.state.defaultFreqResult.id;
+                res = +res[0];
+                this.interest = this.GetMonthlyGoalFutureValue(amount, 0.10, res, "");
+            }else if(this.state.defaultFreq=== "Weekly"){
+                res = this.state.defaultFreqResult.id * 7;
+                this.interest = this.GetWeeklyFutureValue(amount, 0.10, res) - this.savingsValue;
+                this.interest = this.toCurrency(this.interest.toFixed(2));
+            }else{
+                res = this.state.defaultFreqResult.id * 1;
+                this.interest = this.GetDailyFutureValue(amount, 0.10, res) - (amount * res);
+                this.interest = this.toCurrency(this.interest.toFixed(2));
+            }
+           return this.showInterests = true;
+        }else{
+            return this.showInterests = false;
+        }
+    }
 
-
-    
-   
-   
-
-    
     showInterest = () =>  {
         this.setState({showMessage: true})
     };
@@ -249,7 +348,7 @@ class FlexGoal extends React.Component {
     
     render() {
         
-        let {GoalNameInvalid,startDateInvalid,endDateInvalid,targetAmountInvalid,goalFrequencyInvalid,goalFrequency}=this.state
+        let {GoalNameInvalid,startDateInvalid,endDateInvalid,goalFrequencyType,targetAmountInvalid,goalFrequencyInvalid,goalFrequency}=this.state;
 
         return (
             <Fragment>
@@ -298,6 +397,45 @@ class FlexGoal extends React.Component {
                                                     {GoalNameInvalid &&
                                                         <div className="text-danger">select a goal name please</div>}
                                                 </div>
+                                                <div className="form-row">
+                                                    <div className={targetAmountInvalid ? "form-group col-md-6 form-error" : "form-group col-md-6"}>
+                                                        <label className="label-text">How much would you like to save</label>
+                                                        <input
+                                                            onKeyUp= {this.showInterest}
+
+                                                            className="form-control"
+                                                            autoComplete="off"
+                                                            name="targetAmount"
+                                                            onChange={this.handleAmount}
+                                                            placeholder="E.g. ₦100,000"
+                                                            value={this.state.targetAmount}
+
+
+                                                        />
+                                                        {targetAmountInvalid &&
+                                                        <div className="text-danger">Enter the amount you want to save</div>}
+                                                        {
+                                                            this.state.showMessage ?
+                                                                <div className="text-purple m-b-55"><h3 className="text-purple m-b-55"> You will earn approximately ₦ {this.state.showInterests} in interest.</h3></div>
+                                                                : null
+
+                                                        }
+
+                                                    </div>
+
+
+                                                    <div className={goalFrequencyInvalid ? "form-group col-md-6 form-error" : "form-group col-md-6"}>
+                                                        <label className="label-text">How often do you want to save</label>
+                                                        <Select type="text"
+                                                                options={selectedTime}
+                                                                name="goalFrequency"
+                                                                autoComplete="off"
+                                                                onChange={this.handleSelectChange}
+                                                                value={goalFrequency.label}
+                                                        />
+                                                        {goalFrequencyInvalid && <div className='text-danger'>Enter saving duration</div>}
+                                                    </div>
+                                                </div>
                                                
                                                 <div className="form-row">
                                                     <div className= {!startDateInvalid ? "form-group col-md-6 " : "form-group col-md-6 form-error"}>
@@ -312,6 +450,7 @@ class FlexGoal extends React.Component {
                                                             peekNextMonth
                                                             maxDate={new Date()}
                                                             showMonthDropdown
+                                                            minDate={new Date()}
                                                             showYearDropdown
                                                             dropdownMode="select"
                                                             maxDate={new Date()}
@@ -324,72 +463,21 @@ class FlexGoal extends React.Component {
                                                             {startDateInvalid &&
                                                                 <div className="text-danger">select a valid date</div>
                                                             }
-                                        
                                                     </div>
-                                                    <div className={!endDateInvalid ? "form-group col-md-6" : "form-group col-md-6 form-error"}>
-                                                        <label className="label-text">How long do you want to save for </label>
-                                                        <DatePicker  
-                                                            selected={this.state.endDate}
-                                                            className="form-control"
-                                                            autoComplete="off" 
-                                                            placeholderText="Goal end Date"
-                                                            dateFormat=" MMMM d, yyyy"
-                                                            peekNextMonth
-                                                            name="endDate"
-                                                            showMonthDropdown
-                                                            showYearDropdown
-                                                            dropdownMode="select"                                  
-                                                            // maxDate={new Date()}
-                                                            onChange={this.handleEndDatePicker}
-                                                            value={this.state.endDate}
-                                                        />
-                                                        <i class="mdi mdi-calendar-range"></i>
-
-                                                        {endDateInvalid &&
-                                                            <div className="text-danger">select a valid date</div>
-                                                        }
-                                                    </div>
-                                                </div>
-                                                <div className="form-row">
-                                                    <div className={targetAmountInvalid ? "form-group col-md-6 form-error" : "form-group col-md-6"}>
-                                                        <label className="label-text">How much would you like to save</label>
-                                                        <input 
-                                                            onKeyUp= {this.showInterest}
-                                                            
-                                                            className="form-control" 
-                                                            autoComplete="off" 
-                                                            name="targetAmount"
-                                                            onChange={this.handleAmount}
-                                                            placeholder="E.g. ₦100,000"
-                                                            value={this.state.targetAmount}
-
-                                                        
-                                                        />
-                                                        {targetAmountInvalid && 
-                                                            <div className="text-danger">Enter the amount you want to save</div>}
-                                                            {
-                                                            this.state.showMessage ? 
-                                                            <div className="text-purple m-b-55"><h3 className="text-purple m-b-55"> You will earn approximately ₦ {this.state.showInterests} in interest.</h3></div> 
-                                                            : null
-
-                                                            }
-    
-                                                    </div>
-                                                    
-
                                                     <div className={goalFrequencyInvalid ? "form-group col-md-6 form-error" : "form-group col-md-6"}>
                                                         <label className="label-text">How often do you want to save</label>
-                                                        <Select type="text" 
-                                                            options={selectedTime}
-                                                            name="goalFrequency"
-                                                            autoComplete="off" 
-
-                                                            onChange={this.handleSelectChange}
-                                                            value={goalFrequency.label}
-                                                        />
+                                                        {/*<Select type="text"*/}
+                                                                {/*options=""*/}
+                                                                {/*name="goalFrequency"*/}
+                                                                {/*autoComplete="off"*/}
+                                                                {/*onChange={this.handleSelectChange}*/}
+                                                                {/*value={goalFrequency.name}*/}
+                                                        {/*/>*/}
                                                         {goalFrequencyInvalid && <div className='text-danger'>Enter saving duration</div>}
                                                     </div>
+
                                                 </div>
+
 
 
                                                 <div className="row">
@@ -433,6 +521,7 @@ class FlexGoal extends React.Component {
             </Fragment>
         );
     }
+
 }
 const mapStateToProps = state => ({
     flex_goal_step1: state.flex_goal_step1
