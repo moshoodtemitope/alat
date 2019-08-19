@@ -19,7 +19,6 @@ class LoanScoreCard extends React.Component{
         this.props.history.push('/loans/salary/entry');
     }
 
-
     render(){
         return(<ScoreCard 
                 forwardUrl={'/loan/salary/card-result'}

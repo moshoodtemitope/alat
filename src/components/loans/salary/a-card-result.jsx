@@ -11,7 +11,7 @@ class LoanCardResult extends React.Component{
         super(props);
     }
      goForward=()=>{
-
+        this.props.history.push('/loans/salary/terms');
      }
 
      doneClick=()=>{
@@ -24,6 +24,7 @@ class LoanCardResult extends React.Component{
     render(){
         return(<ScoreResult 
             gotoPreviousPageMethod={this.goBackWard}
+            gotoNextPageMethod={this.goForward}
             doneClick={this.doneClick}
         />);
     }

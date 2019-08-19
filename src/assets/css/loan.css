@@ -149,3 +149,13 @@ max-width: 40%;
 .unset-pad {
   padding: unset !important;
 }
+
+.term-ctn{
+  display: flex;
+  justify-content: center;
+  padding-bottom: 35px;
+}
+
+.term-acpt-link{
+  margin-right: 30px;
+}

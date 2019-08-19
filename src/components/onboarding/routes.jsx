@@ -25,6 +25,7 @@ import LoanOnboardingSalaryEntry from './loans/salary-entry';
 import LoanOnboardingScoreCard from './loans/score-card';
 import LoanOnboardingScoreResult from './loans/card-result';
 import LoanOnboardingWorkDetail from './loans/work-detail';
+import LoanOnboardingTerms from './loans/terms';
 
 
 export const fakeAuth = {
@@ -91,6 +92,7 @@ class OnboardingRoute extends React.Component {
                 <Route path="/loan/salary-entry" component={LoanOnboardingSalaryEntry} />
                 <Route path="/loan/score-card" component={LoanOnboardingScoreCard} />
                 <Route path="/loan/card-result" component={LoanOnboardingScoreResult}/>
+                <Route path="/loan/terms" component={LoanOnboardingTerms} />
             </div>
         )
     }

@@ -5,7 +5,7 @@ import Select from 'react-select';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import * as actions from '../../../redux/actions/onboarding/loan.actions';
-import { loanOnboardingConstants } from '../../../redux/constants/onboarding/loan.constants';
+import { loanConstants } from '../../../redux/constants/loans/loans.constants';
 import * as util from '../../utils';
 
 class ScoreResult extends React.Component {
@@ -31,7 +31,7 @@ class ScoreResult extends React.Component {
 				var data = {
 					...this.props.score_card_A.loan_scoreA_data.data.response.Response
 				}
-				console.log(data);
+				//console.log(data);
 				this.setState({ loanDetails: data });
 			}
 	}
@@ -39,6 +39,23 @@ class ScoreResult extends React.Component {
 	doneClick = () => {
 		this.props.dispatch(actions.clearLoanOnboardingStore());
 		this.props.doneClick();
+	}
+	
+	declineClikc =()=>{
+		this.props.dispatch(actions.clearLoanOnboardingStore());
+		this.props.dispatch(actions.loanReject(this.state.user.token)); //What should be done after firing reject loan
+	}
+
+	declineAction =()=>{
+		if(this.props.loan_reject){
+			if(this.props.loan_reject.loan_reject_status == loanConstants.LOAN_REJECT_SUCCESS){
+				this.props.gotoPreviousPageMethod();
+			}
+		}
+	}
+
+	acceptClick = () =>{
+		this.props.gotoNextPageMethod();
 	}
 
 	returnScoreCardSuccessStatus = () => {
@@ -48,6 +65,7 @@ class ScoreResult extends React.Component {
 	}
 
 	render() {
+		
 		return (
 
 			<div className="col-sm-12">
@@ -66,7 +84,7 @@ class ScoreResult extends React.Component {
 									<br/>
 										<b>Loan Tenure: {this.state.loanDetails.LoanTenure} Months</b>
 										<br/>
-										<b>Monthly Repayment: : {this.state.loanDetails.MonthlyRepaymentAmount}</b>
+										<b>Monthly Repayment:  {this.state.loanDetails.MonthlyRepaymentAmount}</b>
 									</p>
 									<p>Click Accept to proceed</p></Fragment>}
 
@@ -77,11 +95,11 @@ class ScoreResult extends React.Component {
 					</div>
 					{this.returnScoreCardSuccessStatus() && <div className="row">
 						<div className="col-sm-6">
-							<input type="button" value="Accept"
+							<input type="button" value="Continue" onClick={this.acceptClick}
 								className="btn-alat  m-b-20 text-center" />
 						</div>
 						<div className="col-sm-6">
-							<input type="button" value="Decline"
+							<input type="button" value="Decline" onClick={this.declineClikc}
 								className="btn-alat  m-b-20 text-center btn-alat-outline grey" />
 						</div>
 					</div>}
@@ -106,13 +124,13 @@ class ScoreResult extends React.Component {
 function mapStateToProps(state) {
 	return {
 		alert: state.alert,
-
 		loan_reqStat: state.loanOnboardingReducerPile.loanOnboardingRequestStatement,
 		loan_genStat: state.loanOnboardingReducerPile.loanOnboardingGenerateStatement,
-		salary_trans: state.loanOnboardingReducerPile.loanOnboardingSalaryTransaction,
-		salary_entry: state.loanOnboardingReducerPile.loanSalaryEntryReducer,
+		
 		score_card_Q: state.loanOnboardingReducerPile.loanGetScoreCardQuestion,
 		score_card_A: state.loanOnboardingReducerPile.loanPostScoreCardAnswer,
+
+		loan_reject: state.loanOnboardingReducerPile.loanRejectReducer
 	}
 }
 
