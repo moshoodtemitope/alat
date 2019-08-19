@@ -5,7 +5,9 @@ import {Fragment} from "react";
 import { connect } from 'react-redux';
 import moment from 'moment';
 import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant';
-import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
+import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions';
+import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant'
+
  
 
 

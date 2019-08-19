@@ -6,8 +6,10 @@ import successLogo from '../../../assets/img/success.svg';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import Members from '../../savings/group/list-item';
 import { connect } from "react-redux";
+import * as actions from '../../../redux/actions/savings/goal/fixed-goal.actions'
+import  {fixedGoalConstants} from '../../../redux/constants/goal/fixed-goal.constant'
 
-class CreateStashSuccessMessage extends React.Component {
+class FixedSuccessMessage extends React.Component {
     constructor(props){
         super(props);
         this.state={
@@ -85,6 +87,11 @@ class CreateStashSuccessMessage extends React.Component {
                                 </div>
 
                             </div>
+                            <center>
+                                <button onClick={() => { this.props.dispatch(actions.ClearAction(fixedGoalConstants.FIXED_GOAL_REDUCER_CLEAR));
+                                    this.props.history.push('/savings/choose-goal-plan') }} className="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</button>
+                                {/* <Link to={'/dashboard'} className="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</Link> */}
+                            </center>
 
                         </div>
 
@@ -98,4 +105,4 @@ const mapStateToProps = state => ({
     create_stash_goal:state.create_stash_goal,
     create_stash_goal_step1:state.create_stash_step1
 });
-export default connect(mapStateToProps)(CreateStashSuccessMessage);
+export default connect(mapStateToProps)(FixedSuccessMessage);

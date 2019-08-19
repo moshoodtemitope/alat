@@ -155,19 +155,8 @@ class GoalPlan extends React.Component {
                 }
 
 
-                let achieved = 0;
-                let totalPercentage = 0;
-                let rounded = 0;
-                let classname = "progress-circle p";
-                for(let result of goals){
-                    totalPercentage += result.percentageCompleted;
-                    if(totalPercentage == 0){
-                        achieved = 0;
-                    }
-                }
-                achieved = totalPercentage/goals.length;
-                rounded = Math.round( achieved * 10 ) / 10 + "% completed";
-                classname = classname + achieved.toFixed();
+
+
                 return(
                     // user has goals
                         <div className="">
@@ -189,22 +178,22 @@ class GoalPlan extends React.Component {
                                             <ProgressBar
                                                 percentage={hist.percentageCompleted}
                                                 discBottom={"₦"+ this.toCurrency(hist.amountSaved)}
-                                                discSpan={ "of"+"₦"+hist.amountSaved}
+                                                discSpan={ "of" + "₦"+hist.amountSaved}
                                                 discBottomSib='Amount Saved'
-                                                discBottomRight={rounded}
+                                                discBottomRight={hist.percentageCompleted +"%"}
                                             />
                                         </div>
                                         <div className='row forDetailsComp'>
                                             <div className="col-xs-4">
-                                                <p className="upper">₦{hist.targetAmount}</p>
+                                                <p className="upper">₦{this.toCurrency(hist.targetAmount)}</p>
                                                 <p className="lower">Weekly Savings</p>
                                             </div>
                                             <div className="col-xs-4">
-                                                <p className="upper">₦{hist.interestEarned}</p>
+                                                <p className="upper">₦{this.toCurrency(hist.interestEarned)}</p>
                                                 <p className="lower">Interest Gained</p>
                                             </div>
                                             <div className="col-xs-4">
-                                                <p className="upper">₦{hist.interestAccrued}</p>
+                                                <p className="upper">₦{this.toCurrency(hist.interestAccrued)}</p>
                                                 <p className="lower">Interest Accrued</p>
                                             </div>
                                         </div>

@@ -220,21 +220,21 @@
 }
 
 .topCard .left .top {
-  color: #A90836;
-  width: 100%;
-  margin-bottom: 0px;
-  font-family: Proxima Nova;
-font-size: 8px;
-line-height: 10px;
-text-transform: uppercase;
-color: #A90836;
-padding-bottom: 5px;
-padding-top: 20px;
-font-weight: bold;
+      color: #A90836;
+      width: 100%;
+      margin-bottom: 0px;
+    font-family:'proxima_novasemibold';
+    font-size: 8px;
+    line-height: 10px;
+    text-transform: uppercase;
+    color: #A90836;
+    padding-bottom: 5px;
+    padding-top: 20px;
+    font-weight: bold;
 }
 
 .topCard .left .bottom {
-    font-family: Proxima Nova;
+    font-family: 'proxima_novasemibold';
 font-size: 12px;
 line-height: 14px;
 color: #4D4D4D;
@@ -270,6 +270,7 @@ font-weight: bold;
     display: flex;
     flex-wrap: nowrap;
     width: 100%;
+    font-family:'proxima_novasemibold';
 }
 
 .bottomDiscriptionDashBoard .left p {

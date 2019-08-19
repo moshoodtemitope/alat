@@ -52,6 +52,7 @@ import EditGroupSavings from './savings/group/edit-group-savings';
 import EditRotatingGroup from './savings/group/edit-rotating-savings-group';
 import DeleteGoal from './savings/goal/delete-goal';
 import EditGoal from './savings/goal/Edit-Goal'
+import FlexGoalStep2 from './savings/flex-goal-step2'
 
 
 
@@ -135,6 +136,9 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path='/group-savings/edit-rotating' authed={this.props.user} component={EditRotatingGroup} />
                     <PrivateRoute path='/savings/delete-goal' authed={this.props.user} component={DeleteGoal} />
                     <PrivateRoute path='/savings/edit-goal' authed={this.props.user} component={EditGoal} />
+                    <PrivateRoute path='/savings/flex-goal-step2' authed={this.props.user} component={FlexGoalStep2} />
+
+
 
 
 
