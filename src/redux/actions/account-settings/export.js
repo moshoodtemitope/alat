@@ -1,4 +1,5 @@
 export {
     changePassword,
-    resetPageState
+    resetPageState,
+    getSecurityQuestion
 } from './settings.action'

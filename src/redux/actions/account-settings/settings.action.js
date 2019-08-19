@@ -50,88 +50,27 @@ export const changePassword = (token, payload) => {
     }
 };
 
-
-///
-export const sendTransactionReceipt = (token, data) => {
+export const getSecurityQuestion = (token, payload) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.SEND_TRANSACTION_RECEIPT, "POST", data, SystemConstant.HEADER);
-        dispatch(isSendingReceipt());
-        return consume
-            .then(response => {
-                dispatch(success());
-                dispatchClearResponse(2);
-                // console.log("the receipt thing",response.data);
-            })
-            .catch(error => {
-                // dispatch(isSendingReceipt());
-                dispatch(alertActions.error(modelStateErrorHandler(error)));
-            });
-
-        function dispatchClearResponse(status) {
-            setTimeout(() => {
-                dispatch(clearResponse(status));
-            }, 3000);
-        };
-    };
-
-    function success() {
-        return {
-            type: actionTypes.SEND_RECEIPT_SUCCESS,
-        }
-    }
-
-};
-
-export const sendStatement = (token, data) => {
-    SystemConstant.HEADER['alat-token'] = token;
-    return (dispatch) => {
-        let consume = ApiService.request(routes.SEND_STATEMENT, "POST", data, SystemConstant.HEADER);
+        let consume = ApiService.request(routes.GET_RANDOM_SECURITY_QUESTION, "GET", payload, SystemConstant.HEADER);
         dispatch(isFetchingTrue());
         return consume
             .then(response => {
-                dispatch(sendStatementSuccess());
-                dispatch(alertActions.success(modelStateErrorHandler({ message: "Your request has been sent successfully" })));
-            })
-            .catch(error => {
-                dispatch(alertActions.error(modelStateErrorHandler(error)));
-            });
-    };
-
-    function success() {
-        return {
-            type: actionTypes.SEND_STATEMENT_SUCCESS,
-        }
-    }
-};
-
-
-export const sendTransactionLimit = (token, data) => {
-    SystemConstant.HEADER['alat-token'] = token;
-    return (dispatch) => {
-        dispatch(isFetchingTrue());
-        let consume = ApiService.request(routes.SET_TRANSACTION_LIMIT, "POST", data, SystemConstant.HEADER);
-        return consume
-            .then(response => {
+               console.log(response.data);
                 dispatch(success(response.data));
-                dispatchClearLimitInfo();
             })
             .catch(error => {
                 dispatch(isFetchingFalse());
-                console.log(error);
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
-
-        function dispatchClearLimitInfo() {
-            setTimeout(() => {
-                dispatch(clearLimitData());
-            }, 5000);
-        };
     };
 
-    function success() {
+    function success(data) {
         return {
-            type: actionTypes.SEND_TRANSACTION_LIMIT_SUCCESS,
+            type: actionTypes.GET_QUESTION_SUCCESS,
+            data: data
         }
     }
 };
+

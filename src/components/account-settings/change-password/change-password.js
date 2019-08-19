@@ -123,16 +123,16 @@ class ChangePassword extends Component {
             } else if (inputIdentifier == "newPassword") {
                 validation.required.newEmpty = false
                 if(updatedChangeForm.verifyNewPassword.touched){
-                    if (updatedFormElement.value != this.state.changeForm.newPassword.value) {
+                    if (updatedFormElement.value != this.state.changeForm.verifyNewPassword.value) {
                         validation.notSame = true;
                     } else validation.notSame = false;
                 }
                 if (!passwordPattern.test(updatedFormElement.value)) {
-                    format.invalidNew = true
+                    format.invalidNew = true;
                 } else format.invalidNew = false;
             } else if (inputIdentifier == "verifyNewPassword") {
-                updatedChangeForm.verifyNewPassword.touched = true;
-                validation.required.verifyEmpty = false
+                updatedFormElement.touched = true;
+                validation.required.verifyEmpty = false;
                 if (updatedFormElement.value != this.state.changeForm.newPassword.value) {
                     validation.notSame = true;
                 } else validation.notSame = false;
@@ -202,8 +202,8 @@ class ChangePassword extends Component {
                                     <h4 className="m-b-10 center-text hd-underline">Change Password</h4>
                                     <div className="transfer-ctn">
                                         <form>
-                                            <div class="no-pad text-center" style={{ padding: "0 10px 10px 10px" }}>
-                                                <p className="s-info">To make your password secure, make sure you use <b>at least 8 characters</b> which <b>must include letters, numbers & special characters.</b></p>
+                                            <div className="no-pad text-center" style={{ padding: "0 10px 10px 10px" }}>
+                                                <p className="s-info" style={{color : "#A6A6A6"}}>To make your password secure, make sure you use <b>at least 8 characters</b> which <b>must include letters, numbers & special characters.</b></p>
                                             </div>
                                             {(this.props.alert.message) ?
                                                 <div className="info-label error">{this.props.alert.message}</div> : null
@@ -235,11 +235,11 @@ class ChangePassword extends Component {
 
                                             })}
 
-                                            <div class="row">
-                                                <div class="col-sm-12">
+                                            <div className="row">
+                                                <div className="col-sm-12">
                                                     <center>
                                                         {validation.isSamePassword ? <p className="text-danger">Old and new password cannot be the same</p> : null}
-                                                        <button disabled={this.props.fetching} onClick={this.onSubmitForm} class="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Buy Data"}</button>
+                                                        <button disabled={this.props.fetching} onClick={this.onSubmitForm} className="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Change PIN"}</button>
                                                     </center>
                                                 </div>
                                             </div>
@@ -249,9 +249,6 @@ class ChangePassword extends Component {
 
                                 </div>
 
-                                {/* <center>
-                                    <button onClick={this.goBack} className="add-bene m-t-50 goback">Go Back</button>
-                                </center> */}
                             </div>
                         </div>
                     </div>

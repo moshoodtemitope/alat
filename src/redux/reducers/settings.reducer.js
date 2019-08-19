@@ -25,9 +25,11 @@ const reducer = (state = initialState, action) => {
         case actionTypes.IS_FETCHING_FALSE:
             return updateObject(state, { isFetching: false });
         case actionTypes.CHANGE_PIN_SUCCESS:
-            return updateObject(state, { page: 0 , isFetching: false});
+            return updateObject(state, { pageState: 0, isFetching: false });
+        case actionTypes.GET_QUESTION_SUCCESS:
+            return updateObject(state, { pageState: 0, isFetching: false });
         case actionTypes.RESET_PAGE_STATE:
-            return updateObject(state, { page: 2 });
+            return updateObject(state, { pageState: 2 });
         default: return state;
     }
 }

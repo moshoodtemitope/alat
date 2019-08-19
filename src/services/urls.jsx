@@ -108,5 +108,8 @@ export const routes = {
     LOAN_BANK_LIST: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GetBankList',
 
     //Settings
-    CHANGE_PASSWORD : BASEURL + '/AccountSetting/api/password/change'
+    CHANGE_PASSWORD : BASEURL + '/AccountSetting/api/password/change',
+    GET_RANDOM_SECURITY_QUESTION: BASEURL + '/AccountSetting/api/securityquestion/Random',
+    CHECK_ANSWER_WITHOUT_OTP: BASEURL + '/AccountSetting/api/securityquestion/validatewithoutotp',
+    CHANGE_PIN: BASEURL + '/AccountSetting/api/pin/change',
 };
