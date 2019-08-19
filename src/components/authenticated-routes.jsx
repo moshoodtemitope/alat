@@ -65,6 +65,7 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path='/cards' authed={this.props.user} component={CardsContainer}/>
                     <PrivateRoute path='/hotlist' authed={this.props.user} component={CardsContainer}/>
                     <PrivateRoute path='/setcard-pin' authed={this.props.user} component={CardsContainer}/>
+                    <PrivateRoute path='/cards-control' authed={this.props.user} component={CardsContainer}/>
                     <PrivateRoute path='/virtual-cards' authed={this.props.user} component={CardsContainer}/>
                 </Switch>
             </Router>

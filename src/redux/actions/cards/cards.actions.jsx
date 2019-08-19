@@ -46,6 +46,12 @@ import {
     ACTIVATE_ALATCARD_SUCCESS,
     ACTIVATE_ALATCARD_PENDING,
     ACTIVATE_ALATCARD_FAILURE,
+    GETALAT_CARDSETTINGS_SUCCESS,
+    GETALAT_CARDSETTINGS_PENDING,
+    GETALAT_CARDSETTINGS_FAILURE,
+    UPDATEALAT_CARDSETTINGS_SUCCESS,
+    UPDATEALAT_CARDSETTINGS_PENDING,
+    UPDATEALAT_CARDSETTINGS_FAILURE,
     ALATCARD_REDUCER_CLEAR
 } from "../../constants/cards/cards.constants";
 
@@ -660,6 +666,133 @@ export const activateALATCard = (payload,token)=>{
     function failure(error) { return {type:ACTIVATE_ALATCARD_FAILURE, error} }
 }
 
+export const getALATCardSettings = (token)=>{
+    SystemConstant.HEADER['alat-token'] = token;  
+
+    return (dispatch)=>{
+        let consume =  ApiService.request(routes.GET_PANS, "GET", null, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{
+                if(response.data.length>=1){
+                    let consume2 = ApiService.request(routes.GET_CARD_EXISTING_SETTINGS, "GET", SystemConstant.HEADER); 
+                    
+                    dispatch(request(consume2))
+                    return consume2
+                        .then(response2=>{
+                            let panNum = response.data[0].maskedPan.replace(/\*/g, '');
+                            let consume3 = ApiService.request(routes.GET_CARD_CONTROL_SETTINGS, "POST", {pan:panNum}, SystemConstant.HEADER); 
+        
+                            dispatch(request(consume3))
+                            return consume3
+                                .then(response3=>{
+                                    let bulkResponse={
+                                            panDetails              : response.data[0],
+                                            cardControlSettings     : response2.data,
+                                            otherCardControlDetails : response3.data
+                                    }
+                                    dispatch(success(bulkResponse));
+                                })
+                                .catch(error=>{
+                                    if(error.response && typeof(error.response.message) !=="undefined"){
+                                        dispatch(failure(error.response.message.toString()));
+                                    }
+                                    else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                                        if(error.response.data.Message){
+                                            dispatch(failure(error.response.data.Message.toString()));
+                                        }
+                    
+                                        if(error.response!==undefined && error.response.data.message){
+                                            dispatch(failure(error.response.data.message.toString()));
+                                        }
+                                    }
+                                    else{
+                                        dispatch(failure('An error occured. Please try again '));
+                                    }
+                                })
+                        })
+                        .catch(error=>{
+                            if(error.response && typeof(error.response.message) !=="undefined"){
+                                dispatch(failure(error.response.message.toString()));
+                            }
+                            else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                                if(error.response.data.Message){
+                                    dispatch(failure(error.response.data.Message.toString()));
+                                }
+            
+                                if(error.response!==undefined && error.response.data.message){
+                                    dispatch(failure(error.response.data.message.toString()));
+                                }
+                            }
+                            else{
+                                dispatch(failure('An error occured. Please try again '));
+                            }
+                        })
+                }
+                else{
+                    let bulkResponse={
+                        panDetails : null
+                    }
+                    dispatch(success(bulkResponse));
+                }
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+    
+    function request(request) { return { type:GETALAT_CARDSETTINGS_PENDING, request} }
+    function success(response) { return {type:GETALAT_CARDSETTINGS_SUCCESS, response} }
+    function failure(error) { return {type:GETALAT_CARDSETTINGS_FAILURE, error} }
+}
+
+export const updateALATCardSettings = (payload,token)=>{
+    SystemConstant.HEADER['alat-token'] = token;  
+
+    return (dispatch)=>{
+        let consume =  ApiService.request(routes.UPDATE_CARD_CONTROL, "POST", payload, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{
+                dispatch(success(response));
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+    
+    function request(request) { return { type:UPDATEALAT_CARDSETTINGS_PENDING, request} }
+    function success(response) { return {type:UPDATEALAT_CARDSETTINGS_SUCCESS, response} }
+    function failure(error) { return {type:UPDATEALAT_CARDSETTINGS_FAILURE, error} }
+}
 
 
 export const clearCardsStore =()=>{

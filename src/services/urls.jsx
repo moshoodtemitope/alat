@@ -80,7 +80,7 @@ export const routes = {
     GET_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getpans',
     ACTIVATE_CARD: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/activatecard',
     GET_ACTIVE_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getactivepans',
-    GET_CARD_STATES: BASEURL + '/CardMaintenanceApi/api/v1/CardControl/CustomerCardsFromCardControl',
+    GET_CARD_EXISTING_SETTINGS: BASEURL + '/CardMaintenanceApi/api/v1/CardControl/CustomerCardsFromCardControl',
     GETCARDDESIGN: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/GetJson',
     HOTLIST_CARD: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/hotlistcard',
     GETCUSTOMERINFO: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/GetAllCustomerInfo',

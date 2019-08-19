@@ -42,6 +42,7 @@ class TransactionHistory extends React.Component {
             emptyDate: false,
             startDateInNumbers:'',
             endDateInNumbers:'',
+            invalidInterval: false,
             showError:false,
             errorToshow:'',
             searchterm:''
@@ -126,6 +127,14 @@ class TransactionHistory extends React.Component {
             if(searchterm!==''){
                 queryString +='&keyword='+searchterm;
             }
+
+            if (Date.parse(this.state.startDate) > Date.parse(this.state.endDate)) {
+                this.setState({ invalidInterval: true});
+                return;
+            }else{
+                this.setState({ invalidInterval: false});
+            }
+
             dispatch(getCurrentVirtualCardHistory(queryString, this.state.user.token))
         }else{
             this.setState({showError: true, errorToshow:'Start and end dates required'});

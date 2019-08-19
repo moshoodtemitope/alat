@@ -215,6 +215,40 @@
 .return-text a.btn-alat {
     color: #fff!important;
 }
+.setting-title {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.css-15k3avv{
+    z-index: 1;
+}
+.lockwrap{
+    z-index: -1;
+}
+.setting-wrap{
+    margin: 30px 0;
+    .blocklevel{
+        display: flex;
+        justify-content: space-around;
+        .settings-control span{
+            position: relative;
+            left: -10px;
+            display: block;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+    }
+    .settings-control.inlinelevel{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        span{
+            display: block;
+            font-weight: 600;
+            font-size: 13px;
+        }
+    }
+}
 .atmpin{
     input{
         letter-spacing: 11.5px;

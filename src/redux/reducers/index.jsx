@@ -124,6 +124,8 @@ const alatCardsReducer = combineReducers({
     randomQuestionRequest: alatCards.randomQuestionRequest,
     answerRandomQuestionRequest: alatCards.answerRandomQuestionRequest,
     activateALATCardRequest: alatCards.activateALATCardRequest,
+    loadALATCardSettingsRequest: alatCards.loadALATCardSettingsRequest,
+    updateALATCardSettingsRequest: alatCards.updateALATCardSettingsRequest,
 })
 
 const appReducer = combineReducers({

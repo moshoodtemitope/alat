@@ -41,6 +41,12 @@ import {
     ACTIVATE_ALATCARD_SUCCESS,
     ACTIVATE_ALATCARD_PENDING,
     ACTIVATE_ALATCARD_FAILURE,
+    GETALAT_CARDSETTINGS_SUCCESS,
+    GETALAT_CARDSETTINGS_PENDING,
+    GETALAT_CARDSETTINGS_FAILURE,
+    UPDATEALAT_CARDSETTINGS_SUCCESS,
+    UPDATEALAT_CARDSETTINGS_PENDING,
+    UPDATEALAT_CARDSETTINGS_FAILURE
 } from "../constants/cards/cards.constants";
 
 //VIRTUAL CARD REDUCERS
@@ -401,6 +407,58 @@ export function activateALATCardRequest(state=[], action){
                 is_processing: false,
                 fetch_status: ACTIVATE_ALATCARD_FAILURE,
                 activatedcard_info: action
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+export function loadALATCardSettingsRequest(state=[], action){
+    switch (action.type) {
+        case GETALAT_CARDSETTINGS_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: GETALAT_CARDSETTINGS_PENDING,
+                alatcardsettings_info: action
+            };
+        case GETALAT_CARDSETTINGS_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: GETALAT_CARDSETTINGS_SUCCESS,
+                alatcardsettings_info: action
+            };
+        case GETALAT_CARDSETTINGS_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: GETALAT_CARDSETTINGS_FAILURE,
+                alatcardsettings_info: action
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+export function updateALATCardSettingsRequest(state=[], action){
+    switch (action.type) {
+        case UPDATEALAT_CARDSETTINGS_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: UPDATEALAT_CARDSETTINGS_PENDING,
+                updatealatcard_info: action
+            };
+        case UPDATEALAT_CARDSETTINGS_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: UPDATEALAT_CARDSETTINGS_SUCCESS,
+                updatealatcard_info: action
+            };
+        case UPDATEALAT_CARDSETTINGS_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: UPDATEALAT_CARDSETTINGS_FAILURE,
+                updatealatcard_info: action
             };
 
         default:

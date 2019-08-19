@@ -129,7 +129,7 @@ class LiquidateCard extends React.Component {
                         You just liquidated your ALAT dollar card 
                     </div>
                 </div>
-                <div class="return-text"><a onClick={(e)=>{e.preventDefault();
+                <div className="return-text"><a onClick={(e)=>{e.preventDefault();
                                                                 this.props.dispatch(clearCardsStore()); 
                                                                 this.props.history.push("/dashboard");
                                                         }}> Return to dashboard</a>
