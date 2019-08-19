@@ -175,6 +175,7 @@ const appReducer = combineReducers({
     getGroupSavingsEsusu: rotatingSavings.GetGroupsEsusu,
     editGroupEsusu: rotatingSavings.editGroupEsusu,
     deleteGroupEsusu: rotatingSavings.deleteGroupEsusu,
+    joinGroupEsusu: rotatingSavings.joinGroupEsusu
     // pauseGroupEsusu: rotatingSavings.pauseGroupEsusu
 });
 

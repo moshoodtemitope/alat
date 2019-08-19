@@ -67,12 +67,17 @@
 }
 
 .compContainer {
-    width: 32%;
+    width: 100% !important;
     background-color: transparent;
-    /*padding-top: 20px;*/
-    /*padding-bottom: 20px;*/
-    display: flex;
-    flex-wrap: wrap;
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
+
+.compContainer2 {
+    width: 100% !important;
+    background-color: transparent;
+    display: flex !important;
+    flex-wrap: wrap !important;
 }
 
 
@@ -108,40 +113,58 @@
     padding-right: 15px;
 }
 
+.accountSelect {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
 .smallnavtop {
     width: 86% !important;
     position: absolute;
     top: 238px;
+    z-index: 0;
+    left: 50%;
 }
 
 .smallnavtop  ul {
-    width: 100% !important;
-    /* background-color: black; */
-    float: right;
+    /* width: 100% !important; */
+    float: right !important;
 }
 
 .smallnavtop ul li {
     display: inline-block;
-    width: 25%;
     padding-top: 15px;
     padding-bottom: 15px;
-    /* color: white; */
     text-align: center;
-    /* background-color: #A90836; */
-
     font-family: Proxima Nova;
     font-size: 16px;
     line-height: 19px;
-    text-align: center;
     color: #FFFFFF;
-
     background-color: #AB2656;
     border-radius: 3px;
     float: right;
 }
 
+#upDateButton {
+    padding: 10px 70px;
+    background: #AB2656;
+    border-radius: 3px;
+    color: white;
+    font-family: Proxima Nova;
+    margin-bottom: 40px;
+}
+
+.smallnavtop ul #second{
+    padding-left: 80px !important;
+    padding-right: 80px !important;
+}
+
+.smallnavtop ul #first {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
 #parentGoal {
-    /* color: black; */
     color: #666666;
 }
 .smallnavtop ul li:first-child {
@@ -160,6 +183,16 @@
     position: relative;
 }
 
+.compContainer2 .eachComp2 {
+    width: 330px;
+    height: 230px;
+    border-radius: 2%;
+    background-color: white;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
 .compContainer .eachComp .upper {
     font-family: Proxima Nova;
     font-size: 14px;
@@ -169,7 +202,24 @@
     margin-bottom: 5px;
 }
 
+.compContainer2 .eachComp2 .upper {
+    font-family: Proxima Nova;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0.168px;
+    color: #4D4D4D;
+    margin-bottom: 5px;
+}
+
 .compContainer .eachComp .lower {
+    font-family: Proxima Nova;
+    font-size: 10.4px;
+    line-height: 12px;
+    letter-spacing: 0.1248px;
+}
+
+
+.compContainer2 .eachComp2 .lower {
     font-family: Proxima Nova;
     font-size: 10.4px;
     line-height: 12px;
@@ -193,18 +243,6 @@
     text-align: center;
     margin-top: 30px;
 }
-
-/* .bottomDiscription {
-    display: flex;
-    flex-wrap: nowrap;
-    position: absolute;
-    width: 100%;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding-left: 15px;
-    padding-right: 15px;
-    top: 180px;
-} */
 
 .topCard {
     display: flex;

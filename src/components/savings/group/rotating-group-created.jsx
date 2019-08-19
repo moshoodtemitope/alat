@@ -13,6 +13,9 @@ import * as actions from '../../../redux/actions/savings/group-savings/rotating-
 import {history} from '../../../_helpers/history';
 import * as actions1 from '../../../redux/actions/savings/group-savings/group-savings-actions';
 
+if(window.performance.navigation.type == 1)
+    window.location.replace("http://localhost:8080/");
+    
 class RotatingGroupCreated extends React.Component {
     constructor(props){
         super(props)

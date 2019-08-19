@@ -11,8 +11,9 @@ import { connect } from "react-redux";
 import {getCustomerGoalTransHistory, GoalType, GoalFormula} from '../../../redux/actions/savings/goal/get-customer-transaction-history.actions'
 import moment from 'moment';
 import ProgressBar from '../../savings/group/progress-bar';
-
-
+import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
+import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
+import {history} from '../../../_helpers/history';
 
 class GoalPlan extends React.Component {
     constructor(props){
@@ -25,6 +26,29 @@ class GoalPlan extends React.Component {
         this.fetchCustomerTransHistoryGoals();
         this.fetchGoalType();
         this.fetchGoalFormular();
+    }
+
+    componentDidMount = () => {
+        this.CheckGroupSavingsAvailability();
+        this.CheckRotatingSavingsAvailability();
+    }
+
+    CheckRotatingSavingsAvailability = () => {
+        this.props.dispatch(actions1.GetGroupsEsusu(this.state.user.token, null));
+    }
+
+    CheckGroupSavingsAvailability = () => {
+        this.props.dispatch(actions.customerGroup(this.state.user.token, null));
+    }
+
+    NavigateToGroupSavings = () => {
+        let groupSavings = Object.keys(this.props.groups); //returns an array
+        let rotatingSavings = Object.keys(this.props.groupSavingsEsusu); //returns an array
+        if(groupSavings.length != 0 || rotatingSavings.length != 0){
+            history.push('/savings/activityDashBoard');
+            return;
+        }
+        history.push('/savings/goal/group-savings-selection');
     }
 
     fetchCustomerTransHistoryGoals(){
@@ -128,7 +152,6 @@ class GoalPlan extends React.Component {
                     );
                 }
 
-
                 let achieved = 0;
                 let totalPercentage = 0;
                 let rounded = 0;
@@ -146,10 +169,9 @@ class GoalPlan extends React.Component {
                     // user has goals
                         <div className="">
                         <div className="row">
+                        <div className="compContainer2">
                             {goals.map((hist, key)=> (
-
-                                <div className="compContainer">
-                                    <div className="eachComp ">
+                                    <div className="eachComp2">
                                         <div className='topCard'>
                                             <div className="left" key={key}>
                                                 <p className='top' >{hist.goalTypeName}</p>
@@ -187,7 +209,6 @@ class GoalPlan extends React.Component {
                                                 <div className="innerLeft">
                                                     <p><span id="dot">.</span> <span id='message'>Next Payment</span> <span id="date">{moment(hist.nextstandingDate).format('L')}</span></p>
                                                 </div>
-
                                             </div>
                                             <div className="right">
                                                 <Link to={{
@@ -196,15 +217,15 @@ class GoalPlan extends React.Component {
                                                         name:hist
                                                     }
                                                 } }>
-                                                    <span>View Details</span>
+                                                <span>View Details</span>
                                                 </Link>
 
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                                 )
                             )}
+                            </div>
                         </div>
 
                     </div>
@@ -271,9 +292,9 @@ class GoalPlan extends React.Component {
                                 <div className="sub-tab-nav">
                                     <ul>
                                         <li><a onClick={() => this.setState({visible: true})} href="#" className="active">Goals</a></li>
-                                        <NavLink to='/savings/goal/group-savings-selection'>
-                                            <li><a className="forGroupLink">Group Savings</a></li>
-                                        </NavLink>
+                                        {/* <NavLink to='/savings/goal/group-savings-selection'> */}
+                                            <li onClick={this.NavigateToGroupSavings}><a className="forGroupLink">Group Savings</a></li>
+                                        {/* </NavLink> */}
                                         <NavLink to="/savings/fixed-goal">
                                             <li><a href="#">Investments</a></li>
                                         </NavLink>
@@ -298,6 +319,8 @@ class GoalPlan extends React.Component {
 }
 const mapStateToProps = state => ({
     customerGoalTransHistory:state.customerGoalTransHistory,
+    groupSavingsEsusu: state.getGroupSavingsEsusu.data,
+    groups: state.customerGroup.data
 });
 
 export default connect (mapStateToProps)(GoalPlan);

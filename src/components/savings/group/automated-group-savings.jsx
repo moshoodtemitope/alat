@@ -18,6 +18,9 @@ const selectedTime = [
     {  value: 'Monthly' , label:"Monthly" }
 ];
 
+if(window.performance.navigation.type == 1)
+    window.location.replace("http://localhost:8080/");
+
 class AutomateGroupSavings extends React.Component {
     constructor(props){
         super(props);
@@ -286,17 +289,14 @@ class AutomateGroupSavings extends React.Component {
                                                         <input type="text" className="form-control"  placeholder="E.g. ₦100,000" onChange={this.handleSetAmount}/>
                                                     </div>
                                                 </div>
-                                                
-                                                <div className="form-row">
-                                                    <div className='form-group'>
-                                                                    <SelectDebitableAccounts
-                                                                        accountInvalid={this.state.isAccountInvalid}
-                                                                        onChange={this.handleSelectDebitableAccounts}
-                                                                        labelText="Select Account to debit" 
-                                                                        options={selectedAccount}/>
-                                                    </div>
+                                                   
+                                                <div className="accountSelect">
+                                                        <SelectDebitableAccounts
+                                                                                accountInvalid={this.state.isAccountInvalid}
+                                                                                onChange={this.handleSelectDebitableAccounts}
+                                                                                labelText="Select Account to debit" 
+                                                                                options={selectedAccount}/>
                                                 </div>
-                                                
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <center>

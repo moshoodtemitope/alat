@@ -14,6 +14,13 @@ import ProgressBar from './progress-bar';
 // import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
 import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 
+if(window.performance.navigation.type == 1){
+    window.location.replace("http://localhost:8080/");
+}
+     
+if(window.performance.navigation.type == 1)
+    window.location.replace("http://localhost:8080/");
+    
 class ParentDashBoard extends React.Component {
     constructor(props){
         super(props);
@@ -137,7 +144,6 @@ class ParentDashBoard extends React.Component {
                                         {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                             <li><a className="active">Group Savings</a></li>
                                         {/* </NavLink> */}
-                                            
                                         <li><a>Investments</a></li>
 
                                         </ul>
@@ -151,50 +157,19 @@ class ParentDashBoard extends React.Component {
                                           <div className="row smallnavtop">
                                                     <ul>
                                                         <NavLink to='/savings/group/save-towards-a-target'>
-                                                             <li>Create A Group Savings Goal</li>
+                                                             <li id='first'>Create A Group Savings Goal</li>
                                                         </NavLink>
                                                         <NavLink to='/savings/group/join-a-group'>
-                                                             <li>Join A Group</li>
+                                                             <li id='second'>Join A Group</li>
                                                         </NavLink>
                                                         
                                                         
                                                     </ul>  
                                           </div>
                                           <h4 className="m-b-10 center-text hd-underline">Automate Group Savings</h4>
-
                                           <div className="compContainer">
                                                {this.GetRotatingGroup()}
                                                {this.GetGroups()}
-                                               {/* <div className="eachComp">
-                                                    <div className='topCard'>
-                                                            <div className="left">
-                                                                <p className='top'>FIXED GOAL</p>
-                                                                <p className='bottom'>New MacBook Pro</p>
-                                                            </div>
-                                                            <div className="right">
-                                                                <i></i>
-                                                            </div>
-                                                    </div>
-                                                   <div id="progressBarDashBoard">
-                                                      <ProgressBar 
-                                                      percentage="50" 
-                                                      discBottom='N20,000'
-                                                      discSpan='N200,000'
-                                                      discBottomSib='Amount Saved'
-                                                      discBottomRight='45% completed'
-                                                      />
-                                                   </div>
-                                                   <div className='bottomDisCriptionTray'>
-                                                       <div className='left'>
-                                                           <p>20</p>
-                                                           <p>Members</p>
-                                                       </div>
-                                                       <div className='right'>
-                                                           <p>View Details</p>
-                                                       </div>
-                                                   </div>
-                                               </div>
-                                             */}
                                             </div>
                                           </div>
                                     </div>

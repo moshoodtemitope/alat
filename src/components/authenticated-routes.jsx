@@ -48,7 +48,8 @@ import TopUpGoal from './savings/goal/Top-up-goal';
 import TopUpGoalSummary from './savings/goal/Top-up-goal-summary';
 import TopUpGoalSuccess from './savings/goal/top-up-goal-success';
 import FixedGoalSuccess from './savings/goal/Fixed-goal-success'
-
+import MemberSlots from './savings/group/members-slot';
+// import Login from './onboarding/login/index';
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
     return (
@@ -127,8 +128,8 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path='/savings/top-up-goal-step1' authed={this.props.user} component={TopUpGoal} />
                     <PrivateRoute path='/savings/top-up-goal-summary' authed={this.props.user} component={TopUpGoalSummary} />
                     <PrivateRoute path='/savings/top-up-goal-success' authed={this.props.user} component={TopUpGoalSuccess} />
-
-                    {/* <PrivateRoute path='/group-savings/edit-members-slots' authed={this.props.user} component={MemberSlots} /> */}
+                    <PrivateRoute path='/' authed={this.props.user} component={Login} />
+                    <PrivateRoute path='/group-savings/edit-members-slots' authed={this.props.user} component={MemberSlots} />
                 </Switch>
             </Router>
         )

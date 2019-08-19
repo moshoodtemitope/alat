@@ -19,6 +19,9 @@ import MoreDetails from './details';
 import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
 import history from '../../../_helpers/history';
 
+if(window.performance.navigation.type == 1)
+    window.location.replace("http://localhost:8080/");
+    
 class GroupAnalytics extends React.Component {
     constructor(props){
         super(props);

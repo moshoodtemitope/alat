@@ -12,6 +12,9 @@ import { connect } from "react-redux";
 import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import {history} from '../../../_helpers/history';
 
+if(window.performance.navigation.type == 1)
+    window.location.replace("http://localhost:8080/");
+    
 class JoinAGroup extends React.Component {
     constructor(props){
         super(props)
