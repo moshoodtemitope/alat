@@ -14,7 +14,7 @@ class LoanRemitaMandateSetUp extends React.Component{
     }
 
     confirmClick =()=>{
-        this.props.dispatch(actions.loanMandateStatus(this.state.user.token));
+        this.props.dispatch(LoanActions.loanMandateStatus(this.state.user.token));
     }
 
     checkKycStatus=()=>{

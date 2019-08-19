@@ -1,9 +1,9 @@
-
 import React, { Fragment } from 'react';
 
 import Select from 'react-select';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
+import * as LoanActions from '../../../redux/actions/loans/loans.action';
 import * as actions from '../../../redux/actions/onboarding/loan.actions';
 import { loanConstants } from '../../../redux/constants/loans/loans.constants';
 import * as util from '../../utils';
@@ -24,7 +24,7 @@ class ScoreResult extends React.Component {
 	init = () => {
 		//I made the call on the previous page, checking here to see the call is not busy
 		if (this.props.score_card_A.loan_scoreA_data)  //loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS
-			if (this.props.score_card_A.loan_scoreA_status != loanOnboardingConstants.LOAN_SCORECARD_ANSWER_PENDING) {
+			if (this.props.score_card_A.loan_scoreA_status != loanConstants.LOAN_SCORECARD_ANSWER_PENDING) {
 				//this.props.gotoPreviousPageMethod();// this.props.history.push("/loan/card-result");
 				// this.props.history.push(this.props.backwardUrl);
 
@@ -43,7 +43,7 @@ class ScoreResult extends React.Component {
 	
 	declineClikc =()=>{
 		this.props.dispatch(actions.clearLoanOnboardingStore());
-		this.props.dispatch(actions.loanReject(this.state.user.token)); //What should be done after firing reject loan
+		this.props.dispatch(LoanActions.loanReject(this.state.user.token)); //What should be done after firing reject loan
 	}
 
 	declineAction =()=>{
@@ -59,7 +59,7 @@ class ScoreResult extends React.Component {
 	}
 
 	returnScoreCardSuccessStatus = () => {
-		if (this.props.score_card_A.loan_scoreA_status == loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS)
+		if (this.props.score_card_A.loan_scoreA_status == loanConstants.LOAN_SCORECARD_ANSWER_SUCCESS)
 			return true;
 		else return false;
 	}
