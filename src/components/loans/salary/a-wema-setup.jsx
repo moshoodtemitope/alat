@@ -41,7 +41,7 @@ class WemaCollectionSetup extends React.Component {
 
 function mapStateToProps(state) {
     return {
-
+        standing_order: state.loanOnboardingReducerPile.loanStandingOrder,
     }
 }
 

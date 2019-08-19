@@ -15,6 +15,7 @@ class LoanCardResult extends React.Component{
      }
 
      doneClick=()=>{
+        this.props.dispatch(OnbaordingActions.clearLoanOnboardingStore());
         this.props.history.push('/loans');
      }
 
