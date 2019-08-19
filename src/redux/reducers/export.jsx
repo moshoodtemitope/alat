@@ -29,6 +29,23 @@ import { fundAccountReducer, getTokenizedCardsReducer,
 import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingVerifyBVNReducer,
      loanOnboardingStep3Reducer, loanOnboardingValidateOTPReducer} from './loan-onboarding.reducer';
 
+import { geCurrentVirtualCardsRequest,
+         sendVCNewCardinfo,
+         sendTopVCCardinfo,
+         getAVirtualCardinfo,
+         liquidateCard,
+         deleteVirtualCard,
+         getVirtualCardHistoryRequest,
+         changeCardStatus,
+         getAtmCardRequest,
+         getAtmCardHotlistReasonsRequest,
+         atmCardHotlistRequest,
+         randomQuestionRequest,
+         answerRandomQuestionRequest,
+         activateALATCardRequest,
+         loadALATCardSettingsRequest,
+         updateALATCardSettingsRequest} from './alatcards.reducer'
+
 export const onboarding = {
     userRegistrationRequest,
     bvnDetailsReducer,
@@ -92,4 +109,23 @@ export const fundAccount={
     //fundFromTokenisedCardReducer,
     //fundFromCardWithPinReducer
     saveCardAfterTranReducer
+}
+
+export const alatCards={
+    geCurrentVirtualCardsRequest,
+    sendVCNewCardinfo,
+    sendTopVCCardinfo,
+    getAVirtualCardinfo,
+    liquidateCard,
+    deleteVirtualCard,
+    getVirtualCardHistoryRequest,
+    changeCardStatus,
+    getAtmCardRequest,
+    getAtmCardHotlistReasonsRequest,
+    atmCardHotlistRequest,
+    randomQuestionRequest,
+    answerRandomQuestionRequest,
+    activateALATCardRequest,
+    loadALATCardSettingsRequest,
+    updateALATCardSettingsRequest
 }
