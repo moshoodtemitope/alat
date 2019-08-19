@@ -172,3 +172,12 @@
   .dsh-right{
       width : 60%;
   }
+
+  .term-ctn{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 35px;
+  }
+  .term-acpt-link{
+    margin-right: 30px;
+  }

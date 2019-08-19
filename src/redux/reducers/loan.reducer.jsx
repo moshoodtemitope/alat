@@ -194,3 +194,99 @@ export function WorkIdBackReducer(state = {}, action) {
             };
     }
 }
+
+export function loanRejectReducer(state = {}, action) {
+    switch (action.type) {
+        case loanConstants.LOAN_REJECT_SUCCESS:
+            return {
+                loan_reject_status: loanConstants.LOAN_REJECT_SUCCESS,
+                loan_reject_data: action
+            };
+        case loanConstants.LOAN_REJECT_PENDING:
+            return {
+                loan_reject_status: loanConstants.LOAN_REJECT_PENDING,
+                loan_reject_data: action
+            };
+        case loanConstants.LOAN_REJECT_FAILURE:
+            return {
+                loan_reject_status: loanConstants.LOAN_REJECT_FAILURE,
+                loan_reject_data: action
+            };
+        default:
+            return{
+                ...state,
+            };
+    }
+}
+
+export function loanStandingOrderReducer(state = {}, action) {
+    switch (action.type) {
+        case loanConstants.LOAN_STAND_ORDER_SUCCESS:
+            return {
+                loan_standOrder_status: loanConstants.LOAN_STAND_ORDER_SUCCESS,
+                loan_standOrder_data: action
+            };
+        case loanConstants.LOAN_STAND_ORDER_PENDING:
+            return {
+                loan_standOrder_status: loanConstants.LOAN_STAND_ORDER_PENDING,
+                loan_standOrder_data: action
+            };
+        case loanConstants.LOAN_STAND_ORDER_FAILURE:
+            return {
+                loan_standOrder_status: loanConstants.LOAN_STAND_ORDER_FAILURE,
+                loan_standOrder_data: action
+            };
+        default:
+            return{
+                ...state,
+            };
+    }
+}
+
+export function loanMandateStatusReducer(state = {}, action) {
+    switch (action.type) {
+        case loanConstants.LOAN_MANDATE_STATUS_SUCCESS:
+            return {
+                loan_mandate_status: loanConstants.LOAN_MANDATE_STATUS_SUCCESS,
+                loan_mandate_data: action
+            };
+        case loanConstants.LOAN_MANDATE_STATUS_PENDING:
+            return {
+                loan_mandate_status: loanConstants.LOAN_MANDATE_STATUS_PENDING,
+                loan_mandate_data: action
+            };
+        case loanConstants.LOAN_MANDATE_STATUS_FAILURE:
+            return {
+                loan_mandate_status: loanConstants.LOAN_MANDATE_STATUS_FAILURE,
+                loan_mandate_data: action
+            };
+        default:
+            return{
+                ...state,
+            };
+    }
+}
+
+export function loanValidateRemitaOtpReducer(state = {}, action) {
+    switch (action.type) {
+        case loanConstants.LOAN_VALIDATEOTP_SUCCESS:
+            return {
+                loan_valotp_status: loanConstants.LOAN_VALIDATEOTP_SUCCESS,
+                lo_valotp_data: action
+            };
+        case loanConstants.LOAN_VALIDATEOTP_PENDING:
+            return {
+                loan_valotp_status: loanConstants.LOAN_VALIDATEOTP_PENDING,
+                lo_valotp_data: action
+            };
+        case loanConstants.LOAN_VALIDATEOTP_FAILURE:
+            return {
+                loan_valotp_status: loanConstants.LOAN_VALIDATEOTP_FAILURE,
+                lo_valotp_data: action
+            };
+        default:
+            return{
+                ...state,
+            };
+    }
+}

@@ -120,6 +120,10 @@ const loansReducer = combineReducers({
     loanHistory: loans.LoanHistoryReducer,
     loanFrontId: loans.WorkIdFrontReducer,
     loanBackId: loans.WorkIdBackReducer,
+    loanReject: loans.loanRejectReducer,
+    loanStandingOrder: loans.loanStandingOrderReducer,
+    loanMandate: loans.loanMandateStatusReducer,
+    loanValRemOtp: loans.loanValidateRemitaOtpReducer
 })
 
 const appReducer = combineReducers({

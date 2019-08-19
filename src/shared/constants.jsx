@@ -46,3 +46,9 @@ export const NetworkName = {
     '3': 'airtel',
     '4': 'etisalat'
 };
+
+export const CollectionScreenOption = {
+    WemaAccountSetup : 0,
+    RemitaOtpSetup : 1,
+    RemitaBankSetup: 2
+}
