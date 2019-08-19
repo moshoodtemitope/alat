@@ -10,7 +10,7 @@ import Modal from 'react-responsive-modal';
 import {Textbox} from "react-inputs-validation";
 import "./../cards.scss";
 import whitelogo from "../../../assets/img/white-logo.svg"; 
-import successIcon from "../../../assets/img/success-tick";
+import successIcon from "../../../assets/img/success-tick.svg";
 import {
     getCurrentVirtualCard,
     deleteAlatVirtualCard,

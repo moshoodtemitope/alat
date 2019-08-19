@@ -10,7 +10,7 @@ import {
 import {Fragment} from "react";
 import {connect} from "react-redux";
 import { Link } from 'react-router-dom';
-import successIcon from "../../../assets/img/success-tick";
+import successIcon from "../../../assets/img/success-tick.svg";
 import Select from 'react-select';
 import Modal from 'react-responsive-modal';
 import {Textbox} from "react-inputs-validation";

@@ -170,8 +170,8 @@ class VirtualCardsOtp extends React.Component{
                                                 <div className="error-msg">{topupOtpRequestStatus.topup_vc_info.error}</div>
                                             }
 
-                                            {(newCardotpRequestStatus.new_vc_info!==undefined && otpRequestStatus.is_fetching===false && otpRequestStatus.fetch_status===SEND_NEWVC_DATA_FAILURE)&&
-                                                <div className="error-msg">{otpRequestStatus.new_vc_info.error}</div>
+                                            {(newCardotpRequestStatus.new_vc_info!==undefined && newCardotpRequestStatus.is_fetching===false && newCardotpRequestStatus.fetch_status===SEND_NEWVC_DATA_FAILURE)&&
+                                                <div className="error-msg">{newCardotpRequestStatus.new_vc_info.error}</div>
                                             }
                                                 
                                             <div className="row">
@@ -220,13 +220,13 @@ class VirtualCardsOtp extends React.Component{
                                                                 disabled={(topupOtpRequestStatus.topup_vc_info!==undefined && newCardotpRequestStatus.new_vc_info===undefined) // If OTP is being verified for  existing Virtual Card Top UP
                                                                                 ? topupOtpRequestStatus.is_processing:
                                                                                 (newCardotpRequestStatus.new_vc_info!==undefined && topupOtpRequestStatus.topup_vc_info===undefined) // If OTP is being verified for new Virtual Card
-                                                                                    ? otpRequestStatus.is_fetching: true
+                                                                                    ? newCardotpRequestStatus.is_fetching: true
                                                                 }
                                                                 className="btn-alat m-t-10 m-b-20 text-center">
                                                                     {((topupOtpRequestStatus.topup_vc_info!==undefined 
                                                                         && topupOtpRequestStatus.is_processing===true) ||
                                                                             (newCardotpRequestStatus.new_vc_info!==undefined 
-                                                                            &&  otpRequestStatus.is_fetching ===true)
+                                                                            &&  newCardotpRequestStatus.is_fetching ===true)
                                                                     )?'Processing':'Confirm'
                                                                         
                                                                     }
