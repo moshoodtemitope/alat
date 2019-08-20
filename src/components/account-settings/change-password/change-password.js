@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Input } from '../../airtime-bills/data/input';
-import Success from '../success';
+import Success from '../shared/success';
 import { alertActions } from "../../../redux/actions/alert.actions";
 import * as settingsActions from "../../../redux/actions/account-settings/export"
 
@@ -232,18 +232,16 @@ class ChangePassword extends Component {
                                                         {formElement.id == "verifyNewPassword" && validation.notSame ? <span className="text-danger">Password doesn't match</span> : formElement.id == "verifyNewPassword" && validation.required.verifyEmpty ? <span className="text-danger">Field is required</span> : null}
                                                     </div>
                                                 )
-
                                             })}
 
                                             <div className="row">
                                                 <div className="col-sm-12">
                                                     <center>
                                                         {validation.isSamePassword ? <p className="text-danger">Old and new password cannot be the same</p> : null}
-                                                        <button disabled={this.props.fetching} onClick={this.onSubmitForm} className="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Change PIN"}</button>
+                                                        <button disabled={this.props.fetching} onClick={this.onSubmitForm} className="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Change Password"}</button>
                                                     </center>
                                                 </div>
                                             </div>
-
                                         </form>
                                     </div>
 
@@ -257,7 +255,7 @@ class ChangePassword extends Component {
         );
         if (this.props.pageState == 0) {
             form = <Success
-                message="PIN changed Successfully"
+                message="Password changed Successfully"
                 homeUrl="/settings/change-password"
                 isActionButton={true}
                 clicked={this.goHome}
