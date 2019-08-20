@@ -1,55 +1,63 @@
 
 import React, { Fragment } from 'react';
 
-import Select from 'react-select';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import * as actions from '../../../redux/actions/onboarding/loan.actions';
 import { loanOnboardingConstants } from '../../../redux/constants/onboarding/loan.constants';
 import LoanOnboardingContainer from './loanOnboarding-container';
 import * as util from '../../../shared/utils';
+import ScoreResult from '../../../shared/components/loans/_card-result';
+
 
 class LoanOnboardingScoreResult extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			user: JSON.stringify(localStorage.getItem("user")),
-			loanDetails:{}
+			loanDetails: {}
 		}
 	}
 
 	componentDidMount = () => {
-		this.init();
+		//this.init();
 	}
 
-	init = () => {
-		//console.log(this.props);
-		if (this.props.score_card_A.loan_scoreA_data)  //loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS
-			if (this.props.score_card_A.loan_scoreA_status != loanOnboardingConstants.LOAN_SCORECARD_ANSWER_PENDING) {
-				// this.props.history.push("/loan/card-result");
-				var data = {
-					...this.props.score_card_A.loan_scoreA_data.data.response.Response
-				}
-				//console.log(data);
-				this.setState({ loanDetails: data });
-			}
-	}
+	// init = () => {
+	// 	//console.log(this.props);
+	// 	if (this.props.score_card_A.loan_scoreA_data)  //loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS
+	// 		if (this.props.score_card_A.loan_scoreA_status != loanOnboardingConstants.LOAN_SCORECARD_ANSWER_PENDING) {
+	// 			// this.props.history.push("/loan/card-result");
+	// 			var data = {
+	// 				...this.props.score_card_A.loan_scoreA_data.data.response.Response
+	// 			}
+	// 			//console.log(data);
+	// 			this.setState({ loanDetails: data });
+	// 		}
+	// }
+	goForward=()=>{
+        this.props.history.push('/loans/terms');
+     }
 
-	doneClick=()=>{
+	doneClick = () => {
 		this.props.dispatch(actions.clearLoanOnboardingStore());
-		this.props.history.push("/");
+		this.props.history.push("/loans");
 	}
 
-	returnScoreCardSuccessStatus = () => {
-		if (this.props.score_card_A.loan_scoreA_status == loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS)
-			return true;
-		else return false;
-	}
+	goBackWard=()=>{
+		this.props.history.push('/loans/card-result');
+	   }
+
+	// returnScoreCardSuccessStatus = () => {
+	// 	if (this.props.score_card_A.loan_scoreA_status == loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS)
+	// 		return true;
+	// 	else return false;
+	// }
 
 	render() {
 		return (
 			<LoanOnboardingContainer UserName={this.state.user.fullName}>
-				<div className="col-sm-12">
+				{/* <div className="col-sm-12">
 					<div className="max-460">
 						<div className="loan-header-text text-center">
 							<h4 className="text-black">Score Card</h4>
@@ -89,7 +97,12 @@ class LoanOnboardingScoreResult extends React.Component {
 
 
 					</div>
-				</div>
+				</div> */}
+				<ScoreResult
+					gotoPreviousPageMethod={this.goBackWard}
+					gotoNextPageMethod={this.goForward}
+					doneClick={this.doneClick}
+				/>);
 			</LoanOnboardingContainer>
 		)
 	}
@@ -100,12 +113,12 @@ function mapStateToProps(state) {
 	return {
 		alert: state.alert,
 
-		loan_reqStat: state.loanOnboardingReducerPile.loanOnboardingRequestStatement,
-		loan_genStat: state.loanOnboardingReducerPile.loanOnboardingGenerateStatement,
-		salary_trans: state.loanOnboardingReducerPile.loanOnboardingSalaryTransaction,
-		salary_entry: state.loanOnboardingReducerPile.loanSalaryEntryReducer,
-		score_card_Q: state.loanOnboardingReducerPile.loanGetScoreCardQuestion,
-		score_card_A: state.loanOnboardingReducerPile.loanPostScoreCardAnswer,
+		// loan_reqStat: state.loanOnboardingReducerPile.loanOnboardingRequestStatement,
+		// loan_genStat: state.loanOnboardingReducerPile.loanOnboardingGenerateStatement,
+		// salary_trans: state.loanOnboardingReducerPile.loanOnboardingSalaryTransaction,
+		// salary_entry: state.loanOnboardingReducerPile.loanSalaryEntryReducer,
+		// score_card_Q: state.loanOnboardingReducerPile.loanGetScoreCardQuestion,
+		// score_card_A: state.loanOnboardingReducerPile.loanPostScoreCardAnswer,
 	}
 }
 

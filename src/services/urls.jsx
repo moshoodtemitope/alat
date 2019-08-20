@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 // const URL = 'https://api.alat.ng';
 const URL = 'https://196.43.215.170';
 // const URL = 'https://196.43.215.157';
+=======
+//const URL = 'https://api.alat.ng';
+const URL = 'https://196.43.215.170';
+//const URL = 'https://196.43.215.157';
+>>>>>>> 44a4bbec89fd6af1815d0077ae0f6dbf3d591c5c
 
 const BASEURL = URL;
 
@@ -114,6 +120,10 @@ export const routes = {
     LOAN_EMPLOYMENT_INDUSTRIES: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GetEmploymentIndustries',
     LOAN_EMPLOYER: BASEURL +  '/DL_LoanRequest.WebApi/api/AccountDetails/GetEmployers',
     LOAN_APPLY : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/RequestLoan',
+    LOAN_STANDING_ORDER : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/SetupStandingOrder',
+    LOAN_REJECT : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/RejectLoan',
+    LOAN_MANDATE_STATUS : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/MandateStatus',
+    LOAN_OTP_MANDATE : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/ValidateOtpMandate',
 
     //Settings
     CHANGE_PASSWORD : BASEURL + '/AccountSetting/api/password/change',

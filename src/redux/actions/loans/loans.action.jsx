@@ -107,7 +107,6 @@ export const saveWorkDetails =(data)=>{
     return (dispatch) =>{
         dispatch(workDetails(data));
     }
-
     function workDetails(data){ return { type: loanConstants.LOAN_REQUEST_STATEMENT_SUCCESS, data : data } }
 }
 
@@ -159,4 +158,92 @@ export const loanCurrent =(token) =>{
     function request(request) { return { type: loanConstants.LOAN_CURRENT_PENDING, request } }
     function success(response) { return { type: loanConstants.LOAN_CURRENT_SUCCESS, response }}
     function failure(error) { return { type: loanConstants.LOAN_CURRENT_FAILURE, error } }
+}
+
+export const loanReject =(token) =>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.LOAN_REJECT,
+             "GET", null, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                //TODO: edit localDB accounts object
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+               // console.log("error in here");
+               // dispatch(success(response.data, request));
+                 dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // throw(error);
+            });
+    };
+
+    function request(request) { return { type: loanConstants.LOAN_REJECT_PENDING, request } }
+    function success(response) { return { type: loanConstants.LOAN_REJECT_SUCCESS, response }}
+    function failure(error) { return { type: loanConstants.LOAN_REJECT_FAILURE, error } }
+}
+
+export const loanStandingOrder =(token) =>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.LOAN_STANDING_ORDER,
+             "GET", null, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                 dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function request(request) { return { type: loanConstants.LOAN_STAND_ORDER_PENDING, request } }
+    function success(response) { return { type: loanConstants.LOAN_STAND_ORDER_SUCCESS, response }}
+    function failure(error) { return { type: loanConstants.LOAN_STAND_ORDER_FAILURE, error } }
+}
+
+export const loanMandateStatus =(token) =>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.LOAN_MANDATE_STATUS,
+             "GET", null, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                 dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function request(request) { return { type: loanConstants.LOAN_MANDATE_STATUS_PENDING, request } }
+    function success(response) { return { type: loanConstants.LOAN_MANDATE_STATUS_SUCCESS, response }}
+    function failure(error) { return { type: loanConstants.LOAN_MANDATE_STATUS_FAILURE, error } }
+}
+
+export const loanValidateRemitaOtp =(token, data) =>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.LOAN_OTP_MANDATE,
+             "POST", data, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                 dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function request(request) { return { type: loanConstants.LOAN_VALIDATEOTP_PENDING, request } }
+    function success(response) { return { type: loanConstants.LOAN_VALIDATEOTP_SUCCESS, response }}
+    function failure(error) { return { type: loanConstants.LOAN_VALIDATEOTP_FAILURE, error } }
 }
