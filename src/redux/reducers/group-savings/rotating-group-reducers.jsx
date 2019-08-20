@@ -176,3 +176,20 @@ export function joinGroupEsusu(state=[], action){
            return {... state}
     }
 }
+
+export function refferalCode (state=[], action){
+    switch(action.type){
+        case 'refferalCode':
+           return {
+               message: 'refferalCode',
+               data: action.data
+           }
+       
+        default: 
+        return {
+            message: "refferalCode",
+            data: ""
+        }
+    }
+}
+

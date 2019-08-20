@@ -152,19 +152,6 @@ class GoalPlan extends React.Component {
                     );
                 }
 
-                let achieved = 0;
-                let totalPercentage = 0;
-                let rounded = 0;
-                let classname = "progress-circle p";
-                for(let result of goals){
-                    totalPercentage += result.percentageCompleted;
-                    if(totalPercentage == 0){
-                        achieved = 0;
-                    }
-                }
-                achieved = totalPercentage/goals.length;
-                rounded = Math.round( achieved * 10 ) / 10 + "% completed";
-                classname = classname + achieved.toFixed();
                 return(
                     // user has goals
                         <div className="">
@@ -184,10 +171,10 @@ class GoalPlan extends React.Component {
                                         <div id="progressBarDashBoard">
                                             <ProgressBar
                                                 percentage={hist.percentageCompleted}
-                                                discBottom={"₦"+ this.toCurrency(hist.amountSaved)}
-                                                discSpan={ "of"+"₦"+hist.amountSaved}
+                                                discBottom={"₦" + this.toCurrency(hist.amountSaved) + " " + "of"}
+                                                discSpan={"₦" + hist.amountSaved}
                                                 discBottomSib='Amount Saved'
-                                                discBottomRight={rounded}
+                                                discBottomRight={hist.percentageCompleted + "%"}
                                             />
                                         </div>
                                         <div className='row forDetailsComp'>
@@ -301,7 +288,6 @@ class GoalPlan extends React.Component {
                                         {
                                             this.state.visible ?
                                             <li style={{float:'right',color:'white',fontSize:'16px, font-family:"proxima_novaregular'}}> <a onClick={this.togglePage} className="btn-alat">Create a Savings Goal</a> </li> : null
- 
                                         }
                                     </ul>
                                 </div>

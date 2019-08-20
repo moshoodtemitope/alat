@@ -226,4 +226,17 @@ export const joinGroupEsusu = (token, data) => {
 //     function failure(error) { return {type:GROUPSAVINGSCONSTANT.JOIN_GROUP_ESUSU_ERROR, error} }
 // };
 
+export const refferalCode = (data) =>{
+    return(dispatch)=>{
+        dispatch(success(data))
+        history.push('/savings/join-group-summary');
+    }
+    function success(data){
+        return{
+            type: 'refferalCode',
+            data: data
+        }
+    }
+}
+
 

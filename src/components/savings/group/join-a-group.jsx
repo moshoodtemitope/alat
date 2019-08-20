@@ -12,59 +12,69 @@ import { connect } from "react-redux";
 import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import {history} from '../../../_helpers/history';
 
-if(window.performance.navigation.type == 1)
-    window.location.replace("http://localhost:8080/");
-    
+// if(window.performance.navigation.type == 1)
+//     window.location.replace("http://localhost:8080/");
+
 class JoinAGroup extends React.Component {
     constructor(props){
         super(props)
         this.state= {
             user: JSON.parse(localStorage.getItem("user")),
             referralCode: null,
-            debitAccount: null,
-
-            isSubmitted: null,
-            isAccountInvalid: null,
-            accountNumber: null,
-            selectedAccount: null,
+            warning: 'notValid',
+            warningStyle: 'notValid'
         }
     }
 
-    handleSelectDebitableAccounts = (account) => {
-        console.log('dss', account);
-        this.setState({ selectedAccount: account });
-        if (this.state.isSubmitted) { 
-            if(account.length == 10)
-            this.setState({ isAccountInvalid: false })
-         }
+    componentDidMount = () => {
+        setTimeout(() => {
+            this.setState({'warningStyle': 'valid'});
+        }, 1);
     }
-    
-    checkAccountNumber = () => {
-        if (this.state.selectedAccount.length != 10) {
-            this.setState({ isAccountInvalid: true })
-            return true;
-        }
-    }
+
 
     handleReferralCode = (event) => {
+        this.setState({'warningStyle': 'valid'}); // remove warning sign.
+        let container = event.target.value.split('');
+        let count = 0;
+        container.map(() => {
+           if(count == 9)
+               this.setState({'warning': 'valid'});
+               this.setState({'warningStyle': 'valid'});
+           count++;
+        });
+
+        if(count != 10)
+               return;
+        
         this.setState({
-            referralCode: event.target.value
-        })
+            'referralCode': event.target.value
+        });
     }
 
-    JoinAGroup = () => {
-       const data = {
-           referralCode: this.state.referralCode,
-           DebitAccount: this.state.selectedAccount
-       }
-       console.log(data)
-       return;
-       this.props.dispatch(actions.joinAGroup(this.state.user.token, data))
+    // JoinAGroup = () => {
+    //    if(this.state.warning == true)
+    //        return;
+
+    //    const data = {
+    //        referralCode: this.state.referralCode,
+    //        DebitAccount: this.state.selectedAccount
+    //    }
+    //    console.log(data)
+    //    this.props.dispatch(actions.joinAGroup(this.state.user.token, data))
+    // }
+
+    NavigateToSummary = () => {
+        if(this.state.referralCode.split('').length != 10)
+             this.setState({'warningStyle': 'notValid'});   // display warning sign
+        if(this.state.warning == 'notValid')
+            return; 
+        this.props.dispatch(actions.refferalCode(this.state.referralCode));
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
-        this.JoinAGroup();
+        this.NavigateToSummary();
         return null;
     }
 
@@ -77,7 +87,6 @@ class JoinAGroup extends React.Component {
         }
         history.push('/savings/goal/group-savings-selection');
     }
-
 
     render() {
         const {selectedAccount} = this.state;
@@ -119,50 +128,30 @@ class JoinAGroup extends React.Component {
                                                     <div className='form-group col-md-12 joinGroup'>
                                                         <h6>Enter Group Code</h6>
                                                         <input type="text" placeholder='GPEFA34UE' id='enterCode' onChange={this.handleReferralCode}/>
+                                                        <p id={this.state.warningStyle}>character must not exceed or below 10</p>
                                                     </div>
                                                 </div>
-                                                <div className="accountSelection">
-                                                    <div className='col-sm-12'>
-                                                                
-                                                                    <SelectDebitableAccounts
-                                                                    
-                                                                        accountInvalid={this.state.isAccountInvalid}
-                                                                        onChange={this.handleSelectDebitableAccounts}
-                                                                        labelText="Select Account to debit" 
-                                                                        options={selectedAccount}/>
-                                                                
-                                                    </div>
-                                                </div>
+                                               
                                                 <div className="form-row">
                                                    
                                                     <div className="form-group col-md-12 butLeft joinButton">
                                                        <center>
-                                                           <NavLink to='/savings/group/joingroup-success-message'>
-                                                               <button>Proceed To Group</button>
-                                                           </NavLink>
-                                                          
+                                                           {/* <NavLink to='/savings/group/joingroup-success-message'> */}
+                                                                 <button>Join Group</button>
+                                                           {/* </NavLink> */}
                                                        </center>
                                                     </div>
                                                    
                                                 </div>
                                             </form>
                                         </div>
-                                        
                                        </div>
-
                                       </div>
-
                                 </div>
-
                             </div>
-
                         </div>
-
                     </SavingsContainer>
-
                 </InnerContainer>
-
-
             </Fragment>
         );
     }

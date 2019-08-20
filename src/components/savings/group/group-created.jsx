@@ -63,6 +63,7 @@ class GroupCreated extends React.Component {
     }
 
     CopyCode = (event) => {
+        
         document.execCommand('copy');
         event.target.focus();
     }
@@ -104,10 +105,11 @@ class GroupCreated extends React.Component {
                                                 </div>
                                                 <div className="forCode">
                                                         <div className="left">
-                                                            <h2>{this.props.payload.response.referralCode}</h2>
+                                                            <h2 id='itemToCopy'>{this.props.payload.response.referralCode}</h2>
                                                         </div>
                                                         <div className="right">
-                                                            <i onClick={this.CopyCode} className='glyphicon glyphicon-share'></i>
+                                                            <img onClick={this.CopyCode} className='itemToCopy' src="/src/assets/img/Group.png" alt=""/>
+                                                           
                                                         </div>
                                                 </div>
                                                 <div className="form-row">
