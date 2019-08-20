@@ -46,7 +46,16 @@ import {
     GETALAT_CARDSETTINGS_FAILURE,
     UPDATEALAT_CARDSETTINGS_SUCCESS,
     UPDATEALAT_CARDSETTINGS_PENDING,
-    UPDATEALAT_CARDSETTINGS_FAILURE
+    UPDATEALAT_CARDSETTINGS_FAILURE,
+    LOADING_INFOFOR_CARDREQUEST_SUCCESS,
+    LOADING_INFOFOR_CARDREQUEST_PENDING,
+    LOADING_INFOFOR_CARDREQUEST_FAILURE,
+    REQUESTINGOTP_FOR_CARDREQUEST_SUCCESS,
+    REQUESTINGOTP_FOR_CARDREQUEST_PENDING,
+    REQUESTINGOTP_FOR_CARDREQUEST_FAILURE,
+    POSTINGDATA_FOR_CARDREQUEST_SUCCESS,
+    POSTINGDATA_FOR_CARDREQUEST_PENDING,
+    POSTINGDATA_FOR_CARDREQUEST_FAILURE,
 } from "../constants/cards/cards.constants";
 
 //VIRTUAL CARD REDUCERS
@@ -459,6 +468,84 @@ export function updateALATCardSettingsRequest(state=[], action){
                 is_processing: false,
                 fetch_status: UPDATEALAT_CARDSETTINGS_FAILURE,
                 updatealatcard_info: action
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+export function infoForATMCardRequest(state=[], action){
+    switch (action.type) {
+        case LOADING_INFOFOR_CARDREQUEST_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: LOADING_INFOFOR_CARDREQUEST_PENDING,
+                atmcard_info: action
+            };
+        case LOADING_INFOFOR_CARDREQUEST_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: LOADING_INFOFOR_CARDREQUEST_SUCCESS,
+                atmcard_info: action
+            };
+        case LOADING_INFOFOR_CARDREQUEST_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: LOADING_INFOFOR_CARDREQUEST_FAILURE,
+                atmcard_info: action
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+export function otpForATMCardRequest(state=[], action){
+    switch (action.type) {
+        case REQUESTINGOTP_FOR_CARDREQUEST_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: REQUESTINGOTP_FOR_CARDREQUEST_PENDING,
+                requestingotp_foratm_info: action
+            };
+        case REQUESTINGOTP_FOR_CARDREQUEST_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: REQUESTINGOTP_FOR_CARDREQUEST_SUCCESS,
+                requestingotp_foratm_info: action
+            };
+        case REQUESTINGOTP_FOR_CARDREQUEST_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: REQUESTINGOTP_FOR_CARDREQUEST_FAILURE,
+                requestingotp_foratm_info: action
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+export function postATMCardRequest(state=[], action){
+    switch (action.type) {
+        case POSTINGDATA_FOR_CARDREQUEST_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: POSTINGDATA_FOR_CARDREQUEST_PENDING,
+                postdata_foratm_info: action
+            };
+        case POSTINGDATA_FOR_CARDREQUEST_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: POSTINGDATA_FOR_CARDREQUEST_SUCCESS,
+                postdata_foratm_info: action
+            };
+        case POSTINGDATA_FOR_CARDREQUEST_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: POSTINGDATA_FOR_CARDREQUEST_FAILURE,
+                postdata_foratm_info: action
             };
 
         default:

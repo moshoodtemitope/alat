@@ -52,6 +52,15 @@ import {
     UPDATEALAT_CARDSETTINGS_SUCCESS,
     UPDATEALAT_CARDSETTINGS_PENDING,
     UPDATEALAT_CARDSETTINGS_FAILURE,
+    LOADING_INFOFOR_CARDREQUEST_SUCCESS,
+    LOADING_INFOFOR_CARDREQUEST_PENDING,
+    LOADING_INFOFOR_CARDREQUEST_FAILURE,
+    REQUESTINGOTP_FOR_CARDREQUEST_SUCCESS,
+    REQUESTINGOTP_FOR_CARDREQUEST_PENDING,
+    REQUESTINGOTP_FOR_CARDREQUEST_FAILURE,
+    POSTINGDATA_FOR_CARDREQUEST_SUCCESS,
+    POSTINGDATA_FOR_CARDREQUEST_PENDING,
+    POSTINGDATA_FOR_CARDREQUEST_FAILURE,
     ALATCARD_REDUCER_CLEAR
 } from "../../constants/cards/cards.constants";
 
@@ -792,6 +801,204 @@ export const updateALATCardSettings = (payload,token)=>{
     function request(request) { return { type:UPDATEALAT_CARDSETTINGS_PENDING, request} }
     function success(response) { return {type:UPDATEALAT_CARDSETTINGS_SUCCESS, response} }
     function failure(error) { return {type:UPDATEALAT_CARDSETTINGS_FAILURE, error} }
+}
+
+export const loadInfoForCardRequest = (token)=>{
+    SystemConstant.HEADER['alat-token'] = token; 
+    
+    return(dispatch)=>{
+        let consume =  ApiService.request(routes.GETCUSTOMERINFO, "GET", null, SystemConstant.HEADER); 
+        dispatch(request(consume));
+
+        return consume
+            .then(response=>{
+                    let consume2 =  ApiService.request(routes.GETCARDDESIGN, "GET", null, SystemConstant.HEADER); 
+                    dispatch(request(consume2));
+                    return consume2
+                        .then(response2=>{
+                            if(response.data.customerCardIds.length===0){
+                                // call get debittable accounts 
+                                let consume4 =  ApiService.request(routes.GETALLACCOUNTS, "GET", null, SystemConstant.HEADER); 
+                                dispatch(request(consume4));
+                                return consume4
+                                    .then(response4=>{
+                                        let infoForNewCard;
+
+                                        infoForNewCard = {
+                                            allCardDesigns  : response2.data,
+                                            customerAccounts: response4.data
+                                        }
+                                        dispatch(success(infoForNewCard));
+                                    })
+                                    .catch(error=>{
+                                        if(error.response && typeof(error.response.message) !=="undefined"){
+                                            dispatch(failure(error.response.message.toString()));
+                                        }
+                                        else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                                            if(error.response.data.Message){
+                                                dispatch(failure(error.response.data.Message.toString()));
+                                            }
+                        
+                                            if(error.response!==undefined && error.response.data.message){
+                                                dispatch(failure(error.response.data.message.toString()));
+                                            }
+                                        }
+                                        else{
+                                            dispatch(failure('An error occured loading your account(s) details. Please try again '));
+                                        }
+                                    })
+                                    
+                            }else{
+                                // call get pans
+                                let consume3 =  ApiService.request(routes.GET_PANS, "GET", null, SystemConstant.HEADER); 
+                                dispatch(request(consume3));
+                                return consume3
+                                    .then(response3=>{
+                                        let existingcardDetails;
+
+                                        if(response3.data.length>=1){
+                                            existingcardDetails = {
+                                                cardDeisgnId    : response.data.customerCardIds,
+                                                allCardDesigns  : response2.data,
+                                                pans            : response3.data
+                                            }
+                                        }else{
+                                            existingcardDetails = {
+                                                cardDeisgnId    : response.data.customerCardIds,
+                                                allCardDesigns  : response2.data,
+                                                pans            :null
+                                            }
+                                        }
+                                        dispatch(success(existingcardDetails));
+                                    })
+                                    .catch(error=>{
+                                        if(error.response && typeof(error.response.message) !=="undefined"){
+                                            dispatch(failure(error.response.message.toString()));
+                                        }
+                                        else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                                            if(error.response.data.Message){
+                                                dispatch(failure(error.response.data.Message.toString()));
+                                            }
+                        
+                                            if(error.response!==undefined && error.response.data.message){
+                                                dispatch(failure(error.response.data.message.toString()));
+                                            }
+                                        }
+                                        else{
+                                            dispatch(failure('An error occured loading your ATM card details. Please try again '));
+                                        }
+                                    })
+                            }
+                        })
+                        .catch(error=>{
+                            if(error.response && typeof(error.response.message) !=="undefined"){
+                                dispatch(failure(error.response.message.toString()));
+                            }
+                            else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                                if(error.response.data.Message){
+                                    dispatch(failure(error.response.data.Message.toString()));
+                                }
+            
+                                if(error.response!==undefined && error.response.data.message){
+                                    dispatch(failure(error.response.data.message.toString()));
+                                }
+                            }
+                            else{
+                                dispatch(failure('An error occured loading your card design. Please try again '));
+                            }
+                        })
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+
+
+    function request(request) { return { type:LOADING_INFOFOR_CARDREQUEST_PENDING, request} }
+    function success(response) { return {type:LOADING_INFOFOR_CARDREQUEST_SUCCESS, response} }
+    function failure(error) { return {type:LOADING_INFOFOR_CARDREQUEST_FAILURE, error} }
+}
+
+export const requestOtpForNewATMCard = (payload, token)=>{
+    SystemConstant.HEADER['alat-token'] = token; 
+    
+    return(dispatch)=>{
+        let consume =  ApiService.request(routes.GET_OTP_FOR_CUSTOMER, "POST", payload, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{
+                dispatch(success(response));
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+
+    function request(request) { return { type:REQUESTINGOTP_FOR_CARDREQUEST_PENDING, request} }
+    function success(response) { return {type:REQUESTINGOTP_FOR_CARDREQUEST_SUCCESS, response} }
+    function failure(error) { return {type:REQUESTINGOTP_FOR_CARDREQUEST_FAILURE, error} }
+}
+
+export const postDataForNewATMCard = (payload, token)=>{
+    SystemConstant.HEADER['alat-token'] = token; 
+    
+    return(dispatch)=>{
+        let consume =  ApiService.request(routes.SAVECARD, "POST", payload, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{
+                dispatch(success(response));
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+
+    function request(request) { return { type:POSTINGDATA_FOR_CARDREQUEST_PENDING, request} }
+    function success(response) { return {type:POSTINGDATA_FOR_CARDREQUEST_SUCCESS, response} }
+    function failure(error) { return {type:POSTINGDATA_FOR_CARDREQUEST_FAILURE, error} }
 }
 
 
