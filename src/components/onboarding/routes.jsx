@@ -28,6 +28,7 @@ import LoanOnboardingWorkDetail from './loans/work-detail';
 import LoanOnboardingTerms from './loans/terms';
 import LoanOnboardingWemaSetup from './loans/wema-setup'; 
 import LoanOnboardingRemitaOtpSetUp from './loans/remita-otp'; 
+import LoanOnbaordingKyc from './loans/kyc'; 
 
 
 export const fakeAuth = {
@@ -95,8 +96,9 @@ class OnboardingRoute extends React.Component {
                 <Route path="/loan/score-card" component={LoanOnboardingScoreCard} />
                 <Route path="/loan/card-result" component={LoanOnboardingScoreResult}/>
                 <Route path="/loan/terms" component={LoanOnboardingTerms} />
-                <Route path="/loan/wema-setup" component={LoanOnboardingWemaSetup} /> LoanOnboardingRemitaOtpSetUp
-                <Route path="/loan/remita-otp" component={LoanOnboardingRemitaOtpSetUp} />
+                <Route path="/loan/wema-setup" component={LoanOnboardingWemaSetup} /> 
+                <Route path="/loan/remita-otp" component={LoanOnboardingRemitaOtpSetUp} /> 
+                <Route path="/loan/kyc" component={LoanOnbaordingKyc} /> 
 
             </div>
         )
