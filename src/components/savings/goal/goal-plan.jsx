@@ -83,6 +83,7 @@ class GoalPlan extends React.Component {
         this.setState({visible: false})
     };
 
+
     renderGoalsElement(customerGoalTransHistory){
         if(!customerGoalTransHistory){
             return(
@@ -122,6 +123,7 @@ class GoalPlan extends React.Component {
             }
             else if(customerGoalTransHistory.customer_goal === 'FETCH_CUSTOMER_GOAL_TRANS_HISTORY_SUCCESS' && this.state.visible){
                 let goals = customerGoalTransHistory.customer_goal_data.response.data;
+
 
                 if(goals.length === 0 && !this.state.visible){
                     return(
@@ -163,6 +165,7 @@ class GoalPlan extends React.Component {
                         <div className="row">
                             {goals.map((hist, key)=> (
 
+
                                 <div className="compContainer">
                                     <div className="eachComp ">
                                         <div className='topCard'>
@@ -178,7 +181,7 @@ class GoalPlan extends React.Component {
                                             <ProgressBar
                                                 percentage={hist.percentageCompleted}
                                                 discBottom={"₦"+ this.toCurrency(hist.amountSaved)}
-                                                discSpan={ "of" + "₦"+hist.amountSaved}
+                                                discSpan={ "of" + "₦"+hist.targetAmount}
                                                 discBottomSib='Amount Saved'
                                                 discBottomRight={hist.percentageCompleted +"%"}
                                             />

@@ -30,6 +30,7 @@ class EditGoal extends React.Component {
     constructor(props){
         super(props);
         this.state={
+            user: JSON.parse(localStorage.getItem("user")),
             goalName:"",
             startDate:null,
             endDate:null,
@@ -45,7 +46,9 @@ class EditGoal extends React.Component {
             goalFrequencyInvalid:false,
             showInterests:"",
             showMessage: false,
-            frequencyAmount:""
+            frequencyAmount:"",
+            goal:JSON.parse(localStorage.getItem('goal')) || [],
+
 
 
         };
@@ -231,13 +234,15 @@ class EditGoal extends React.Component {
 
         } else {
             this.setState({isSubmitted : true });
-            this.props.dispatch(actions.EditCustomerGoal({
+            this.props.dispatch(actions.EditCustomerGoal(this.state.user.token,{
                 "goalName":this.state.goalName,
                 "startDate":this.state.startDate,
-                "endDate":this.state.endDate,
-                "targetAmount":this.state.targetAmount,
-                "goalFrequency":this.state.goalFrequency,
-                "showInterests":this.state.showInterests
+                "targetDate":this.state.endDate,
+                "targetAmount":parseFloat(this.state.goal.targetAmount),
+                "debitAccount":this.state.goal.debitAccount,
+                "debitAmount":parseFloat(this.state.goal.debitAmount),
+                "goalTypeId":parseInt(this.state.goal.goalTypeId),
+                "frequencyId":parseInt(this.state.goal.frequencyId)
             }));
             console.log('tag', '')
         }
@@ -257,7 +262,7 @@ class EditGoal extends React.Component {
 
     render() {
 
-        let {GoalNameInvalid,endDateInvalid,startDateInvalid,targetAmountInvalid,goalFrequencyInvalid,goalFrequency}=this.state
+        let {GoalNameInvalid,endDateInvalid,startDateInvalid,targetAmountInvalid,goalFrequencyInvalid,goalFrequency}=this.state;
         let props = this.props;
 
         return (

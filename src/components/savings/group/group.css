@@ -864,5 +864,11 @@ margin-top: 40px;
 .perc {
     text-transform: lowercase !important;
 }
+.progress-bar {
+    -webkit-transition: width .3s ease;
+    -o-transition: width .3s ease;
+    transition: width .3s ease;
+}
+
 
 

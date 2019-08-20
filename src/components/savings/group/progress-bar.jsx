@@ -18,10 +18,11 @@ export default (props) => {
                              <p>{props.discTopRight}</p>
                          </div>
                      </div>
-                     <Progress color="success" value={props.percentage}></Progress>
+
+                     <Progress  color="success" value={props.percentage}></Progress>
                      <div className='bottomDiscription topDiscription row'>
                          <div className='left'>
-                             <p class="perc">{props.discBottom}<span>{props.discSpan}</span></p>
+                             <p className="perc">{props.discBottom}<span>{props.discSpan}</span></p>
                              <p>{props.discBottomSib}</p>
                          </div>
                          <div className='right'>

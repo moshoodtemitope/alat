@@ -68,7 +68,7 @@ class ViewGroupSummary extends React.Component {
         this.props.dispatch(actions.unpauseCustomerGoal(this.state.user.token,data));
     };
     EditCustomerGoal = () => {
-        return this.props.history.push("/savings/edit-goal")
+        return this.props.history.push("/savings/edit-goal", this.state.goal)
 
     };
 
@@ -148,6 +148,85 @@ class ViewGroupSummary extends React.Component {
                             {this.props.alert && this.props.alert.message &&
                             <div style={{width: "100%", marginRight:"120px",marginLeft:"120px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                             }
+                            {details.goalTypeName === "Stash" ? (
+                                <div className="col-sm-12">
+                                    <div className="row">
+                                        <div className="col-sm-12">
+                                            <div className="max-600">
+                                                <div className="al-card no-pad">
+
+                                                    <div className='firstSubHead'>
+                                                        <p>{details.goalTypeName}</p>
+                                                        <p>{details.goalName}</p>
+                                                    </div>
+                                                    <SubHead
+                                                        type={this.state.type}
+                                                        middlename="Stash Summary"
+                                                        memberClicked={this.HandleNavigation}
+                                                        automatedwasclicked={this.Automated}
+                                                    />
+
+                                                    <div className='statContainer'>
+                                                        <ProgressBar
+                                                            discTopSpan="Goal Progress"
+                                                            discTopRight={details.percentageCompleted + "%" + " Completed"}
+                                                            percentage={details.percentageCompleted}
+                                                            discBottom={"₦" + details.amountSaved}
+                                                            discSpan={"of" + "₦" + details.targetAmount}
+                                                            discBottomSib="Amount Saved"
+                                                        />
+                                                        <MoreDetails
+                                                            lefthead={"₦" + details.interestAccrued}
+                                                            leftBottom="Interest Accrued"
+                                                            middleTop={"₦" + details.interestEarned}
+                                                            middleBottom="Interest Earned"
+                                                            rightContent={moment(details.nextstandingDate).format("L")}
+                                                            rightContentBottom="Next Payment"/>
+                                                        <div className="btn-position">
+                                                            <NavLink to="/savings/withdraw-from-goal_step1">
+                                                                <span href="#"
+                                                                      className="btn-withdraw-goal btn-sm border-btn">Cash Out</span>
+                                                            </NavLink>
+
+                                                            <Link to={{
+                                                                pathname: "/savings/top-up-goal-step1",
+                                                                state: {
+                                                                    name: details,
+
+                                                                }
+                                                            }}>
+                                                                <span href="#"
+                                                                      className="btn-top-up-goal btn-sm border-btn">Top Up Stash</span>
+                                                            </Link>
+
+                                                        </div>
+
+
+                                                        <NavButtons
+                                                            navType={this.state.navType}
+                                                            leftName='edit'
+                                                            middleName='pause'
+                                                            rightName='delete'
+                                                            edit={details.id}
+                                                            delete={details.id}
+                                                            unpause={details.id}
+                                                            DeleteGroup={this.DeleteCustomerGoal}
+                                                            PauseGroup={this.PauseCustomerGoal}
+                                                            EditGroup={this.EditCustomerGoal}
+
+                                                        />
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>                            ): (
                             <div className="col-sm-12">
                                 <div className="row">
                                     <div className="col-sm-12">
@@ -224,6 +303,7 @@ class ViewGroupSummary extends React.Component {
                                 </div>
 
                             </div>
+                                )}
 
                         </div>
 

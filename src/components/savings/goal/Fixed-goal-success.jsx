@@ -82,16 +82,19 @@ class FixedSuccessMessage extends React.Component {
 
 
                                         </div>
+                                        <center>
+                                            <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(fixedGoalConstants.FIXED_GOAL_REDUCER_CLEAR));
+                                                this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
+                                                Go to Dashboard
+                                            </a>
+                                        </center>
+
 
                                     </div>
                                 </div>
 
+
                             </div>
-                            <center>
-                                <button onClick={() => { this.props.dispatch(actions.ClearAction(fixedGoalConstants.FIXED_GOAL_REDUCER_CLEAR));
-                                    this.props.history.push('/savings/choose-goal-plan') }} className="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</button>
-                                {/* <Link to={'/dashboard'} className="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</Link> */}
-                            </center>
 
                         </div>
 
