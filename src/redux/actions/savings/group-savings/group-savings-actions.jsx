@@ -379,18 +379,7 @@ export const setFrequency =(data) =>{
     }
 }
 
-export const referralCode = (data) =>{
-    return(dispatch)=>{
-        dispatch(success(data))
-        history.push('/savings/join-group-summary');
-    }
-    function success(data){
-        return{
-            type: 'refferalCode',
-            data: data
-        }
-    }
-}
+
 
 
 

@@ -59,13 +59,14 @@ export const rotatingGroupDetails = (token, data) => {
 
 export const joinAGroup = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
-    return (dispatch) => {
+    return (dispatch) => {    
         let consume = ApiService.request(routes.JOIN_A_GROUP, "POST", data, SystemConstant.HEADER, false);
-        dispatch(request(consume));
+        dispatch(request(consume)); 
         return consume
             .then(response => {
                 dispatch(success(response.data));
-            }) 
+                history.push('/savings/joined-group-successfully');    
+            })    
             .catch(error => {
                 if(error.response.message){
                     dispatch(failure(error.response.message.toString()));

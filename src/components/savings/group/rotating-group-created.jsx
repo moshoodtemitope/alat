@@ -64,6 +64,11 @@ class RotatingGroupCreated extends React.Component {
        event.target.focus();
     }
 
+    CopyCode = (event) => {
+        this.textInput.select();
+        document.execCommand('copy');
+    }
+
     render() {
         return (
             <Fragment>
@@ -101,10 +106,10 @@ class RotatingGroupCreated extends React.Component {
                                                 </div>
                                                 <div className="forCode">
                                                         <div className="left">
-                                                            <h2>{this.props.createdGroupSavings.response.referralCode}</h2>
+                                                            <h2 id={this.props.createdGroupSavings.response.referralCode} ref={element => this.textInput = element}>{this.props.createdGroupSavings.response.referralCode}</h2>
                                                         </div>
                                                         <div className="right">
-                                                            <i onClick={this.CopyCode} id={this.props.createdGroupSavings.response.referralCode}></i>
+                                                        <img onClick={this.CopyCode} className='itemToCopy' src="/src/assets/img/Group.png" alt=""/>
                                                         </div>
                                                 </div>
                                                 <div className="form-row">

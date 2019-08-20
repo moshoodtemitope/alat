@@ -32,7 +32,6 @@ class JoinAGroup extends React.Component {
         }, 1);
     }
 
-
     handleReferralCode = (event) => {
         this.setState({'warningStyle': 'valid'}); // remove warning sign.
         let container = event.target.value.split('');

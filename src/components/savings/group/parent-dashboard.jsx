@@ -198,8 +198,8 @@ class ParentDashBoard extends React.Component {
                                     <div className="bodyDetails">
                                           <div className="row smallnavtop">
                                                     <ul>
-                                                        <NavLink to='/savings/group/save-towards-a-target'>
-                                                             <li id='first'>Create A Group Savings Goal</li>
+                                                        <NavLink to='/savings/goal/group-savings-selection'>
+                                                             <li id='first'>Create Group</li>
                                                         </NavLink>
                                                         <NavLink to='/savings/group/join-a-group'>
                                                              <li id='second'>Join A Group</li>
@@ -250,8 +250,8 @@ class ParentDashBoard extends React.Component {
                                     <div className="bodyDetails">
                                           <div className="row smallnavtop">
                                                     <ul>
-                                                        <NavLink to='/savings/group/save-towards-a-target'>
-                                                             <li id='first'>Create A Group Savings Goal</li>
+                                                        <NavLink to='/savings/goal/group-savings-selection'>
+                                                             <li id='first'>Create Group</li>
                                                         </NavLink>
                                                         <NavLink to='/savings/group/join-a-group'>
                                                              <li id='second'>Join A Group</li>
@@ -302,8 +302,8 @@ class ParentDashBoard extends React.Component {
                                     <div className="bodyDetails">
                                           <div className="row smallnavtop">
                                                     <ul>
-                                                        <NavLink to='/savings/group/save-towards-a-target'>
-                                                             <li id='first'>Create A Group Savings Goal</li>
+                                                        <NavLink to='/savings/goal/group-savings-selection'>
+                                                             <li id='first'>Create Group</li>
                                                         </NavLink>
                                                         <NavLink to='/savings/group/join-a-group'>
                                                              <li id='second'>Join A Group</li>

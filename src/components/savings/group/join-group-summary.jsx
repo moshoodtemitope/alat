@@ -9,7 +9,7 @@ import DatePicker from "react-datepicker";
 import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
-import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
+import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import {GROUPSAVINGSCONSTANT} from "../../../redux/constants/savings/group/index";
 import {history} from '../../../_helpers/history';
 import { Description } from './component';
@@ -87,15 +87,14 @@ class JoinGroupSummary extends React.Component {
         }  
     }
 
-    SubmitTargetGoal = () => {
-        const data = {
-            TargetDate: this.state.targetDate,
-            MinimumIndividualAmount: parseFloat(this.state.minimumIndividualAmount),
-            DebitAccount: this.state.selectedAccount
-        }
-        console.log(data)
-        // return;
-        this.props.dispatch(actions.groupSavingsTargetGoal(this.state.user.token, data));
+    JoinAGroup = () => {
+       const data = {
+           referralCode: this.props.refferalCode,
+           DebitAccount: this.state.selectedAccount
+       }
+       console.log(data);
+       return;
+       this.props.dispatch(actions.joinAGroup(this.state.user.token, data));
     }
 
     InitialPropertyCheck = () => {
@@ -112,15 +111,21 @@ class JoinGroupSummary extends React.Component {
             console.log(this.checkMinimumAccountToContribute())
         } 
         
+        this.JoinAGroup();
         switch(this.checkingUserInputs()){
             case null:
                console.log('empty feild found');
                break;
             case "valid":
-                this.SubmitTargetGoal();
+                this.JoinAGroup();
                 console.log("no empty feilds found")
                 break;
         }
+    }
+
+    handleDecline = () => {
+        this.setState({NoAccountSelectionWasDon: true});
+        history.push('/savings/activityDashBoard');
     }
 
     NavigateToGroupSavings = () => {
@@ -134,7 +139,7 @@ class JoinGroupSummary extends React.Component {
     }
 
     render() {
-        const {targetDate, GroupEndDate, AmountToContribute, NoAccountSelectionWasDon, selectedAccount} = this.state;
+        const {NoAccountSelectionWasDon, selectedAccount} = this.state;
         return (
             <Fragment>
                 <InnerContainer>
@@ -192,7 +197,6 @@ class JoinGroupSummary extends React.Component {
                                                 
                                                 <div className={NoAccountSelectionWasDon ? "form-error" : "accountSelection"}>
                                                     <div className='col-sm-12'>
-                                                              
                                                                     <SelectDebitableAccounts
                                                                         options={selectedAccount}
                                                                         // value={this.state.selectedAccount}
@@ -200,15 +204,14 @@ class JoinGroupSummary extends React.Component {
                                                                         onChange={this.handleSelectDebitableAccounts}
                                                                         options={selectedAccount}
                                                                         labelText="Select Account to debit" />
-                                                              
                                                     </div>
                                                 </div>
-                                                <div className="row buttomButtonsJoinGroup">
+                                                <div className="form-row buttomButtonsJoinGroup acceptAndDecline">
                                                      <div className="col-sm-6 left">
-                                                         <button>Decline</button>
+                                                         <button onClick={this.handleDecline}>Decline</button>
                                                      </div>
                                                      <div className="col-sm-6 right">
-                                                         <button type="submit">Accept</button>
+                                                         <button type="submit" id='acepting'>Accept</button>
                                                      </div>
                                                 </div>
                                             </form>
