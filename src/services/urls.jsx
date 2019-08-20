@@ -1,12 +1,6 @@
-<<<<<<< HEAD
 // const URL = 'https://api.alat.ng';
 const URL = 'https://196.43.215.170';
 // const URL = 'https://196.43.215.157';
-=======
-//const URL = 'https://api.alat.ng';
-const URL = 'https://196.43.215.170';
-//const URL = 'https://196.43.215.157';
->>>>>>> 44a4bbec89fd6af1815d0077ae0f6dbf3d591c5c
 
 const BASEURL = URL;
 
