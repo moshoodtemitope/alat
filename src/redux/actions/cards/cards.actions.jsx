@@ -858,13 +858,13 @@ export const loadInfoForCardRequest = (token)=>{
 
                                         if(response3.data.length>=1){
                                             existingcardDetails = {
-                                                cardDeisgnId    : response.data.customerCardIds,
+                                                cardDesignId    : response.data.customerCardIds,
                                                 allCardDesigns  : response2.data,
                                                 pans            : response3.data
                                             }
                                         }else{
                                             existingcardDetails = {
-                                                cardDeisgnId    : response.data.customerCardIds,
+                                                cardDesignId    : response.data.customerCardIds,
                                                 allCardDesigns  : response2.data,
                                                 pans            :null
                                             }
