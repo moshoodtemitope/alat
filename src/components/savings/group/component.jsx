@@ -1,12 +1,12 @@
 import React from 'react';
 
 export function Description(props){
-    return(<div>
-               <div className="col-xs-6">
+    return(<div className='sumComponent'>
+               <div className="left">
                    <p>{props.leftHeader}</p>
                    <p>{props.leftDescription}</p>
                </div>
-               <div className="col-xs-6">
+               <div className="right">
                    <p>{props.rightHeader}</p>
                    <p>{props.rightDiscription}</p>
                </div>

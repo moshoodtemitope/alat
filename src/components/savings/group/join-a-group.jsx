@@ -44,7 +44,7 @@ class JoinAGroup extends React.Component {
            count++;
         });
 
-        if(count != 10)
+        if(count != 9)
                return;
         
         this.setState({
@@ -65,6 +65,7 @@ class JoinAGroup extends React.Component {
     // }
 
     NavigateToSummary = () => {
+        console.log(this.state.referralCode);
         if(this.state.referralCode.split('').length != 10)
              this.setState({'warningStyle': 'notValid'});   // display warning sign
         if(this.state.warning == 'notValid')

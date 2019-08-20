@@ -173,6 +173,51 @@
     margin-bottom: 40px;
 }
 
+.sumComponent {
+    display: flex;
+    flex-wrap: nowrap;
+    font-family:'proxima_novasemibold';
+    background: linear-gradient(171.37deg, #FFFFFF 0%, rgba(195, 195, 195, 0.291752) 100%), linear-gradient(351.37deg, #7C5578 0%, #580637 100%);
+    background-blend-mode: multiply, normal;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    width: 98%;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 40px;
+    padding-top: 20px;
+}
+
+.sumComponent .left, .sumComponent .right {
+   width: 50%;
+}
+
+.sumComponent .left p {
+   
+}
+
+.sumComponent .right p {
+    text-align: right;
+}
+
+.sumComponent .left p:nth-child(1), .sumComponent .right p:nth-child(1) {
+    margin-bottom: 5px;
+    color: white;
+}
+
+
+.sumComponent .left p:nth-child(2) {
+    color: #C7C7C7;
+    font-size: 16px;
+}
+
+.sumComponent .right p:nth-child(2) {
+    color: #C7C7C7;
+    font-size: 16px;
+}
+
+
+
 .smallnavtop ul #second{
     padding-left: 80px !important;
     padding-right: 80px !important;
@@ -194,9 +239,14 @@
 
 .forReadOnlyInput input {
     background-color: #F5F5F5;
-    border-radius: 3px;
+    border-radius: 5px;
     font-family:'proxima_novasemibold';
     font-size: 14px;
+    border: none;
+}
+
+.forInputFields {
+    margin-bottom: 30px;
 }
 
 #notValid {
@@ -206,6 +256,10 @@
     padding-top: 10px;
     font-family:'proxima_novasemibold';
     font-size: 14px;
+}
+
+.buttomButtonsJoinGroup {
+    
 }
 
 #valid {

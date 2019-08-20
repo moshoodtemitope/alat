@@ -61,12 +61,6 @@ class JoinGroupSummary extends React.Component {
                       result = null;
                       break;
                    }
-                case 'targetDate':
-                   if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
-                      result = null;
-                      break;
-                   }
                 case 'selectedAccount':
                       if(this.state[x] == null || this.state[x] == ""){
                         console.log(x)
@@ -79,25 +73,8 @@ class JoinGroupSummary extends React.Component {
         return result;
     }
 
-    
-    SetStartDate = (targetDate) => {
-       this.setState({
-           targetDate:targetDate
-       })
-    }
-
     SetAmountToContributeIndividually = (event) => {
         this.setState({minimumIndividualAmount: event.target.value});
-    }
-
-    checkTheEndDate = () => {
-        if(this.state.targetDate == null || this.state.targetDate == ""){
-            this.setState({GroupEndDate: true});
-            return false;
-        }else{
-            this.setState({GroupEndDate: false});
-            return true;
-        }
     }
 
     checkTheSelectedAccount = () => {
@@ -109,17 +86,6 @@ class JoinGroupSummary extends React.Component {
             return true;
         }  
     }
-
-    checkMinimumAccountToContribute = () => {
-        console.log(this.state.minimumIndividualAmount);
-        if(this.state.minimumIndividualAmount == null || this.state.minimumIndividualAmount == ""){
-            this.setState({AmountToContribute: true});
-            return false;
-        }else{
-            this.setState({AmountToContribute: false});
-            return true;
-        }
-     }
 
     SubmitTargetGoal = () => {
         const data = {
@@ -140,9 +106,9 @@ class JoinGroupSummary extends React.Component {
     }
 
     handleSubmit = (event) => {
-         event.preventDefault();
+        event.preventDefault();
         console.log("handleSubmit was triggered");
-        if(this.checkMinimumAccountToContribute() || this.checkTheSelectedAccount()||this.checkTheEndDate()){
+        if(this.checkTheSelectedAccount() == true){
             console.log(this.checkMinimumAccountToContribute())
         } 
         
@@ -211,7 +177,7 @@ class JoinGroupSummary extends React.Component {
                                                     rightDiscription="Group Target"
                                                     />
                                                 </div>
-                                                <div className="form-row">
+                                                <div className="form-row forInputFields">
                                     
                                                     <div className="form-group col-md-6 forReadOnlyInput">
                                                         <label className="label-text">Monthly Contributions</label>
@@ -237,13 +203,12 @@ class JoinGroupSummary extends React.Component {
                                                               
                                                     </div>
                                                 </div>
-                                                
                                                 <div className="row buttomButtonsJoinGroup">
                                                      <div className="col-sm-6 left">
                                                          <button>Decline</button>
                                                      </div>
                                                      <div className="col-sm-6 right">
-                                                         <button>Accept</button>
+                                                         <button type="submit">Accept</button>
                                                      </div>
                                                 </div>
                                             </form>
