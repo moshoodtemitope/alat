@@ -47,14 +47,14 @@ class ViewGroupSummary extends React.Component {
     }
     PauseCustomerGoal= () => {
         let data = {
-            goalName:this.state.goal.goalName,
-            targetDate:this.state.goal.targetDate,
-            startDate:this.state.goal.startDate,
-            targetAmount:parseFloat(this.state.goal.targetAmount),
-            goalTypeId:parseInt(this.state.goal.goalTypeId),
-            debitAmount:parseFloat(this.state.goal.debitAmount),
-            frequencyId:parseInt(this.state.goal.frequencyId),
-            debitAccount:this.state.goal.debitAmount
+            GoalName:this.state.goal.goalName,
+            TargetDate:this.state.goal.targetDate,
+            StartDate:this.state.goal.startDate,
+            TargetAmount:parseFloat(this.state.goal.targetAmount),
+            GoalTypeId:parseInt(this.state.goal.goalTypeId),
+            DebitAmount:parseFloat(this.state.goal.debitAmount),
+            FrequencyId:parseInt(this.state.goal.frequencyId),
+            DebitAccount:this.state.goal.debitAccount
         };
         this.props.dispatch(actions.PauseCustomerGoal(this.state.user.token, data));
     };
@@ -147,6 +147,87 @@ class ViewGroupSummary extends React.Component {
                             {this.props.alert && this.props.alert.message &&
                             <div style={{width: "100%", marginRight:"120px",marginLeft:"120px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                             }
+                            {details.goalTypeName === "Stash" ? (
+                                <div className="col-sm-12">
+                                    <div className="row">
+                                        <div className="col-sm-12">
+                                            <div className="max-600">
+                                                <div className="al-card no-pad">
+
+                                                    <div className='firstSubHead'>
+                                                        <p>{details.goalTypeName}</p>
+                                                        <p>{details.goalName}</p>
+                                                    </div>
+                                                    <SubHead
+                                                        type={this.state.type}
+                                                        middlename="Stash Summary"
+                                                        memberClicked={this.HandleNavigation}
+                                                        automatedwasclicked={this.Automated}
+                                                    />
+
+                                                    <div className='statContainer'>
+                                                        <p className="information">You have saved <span style={{color:"#AB2656"}}> N{details.amountSaved}</span> and have earned <span style={{color:"#AB2656"}}>N{details.interestEarned}</span> in Interest</p>
+
+                                                        <ProgressBar
+                                                            discTopSpan="Goal Progress"
+                                                            discTopRight={details.percentageCompleted.toFixed(2) + "%" + " Completed"}
+                                                            percentage={details.percentageCompleted}
+                                                            discBottom={"₦" + details.amountSaved + " "}
+                                                            discSpan={"  " + "of" + "  " + "₦" + details.targetAmount}
+                                                            discBottomSib="Amount Saved"
+                                                        /><br /><br/>
+                                                        <MoreDetails
+                                                            lefthead={"₦" + details.interestAccrued}
+                                                            leftBottom="Interest Accrued"
+                                                            middleTop={"₦" + details.interestEarned}
+                                                            middleBottom="Interest Earned"
+                                                            rightContent={moment(details.nextstandingDate).format("L")}
+                                                            rightContentBottom="Next Payment"/>
+                                                        <div className="btn-position">
+                                                            <NavLink to="/savings/stash-cashout">
+                                                                <span href="#"
+                                                                      className="btn-withdraw-goal btn-sm border-btn">Cash Out</span>
+                                                            </NavLink>
+
+                                                            <Link to={{
+                                                                pathname: "/savings/top-up-goal-step1",
+                                                                state: {
+                                                                    name: details,
+
+                                                                }
+                                                            }}>
+                                                                <span href="#"
+                                                                      className="btn-top-up-goal btn-sm border-btn">Top Up Stash</span>
+                                                            </Link>
+
+                                                        </div>
+
+
+                                                        <NavButtons
+                                                            navType={this.state.navType}
+                                                            leftName='Edit'
+                                                            middleName='Pause'
+                                                            rightName='Delete'
+                                                            edit={details.id}
+                                                            delete={details.id}
+                                                            unpause={details.id}
+                                                            DeleteGroup={this.DeleteCustomerGoal}
+                                                            PauseGroup={this.PauseCustomerGoal}
+                                                            EditGroup={this.EditCustomerGoal}
+
+                                                        />
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>                            ): (
                             <div className="col-sm-12">
                                 <div className="row">
                                     <div className="col-sm-12">
@@ -165,6 +246,8 @@ class ViewGroupSummary extends React.Component {
                                                 />
 
                                                 <div className='statContainer'>
+                                                    <p className="information">You have saved <span style={{color:"#AB2656"}}> N{details.amountSaved}</span> of your <span style={{color:"#AB2656"}}>N{details.targetAmount}</span> goal saving <span style={{color:"#AB2656"}}>N{details.amountSaved}</span> monthly </p>
+
                                                     <ProgressBar
                                                         discTopSpan="Goal Progress"
                                                         discTopRight={details.percentageCompleted +"%"+" Completed"}
@@ -200,9 +283,9 @@ class ViewGroupSummary extends React.Component {
 
                                                     <NavButtons
                                                        navType={this.state.navType}
-                                                        leftName='edit'
-                                                        middleName='pause'
-                                                        rightName='delete'
+                                                        leftName='Edit'
+                                                        middleName='Pause'
+                                                        rightName='Delete'
                                                        edit={details.id}
                                                        delete={details.id}
                                                        unpause={details.id}
@@ -216,6 +299,7 @@ class ViewGroupSummary extends React.Component {
 
                                             </div>
 
+
                                         </div>
 
                                     </div>
@@ -223,6 +307,7 @@ class ViewGroupSummary extends React.Component {
                                 </div>
 
                             </div>
+                                )}
 
                         </div>
 

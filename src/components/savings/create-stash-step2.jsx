@@ -95,7 +95,6 @@ import * as actions from '../../redux/actions/savings/goal/create-stash-goal.act
                         </div>
                     </div>
 
-
                         {this.props.alert && this.props.alert.message &&
                             <div style={{width: "100%",}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                         }

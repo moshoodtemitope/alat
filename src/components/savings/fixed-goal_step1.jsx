@@ -251,11 +251,11 @@ class FixedGoal extends React.Component {
             if (this.props.fixed_goal_step1.fixed_step1_status == fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS) {
                 return <Redirect to="/savings/fixed-goal-complete" />
             }
-    }
+    };
 
     showInterest = () =>  {
         this.setState({showMessage: true})
-    }
+    };
     
 
     

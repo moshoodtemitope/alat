@@ -39,7 +39,7 @@ class GroupAnalyticsMini extends React.Component {
     };
 
     PotContribution = () =>{
-        return "N" + this.props.groupDetails.response.potContribution;
+        return "₦" + this.props.groupDetails.response.potContribution;
     };
 
     UpNext = () => {

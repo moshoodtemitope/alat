@@ -6,10 +6,11 @@ import successLogo from '../../../assets/img/success.svg';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import Members from '../../savings/group/list-item';
 import { connect } from "react-redux";
-import * as actions from '../../../redux/actions/savings/goal/fixed-goal.actions'
-import  {fixedGoalConstants} from '../../../redux/constants/goal/fixed-goal.constant'
+import {flexGoalConstants} from '../../../redux/constants/goal/flex-goal.constant'
+import * as actions from '../../../redux/actions/savings/goal/flex-goal.actions'
 
-class FixedSuccessMessage extends React.Component {
+
+class FlexSuccessMessage extends React.Component {
     constructor(props){
         super(props);
         this.state={
@@ -66,7 +67,7 @@ class FixedSuccessMessage extends React.Component {
                                                         <center>
                                                             <img className="successIcon"    alt="" src={successLogo}/>
                                                         </center>
-                                                        <label id="sucMessage">Fixed Goal created  successfully</label>
+                                                        <label id="sucMessage">Flex Goal created  successfully</label>
                                                     </div>
                                                     <div className="form-row">
                                                         <Members
@@ -83,7 +84,7 @@ class FixedSuccessMessage extends React.Component {
 
                                         </div>
                                         <center>
-                                            <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(fixedGoalConstants.FIXED_GOAL_REDUCER_CLEAR));
+                                            <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(flexGoalConstants.FLEX_GOAL_REDUCER_CLEAR));
                                                 this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
                                                 Go to Dashboard
                                             </a>
@@ -108,4 +109,4 @@ const mapStateToProps = state => ({
     create_stash_goal:state.create_stash_goal,
     create_stash_goal_step1:state.create_stash_step1
 });
-export default connect(mapStateToProps)(FixedSuccessMessage);
+export default connect(mapStateToProps)(FlexSuccessMessage);

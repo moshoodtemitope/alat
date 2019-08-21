@@ -52,3 +52,10 @@ export const CreateStashGoal =(data)=>{
     function success(response, request) { return { type: createGoalConstants.CREATE_STASH_GOAL_SUCCESS, data: { response : response, request: request } }}
     function failure(error) { return { type: createGoalConstants.CREATE_STASH_GOAL_SUCCESS, error } }
 };
+
+export const ClearAction=(type)=>{
+    return (dispatch) =>{
+        dispatch(clear(type))
+    };
+    function clear(type){return {type : type}}
+};

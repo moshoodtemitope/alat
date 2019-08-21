@@ -19,9 +19,6 @@ import MoreDetails from './details';
 import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
 import {history} from '../../../_helpers/history';
 
-// if(window.performance.navigation.type == 1)
-//     window.location.replace("http://localhost:8080/");
-
 class GroupAnalytics extends React.Component {
     constructor(props){
         super(props);
@@ -255,9 +252,9 @@ class GroupAnalytics extends React.Component {
                                                
                                                 <NavButtons 
                                                     navType={this.state.navType}
-                                                    leftName='edit'
-                                                    middleName='pause'
-                                                    rightName='delete'
+                                                    leftName='Edit'
+                                                    middleName='Pause'
+                                                    rightName='Delete'
                                                     edit={this.props.groupDetails.response.id}
                                                     pause={this.props.groupDetails.response.id}
                                                     delete={this.props.groupDetails.response.id}

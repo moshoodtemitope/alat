@@ -10,18 +10,13 @@ import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant
 import SelectDebitableAccounts from '../../shared/components/selectDebitableAccounts';
 import moment from 'moment';
 import * as util from '../../shared/utils'
-
-
-
-
 import "react-datepicker/dist/react-datepicker.css";
-import {fundAccountConstants} from "../../redux/constants/fund-account/fund-account.constant";
 const selectedTime = [
-           
+
     { "id":3, value: 'monthly',label:"Monthly" },
     { "id":2, value: 'weekly', label:"Weekly" },
     { "id":1, value: 'daily', label:"Daily"},
-   
+
 ];
 
 
@@ -47,8 +42,8 @@ class FixedGoal extends React.Component {
 
             // frequencyAmount:"",
 
-           
-         };
+
+        };
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this)
         this.handleSelectDebitableAccounts = this.handleSelectDebitableAccounts.bind(this);
@@ -57,13 +52,13 @@ class FixedGoal extends React.Component {
     removeComma(currencyValue) {
         return currencyValue.replace(/,/g, '');
     }
-   
+
     handleSelectDebitableAccounts(account) {
         console.log('dss', account);
         this.setState({ debitAccount: account });
-        if (this.state.isSubmitted) { 
+        if (this.state.isSubmitted) {
             if(account.length == 10)
-            this.setState({ isAccountInvalid: false })
+                this.setState({ isAccountInvalid: false })
         }
     }
     checkAccountNumber() {
@@ -81,8 +76,8 @@ class FixedGoal extends React.Component {
     componentDidMount = () => {
         this.init();
     };
-    
-  
+
+
 
     init = () => {
         if (this.props.fixed_goal_step1.fixed_step1_status !== fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS)
@@ -106,41 +101,41 @@ class FixedGoal extends React.Component {
 
     //this method is to calculate the monthly interest value for every amount entered
     ComputeDebitAmount(frequency){
-      let timeBetween;
-      let amount= parseFloat(this.removeComma(this.state.targetAmount));
-      let startDate = moment(this.state.startDate, 'DD MMMM, YYYY');
-      let enddate = moment(this.state.endDate, 'DD MMMM, YYYY');
+        let timeBetween;
+        let amount= parseFloat(this.removeComma(this.state.targetAmount));
+        let startDate = moment(this.state.startDate, 'DD MMMM, YYYY');
+        let enddate = moment(this.state.endDate, 'DD MMMM, YYYY');
 
 
-      if (frequency == "daily")
-      {
-         timeBetween = enddate.diff(startDate,'days') + 1;
-          console.log(timeBetween)
+        if (frequency == "daily")
+        {
+            timeBetween = enddate.diff(startDate,'days') + 1;
+            console.log(timeBetween)
 
-      }
+        }
 
-      else if (frequency == "weekly")
-      {
-          timeBetween = enddate.diff(startDate, 'week') + 1;
-      }
-      else
-      {
-        let years = (Number(enddate.format("YYYY") - Number(startDate.format("YYYY"))));
-        let targetMonth = Number(enddate.format("MM"));
-        let startMonth = Number(startDate.format("MM"));
-        let startDay = moment(startDate).date();
-        let endDay = moment(enddate).date();
-        timeBetween = (years * 12) + (targetMonth - startMonth);
-        if (endDay >= startDay){
-          timeBetween += 1;
-        }           
-      }
+        else if (frequency == "weekly")
+        {
+            timeBetween = enddate.diff(startDate, 'week') + 1;
+        }
+        else
+        {
+            let years = (Number(enddate.format("YYYY") - Number(startDate.format("YYYY"))));
+            let targetMonth = Number(enddate.format("MM"));
+            let startMonth = Number(startDate.format("MM"));
+            let startDay = moment(startDate).date();
+            let endDay = moment(enddate).date();
+            timeBetween = (years * 12) + (targetMonth - startMonth);
+            if (endDay >= startDay){
+                timeBetween += 1;
+            }
+        }
 
-      if (timeBetween < 1){
-        timeBetween = 1;
-        // console.log('timeBetween', timeBetween)
-      }
-      // console.log("monthly" +amount/timeBetween)
+        if (timeBetween < 1){
+            timeBetween = 1;
+            // console.log('timeBetween', timeBetween)
+        }
+        // console.log("monthly" +amount/timeBetween)
         return this.setState({showInterests:  parseFloat(amount/timeBetween).toFixed(2)});
     }
 
@@ -148,16 +143,16 @@ class FixedGoal extends React.Component {
         console.log(frequency);
         // let label = frequency.id.split("/")[0]
         this.setState({ "goalFrequencyType": frequency.value,
-                        "goalFrequencyLabel" : frequency.label,
-                        "goalFrequency": `${frequency.id}`
+            "goalFrequencyLabel" : frequency.label,
+            "goalFrequency": `${frequency.id}`
         });
         this.ComputeDebitAmount(frequency.value);
 
-        
+
         if (this.state.formsubmitted && frequency.value != "") {
             this.setState({ goalFrequencyInvalid: false })
         }
-        
+
 
         // this.setState({
         //         // showInterests:this.ComputeDebitAmount(this.state.goalFrequencyType,this.state.targetAmount,this.state.startDate,this.state.endDate)
@@ -165,13 +160,13 @@ class FixedGoal extends React.Component {
         // })
 
     };
-    
+
 
     handleChange = (e) => {
         let name = e.target.name;
         this.setState({ [name]: e.target.value })
     };
-    
+
     onSubmit(event){
         event.preventDefault();
 
@@ -191,7 +186,7 @@ class FixedGoal extends React.Component {
                 "goalFrequencyType":this.state.goalFrequencyType
             }));
         }
-       
+
     }
     gotoStep3 = () => {
         if (this.props.fixed_goal_step2)
@@ -209,14 +204,14 @@ class FixedGoal extends React.Component {
 
 
     render() {
-        
+
         let { frequency, goalFrequencyLabel,goalFrequencyType, goalFrequency, goalFrequencyInvalid} =this.state;
-       
+
         return (
             <Fragment>
                 <InnerContainer>
                     <SavingsContainer>
-                    {this.gotoStep3()}
+                        {this.gotoStep3()}
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -227,10 +222,10 @@ class FixedGoal extends React.Component {
                                         <ul>
                                             <li><a href="accounts.html" className="active">Goals</a></li>
                                             <NavLink to="/savings/goal/group-savings-selection">
-                                            <li><a href="statement.html">Group Savings</a></li>
-                                            </NavLink>                                            
+                                                <li><a href="statement.html">Group Savings</a></li>
+                                            </NavLink>
                                             <li><a href="#">Investments</a></li>
-                                        
+
                                         </ul>
                                     </div>
                                 </div>
@@ -238,77 +233,77 @@ class FixedGoal extends React.Component {
                             <div className="col-sm-12">
                                 <div className="row">
                                     <div className="col-sm-12">
-                                      <div className="max-600">
-                                       <div className="al-card no-pad">
-                                       <h4 className="m-b-10 center-text hd-underline">Create a Fixed Goal</h4>
-                                       <p className="header-info">To achieve your target of <span style={{color:'#AB2656'}}>N{this.state.targetAmount} <span style={{color:'#444444'}}>by</span> {moment(this.state.endDate).format("DD, MMMM, YYYY")}</span></p>
+                                        <div className="max-600">
+                                            <div className="al-card no-pad">
+                                                <h4 className="m-b-10 center-text hd-underline">Create a Fixed Goal</h4>
+                                                <p className="header-info">To achieve your target of <span style={{color:'#AB2656'}}>N{this.state.targetAmount} <span style={{color:'#444444'}}>by</span> {moment(this.state.endDate).format("DD, MMMM, YYYY")}</span></p>
 
-                                            <form onSubmit={this.onSubmit}>
-                                            
-                                            <div className="form-row">
-                                                <div className="form-group col-md-6">
-                                                    <label className="label-text">You will have to save</label>
-                                                    <input type="text"
-                                                     value={this.state.showInterests} 
-                                                     onChange={this.handleChange}
-                                                      placeholder="E.g. ₦100,000"/>
-                                                </div>
-                                                <p>{ goalFrequencyLabel.label }</p>
-                                                <div className={goalFrequencyInvalid ? "form-group col-md-6 form-error" : "form-group col-md-6"}>
-                                                    <label className="label-text">How often would you save</label>
-                                                    <Select type="text" 
-                                                    options={selectedTime} 
-                                                    value={goalFrequencyType.value}
-                                                    name="goalFrequency"
-                                                    onChange={this.handleSelectChange}/>
-                                                    {goalFrequencyInvalid && <div className='text-danger'>Enter duration</div>}
-                                                </div>
-                                            </div>
-                                            <div className="form-group">
-                                               <SelectDebitableAccounts
-                                                value={this.state.accountNumber}
-                                                accountInvalid={this.state.isAccountInvalid}
-                                                onChange={this.handleSelectDebitableAccounts}
-                                                labelText={"Select an account to debit"}/>
-                                               
-                                            </div>
-                                            
-                                            <div className="row">
-                                            <div className="col-sm-12">
-                                            <center>
-                                            <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Next
-                                            
-                                            </button>
-                                            </center>
-                                            
-                                            
-                                            </div>
-                                            
-                                            </div>
-                                                
-                                               
-                                            
-                                            </form>
+                                                <form onSubmit={this.onSubmit}>
 
-                                            
-                                            
+                                                    <div className="form-row">
+                                                        <div className="form-group col-md-6">
+                                                            <label className="label-text">You will have to save</label>
+                                                            <input type="text"
+                                                                   value={this.state.showInterests}
+                                                                   onChange={this.handleChange}
+                                                                   placeholder="E.g. ₦100,000"/>
+                                                        </div>
+                                                        <p>{ goalFrequencyLabel.label }</p>
+                                                        <div className={goalFrequencyInvalid ? "form-group col-md-6 form-error" : "form-group col-md-6"}>
+                                                            <label className="label-text">How often would you save</label>
+                                                            <Select type="text"
+                                                                    options={selectedTime}
+                                                                    value={goalFrequencyType.value}
+                                                                    name="goalFrequency"
+                                                                    onChange={this.handleSelectChange}/>
+                                                            {goalFrequencyInvalid && <div className='text-danger'>Enter duration</div>}
+                                                        </div>
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <SelectDebitableAccounts
+                                                            value={this.state.accountNumber}
+                                                            accountInvalid={this.state.isAccountInvalid}
+                                                            onChange={this.handleSelectDebitableAccounts}
+                                                            labelText={"Select an account to debit"}/>
+
+                                                    </div>
+
+                                                    <div className="row">
+                                                        <div className="col-sm-12">
+                                                            <center>
+                                                                <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Next
+
+                                                                </button>
+                                                            </center>
+
+
+                                                        </div>
+
+                                                    </div>
+
+
+
+                                                </form>
+
+
+
+                                            </div>
+
+
                                         </div>
-
-                                       
-                                       </div>
-                                         <center>
-                                             <a style={{ cursor: "pointer" }} onClick={this.OnBackClick} className="add-bene m-t-50">Go Back</a>
+                                        <center>
+                                            <a style={{ cursor: "pointer" }} onClick={this.OnBackClick} className="add-bene m-t-50">Go Back</a>
                                         </center>
-                                      
-                                      </div>
-                                    
+
+                                    </div>
+
                                 </div>
-                            
+
                             </div>
-                        
+
                         </div>
 
-                    
+
                     </SavingsContainer>
 
                 </InnerContainer>

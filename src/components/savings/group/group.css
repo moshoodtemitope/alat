@@ -461,6 +461,7 @@ font-weight: bold;
     display: flex;
     flex-wrap: nowrap;
     width: 100%;
+    font-family:'proxima_novasemibold';
 }
 
 .bottomDiscriptionDashBoard .left p {
@@ -605,9 +606,7 @@ font-weight: bold;
     padding-top: 15px;
     padding-bottom: 15px;
 }
-/* .subNav .left p {
-    border-bottom: 1px solid #AB2656;
-} */
+
 
 .subNav #middle p {
     border-bottom: 1px solid #AB2656;
@@ -686,10 +685,8 @@ font-weight: bold;
     font-family:"proxima_novasemibold";
     font-size: 8px;
     line-height: 10px;
-
-    text-transform: uppercase;
-
     color: #A90836;
+    /* text-transform: uppercase; */
 }
 
 .topDiscription .right p {
@@ -764,6 +761,9 @@ font-weight: bold;
 .butNav {
     padding-bottom: 50px;
     padding-top: 20px;
+    font-size: 12px;
+    color: #444444;
+    font-family:"proxima_novasemibold";
 }
 
 .navRight p {
@@ -814,6 +814,12 @@ letter-spacing: 0.168px;
 
 color: #4D4D4D;
 }
+
+.moreDetails .left p:last-child, .moreDetails .right p:last-child, .moreDetails .middle p:last-child {
+    font-family:"proxima_novasemibold";
+    font-size: 10px;
+    color: #878686;
+    }
 
 .butProgBar {
     font-family:"proxima_novaregular" !important;
@@ -1071,12 +1077,20 @@ margin-top: 40px;
 }
 
 
+.progress-bar {
+    -webkit-transition: width .3s ease;
+    -o-transition: width .3s ease;
+    transition: width .3s ease;
+}
+#subButtonGroupT{
+    margin-bottom: 40px
+}
 
 .perc {
     font-family:'proxima_novasemibold' !important;
     font-size: 12px !important;
+    text-transform: lowercase !important;
 }
-
 
 .shiftLeft {
     /* padding-left: 5px; */

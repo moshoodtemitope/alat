@@ -6,6 +6,9 @@ import successLogo from '../../../assets/img/success.svg';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import Members from '../../savings/group/list-item';
 import { connect } from "react-redux";
+import * as actions from "../../../redux/actions/fund-account/fund-acount.action";
+import {createGoalConstants} from '../../../redux/constants/goal/create-stash.constant'
+
 
 class CreateStashSuccessMessage extends React.Component {
     constructor(props){
@@ -80,8 +83,13 @@ class CreateStashSuccessMessage extends React.Component {
 
 
                                       </div>
+                                        <center>
+                                            <a onClick={() => { this.props.dispatch(actions.ClearAction(createGoalConstants.STASH_GOAL_REDUCER_CLEAR));
+                                                this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">Go to Dashboard</a>
+                                        </center>
 
-                                      </div>
+
+                                    </div>
                                 </div>
 
                             </div>

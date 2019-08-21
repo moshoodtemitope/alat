@@ -5,7 +5,8 @@ import {Fragment} from "react";
 import { connect } from 'react-redux';
 import moment from 'moment';
 import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant';
-import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
+import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions';
+
  
 
 
@@ -162,8 +163,14 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
 
                                 
                                 </div>
+                                <center>
+                                    <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(fixedGoalConstants.FIXED_GOAL_REDUCER_CLEAR));
+                                        this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
+                                        Go to Dashboard
+                                    </a>
+                                </center>
 
-                            
+
                             </div>
 
                         

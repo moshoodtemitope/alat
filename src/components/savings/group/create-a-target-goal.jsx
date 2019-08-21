@@ -318,34 +318,25 @@ class CreateATargetGoal extends React.Component {
                                                 
                                                 <div className={NoAccountSelectionWasDon ? "form-error" : "accountSelection"}>
                                                     <div className='col-sm-12'>
-                                                              
                                                                     <SelectDebitableAccounts
                                                                         options={selectedAccount}
                                                                         // value={this.state.selectedAccount}
                                                                         accountInvalid={this.state.isAccountInvalid}
                                                                         onChange={this.handleSelectDebitableAccounts}
                                                                         options={selectedAccount}
-                                                                        labelText="Select Account to debit" />
-                                                              
+                                                                        labelText="Select Account to debit" />      
                                                     </div>
                                                 </div>
                                                 
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <center>
-                                                            {/* <NavLink to='/savings/group/group-created'> */}
-                                                                  <button type="submit">submit</button>
-                                                            {/* </NavLink> */}
+                                                            <button className="btn-alat" id="subButtonGroupT" type="submit">submit</button>
                                                         </center>
                                                     </div>
                                                 </div>
                                             </form>
-
-
-
                                         </div>
-
-
                                        </div>
 
                                       </div>

@@ -45,8 +45,8 @@ class ParentDashBoard extends React.Component {
                             <div id="progressBarDashBoard">
                             <ProgressBar 
                             percentage={element.groupStatus}
-                            discBottom={element.yourSavedAmount}
-                            discSpan={element.targetAmount}
+                            discBottom={"₦" + element.yourSavedAmount + ' ' + 'of'}
+                            discSpan={"  " + "₦" +element.targetAmount}
                             discBottomSib='Amount Saved'
                             discBottomRight={element.groupStatus + '%' + ' ' + 'Completed'}
                             />
@@ -81,8 +81,8 @@ class ParentDashBoard extends React.Component {
                         <div id="progressBarDashBoard">
                             <ProgressBar 
                             percentage={element.status}
-                            discBottom='N20,000'
-                            discSpan={"N" + element.potTotal}
+                            // discBottom={"₦" + ' ' + '20,000'}
+                            discSpan={"₦" + element.potTotal}
                             discBottomSib='PotTotal'
                             discBottomRight={element.status + "%" + " " + 'Completed'}
                             />
