@@ -274,7 +274,7 @@ class FlexGoal extends React.Component {
     onSubmit(event){
         event.preventDefault();
 
-        if (this.checkGoalName()||this.checkAmount()) {
+        if (this.checkGoalName()||this.checkAmount() || this.valStartDate()) {
 
         } else {
             this.setState({isSubmitted : true });

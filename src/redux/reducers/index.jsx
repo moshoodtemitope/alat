@@ -51,12 +51,12 @@ const loanOnboardingReducerPile = (state, action)=>{
     }
     return loanOnboardingReducer(state, action);
 }
-const flexReducerPile = (state, action)=>{
-    if(action.type === flexGoalConstants.FLEX_GOAL_REDUCER_CLEAR){
-        state = undefined;
-    }
-    return flexGoalReducer (state, action);
-}
+// const flexReducerPile = (state, action)=>{
+//     if(action.type === flexGoalConstants.FLEX_GOAL_REDUCER_CLEAR){
+//         state = undefined;
+//     }
+//     return flexGoalReducer (state, action);
+// }
 
 
 
@@ -82,7 +82,7 @@ const airtimeReducer = combineReducers({
     airtime_webpin: airtime.buyAirtimeWebPinReducer,
     airtime_webpinotp: airtime.buyAirtimeWebPinOTPReducer,
     airtime_save_bene: airtime.airtimeSaveBeneficiaryReducer
-})
+});
 
 const fundAccountReducer = combineReducers({
     fundAccount : fundAccount.fundAccountReducer,
@@ -94,7 +94,7 @@ const fundAccountReducer = combineReducers({
     fundwema_alat: fundAccount.fundWemaAccountReducer
     //fundFromCardToken: fundAccount.fundFromTokenisedCardReducer,
     //fundfromWithPin: fundAccount.fundFromCardWithPinReducer
-})
+});
 
 const loanOnboardingReducer = combineReducers({
     loanOnboardingStep1 : loanOnboarding.loanOnboardingStep1Reducer,
@@ -102,11 +102,11 @@ const loanOnboardingReducer = combineReducers({
     loanOnboardingBVN: loanOnboarding.loanOnboardingVerifyBVNReducer,
     loanOnboardingStep3 : loanOnboarding.loanOnboardingStep3Reducer,
     loanOnboardingValidateOTP : loanOnboarding.loanOnboardingValidateOTPReducer
-})
-
-const flexGoalReducer = combineReducers({
-
 });
+
+// const flexGoalReducer = combineReducers({
+//
+// });
 
 
 const appReducer = combineReducers({
@@ -127,7 +127,7 @@ const appReducer = combineReducers({
     fundAccountReducerPile,
     loanOnboardingReducerPile,
     // goal reducer
-    flexReducerPile,
+    // flexReducerPile,
     accounts: global.debitableAccountsReducer,
     encrypt_rule: global.getEncryptionRuleReducer,
     verify_pan: global.verifyPANReducer,
