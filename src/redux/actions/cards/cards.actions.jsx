@@ -816,7 +816,8 @@ export const loadInfoForCardRequest = (token)=>{
                     dispatch(request(consume2));
                     return consume2
                         .then(response2=>{
-                            if(response.data.customerCardIds.length===0){
+                            // if(response.data.customerCardIds.length===0){
+                            if(response.data.customerCardIds.length!==0){ //To be removed
                                 // call get debittable accounts 
                                 let consume4 =  ApiService.request(routes.GETALLACCOUNTS, "GET", null, SystemConstant.HEADER); 
                                 dispatch(request(consume4));

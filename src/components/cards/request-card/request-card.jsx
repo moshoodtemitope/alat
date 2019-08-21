@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 import Select from 'react-select';
 import Modal from 'react-responsive-modal';
 import {Textbox} from "react-inputs-validation";
+import Slider from 'react-animated-slider';
 import "./../cards.scss";
 import  {routes} from '../../../services/urls';
 import whitelogo from "../../../assets/img/white-logo.svg"; 
@@ -57,6 +58,73 @@ class RequestCard extends React.Component {
 
     }
 
+
+    renderExistingCard(){
+        let props = this.props,
+        loadCardsInfo = props.infoForCardRequest;
+
+        let cardInfoFromRequest = loadCardsInfo.atmcard_info.response,
+        cardDesignUrl, cardStyle, cardDesignId, cardDesignObj,allDesigns;
+
+        allDesigns  = cardInfoFromRequest.allCardDesigns;
+        cardDesignId = cardInfoFromRequest.cardDeisgnId[0];
+        cardDesignObj = allDesigns.filter(eachDesign=>eachDesign.id===cardDesignId)[0];
+    
+
+        
+
+        console.log('design ids', cardDesignObj);
+        cardDesignUrl = `${BASEURL}/${cardDesignObj.url}`,
+        cardStyle= {
+            backgroundImage: `url('${cardDesignUrl}')`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center center'
+        };
+        return(
+            <div className="transfer-ctn">
+                <div className="atmcard-wrap nonvirtual" style={cardStyle}>
+                </div>
+                {cardDesignObj.isActive===true&&
+                    <div className="card-msg text-center m-t-20">You have an active ALAT CARD</div>
+                }
+                
+                {cardDesignObj.isActive!==true&&
+                    <div className="card-msg text-center m-t-20">You ALAT CARD is not yet active</div>
+                }
+            </div>
+        )
+    }
+
+    renderChooseCardDesign(){
+        let props = this.props,
+        loadCardsInfo = props.infoForCardRequest;
+        let cardInfoFromRequest = loadCardsInfo.atmcard_info.response,
+        allDesigns  = cardInfoFromRequest.allCardDesigns,cardDesignUrl,
+        cardStyle= {
+            // backgroundImage: `url('${cardDesignUrl}')`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center center'
+        };
+        
+        return(
+            <Slider duration="500" infinite="true" emulateTouch="true">
+                {allDesigns.map((eachDesign, key)=>{
+                    
+                    cardDesignUrl = `${BASEURL}/${eachDesign.url}`,
+                    // cardStyle.backgroundImage = `url(${BASEURL}/${eachDesign.url})`;
+                    console.log('dsdsdsdsd',cardStyle );
+                    return(
+                        cardStyle.backgroundImage = `url(${BASEURL}/${eachDesign.url})`,
+                        <div className="atmcard-wrap nonvirtual choosecard" style={{backgroundImage : `url(${BASEURL}/${eachDesign.url})`}} key={key}>
+                        </div>
+                    )
+                })}
+            </Slider>
+        )
+    }
+
     renderRequestNewCardScreen1(){
         let props = this.props,
             loadCardsInfo = props.infoForCardRequest;
@@ -65,34 +133,43 @@ class RequestCard extends React.Component {
             switch(loadCardsInfo.fetch_status){
                 case LOADING_INFOFOR_CARDREQUEST_PENDING:
                     return(
-                        <div className="text-center">
-                            Loading your card details...
+                        <div className="transfer-ctn">
+                            <div className="text-center">
+                                Loading your card details...
+                            </div>
                         </div>
                     );
 
                 case LOADING_INFOFOR_CARDREQUEST_SUCCESS:
                     let cardInfoFromRequest = loadCardsInfo.atmcard_info.response;
                     console.log('atm data',loadCardsInfo.atmcard_info.response);
-                        if(cardInfoFromRequest.cardDeisgnId.length===0){
-                            return(
-                                <div>
-                                    {this.renderNoAlatCard()}
-                                </div>
-                            );
-                        }else{
-                            return(
-                                <div className="text-center">
-                                    cardInfoFromRequest
-                                </div>
-                            );
-                        }
+                        // if(cardInfoFromRequest.cardDeisgnId.length===0){
+                        //     return(
+                        //         <div>
+                        //             {this.renderNoAlatCard()}
+                        //         </div>
+                        //     );
+                        // }else{
+                        //     return(
+                        //         <div className="">
+                        //             {this.renderExistingCard()}
+                        //         </div>
+                        //     );
+                        // }
+                        return(
+                            <div>
+                                {this.renderNoAlatCard()}
+                            </div>
+                        )
                         
                 case LOADING_INFOFOR_CARDREQUEST_FAILURE:
                         let loadCardError = loadCardsInfo.atmcard_info.error;
                         return(
-                            <div className="text-center">
-                                <div>{loadCardError}</div>
-                                <a className="cta-link" onClick={this.getCustomerATMCardsData}> Retry</a>
+                            <div className="transfer-ctn">
+                                <div className="text-center">
+                                    <div>{loadCardError}</div>
+                                    <a className="cta-link" onClick={this.getCustomerATMCardsData}> Retry</a>
+                                </div>
                             </div>
                         );
 
@@ -104,44 +181,20 @@ class RequestCard extends React.Component {
     renderNoAlatCard(){
         return(
             <div>
-                <center>
-                    <img className="nocards-icon" src={emptyVC} />
-                    <p> You currently do not have an  ALAT card</p>
-                    <button type="submit"  
-                        className="btn-alat m-t-10 m-b-20 text-center">Request Card</button>
-                </center>
-            </div>
-        )
-    }
-
-    renderExistingCard(){
-        let cardInfoFromRequest = loadCardsInfo.atmcard_info.response,
-        cardDesignUrl, cardStyle, cardDesignId, cardDesignObj;
-
-        cardDesignId = cardInfoFromRequest.cardDesignId[0];
-
-
-        cardDesignUrl = `${BASEURL}/${cardDataInfo.design.url}`,
-        cardStyle= {
-            backgroundImage: `url('${cardDesignUrl}')`,
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center center'
-        };
-        return(
-            <div>
-                <div className="atmcard-wrap nonvirtual" style={cardStyle}>
-                    <div className="cardnum-digits">
-                    {cardDataInfo.maskedPan}
-                    </div>
-                    <div className="cardname">
-                        {cardDataInfo.embossingName}
-                    </div>
-                    
+                <div className="transfer-ctn">
+                    <center>
+                        <img className="nocards-icon" src={emptyVC} />
+                        <p> You currently do not have an  ALAT card</p>
+                        <button type="submit"  
+                            className="btn-alat m-t-10 m-b-20 text-center">Request Card</button>
+                    </center>
                 </div>
+                {this.renderChooseCardDesign()}
             </div>
         )
     }
+
+   
 
 
     renderCardRequestWrapper(){
@@ -154,9 +207,9 @@ class RequestCard extends React.Component {
                             <div className="max-600">
                                 <div className="al-card no-pad">
                                     <h4 className="m-b-10 center-text hd-underline">Request an ALAT ATM Card</h4>
-                                    <div className="transfer-ctn">
+                                    {/* <div className="transfer-ctn"> */}
                                             {this.renderRequestNewCardScreen1()}
-                                    </div>
+                                    {/* </div> */}
                                     
                                 </div>
                             </div>
