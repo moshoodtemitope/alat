@@ -9,8 +9,8 @@ import '../savings.css';
 import {NavLink, Route} from "react-router-dom";
 import './group.css';
 
-if(window.performance.navigation.type == 1)
-    window.location.replace("http://localhost:8080/");
+// if(window.performance.navigation.type == 1)
+//     window.location.replace("http://localhost:8080/");
 
 class GroupSavingsSelection extends React.Component {
     render() {

@@ -14,8 +14,8 @@ import {GROUPSAVINGSCONSTANT} from "../../../redux/constants/savings/group/index
 import {history} from '../../../_helpers/history';
 import { Description } from './component';
 
-if(window.performance.navigation.type == 1)
-    window.location.replace("http://localhost:8080/");
+// if(window.performance.navigation.type == 1)
+//     window.location.replace("http://localhost:8080/");
 
 class JoinGroupSummary extends React.Component {
     constructor(props){

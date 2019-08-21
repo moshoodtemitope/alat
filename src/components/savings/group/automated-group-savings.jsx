@@ -18,8 +18,8 @@ const selectedTime = [
     {  value: 'Monthly' , label:"Monthly" }
 ];
 
-if(window.performance.navigation.type == 1)
-    window.location.replace("http://localhost:8080/");
+// if(window.performance.navigation.type == 1)
+//     window.location.replace("http://localhost:8080/");
 
 class AutomateGroupSavings extends React.Component {
     constructor(props){
@@ -33,12 +33,13 @@ class AutomateGroupSavings extends React.Component {
             goalFrequency: "",
             Frequency:"",
 
-            howMuchValidity:false,
+            frequencyValidity:false,
             endDateValidity:false,
             startDateValidity:false,
             amountToContributeValidity:false,
-            startDate: new Date(),
-            endDate: new Date(),
+            selectedAccountValidity: false,
+            startDate: null,
+            endDate: null,
             amountToBeWithDrawn:null,
             howOftenDoYouWantToSave: null
 
@@ -49,13 +50,19 @@ class AutomateGroupSavings extends React.Component {
         var result = "valid";
         for(var x in this.state){
             switch(x){
-                case 'endDate':
-                   if(this.state[x] == new Date() || this.state[x] == ""){
+                case 'startDate':
+                   if(this.state[x] == null || this.state[x] == ""){
                       console.log(x)
                       result = null;
                       break;
                    }     
-                case 'amountToContributeValidity':
+                case 'endDate':
+                   if(this.state[x] == null || this.state[x] == ""){
+                      console.log(x)
+                      result = null;
+                      break;
+                   }     
+                case 'amountToBeWithDrawn':
                    if(this.state[x] == null || this.state[x] == ""){
                        console.log(x)
                        result = null;
@@ -79,29 +86,6 @@ class AutomateGroupSavings extends React.Component {
         return result;
     }
 
-    validateEndDate=()=>{
-        if(this.state.endDate == null || this.state.endDate == ""){
-            this.setState({endDateValidity: true});
-            return true;
-        }else {this.setState({endDateValidity : false});
-           return false;
-        }
-    }
-
-    handleSelectedDate = (startDate) => {
-        this.setState({
-            startDate: startDate
-        });
-        // this.props.dispatch(actions.setAutomateSavingsStartDate(startDate));
-    }
-
-    handleEndDate = (endDate) => {
-        this.setState({
-            endDate: endDate
-        })
-        // this.props.dispatch(actions.setAutomateSavingsEndDate(endDate));
-    }
-
     validateStartDate=()=>{
         if(this.state.startDate == null || this.state.startDate == ""){
             this.setState({startDateValidity: true});
@@ -111,11 +95,21 @@ class AutomateGroupSavings extends React.Component {
         }
     }
 
+    validateEndDate=()=>{
+        if(this.state.endDate == null || this.state.endDate == ""){
+            this.setState({endDateValidity: true});
+            return true;
+        }else {this.setState({endDateValidity : false});
+           return false;
+        }
+    }
+
+
     validateFrequencyOfWithdrawals=()=>{
         if(this.state.howOftenDoYouWantToSave == null || this.state.howOftenDoYouWantToSave == ""){
-            this.setState({howMuchValidity: true});
+            this.setState({frequencyValidity: true});
             return true;
-        }else {this.setState({howMuchValidity : false});
+        }else {this.setState({frequencyValidity : false});
             return false;
         }
     }
@@ -125,6 +119,15 @@ class AutomateGroupSavings extends React.Component {
             this.setState({amountToContributeValidity: true});
             return true;
         }else {this.setState({amountToContributeValidity : false});
+            return false;
+        }
+    }
+
+    validateSelectedAccount = () => {
+        if(this.state.selectedAccount == null || this.state.selectedAccount == ""){
+            this.setState({selectedAccountValidity: true});
+            return true;
+        }else {this.setState({SelectDebitableAccounts : false});
             return false;
         }
     }
@@ -145,16 +148,30 @@ class AutomateGroupSavings extends React.Component {
         }
     }
 
+    handleSelectedDate = (startDate) => {
+        this.setState({
+            'startDate': startDate
+        });
+        // this.props.dispatch(actions.setAutomateSavingsStartDate(startDate));
+    }
+
+    handleEndDate = (endDate) => {
+        this.setState({
+            'endDate': endDate
+        })
+        // this.props.dispatch(actions.setAutomateSavingsEndDate(endDate));
+    }
+
     handleSetAmount = (event) => {
         this.setState({
-            amountToBeWithDrawn: event.target.value
+            'amountToBeWithDrawn': event.target.value
         })
 
         this.props.dispatch(actions.setAmountToWithDraw(event.target.value));
     }
 
     handleSelectChange = (Frequency) => {
-        this.setState({ "goalFrequency": Frequency.value
+        this.setState({ "howOftenDoYouWantToSave": Frequency.value
               });
         //  if (this.state.formsubmitted && Frequency.value != "")
         //   this.setState({ TimeSavedInvalid: false })
@@ -187,7 +204,20 @@ class AutomateGroupSavings extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        this.SubmitAutomatedGroupSavings();
+        this.validateAmountToBeWithDrawn();
+        this.validateEndDate();
+        this.validateStartDate();
+        this.validateFrequencyOfWithdrawals();
+        this.validateSelectedAccount();
+        
+        switch(this.checkingUserInputs()){
+            case null:
+               console.log('Empty fields presents')
+               break;
+            case 'valid':
+               this.SubmitAutomatedGroupSavings();
+        }
+        
         console.log('what');
     }
 
@@ -202,8 +232,8 @@ class AutomateGroupSavings extends React.Component {
    }
 
     render() {
-        const {selectedAccount,startDate,endDate,amountToContributeValidity,goalFrequency, endDateValidity, startDateValidity, howMuchValidity,
-        } = this.state;
+        const {selectedAccount,startDate,endDate,frequencyValidity,amountToContributeValidity,goalFrequency, endDateValidity, startDateValidity, howMuchValidity,
+            selectedAccountValidity} = this.state;
 
         return (
             <Fragment>
@@ -238,7 +268,7 @@ class AutomateGroupSavings extends React.Component {
                                        <h4 className="m-b-10 center-text hd-underline">Automate Group Savings</h4>
                                             <form onSubmit={this.handleSubmit}>
                                                 <div className="form-row">
-                                                    <div className={howMuchValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                    <div className={frequencyValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                         <label className="label-text">How would you like to save?</label>
                                                          <Select type="text" 
                                                             options={selectedTime}
@@ -283,19 +313,22 @@ class AutomateGroupSavings extends React.Component {
                                                     </div>
                                                 </div>
                                                    
-                                                <div className="accountSelect">
-                                                        <SelectDebitableAccounts
-                                                                                accountInvalid={this.state.isAccountInvalid}
-                                                                                onChange={this.handleSelectDebitableAccounts}
-                                                                                labelText="Select Account to debit" 
-                                                                                options={selectedAccount}/>
+                                                <div className="form-row">
+                                                      <div className={selectedAccountValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                      <SelectDebitableAccounts
+                                                            accountInvalid={this.state.isAccountInvalid}
+                                                            onChange={this.handleSelectDebitableAccounts}
+                                                            labelText="Select Account to debit" 
+                                                            options={selectedAccount}/>
+                                                      </div>
                                                 </div>
+                                                
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <center>
-                                                            <NavLink to='/savings/group/success-message'>
-                                                                  <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Accept</button>
-                                                            </NavLink>
+                                                            
+                                                               <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Accept</button>
+                                                            
                                                         </center>
                                                     </div>
                                                 </div>

@@ -148,20 +148,22 @@
 .smallnavtop  ul {
     /* width: 100% !important; */
     float: right !important;
+    margin-left: 145px !important;
 }
 
 .smallnavtop ul li {
     display: inline-block;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    text-align: center;
-    font-family: Proxima Nova;
+    padding-top: 10px;
+    padding-bottom: 10px; 
+    text-align: center; 
+    font-family: Proxima Nova;        
     font-size: 16px;
     line-height: 19px;
     color: #FFFFFF;
     background-color: #AB2656;
     border-radius: 3px;
     float: right;
+    margin-left: 200px;
 }
 
 #upDateButton {
@@ -313,7 +315,7 @@
     font-size: 14px;
 }
 .compContainer .eachComp {
-    width: 330px;
+    width: 345px;
     height: 230px;
     border-radius: 2%;
     background-color: white;
@@ -327,8 +329,8 @@
 }
 
 .compContainer2 .eachComp2 {
-    width: 330px;
-    height: 260px;
+    width: 345px;
+    height: 250px;
     border-radius: 2%;
     background-color: white;
     margin-left: 20px;
@@ -404,6 +406,10 @@
     width: 80%;
 }
 
+/* .topCard .left p:nth-child(1) {
+    text-transform: capitalize !important;
+} */
+
 .topCard .left .top {
   color: #A90836;
   width: 100%;
@@ -411,10 +417,11 @@
   font-family:'proxima_novasemibold';
 font-size: 8px;
 line-height: 10px;
-color: #A90836;
+/* color: #A90836; */
 padding-bottom: 5px;
 padding-top: 20px;
 font-weight: bold;
+text-transform: uppercase !important;
 }
 
 .topCard .left .bottom {
@@ -545,8 +552,13 @@ font-weight: bold;
     font-family:'proxima_novasemibold';
     font-size: 14px;
     line-height: 17px;
-    color: #4D4D4D
-    ;
+    color: #4D4D4D;
+}
+
+.bottomDisCriptionTray .left p:last-child {
+    font-family:"proxima_novaregular" !important;
+    font-size: 10.4px;
+    color: #878686
 }
 
 .bottomDisCriptionTray .right p {
@@ -675,7 +687,7 @@ font-weight: bold;
     font-size: 8px;
     line-height: 10px;
 
-    /* text-transform: uppercase; */
+    text-transform: uppercase;
 
     color: #A90836;
 }
@@ -696,17 +708,25 @@ font-weight: bold;
 
 .bottomDiscription .left p:nth-child(1) {
     font-family:"proxima_novasemibold";
-    font-size: 12px;
+    font-size: 10px;
     line-height: 14px;
     color: #4D4D4D;
 }
 
 .bottomDiscription .left p {
     color: #4D4D4D;
+    font-size: 12px;
+    font-family:"proxima_novaregular";
 }
 
 .bottomDiscription .right p:nth-child(1) {
     font-size: 12px;
+    
+}
+
+.botPercent {
+    color: #717171 !important;
+    font-size: 10px;
 }
 
 .bottomDiscription .right p {
@@ -796,8 +816,9 @@ color: #4D4D4D;
 }
 
 .butProgBar {
-    font-family:"proxima_novaregular";
+    font-family:"proxima_novaregular" !important;
     font-size: 10px !important; 
+    color: #717171 !important;
 }
 
 .moreDetails {
@@ -1052,10 +1073,11 @@ margin-top: 40px;
 
 
 .perc {
-    font-family:'proxima_novasemibold';
+    font-family:'proxima_novasemibold' !important;
+    font-size: 12px !important;
 }
 
 
 .shiftLeft {
-    padding-left: 5px;
+    /* padding-left: 5px; */
 }

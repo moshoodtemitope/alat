@@ -25,7 +25,7 @@ export default (props) => {
                              <p className="butProgBar">{props.discBottomSib}</p>
                          </div>
                          <div className='right'>
-                             <p><span>{props.discBottomRight}</span></p>
+                             <p><span className='botPercent'>{props.discBottomRight}</span></p>
                              <p>{props.discBottomSibRight}</p>
                          </div>
                      </div>

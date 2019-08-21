@@ -27,8 +27,8 @@ const quantityOfMembers = [
     {  value: '12', label: "12"}
 ];
 
-if(window.performance.navigation.type == 1)
-    window.location.replace("http://localhost:8080/");
+// if(window.performance.navigation.type == 1)
+//     window.location.replace("http://localhost:8080/");
     
 class RotatingGroup extends React.Component {
     constructor(props){

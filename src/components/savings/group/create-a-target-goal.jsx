@@ -13,8 +13,8 @@ import * as actions from '../../../redux/actions/savings/group-savings/group-sav
 import {GROUPSAVINGSCONSTANT} from "../../../redux/constants/savings/group/index";
 import {history} from '../../../_helpers/history';
 
-if(window.performance.navigation.type == 1)
-    window.location.replace("http://localhost:8080/");
+// if(window.performance.navigation.type == 1)
+//     window.location.replace("http://localhost:8080/");
 
 class CreateATargetGoal extends React.Component {
     constructor(props){
@@ -215,7 +215,7 @@ class CreateATargetGoal extends React.Component {
     }
 
     handleSubmit = (event) => {
-         event.preventDefault();
+        event.preventDefault();
         console.log("handleSubmit was triggered");
         if(this.checkMinimumAccountToContribute() || this.checkTheSelectedAccount()||this.checkTheEndDate()||this.checkGroupPurpose()||this.checkGroupName()||this.checkTheTargetAmount()){
             console.log(this.checkMinimumAccountToContribute())
