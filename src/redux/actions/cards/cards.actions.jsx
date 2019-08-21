@@ -816,8 +816,8 @@ export const loadInfoForCardRequest = (token)=>{
                     dispatch(request(consume2));
                     return consume2
                         .then(response2=>{
-                            // if(response.data.customerCardIds.length===0){
-                            if(response.data.customerCardIds.length!==0){ //To be removed
+                            if(response.data.customerCardIds.length===0){
+                            // if(response.data.customerCardIds.length!==0){ //To be removed
                                 // call get debittable accounts 
                                 let consume4 =  ApiService.request(routes.GETALLACCOUNTS, "GET", null, SystemConstant.HEADER); 
                                 dispatch(request(consume4));
@@ -855,22 +855,95 @@ export const loadInfoForCardRequest = (token)=>{
                                 dispatch(request(consume3));
                                 return consume3
                                     .then(response3=>{
-                                        let existingcardDetails;
 
-                                        if(response3.data.length>=1){
-                                            existingcardDetails = {
-                                                cardDesignId    : response.data.customerCardIds,
-                                                allCardDesigns  : response2.data,
-                                                pans            : response3.data
-                                            }
-                                        }else{
-                                            existingcardDetails = {
-                                                cardDesignId    : response.data.customerCardIds,
-                                                allCardDesigns  : response2.data,
-                                                pans            :null
-                                            }
-                                        }
-                                        dispatch(success(existingcardDetails));
+                                        // Get customer accounts
+                                        let consume5 =  ApiService.request(routes.GETALLACCOUNTS, "GET", null, SystemConstant.HEADER); 
+                                        dispatch(request(consume5));
+                                        return consume5
+                                            .then(response5=>{
+
+                                                // Get States and LGAs
+                                                let consume6 =  ApiService.request(routes.GETSTATES, "GET", null, SystemConstant.HEADER); 
+                                                dispatch(request(consume6));
+                                                    return consume6
+                                                        .then(response6=>{
+                                                            let existingcardDetails;
+
+                                                            if(response3.data.length>=1){
+                                                                existingcardDetails = {
+                                                                    cardDesignId    : response.data.customerCardIds,
+                                                                    allCardDesigns  : response2.data,
+                                                                    pans            : response3.data,
+                                                                    customerAccounts: response5.data,
+                                                                    statesData      : response6.data.States,
+                                                                    citiesData      : response6.data.Cities,
+                                                                }
+                                                            }else{
+                                                                existingcardDetails = {
+                                                                    cardDesignId    : response.data.customerCardIds,
+                                                                    allCardDesigns  : response2.data,
+                                                                    pans            :null,
+                                                                    customerAccounts: response5.data,
+                                                                    statesData      : response6.data.States,
+                                                                    citiesData      : response6.data.Cities,
+                                                                }
+                                                            }
+                                                            dispatch(success(existingcardDetails));
+                                                        })
+                                                        .catch(error=>{
+                                                            if(error.response && typeof(error.response.message) !=="undefined"){
+                                                                dispatch(failure(error.response.message.toString()));
+                                                            }
+                                                            else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                                                                if(error.response.data.Message){
+                                                                    dispatch(failure(error.response.data.Message.toString()));
+                                                                }
+                                            
+                                                                if(error.response!==undefined && error.response.data.message){
+                                                                    dispatch(failure(error.response.data.message.toString()));
+                                                                }
+                                                            }
+                                                            else{
+                                                                dispatch(failure('An error occured. Please try again '));
+                                                            }
+                                                        })
+
+                                                
+                                            })
+                                            .catch(error=>{
+                                                if(error.response && typeof(error.response.message) !=="undefined"){
+                                                    dispatch(failure(error.response.message.toString()));
+                                                }
+                                                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                                                    if(error.response.data.Message){
+                                                        dispatch(failure(error.response.data.Message.toString()));
+                                                    }
+                                
+                                                    if(error.response!==undefined && error.response.data.message){
+                                                        dispatch(failure(error.response.data.message.toString()));
+                                                    }
+                                                }
+                                                else{
+                                                    dispatch(failure('An error occured loading your accounts details. Please try again '));
+                                                }
+                                            })
+
+                                        // let existingcardDetails;
+
+                                        // if(response3.data.length>=1){
+                                        //     existingcardDetails = {
+                                        //         cardDesignId    : response.data.customerCardIds,
+                                        //         allCardDesigns  : response2.data,
+                                        //         pans            : response3.data
+                                        //     }
+                                        // }else{
+                                        //     existingcardDetails = {
+                                        //         cardDesignId    : response.data.customerCardIds,
+                                        //         allCardDesigns  : response2.data,
+                                        //         pans            :null
+                                        //     }
+                                        // }
+                                        // dispatch(success(existingcardDetails));
                                     })
                                     .catch(error=>{
                                         if(error.response && typeof(error.response.message) !=="undefined"){

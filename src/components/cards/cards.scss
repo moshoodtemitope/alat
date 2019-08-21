@@ -19,6 +19,23 @@
         margin-right: 14px;
     }
 }
+.design-options-wrap{
+    width: 80%;
+    margin: 0 auto;
+    .slider{
+        height: 240px;
+    }
+    .slider a.previousButton, .slider a.nextButton{
+        top: 50%;
+    }
+    .slider a.previousButton {
+        left: -5px;
+    }
+    .slider a.nextButton {
+        right: -5px;
+    }
+}
+
 .history-wrap {
     padding-bottom: 30px;
 }
@@ -211,7 +228,7 @@
             bottom: 20px;
         }
     }
-    &.choosecard{
+    &.choosecarddesign{
         position: absolute;
         width: 100%;
         max-width: 420px;
@@ -220,7 +237,28 @@
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center center;
+        &:hover{
+            cursor: pointer;
+        }
+        &.selected-design:after{
+            content: '';
+            width: 45px;
+            height: 45px;
+            position: absolute;
+            background: url("../../assets/img/selected.svg") no-repeat;
+            background-position: center center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
     }
+    &.slide.current{
+        left: 30px;
+    }
+}
+.helptext{
+    display: block;
+    font-size: 11px;
 }
 .return-text a.btn-alat {
     color: #fff!important;
