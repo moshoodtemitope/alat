@@ -9,11 +9,9 @@ import DatePicker from "react-datepicker";
 import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
-import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
+import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
+import * as action from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import {history} from '../../../_helpers/history';
-
-// if(window.performance.navigation.type == 1)
-//     window.location.replace("http://localhost:8080/");
 
 class JoinAGroup extends React.Component {
     constructor(props){
@@ -37,9 +35,16 @@ class JoinAGroup extends React.Component {
         let container = event.target.value.split('');
         let count = 0;
         container.map(() => {
-           if(count == 9)
-               this.setState({'warning': 'valid'});
-               this.setState({'warningStyle': 'valid'});
+           if(count == 8){
+                this.setState({'warning': 'valid'});
+                this.setState({'warningStyle': 'valid'});
+           }
+
+           if(count != 8){
+               this.setState({'warningStyle': 'notValid'});
+               this.setState({'warning': 'notValid'});
+           }
+                
            count++;
         });
 
@@ -51,17 +56,26 @@ class JoinAGroup extends React.Component {
         });
     }
 
-    // JoinAGroup = () => {
-    //    if(this.state.warning == true)
-    //        return;
+    FindAGroup = () => {
+       if(this.state.warning != 'valid')
+           return;
+       console.log(this.state.warning);
+       const data = {
+           referralCode: this.state.referralCode
+       }
 
-    //    const data = {
-    //        referralCode: this.state.referralCode,
-    //        DebitAccount: this.state.selectedAccount
-    //    }
-    //    console.log(data)
-    //    this.props.dispatch(actions.joinAGroup(this.state.user.token, data))
-    // }
+       const data2 = {
+           data: this.state.referralCode,
+           type: 'refferalCode'
+       }
+       console.log(data2)
+       console.log(data);
+       //return;
+       this.props.dispatch(action.refferalCode(data2))
+       this.props.dispatch(actions.findGroup(this.state.user.token, data));
+       
+    //    this.formSubmitButton.disable = true;
+    }
 
     NavigateToSummary = () => {
         console.log(this.state.referralCode);
@@ -74,7 +88,8 @@ class JoinAGroup extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        this.NavigateToSummary();
+        this.FindAGroup();
+        //this.NavigateToSummary();
         return null;
     }
 
@@ -138,7 +153,7 @@ class JoinAGroup extends React.Component {
                                                     <div className="form-group col-md-12 butLeft joinButton">
                                                        <center>
                                                            {/* <NavLink to='/savings/group/joingroup-success-message'> */}
-                                                                 <button>Join Group</button>
+                                                                 <button type='submit' ref={element => this.formSubmitButton = element}>Join Group</button>
                                                            {/* </NavLink> */}
                                                        </center>
                                                     </div>

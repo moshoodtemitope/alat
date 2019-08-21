@@ -41,11 +41,9 @@ export const groupDetails = (token, data) => {
                     history.push('/savings/group/group-analytics');
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to get GroupCustomersDetails'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -67,11 +65,9 @@ export const deleteGroup = (token, data) => {
                      history.push('/savings/group/success-message');
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to get GroupCustomersDetails'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -91,11 +87,9 @@ export const contribute = (token, data) => {
                 dispatch(success(response.data));
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('You are unable to contribute now!'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -116,11 +110,9 @@ export const editGroup = (token, data) => {
                 history.push('/savings/group/success-message');
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('You are unable to contribute now!'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -138,14 +130,12 @@ export const pauseGroup = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
-                history.push('/savings/group/success-message');
+                history.push('/savings/group/success-message');  
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('WE are unable to PAUSE GROUP NOW!'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -159,18 +149,17 @@ export const pauseGroup = (token, data) => {
 export const findGroup = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.DELETE_GROUP, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.FIND_GROUP.concat("?referralCode=", data.referralCode), "GET", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                history.push('/savings/join-group-summary');
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('WE are unable to PAUSE GROUP NOW!'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -192,11 +181,9 @@ export const customerGroup = (token, data = null) => {
                 //     history.push('/savings/group/group-analytics');
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('WE are unable to GET CUSTOMER GROUPS NOW!'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -209,18 +196,17 @@ export const customerGroup = (token, data = null) => {
 export const joinGroup = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.DELETE_GROUP, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.JOIN_GROUP, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                this.history.push('/savings/group/joingroup-success-message');
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('WE are unable to PAUSE GROUP NOW!'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -229,7 +215,6 @@ export const joinGroup = (token, data) => {
     function success(response) { return {type:GROUPSAVINGSCONSTANT.JOIN_GROUP_SUCCESS, response} }
     function failure(error) { return {type:GROUPSAVINGSCONSTANT.JOIN_GROUP_ERROR, error} }
 };
-
 
 export const scheduleContribution = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
@@ -242,11 +227,9 @@ export const scheduleContribution = (token, data) => {
                 history.push('/savings/group/success-message');
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('WE are unable to Schedule Group Contribution Now!'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -267,11 +250,9 @@ export const deleteMember = (token, data) => {
                 dispatch(success(response.data));
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to delete this member now!'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -291,11 +272,9 @@ export const cashOut = (token, data) => {
                 dispatch(success(response.data));
             }) 
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to delete this member now!'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -315,11 +294,9 @@ export const continueScheduleGroupPayment = (token, data) => {
                 dispatch(success(response.data));
             }) 
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to delete this member now!'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };

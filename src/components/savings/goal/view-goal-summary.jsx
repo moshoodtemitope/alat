@@ -47,14 +47,14 @@ class ViewGroupSummary extends React.Component {
     }
     PauseCustomerGoal= () => {
         let data = {
-            GoalName:this.state.goal.goalName,
-            TargetDate:this.state.goal.targetDate,
-            StartDate:this.state.goal.startDate,
-            TargetAmount:parseFloat(this.state.goal.targetAmount),
-            GoalTypeId:parseInt(this.state.goal.goalTypeId),
-            DebitAmount:parseFloat(this.state.goal.debitAmount),
-            FrequencyId:parseInt(this.state.goal.frequencyId),
-            DebitAccount:this.state.goal.debitAccount
+            goalName:this.state.goal.goalName,
+            targetDate:this.state.goal.targetDate,
+            startDate:this.state.goal.startDate,
+            targetAmount:parseFloat(this.state.goal.targetAmount),
+            goalTypeId:parseInt(this.state.goal.goalTypeId),
+            debitAmount:parseFloat(this.state.goal.debitAmount),
+            frequencyId:parseInt(this.state.goal.frequencyId),
+            debitAccount:this.state.goal.debitAccount
         };
         this.props.dispatch(actions.PauseCustomerGoal(this.state.user.token, data));
     };
@@ -250,7 +250,7 @@ class ViewGroupSummary extends React.Component {
 
                                                     <ProgressBar
                                                         discTopSpan="Goal Progress"
-                                                        discTopRight={details.percentageCompleted +"%"+" Completed"}
+                                                        discTopRight={details.percentageCompleted.toFixed(2) +"%"+" Completed"}
                                                         percentage={details.percentageCompleted}
                                                         discBottom={"₦"+details.amountSaved}
                                                         discSpan={"of"+"₦"+details.targetAmount}

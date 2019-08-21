@@ -134,7 +134,7 @@ export const fixedGoal ={
     setAutomateSavingsEndDate,
     setAutomateSavingsStartDate,
     setAmountToWithDraw,
-    setFrequency
+    setFrequency,
 }
  
 export const rotatingSavings = {

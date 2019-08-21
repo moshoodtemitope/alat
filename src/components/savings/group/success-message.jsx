@@ -75,12 +75,14 @@ class SuccessMessage extends React.Component {
                                     </div>
                                 </div>
                             </div>
+                            {this.props.alert && this.props.alert.message &&
+                                <div style={{width: "100%", marginLeft:"150px",marginRight:"150px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                            }
                             <div className="col-sm-12">
                                 <div className="row">
                                     <div className="col-sm-12">
                                       <div className="max-600">
                                        <div className="al-card no-pad">
-
                                             <form className=''>
                                                 <img src="/src/assets/img/success.svg" className="succefullMessage" alt=""/>
                                                 <div className="form-group">
@@ -122,7 +124,9 @@ function mapStateToProps(state){
         setAmountToWithDraw: state.setAmountToWithDraw.data,
         setFrequency: state.setFrequency.data,
         groupSavingsEsusu: state.getGroupSavingsEsusu.data,
-        groups: state.customerGroup.data
+        groups:state.customerGroup.data,
+        alert:state.alert,
+
     }
 }
 export default connect(mapStateToProps)(SuccessMessage);

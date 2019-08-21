@@ -49,11 +49,8 @@ export const addFixedGoal =(data)=>{
                 })
             })
             .catch(error => {
-               // console.log("error in here");
-               // dispatch(success(response.data, request));
                  dispatch(failure(modelStateErrorHandler(error)));
                  dispatch(alertActions.error(modelStateErrorHandler(error)));
-                // throw(error);
             });
     };
 

@@ -186,10 +186,7 @@ export function refferalCode (state=[], action){
            }
        
         default: 
-        return {
-            message: "refferalCode",
-            data: ""
-        }
+            return {... state}
     }
 }
 

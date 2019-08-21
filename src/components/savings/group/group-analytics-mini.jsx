@@ -162,6 +162,7 @@ class GroupAnalyticsMini extends React.Component {
                                                       rightContent={this.GetReferalCode()}
                                                       rightContentBottom="Group Code"
                                                      />
+
                                                     <Buttons
                                                         buttonType={this.state.buttonType}
                                                         buttonName="Start"          

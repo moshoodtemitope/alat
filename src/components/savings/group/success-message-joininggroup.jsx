@@ -73,6 +73,9 @@ class JoinGroupSuccessMessage extends React.Component {
                                     </div>
                                 </div>
                             </div>
+                            {this.props.alert && this.props.alert.message &&
+                                <div style={{width: "100%", marginLeft:"150px",marginRight:"150px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                            }
                             <div className="col-sm-12">
                                 <div className="row">
                                     <div className="col-sm-12">
@@ -108,7 +111,9 @@ class JoinGroupSuccessMessage extends React.Component {
 
 function mapStateToProps(state){
     return {
-        joinAGroup: state.joinAGroup.data
+        joinAGroup: state.joinAGroup.data,
+        alert:state.alert,
+
     }
 }
 export default connect(mapStateToProps)(JoinGroupSuccessMessage);

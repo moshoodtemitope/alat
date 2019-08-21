@@ -269,9 +269,9 @@ class CreateATargetGoal extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            {/* {this.props.alert && this.props.alert.message &&
+                             {this.props.alert && this.props.alert.message &&
                             <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
-                            } */}
+                            } 
                             <div className="col-sm-12">
                                 <div className="row">
                                     <div className="col-sm-12">
@@ -331,7 +331,11 @@ class CreateATargetGoal extends React.Component {
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <center>
-                                                            <button className="btn-alat" id="subButtonGroupT" type="submit">submit</button>
+                                                            <button disabled={this.props.data.message === GROUPSAVINGSCONSTANT.CREATEGROUPSAINGSPENDING}
+                                                             className="btn-alat" id="subButtonGroupT" type="submit">
+                                                            {this.props.data.message === GROUPSAVINGSCONSTANT.CREATEGROUPSAINGSPENDING ? "Processing..." :"Create Target Goal"}
+
+                                                             </button>
                                                         </center>
                                                     </div>
                                                 </div>
@@ -357,7 +361,7 @@ class CreateATargetGoal extends React.Component {
 function mapStateToProps(state){
     return {
         data: state.groupSavings,
-        alert: state.alert,
+        alert:state.alert,
         groupDetails: state.groupDetails.data,
         groupSavingsEsusu: state.getGroupSavingsEsusu.data,
         groups: state.customerGroup.data
