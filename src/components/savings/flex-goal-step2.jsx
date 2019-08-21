@@ -32,6 +32,7 @@ import React from 'react'
              isSubmitted: false,
              isAccountInvalid: false,
              frequency:"",
+             goalFrequencyValue:"",
              goalFrequencyInvalid:false
 
 
@@ -74,9 +75,11 @@ import React from 'react'
              this.setState({
                  targetAmount:data.targetAmount,
                  startDate: data.startDate,
-                 endDate: data.endDate,
                  goalName:data.goalName,
-                 showInterests:data.showInterests,
+                 debitAmount:data.debitAmount,
+                 goalFrequencyValue:data.goalFrequencyValue,
+                 goalFrequency:data.goalFrequency,
+
              });
          }
      }
@@ -90,19 +93,24 @@ import React from 'react'
          event.preventDefault();
 
          this.setState({ isSubmitted: true });
-         if (this.checkAccountNumber()|| this.checkgoalFrequency()) {
+         if (this.checkAccountNumber()) {
 
          } else {
              this.setState({isSubmitted : true });
-             this.props.dispatch(actions.fetchFlexGoalStep2({
-                 "goalName":this.state.goalName,
-                 "startDate":this.state.startDate,
-                 "endDate":this.state.endDate,
-                 "targetAmount":this.state.targetAmount,
-                 "goalFrequency":this.state.goalFrequency,
-                 "debitAccount":this.state.debitAccount,
-                 "showInterests":this.state.showInterests,
-             }));
+             //console.log('condition returned true');
+             let data = {
+                "goalName":this.state.goalName,
+                "startDate":this.state.startDate,
+                "targetAmount":this.state.targetAmount,
+                "debitAmount":this.state.debitAmount,
+                "goalFrequency":this.state.goalFrequency,
+                "debitAccount":this.state.debitAccount,
+                "goalFrequencyValue":this.state.goalFrequencyValue,
+
+            }
+            //console.log(data);
+            //return;
+            this.props.dispatch(actions.fetchFlexGoalStep2(data));
          }
 
      }
@@ -166,9 +174,9 @@ import React from 'react'
                                              <div className="row">
                                              <div className="col-sm-12">
                                              <center>
-                                             <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Next
+                                                 <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Next
 
-                                             </button>
+                                                 </button>
                                              </center>
 
 

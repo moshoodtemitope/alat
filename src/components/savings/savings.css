@@ -248,7 +248,7 @@
   .top-goal-Message{
       color: #9F083E;
       font-size: 14px;
-      font-family: Proxima Nova;
+      font-family: "proxima_novasemibold";
       line-height: 24px;
       margin-left: 60px;
 
@@ -267,5 +267,13 @@
     background-color: transparent;
     display: flex;
     flex-wrap: wrap;
+
+}
+.information{
+    font-size: 14px;
+    color:#4D4D4D;
+    font-family:"proxima_novaregular";
+    margin-top: 40px;
+
 
 }

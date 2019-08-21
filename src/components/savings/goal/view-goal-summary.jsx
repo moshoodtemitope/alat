@@ -167,6 +167,8 @@ class ViewGroupSummary extends React.Component {
                                                     />
 
                                                     <div className='statContainer'>
+                                                        <p className="information">You have saved <span style={{color:"#AB2656"}}> N{details.amountSaved}</span> and have earned <span style={{color:"#AB2656"}}>N{details.interestEarned}</span> in Interest</p>
+
                                                         <ProgressBar
                                                             discTopSpan="Goal Progress"
                                                             discTopRight={details.percentageCompleted + "%" + " Completed"}
@@ -183,7 +185,7 @@ class ViewGroupSummary extends React.Component {
                                                             rightContent={moment(details.nextstandingDate).format("L")}
                                                             rightContentBottom="Next Payment"/>
                                                         <div className="btn-position">
-                                                            <NavLink to="/savings/withdraw-from-goal_step1">
+                                                            <NavLink to="/savings/stash-cashout">
                                                                 <span href="#"
                                                                       className="btn-withdraw-goal btn-sm border-btn">Cash Out</span>
                                                             </NavLink>
@@ -245,6 +247,8 @@ class ViewGroupSummary extends React.Component {
                                                 />
 
                                                 <div className='statContainer'>
+                                                    <p className="information">You have saved <span style={{color:"#AB2656"}}> N{details.amountSaved}</span> of your <span style={{color:"#AB2656"}}>N{details.targetAmount}</span> goal saving <span style={{color:"#AB2656"}}>N{details.amountSaved}</span> monthly </p>
+
                                                     <ProgressBar
                                                         discTopSpan="Goal Progress"
                                                         discTopRight={details.percentageCompleted +"%"+" Completed"}
@@ -295,6 +299,7 @@ class ViewGroupSummary extends React.Component {
 
 
                                             </div>
+
 
                                         </div>
 

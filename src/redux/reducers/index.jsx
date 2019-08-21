@@ -12,6 +12,7 @@ import { airtimeConstants } from "../constants/airtime/airtime.constants";
 import { TRANSFER_REDUCER_CLEAR } from "../constants/transfer.constants";
 import { fundAccountConstants } from "../constants/fund-account/fund-account.constant";
 import { loanOnboardingConstants } from '../constants/onboarding/loan.constants';
+import {flexGoalConstants} from '../constants/goal/flex-goal.constant'
 import { findGroup, joinGroup } from "./group-savings/group-savings-reducers";
 import { joinAGroup } from "./group-savings/rotating-group-reducers";
 //import { saveCardReducer } from "./fund-account.reducer";
@@ -49,6 +50,12 @@ const loanOnboardingReducerPile = (state, action)=>{
         state = undefined;
     }
     return loanOnboardingReducer(state, action);
+}
+const flexReducerPile = (state, action)=>{
+    if(action.type === flexGoalConstants.FLEX_GOAL_REDUCER_CLEAR){
+        state = undefined;
+    }
+    return flexGoalReducer (state, action);
 }
 
 
@@ -97,6 +104,9 @@ const loanOnboardingReducer = combineReducers({
     loanOnboardingValidateOTP : loanOnboarding.loanOnboardingValidateOTPReducer
 })
 
+const flexGoalReducer = combineReducers({
+
+});
 
 
 const appReducer = combineReducers({
@@ -116,6 +126,8 @@ const appReducer = combineReducers({
     transferReducerPile,
     fundAccountReducerPile,
     loanOnboardingReducerPile,
+    // goal reducer
+    flexReducerPile,
     accounts: global.debitableAccountsReducer,
     encrypt_rule: global.getEncryptionRuleReducer,
     verify_pan: global.verifyPANReducer,
@@ -126,6 +138,7 @@ const appReducer = combineReducers({
     data_reducer: dataReducer,
     cardless_reducer: cardlessReducer,
     bills_reducer: billsReducer,
+
 
     //fixed goal reducers
     fixed_goal_step1:fixedGoal.fixedGoalStep1Reducer,

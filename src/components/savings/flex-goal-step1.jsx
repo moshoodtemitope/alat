@@ -282,8 +282,10 @@ class FlexGoal extends React.Component {
                 "goalName":this.state.goalName,
                 "startDate":this.state.startDate,
                 "endDate":this.state.endDate,
-                "targetAmount":this.state.targetAmount,
-                "goalFrequency":this.state.goalFrequency,
+                "debitAmount":this.state.targetAmount,
+                "targetAmount":this.state.showTotalAmount,
+                "goalFrequency":this.state.goalFrequencyName,
+                "goalFrequencyValue":this.state.goalFrequencyValue,
                 "showInterests":this.state.showInterests,
             }));
         }
@@ -293,7 +295,7 @@ class FlexGoal extends React.Component {
 
     gotoStep2 = () => {
         if (this.props.flex_goal_step1)
-            if (this.props.flex_goal_step1.flex_step1_status == flexGoalConstants.FETCH_FLEX_GOAL_SUCCESS) {
+            if (this.props.flex_goal_step1.flex_step1_status === flexGoalConstants.FETCH_FLEX_GOAL_SUCCESS) {
                 return <Redirect to="/savings/flex-goal-step2" />
             }
     };
@@ -352,7 +354,7 @@ class FlexGoal extends React.Component {
 
     render() {
 
-        let {GoalNameInvalid,startDateInvalid,endDateInvalid,goalFrequencyName,targetAmountInvalid,goalFrequencyValue,goalFrequencyInvalid,goalFrequency}=this.state
+        let {GoalNameInvalid,startDateInvalid,endDateInvalid,targetAmountInvalid,goalFrequencyInvalid}=this.state;
 
 
 
@@ -393,7 +395,6 @@ class FlexGoal extends React.Component {
                                                         <input
                                                             type="text"
                                                             autoComplete="off"
-
                                                             className="form-control"
                                                             placeholder="December Goal"
                                                             name="goalName"
@@ -408,7 +409,6 @@ class FlexGoal extends React.Component {
                                                             <label className="label-text">How much would you like to save</label>
                                                             <input
                                                                 onKeyUp= {this.showInterest}
-
                                                                 className="form-control"
                                                                 autoComplete="off"
                                                                 name="targetAmount"
@@ -422,7 +422,7 @@ class FlexGoal extends React.Component {
                                                             <div className="text-danger">Enter the amount you want to save</div>}
                                                             {
                                                                 this.state.showMessage ?
-                                                                    <div className="text-purple"><h3 className="text-purple"> You will earn approximately ₦ {this.state.showTotalAmount} in interest.</h3></div>
+                                                                    <div className="text-purple"><h3 className="text-purple"> You will have  saved ₦ {this.state.showTotalAmount} at the end of this goal.</h3></div>
                                                                     : null
 
                                                             }
@@ -462,11 +462,10 @@ class FlexGoal extends React.Component {
                                                                 dateFormat=" MMMM d, yyyy"
                                                                 name="startDate"
                                                                 peekNextMonth
-                                                                maxDate={new Date()}
                                                                 showMonthDropdown
                                                                 showYearDropdown
                                                                 dropdownMode="select"
-                                                                maxDate={new Date()}
+                                                                minDate={new Date()}
                                                                 onChange={this.handleStartDatePicker}
                                                                 value={this.state.startDate}
 
