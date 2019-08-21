@@ -286,7 +286,17 @@
  }
 
  #hiddenReferralCode {
-    display: none;
+    position: absolute;
+    color: white;
+    border: none;
+    background-color: transparent;
+    top: 0px;
+ }
+
+ .succefullMessage {
+     margin-left: 45%;
+     padding-top: 40px;
+     padding-bottom: 20px;
  }
 
  #acepting {
@@ -948,7 +958,7 @@ color: #4D4D4D;
 }
 
 #autoSummary .right p:first-child { 
-    padding-top: 20px;
+    padding-top: 10px;
 }
 
 #autoSummary .left p:first-child { 
@@ -964,7 +974,7 @@ color: #4D4D4D;
     justify-content: center;
     margin: auto;
     margin-left: 25%;
-    font-family: Proxima Nova;
+    font-family:"proxima_novasemibold";
     font-size: 20px;
     line-height: 24px;
     text-align: center;

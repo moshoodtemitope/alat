@@ -24,6 +24,10 @@ class SuccessMessage extends React.Component {
     componentDidMount = () => {
         this.CheckGroupSavingsAvailability();
         this.CheckRotatingSavingsAvailability();
+
+        setTimeout(() => {
+            history.push('/savings/activityDashBoard');
+        }, 3000);
     }
 
     CheckRotatingSavingsAvailability = () => {
@@ -77,7 +81,8 @@ class SuccessMessage extends React.Component {
                                       <div className="max-600">
                                        <div className="al-card no-pad">
 
-                                            <form>
+                                            <form className=''>
+                                                <img src="/src/assets/img/success.svg" className="succefullMessage" alt=""/>
                                                 <div className="form-group">
                                                     <label id="sucMessage">Scheduling was successfull</label>
                                                 </div>
@@ -91,8 +96,6 @@ class SuccessMessage extends React.Component {
                                                    id="autoSummary"/>
                                                 </div>
                                             </form>
-
-
 
                                         </div>
 

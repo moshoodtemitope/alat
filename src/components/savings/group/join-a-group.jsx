@@ -121,6 +121,7 @@ class JoinAGroup extends React.Component {
                                        <h4 className="m-b-10 center-text hd-underline">Join A Group</h4>
 
                                             <form onSubmit={this.handleSubmit}>
+                                            
                                                 <div className="form-group instruction">
                                                     <h6></h6>
                                                 </div>

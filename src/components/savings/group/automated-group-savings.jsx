@@ -173,13 +173,6 @@ class AutomateGroupSavings extends React.Component {
     }
 
     SubmitAutomatedGroupSavings = () => {
-        // console.log(this.state.startDate)
-        // const theStartDate = this.state.startDate.split("-");
-        // const day = theStartDate[2].split('T')[0];
-        // const month = theStartDate[1] - 1;
-        // const year = theStartDate[0];
-        // const actualDate = new Date(year, month, day);
-        
         const data = {
             GroupId: parseInt(this.props.groupDetails.response.id),
             StartDate: this.state.startDate,
@@ -188,11 +181,9 @@ class AutomateGroupSavings extends React.Component {
             DebitAccount: this.state.selectedAccount
         }
 
-        console.log(data)
-        //return;
+        console.log(data);
         this.props.dispatch(actions.scheduleContribution(this.state.user.token, data));
     }
-
 
     handleSubmit = (event) => {
         event.preventDefault();

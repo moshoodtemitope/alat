@@ -39,15 +39,17 @@ class RotatingGroup extends React.Component {
             isAccountInvalid: null,
             accountNumber: null,
             selectedAccount: null,
-            numberOfMembers: "",
+            startDate: null,
             Frequency:"",
 
-            howMuchValidity:false,
-            endDateValidity:false,
-            startDateValidity:false,
-            amountToContributeValidity:false,
-            startDate: new Date(),
-            endDate: new Date(),
+            // Form Validity  !!
+            
+            startDateValidity: false,
+            NoOfMembers: false,
+            monthlyContributionValidity: false,
+            groupNameValidity: false,
+            selectAccountValidity: false,
+            
             amountToBeWithDrawn:null,
             howOftenDoYouWantToSave: null,
             
@@ -59,21 +61,27 @@ class RotatingGroup extends React.Component {
 
     checkingUserInputs = () => {
         var result = "valid";
-        for(var x in this.state){
+        for(let x in this.state){
             switch(x){
-                case 'endDate':
-                   if(this.state[x] == new Date() || this.state[x] == ""){
-                      console.log(x)
-                      result = null;
-                      break;
-                   }     
-                case 'amountToContributeValidity':
+                case 'groupName':
                    if(this.state[x] == null || this.state[x] == ""){
                        console.log(x)
                        result = null;
                        break;
                    }
-                case 'howOftenDoYouWantToSave':
+                case 'monthlyContribution':
+                   if(this.state[x] == null || this.state[x] == ""){
+                      console.log(x)
+                      result = null;
+                      break;
+                   }
+                case 'startDate':
+                   if(this.state[x] == null || this.state[x] == ""){
+                      console.log(x)
+                      result = null;
+                      break;
+                   }
+                case 'numberOfMembers':
                    if(this.state[x] == null || this.state[x] == ""){
                       console.log(x)
                       result = null;
@@ -91,15 +99,7 @@ class RotatingGroup extends React.Component {
         return result;
     }
 
-    validateEndDate=()=>{
-        if(this.state.endDate == null || this.state.endDate == ""){
-            this.setState({endDateValidity: true});
-            return true;
-        }else {this.setState({endDateValidity : false});
-           return false;
-        }
-    }
-
+    
     handleSelectedDate = (startDate) => {
         this.setState({
             startDate: startDate
@@ -107,13 +107,7 @@ class RotatingGroup extends React.Component {
         // this.props.dispatch(actions.setAutomateSavingsStartDate(startDate));
     }
 
-    handleEndDate = (endDate) => {
-        this.setState({
-            endDate: endDate
-        })
-        // this.props.dispatch(actions.setAutomateSavingsEndDate(endDate));
-    }
-
+    //1
     validateStartDate=()=>{
         if(this.state.startDate == null || this.state.startDate == ""){
             this.setState({startDateValidity: true});
@@ -122,21 +116,42 @@ class RotatingGroup extends React.Component {
             return false;
         }
     }
-
-    validateFrequencyOfWithdrawals=()=>{
-        if(this.state.howOftenDoYouWantToSave == null || this.state.howOftenDoYouWantToSave == ""){
-            this.setState({howMuchValidity: true});
+    //2
+    validateNoOfMembers=()=>{
+        if(this.state.numberOfMembers == null || this.state.numberOfMembers == ""){
+            this.setState({NoOfMembers: true});
             return true;
-        }else {this.setState({howMuchValidity : false});
+        }else {this.setState({NoOfMembers : false});
+            return false;
+        }
+    }
+    
+    //3
+    validateMonthlyContributionValidity = () => {
+        if(this.state.monthlyContribution == null || this.state.monthlyContribution == ""){
+            this.setState({monthlyContributionValidity: true});
+            return true;
+        }else {this.setState({monthlyContributionValidity : false});
             return false;
         }
     }
 
-    validateAmountToBeWithDrawn=()=>{
-        if(this.state.amountToBeWithDrawn == null || this.state.amountToBeWithDrawn == ""){
-            this.setState({amountToContributeValidity: true});
+    //4
+    validateGroupName = () => {
+        if(this.state.groupName == null || this.state.groupName == ""){
+            this.setState({groupNameValidity: true});
             return true;
-        }else {this.setState({amountToContributeValidity : false});
+        }else {this.setState({groupNameValidity : false});
+            return false;
+        }
+    }
+
+    //5
+    validateSelectedAccount = () => {
+        if(this.state.selectedAccount == null || this.state.selectedAccount == ""){
+            this.setState({selectAccountValidity: true});
+            return true;
+        }else {this.setState({selectAccountValidity : false});
             return false;
         }
     }
@@ -157,20 +172,11 @@ class RotatingGroup extends React.Component {
         }
     }
 
-    // handleSetAmount = (event) => {
-    //     this.setState({
-    //         amountToBeWithDrawn: event.target.value
-    //     })
-    //
-    //     this.props.dispatch(actions.setAmountToWithDraw(event.target.value));
-    // }
-
+   
     handleSelectChange = (Frequency) => {
         this.setState({ numberOfMembers: Frequency.value
               });
-        //  if (this.state.formsubmitted && Frequency.value != "")
-        //   this.setState({ TimeSavedInvalid: false })
-        //this.props.dispatch(actions.setFrequency(Frequency.value))
+      
     }
     
     CheckFrequency = (param) => {
@@ -210,11 +216,22 @@ class RotatingGroup extends React.Component {
         this.props.dispatch(actions.createRotatingSavings(this.state.user.token, data));
     }
 
-
     handleSubmit = (event) => {
         event.preventDefault();
-        this.SubmitAutomatedGroupSavings();
-        console.log('what');
+        this.validateMonthlyContributionValidity();
+        this.validateNoOfMembers();
+        this.validateStartDate();
+        this.validateGroupName();
+        this.validateSelectedAccount();
+        //this.SubmitAutomatedGroupSavings();
+        
+        switch(this.checkingUserInputs()){
+            case null:
+                console.log('contains a lot of empty fields');
+                break;
+            case 'valid': 
+                this.SubmitAutomatedGroupSavings();
+        }
     }
 
     NavigateToGroupSavings = () => {
@@ -229,7 +246,8 @@ class RotatingGroup extends React.Component {
     
 
     render() {
-        const {selectedAccount,startDate,endDate,amountToContributeValidity,numberOfMembers, endDateValidity, startDateValidity, howMuchValidity,
+        const {selectedAccount,numberOfMembers, startDateValidity, NoOfMembers,groupNameValidity,
+            monthlyContributionValidity, selectAccountValidity
         } = this.state;
 
         return (
@@ -266,15 +284,17 @@ class RotatingGroup extends React.Component {
 
                                             <form onSubmit={this.handleSubmit}>
                                                 <div className="form-row">
-                                                   <label className="label-text">Give your group a name</label>
-                                                   <input type="text" placeholder="Dubai Goal" onChange={this.handleGroupName}/>
+                                                    <div className={groupNameValidity ? " form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                    <label className='label-text'>Give your group a name</label>
+                                                    <input type="text" placeholder="Dubai Goal" onChange={this.handleGroupName}/>
+                                                    </div>
                                                 </div>
                                                 <div className="form-row">
-                                                    <div className="form-group col-md-6">
+                                                    <div className={monthlyContributionValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                          <label className="label-text">Monthly Contributions</label>
                                                          <input type="number" placeholder="N 100,000" onChange={this.handleMonthlContributions}/>
                                                     </div>
-                                                    <div className={howMuchValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                    <div className={NoOfMembers ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                         <label className="label-text">Number of members?</label>
                                                          <Select type="text" 
                                                             options={quantityOfMembers}
@@ -296,30 +316,27 @@ class RotatingGroup extends React.Component {
                                                             value={this.state.startDate}
                                                             dropdownMode="select"
                                                             minDate={new Date()}
-                                                        />
+                                                        />   
                                                     </div>
                                         
                                                 </div>
-                                                
-                                                <div className="accountSelection">
-                                                    <div className='col-sm-12'>
-                                                                
-                                                                    <SelectDebitableAccounts
-                                                                    
-                                                                        accountInvalid={this.state.isAccountInvalid}
-                                                                        onChange={this.handleSelectDebitableAccounts}
-                                                                        labelText="Select Account to debit" 
-                                                                        options={selectedAccount}/>
-                                                                
-                                                    </div>
+
+                                                <div className="form-row">
+                                                       <div className={selectAccountValidity ? "form-error col-sm-12" : "col-sm-12"}>
+                                                        <SelectDebitableAccounts 
+                                                                accountInvalid={this.state.isAccountInvalid}
+                                                                onChange={this.handleSelectDebitableAccounts}
+                                                                labelText="Select Account to debit" 
+                                                                options={selectedAccount}/>
+                                                       </div>
                                                 </div>
                                                 
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <center>
-                                                            {/* <NavLink to='/savings/rotating-group'> */}
+                                                           
                                                                   <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Create Group</button>
-                                                            {/* </NavLink> */}
+                                                        
                                                         </center>
                                                     </div>
                                                 </div>

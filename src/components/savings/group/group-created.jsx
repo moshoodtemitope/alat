@@ -101,6 +101,7 @@ class GroupCreated extends React.Component {
                                        <h4 className="m-b-10 center-text hd-underline">Group Created</h4>
 
                                             <form onSubmit={this.handleSubmit}>
+                                                <input type="text" id='hiddenReferralCode' ref={ele => this.textInputHidden = ele} value={this.props.payload.response.referralCode}/>
                                                 <div className="form-group instruction">
                                                     <h6>Use the code below to invite your friends to join the group.</h6>
                                                 </div>
@@ -110,9 +111,9 @@ class GroupCreated extends React.Component {
                                                         </div>
                                                         <div className="right">
                                                             <img onClick={this.CopyCode} className='itemToCopy' src="/src/assets/img/Group.png" alt=""/>
-                
+            
                                                         </div>
-                                                        <input type="text" id='hiddenReferralCode' ref={element => this.textInputHidden = element} value={this.props.payload.response.referralCode}/>
+                                                
                                                 </div>
                                                 <div className="form-row">
                                                     <div className="form-group col-md-6 butLeft">
