@@ -1,6 +1,6 @@
-//const URL = 'https://api.alat.ng';
+// const URL = 'https://api.alat.ng';
 const URL = 'https://196.43.215.170';
-//const URL = 'https://196.43.215.157';
+// const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
 
@@ -123,5 +123,7 @@ export const routes = {
     CHANGE_PASSWORD : BASEURL + '/AccountSetting/api/password/change',
     GET_RANDOM_SECURITY_QUESTION: BASEURL + '/AccountSetting/api/securityquestion/Random',
     CHECK_ANSWER_WITHOUT_OTP: BASEURL + '/AccountSetting/api/securityquestion/validatewithoutotp',
+    CHECK_ANSWER: BASEURL + '/AccountSetting/api/securityquestion/validate',
     CHANGE_PIN: BASEURL + '/AccountSetting/api/pin/change',
+    RESET_PIN :BASEURL + '/AccountSetting/api/pin/CreateOrReset',
 };

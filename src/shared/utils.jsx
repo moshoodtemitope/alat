@@ -192,6 +192,12 @@ export const mapCurrency = (currency) => {
     return unicode;
 }
 
+export const getOnlyNumericPhoneNumber = (phoneString) => {
+    phoneString = phoneString.replace(/\D/g,'');
+    phoneString = phoneString.replace("234", "0");
+    return phoneString;
+}
+
 export const getBase64=(file, cb)=> {
     let reader = new FileReader();
     // reader.readAsDataURL(file);
