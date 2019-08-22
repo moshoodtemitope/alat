@@ -1,6 +1,6 @@
 import {ApiService} from "../../../services/apiService";
 import {routes} from "../../../services/urls";
-import {fundAccountConstants} from "../../constants/fund-account/fund-account.constant";
+import {listStyleConstants} from "../../constants/lifestyle/lifestyle-constants";
 import {SystemConstant} from "../../../shared/constants";
 import { modelStateErrorHandler } from "../../../shared/utils";
 import { alertActions } from "../alert.actions";
@@ -10,7 +10,7 @@ import * as utils from "../../../shared/utils";
 export const getCinemaList = (token) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.BANK_LIST, "GET", null, SystemConstant.HEADER);
+        let consume = ApiService.request(routes.BANK_LIST, "GET", null, SystemConstant.HEADER, true);
         dispatch(request(consume));
         return consume
             .then(response => {
