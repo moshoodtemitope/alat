@@ -10,9 +10,7 @@ import {history} from '../../../_helpers/history';
 import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
 import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 
-if(window.performance.navigation.type == 1)
-    window.location.replace("http://localhost:8080/");
-    
+
 class SuccessMessage extends React.Component {
     constructor(props){
         super(props);

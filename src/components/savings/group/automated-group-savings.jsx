@@ -18,9 +18,6 @@ const selectedTime = [
     {  value: 'Monthly' , label:"Monthly" }
 ];
 
-// if(window.performance.navigation.type == 1)
-//     window.location.replace("http://localhost:8080/");
-
 class AutomateGroupSavings extends React.Component {
     constructor(props){
         super(props);

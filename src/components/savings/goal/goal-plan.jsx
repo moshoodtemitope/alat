@@ -40,7 +40,7 @@ class GoalPlan extends React.Component {
     CheckGroupSavingsAvailability = () => {
         this.props.dispatch(actions.customerGroup(this.state.user.token, null));
     }
-
+    
     NavigateToGroupSavings = () => {
         let groupSavings = Object.keys(this.props.groups); //returns an array
         let rotatingSavings = Object.keys(this.props.groupSavingsEsusu); //returns an array
