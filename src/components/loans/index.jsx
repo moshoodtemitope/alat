@@ -14,6 +14,7 @@ import WemaCollectionSetup from './salary/a-wema-setup';
 import LoanRemitaOtpSetUp from './salary/a-remita-otp';
 import LoanRemitaMandateSetUp from './salary/a-remita-mandate';
 import LoansKYC from './salary/a-loans-kyc';
+import LoanStatementUpload from './salary/a-statement-upload';
 
 
 import InnerContainer from '../../shared/templates/inner-container';
@@ -47,6 +48,8 @@ class LoansIndex extends React.Component {
                                                <Route path={'/loans/salary/remita-otp'} component={LoanRemitaOtpSetUp} />
                                                <Route path={'/loans/salary/remita-mandate'} component={LoanRemitaMandateSetUp} />
                                                <Route path={'/loans/salary/kyc'} component={LoansKYC} />
+                                               <Route path={'/loans/salary/statement-upload'} component={LoanStatementUpload} />
+                                               
                             
                                 </div>
 

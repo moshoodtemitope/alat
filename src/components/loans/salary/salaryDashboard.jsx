@@ -18,6 +18,7 @@ class LoansDashboard extends React.Component {
         this.state = {
             user: JSON.parse(localStorage.getItem("user")),
             currentLoan: null,
+            pendingLoanApplication : {},
             LoanHistory: [
             ],
             currentLoanSet: false,
@@ -47,6 +48,8 @@ class LoansDashboard extends React.Component {
                 var data = {
                     ...this.props.loan_current.loan_current_data.response.Response
                 };
+                 
+                //var x = array.find(x => x.name === 'string 1')
                 this.setState({ currentLoan: data, currentLoanSet: true });
             }
     }
@@ -99,26 +102,27 @@ class LoansDashboard extends React.Component {
     renderLoanList = (data) => {
         return (
             data.map((loan, key) => {
-                //if (key <= 4) {
+                if (loan.PendingApplication == false) {
                 return (
                     <div className="shd-box m-b-10" key={key}>
                         <div className="shd-amt">
                             <div>
                                 <img src={loanIcon} />
-                                <p>{util.formatAmount(loan.AmountRequested)}
+                                <p>{util.formatAmount(loan.AmountOffered)}
                                     <span>Loan Amount</span>
+                                </p>
+                            </div>
+                            
+                            <div>
+                                <img src={loanIcon} />
+                                <p>--
+                                                   <span>Total Repayment</span>
                                 </p>
                             </div>
                             <div>
                                 <img src={loanCalendar} />
                                 <p>{loan.TenureMonths} Months
                                     <span>Loan Term</span>
-                                </p>
-                            </div>
-                            <div>
-                                <img src={loanIcon} />
-                                <p>N2,000,000
-                                                   <span>Loan Amount</span>
                                 </p>
                             </div>
                             <div>
@@ -130,7 +134,7 @@ class LoansDashboard extends React.Component {
                         </div>
                     </div>
                 );
-                //}
+                }
             })
         );
     }
@@ -145,7 +149,7 @@ class LoansDashboard extends React.Component {
                     <div className="loan-dsh-ctn">
                         <div className="sub-ctn dsh-left">
                             <h4 className="red-text m-b-20">Current Loan</h4>
-                            {currentLoan != null && <div className="shd-box seg">
+                            {currentLoan != null && currentLoan.Response != null && <div className="shd-box seg">
                                 <div className="header">
                                     <h3 className="red-text">{util.mapCurrency("NGN")}{util.formatAmount(currentLoan.AmountRemaining)}
                                         <span className="text-grey-span">Balance</span>
@@ -155,13 +159,13 @@ class LoansDashboard extends React.Component {
                                 <div className="shd-amt">
                                     <div>
                                         <img src={loanIcon} />
-                                        <p>N{currentLoan.AmountPaid}
+                                        <p>{util.mapCurrency("NGN")}{util.formatAmount(currentLoan.LoanAmount)}
                                             <span>Loan Amount</span>
                                         </p>
                                     </div>
                                     <div>
                                         <img src={loanCalendar} />
-                                        <p>12 Months
+                                        <p>{currentLoan.LoanTenure} Months 
 													<span>Loan Term</span>
                                         </p>
                                     </div>
@@ -169,13 +173,13 @@ class LoansDashboard extends React.Component {
                                 <div className="shd-amt">
                                     <div>
                                         <img src={loanIcon} />
-                                        <p>N2,500,000
+                                        <p>--
 													<span>Total Repayment</span>
                                         </p>
                                     </div>
                                     <div>
                                         <img src={loanCalendar} />
-                                        <p>{currentLoan.NextDueDate}
+                                        <p>{util.FormartDate(currentLoan.FullPaymentDue)}
                                             <span>Full Repayment Due</span>
                                         </p>
                                     </div>
@@ -183,13 +187,13 @@ class LoansDashboard extends React.Component {
                                 <div className="shd-amt">
                                     <div>
                                         <img src={loanIcon} />
-                                        <p>N45,000
+                                        <p>{util.mapCurrency("NGN")}{util.formatAmount(currentLoan.NextRepaymentAmount)}
 													<span>Next Repayment Amount</span>
                                         </p>
                                     </div>
                                     <div>
                                         <img src={loanCalendar} />
-                                        <p>12/09/2015
+                                        <p>{util.FormartDate(currentLoan.NextDueDate)}
 													<span>Next Repayment Date</span>
                                         </p>
                                     </div>
@@ -210,34 +214,6 @@ class LoansDashboard extends React.Component {
                             <div className="pst-ctn">
                                 {this.returnPastLoans()}
                             </div>
-                            {/* <div className="shd-box m-b-10">
-                                <div className="shd-amt">
-                                    <div>
-                                         <img src={loanIcon} />
-                                        <p>N2,000,000
-													<span>Loan Amount</span>
-                                        </p>
-                                    </div>
-                                    <div>
-                                    <img src={loanCalendar} />
-                                        <p>12 Months
-													<span>Loan Term</span>
-                                        </p>
-                                    </div>
-                                    <div>
-                                    <img src={loanIcon} />
-                                        <p>N2,000,000
-													<span>Loan Amount</span>
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <img src={calendarFull} />
-                                        <p>N2,000,000
-													<span>Loan Amount</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div> */}
                         </div>
                         <div>
                         </div>

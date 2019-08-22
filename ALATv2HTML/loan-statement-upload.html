@@ -17,14 +17,18 @@
 	<link href="css/font-awesome/font-awesome.css" rel="stylesheet">
 	<link href="css/fontello/css/fontello.css" rel="stylesheet">
 	<link href="css/selectize.default.css" rel="stylesheet">
-	<!-- <link href="css/dropify.min.css" rel="stylesheet"> -->
+	<link href="css/datepicker.min.css" rel="stylesheet" type="text/css">
 
 	<!--JQuery-->
 	<script src="js/jquery.min.js"></script>
+	<script src="js/matchHeight.js"></script>
+	<script src="js/jquery.bxslider.js"></script>
 	<script src="js/standalone/selectize.min.js"></script>
-	<!-- <script src="js/dropify.min.js"></script> -->
+	<script src="js/datepicker.min.js"></script>
+	<script src="js/i18n/datepicker.en.js"></script>
 
 	<!-- User Defined Style -->
+	<link href="css/jquery.bxslider.css" rel="stylesheet">
 	<link href="css/app.css" rel="stylesheet">
 	<link href="css/dashboard.css" rel="stylesheet">
 	<!--   <link href="css/components.css" rel="stylesheet"> -->
@@ -67,34 +71,20 @@
 						<div class="col-sm-12">
 							<div class="max-500">
 									<div class="loan-header-text text-center">
-											<h4 class="text-black">Let's know more about you</h4>
-											<p>complete the form below to create your profile</p>
+											<h4 class="text-black">Upload Statement of Account</h4>
+											<p>Upload PDF version of your bank account statement.</p>
 										</div>
 									<div class="al-card no-pad">
 											<div class="transfer-ctn">
-												<form class="onboard-form">
-													<div class="row">
-														<div class="col-sm-12 col-md-6">
-															<div class="upload-div">
-																<p class="bold-text">Picture Upload</p>
-																<div class="upload-box">
-																	<input type="file" id="input-file-now" class="dropify" data-height="150">
-																</div>
-															</div>
-														</div>
-							
-														<div class="col-sm-12 col-md-6">
-															<div class="upload-div">
-																<p class="bold-text">Signature Upload</p>
-																<div class="upload-box">
-																	<input type="file" id="input-file-now" class="dropify" data-height="150">
-																</div>
-															</div>
-														</div>
-													</div>
-							
-													<input type="submit" value="Upload Documents" class="btn-alat btn-block"/>
-												</form>
+												<form>
+												  <div class="row">
+													  <div class="col-sm-12">
+														  <center>
+															  <input type="button" value="Upload" class="btn-alat m-t-10 m-b-20 text-center"/>
+														  </center>
+													  </div>
+												  </div>
+											  </form>
 										  </div>
 										</div>
 							</div>
