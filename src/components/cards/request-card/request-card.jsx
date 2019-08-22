@@ -13,6 +13,8 @@ import  {routes} from '../../../services/urls';
 import whitelogo from "../../../assets/img/white-logo.svg"; 
 import emptyVC from "../../../assets/img/credit-card-2.svg"; 
 import successIcon from "../../../assets/img/success-tick.svg";
+import AlatPinInput from '../../../shared/components/alatPinInput';
+import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
 
 import {
     LOADING_INFOFOR_CARDREQUEST_SUCCESS,
@@ -50,15 +52,23 @@ class RequestCard extends React.Component {
             addressLandmark:'',
             deliveryAddress:'',
             deactivateCities: true,
+            isRenderSummary: false,
             citiesList :[],
-            selectedState:''
+            selectedState:'',
+            selectedCity: '',
+            isCardSelected:'',
+            selectedAccount:''
             // isCardSelected: false,
         };
+
+        console.log('user is', this.state.user);
         
-        this.getCustomerATMCardsData    = this.getCustomerATMCardsData.bind(this);
-        this.selectADesign              = this.selectADesign.bind(this);
-        this.handleStateChange          = this.handleStateChange.bind(this);
-        this.handleCitiesChange         = this.handleCitiesChange.bind(this);
+        this.getCustomerATMCardsData            = this.getCustomerATMCardsData.bind(this);
+        this.selectADesign                      = this.selectADesign.bind(this);
+        this.handleStateChange                  = this.handleStateChange.bind(this);
+        this.handleCitiesChange                 = this.handleCitiesChange.bind(this);
+        this.handleAlatPinChange                = this.handleAlatPinChange.bind(this);
+        this.handleSelectDebitableAccounts      = this.handleSelectDebitableAccounts.bind(this);
     }
 
     componentDidMount() {
@@ -69,6 +79,35 @@ class RequestCard extends React.Component {
         const { dispatch } = this.props;
         dispatch(loadInfoForCardRequest(this.state.user.token));
 
+    }
+
+    getCustomerOTP(){
+        const { dispatch } = this.props;
+        let payload={
+            phoneNo:this.state.user.phoneNo,
+            otpType:null,
+            imei:"123456789012345"
+        }
+        dispatch(requestOtpForNewATMCard(payload, this.state.user.token));
+
+    }
+
+    handleSelectDebitableAccounts(account) {
+        let allDebitableAccounts = this.props.debitable_accounts.debitable_accounts_data.data,
+            selectedDebitableAccount = allDebitableAccounts.filter(accountDetails=>accountDetails.AccountNumber ===account),
+            transferLimit =selectedDebitableAccount[0].MaxIntraBankTransferLimit;
+
+            
+        this.setState({ selectedAccount: account, selectedDebitableAccount, isSelectChanged:true, transferLimit});
+
+    }
+
+    handleAlatPinChange(pin) {
+        this.setState({ Pin: pin })
+        if (this.state.isSubmitted) {
+            if (pin.length != 4)
+           this.setState({isPinInvalid : false})
+        }
     }
 
 
@@ -134,12 +173,49 @@ class RequestCard extends React.Component {
 
     }
 
+    renderNoAlatCard(){
+        let {showNoCards, 
+            showChooseDesign,
+            showDeliveryLocation,
+            isRenderSummary } = this.state;
+        return(
+            <div>
+                {showNoCards &&
+                <div className="transfer-ctn">
+                    <center>
+                        <img className="nocards-icon" src={emptyVC} />
+                        <p> You currently do not have an  ALAT card</p>
+                        <button type="submit"  
+                            className="btn-alat m-t-10 m-b-20 text-center"
+                            onClick={()=>this.setState({showChooseDesign: true,showNoCards: false, nameOnCard: this.state.user.fullName})}>Request Card</button>
+                    </center>
+                </div>
+                }
+
+                {showChooseDesign &&
+                    this.renderChooseCardDesign()
+                }
+
+                {showDeliveryLocation &&
+                    this.renderDeliveryLocationForm()
+                }
+                {isRenderSummary &&
+                    this.renderSummary()
+                }
+            </div>
+        )
+    }
+
     renderChooseCardDesign(){
-        let {isCardSelected, selectedDesignId} = this.state;
+        let {isCardSelected, 
+            selectedDesignId,
+            isNameEmpty,
+            nameOnCard} = this.state;
         let props = this.props,
         loadCardsInfo = props.infoForCardRequest;
         let cardInfoFromRequest = loadCardsInfo.atmcard_info.response,
-        allDesigns  = cardInfoFromRequest.allCardDesigns,cardDesignUrl,
+        allDesigns  = cardInfoFromRequest.allCardDesigns,
+        cardDesignUrl,
         cardStyle= {
             // backgroundImage: `url('${cardDesignUrl}')`,
             backgroundSize: 'cover',
@@ -164,15 +240,33 @@ class RequestCard extends React.Component {
                         )
                     })}
                 </Slider>
+                <div className="input-ctn m-t-30 inputWrap">
+                    <label>Name on Card <small>(Edit the name that appears on your card)</small></label>
+                    <Textbox
+                        tabIndex="2"
+                        id={'nameOnCard'}
+                        name="nameOnCard"
+                        placeholder="Enter your full address"
+                        value={nameOnCard}
+                        onChange= {(nameOnCard, e)=>{ 
+                            this.setState({nameOnCard});
+                        }}
+                        
+                    />
+                </div>
                 <center>
                     {isCardSelected===false && <div className="error-msg"> Please click to choose a design above</div>}
+                    {isNameEmpty===false && <div className="error-msg"> Please provide a name on your ALAT ATM card</div>}
                     <button type="submit"  
                         className="btn-alat m-t-10 m-b-20 text-center"
                         onClick={()=>{
-                                if(selectedDesignId!==''){
-                                    this.setState({isCardSelected: true, showChooseDesign: false, showDeliveryLocation: true});
+                                if(selectedDesignId!=='' && nameOnCard!==''){
+                                    this.setState({isCardSelected: true, showChooseDesign: false, showDeliveryLocation: true, isNameEmpty: false});
                                 }else{
                                     this.setState({isCardSelected: false});
+                                    if(nameOnCard!==''){
+                                        this.setState({isNameEmpty: true});
+                                    }
                                 }
                                 
                             }}>Proceed</button>
@@ -182,98 +276,16 @@ class RequestCard extends React.Component {
         )
     }
 
-    renderRequestNewCardScreen1(){
-        let props = this.props,
-            loadCardsInfo = props.infoForCardRequest;
-
-
-            switch(loadCardsInfo.fetch_status){
-                case LOADING_INFOFOR_CARDREQUEST_PENDING:
-                    return(
-                        <div className="transfer-ctn">
-                            <div className="text-center">
-                                Loading your card details...
-                            </div>
-                        </div>
-                    );
-
-                case LOADING_INFOFOR_CARDREQUEST_SUCCESS:
-                    let cardInfoFromRequest = loadCardsInfo.atmcard_info.response;
-                    
-                        // if(cardInfoFromRequest.cardDesignId.length===0){
-                        //     return(
-                        //         <div>
-                        //             {this.renderNoAlatCard()}
-                        //         </div>
-                        //     );
-                        // }else{
-                        //     return(
-                        //         <div className="">
-                        //             {this.renderExistingCard()}
-                        //         </div>
-                        //     );
-                        // }
-                        return(
-                            <div>
-                                {this.renderNoAlatCard()}
-                            </div>
-                        )
-                        
-                case LOADING_INFOFOR_CARDREQUEST_FAILURE:
-                        let loadCardError = loadCardsInfo.atmcard_info.error;
-                        return(
-                            <div className="transfer-ctn">
-                                <div className="text-center">
-                                    <div>{loadCardError}</div>
-                                    <a className="cta-link" onClick={this.getCustomerATMCardsData}> Retry</a>
-                                </div>
-                            </div>
-                        );
-
-                        
-            }
-        
-    }
-
-    handleStateChange(selectedState){
-        this.setState({selectedState},()=>{
-            
-            let props = this.props,
-            loadCardsInfo = props.infoForCardRequest.atmcard_info.response,
-            citiesList = [],
-            allCitiesList = [];
-
-            
-
-            
-            citiesList = loadCardsInfo.citiesData.filter(eachCity=>eachCity.StateId===this.state.selectedState.value);
-            citiesList.map(city=>{
-                allCitiesList.push({value:city.CityId,
-                                    label: city.City
-                            });
-                            
-                this.setState({citiesList: allCitiesList, deactivateCities: false});
-            }); 
-
-            // console.log('cities', loadCardsInfo.citiesData);
-            // console.log('selected state', this.state.selectedState);
-        });
-
-        
-    }
-
-    handleCitiesChange(selectedCity){
-        this.setState({selectedCity});
-    }
-
-
     renderDeliveryLocationForm(){
         let {
             deliveryAddress,
             deactivateCities,
             addressLandmark,
             citiesList,
-            selectedState
+            selectedState,
+            isLocationProvided,
+            isRenderSummary,
+            selectedCity
         } = this.state;
 
         let props = this.props,
@@ -338,15 +350,15 @@ class RequestCard extends React.Component {
                     </div>
                 </div>
                 <center>
-                    {isCardSelected===false && <div className="error-msg"> Please click to choose a design above</div>}
+                    {isLocationProvided===false && <div className="error-msg"> Please provide all details</div>}
                     <button type="submit"  
                         className="btn-alat m-t-10 m-b-20 text-center"
                         onClick={()=>{
                                 if(deliveryAddress!=='' && addressLandmark!=='' 
-                                    && addressLandmark!=='' && selectedState!=='' && selectedCity!==''){
-                                    this.setState({isCardSelected: true, showChooseDesign: false, showDeliveryLocation: true});
+                                    &&  selectedState!=='' && selectedCity!==''){
+                                    this.setState({isLocationProvided: true,  showDeliveryLocation: false, isRenderSummary: true});
                                 }else{
-                                    this.setState({isCardSelected: false});
+                                    this.setState({isLocationProvided: false});
                                 }
                                 
                             }}>Proceed</button>
@@ -355,35 +367,183 @@ class RequestCard extends React.Component {
         )
     }
 
-    renderNoAlatCard(){
-        let {showNoCards, showChooseDesign,showDeliveryLocation } = this.state;
+    handleStateChange(selectedState){
+        this.setState({selectedState},()=>{
+            
+            let props = this.props,
+            loadCardsInfo = props.infoForCardRequest.atmcard_info.response,
+            citiesList = [],
+            allCitiesList = [];
+
+            
+
+            
+            citiesList = loadCardsInfo.citiesData.filter(eachCity=>eachCity.StateId===this.state.selectedState.value);
+            citiesList.map(city=>{
+                allCitiesList.push({value:city.CityId,
+                                    label: city.City
+                            });
+                            
+                this.setState({citiesList: allCitiesList, deactivateCities: false});
+            }); 
+
+            // console.log('cities', loadCardsInfo.citiesData);
+            // console.log('selected state', this.state.selectedState);
+        });
+
+        
+    }
+
+    handleCitiesChange(selectedCity){
+        this.setState({selectedCity});
+    }
+
+    renderSummary(){
+        let {transferLimit,
+            isSelectChanged,
+            selectedDesignId,
+            nameOnCard
+        } = this.state;
+        let props = this.props,
+            loadCardsInfo           = props.infoForCardRequest.atmcard_info.response,
+            customerOtpRequest      = props.otpForCardRequest,
+            cardPrice               =loadCardsInfo.customerAccounts.requestCardMenu.cardPrice,
+            allDesigns              = loadCardsInfo.allCardDesigns,
+            cardDesignUrl           = allDesigns.filter(eachDesign=>eachDesign.id===selectedDesignId)[0].url;
+            
+            cardDesignUrl = `${BASEURL}/${cardDesignUrl}`;
+            let cardStyle= {
+                backgroundImage: `url('${cardDesignUrl}')`,
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center center'
+            };
+
+            console.log('dsdsd', loadCardsInfo);
         return(
-            <div>
-                {showNoCards &&
-                <div className="transfer-ctn">
-                    <center>
-                        <img className="nocards-icon" src={emptyVC} />
-                        <p> You currently do not have an  ALAT card</p>
-                        <button type="submit"  
-                            className="btn-alat m-t-10 m-b-20 text-center"
-                            onClick={()=>this.setState({showChooseDesign: true,showNoCards: false})}>Request Card</button>
-                    </center>
+            <div className="transfer-ctn">
+                <h4 className="text-center m-b-20">You will be charged &#8358;{cardPrice}</h4>
+
+                <div className="atmcard-wrap nonvirtual" style={cardStyle}>
+                    <div className="carddata">
+                        <div className="cardname">{nameOnCard}</div>
+                    </div>
                 </div>
-                }
 
-                {showChooseDesign &&
-                    this.renderChooseCardDesign()
-                }
+                <div className="inputctn-wrap">
+                    <SelectDebitableAccounts
+                        value={this.state.accountNumber}
+                        // currency={currencySelected}
+                        // requestType = "forBankTransfer"
+                        accountInvalid={this.state.isAccountInvalid}
+                        onChange={this.handleSelectDebitableAccounts} />
 
-                {showDeliveryLocation &&
-                    this.renderDeliveryLocationForm()
-                }
+                        {isSelectChanged===true &&
+                            <span className="limit-text">Your daily transaction limit for the selected account is ₦{transferLimit} </span>
+                        }
+                </div>
+
+                <div className="input-ctn inputWrap">
+                    <AlatPinInput
+                        value={this.state.Pin}
+                        onChange={this.handleAlatPinChange}
+                        PinInvalid={this.state.isPinInvalid}
+                        maxLength={4} 
+                    />
+                </div>
+               
+                {/* this.getCustomerOTP() */}
+               
+                <center>
+                    {this.state.summaryError===true &&
+                        <div className="error-msg">{this.state.summaryErrorMsg}</div>
+                    }
+
+                    {(customerOtpRequest.is_processing===false && customerOtpRequest.fetch_status===REQUESTINGOTP_FOR_CARDREQUEST_FAILURE)&&
+                        <div className="error-msg">{customerOtpRequest.requestingotp_foratm_info.error}</div>
+                    }
+                    <button type="button"  
+                        className="btn-alat m-t-10 m-b-20 text-center"
+                        disabled={customerOtpRequest.is_processing}
+                        onClick={()=>{      
+                            this.getCustomerOTP();      
+                                    if(this.state.selectedAccount!=='' && this.state.Pin!==''){
+                                        if(this.state.selectedDebitableAccount[0].AvailableBalance >= cardPrice){
+                                            if(this.state.selectedDebitableAccount[0].MaxIntraBankTransferLimit >= cardPrice){
+                                                this.setState({summaryError: false});
+                                                this.getCustomerOTP();
+                                            }else{
+                                                this.setState({summaryError: true, summaryErrorMsg:'Amount exceeds daily transaction limit for selected account'});
+                                            }
+                                        }else{
+                                            this.setState({summaryError: true, summaryErrorMsg:'Selected account has insufficient funds'});
+                                        }
+                                        
+                                    }else{
+                                        this.setState({summaryError: true, summaryErrorMsg:'Please provide all details'});
+                                    }
+                        }} 
+                        >{customerOtpRequest.is_processing? 'Processing...': 'Continue'}</button>
+                </center>
             </div>
         )
     }
 
-   
+    
 
+   
+    renderRequestNewCardScreen1(){
+        let props = this.props,
+            loadCardsInfo = props.infoForCardRequest;
+
+
+            switch(loadCardsInfo.fetch_status){
+                case LOADING_INFOFOR_CARDREQUEST_PENDING:
+                    return(
+                        <div className="transfer-ctn">
+                            <div className="text-center">
+                                Loading your card details...
+                            </div>
+                        </div>
+                    );
+
+                case LOADING_INFOFOR_CARDREQUEST_SUCCESS:
+                    let cardInfoFromRequest = loadCardsInfo.atmcard_info.response;
+                    
+                        // if(cardInfoFromRequest.cardDesignId.length===0){
+                        //     return(
+                        //         <div>
+                        //             {this.renderNoAlatCard()}
+                        //         </div>
+                        //     );
+                        // }else{
+                        //     return(
+                        //         <div className="">
+                        //             {this.renderExistingCard()}
+                        //         </div>
+                        //     );
+                        // }
+                        return(
+                            <div>
+                                {this.renderNoAlatCard()}
+                            </div>
+                        )
+                        
+                case LOADING_INFOFOR_CARDREQUEST_FAILURE:
+                        let loadCardError = loadCardsInfo.atmcard_info.error;
+                        return(
+                            <div className="transfer-ctn">
+                                <div className="text-center">
+                                    <div>{loadCardError}</div>
+                                    <a className="cta-link" onClick={this.getCustomerATMCardsData}> Retry</a>
+                                </div>
+                            </div>
+                        );
+
+                        
+            }
+        
+    }
 
     renderCardRequestWrapper(){
         let {user} = this.state;

@@ -1016,6 +1016,7 @@ export const requestOtpForNewATMCard = (payload, token)=>{
         return consume
             .then(response=>{
                 dispatch(success(response));
+                history.push("/cards/otp");
             })
             .catch(error=>{
                 if(error.response && typeof(error.response.message) !=="undefined"){
@@ -1037,7 +1038,7 @@ export const requestOtpForNewATMCard = (payload, token)=>{
     };
 
     function request(request) { return { type:REQUESTINGOTP_FOR_CARDREQUEST_PENDING, request} }
-    function success(response) { return {type:REQUESTINGOTP_FOR_CARDREQUEST_SUCCESS, response} }
+    function success(response) { return {type:REQUESTINGOTP_FOR_CARDREQUEST_SUCCESS, response, payload} }
     function failure(error) { return {type:REQUESTINGOTP_FOR_CARDREQUEST_FAILURE, error} }
 }
 
