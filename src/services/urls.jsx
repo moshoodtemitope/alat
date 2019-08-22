@@ -124,4 +124,17 @@ export const routes = {
     GET_RANDOM_SECURITY_QUESTION: BASEURL + '/AccountSetting/api/securityquestion/Random',
     CHECK_ANSWER_WITHOUT_OTP: BASEURL + '/AccountSetting/api/securityquestion/validatewithoutotp',
     CHANGE_PIN: BASEURL + '/AccountSetting/api/pin/change',
+
+    //Movies
+    GET_CINEMA_LIST: BASEURL + '/api/v3/Movies/GetCinemaList',
+    GET_SINGLE_MOVIE: BASEURL + './api/v3/Movies/GetSingleMovie',
+    BUY_MOVIE_TICKET: BASEURL + './api/v3/Movies/BuyMovieTicketV2',
+
+    //EVENTS
+    GET_EVENTS: BASEURL + '/api/v1/Events/GetEvents',
+    GET_SINGLE_EVENT: BASEURL + 'api/v1/Events/GetSingleEvent',
+    BUY_EVENT_TICKET: BASEURL + 'api/v1/Events/BuyEventTicketV2',
+
+    //PREFERENCES
+    GET_PREFENCE: BASEURL + '/api/v1/Account/GetAllEngagements'
 };

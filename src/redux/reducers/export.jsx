@@ -1,4 +1,6 @@
 import {userRegistrationRequest, bvnDetailsReducer,bvnSkipReducer, bvnCustomerDetailsReducer} from "./onboarding.reducer";
+import {getCinemaList, getSingleMovie, buyMovieTicket, getEvents, getSingleEvent, purchaseEventTicket, getAllEngagements} from './lifestyle/lifestyle-reducer';
+
 import {
     accountFetch,
     accountHistoryReducer,
@@ -119,4 +121,14 @@ export const fundAccount={
     //fundFromTokenisedCardReducer,
     //fundFromCardWithPinReducer
     saveCardAfterTranReducer
+}
+
+export const movies = {
+    getCinemaList,
+    getSingleMovie,
+    buyMovieTicket,
+    getEvents,
+    getSingleEvent,
+    purchaseEventTicket,
+    getAllEngagements
 }
