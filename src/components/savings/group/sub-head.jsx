@@ -1,5 +1,4 @@
 import React from 'react';
-import {NavLink, Route, Redirect} from "react-router-dom";
 import { prop } from 'cramda';
 
 export default (props) => {
