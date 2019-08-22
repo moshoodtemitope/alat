@@ -205,6 +205,7 @@ class SetCardPin extends React.Component {
                                     tabIndex="2"
                                     maxLength='4'
                                     id={'lastFourDigitsNum'}
+                                    type="password"
                                     name="lastFourDigitsNum"
                                     value={lastFourDigitsNum}
                                     onChange= {(lastFourDigitsNum, e)=>{ 
@@ -310,6 +311,7 @@ class SetCardPin extends React.Component {
                             tabIndex="2"
                             id={'securityAnswer'}
                             name="securityAnswer"
+                            type="password"
                             value={securityAnswer}
                             onChange= {(securityAnswer, e)=>{ 
                                 this.setState({securityAnswer});
@@ -361,15 +363,22 @@ class SetCardPin extends React.Component {
                                 <div className="transfer-ctn ">
 
                                     {/* Loading Current ATM Card and Random question */}
-                                    {(currentCardRequest.is_processing === GETCURRENT_ATMCARD_PENDING ||
+                                    {(currentCardRequest.fetch_status === GETCURRENT_ATMCARD_PENDING ||
                                             randomQuestion.fetch_status === GETRANDOM_SECURITYQUESTION_PENDING) &&
                                                 <center>
                                                     Loading ATM card details...
                                                 </center>
                                     }
 
+                                    {/* {(currentCardRequest.fetch_status === GETCURRENT_ATMCARD_PENDING &&
+                                            randomQuestion.fetch_status !== GETRANDOM_SECURITYQUESTION_PENDING) &&
+                                                <center>
+                                                    Loading ATM card details...
+                                                </center>
+                                    } */}
+
                                     {/* If Loading Current ATM Card and/or Fails */}
-                                    {(currentCardRequest.is_processing === GETCURRENT_ATMCARD_FAILURE ||
+                                    {(currentCardRequest.is_processing === false ||
                                             randomQuestion.fetch_status === GETRANDOM_SECURITYQUESTION_FAILURE) &&
                                                 <center>
                                                     An error occured

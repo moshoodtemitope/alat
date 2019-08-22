@@ -480,6 +480,7 @@ export const getCurrentATMCard = (token)=>{
                     }
                 }
                 else{
+                    console.log('error', error.response);
                     dispatch(failure('An error occured. Please try again '));
                 }
             })
