@@ -143,7 +143,6 @@ export function purchaseEventTicket(state=[], action){
 
 export function getAllEngagements(state=[], action){
     switch(action.type){
-        
         case listStyleConstants.PREFERENCES_PENDING: 
            return {
                message: listStyleConstants.PREFERENCES_PENDING,
