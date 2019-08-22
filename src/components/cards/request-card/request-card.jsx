@@ -87,8 +87,21 @@ class RequestCard extends React.Component {
             phoneNo:this.state.user.phoneNo,
             otpType:null,
             imei:"123456789012345"
+        },
+        newCardRequestData={
+            DeliveryOption      :  "LocationDelivery",
+            NameOnCard          :   this.state.nameOnCard,
+            Pin                 :   this.state.Pin,
+            AccountNumber       :   this.state.selectedAccount,
+            State               :   this.state.selectedState.value,
+            City                :   this.state.selectedCity.value,
+            StreetAddress       :   this.state.deliveryAddress,
+            NearestBustop       :   this.state.addressLandmark,
+            CardId              :   this.state.selectedDesignId,
+            PhoneNo             :   this.state.user.phoneNo,
+            ChannelId           :   2
         }
-        dispatch(requestOtpForNewATMCard(payload, this.state.user.token));
+        dispatch(requestOtpForNewATMCard(payload, this.state.user.token, newCardRequestData));
 
     }
 
@@ -116,7 +129,8 @@ class RequestCard extends React.Component {
         loadCardsInfo = props.infoForCardRequest;
 
         let cardInfoFromRequest = loadCardsInfo.atmcard_info.response,
-        cardDesignUrl, cardStyle, cardDesignId, cardDesignObj,allDesigns;
+            panDetails = loadCardsInfo.atmcard_info.response.pans,
+            cardDesignUrl, cardStyle, cardDesignId, cardDesignObj,allDesigns;
 
         allDesigns  = cardInfoFromRequest.allCardDesigns;
         cardDesignId = cardInfoFromRequest.cardDesignId[0];
@@ -136,6 +150,14 @@ class RequestCard extends React.Component {
         return(
             <div className="transfer-ctn">
                 <div className="atmcard-wrap nonvirtual" style={cardStyle}>
+                    {panDetails!==null && 
+                        <div>
+                            <div className="carddata">
+                                <div className="cardname">{panDetails[0].embossingName}</div>
+                            </div>
+                        </div>
+                    }
+                    
                 </div>
                 {cardDesignObj.isActive===true&&
                     <div className="card-msg text-center m-t-20">You have an active ALAT CARD</div>
@@ -419,7 +441,7 @@ class RequestCard extends React.Component {
                 backgroundPosition: 'center center'
             };
 
-            console.log('dsdsd', loadCardsInfo);
+            
         return(
             <div className="transfer-ctn">
                 <h4 className="text-center m-b-20">You will be charged &#8358;{cardPrice}</h4>
@@ -466,7 +488,7 @@ class RequestCard extends React.Component {
                         className="btn-alat m-t-10 m-b-20 text-center"
                         disabled={customerOtpRequest.is_processing}
                         onClick={()=>{      
-                            this.getCustomerOTP();      
+                            // this.getCustomerOTP();      
                                     if(this.state.selectedAccount!=='' && this.state.Pin!==''){
                                         if(this.state.selectedDebitableAccount[0].AvailableBalance >= cardPrice){
                                             if(this.state.selectedDebitableAccount[0].MaxIntraBankTransferLimit >= cardPrice){
@@ -510,24 +532,24 @@ class RequestCard extends React.Component {
                 case LOADING_INFOFOR_CARDREQUEST_SUCCESS:
                     let cardInfoFromRequest = loadCardsInfo.atmcard_info.response;
                     
-                        // if(cardInfoFromRequest.cardDesignId.length===0){
-                        //     return(
-                        //         <div>
-                        //             {this.renderNoAlatCard()}
-                        //         </div>
-                        //     );
-                        // }else{
-                        //     return(
-                        //         <div className="">
-                        //             {this.renderExistingCard()}
-                        //         </div>
-                        //     );
-                        // }
-                        return(
-                            <div>
-                                {this.renderNoAlatCard()}
-                            </div>
-                        )
+                        if(cardInfoFromRequest.cardDesignId.length===0){
+                            return(
+                                <div>
+                                    {this.renderNoAlatCard()}
+                                </div>
+                            );
+                        }else{
+                            return(
+                                <div className="">
+                                    {this.renderExistingCard()}
+                                </div>
+                            );
+                        }
+                        // return(
+                        //     <div>
+                        //         {this.renderNoAlatCard()}
+                        //     </div>
+                        // )
                         
                 case LOADING_INFOFOR_CARDREQUEST_FAILURE:
                         let loadCardError = loadCardsInfo.atmcard_info.error;
