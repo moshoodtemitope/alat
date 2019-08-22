@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-
+import '../movie-preference-event.css';
 
 class Movie extends Component{
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import elel from '../../../assets/css/movie-preference-event.css';
+import '../movie-preference-event.css';
 
 class Event extends Component{
 
