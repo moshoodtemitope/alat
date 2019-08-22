@@ -47,29 +47,28 @@ class ViewGroupSummary extends React.Component {
     }
     PauseCustomerGoal= () => {
         let data = {
-            GoalName:this.state.goal.goalName,
-            TargetDate:this.state.goal.targetDate,
-            StartDate:this.state.goal.startDate,
-            TargetAmount:parseFloat(this.state.goal.targetAmount),
-            GoalTypeId:parseInt(this.state.goal.goalTypeId),
-            DebitAmount:parseFloat(this.state.goal.debitAmount),
-            FrequencyId:parseInt(this.state.goal.frequencyId),
-            DebitAccount:this.state.goal.debitAccount
+            goalName:this.state.goal.goalName,
+            targetDate:this.state.goal.targetDate,
+            startDate:this.state.goal.startDate,
+            targetAmount:parseFloat(this.state.goal.targetAmount),
+            goalTypeId:parseInt(this.state.goal.goalTypeId),
+            debitAmount:parseFloat(this.state.goal.debitAmount),
+            frequencyId:parseInt(this.state.goal.frequencyId),
+            debitAccount:this.state.goal.debitAccount
         };
         this.props.dispatch(actions.PauseCustomerGoal(this.state.user.token, data));
     };
     DeleteCustomerGoal = () => {
         return this.props.history.push('/savings/delete-goal')
     };
-    UnpauseCustomerGoal = () => {
+    UnpauseCustomerGoal = (event) => {
         let data = {
             goalId: parseInt(event.target.id),
         };
         this.props.dispatch(actions.unpauseCustomerGoal(this.state.user.token,data));
     };
     EditCustomerGoal = () => {
-        return this.props.history.push("/savings/edit-goal", this.state.goal)
-
+        return this.props.history.push("/savings/edit-goal");
     };
 
 
@@ -137,7 +136,7 @@ class ViewGroupSummary extends React.Component {
                                             <NavLink to='/savings/choose-goal-plan'>
                                                 <li><a  href="#" className="active">Goals</a></li>
                                             </NavLink>
-                                            <NavLink to="/savings/goal/group-savings-selection">
+                                            <NavLink to="/savings/activityDashBoard">
                                                 <li><a href="#" >Group Savings</a></li>
                                             </NavLink>
                                             <li><a href="#">Investments</a></li>
@@ -171,12 +170,12 @@ class ViewGroupSummary extends React.Component {
 
                                                         <ProgressBar
                                                             discTopSpan="Goal Progress"
-                                                            discTopRight={details.percentageCompleted + "%" + " Completed"}
+                                                            discTopRight={details.percentageCompleted.toFixed(2) + "%" + " Completed"}
                                                             percentage={details.percentageCompleted}
-                                                            discBottom={"₦" + details.amountSaved}
-                                                            discSpan={"of" + "₦" + details.targetAmount}
+                                                            discBottom={"₦" + details.amountSaved + " "}
+                                                            discSpan={"  " + "of" + "  " + "₦" + details.targetAmount}
                                                             discBottomSib="Amount Saved"
-                                                        />
+                                                        /><br /><br/>
                                                         <MoreDetails
                                                             lefthead={"₦" + details.interestAccrued}
                                                             leftBottom="Interest Accrued"
@@ -206,9 +205,9 @@ class ViewGroupSummary extends React.Component {
 
                                                         <NavButtons
                                                             navType={this.state.navType}
-                                                            leftName='edit'
-                                                            middleName='pause'
-                                                            rightName='delete'
+                                                            leftName='Edit'
+                                                            middleName='Pause'
+                                                            rightName='Delete'
                                                             edit={details.id}
                                                             delete={details.id}
                                                             unpause={details.id}
@@ -251,7 +250,7 @@ class ViewGroupSummary extends React.Component {
 
                                                     <ProgressBar
                                                         discTopSpan="Goal Progress"
-                                                        discTopRight={details.percentageCompleted +"%"+" Completed"}
+                                                        discTopRight={details.percentageCompleted.toFixed(2) +"%"+" Completed"}
                                                         percentage={details.percentageCompleted}
                                                         discBottom={"₦"+details.amountSaved}
                                                         discSpan={"of"+"₦"+details.targetAmount}
@@ -284,9 +283,9 @@ class ViewGroupSummary extends React.Component {
 
                                                     <NavButtons
                                                        navType={this.state.navType}
-                                                        leftName='edit'
-                                                        middleName='pause'
-                                                        rightName='delete'
+                                                        leftName='Edit'
+                                                        middleName='Pause'
+                                                        rightName='Delete'
                                                        edit={details.id}
                                                        delete={details.id}
                                                        unpause={details.id}

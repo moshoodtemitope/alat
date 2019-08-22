@@ -4,6 +4,8 @@ import {routes} from "../../../../services/urls";
 import {history} from '../../../../_helpers/history';
 import { modelStateErrorHandler } from "../../../../shared/utils";
 import {GROUPSAVINGSCONSTANT} from "../../../constants/savings/group/index";
+import {alertActions} from "../../alert.actions";
+
 
 
 export const createRotatingSavings = (token, data) => {
@@ -17,12 +19,9 @@ export const createRotatingSavings = (token, data) => {
                 history.push("/savings/rotating-group");
             }) 
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to create rotating group now!'));
-                }
-                // dispatch(failure(error.response.data.message.toString()));
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
             });
     };
     
@@ -43,12 +42,9 @@ export const rotatingGroupDetails = (token, data) => {
                      history.push('/savings/group-analytics-mini');
             }) 
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to create rotating group now!'));
-                }
-                // dispatch(failure(error.response.data.message.toString()));
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
             });
     };
     
@@ -59,20 +55,18 @@ export const rotatingGroupDetails = (token, data) => {
 
 export const joinAGroup = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
-    return (dispatch) => {
+    return (dispatch) => {    
         let consume = ApiService.request(routes.JOIN_A_GROUP, "POST", data, SystemConstant.HEADER, false);
-        dispatch(request(consume));
+        dispatch(request(consume)); 
         return consume
             .then(response => {
                 dispatch(success(response.data));
-            }) 
+                history.push('/savings/joined-group-successfully');    
+            })    
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to create rotating group now!'));
-                }
-                // dispatch(failure(error.response.data.message.toString()));
+                dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+
             });
     };
     
@@ -91,12 +85,9 @@ export const EditSlots = (token, data) => {
                 dispatch(success(response.data));
             }) 
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to create rotating group now!'));
-                }
-                // dispatch(failure(error.response.data.message.toString()));
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
             });
     };
     
@@ -115,12 +106,9 @@ export const GetGroupsEsusu = (token, data = null) => {
                 dispatch(success(response.data));
             }) 
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to create rotating group now!'));
-                }
-                // dispatch(failure(error.response.data.message.toString()));
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
             });
     };
     
@@ -139,12 +127,9 @@ export const editGroupEsusu = (token, data) => {
                 dispatch(success(response.data));
             }) 
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to EDIT GROUP NOW!'));
-                }
-                // dispatch(failure(error.response.data.message.toString()));
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
             });
     };
     
@@ -164,11 +149,9 @@ export const deleteGroupEsusu = (token, data) => {
                 history.push('/savings/group/success-message');
             }) 
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to DELETE GROUP NOW!'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -188,11 +171,9 @@ export const joinGroupEsusu = (token, data) => {
                 dispatch(success(response.data));
             }) 
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('You are unable to Join NOW!'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -225,5 +206,18 @@ export const joinGroupEsusu = (token, data) => {
 //     function success(response) { return {type:GROUPSAVINGSCONSTANT.JOIN_GROUP_ESUSU_SUCCESS, response} }
 //     function failure(error) { return {type:GROUPSAVINGSCONSTANT.JOIN_GROUP_ESUSU_ERROR, error} }
 // };
+
+export const refferalCode = (data) =>{
+    return(dispatch)=>{
+        dispatch(success(data))
+        // history.push('/savings/join-group-summary');
+    }
+    function success(data){
+        return{
+            type: 'refferalCode',
+            data: data
+        }
+    }
+}
 
 

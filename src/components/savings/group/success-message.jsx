@@ -7,12 +7,35 @@ import {Switch} from "react-router";
 import Members from './list-item';
 import { connect } from "react-redux";
 import {history} from '../../../_helpers/history';
+import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
+import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 
+if(window.performance.navigation.type == 1)
+    window.location.replace("http://localhost:8080/");
+    
 class SuccessMessage extends React.Component {
     constructor(props){
         super(props);
         this.state={
+            user: JSON.parse(localStorage.getItem("user"))
         }
+    }
+
+    componentDidMount = () => {
+        this.CheckGroupSavingsAvailability();
+        this.CheckRotatingSavingsAvailability();
+
+        setTimeout(() => {
+            history.push('/savings/activityDashBoard');
+        }, 3000);
+    }
+
+    CheckRotatingSavingsAvailability = () => {
+        this.props.dispatch(actions1.GetGroupsEsusu(this.state.user.token, null));
+    }
+
+    CheckGroupSavingsAvailability = () => {
+        this.props.dispatch(actions.customerGroup(this.state.user.token, null));
     }
 
     NavigateToGroupSavings = () => {
@@ -52,13 +75,16 @@ class SuccessMessage extends React.Component {
                                     </div>
                                 </div>
                             </div>
+                            {this.props.alert && this.props.alert.message &&
+                                <div style={{width: "100%", marginLeft:"150px",marginRight:"150px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                            }
                             <div className="col-sm-12">
                                 <div className="row">
                                     <div className="col-sm-12">
                                       <div className="max-600">
                                        <div className="al-card no-pad">
-
-                                            <form>
+                                            <form className=''>
+                                                <img src="/src/assets/img/success.svg" className="succefullMessage" alt=""/>
                                                 <div className="form-group">
                                                     <label id="sucMessage">Scheduling was successfull</label>
                                                 </div>
@@ -72,8 +98,6 @@ class SuccessMessage extends React.Component {
                                                    id="autoSummary"/>
                                                 </div>
                                             </form>
-
-
 
                                         </div>
 
@@ -100,7 +124,9 @@ function mapStateToProps(state){
         setAmountToWithDraw: state.setAmountToWithDraw.data,
         setFrequency: state.setFrequency.data,
         groupSavingsEsusu: state.getGroupSavingsEsusu.data,
-        groups: state.customerGroup.data
+        groups:state.customerGroup.data,
+        alert:state.alert,
+
     }
 }
 export default connect(mapStateToProps)(SuccessMessage);

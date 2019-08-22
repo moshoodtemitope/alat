@@ -18,17 +18,36 @@ export default (props) => {
                              <p>{props.discTopRight}</p>
                          </div>
                      </div>
-
-                     <Progress  color="success" value={props.percentage}></Progress>
+                     <Progress color="success" value={props.percentage}></Progress>
                      <div className='bottomDiscription topDiscription row'>
                          <div className='left'>
-                             <p className="perc">{props.discBottom}<span>{props.discSpan}</span></p>
-                             <p>{props.discBottomSib}</p>
+                             <p class="perc" >{props.discBottom}<span className="shiftLeft">{props.discSpan}</span></p>
+                             <p className="butProgBar">{props.discBottomSib}</p>
+                            
                          </div>
                          <div className='right'>
-                             <p><span>{props.discBottomRight}</span></p>
+                             <p><span className='botPercent'>{props.discBottomRight}</span></p>
                              <p>{props.discBottomSibRight}</p>
                          </div>
                      </div>
                  </div>);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

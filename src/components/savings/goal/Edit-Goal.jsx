@@ -241,8 +241,8 @@ class EditGoal extends React.Component {
                 "targetAmount":parseFloat(this.state.goal.targetAmount),
                 "debitAccount":this.state.goal.debitAccount,
                 "debitAmount":parseFloat(this.state.goal.debitAmount),
-                "goalTypeId":parseInt(this.state.goal.goalTypeId),
-                "frequencyId":parseInt(this.state.goal.frequencyId)
+                "goalTypeId":parseInt(this.state.goal.GoalTypeId),
+                "frequencyId":parseInt(this.state.goalFrequency)
             }));
             console.log('tag', '')
         }
@@ -278,7 +278,7 @@ class EditGoal extends React.Component {
                                     <div className="sub-tab-nav">
                                         <ul>
                                             <li><a href="accounts.html" className="active">Goals</a></li>
-                                            <NavLink to="/savings/goal/group-savings-selection">
+                                            <NavLink to="/savings/activityDashBoard">
                                                 <li><a href="statement.html">Group Savings</a></li>
                                             </NavLink>
                                             <li><a href="#">Investments</a></li>

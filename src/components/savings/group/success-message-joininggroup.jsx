@@ -13,7 +13,7 @@ import * as actions1 from '../../../redux/actions/savings/group-savings/rotating
 // if(window.performance.navigation.type == 1)
 //     window.location.replace("http://localhost:8080/");
     
-class JoinedGroupSuccessfully extends React.Component {
+class JoinGroupSuccessMessage extends React.Component {
     constructor(props){
         super(props);
         this.state={
@@ -24,16 +24,19 @@ class JoinedGroupSuccessfully extends React.Component {
     componentDidMount = () => {
         this.CheckGroupSavingsAvailability();
         this.CheckRotatingSavingsAvailability();
-     }
- 
-     CheckRotatingSavingsAvailability = () => {
-         this.props.dispatch(actions1.GetGroupsEsusu(this.state.user.token, null));
-     }
- 
-     CheckGroupSavingsAvailability = () => {
-         this.props.dispatch(actions.customerGroup(this.state.user.token, null));
-     }
- 
+        
+        setTimeout(() => {
+            history.push('/savings/activityDashBoard');
+        }, 3000);
+    }
+
+    CheckRotatingSavingsAvailability = () => {
+        this.props.dispatch(actions1.GetGroupsEsusu(this.state.user.token, null));
+    }
+
+    CheckGroupSavingsAvailability = () => {
+        this.props.dispatch(actions.customerGroup(this.state.user.token, null));
+    }
 
     NavigateToGroupSavings = () => {
         let groupSavings = Object.keys(this.props.groups); //returns an array
@@ -46,8 +49,6 @@ class JoinedGroupSuccessfully extends React.Component {
     }
 
     render() {
-        const {endDate,endDateInvalid} = this.state;
-
         return (
             <Fragment>
                 <InnerContainer>
@@ -80,29 +81,25 @@ class JoinedGroupSuccessfully extends React.Component {
                                     <div className="col-sm-12">
                                       <div className="max-600">
                                        <div className="al-card no-pad">
-
                                             <form>
                                                 <div className="form-group">
-                                                    <label id="sucMessage">Group Joined Successfully</label>
+                                                    <label id="sucMessage">Joined Successfully</label>
                                                 </div>
                                                 <div className="form-row">
-                                                
+                                                <Members 
+                                                   userType="admin"
+                                                   name={this.props.joinAGroup.CurrentSlot}
+                                                   position="Current Slot"
+                                                   amount={this.props.joinAGroup.response.MemberCount}
+                                                   intent="Member Count"
+                                                   id="autoSummary"/>
                                                 </div>
                                             </form>
-
-
-
                                         </div>
-
-
                                        </div>
-
                                       </div>
-
                                 </div>
-
                             </div>
-
                         </div>
 
                     </SavingsContainer>
@@ -114,10 +111,9 @@ class JoinedGroupSuccessfully extends React.Component {
 
 function mapStateToProps(state){
     return {
-        groupSavingsEsusu: state.getGroupSavingsEsusu.data,
-        groups: state.customerGroup.data,
+        joinAGroup: state.joinAGroup.data,
         alert:state.alert,
 
     }
 }
-export default connect(mapStateToProps)(JoinedGroupSuccessfully);
+export default connect(mapStateToProps)(JoinGroupSuccessMessage);

@@ -216,12 +216,7 @@ class FlexGoal extends React.Component {
 
 
     calculateInterestRate = () => {
-        // let day = this.state.goalFrequencyValue.split(" ", 1) * 1;
-        // console.log("days",day);
-        // let ans = this.GetDailyFutureValue(this.removeComma(this.state.targetAmount), 0.1, day) - (this.removeComma(this.state.targetAmount) * day);
-        //  ans = this.toCurrency(ans.toFixed(2));
-        //
-        // this.setState({interest: ans});
+        
         var days = null;
         var res;
         let amount= parseFloat(this.removeComma(this.state.targetAmount));
@@ -304,7 +299,13 @@ class FlexGoal extends React.Component {
         if (this.state.goalFrequencyName === "Monthly") {
             // this.setState({goalFrequencyValue: "12 Month"});
             return (
-                <select onChange={(e) => this.setState({ goalFrequencyValue: e.target.value })}>
+                <select onChange={(e) => {
+                    this.setState({ goalFrequencyValue: e.target.value }, () => {
+                        this.calculateInterestRate();
+                        this.calculationForTotalAmount();
+                    });
+                    
+                    }}>
                     <option >1 Month</option>
                     <option>2 Month</option>
                     <option>3 Month</option>
@@ -323,7 +324,10 @@ class FlexGoal extends React.Component {
         if (this.state.goalFrequencyName === "Weekly") {
             // this.setState({goalFrequencyValue: "52 Weeks"});
             return (
-                <select onChange={(e) => this.setState({ goalFrequencyValue: e.target.value })}>
+                <select onChange={(e) => this.setState({ goalFrequencyValue: e.target.value }, () => {
+                    this.calculateInterestRate();
+                    this.calculationForTotalAmount();
+                })}>
                     <option>2 Weeks</option>
                     <option>4 Weeks</option>
                     <option>8 Weeks</option>
@@ -337,7 +341,10 @@ class FlexGoal extends React.Component {
         if (this.state.goalFrequencyName === "Daily") {
 
             return (
-                <select onChange={(e) => this.setState({ goalFrequencyValue: e.target.value })}>
+                <select onChange={(e) => this.setState({ goalFrequencyValue: e.target.value }, () => {
+                    this.calculateInterestRate();
+                    this.calculationForTotalAmount();
+                })}>
                     <option>7 Days</option>
                     <option>14 Days</option>
                     <option>30 Days</option>
@@ -371,10 +378,12 @@ class FlexGoal extends React.Component {
                                 <div className="tab-overflow">
                                     <div className="sub-tab-nav">
                                         <ul>
-                                            <li><a href="accounts.html" className="active">Goals</a></li>
-                                            <NavLink to="/savings/goal/group-savings-selection">
-                                                <li><a>Group Savings</a></li>
-                                            </NavLink>
+                                        <NavLink to='/savings/choose-goal-plan'>
+                                        <li><a className="active">Goals</a></li>
+                                        </NavLink>
+                                        <NavLink to="/savings/activityDashBoard">
+                                            <li><a>Group Savings</a></li>
+                                        </NavLink>                                            
                                             <li><a href="#">Investments</a></li>
 
                                         </ul>
@@ -432,7 +441,10 @@ class FlexGoal extends React.Component {
 
                                                         <div className={goalFrequencyInvalid ? "form-group col-md-6 form-error" : "form-group col-md-6"}>
                                                             <label className="label-text">Saving Circle</label>
-                                                            <select onChange={(e) => this.setState({ goalFrequencyName: e.target.value })}>
+                                                            <select onChange={(e) => this.setState({ goalFrequencyName: e.target.value },()=>{
+                                                                this.calculateInterestRate();
+                                                                this.calculationForTotalAmount();
+                                                            })}>
                                                                 <option selected={true}>Monthly</option>
                                                                 <option>Weekly</option>
                                                                 <option>Daily</option>

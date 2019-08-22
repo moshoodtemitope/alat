@@ -21,6 +21,25 @@
     font-family: Proxima Nova;
     text-align: center;
     width: 100% !important;
+    margin-left: 15%;
+}
+
+.forCode img {
+    width: 20px;
+    height: 23px;
+    margin-top: 10px;
+    margin-left: 50px;
+    margin-left: 30px;
+}
+
+.joinGroup #true {
+    display: block;
+    color: red;
+    text-align: center;
+}
+
+.joinGroup #false {
+    display: none;
 }
 
 .forCode {
@@ -67,12 +86,17 @@
 }
 
 .compContainer {
-    width: 32%;
+    width: 100% !important;
     background-color: transparent;
-    /*padding-top: 20px;*/
-    /*padding-bottom: 20px;*/
-    display: flex;
-    flex-wrap: wrap;
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
+
+.compContainer2 {
+    width: 100% !important;
+    background-color: transparent;
+    display: flex !important;
+    flex-wrap: wrap !important;
 }
 
 
@@ -108,40 +132,105 @@
     padding-right: 15px;
 }
 
+.accountSelect {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
 .smallnavtop {
     width: 86% !important;
     position: absolute;
     top: 238px;
+    z-index: 0;
+    left: 50%;
 }
 
 .smallnavtop  ul {
-    width: 100% !important;
-    /* background-color: black; */
-    float: right;
+    /* width: 100% !important; */
+    float: right !important;
+    margin-left: 145px !important;
 }
 
 .smallnavtop ul li {
     display: inline-block;
-    width: 25%;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    /* color: white; */
-    text-align: center;
-    /* background-color: #A90836; */
-
-    font-family: Proxima Nova;
+    padding-top: 10px;
+    padding-bottom: 10px; 
+    text-align: center; 
+    font-family: Proxima Nova;        
     font-size: 16px;
     line-height: 19px;
-    text-align: center;
     color: #FFFFFF;
-
     background-color: #AB2656;
     border-radius: 3px;
     float: right;
+    margin-left: 200px;
+}
+
+#upDateButton {
+    padding: 10px 70px;
+    background: #AB2656;
+    border-radius: 3px;
+    color: white;
+    font-family: Proxima Nova;
+    margin-bottom: 40px;
+}
+
+.sumComponent {
+    display: flex;
+    flex-wrap: nowrap;
+    font-family:'proxima_novasemibold';
+    background: linear-gradient(171.37deg, #FFFFFF 0%, rgba(195, 195, 195, 0.291752) 100%), linear-gradient(351.37deg, #7C5578 0%, #580637 100%);
+    background-blend-mode: multiply, normal;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    width: 98%;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 40px;
+    padding-top: 20px;
+}
+
+.sumComponent .left, .sumComponent .right {
+   width: 50%;
+}
+
+.sumComponent .left p {
+   
+}
+
+.sumComponent .right p {
+    text-align: right;
+}
+
+.sumComponent .left p:nth-child(1), .sumComponent .right p:nth-child(1) {
+    margin-bottom: 5px;
+    color: white;
+}
+
+
+.sumComponent .left p:nth-child(2) {
+    color: #C7C7C7;
+    font-size: 16px;
+}
+
+.sumComponent .right p:nth-child(2) {
+    color: #C7C7C7;
+    font-size: 16px;
+}
+
+
+
+.smallnavtop ul #second{
+    padding-left: 80px !important;
+    padding-right: 80px !important;
+}
+
+.smallnavtop ul #first {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
 }
 
 #parentGoal {
-    /* color: black; */
     color: #666666;
 }
 .smallnavtop ul li:first-child {
@@ -150,14 +239,107 @@
     padding-right: 10px;
 }
 
+.forReadOnlyInput input {
+    background-color: #F5F5F5;
+    border-radius: 5px;
+    font-family:'proxima_novasemibold';
+    font-size: 14px;
+    border: none;
+}
+
+.forInputFields {
+    margin-bottom: 30px;
+}
+
+#notValid {
+    text-align: center;
+    color: red;
+    display: block;
+    padding-top: 10px;
+    font-family:'proxima_novasemibold';
+    font-size: 14px;
+}
+
+.acceptAndDecline {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    padding-bottom: 50px;
+}
+.acceptAndDecline button {
+   background: #FFFFFF;
+   border: 1px solid #EDEDED;
+   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
+   border-radius: 6px;
+   padding-top: 10px;
+   padding-bottom: 10px;
+   width: 95%;
+}
+
+.acceptAndDecline button:nth-child(2) {
+    width: 90%;
+    background: #FFFFFF;
+    border: 1px solid #EDEDED;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
+    border-radius: 6px;
+    color: white;
+    border-radius: 3px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+ }
+
+ #hiddenReferralCode {
+    position: absolute;
+    color: white;
+    border: none;
+    background-color: transparent;
+    top: 0px;
+ }
+
+ .succefullMessage {
+     margin-left: 45%;
+     padding-top: 40px;
+     padding-bottom: 20px;
+ }
+
+ #acepting {
+    background-color: #AB2656;
+    color: white;
+ }
+
+#valid {
+    text-align: center;
+    color: red;
+    display: none;
+    padding-top: 10px;
+    font-family:'proxima_novasemibold';
+    font-size: 14px;
+}
 .compContainer .eachComp {
-    width: 330px;
+    width: 345px;
     height: 230px;
     border-radius: 2%;
     background-color: white;
     margin-left: 20px;
     margin-bottom: 20px;
     position: relative;
+    background: #FFFFFF;
+    border: 1px solid rgba(151, 151, 151, 0.05);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
+    border-radius: 6px;
+}
+
+.compContainer2 .eachComp2 {
+    width: 345px;
+    height: 250px;
+    border-radius: 2%;
+    background-color: white;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    background: #FFFFFF;
+    border: 1px solid rgba(151, 151, 151, 0.05);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
+    border-radius: 6px;
 }
 
 .compContainer .eachComp .upper {
@@ -169,7 +351,24 @@
     margin-bottom: 5px;
 }
 
+.compContainer2 .eachComp2 .upper {
+    font-family: Proxima Nova;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0.168px;
+    color: #4D4D4D;
+    margin-bottom: 5px;
+}
+
 .compContainer .eachComp .lower {
+    font-family: Proxima Nova;
+    font-size: 10.4px;
+    line-height: 12px;
+    letter-spacing: 0.1248px;
+}
+
+
+.compContainer2 .eachComp2 .lower {
     font-family: Proxima Nova;
     font-size: 10.4px;
     line-height: 12px;
@@ -194,18 +393,6 @@
     margin-top: 30px;
 }
 
-/* .bottomDiscription {
-    display: flex;
-    flex-wrap: nowrap;
-    position: absolute;
-    width: 100%;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding-left: 15px;
-    padding-right: 15px;
-    top: 180px;
-} */
-
 .topCard {
     display: flex;
     flex-wrap: nowrap;
@@ -219,22 +406,26 @@
     width: 80%;
 }
 
+/* .topCard .left p:nth-child(1) {
+    text-transform: capitalize !important;
+} */
+
 .topCard .left .top {
-      color: #A90836;
-      width: 100%;
-      margin-bottom: 0px;
-    font-family:'proxima_novasemibold';
-    font-size: 8px;
-    line-height: 10px;
-    text-transform: uppercase;
-    color: #A90836;
-    padding-bottom: 5px;
-    padding-top: 20px;
-    font-weight: bold;
+  color: #A90836;
+  width: 100%;
+  margin-bottom: 0px;
+  font-family:'proxima_novasemibold';
+font-size: 8px;
+line-height: 10px;
+/* color: #A90836; */
+padding-bottom: 5px;
+padding-top: 20px;
+font-weight: bold;
+text-transform: uppercase !important;
 }
 
 .topCard .left .bottom {
-    font-family: 'proxima_novasemibold';
+font-family:'proxima_novasemibold';
 font-size: 12px;
 line-height: 14px;
 color: #4D4D4D;
@@ -296,7 +487,7 @@ font-weight: bold;
 }
 
 .bottomDiscriptionDashBoard .left #date {
-    font-family: Proxima Nova;
+    font-family:'proxima_novasemibold';
     font-size: 10px;
     line-height: 12px;
     letter-spacing: 0.96px;
@@ -345,6 +536,8 @@ font-weight: bold;
    top: 170px;
    padding-left: 15px;
    padding-right: 15px;
+   font-family:'proxima_novasemibold';
+
 }
 
 .bottomDisCriptionTray .left {
@@ -357,17 +550,22 @@ font-weight: bold;
 
 .bottomDisCriptionTray .left p:first-child {
     margin-bottom: 0px;
-    font-family: Proxima Nova;
+    font-family:'proxima_novasemibold';
     font-size: 14px;
     line-height: 17px;
     color: #4D4D4D;
-    font-weight: bold;
+}
+
+.bottomDisCriptionTray .left p:last-child {
+    font-family:"proxima_novaregular" !important;
+    font-size: 10.4px;
+    color: #878686
 }
 
 .bottomDisCriptionTray .right p {
     text-align: right;
     font-weight: bold;
-    font-family: Proxima Nova;
+    font-family:'proxima_novasemibold';
     font-size: 12px;
     line-height: 14px;
     color: #AB2656;
@@ -377,7 +575,7 @@ font-weight: bold;
 .butRight button {
     background-color: transparent;
     border-radius: 3px;
-    font-family: Proxima Nova;
+    font-family:'proxima_novasemibold';
     font-size: 16px;
     line-height: 19px;
     text-align: center;
@@ -408,9 +606,7 @@ font-weight: bold;
     padding-top: 15px;
     padding-bottom: 15px;
 }
-/* .subNav .left p {
-    border-bottom: 1px solid #AB2656;
-} */
+
 
 .subNav #middle p {
     border-bottom: 1px solid #AB2656;
@@ -486,17 +682,15 @@ font-weight: bold;
 }
 
 .topDiscription .left p {
-    font-family: Proxima Nova;
+    font-family:"proxima_novasemibold";
     font-size: 8px;
     line-height: 10px;
-
-    text-transform: uppercase;
-
     color: #A90836;
+    /* text-transform: uppercase; */
 }
 
 .topDiscription .right p {
-  font-family: Proxima Nova;
+    font-family:"proxima_novasemibold";
   font-size: 10px;
   line-height: 12px;
   text-align: right;
@@ -510,18 +704,26 @@ font-weight: bold;
 }
 
 .bottomDiscription .left p:nth-child(1) {
-    font-family: Proxima Nova;
-    font-size: 12px;
+    font-family:"proxima_novasemibold";
+    font-size: 10px;
     line-height: 14px;
     color: #4D4D4D;
 }
 
 .bottomDiscription .left p {
     color: #4D4D4D;
+    font-size: 12px;
+    font-family:"proxima_novaregular";
 }
 
 .bottomDiscription .right p:nth-child(1) {
     font-size: 12px;
+    
+}
+
+.botPercent {
+    color: #717171 !important;
+    font-size: 10px;
 }
 
 .bottomDiscription .right p {
@@ -540,7 +742,7 @@ font-weight: bold;
     width: 100%;
     background: #AB2656;
     border-radius: 3px;
-    font-family: Proxima Nova;
+    font-family:"proxima_novasemibold";
     font-size: 16px;
     line-height: 19px;
     /* identical to box height */
@@ -559,6 +761,9 @@ font-weight: bold;
 .butNav {
     padding-bottom: 50px;
     padding-top: 20px;
+    font-size: 12px;
+    color: #444444;
+    font-family:"proxima_novasemibold";
 }
 
 .navRight p {
@@ -600,7 +805,7 @@ font-weight: bold;
 }
 
 .moreDetails .left p:first-child, .moreDetails .right p:first-child, .moreDetails .middle p:first-child {
-font-family: Proxima Nova;
+font-family:"proxima_novasemibold";
 font-size: 14px;
 line-height: 17px;
 /* identical to box height */
@@ -608,6 +813,18 @@ line-height: 17px;
 letter-spacing: 0.168px;
 
 color: #4D4D4D;
+}
+
+.moreDetails .left p:last-child, .moreDetails .right p:last-child, .moreDetails .middle p:last-child {
+    font-family:"proxima_novasemibold";
+    font-size: 10px;
+    color: #878686;
+    }
+
+.butProgBar {
+    font-family:"proxima_novaregular" !important;
+    font-size: 10px !important; 
+    color: #717171 !important;
 }
 
 .moreDetails {
@@ -768,7 +985,7 @@ color: #4D4D4D;
 }
 
 #autoSummary .right p:first-child { 
-    padding-top: 20px;
+    padding-top: 10px;
 }
 
 #autoSummary .left p:first-child { 
@@ -784,7 +1001,7 @@ color: #4D4D4D;
     justify-content: center;
     margin: auto;
     margin-left: 25%;
-    font-family: Proxima Nova;
+    font-family:"proxima_novasemibold";
     font-size: 20px;
     line-height: 24px;
     text-align: center;
@@ -860,15 +1077,21 @@ margin-top: 40px;
 }
 
 
-
-.perc {
-    text-transform: lowercase !important;
-}
 .progress-bar {
     -webkit-transition: width .3s ease;
     -o-transition: width .3s ease;
     transition: width .3s ease;
 }
+#subButtonGroupT{
+    margin-bottom: 40px
+}
 
+.perc {
+    font-family:'proxima_novasemibold' !important;
+    font-size: 12px !important;
+    text-transform: lowercase !important;
+}
 
-
+.shiftLeft {
+    /* padding-left: 5px; */
+}

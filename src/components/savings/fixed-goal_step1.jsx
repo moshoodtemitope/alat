@@ -279,8 +279,11 @@ class FixedGoal extends React.Component {
                                 <div className="tab-overflow">
                                     <div className="sub-tab-nav">
                                         <ul>
-                                            <li><a href="accounts.html" className="active">Goals</a></li>
-                                            <NavLink to="/savings/goal/group-savings-selection">
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                            <li><a className="active">Goals</a></li>
+                                            </NavLink>
+
+                                            <NavLink to="/savings/activityDashBoard">
                                             <li><a href="statement.html">Group Savings</a></li>
                                             </NavLink>
                                             <li><a href="#">Investments</a></li>

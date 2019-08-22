@@ -54,7 +54,10 @@ import DeleteGoal from './savings/goal/delete-goal';
 import EditGoal from './savings/goal/Edit-Goal';
 import FlexGoalStep2 from './savings/flex-goal-step2';
 import StashCashout from './savings/goal/cash-out-goal';
-import FlexSuccessMessage from './savings/goal/flex-goal-success'
+import FlexSuccessMessage from './savings/goal/flex-goal-success';
+import JoinGroupSummary from './savings/group/join-group-summary';
+import JoinGroupSuccessMessage from './savings/group/joined-group-successfully';
+
 
 
 
@@ -141,6 +144,9 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path='/savings/flex-goal-step2' authed={this.props.user} component={FlexGoalStep2} />
                     <PrivateRoute path='/savings/stash-cashout' authed={this.props.user} component={StashCashout} />
                     <PrivateRoute path='/savings/flex-success-message' authed={this.props.user} component={FlexSuccessMessage} />
+                    <PrivateRoute path="/savings/join-group-summary" authed={this.props.user} component={JoinGroupSummary} />
+                    <PrivateRoute path="/savings/joined-group-successfully" authed={this.props.user} component={JoinGroupSuccessMessage} />
+                    
 
 
 

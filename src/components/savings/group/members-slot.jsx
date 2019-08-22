@@ -16,6 +16,9 @@ var slot = [];
 var groupMembers;
 var selectCounter = 0;
 
+// if(window.performance.navigation.type == 1)
+//     window.location.replace("http://localhost:8080/");
+
 class MemberSlots extends React.Component{
     constructor(props){
         super(props);
@@ -83,8 +86,8 @@ class MemberSlots extends React.Component{
         console.log(members);
         this.setState({'members': theMembers})
         this.MembersInitialValues();
-        
     }
+
 
     MembersInitialValues = () => {
         let container = [];
@@ -169,9 +172,9 @@ class MemberSlots extends React.Component{
 
                 return members;
           }
-          
+
           let slots = this.state.sortedMembers.map((element, index) => {
-                return <select name="" className="membersSlots" id={element.slot} onChange={this.handleSelectChange()}>
+                return <select name="" className="membersSlots" id={element.slot} onChange={this.handleSelectChange}>
                             {optionsElm(element)}
                        </select>
           });
@@ -197,13 +200,13 @@ class MemberSlots extends React.Component{
 
         console.log(theSlots);
         return;
-        this.props.dispatch(actions.EditSlot(this.state.user.token, data));
+        // this.props.dispatch(actions.EditSlot(this.state.user.token, data));
     }
 
-    handleSubmit = () => {
+    handleSubmit = (event) => {
         event.preventDefault();
         return;
-        this.SubmitNewSlots();
+        //this.SubmitNewSlots();
     }
 
     NavigateToGroupSavings = () => {
@@ -251,10 +254,8 @@ class MemberSlots extends React.Component{
                                        <h4 className="m-b-10 center-text hd-underline">Members Slot</h4>
 
                                             <form onSubmit={this.handleSubmit}>
-                                                
                                                 <div className="form-group">
                                                     <div className='form-row'>
-                                        
                                                         {this.GenerateOptions(groupMembers)}
                                                     </div>
                                                 </div>
@@ -263,7 +264,7 @@ class MemberSlots extends React.Component{
                                                     <div className="col-sm-12">
                                                         <center>
                                                             {/* <NavLink to='/savings/group/group-created'> */}
-                                                                  <button type="submit" >
+                                                                  <button type="submit" id="upDateButton">
                                                                      Update
                                                                    </button>
                                                             {/* </NavLink> */}

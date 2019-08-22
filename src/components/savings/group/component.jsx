@@ -1,14 +1,14 @@
 import React from 'react';
 
-export function description(props){
-    return(<div>
-               <div className="col-xs-6">
-                   <p>{this.props.leftHeader}</p>
+export function Description(props){
+    return(<div className='sumComponent'>
+               <div className="left">
+                   <p>{props.leftHeader}</p>
                    <p>{props.leftDescription}</p>
                </div>
-               <div className="col-xs-6">
-                   <p>{this.props.rightHeader}</p>
-                   <p>{this.props.rightDiscription}</p>
+               <div className="right">
+                   <p>{props.rightHeader}</p>
+                   <p>{props.rightDiscription}</p>
                </div>
            </div>)
 }
@@ -42,3 +42,10 @@ export function NavButtons(props){
                 </div>);
     }
 }
+
+
+
+
+
+
+

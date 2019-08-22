@@ -14,6 +14,13 @@ import ProgressBar from './progress-bar';
 // import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
 import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 
+// if(window.performance.navigation.type == 1){
+//     window.location.replace("http://localhost:8080/");
+// }
+     
+// if(window.performance.navigation.type == 1)
+//     window.location.replace("http://localhost:8080/");
+
 class ParentDashBoard extends React.Component {
     constructor(props){
         super(props);
@@ -38,8 +45,8 @@ class ParentDashBoard extends React.Component {
                             <div id="progressBarDashBoard">
                             <ProgressBar 
                             percentage={element.groupStatus}
-                            discBottom={element.yourSavedAmount}
-                            discSpan={element.targetAmount}
+                            discBottom={"₦" + element.yourSavedAmount + ' ' + 'of'}
+                            discSpan={"  " + "₦" +element.targetAmount}
                             discBottomSib='Amount Saved'
                             discBottomRight={element.groupStatus + '%' + ' ' + 'Completed'}
                             />
@@ -74,8 +81,8 @@ class ParentDashBoard extends React.Component {
                         <div id="progressBarDashBoard">
                             <ProgressBar 
                             percentage={element.status}
-                            discBottom='N20,000'
-                            discSpan={"N" + element.potTotal}
+                            // discBottom={"₦" + ' ' + '20,000'}
+                            discSpan={"₦" + element.potTotal}
                             discBottomSib='PotTotal'
                             discBottomRight={element.status + "%" + " " + 'Completed'}
                             />
@@ -104,7 +111,7 @@ class ParentDashBoard extends React.Component {
        }
 
        this.props.dispatch(actions.groupDetails(this.state.user.token, data));
-      // this.props.dispatch(actions.customerGroup(this.state.user.token, data));
+       // this.props.dispatch(actions.customerGroup(this.state.user.token, data));
     }
 
     GoToRotatingGroup = (event) => {
@@ -117,10 +124,10 @@ class ParentDashBoard extends React.Component {
         this.props.dispatch(actions1.rotatingGroupDetails(this.state.user.token, data));
     }
 
-
     render() {
-        return (
-            <Fragment>
+        if(this.props.groupSavingsEsusu.response == undefined && this.props.groups.response == undefined){
+            return(
+                <Fragment>
                 <InnerContainer>
                     <SavingsContainer>
                         <div className="row">
@@ -137,7 +144,6 @@ class ParentDashBoard extends React.Component {
                                         {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                             <li><a className="active">Group Savings</a></li>
                                         {/* </NavLink> */}
-                                            
                                         <li><a>Investments</a></li>
 
                                         </ul>
@@ -146,64 +152,178 @@ class ParentDashBoard extends React.Component {
                             </div>
                            
                                 <div className="row">
-                    
                                     <div className="bodyDetails">
-                                          <div className="row smallnavtop">
-                                                    <ul>
-                                                        <NavLink to='/savings/group/save-towards-a-target'>
-                                                             <li>Create A Group Savings Goal</li>
-                                                        </NavLink>
-                                                        <NavLink to='/savings/group/join-a-group'>
-                                                             <li>Join A Group</li>
-                                                        </NavLink>
-                                                        
-                                                        
-                                                    </ul>  
-                                          </div>
+                                          
                                           <h4 className="m-b-10 center-text hd-underline">Automate Group Savings</h4>
-
-                                          <div className="compContainer">
-                                               {this.GetRotatingGroup()}
-                                               {this.GetGroups()}
-                                               {/* <div className="eachComp">
-                                                    <div className='topCard'>
-                                                            <div className="left">
-                                                                <p className='top'>FIXED GOAL</p>
-                                                                <p className='bottom'>New MacBook Pro</p>
-                                                            </div>
-                                                            <div className="right">
-                                                                <i></i>
-                                                            </div>
-                                                    </div>
-                                                   <div id="progressBarDashBoard">
-                                                      <ProgressBar 
-                                                      percentage="50" 
-                                                      discBottom='N20,000'
-                                                      discSpan='N200,000'
-                                                      discBottomSib='Amount Saved'
-                                                      discBottomRight='45% completed'
-                                                      />
-                                                   </div>
-                                                   <div className='bottomDisCriptionTray'>
-                                                       <div className='left'>
-                                                           <p>20</p>
-                                                           <p>Members</p>
-                                                       </div>
-                                                       <div className='right'>
-                                                           <p>View Details</p>
-                                                       </div>
-                                                   </div>
-                                               </div>
-                                             */}
+                                            <div className="loadingData">
+                                                <p>loading data ...</p>
                                             </div>
-                                          </div>
                                     </div>
+                               </div>
                         </div>
 
                     </SavingsContainer>
                 </InnerContainer>
             </Fragment>
-        );
+            );
+        }
+
+        if(this.props.groupSavingsEsusu.response != undefined && this.props.groups.response == undefined){
+            return(
+                <Fragment>
+                <InnerContainer>
+                    <SavingsContainer>
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <p className="page-title">Savings & Goals</p>
+                            </div>
+                            <div className="col-sm-12">
+                                <div className="tab-overflow">
+                                    <div className="sub-tab-nav">
+                                        <ul>
+                                        <NavLink to='/savings/choose-goal-plan'>
+                                            <li><a id='parentGoal'>Goals</a></li>
+                                        </NavLink>
+                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
+                                            <li><a className="active">Group Savings</a></li>
+                                        {/* </NavLink> */}
+                                        <li><a>Investments</a></li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                                <div className="row">
+                                    <div className="bodyDetails">
+                                          <div className="row smallnavtop">
+                                                    <ul>
+                                                        <NavLink to='/savings/goal/group-savings-selection'>
+                                                             <li id='first'>Create Group</li>
+                                                        </NavLink>
+                                                        <NavLink to='/savings/group/join-a-group'>
+                                                             <li id='second'>Join A Group</li>
+                                                        </NavLink>
+                                                    </ul>  
+                                          </div>
+                                          <h4 className="m-b-10 center-text hd-underline">Automate Group Savings</h4>
+                                            <div className="compContainer">
+                                               {this.GetRotatingGroup()}
+                                            </div>
+                                    </div>
+                               </div>
+                        </div>
+
+                    </SavingsContainer>
+                </InnerContainer>
+            </Fragment>
+            )
+        }
+
+        if(this.props.groupSavingsEsusu.response == undefined && this.props.groups.response != undefined){
+            return(
+                <Fragment>
+                <InnerContainer>
+                    <SavingsContainer>
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <p className="page-title">Savings & Goals</p>
+                            </div>
+                            <div className="col-sm-12">
+                                <div className="tab-overflow">
+                                    <div className="sub-tab-nav">
+                                        <ul>
+                                        <NavLink to='/savings/choose-goal-plan'>
+                                            <li><a id='parentGoal'>Goals</a></li>
+                                        </NavLink>
+                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
+                                            <li><a className="active">Group Savings</a></li>
+                                        {/* </NavLink> */}
+                                        <li><a>Investments</a></li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                                <div className="row">
+                                    <div className="bodyDetails">
+                                          <div className="row smallnavtop">
+                                                    <ul>
+                                                        <NavLink to='/savings/goal/group-savings-selection'>
+                                                             <li id='first'>Create Group</li>
+                                                        </NavLink>
+                                                        <NavLink to='/savings/group/join-a-group'>
+                                                             <li id='second'>Join A Group</li>
+                                                        </NavLink>
+                                                    </ul>  
+                                          </div>
+                                          <h4 className="m-b-10 center-text hd-underline">Automate Group Savings</h4>
+                                            <div className="compContainer">
+                                               {this.GetGroups()}
+                                            </div>
+                                    </div>
+                               </div>
+                        </div>
+
+                    </SavingsContainer>
+                </InnerContainer>
+            </Fragment>
+            )
+        }
+
+        if(this.props.groupSavingsEsusu.response != undefined && this.props.groups.response != undefined){
+            return(
+                <Fragment>
+                <InnerContainer>
+                    <SavingsContainer>
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <p className="page-title">Savings & Goals</p>
+                            </div>
+                            <div className="col-sm-12">
+                                <div className="tab-overflow">
+                                    <div className="sub-tab-nav">
+                                        <ul>
+                                        <NavLink to='/savings/choose-goal-plan'>
+                                            <li><a id='parentGoal'>Goals</a></li>
+                                        </NavLink>
+                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
+                                            <li><a className="active">Group Savings</a></li>
+                                        {/* </NavLink> */}
+                                        <li><a>Investments</a></li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                                <div className="row">
+                                    <div className="bodyDetails">
+                                          <div className="row smallnavtop">
+                                                    <ul>
+                                                        <NavLink to='/savings/goal/group-savings-selection'>
+                                                             <li id='first'>Create Group</li>
+                                                        </NavLink>
+                                                        <NavLink to='/savings/group/join-a-group'>
+                                                             <li id='second'>Join A Group</li>
+                                                        </NavLink>
+                                                    </ul>  
+                                          </div>
+                                          <h4 className="m-b-10 center-text hd-underline">Automate Group Savings</h4>
+                                            <div className="compContainer">
+                                               {this.GetRotatingGroup()}
+                                               {this.GetGroups()}
+                                            </div>
+                                    </div>
+                               </div>
+                        </div>
+
+                    </SavingsContainer>
+                </InnerContainer>
+            </Fragment>
+            );
+        }
     }
 }
 

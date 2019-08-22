@@ -37,7 +37,10 @@ import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingV
      import {getCustomerGoalTransHistoryReducer,GET_FORMULAR,GET_GOAL_TYPE,TopUPGoalStep1,TopUPGoal,WithDrawFromGoalStep1,
          WithDrawFromGoal,PauseCustomerGoal,unPauseCustomerGoal,EditCustomerGoal,DeleteCustomerGoal} from './goal/get-customer-goal-trans-history-reducers';
      import {createRotatingSavings, rotatingGroupDetails, joinAGroup, EditSlots, 
-        editGroupEsusu, deleteGroupEsusu, GetGroupsEsusu, joinGroupEsusu} from './group-savings/rotating-group-reducers';
+        editGroupEsusu, deleteGroupEsusu, GetGroupsEsusu, joinGroupEsusu, refferalCode} from './group-savings/rotating-group-reducers';
+
+
+
     
 export const onboarding = {
     userRegistrationRequest,
@@ -131,7 +134,7 @@ export const fixedGoal ={
     setAutomateSavingsEndDate,
     setAutomateSavingsStartDate,
     setAmountToWithDraw,
-    setFrequency
+    setFrequency,
 }
  
 export const rotatingSavings = {
@@ -142,7 +145,8 @@ export const rotatingSavings = {
     GetGroupsEsusu,
     editGroupEsusu,
     deleteGroupEsusu,
-    joinGroupEsusu
+    joinGroupEsusu,
+    refferalCode
 }
 export const stashGoal={
     createStashGoalStep1Reducer,

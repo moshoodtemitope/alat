@@ -11,7 +11,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import {history} from '../../../_helpers/history';
+import * as actions1 from '../../../redux/actions/savings/group-savings/group-savings-actions';
 
+// if(window.performance.navigation.type == 1)
+//     window.location.replace("http://localhost:8080/");
+    
 class RotatingGroupCreated extends React.Component {
     constructor(props){
         super(props)
@@ -21,12 +25,24 @@ class RotatingGroupCreated extends React.Component {
     }
 
     componentDidMount = () => {
+       this.CheckGroupSavingsAvailability();
+       this.CheckRotatingSavingsAvailability();
+
        const data = {
            groupId: this.props.createdGroupSavings.response.id
        }
        console.log(data);
        this.props.dispatch(actions.rotatingGroupDetails(this.state.user.token, data))
     }
+
+    CheckRotatingSavingsAvailability = () => {
+        this.props.dispatch(actions.GetGroupsEsusu(this.state.user.token, null));
+    }
+
+    CheckGroupSavingsAvailability = () => {
+        this.props.dispatch(actions1.customerGroup(this.state.user.token, null));
+    }
+
 
     handleSubmit = (event) => {
         event.preventDefault();
@@ -41,6 +57,16 @@ class RotatingGroupCreated extends React.Component {
             return;
         }
         history.push('/savings/goal/group-savings-selection');
+    }
+
+    CopyCode = (event) => {
+       document.execCommand('copy');
+       event.target.focus();
+    }
+
+    CopyCode = (event) => {
+        this.textInput.select();
+        document.execCommand('copy');
     }
 
     render() {
@@ -80,10 +106,10 @@ class RotatingGroupCreated extends React.Component {
                                                 </div>
                                                 <div className="forCode">
                                                         <div className="left">
-                                                            <h2>{this.props.createdGroupSavings.response.referralCode}</h2>
+                                                            <h2 id={this.props.createdGroupSavings.response.referralCode} ref={element => this.textInput = element}>{this.props.createdGroupSavings.response.referralCode}</h2>
                                                         </div>
                                                         <div className="right">
-                                                            <i></i>
+                                                        <img onClick={this.CopyCode} className='itemToCopy' src="/src/assets/img/Group.png" alt=""/>
                                                         </div>
                                                 </div>
                                                 <div className="form-row">

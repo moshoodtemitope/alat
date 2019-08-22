@@ -13,6 +13,10 @@ import { NavButtons } from './component';
 import MoreDetails from './details';
 import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import {history} from '../../../_helpers/history';
+import moment from 'moment'
+
+// if(window.performance.navigation.type == 1)
+//     window.location.replace("http://localhost:8080/");
 
 class GroupAnalyticsMini extends React.Component {
     constructor(props){
@@ -35,7 +39,7 @@ class GroupAnalyticsMini extends React.Component {
     };
 
     PotContribution = () =>{
-        return this.props.groupDetails.response.potContribution;
+        return "₦" + this.props.groupDetails.response.potContribution;
     };
 
     UpNext = () => {
@@ -60,7 +64,7 @@ class GroupAnalyticsMini extends React.Component {
     };
 
     GetStartDate = () => {
-        return this.props.groupDetails.response.startDate
+        return moment(this.props.groupDetails.response.startDate).format('DD/MM/YYYY')
     };
 
     GroupName = () => {
@@ -158,6 +162,7 @@ class GroupAnalyticsMini extends React.Component {
                                                       rightContent={this.GetReferalCode()}
                                                       rightContentBottom="Group Code"
                                                      />
+
                                                     <Buttons
                                                         buttonType={this.state.buttonType}
                                                         buttonName="Start"          

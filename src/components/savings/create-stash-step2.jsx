@@ -87,14 +87,15 @@ import * as actions from '../../redux/actions/savings/goal/create-stash-goal.act
                             <div className="sub-tab-nav">
                                 <ul>
                                     <li><a href="accounts.html" className="active">Goals</a></li>
+                                    <NavLink to="/savings/activityDashBoard">
                                     <li><a href="statement.html">Group Savings</a></li>
+                                    </NavLink>
                                     <li><a href="#">Investments</a></li>
                                 
                                 </ul>
                             </div>
                         </div>
                     </div>
-
 
                         {this.props.alert && this.props.alert.message &&
                             <div style={{width: "100%",}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>

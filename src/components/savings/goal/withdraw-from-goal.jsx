@@ -7,7 +7,8 @@ import Members from '../../savings/group/list-item'
 import SelectDebitableAccounts from "../../../shared/components/selectDebitableAccounts";
 import {customerGoalConstants} from "../../../redux/constants/goal/get-customer-trans-history.constant";
 import * as actions from "../../../redux/actions/savings/goal/get-customer-transaction-history.actions";
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
+import {Description} from '../group/component'
 
 
 class WithdrawFromGoal extends Component {
@@ -129,7 +130,7 @@ class WithdrawFromGoal extends Component {
                                             <NavLink to='/savings/choose-goal-plan'>
                                                 <li><a href="accounts.html" className="active">Goals</a></li>
                                             </NavLink>
-                                            <NavLink to='/savings/goal/group-savings-selection'>
+                                            <NavLink to='/savings/activityDashBoard'>
                                                 <li><a href="statement.html">Group Savings</a></li>
                                             </NavLink>
                                             <li><a href="#">Investments</a></li>
@@ -148,15 +149,14 @@ class WithdrawFromGoal extends Component {
                                             <h4 className="m-b-10 center-text hd-underline">Goal WithDrawal</h4>
 
                                             <form onSubmit={this.handleSubmit}>
-                                                <div className=" with-draw-goal-header">
-                                                    <Members
-                                                        userType="admin"
-                                                        name={this.state.user.fullName}
-                                                        position={this.state.user.email}
-                                                        amount={'₦'+this.state.goal.amountSaved}
-                                                        intent="Amount Saved"
-                                                        id="autoSummary"/>
+                                                <div className="form-group">
+                                                        <Description 
+                                                            leftHeader={this.state.user.fullName}
+                                                            leftDescription={this.state.user.email}
+                                                            rightHeader={'₦'+this.state.goal.amountSaved}
+                                                            rightDiscription="Amount Saved"/>
                                                 </div>
+
                                                 {this.props.alert && this.props.alert.message &&
                                                 <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                                                 }

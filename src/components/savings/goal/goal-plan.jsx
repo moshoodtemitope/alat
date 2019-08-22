@@ -6,17 +6,14 @@ import calender from '../../../assets/img/calender.svg' ;
 import graph from '../../../assets/img/graph.svg';
 import stash from '../../../assets/img/stash.svg';
 import {NavLink, Link} from "react-router-dom";
-import {history} from '../../../_helpers/history';
-import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
-import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
-
 import '../savings.css';
 import { connect } from "react-redux";
 import {getCustomerGoalTransHistory, GoalType, GoalFormula} from '../../../redux/actions/savings/goal/get-customer-transaction-history.actions'
 import moment from 'moment';
 import ProgressBar from '../../savings/group/progress-bar';
-
-
+import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
+import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
+import {history} from '../../../_helpers/history';
 
 class GoalPlan extends React.Component {
     constructor(props){
@@ -31,32 +28,33 @@ class GoalPlan extends React.Component {
         this.fetchGoalFormular();
     }
 
-    fetchCustomerTransHistoryGoals(){
-        const { dispatch } = this.props;
-        dispatch(getCustomerGoalTransHistory());
-    };
     componentDidMount = () => {
         this.CheckGroupSavingsAvailability();
         this.CheckRotatingSavingsAvailability();
-    };
+    }
 
     CheckRotatingSavingsAvailability = () => {
         this.props.dispatch(actions1.GetGroupsEsusu(this.state.user.token, null));
-    };
+    }
 
     CheckGroupSavingsAvailability = () => {
         this.props.dispatch(actions.customerGroup(this.state.user.token, null));
-    };
+    }
 
     NavigateToGroupSavings = () => {
-        let groupSavings = Object.keys(this.props.groups.response); //returns an array
-        let rotatingSavings = Object.keys(this.props.groupSavingsEsusu.response); //returns an array
+        let groupSavings = Object.keys(this.props.groups); //returns an array
+        let rotatingSavings = Object.keys(this.props.groupSavingsEsusu); //returns an array
         if(groupSavings.length != 0 || rotatingSavings.length != 0){
             history.push('/savings/activityDashBoard');
             return;
         }
         history.push('/savings/goal/group-savings-selection');
     }
+
+    fetchCustomerTransHistoryGoals(){
+        const { dispatch } = this.props;
+        dispatch(getCustomerGoalTransHistory());
+    };
 
     fetchGoalType(){
         const {dispatch}= this.props;
@@ -156,18 +154,13 @@ class GoalPlan extends React.Component {
                     );
                 }
 
-
-
-
                 return(
                     // user has goals
                         <div className="">
                         <div className="row">
+                        <div className="compContainer2">
                             {goals.map((hist, key)=> (
-
-
-                                <div className="compContainer">
-                                    <div className="eachComp ">
+                                    <div className="eachComp2">
                                         <div className='topCard'>
                                             <div className="left" key={key}>
                                                 <p className='top' >{hist.goalTypeName}</p>
@@ -180,10 +173,10 @@ class GoalPlan extends React.Component {
                                         <div id="progressBarDashBoard">
                                             <ProgressBar
                                                 percentage={hist.percentageCompleted}
-                                                discBottom={"₦"+ this.toCurrency(hist.amountSaved)}
-                                                discSpan={ "of" + "₦"+hist.targetAmount}
+                                                discBottom={"₦" + this.toCurrency(hist.amountSaved) + " " + "of"}
+                                                discSpan={" " + "₦" + hist.amountSaved}
                                                 discBottomSib='Amount Saved'
-                                                discBottomRight={hist.percentageCompleted +"%"}
+                                                discBottomRight={hist.percentageCompleted.toFixed(2) + "%"}
                                             />
                                         </div>
                                         <div className='row forDetailsComp'>
@@ -205,7 +198,6 @@ class GoalPlan extends React.Component {
                                                 <div className="innerLeft">
                                                     <p><span id="dot">.</span> <span id='message'>Next Payment</span> <span id="date">{moment(hist.nextstandingDate).format('L')}</span></p>
                                                 </div>
-
                                             </div>
                                             <div className="right">
                                                 <Link to={{
@@ -214,14 +206,15 @@ class GoalPlan extends React.Component {
                                                         name:hist
                                                     }
                                                 } }>
-                                                    <span>View Details</span>
+                                                <span>View Details</span>
                                                 </Link>
+
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                                 )
                             )}
+                            </div>
                         </div>
 
                     </div>
@@ -272,6 +265,9 @@ class GoalPlan extends React.Component {
     render() {
         const GoalTransHistory = this.props.customerGoalTransHistory;
 
+        console.log("goal-history ",GoalTransHistory.customer_goal_data);
+
+
         return (
             <Fragment>
                 <InnerContainer>
@@ -285,16 +281,15 @@ class GoalPlan extends React.Component {
                                 <div className="sub-tab-nav">
                                     <ul>
                                         <li><a onClick={() => this.setState({visible: true})} href="#" className="active">Goals</a></li>
-                                        <NavLink to='/savings/goal/group-savings-selection'>
-                                            <li><a className="forGroupLink">Group Savings</a></li>
-                                        </NavLink>
+                                        {/* <NavLink to='/savings/goal/group-savings-selection'> */}
+                                            <li onClick={this.NavigateToGroupSavings}><a className="forGroupLink">Group Savings</a></li>
+                                        {/* </NavLink> */}
                                         <NavLink to="/savings/fixed-goal">
                                             <li><a href="#">Investments</a></li>
                                         </NavLink>
                                         {
                                             this.state.visible ?
                                             <li style={{float:'right',color:'white',fontSize:'16px, font-family:"proxima_novaregular'}}> <a onClick={this.togglePage} className="btn-alat">Create a Savings Goal</a> </li> : null
- 
                                         }
                                     </ul>
                                 </div>
@@ -314,7 +309,18 @@ const mapStateToProps = state => ({
     customerGoalTransHistory:state.customerGoalTransHistory,
     groupSavingsEsusu: state.getGroupSavingsEsusu.data,
     groups: state.customerGroup.data
-
 });
 
 export default connect (mapStateToProps)(GoalPlan);
+
+
+
+
+
+
+
+
+
+
+
+

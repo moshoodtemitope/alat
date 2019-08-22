@@ -7,6 +7,7 @@ import SelectDebitableAccounts from "../../../shared/components/selectDebitableA
 import {customerGoalConstants} from "../../../redux/constants/goal/get-customer-trans-history.constant";
 import {connect} from "react-redux"
 import Members from '../../savings/group/list-item'
+import {Description} from '../group/component'
 
 import * as actions from "../../../redux/actions/savings/goal/get-customer-transaction-history.actions";
 
@@ -80,7 +81,7 @@ class DeleteGoal extends Component {
                                             <NavLink to='/savings/choose-goal-plan'>
                                                 <li><a href="accounts.html" className="active">Goals</a></li>
                                             </NavLink>
-                                            <NavLink to='/savings/goal/group-savings-selection'>
+                                            <NavLink to='/savings/activityDashBoard'>
                                                 <li><a href="statement.html">Group Savings</a></li>
                                             </NavLink>
                                             <li><a href="#">Investments</a></li>
@@ -102,16 +103,17 @@ class DeleteGoal extends Component {
                                             <h4 className="m-b-10 center-text hd-underline">Delete  Goal</h4>
 
                                             <form onSubmit={this.handleSubmit}>
-                                                <div className=" with-draw-goal-header">
-                                                    <Members
-                                                        userType="admin"
-                                                        name={this.state.goal.goalName}
-                                                        position={'You have ₦'+this.state.goal.amountSaved+' in your goal account and you need to transfer it to another account before you can delete it.'}
-                                                        amount={'₦'+this.state.goal.amountSaved}
-                                                        intent="Amount Saved"
-                                                        id="autoSummary"/>
+                                    
+                                                <div className="form-group">
+                                                       {/* <div className="form-row"> */}
+                                                            <Description 
+                                                                    leftHeader={this.state.goal.goalName}
+                                                                    leftDescription={'You have ₦'+this.state.goal.amountSaved+' in your goal account and you need to transfer it to another account before you can delete it.'}
+                                                                    rightHeader={'₦'+this.state.goal.amountSaved}
+                                                                    rightDiscription="Amount Saved"
+                                                                    />
+                                                       {/* </div> */}
                                                 </div>
-
                                                 <div className="form-group">
 
                                                     <SelectDebitableAccounts
