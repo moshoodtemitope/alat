@@ -160,7 +160,6 @@ class StashCashout extends Component {
                                                 <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                                                 }
 
-                                            }
                                                 <div className="form-group">
 
                                                     <SelectDebitableAccounts
