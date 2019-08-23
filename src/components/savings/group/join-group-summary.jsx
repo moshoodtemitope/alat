@@ -6,6 +6,7 @@ import {NavLink} from "react-router-dom";
 import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
+import * as action from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
 import {history} from '../../../_helpers/history';
 import { Description } from './component';
@@ -60,8 +61,12 @@ class JoinGroupSummary extends React.Component {
            debitAccount: this.state.selectedAccount
        }
        console.log(data);
+       if(this.props.findGroup.response.esusuData != null)
+            this.props.dispatch(action.joinGroupEsusu(this.state.user.token, data));
+       if(this.props.findGroup.response.groupData != null)
+            this.props.dispatch(actions.joinGroup(this.state.user.token, data));
        //return;
-       this.props.dispatch(actions.joinGroup(this.state.user.token, data));
+       //this.props.dispatch(actions.joinGroup(this.state.user.token, data));
     }
 
     handleSubmit = (event) => {

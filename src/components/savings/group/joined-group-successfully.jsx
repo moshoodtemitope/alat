@@ -19,6 +19,12 @@ class JoinedGroupSuccessfully extends React.Component {
         }
     }
 
+    componentDidMount = () => {
+        setTimeout(function(){
+           history.push('/savings/activityDashBoard');
+        }, 3000);
+    }
+
     // componentDidMount = () => {
     //     this.CheckGroupSavingsAvailability();
     //     this.CheckRotatingSavingsAvailability();
@@ -44,7 +50,6 @@ class JoinedGroupSuccessfully extends React.Component {
     // }
 
     render() {
-
         return (
             <Fragment>
                 <InnerContainer>
@@ -78,6 +83,7 @@ class JoinedGroupSuccessfully extends React.Component {
                                        <div className="al-card no-pad">
 
                                             <form>
+                                                <img src="/src/assets/img/success.svg" className="succefullMessage" alt=""/>
                                                 <div className="form-group">
                                                     <label id="sucMessage">Group Joined Successfully</label>
                                                 </div>

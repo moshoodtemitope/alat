@@ -182,7 +182,7 @@ export const customerGroup = (token, data = null) => {
                 //     history.push('/savings/group/group-analytics');
             })
             .catch(error => {
-                dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(failure(modelStateErrorHandler(error)));
                  dispatch(alertActions.error(modelStateErrorHandler(error)));
 
                 // dispatch(failure(error.response.data.message.toString()));
@@ -202,7 +202,7 @@ export const joinGroup = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
-                this.history.push('/savings/group/joingroup-success-message');
+                this.history.push('/savings/joined-group-successfully');
             })
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));

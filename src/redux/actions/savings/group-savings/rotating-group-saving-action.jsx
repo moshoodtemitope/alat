@@ -7,7 +7,6 @@ import {GROUPSAVINGSCONSTANT} from "../../../constants/savings/group/index";
 import {alertActions} from "../../alert.actions";
 
 
-
 export const createRotatingSavings = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
@@ -165,11 +164,12 @@ export const deleteGroupEsusu = (token, data) => {
 export const joinGroupEsusu = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.DELETE_GROUP_ESUSU, "POST", data, SystemConstant.HEADER, false);
+        let consume = ApiService.request(routes.JOIN_GROUP_ESUSU, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                history.push('/savings/joined-group-successfully');
             }) 
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
