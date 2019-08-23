@@ -17,6 +17,10 @@
     text-align: center;
 }
 
+.sucMg {
+    margin-bottom: 50px;
+}
+
 .forCode h2 {
     font-family: Proxima Nova;
     text-align: center;
@@ -1000,13 +1004,20 @@ color: #4D4D4D;
 #sucMessage {
     justify-content: center;
     margin: auto;
-    margin-left: 25%;
+    margin-left: 20%;
     font-family:"proxima_novasemibold";
     font-size: 20px;
     line-height: 24px;
     text-align: center;
     color: #9F083E;
     font-weight: bold;
+}
+
+.goBackButMini {
+    margin-right: 20px;
+    background-color: transparent !important;
+    border: 1px solid #9F083E !important;
+    color: #9F083E !important;
 }
 
 .miniNav {

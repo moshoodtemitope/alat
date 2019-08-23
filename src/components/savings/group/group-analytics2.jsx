@@ -29,12 +29,20 @@ class GroupAnalytics2 extends React.Component {
             userType: 'members',
             navType: 1,
             buttonType: "bigButton",
-            discTopSpan: 'something'
+            discTopSpan: 'something',
+            isAdmin: false
         };
 
         this.HandleNavigation = this.HandleNavigation.bind(this);
         this.Automated = this.Automated.bind(this);
         this.NavigateToGroupSummary = this.NavigateToGroupSummary.bind(this);
+    }
+
+    componentDidMount = () => {
+        let isAdmin = this.props.groupDetails.response.isAdmin;
+        this.setState({
+            isAdmin: isAdmin
+        });
     }
 
     HandleNavigation = () => {
@@ -50,8 +58,8 @@ class GroupAnalytics2 extends React.Component {
     };
 
     NavigateToGroupSavings = () => {
-        let groupSavings = Object.keys(this.props.groups); //returns an array
-        let rotatingSavings = Object.keys(this.props.groupSavingsEsusu); //returns an array
+        let groupSavings = this.props.groups.response; //returns an array
+        let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
         if(groupSavings.length != 0 || rotatingSavings.length != 0){
             history.push('/savings/activityDashBoard');
             return;
@@ -59,9 +67,12 @@ class GroupAnalytics2 extends React.Component {
         history.push('/savings/goal/group-savings-selection');
     }
 
+    ShowManageButton = () => {
+        return <p id="manageButton">Manage</p>
+    }
   
     render() {
-
+        const { isAdmin } = this.state;
         return (
             <Fragment>
                 <InnerContainer>
@@ -135,7 +146,8 @@ class GroupAnalytics2 extends React.Component {
                                                       })}
                                                    </div>
                                                    <div></div>
-                                                   <p id="manageButton">Manage</p>
+                                                   {isAdmin ? this.ShowManageButton() : ""}
+                                                   
                                              </div>
                                         </div>
 

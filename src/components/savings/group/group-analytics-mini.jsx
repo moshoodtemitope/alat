@@ -26,14 +26,31 @@ class GroupAnalyticsMini extends React.Component {
             type: 2,
             navType: 2,
             buttonType: "bigButton",
-            discTopSpan: 'something'
+            discTopSpan: 'something',
+            isAdmin: false,
         }
+    }
+
+    componentDidMount = () => {
+        let isAdmin = this.props.groupDetails.response.isAdmin;
+        this.setState({'isAdmin': isAdmin});
+    }
+
+    GetSmallNavs = () => {
+        return <div className='miniNav'>
+                    <div className='left'>
+                     <p onClick={this.MoveToEditGroupEsusu}>Edit</p>
+                    </div>
+                    <div className='right'>
+                        <p onClick={this.DeleteGroup}>Delete</p>
+                    </div>
+               </div>
     }
 
     ShowMembers = () => {
         this.props.history.push("/savings/group-mini2");
     };
-    
+
     GroupSummary = () => {
         this.props.history.push("/savings/group-analytics-mini");
     };
@@ -80,25 +97,28 @@ class GroupAnalyticsMini extends React.Component {
     };
 
     DeleteGroup = () => {
-        let data = {
-            groupId: this.props.groupDetails.response.id
-        };
-        this.props.dispatch(actions.deleteGroupEsusu(this.state.user.token, data));
+       history.push('/savings/rotating-confirm-delete');
     };
 
+    MoveToEditGroupEsusu = () => {
+        history.push('/group-savings/edit-rotating');
+    }
+
+
     NavigateToGroupSavings = () => {
-        let groupSavings = Object.keys(this.props.groups); //returns an array
-        let rotatingSavings = Object.keys(this.props.groupSavingsEsusu); //returns an array
+        let groupSavings = this.props.groups.response; //returns an array
+        let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
         if(groupSavings.length != 0 || rotatingSavings.length != 0){
             history.push('/savings/activityDashBoard');
             return;
         }
         history.push('/savings/goal/group-savings-selection');
-    };
+    }
+
 
     render() {
-        const {endDate,endDateInvalid} = this.state;
-
+        const {isAdmin} = this.state;
+        
         return (
             <Fragment>
                 <InnerContainer>
@@ -168,16 +188,8 @@ class GroupAnalyticsMini extends React.Component {
                                                         buttonName="Start"          
                                                         />
                                                     
-                                                    <div className='miniNav'>
-                                                        <div className='left'>
-                                                           <NavLink to='/group-savings/edit-rotating'>
-                                                               <p>Edit</p>
-                                                           </NavLink>
-                                                        </div>
-                                                        <div className='right'>
-                                                            <p onClick={this.DeleteGroup}>Delete</p>
-                                                        </div>
-                                                </div>        
+                                                    {isAdmin ? this.GetSmallNavs() : ""}
+                                                    
                                              </div>
                                              
                                              
@@ -210,6 +222,30 @@ function mapStateToProps(state){
  
  export default connect(mapStateToProps)(GroupAnalyticsMini);
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

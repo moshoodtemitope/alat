@@ -41,38 +41,118 @@ class EditRotatingGroup extends React.Component {
             numberOfMembers: "",
             Frequency:"",
 
-            howMuchValidity:false,
-            endDateValidity:false,
-            startDateValidity:false,
-            amountToContributeValidity:false,
-            startDate: new Date(),
-            endDate: new Date(),
-            amountToBeWithDrawn:null,
+            howMuchValidity: false,
+            startDateValidity: false,
+            accountSelectedValidity: false,
+            monthlyContributionValidity: false,
+            groupNameValidity: false,
+
+            startDate: "",
             howOftenDoYouWantToSave: null,
-            
             groupName: "",
             monthlyContribution: "",
             numberOfMembers: "",
         }
+    }
+    
+    validateStartDate=()=>{
+        if(this.state.startDate == null || this.state.startDate == ""){
+            this.setState({startDateValidity: true});
+            return true;
+        }else {this.setState({startDateValidity : false});
+            return false;
+        }
+    }
+
+    validateFrequencyOfWithdrawals=()=>{
+        if(this.state.numberOfMembers == null || this.state.numberOfMembers == ""){
+            this.setState({howMuchValidity: true});
+            return true;
+        }else {this.setState({howMuchValidity : false});
+            return false;
+        }
+    }
+
+
+    validateGroupName=()=>{
+        if(this.state.groupName == null || this.state.groupName == ""){
+            this.setState({groupNameValidity: true});
+            return true;
+        }else {this.setState({groupNameValidity : false});
+            return false;
+        }
+    }
+
+    validateMonthlyContributions = () => {
+        if(this.state.monthlyContribution == null || this.state.monthlyContribution == ""){
+            this.setState({monthlyContributionValidity: true});
+            return true;
+        }else {this.setState({monthlyContributionValidity : false});
+            return false;
+        }
+    }
+
+    validateAccountNumber = () => {
+        if(this.state.selectedAccount == null || this.state.selectedAccount == ""){
+            this.setState({isAccountInvalid: true});
+            return true;
+        }else {this.setState({isAccountInvalid : false});
+            return false;
+        }
+    }
+    
+    handleSelectDebitableAccounts = (account) => {
+        console.log('dss', account);
+        this.setState({ selectedAccount: account });
+        if (this.state.isSubmitted) { 
+            if(account.length == 10)
+            this.setState({ isAccountInvalid: false })
+         }
+    }
+    
+
+    checkAccountNumber = () => {
+        if (this.state.selectedAccount.length != 10) {
+            this.setState({ isAccountInvalid: true })
+            return true;
+        }
+    }
+
+    
+    CheckFrequency = (param) => {
+       switch(param){
+           case 'Daily':
+              return 0;
+           case 'Weekly':
+              return 1;
+           case 'Monthly':
+              return 2;
+       }
     }
 
     checkingUserInputs = () => {
         var result = "valid";
         for(var x in this.state){
             switch(x){
-                case 'endDate':
+                case 'groupName':
                    if(this.state[x] == new Date() || this.state[x] == ""){
                       console.log(x)
                       result = null;
                       break;
+                   }    
+                case 'startDate':
+                   if(this.state[x] == null || this.state[x] == ""){
+                      console.log(x)
+                      result = null;
+                      break;
                    }     
-                case 'amountToContributeValidity':
+                case 'monthlyContribution':
                    if(this.state[x] == null || this.state[x] == ""){
                        console.log(x)
                        result = null;
                        break;
                    }
-                case 'howOftenDoYouWantToSave':
+                case 'numberOfMembers':
                    if(this.state[x] == null || this.state[x] == ""){
                       console.log(x)
                       result = null;
@@ -86,107 +166,22 @@ class EditRotatingGroup extends React.Component {
                    }
             }
         }
+
         console.log(result);
         return result;
     }
 
-    validateEndDate=()=>{
-        if(this.state.endDate == null || this.state.endDate == ""){
-            this.setState({endDateValidity: true});
-            return true;
-        }else {this.setState({endDateValidity : false});
-           return false;
-        }
+
+    handleGroupName = (event) => {
+        this.setState({
+            groupName: event.target.value
+        })
     }
 
     handleSelectedDate = (startDate) => {
         this.setState({
             startDate: startDate
         });
-        // this.props.dispatch(actions.setAutomateSavingsStartDate(startDate));
-    }
-
-    handleEndDate = (endDate) => {
-        this.setState({
-            endDate: endDate
-        })
-        // this.props.dispatch(actions.setAutomateSavingsEndDate(endDate));
-    }
-
-    validateStartDate=()=>{
-        if(this.state.startDate == null || this.state.startDate == ""){
-            this.setState({startDateValidity: true});
-            return true;
-        }else {this.setState({startDateValidity : false});
-            return false;
-        }
-    }
-
-    validateFrequencyOfWithdrawals=()=>{
-        if(this.state.howOftenDoYouWantToSave == null || this.state.howOftenDoYouWantToSave == ""){
-            this.setState({howMuchValidity: true});
-            return true;
-        }else {this.setState({howMuchValidity : false});
-            return false;
-        }
-    }
-
-    validateAmountToBeWithDrawn=()=>{
-        if(this.state.amountToBeWithDrawn == null || this.state.amountToBeWithDrawn == ""){
-            this.setState({amountToContributeValidity: true});
-            return true;
-        }else {this.setState({amountToContributeValidity : false});
-            return false;
-        }
-    }
-
-    handleSelectDebitableAccounts = (account) => {
-        console.log('dss', account);
-        this.setState({ selectedAccount: account });
-        if (this.state.isSubmitted) { 
-            if(account.length == 10)
-            this.setState({ isAccountInvalid: false })
-         }
-    }
-    
-    checkAccountNumber = () => {
-        if (this.state.selectedAccount.length != 10) {
-            this.setState({ isAccountInvalid: true })
-            return true;
-        }
-    }
-
-    // handleSetAmount = (event) => {
-    //     this.setState({
-    //         amountToBeWithDrawn: event.target.value
-    //     })
-
-    //     this.props.dispatch(actions.setAmountToWithDraw(event.target.value));
-    // }
-
-    handleSelectChange = (Frequency) => {
-        this.setState({ numberOfMembers: Frequency.value
-              });
-        //  if (this.state.formsubmitted && Frequency.value != "")
-        //   this.setState({ TimeSavedInvalid: false })
-        //this.props.dispatch(actions.setFrequency(Frequency.value))
-    }
-    
-    CheckFrequency = (param) => {
-       switch(param){
-           case 'Daily':
-              return 0;
-           case 'Weekly':
-              return 1;
-           case 'Monthly':
-              return 2;
-       }
-    }
-
-    handleGroupName = (event) => {
-        this.setState({
-            groupName: event.target.value
-        })
     }
 
     handleMonthlContributions = (event) => {
@@ -195,40 +190,59 @@ class EditRotatingGroup extends React.Component {
         })
     }
 
+    handleSelectChange = (Frequency) => {
+        this.setState({ numberOfMembers: Frequency.value
+              });
+    }
+
+
     SubmitAutomatedGroupSavings = () => {
         const data = {
+            GroupId: parseInt(this.props.rotatingGroupDetails.response.id),
             Name: this.state.groupName,
             MonthlyContribution: parseFloat(this.state.monthlyContribution),
             NumberOfMembers: parseInt(this.state.numberOfMembers),
             StartDate: this.state.startDate,
-            DebitAccount: this.state.selectedAccount
+            // DebitAccount: this.state.selectedAccount
         }
 
         console.log(data);
         //return
-        this.props.dispatch(actions.createRotatingSavings(this.state.user.token, data));
+        this.props.dispatch(actions.editGroupEsusu(this.state.user.token, data));
     }
 
 
     handleSubmit = (event) => {
         event.preventDefault();
-        this.SubmitAutomatedGroupSavings();
-        console.log('what');
+        
+        this.validateStartDate();
+        this.validateFrequencyOfWithdrawals();
+        this.validateMonthlyContributions();
+        this.validateGroupName();
+        this.validateAccountNumber();
+
+        switch(this.checkingUserInputs()){
+            case null:
+               console.log('Empty fields present');
+               break;
+            case 'valid':
+               this.SubmitAutomatedGroupSavings();
+        }
     }
 
     NavigateToGroupSavings = () => {
-        let groupSavings = Object.keys(this.props.groups); //returns an array
-        let rotatingSavings = Object.keys(this.props.groupSavingsEsusu); //returns an array
+        let groupSavings = this.props.groups.response; //returns an array
+        let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
         if(groupSavings.length != 0 || rotatingSavings.length != 0){
             history.push('/savings/activityDashBoard');
             return;
         }
         history.push('/savings/goal/group-savings-selection');
-   }
+    }
 
     render() {
-        const {selectedAccount,startDate,endDate,amountToContributeValidity,numberOfMembers, endDateValidity, startDateValidity, howMuchValidity,
-        } = this.state;
+        const {selectedAccount, numberOfMembers, startDateValidity,
+            groupNameValidity, isAccountInvalid, monthlyContributionValidity, howMuchValidity} = this.state;
 
         return (
             <Fragment>
@@ -260,15 +274,17 @@ class EditRotatingGroup extends React.Component {
                                     <div className="col-sm-12">
                                       <div className="max-600">
                                        <div className="al-card no-pad">
-                                       <h4 className="m-b-10 center-text hd-underline">Create A Rotating Savings Group</h4>
+                                       <h4 className="m-b-10 center-text hd-underline">Edit Rotating Savings Group</h4>
 
                                             <form onSubmit={this.handleSubmit}>
                                                 <div className="form-row">
-                                                   <label className="label-text">Give your group a name</label>
-                                                   <input type="text" placeholder="Dubai Goal" onChange={this.handleGroupName}/>
+                                                    <div className={groupNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                        <label className="label-text">Give your group a name</label>
+                                                        <input type="text" placeholder="Dubai Goal" onChange={this.handleGroupName}/>
+                                                   </div>
                                                 </div>
                                                 <div className="form-row">
-                                                    <div className="form-group col-md-6">
+                                                    <div className={monthlyContributionValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                          <label className="label-text">Monthly Contributions</label>
                                                          <input type="number" placeholder="N 100,000" onChange={this.handleMonthlContributions}/>
                                                     </div>
@@ -284,7 +300,7 @@ class EditRotatingGroup extends React.Component {
                                                 </div>
                                                 <div className="form-row">
                                                     <div className={startDateValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                        <label className="label-text">when should we start taking the money</label>
+                                                        <label className="label-text">when does the group wants to meet this goal?</label>
                                                         <DatePicker className="form-control" selected={this.state.startDate}
                                                             placeholder="October 31, 2017"
                                                             dateFormat=" MMMM d, yyyy"
@@ -295,28 +311,25 @@ class EditRotatingGroup extends React.Component {
                                                             dropdownMode="select"
                                                         />
                                                     </div>
-                                        
+                                                    
                                                 </div>
-                                                
-                                                <div className="accountSelection">
-                                                    <div className='col-sm-12'>
-                                                                
-                                                                    <SelectDebitableAccounts
-                                                                    
-                                                                        accountInvalid={this.state.isAccountInvalid}
-                                                                        onChange={this.handleSelectDebitableAccounts}
-                                                                        labelText="Select Account to debit" 
-                                                                        options={selectedAccount}/>
-                                                                
-                                                    </div>
+
+                                                <div className="form-row">
+                                                    <div className={isAccountInvalid ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                        <SelectDebitableAccounts
+                                                            accountInvalid={this.state.isAccountInvalid}
+                                                            onChange={this.handleSelectDebitableAccounts}
+                                                            labelText="Select Account to debit" 
+                                                            options={selectedAccount}/>
+                                                        </div>
                                                 </div>
-                                                
+
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <center>
-                                                            {/* <NavLink to='/savings/rotating-group'> */}
+                                                           
                                                                   <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Create Group</button>
-                                                            {/* </NavLink> */}
+                                                           
                                                         </center>
                                                     </div>
                                                 </div>
@@ -346,7 +359,8 @@ class EditRotatingGroup extends React.Component {
 
 function mapStateToProps(state){
     return {
-        createGroupSavings: state.createRotatingGroupSavings,
+        createGroupSavings: state.createRotatingGroupSavings.data,
+        rotatingGroupDetails: state.rotatingGroupDetails.data,
         groupSavingsEsusu: state.getGroupSavingsEsusu.data,
         groups: state.customerGroup.data
     }

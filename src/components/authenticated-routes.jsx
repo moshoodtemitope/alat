@@ -57,9 +57,9 @@ import StashCashout from './savings/goal/cash-out-goal';
 import FlexSuccessMessage from './savings/goal/flex-goal-success';
 import JoinGroupSummary from './savings/group/join-group-summary';
 import JoinGroupSuccessMessage from './savings/group/joined-group-successfully';
-
-
-
+import RotatingSavingsEditedSuccessfully from './savings/group/success-message-edit-esusu';
+import RotatingSavingsEditedSuccessfullyDeleted from './savings/group/success-message-rotating-delete';
+import RotatingDelete from './savings/group/confirm-rotating-delete';
 
 // import MemberSlots from './savings/group/members-slot';
 
@@ -146,21 +146,9 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path='/savings/flex-success-message' authed={this.props.user} component={FlexSuccessMessage} />
                     <PrivateRoute path="/savings/join-group-summary" authed={this.props.user} component={JoinGroupSummary} />
                     <PrivateRoute path="/savings/joined-group-successfully" authed={this.props.user} component={JoinGroupSuccessMessage} />
-                    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    <PrivateRoute path="/savings/rotating-edited-successfully" authed={this.props.user} component={RotatingSavingsEditedSuccessfully} />
+                    <PrivateRoute path="/savings/rotating-deleted-successfully" authed={this.props.user} component={RotatingSavingsEditedSuccessfullyDeleted} />
+                    <PrivateRoute path="/savings/rotating-confirm-delete" authed={this.props.user} component={RotatingDelete} />
 
 
 

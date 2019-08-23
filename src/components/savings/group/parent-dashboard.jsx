@@ -13,7 +13,7 @@ import * as actions from '../../../redux/actions/savings/group-savings/group-sav
 import ProgressBar from './progress-bar';
 // import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
 import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
-
+import {history} from '../../../_helpers/history';
 
 class ParentDashBoard extends React.Component {
     constructor(props){
@@ -118,6 +118,10 @@ class ParentDashBoard extends React.Component {
         this.props.dispatch(actions1.rotatingGroupDetails(this.state.user.token, data));
     }
 
+    NavigateToSelectionTray = () => {
+        history.push('/savings/goal/group-savings-selection');
+    }
+
     render() {
         if(this.props.groupSavingsEsusu.response == undefined && this.props.groups.response == undefined){
             return(
@@ -163,6 +167,9 @@ class ParentDashBoard extends React.Component {
         }
 
         if(this.props.groupSavingsEsusu.response != undefined && this.props.groups.response == undefined){
+           if(this.props.groupSavingsEsusu.response.length == 0){
+               this.NavigateToSelectionTray();
+           }
             return(
                 <Fragment>
                 <InnerContainer>
@@ -215,6 +222,9 @@ class ParentDashBoard extends React.Component {
         }
 
         if(this.props.groupSavingsEsusu.response == undefined && this.props.groups.response != undefined){
+            if(this.props.groups.response.length == 0){
+                this.NavigateToSelectionTray();
+            }
             return(
                 <Fragment>
                 <InnerContainer>
@@ -267,6 +277,10 @@ class ParentDashBoard extends React.Component {
         }
 
         if(this.props.groupSavingsEsusu.response != undefined && this.props.groups.response != undefined){
+            if(this.props.groupSavingsEsusu.response.length == 0 && this.props.groups.response.length == 0){
+                this.NavigateToSelectionTray();
+            }
+
             return(
                 <Fragment>
                 <InnerContainer>

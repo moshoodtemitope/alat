@@ -38,6 +38,8 @@ class MemberSlots extends React.Component{
             aMember8: '',
             aMember9: '',
             aMember10: '',
+            aMember11: '',
+            aMember12: '',
             counter: 10,
             sortedMembers: '',
             renderCalled: false
@@ -205,19 +207,19 @@ class MemberSlots extends React.Component{
 
     handleSubmit = (event) => {
         event.preventDefault();
-        return;
-        //this.SubmitNewSlots();
+        this.SubmitNewSlots();
     }
 
     NavigateToGroupSavings = () => {
-        let groupSavings = Object.keys(this.props.groups); //returns an array
-        let rotatingSavings = Object.keys(this.props.groupSavingsEsusu); //returns an array
+        let groupSavings = this.props.groups.response; //returns an array
+        let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
         if(groupSavings.length != 0 || rotatingSavings.length != 0){
             history.push('/savings/activityDashBoard');
             return;
         }
         history.push('/savings/goal/group-savings-selection');
     }
+
 
     render(){
         return (

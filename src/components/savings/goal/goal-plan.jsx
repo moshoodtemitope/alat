@@ -15,6 +15,7 @@ import * as actions from '../../../redux/actions/savings/group-savings/group-sav
 import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import {history} from '../../../_helpers/history';
 
+
 class GoalPlan extends React.Component {
     constructor(props){
         super(props);
@@ -42,14 +43,9 @@ class GoalPlan extends React.Component {
     }
     
     NavigateToGroupSavings = () => {
-        let groupSavings = Object.keys(this.props.groups); //returns an array
-        let rotatingSavings = Object.keys(this.props.groupSavingsEsusu); //returns an array
-        if(groupSavings.length != 0 || rotatingSavings.length != 0){
-            history.push('/savings/activityDashBoard');
-            return;
-        }
-        history.push('/savings/goal/group-savings-selection');
+           history.push('/savings/activityDashBoard');
     }
+
 
     fetchCustomerTransHistoryGoals(){
         const { dispatch } = this.props;

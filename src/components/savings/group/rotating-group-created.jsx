@@ -50,14 +50,15 @@ class RotatingGroupCreated extends React.Component {
     } 
     
     NavigateToGroupSavings = () => {
-        let groupSavings = Object.keys(this.props.groups); //returns an array
-        let rotatingSavings = Object.keys(this.props.groupSavingsEsusu); //returns an array
+        let groupSavings = this.props.groups.response; //returns an array
+        let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
         if(groupSavings.length != 0 || rotatingSavings.length != 0){
             history.push('/savings/activityDashBoard');
             return;
         }
         history.push('/savings/goal/group-savings-selection');
     }
+
 
     CopyCode = (event) => {
        document.execCommand('copy');

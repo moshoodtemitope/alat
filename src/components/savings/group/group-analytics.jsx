@@ -29,7 +29,8 @@ class GroupAnalytics extends React.Component {
             navType: 3,
             buttonType: "bigButton",
             discTopSpan: 'something',
-            groupDetails: null
+            groupDetails: null,
+            isAdmin: false
         }
 
         this.HandleNavigation = this.HandleNavigation.bind(this);
@@ -45,13 +46,11 @@ class GroupAnalytics extends React.Component {
        this.setState({
            groupDetails: details
        })
-    //    setTimeout(function(){
-    //        if(this.state.groupDetails == null){
-    //           this.GetGroupData();
-    //        }
-    //    }, 60000);
-    //    console.log("group details was outputted!")
-    //    console.log(this.state.groupDetails);
+       
+       let isAdmin = this.props.groupDetails.response.isAdmin;
+       this.setState({
+           isAdmin: isAdmin
+       })
     }
 
     // GetGroupData = () => {
@@ -158,17 +157,18 @@ class GroupAnalytics extends React.Component {
     };
 
     NavigateToGroupSavings = () => {
-        let groupSavings = Object.keys(this.props.groups); //returns an array
-        let rotatingSavings = Object.keys(this.props.groupSavingsEsusu); //returns an array
+        let groupSavings = this.props.groups.response; //returns an array
+        let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
         if(groupSavings.length != 0 || rotatingSavings.length != 0){
             history.push('/savings/activityDashBoard');
             return;
         }
         history.push('/savings/goal/group-savings-selection');
-    };
+    }
+
     
     render() {
-        const {endDate,endDateInvalid} = this.state;
+        const {endDate,endDateInvalid, isAdmin} = this.state;
 
         return (
             <Fragment>
@@ -249,19 +249,19 @@ class GroupAnalytics extends React.Component {
                                                         buttonName="contribute"
                                                         
                                                         />
-                                               
-                                                <NavButtons 
-                                                    navType={this.state.navType}
-                                                    leftName='Edit'
-                                                    middleName='Pause'
-                                                    rightName='Delete'
-                                                    edit={this.props.groupDetails.response.id}
-                                                    pause={this.props.groupDetails.response.id}
-                                                    delete={this.props.groupDetails.response.id}
-                                                    DeleteGroup={this.DeleteThisGroup}
-                                                    PauseGroup={this.PauseThisGroup}
-                                                    EditGroup={this.EditThisGroup}
-                                                    />
+                                                {isAdmin ? 
+                                                        <NavButtons 
+                                                            navType={this.state.navType}
+                                                            leftName='Edit'
+                                                            middleName='Pause'
+                                                            rightName='Delete'
+                                                            edit={this.props.groupDetails.response.id}
+                                                            pause={this.props.groupDetails.response.id}
+                                                            delete={this.props.groupDetails.response.id}
+                                                            DeleteGroup={this.DeleteThisGroup}
+                                                            PauseGroup={this.PauseThisGroup}
+                                                            EditGroup={this.EditThisGroup}
+                                                            /> : ""}
                                              </div>
 
                                         </div>

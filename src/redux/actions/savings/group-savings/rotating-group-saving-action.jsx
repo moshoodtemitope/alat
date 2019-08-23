@@ -125,6 +125,7 @@ export const editGroupEsusu = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                history.push('/savings/rotating-edited-successfully');
             }) 
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
@@ -146,7 +147,7 @@ export const deleteGroupEsusu = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
-                history.push('/savings/group/success-message');
+                history.push('/savings/rotating-deleted-successfully');
             }) 
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));

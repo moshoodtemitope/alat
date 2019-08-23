@@ -24,9 +24,16 @@ class GroupAnalyticsMini2 extends React.Component {
             type: 2,
             navType: 2,
             buttonType: "bigButton",
-            discTopSpan: 'something'
+            discTopSpan: 'something',
+
+            isAdmin: false
         }
     
+    }
+
+    componentDidMount = () => {
+        let isAdmin = this.props.groupDetails.response.isAdmin;
+        this.setState({"isAdmin": isAdmin});
     }
 
     ShowMembers = () => {
@@ -37,9 +44,17 @@ class GroupAnalyticsMini2 extends React.Component {
         this.props.history.push("/savings/group-analytics-mini");
     }
 
+    MoveToEditSlot = () => {
+        history.push('/group-savings/edit-members-slots');
+    }
+
+    ShowEditButton = () => {
+        return  <p id='editSlots' onClick={this.MoveToEditSlot}>Edit Slot</p>
+    }
+
     NavigateToGroupSavings = () => {
-        let groupSavings = Object.keys(this.props.groups); //returns an array
-        let rotatingSavings = Object.keys(this.props.groupSavingsEsusu); //returns an array
+        let groupSavings = this.props.groups.response; //returns an array
+        let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
         if(groupSavings.length != 0 || rotatingSavings.length != 0){
             history.push('/savings/activityDashBoard');
             return;
@@ -49,7 +64,7 @@ class GroupAnalyticsMini2 extends React.Component {
 
 
     render() {
-        const {endDate,endDateInvalid} = this.state;
+        const {isAdmin} = this.state;
 
         return (
             <Fragment>
@@ -116,9 +131,11 @@ class GroupAnalyticsMini2 extends React.Component {
                                                                         />
                                                        }
                                                    })}
-                                                   <NavLink to='/group-savings/edit-members-slots'>
+
+                                                   {isAdmin ? this.ShowEditButton() : ""}
+                                                   {/* <NavLink to='/group-savings/edit-members-slots'>
                                                          <p id='editSlots'>Edit Slot</p>
-                                                   </NavLink>
+                                                   </NavLink> */}
                                                    
                                              </div>
             
