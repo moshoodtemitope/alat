@@ -248,9 +248,10 @@
   .top-goal-Message{
       color: #9F083E;
       font-size: 14px;
-      font-family: "proxima_novasemibold";
+      font-family: "proxima_novasemibold" !important;
       line-height: 24px;
-      margin-left: 60px;
+      width: 100%;
+      text-align: center;
 
   }
   .with-draw-goal-header{

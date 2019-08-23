@@ -80,6 +80,7 @@ class CashoutStashGoal extends Component {
         event.preventDefault();
         this.props.dispatch(actions.StashCashout({
             "goalId":parseInt(this.state.goal.id),
+            "goalTypeId":parseInt(this.state.goal.goalTypeId),
             "amountNumber":this.state.debitAccount,
             "amount":parseFloat(this.state.goal.amountSaved),
             "partialWithdrawal":true

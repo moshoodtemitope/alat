@@ -3,7 +3,6 @@ import {Fragment} from 'react';
 import InnerContainer from "../../../shared/templates/inner-container";
 import SavingsContainer from "../container";
 import {NavLink, Redirect} from "react-router-dom";
-import Members from '../../savings/group/list-item'
 import SelectDebitableAccounts from "../../../shared/components/selectDebitableAccounts";
 import {customerGoalConstants} from "../../../redux/constants/goal/get-customer-trans-history.constant";
 import * as actions from "../../../redux/actions/savings/goal/get-customer-transaction-history.actions";
