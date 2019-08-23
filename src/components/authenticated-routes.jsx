@@ -19,6 +19,7 @@ import TransferHome from "./transfer/transfer-home";
 import FundAccountIndex from './fund-account/index';
 import AccountSettings from './account-settings/container';
 import LoansIndex from './loans';
+import InsuranceContainer from './insurance/insurance-container';
 
 
 
@@ -67,6 +68,7 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path='/loans' authed={this.props.user} component={LoansIndex}/>
                     <PrivateRoute path='/account' authed={this.props.user} component={Accounts}/>
                     <PrivateRoute path='/settings' authed={this.props.user} component={AccountSettings}/>
+                    <PrivateRoute path='/insurance/manage-insurance' authed={this.props.user} component={InsuranceContainer}/>
                 </Switch>
             </Router>
             
