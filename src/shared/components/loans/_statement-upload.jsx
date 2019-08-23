@@ -1,5 +1,8 @@
 import React, { Fragment } from 'react';
 import ImageUploader from 'react-images-upload';
+import '../../../assets/css/docupload/doc-upload.scss';
+import deleteIcn from '../../../assets/img/delete.svg';
+
 import { SystemConstant } from "../../../shared/constants";
 
 import { connect } from 'react-redux';
@@ -11,6 +14,9 @@ import * as actions from '../../../redux/actions/loans/loans.action';
 class StatementUpload extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            pdf: { name: "" }
+        }
     }
 
     uploadImage = (data) => {
@@ -42,7 +48,21 @@ class StatementUpload extends React.Component {
         // }
     }
 
-    dummyUpload=()=>{}
+    handleChange = (e) => {
+        console.log(e);
+    }
+
+    pdfInputChange = (pdf, e) => {
+        console.log(pdf);
+        console.log(e);
+        this.setState({ pdf: pdf },()=>{
+            console.log(this.state.pdf);
+        });
+    }
+
+    deletePdf =(pdf)=>{
+        this.setState({pdf: {name: ""}});
+    }
 
 
     render() {
@@ -57,26 +77,18 @@ class StatementUpload extends React.Component {
                         <div className="transfer-ctn">
                             <form>
                                 <div className="row">
-                                    <div className="upload-div">
-                                        <p className="bold-text">Picture Upload</p>
-                                        <div className="upload-box">
-                                            {/* <input type="file" id="input-file-now" className="dropify" data-height="150"/> */}
-                                            <ImageUploader
-                                                withIcon={false}
-                                                singleImage={true}
-                                                withPreview={false}
-                                                label=''
-                                                className=""
-                                                buttonText='Choose image'
-                                                onChange={this.dummyUpload}
-                                                imgExtension={['.jpg', '.png', '.jpeg']}
-                                                maxFileSize={5242880}
-                                            />
-                                        </div>
-                                    </div>
+                                    {/* <input type="file" id="input-file-now" className="dropify" data-height="150"/> */}
+
+
+                                    <label className="text-center" style={{ color: "red"}}>Account label <img src={deleteIcn}></img></label>
                                     <div className="col-sm-12">
                                         <center>
-                                            <input type="button" value="Upload" className="btn-alat m-t-20 m-b-20 text-center" />
+                                            <label className="btn-alat m-t-20 m-b-20 text-center" >
+                                                <input type="file" name="upload" accept="application/pdf"
+                                                    onChange={(e) => this.handleChange(e.target.files)} />
+                                                Upload
+                                             </label>
+                                            {/* <input type="button" value="Upload" className="btn-alat m-t-20 m-b-20 text-center" /> */}
                                         </center>
                                     </div>
                                 </div>
