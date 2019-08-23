@@ -267,13 +267,19 @@ export const saveSecurityQuestion = (token, payload, callback) => {
         dispatch(isFetchingTrue());
         return consume
             .then(response => {
-                callback();
                 dispatch(success());
+                dispatchClearQuestion();
             })
             .catch(error => {
                 dispatch(isFetchingFalse());
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
+    };
+
+    function dispatchClearQuestion() {
+        setTimeout(() => {
+            callback();
+        }, 5000);
     };
 
     function success(data) {

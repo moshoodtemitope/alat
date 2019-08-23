@@ -27,6 +27,9 @@ class PinInput extends Component {
         },
         user: JSON.parse(localStorage.getItem("user")),
     }
+    componentDidMount(){
+        this.props.clearError();
+    }
 
     inputChangedHandler = (event, inputIdentifier) => {
         const updatedPinForm = {

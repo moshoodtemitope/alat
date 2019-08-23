@@ -15,6 +15,7 @@ class ChangeQuestion extends Component {
         this.state = {
             // selectedAccounts: null,
             hasError: false,
+            repeatQuestion: false,
             changeQuestionForm: {
                 question1: {
                     elementType: 'select',
@@ -113,16 +114,15 @@ class ChangeQuestion extends Component {
 
     accountChangedHandler = (selectedOption, selectIndentifier) => {
         console.log(`Option selected:`, selectedOption);
-
         const updatedQuestionDataForm = {
-            ...this.state.changeQuestionForm
-        }
+                ...this.state.changeQuestionForm
+            }
         const updatedSelectElement = {
             ...updatedQuestionDataForm[selectIndentifier]
         };
         updatedSelectElement.selectedOption = selectedOption;
         updatedQuestionDataForm[selectIndentifier] = updatedSelectElement;
-        this.setState({ changeQuestionForm: updatedQuestionDataForm });
+        this.setState({ changeQuestionForm: updatedQuestionDataForm, repeatQuestion : false });
     }
 
 
@@ -138,7 +138,7 @@ class ChangeQuestion extends Component {
         if (event.target.value.length > 40 || (!pattern.test(event.target.value) && event.target.value != '')) {
             return;
         }
-        if(this.state.hasError) this.setState({ hasError : false });
+        if (this.state.hasError) this.setState({ hasError: false });
         updatedFormElement.value = event.target.value;
         updatedQuestionDataForm[inputIdentifier] = updatedFormElement;
         this.setState({ changeQuestionForm: updatedQuestionDataForm });
@@ -146,7 +146,8 @@ class ChangeQuestion extends Component {
 
     goHome = (event) => {
         event.preventDefault();
-        this.props.resetPageState()
+        if(this.props.questionsData) this.props.clearQuestionData();
+        this.props.resetPageState();
     }
 
     goBack = (event) => {
@@ -155,34 +156,48 @@ class ChangeQuestion extends Component {
     }
 
     onSubmitForm = (event) => {
-        // var validation = { ...this.state.validation };
         event.preventDefault();
         if (this.props.alert.message) this.props.clearError();
-        let payload = [];
+        let data = [];
         let answer = ""
 
         for (var input in this.state.changeQuestionForm) {
             if (input == "question1" || input == "question2" || input == "question3") {
                 if (this.state.changeQuestionForm[input].selectedOption != null) {
                     answer = "answer" + input.replace(/\D/g, '');
-                    payload.push({
-                        question: this.state.changeQuestionForm[input].selectedOption.value,
-                        answer: this.state.changeQuestionForm[answer].value,
-                        id: this.state.changeQuestionForm[input].selectedOption.id
-                    })
+                    if(this.state.changeQuestionForm[answer].value != ""){
+                        data.push({
+                            question: this.state.changeQuestionForm[input].selectedOption.value,
+                            answer: this.state.changeQuestionForm[answer].value,
+                            id: this.state.changeQuestionForm[input].selectedOption.id
+                        })
+                    }
                 }
             } else {
                 continue;
             }
 
         }
-        if (payload.length < 1) {
-            this.setState({ hasError : true })
+        if (data.length < 1) {
+            this.setState({ hasError: true })
             return;
+        }
+        if(data.length > 1){
+            let arr;
+            for(var selected in data){
+                arr = data.filter(x => selected.value == x.value );
+                if (arr.length > 1){
+                    this.setState({repeatQuestion: true});
+                    return;
+                }
+            }
+        }
+
+        let payload = {
+            securityQuestion: data
         }
         this.props.saveSecurityQuestion(this.state.user.token, payload, this.props.clearQuestionData);
         console.log(payload);
-        // }
     }
 
 
@@ -192,11 +207,14 @@ class ChangeQuestion extends Component {
         let form = <Redirect to="/settings/security-questions" />
         if (this.props.questionsData) {
             const formElementArray = [];
+            let counter = 1;
             for (let key in this.state.changeQuestionForm) {
                 formElementArray.push({
                     id: key,
-                    config: this.state.changeQuestionForm[key]
+                    config: this.state.changeQuestionForm[key],
+                    position: counter
                 });
+                counter++;
             }
             if (this.props.questionsData && !this.state.changeQuestionForm.question1.loaded) {
                 this.sortQuestionsForSelect();
@@ -239,6 +257,7 @@ class ChangeQuestion extends Component {
                                                                 elementConfig={formElement.config.elementConfig}
                                                                 value={formElement.config.value}
                                                                 changed={(event) => this.inputChangedHandler(event, formElement.id)}
+                                                                isDisabled={this.state.changeQuestionForm["question" + (formElement.position / 2)].selectedOption == null}
                                                             />
                                                             {/* {this.state.validation.pinError.hasError ? <small className="text-danger">{this.state.validation.pinError.error}</small> : null} */}
                                                         </div>
@@ -251,7 +270,9 @@ class ChangeQuestion extends Component {
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <center>
-                                                            {this.state.hasError ? <small className="text-danger">Please pick an answer atleast one security question</small> : null}
+                                                            {this.state.hasError ? <span className="text-danger">Please pick and answer atleast one security question</span> : null}
+                                                            
+                                                            {this.state.repeatQuestion ? <span className="text-danger">You can't select a question twice</span> : null}
                                                             <button disabled={this.props.fetching} onClick={this.onSubmitForm} style={{ width: "100%" }} className="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Confirm"}</button>
                                                         </center>
                                                     </div>
@@ -260,9 +281,9 @@ class ChangeQuestion extends Component {
                                         </div>
                                     </div>
 
-                                    {/* <center>
+                                    <center>
                                         <button onClick={this.goBack} className="add-bene m-t-50 goback">Go Back</button>
-                                    </center> */}
+                                    </center>
                                 </div>
                             </div>
                         </div>
