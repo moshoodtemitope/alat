@@ -119,6 +119,8 @@ export const routes = {
     PAUSE_GROUP: BASEURL + '/Savings.WebApi/api/GroupSaving/PauseScheduledGroupPayemnt',
     FIND_GROUP: BASEURL + '/Savings.WebApi/api/GroupSaving/FindGroup',
     JOIN_GROUP: BASEURL + '/Savings.WebApi/api/GroupSaving/JoinGroup',
+    CONTRIBUTE: BASEURL + '/Savings.WebApi/api/GroupSaving/Contribute',
+    
     // ROTATING SAVINGS (ESUSU)
     CREATE_ROTATING_SAVINGS: BASEURL + '/Savings.WebApi/api/EsusuSaving/CreateGroup',
     ROTATING_GROUP_DETAILS: BASEURL +  '/Savings.WebApi/api/EsusuSaving/GetGroupDetails',

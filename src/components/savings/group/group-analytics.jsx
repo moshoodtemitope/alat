@@ -157,8 +157,13 @@ class GroupAnalytics extends React.Component {
     };
 
     EditThisGroup = () => {
-        return this.props.history.push('/group-savings/edit-group');
+        history.push('/group-savings/edit-group');
     };
+
+    GoToContributionPage = () => {
+        console.log('uuuuuuu')
+        history.push('/savings/contribute-to-group');
+    }
 
     NavigateToGroupSavings = () => {
         let groupSavings = this.props.groups.response; //returns an array
@@ -247,12 +252,10 @@ class GroupAnalytics extends React.Component {
                                                    rightContent={this.GetReferalCode()}
                                                    rightContentBottom="Group Code"
                                                 />
-                                              
                                                     <Buttons
                                                         buttonType={this.state.buttonType}
                                                         buttonName="contribute"
-                                                        
-                                                        />
+                                                        buttonClicked={this.GoToContributionPage} />
                                                 {isAdmin ? 
                                                         <NavButtons 
                                                             navType={this.state.navType}

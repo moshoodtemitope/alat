@@ -62,6 +62,7 @@ import RotatingSavingsEditedSuccessfullyDeleted from './savings/group/success-me
 import RotatingDelete from './savings/group/confirm-rotating-delete';
 import GroupDelete from './savings/group/confirm-group-savings-delete';
 import SavingsGroupDeleted from './savings/group/success-deleted-group-savings';
+import ContributeToGroup from './savings/group/contribute-to-group';
 // import MemberSlots from './savings/group/members-slot';
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
@@ -149,6 +150,7 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path="/savings/rotating-confirm-delete" authed={this.props.user} component={RotatingDelete} />
                     <PrivateRoute path="/savings/delete-group-savings" authed={this.props.user} component={GroupDelete} />
                     <PrivateRoute path="/savings/delete-group-savings-mod" authed={this.props.user} component={SavingsGroupDeleted} />
+                    <PrivateRoute path="/savings/contribute-to-group" authed={this.props.user} component={ContributeToGroup} />
                 </Switch>
             </Router>
         )

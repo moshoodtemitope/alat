@@ -12,10 +12,10 @@ import { connect } from "react-redux";
 import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
 import {history} from '../../../_helpers/history';
 
-class ContributeToGroup extends React.Component {
+class ContributeToGroup extends React.Component {     
     constructor(props){
         super(props);
-        this.state={
+        this.state = {
             user: JSON.parse(localStorage.getItem("user")),
             amount: null,
             selectedAccount: null,
@@ -84,29 +84,39 @@ class ContributeToGroup extends React.Component {
         let id = this.props.groupDetails.response.id;
         let data = {
             groupId: parseInt(id),
-            amount: this.state.amount,
+            amount: parseFloat(this.state.amount),
             debitAccount: this.state.selectedAccount
         };
 
         console.log(data);
-        return;
-        this.props.dispatch(actions.deleteGroup(this.state.user.token, data));
+
+        this.props.dispatch(actions.contribute(this.state.user.token, data));
+    }
+
+    SetAmountInput = (event) => {
+        let amount = event.target.value;
+        this.setState({amount: amount});
     }
 
     SubmitForm = (event) => {
         event.preventDefault();
-        this.validateForm();
-
-        if(this.state.status == "Yes")
-             this.DeleteTheGroup();
+        this.validateAmount();
+        this.validateAccount();
+        this.checkAccountNumber();
+         
+        switch(this.checkingUserInputs()){
+            case null:
+               console.log('Empty fields are found');
+               break;
+            case 'valid':
+               this.ContributeToGroup();
+               console.log('its Valid');
+        }
     }
 
-    SetAmountInput = (event) => {
-        this.setState({amount: event.target.value});
-    }
     
     render() {
-        const { selectedAccount, isAccountInvalid} = this.state;
+        const { selectedAccount, isAccountInvalid, amountValidity} = this.state;
         return (
             <Fragment>
                 <InnerContainer>
@@ -137,13 +147,13 @@ class ContributeToGroup extends React.Component {
                                     <div className="col-sm-12">
                                       <div className="max-600">
                                        <div className="al-card no-pad">
-                                       <h4 className="m-b-10 center-text hd-underline">Confirm Delete!</h4>
+                                       <h4 className="m-b-10 center-text hd-underline">Contribution</h4>
 
                                             <form>
                                                 <div className="form-row">
                                                     <div className={amountValidity ? "form-group form-error col-md-11" : "form-group col-md-11"}>
-                                                        <label className="label-text">Are you sure you want to delete this group?</label>
-                                                        <input placeholder="N100, 000" onChange={this.SetAmountInput()}/>
+                                                        <label className="label-text">Amount to contribute</label>
+                                                        <input type="number" className="form-control" placeholder="N100, 000" onChange={this.SetAmountInput}/>
                                                    </div>
                                                 </div>
 

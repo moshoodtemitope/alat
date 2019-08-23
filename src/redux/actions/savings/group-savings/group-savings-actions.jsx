@@ -85,6 +85,7 @@ export const contribute = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                history.push('/');
             })
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
