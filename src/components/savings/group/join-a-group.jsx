@@ -9,8 +9,8 @@ import DatePicker from "react-datepicker";
 import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
-import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
-import * as action from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
+import * as action from '../../../redux/actions/savings/group-savings/group-savings-actions';
+import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import {history} from '../../../_helpers/history';
 
 class JoinAGroup extends React.Component {
@@ -71,8 +71,8 @@ class JoinAGroup extends React.Component {
        console.log(data2)
        console.log(data);
        //return;
-       this.props.dispatch(action.refferalCode(data2))
-       this.props.dispatch(actions.findGroup(this.state.user.token, data));
+       this.props.dispatch(actions.refferalCode(data2))
+       this.props.dispatch(action.findGroup(this.state.user.token, data));
        
     //    this.formSubmitButton.disable = true;
     }

@@ -34,7 +34,7 @@ class RotatingDelete extends React.Component {
         history.push('/savings/group-analytics-mini');
     }
 
-    ChangeState = () => {
+    ChangeState = (event) => {
         this.setState({status: event.target.value});
     }
 

@@ -126,7 +126,7 @@ class DeleteGoal extends Component {
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <center>
-                                                            <button onClick={()=>{if(window.comfirm('Are you sure you wish to delete this item?')) thiis.onCancel(item)}} type="submit" value="Fund Account" className="btn-alat m-t-10 m-b-20 text-center">
+                                                            <button  type="submit" value="Fund Account" className="btn-alat m-t-10 m-b-20 text-center">
                                                                 {this.props.delete_goal.delete_customer_goal_status === customerGoalConstants.DELETE_CUSTOMER_GOAL_PENDING ? "Processing..." : "Delete Goal"}
                                                             </button>
                                                         </center>

@@ -34,7 +34,7 @@ class GroupDelete extends React.Component {
         history.push('/savings/group/group-analytics');
     }
 
-    ChangeState = () => {
+    ChangeState = (event) => {
         this.setState({status: event.target.value});
     }
 
