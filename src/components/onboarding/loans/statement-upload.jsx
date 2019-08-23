@@ -12,9 +12,20 @@ class LoanOnboardingStatementUpload extends React.Component {
         super(props);
     }
 
+    goBack = () => {
+        this.props.history.push("/loans/salary-detail");
+    }
+
+    goFoward = () => {
+        this.props.history.push('/loans/salary/dashboard');
+    }
+
     render() {
         return (<LoanOnboardingContainer>
-            <h1>Statement Upload</h1>
+            <StatementUpload
+                gotoPreviousPageMethod={this.goBack}
+                goToNextPage={this.goForward}
+            />
         </LoanOnboardingContainer>);
     }
 }

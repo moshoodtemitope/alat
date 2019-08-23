@@ -23,6 +23,7 @@ export const SystemConstant = {
         residentPermit: 'ResidentPermit',
         workid: 'WorkId',
         workidBack: 'WorkIdBack',
+        statement: 'Statement',
         otherIdentityType: 'Others'
     },
     RELATIONS: [{

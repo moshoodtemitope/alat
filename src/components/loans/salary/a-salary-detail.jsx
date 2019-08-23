@@ -38,6 +38,7 @@ class LoanSalaryDetail extends React.Component{
              token={this.state.user.token}
              ticketUrl={'/loans/salary/ticket'}
              salaryEntryUrl={'/loans/salary/entry'}
+             statementUploadUrl={'/loans/salary/statement-upload'}
             />
         );
     }

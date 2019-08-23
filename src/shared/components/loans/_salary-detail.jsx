@@ -179,6 +179,7 @@ class SalaryDetails extends React.Component {
                 if(data.response){
                 if (data.response.Response.NextScreen == 0) { return (<Redirect to={this.props.ticketUrl} />) }
                 //this.props.history.push("/loan/ticket");
+                if(data.response.Response.NextScreen == 1){ return (<Redirect to={this.props.statementUploadUrl} />) }
 
                 if (data.response.Response.NextScreen == 2) return (<Redirect to={this.props.salaryEntryUrl} />)
                 }

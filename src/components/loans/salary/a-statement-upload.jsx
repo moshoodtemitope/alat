@@ -15,9 +15,18 @@ class LoanStatementUpload extends React.Component{
         }
     }
 
+    goBack=()=>{
+        this.props.history.push("/loans/salary/detail");
+    }
+
+    goFoward=()=>{
+        this.props.history.push('/loans/salary/dashboard');
+    }
+
     render(){
         return(<StatementUpload
-        
+                gotoPreviousPageMethod={this.goBack}
+                goToNextPage={this.goForward}
         />);
     }
 }

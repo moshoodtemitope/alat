@@ -290,3 +290,27 @@ export function loanValidateRemitaOtpReducer(state = {}, action) {
             };
     }
 }
+
+export function loanStatementUpload(state = {}, action) {
+    switch (action.type) {
+        case loanConstants.LOAN_STATEMENT_UPLOAD_SUCCESS:
+            return {
+                loan_statement_status: loanConstants.LOAN_STATEMENT_UPLOAD_SUCCESS,
+                loan_statement_data: action
+            };
+        case loanConstants.LOAN_STATEMENT_UPLOAD_PENDING:
+            return {
+                loan_statement_status: loanConstants.LOAN_STATEMENT_UPLOAD_PENDING,
+                loan_statement_data: action
+            };
+        case loanConstants.LOAN_STATEMENT_UPLOAD_FAILURE:
+            return {
+                loan_statement_status: loanConstants.LOAN_STATEMENT_UPLOAD_FAILURE,
+                loan_statement_data: action
+            };
+        default:
+            return{
+                ...state,
+            };
+    }
+}
