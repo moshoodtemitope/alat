@@ -60,7 +60,8 @@ import JoinGroupSuccessMessage from './savings/group/joined-group-successfully';
 import RotatingSavingsEditedSuccessfully from './savings/group/success-message-edit-esusu';
 import RotatingSavingsEditedSuccessfullyDeleted from './savings/group/success-message-rotating-delete';
 import RotatingDelete from './savings/group/confirm-rotating-delete';
-
+import GroupDelete from './savings/group/confirm-group-savings-delete';
+import SavingsGroupDeleted from './savings/group/success-deleted-group-savings';
 // import MemberSlots from './savings/group/members-slot';
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
@@ -92,13 +93,10 @@ class AuthenticatedRoutes extends React.Component{
         return(
             <Router history={history}>
                 <Switch>
-                    {/*<Route path="/dashboard" component={Dashboard} />*/}
+                   
                     <PrivateRoute path='/dashboard' authed={this.props.user} component={Dashboard} />
                     <PrivateRoute path='/fund' authed={this.props.user} component={FundAccountIndex} />
-                    {/* <BillsRoute authed={this.props.user}/> */}
-                    {/* <PrivateRoute exact path='/bills' authed={this.props.user} component= {Bills}>
-                        <Redirect to={'/bills/airtime'} />
-                    </PrivateRoute> */}
+                    
                     <PrivateRoute path='/bills/airtime' authed={this.props.user} component={Bills}/>
                     <PrivateRoute path='/bills/data' authed={this.props.user} component={Bills}/>
                     <PrivateRoute path='/bills/paybills' authed={this.props.user} component={Bills}/>
@@ -149,10 +147,8 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path="/savings/rotating-edited-successfully" authed={this.props.user} component={RotatingSavingsEditedSuccessfully} />
                     <PrivateRoute path="/savings/rotating-deleted-successfully" authed={this.props.user} component={RotatingSavingsEditedSuccessfullyDeleted} />
                     <PrivateRoute path="/savings/rotating-confirm-delete" authed={this.props.user} component={RotatingDelete} />
-
-
-
-                    {/* <PrivateRoute path='/group-savings/edit-members-slots' authed={this.props.user} component={MemberSlots} /> */}
+                    <PrivateRoute path="/savings/delete-group-savings" authed={this.props.user} component={GroupDelete} />
+                    <PrivateRoute path="/savings/delete-group-savings-mod" authed={this.props.user} component={SavingsGroupDeleted} />
                 </Switch>
             </Router>
         )

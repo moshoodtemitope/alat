@@ -137,13 +137,17 @@ class GroupAnalytics extends React.Component {
         return this.props.groupDetails.response.referralCode;
     };
 
-    DeleteThisGroup = (event) => {
-        let data = {
-            groupId: parseInt(event.target.id),
-            deleteGroup: 'deleteGroup'
-        };
-        this.props.dispatch(actions.deleteGroup(this.state.user.token, data));
-    };
+    // DeleteThisGroup = (event) => {
+    //     let data = {
+    //         groupId: parseInt(event.target.id),
+    //         deleteGroup: 'deleteGroup'
+    //     };
+    //     this.props.dispatch(actions.deleteGroup(this.state.user.token, data));
+    // };
+
+    GoToConfirmDelete = () => {
+        history.push('/savings/delete-group-savings');
+    }
 
     PauseThisGroup = (event) => {
         let data = {
@@ -258,7 +262,7 @@ class GroupAnalytics extends React.Component {
                                                             edit={this.props.groupDetails.response.id}
                                                             pause={this.props.groupDetails.response.id}
                                                             delete={this.props.groupDetails.response.id}
-                                                            DeleteGroup={this.DeleteThisGroup}
+                                                            DeleteGroup={this.GoToConfirmDelete}
                                                             PauseGroup={this.PauseThisGroup}
                                                             EditGroup={this.EditThisGroup}
                                                             /> : ""}

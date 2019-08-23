@@ -62,7 +62,7 @@ export const deleteGroup = (token, data) => {
             .then(response => {
                 dispatch(success(response.data));
                 if(data.deleteGroup != undefined)
-                     history.push('/savings/group/success-message');
+                     history.push('/savings/delete-group-savings-mod');
             })
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
