@@ -6,7 +6,6 @@ import {NavLink, Redirect} from "react-router-dom";
 import SelectDebitableAccounts from "../../../shared/components/selectDebitableAccounts";
 import {customerGoalConstants} from "../../../redux/constants/goal/get-customer-trans-history.constant";
 import {connect} from "react-redux"
-import Members from '../../savings/group/list-item'
 import {Description} from '../group/component'
 
 import * as actions from "../../../redux/actions/savings/goal/get-customer-transaction-history.actions";

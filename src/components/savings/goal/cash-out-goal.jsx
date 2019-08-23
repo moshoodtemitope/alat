@@ -8,6 +8,7 @@ import SelectDebitableAccounts from "../../../shared/components/selectDebitableA
 import {customerGoalConstants} from "../../../redux/constants/goal/get-customer-trans-history.constant";
 import * as actions from "../../../redux/actions/savings/goal/get-customer-transaction-history.actions";
 import {connect} from 'react-redux'
+import {Description} from "../group/component";
 
 
 class StashCashout extends Component {
@@ -89,11 +90,11 @@ class StashCashout extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({isSubmit: true});
-        if (this.validateAmount(this.state.Amount) || this.validateAccountNumber(this.state.accountToDebit, "accountToDebitInValid")) {
+        if (this.validateAccountNumber(this.state.accountToDebit, "accountToDebitInValid")) {
             //not valid
         }else {
-            this.props.dispatch(actions.WithDrawFromGoalStep1( {
-                    'goalName':this.state.goal.goalName,
+            this.props.dispatch(actions.StashCashoutStep1( {
+                    // 'goalName':this.state.goal.goalName,
                     'goalId':this.state.goal.id,
                     "amountSaved":this.toCurrency(this.state.goal.amountSaved),
                     'accountNumber':this.state.accountToDebit
@@ -103,9 +104,9 @@ class StashCashout extends Component {
         }
     };
     gotoStep2 = () => {
-        if (this.props.withdraw_from_goal_step1)
-            if (this.props.withdraw_from_goal_step1.withdraw_from_goal_status_step1 === customerGoalConstants.WITHDRAW_FROM_GOAL_SUCCESS_STEP1) {
-                return <Redirect to="/savings/withdraw-from-goal_summary"/>
+        if (this.props.stashGoal_step1)
+            if (this.props.stashGoal_step1.stashout_goal_status_step1 === customerGoalConstants.STASH_CASHOUT_STEP1_SUCCESS) {
+                return <Redirect to="/savings/cashout-goal-summary"/>
             }
     };
 
@@ -147,15 +148,14 @@ class StashCashout extends Component {
                                             <h4 className="m-b-10 center-text hd-underline">Stash Cashout</h4>
 
                                             <form onSubmit={this.handleSubmit}>
-                                                <div className=" with-draw-goal-header">
-                                                    <Members
-                                                        userType="admin"
-                                                        name={this.state.user.fullName}
-                                                        position={this.state.user.email}
-                                                        amount={'₦'+this.state.goal.amountSaved}
-                                                        intent="Amount Saved"
-                                                        id="autoSummary"/>
+                                                <div className="form-group">
+                                                    <Description
+                                                        leftHeader={this.state.user.fullName}
+                                                        leftDescription={this.state.user.email}
+                                                        rightHeader={'₦'+this.state.goal.amountSaved}
+                                                        rightDiscription="Amount Saved"/>
                                                 </div>
+
                                                 {this.props.alert && this.props.alert.message &&
                                                 <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                                                 }
@@ -174,7 +174,7 @@ class StashCashout extends Component {
                                                     <div className="col-sm-12">
                                                         <center>
                                                             <button type="submit" value="Fund Account" className="btn-alat m-t-10 m-b-20 text-center">
-                                                                {this.props.withdraw_from_goal_step1.withdraw_from_goal_status_step1 === customerGoalConstants.WITHDRAW_FROM_GOAL_PENDING_STEP1 ? "Processing..." : "Proceed and Checkout"}
+                                                                {this.props.stashGoal_step1.stashout_goal_status_step1 === customerGoalConstants.STASH_CASHOUT_STEP1_PENDING ? "Processing..." : "Proceed and Checkout"}
                                                             </button>
                                                         </center>
                                                     </div>
@@ -201,7 +201,7 @@ class StashCashout extends Component {
 }
 const mapStateToProps = state => ({
     alert:state.alert,
-    withdraw_from_goal_step1:state.withdraw_from_goal_step1
+    stashGoal_step1:state.stashGoal_step1
 });
 
 export default connect (mapStateToProps)(StashCashout);

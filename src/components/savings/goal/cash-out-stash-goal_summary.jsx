@@ -8,7 +8,7 @@ import {customerGoalConstants} from "../../../redux/constants/goal/get-customer-
 import {NavLink} from "react-router-dom";
 
 
-class TopUPGoalSummmary extends Component {
+class CashoutStashGoal extends Component {
     constructor(props){
         super(props);
 
@@ -19,6 +19,8 @@ class TopUPGoalSummmary extends Component {
             debitAmount:"",
             Amount:"",
             goalId:"",
+            amountSaved:"",
+            goal:JSON.parse(localStorage.getItem('goal')) || [],
 
 
         }
@@ -30,11 +32,11 @@ class TopUPGoalSummmary extends Component {
     };
 
     init = () => {
-        if (this.props.top_up_goal_step1.top_up_goal_status_step1 !== customerGoalConstants.TOP_UP_GOAL_SUCCESS_STEP1)
-            this.props.history.push("/savings/top-up-goal-step1");
+        if (this.props.stashGoal_step1.stashout_goal_status_step1 !== customerGoalConstants.STASH_CASHOUT_STEP1_SUCCESS)
+            this.props.history.push("/savings/stash-cashout");
         else {
             let data = {
-                ...this.props.top_up_goal_step1.top_up_goal_data_step1.data
+                ...this.props.stashGoal_step1.stashout_goal_data_step1.data
             };
             console.log('tag', data);
 
@@ -43,15 +45,45 @@ class TopUPGoalSummmary extends Component {
                 goalName:data.goalName,
                 goalId:data.goalId,
                 debitAccount:data.accountNumber,
+                amountSaved:data.amountSaved,
+                partialWithdrawal:true
             });
         }
     };
+    removeComma(currencyValue) {
+        return currencyValue.replace(/,/g, '');
+    }
+    toCurrency(number) {
+        // console.log(number);
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: "decimal",
+            currency: "USD",
+            maximumFractionDigits: 2
+        });
+
+        return formatter.format(number);
+    }
+    toCurrency(currency) {
+        if (currency) {
+            currency = typeof currency !== 'string' ? currency.toString() : currency;
+            let numberValueArray = currency.split('.');
+            let numberValue = this.removeComma(numberValueArray[0]);
+            currency = numberValueArray.length > 1 ? numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+                + '.' + numberValueArray[1] : numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+        }
+        return currency;
+    }
+
+
     handleSubmit=(event)=>{
+
         event.preventDefault();
-        this.props.dispatch(actions.TopUPGoal({
-            "goalId":this.state.goalId,
-            "amount":this.state.Amount,
-            "amountNumber":this.state.debitAccount
+        this.props.dispatch(actions.StashCashout({
+            "goalId":parseInt(this.state.goal.id),
+            "amountNumber":this.state.debitAccount,
+            "amount":parseFloat(this.state.goal.amountSaved),
+            "partialWithdrawal":true
+
         }));
 
     };
@@ -73,7 +105,7 @@ class TopUPGoalSummmary extends Component {
                                         <ul>
                                             <NavLink to='/savings/choose-goal-plan'>
 
-                                            <li><a href="accounts.html" className="active">Goals</a></li>
+                                                <li><a href="accounts.html" className="active">Goals</a></li>
                                             </NavLink>
                                             <NavLink to='/savings/activityDashBoard'>
                                                 <li><a href="statement.html">Group Savings</a></li>
@@ -90,7 +122,8 @@ class TopUPGoalSummmary extends Component {
                             <div style={{width: "100%",}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                             }
 
-                            <h1 style={{textAlign:"center", width:"100%", color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>Top Up Goal Summary</h1>
+                            <h1 style={{margin:'auto', width:"100%", textAlign:"center",
+                                color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>WithDrawal Summary</h1>
                             <div style={{margin:"30px", marginLeft:"120px",marginRight:"120px"}}></div>
 
                             <div className="col-sm-12">
@@ -106,7 +139,7 @@ class TopUPGoalSummmary extends Component {
                                                         </div>
                                                         <div className="right">
                                                             <p className='GoalText'>Amount</p>
-                                                            <p className='boldedText'>₦{this.state.Amount}</p>
+                                                            <p className='boldedText'>₦{this.state.goal.amountSaved}</p>
                                                         </div>
                                                     </div>
                                                     <div className="coverForSummary">
@@ -133,9 +166,9 @@ class TopUPGoalSummmary extends Component {
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <center>
-                                                            <button disabled={this.props.top_up_goal.top_up_goal_status === customerGoalConstants.TOP_UP_GOAL_PENDING}
+                                                            <button disabled={this.props.stashGoal.stashout_goal_status === customerGoalConstants.STASH_CASHOUT__PENDING}
                                                                     type="submit" className="btn-alat m-t-10 m-b-20 text-center">
-                                                                {this.props.top_up_goal.top_up_goal_status === customerGoalConstants.TOP_UP_GOAL_PENDING ? "Processing..." :"Top Up Goal"}
+                                                                {this.props.stashGoal.stashout_goal_status === customerGoalConstants.STASH_CASHOUT__PENDING ? "Processing..." :"WithDraw"}
                                                             </button>
                                                         </center>
                                                     </div>
@@ -167,13 +200,12 @@ class TopUPGoalSummmary extends Component {
     }
 }
 const mapStateToProps = state => ({
-    top_up_goal_step1:state.top_up_goal_step1,
-    top_up_goal:state.top_up_goal,
-    create_stash_goal:state.create_stash_goal,
     alert: state.alert,
+    stashGoal:state.stashGoal,
+    stashGoal_step1:state.stashGoal_step1,
     accounts: state.dashboard_accounts
 
 
 });
-export default connect(mapStateToProps)(TopUPGoalSummmary);
+export default connect(mapStateToProps)(CashoutStashGoal);
 

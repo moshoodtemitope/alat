@@ -18,7 +18,7 @@ import * as actions1 from '../../../redux/actions/savings/group-savings/group-sa
     
 class RotatingGroupCreated extends React.Component {
     constructor(props){
-        super(props)
+        super(props);
         this.state= {
             user: JSON.parse(localStorage.getItem("user"))
         }

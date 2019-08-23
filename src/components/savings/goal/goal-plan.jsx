@@ -174,15 +174,15 @@ class GoalPlan extends React.Component {
                                             <ProgressBar
                                                 percentage={hist.percentageCompleted}
                                                 discBottom={"₦" + this.toCurrency(hist.amountSaved) + " " + "of"}
-                                                discSpan={" " + "₦" + hist.amountSaved}
+                                                discSpan={" " + "₦" + hist.targetAmount}
                                                 discBottomSib='Amount Saved'
-                                                discBottomRight={hist.percentageCompleted.toFixed(2) + "%"}
+                                                discBottomRight={hist.percentageCompleted.toFixed(1) + "%"}
                                             />
                                         </div>
                                         <div className='row forDetailsComp'>
                                             <div className="col-xs-4">
                                                 <p className="upper">₦{this.toCurrency(hist.targetAmount)}</p>
-                                                <p className="lower">Weekly Savings</p>
+                                                <p className="lower">{hist.frequency} Savings</p>
                                             </div>
                                             <div className="col-xs-4">
                                                 <p className="upper">₦{this.toCurrency(hist.interestEarned)}</p>
@@ -194,11 +194,39 @@ class GoalPlan extends React.Component {
                                             </div>
                                         </div>
                                         <div className='bottomDiscriptionDashBoard'>
-                                            <div className="left">
-                                                <div className="innerLeft">
-                                                    <p><span id="dot">.</span> <span id='message'>Next Payment</span> <span id="date">{moment(hist.nextstandingDate).format('L')}</span></p>
-                                                </div>
-                                            </div>
+                                            {
+                                                hist.goalTypeName === "Stash" ? <div className="left">
+                                                            <div className="innerRight">
+                                                            <Link to={{
+                                                                pathname:'/savings/top-up-goal-step1',
+                                                                state:{
+                                                                    name:hist
+                                                                }
+                                                            } }>
+                                                                <span style={{ fontFamily:"proxima_novaregular",fontSize:"12px"
+                                                                }}>Top Up Stash</span>
+                                                            </Link>
+
+
+                                                            <Link to={{
+                                                                pathname:'/savings/stash-cashout',
+                                                                state:{
+                                                                    name:hist
+                                                                }
+                                                            } }>
+                                                                <span style={{ fontFamily:"proxima_novaregular",fontSize:"12px"
+                                                                }}>Cashout Stash</span>
+                                                            </Link>
+                                                            </div>
+
+                                                    </div>:
+                                                    <div className="left">
+                                                        <div className="innerLeft">
+                                                            <p><span id="dot">.</span> <span id='message'>Next Payment</span> <span id="date">{moment(hist.nextstandingDate).format('L')}</span></p>
+                                                        </div>
+                                                    </div>
+                                            }
+
                                             <div className="right">
                                                 <Link to={{
                                                     pathname:'/savings/view-goal-summary',
@@ -206,7 +234,8 @@ class GoalPlan extends React.Component {
                                                         name:hist
                                                     }
                                                 } }>
-                                                <span>View Details</span>
+                                                <span style={{ fontFamily:"proxima_novaregular"
+                                                }}>View Details</span>
                                                 </Link>
 
                                             </div>

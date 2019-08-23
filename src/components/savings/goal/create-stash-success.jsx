@@ -6,7 +6,8 @@ import successLogo from '../../../assets/img/success.svg';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import Members from '../../savings/group/list-item';
 import { connect } from "react-redux";
-import * as actions from "../../../redux/actions/fund-account/fund-acount.action";
+import * as actions from '../../../redux/actions/savings/goal/create-stash-goal.actions'
+
 import {createGoalConstants} from '../../../redux/constants/goal/create-stash.constant'
 
 

@@ -19,7 +19,8 @@ class WithDrawFromGoalSummmary extends Component {
             debitAmount:"",
             Amount:"",
             goalId:"",
-            amountSaved:""
+            amountSaved:"",
+            goal:JSON.parse(localStorage.getItem('goal')) || [],
 
 
         }
@@ -41,7 +42,7 @@ class WithDrawFromGoalSummmary extends Component {
 
             this.setState({
                 Amount:data.amount,
-                goalName:data.goalName,
+                 goalName:data.goalName,
                 goalId:data.goalId,
                 debitAccount:data.accountNumber,
                 amountSaved:data.amountSaved,
@@ -73,20 +74,15 @@ class WithDrawFromGoalSummmary extends Component {
         return currency;
     }
 
-    maskAccountNumber(accountNumber) {
-        for (let index = 3; index < 6; index++) {
-            accountNumber =  accountNumber.substr(0, index) + '*' + accountNumber.substr(index + 1,  accountNumber.length);
-        }
-        return accountNumber;
-    }
+
     handleSubmit=(event)=>{
 
         event.preventDefault();
         this.props.dispatch(actions.WithDrawFromGoal({
-            "goalId":parseInt(this.state.goalId),
-            "amount":parseFloat(this.state.Amount),
+            "goalId":parseInt(this.state.goal.id),
+            // "amount":parseFloat(this.state.Amount),
             "amountNumber":this.state.debitAccount,
-            // "amount":this.state.amountSaved,
+            "amount":parseFloat(this.state.goal.amountSaved),
             "partialWithdrawal":true
 
         }));
@@ -127,7 +123,7 @@ class WithDrawFromGoalSummmary extends Component {
                             <div style={{width: "100%",}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                             }
 
-                            <h1 style={{margin:'auto',paddingLeft:"20%",
+                            <h1 style={{margin:'auto', width:"100%", textAlign:"center",
                                 color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>WithDrawal Summary</h1>
                             <div style={{margin:"30px", marginLeft:"120px",marginRight:"120px"}}></div>
 
@@ -144,7 +140,7 @@ class WithDrawFromGoalSummmary extends Component {
                                                         </div>
                                                         <div className="right">
                                                             <p className='GoalText'>Amount</p>
-                                                            <p className='boldedText'>₦{this.state.Amount}</p>
+                                                            <p className='boldedText'>₦{this.state.goal.amountSaved}</p>
                                                         </div>
                                                     </div>
                                                     <div className="coverForSummary">
@@ -163,7 +159,7 @@ class WithDrawFromGoalSummmary extends Component {
 
                                                         <div className="right">
                                                             <p className='GoalText'>Account to Debit</p>
-                                                            <p className='boldedText'>{this.maskAccountNumber(this.state.debitAccount)}</p>
+                                                            <p className='boldedText'>{this.state.debitAccount}</p>
                                                         </div>
                                                     </div>
 

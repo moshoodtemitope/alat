@@ -164,6 +164,8 @@ const appReducer = combineReducers({
     edit_goal:customerGoal.EditCustomerGoal,
     pause_goal:customerGoal.PauseCustomerGoal,
     unpause_goal:customerGoal.unPauseCustomerGoal,
+    stashGoal:customerGoal.StashCashout,
+    stashGoal_step1:customerGoal.StashCashoutStep1,
 
     //Group Savings Reducers (GROUP SAVINGS)
     groupSavings: groupSavings.groupSavingsTargetGoal,
