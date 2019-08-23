@@ -1,5 +1,5 @@
 import {userRegistrationRequest, bvnDetailsReducer,bvnSkipReducer, bvnCustomerDetailsReducer} from "./onboarding.reducer";
-import {getCinemaList, getSingleMovie, buyMovieTicket, getEvents, getSingleEvent, purchaseEventTicket, getAllEngagements} from './lifestyle/lifestyle-reducer';
+import {getCinemaList, getSingleMovie, buyMovieTicket, getEvents, getSingleEvent, purchaseEventTicket, getAllEngagements, fetchMovieList} from './lifestyle/lifestyle-reducer';
 
 import {
     accountFetch,
@@ -130,5 +130,6 @@ export const movies = {
     getEvents,
     getSingleEvent,
     purchaseEventTicket,
-    getAllEngagements
+    getAllEngagements,
+    fetchMovieList
 }

@@ -162,3 +162,25 @@ export function getAllEngagements(state=[], action){
            return {... state}
     }
 }
+export function fetchMovieList(state=[], action){
+    switch(action.type){
+
+        case listStyleConstants.GET_MOVIE_LIST_PENDING:
+            return {
+                message: listStyleConstants.GET_MOVIE_LIST_PENDING,
+                data: action
+            };
+        case listStyleConstants.GET_MOVIE_LIST_SUCCESS:
+            return {
+                message: listStyleConstants.GET_MOVIE_LIST_SUCCESS,
+                data: action
+            };
+        case listStyleConstants.GET_MOVIE_LIST_FAILURE:
+            return {
+                message: listStyleConstants.GET_MOVIE_LIST_FAILURE,
+                data: action
+            };
+        default:
+            return {... state}
+    }
+}

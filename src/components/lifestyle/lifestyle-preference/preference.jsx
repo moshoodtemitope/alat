@@ -1,5 +1,6 @@
-import React, {Component} from 'react'
-import '../movie-preference-event.css';
+import React, {Component} from 'react';
+import '../movie-preference-event.css'
+
 
 class Preference extends Component{
 

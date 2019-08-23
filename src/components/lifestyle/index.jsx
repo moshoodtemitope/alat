@@ -26,7 +26,7 @@ class LifestyleIndex extends Component {
                                 </div>
                                 <div className="col-sm-12">
                                     <div>
-                                        <div className="sub-tab-nav">
+                                        <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                             <ul>
                                                 <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
                                                 <li><NavLink to={'/lifestyle/event'}>Event</NavLink></li>
