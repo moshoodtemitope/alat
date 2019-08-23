@@ -126,15 +126,34 @@ export const routes = {
     CHANGE_PIN: BASEURL + '/AccountSetting/api/pin/change',
 
     //Movies
-    GET_CINEMA_LIST: BASEURL + '/api/v3/Movies/GetCinemaList',
-    GET_SINGLE_MOVIE: BASEURL + './api/v3/Movies/GetSingleMovie',
-    BUY_MOVIE_TICKET: BASEURL + './api/v3/Movies/BuyMovieTicketV2',
+    // GET_CINEMA_LIST: BASEURL + '/LifeStylePaymentMoviesApi/api/v3/Movies/GetCinemaList',
+    // GET_SINGLE_MOVIE: BASEURL + '/LifeStylePaymentMoviesApi/api/v3/Movies/GetSingleMovie',
+    // BUY_MOVIE_TICKET: BASEURL + '/LifeStylePaymentMoviesApi/api/v3/Movies/BuyMovieTicketV2',
+    // FETCH_MOVIES_LIST : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetMovies?page',
+    // FETCH_MOVIE_SHOWTIME : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetShowTimes?cinemaUid=',
+    // FETCH_MOVIE_GENRE : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetGenreList',
+    // FETCH_MOVIE_CINEMAS : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetCinemaList',
+    // GET_CONVENIENCE_FEE : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetCinemaListAndFee',
+
 
     //EVENTS
-    GET_EVENTS: BASEURL + '/api/v1/Events/GetEvents',
-    GET_SINGLE_EVENT: BASEURL + 'api/v1/Events/GetSingleEvent',
-    BUY_EVENT_TICKET: BASEURL + 'api/v1/Events/BuyEventTicketV2',
+    GET_EVENTS: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Events/GetEvents',
+    GET_SINGLE_EVENT: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Events/GetSingleEvent',
+    BUY_EVENT_TICKET: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Events/BuyEventTicketV2',
 
     //PREFERENCES
-    GET_PREFENCE: BASEURL + '/api/v1/Account/GetAllEngagements'
+    GET_PREFENCE: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Account/GetAllEngagements',
+
+    //movies
+    FETCH_MOVIES_LIST : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetMovies?page=1',
+    FETCH_MOVIE_SHOWTIME : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetShowTimes?cinemaUid=',
+    BUY_MOVIE_TICKET : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/BuyMovieTicket',
+    FETCH_MOVIE_GENRE : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetGenreList',
+    FETCH_MOVIE_CINEMAS : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetCinemaList',
+    GET_CONVENIENCE_FEE : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetCinemaListAndFee',
+
+
+
+
+
 };

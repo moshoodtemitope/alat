@@ -2,9 +2,30 @@ import {ApiService} from "../../../services/apiService";
 import {routes} from "../../../services/urls";
 import {listStyleConstants} from "../../constants/lifestyle/lifestyle-constants";
 import {SystemConstant} from "../../../shared/constants";
-import { modelStateErrorHandler } from "../../../shared/utils";
-import { alertActions } from "../alert.actions";
-import * as utils from "../../../shared/utils";
+import {alertActions} from "../alert.actions";
+import {modelStateErrorHandler} from "../../../shared/utils";
+
+
+
+export const FetchMovie = (token) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.FETCH_MOVIES_LIST, "GET", null, SystemConstant.HEADER, false);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                // consume.log(response);
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function request(request) { return { type:listStyleConstants.GET_MOVIE_LIST_PENDING, request} }
+    function success(response) { return {type:listStyleConstants.GET_MOVIE_LIST_SUCCESS, response} }
+    function failure(error) { return {type:listStyleConstants.GET_MOVIE_LIST_FAILURE, error} }
+};
 
 
 export const getCinemaList = (token) => {
@@ -18,12 +39,8 @@ export const getCinemaList = (token) => {
                 dispatch(success(response.data));
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to Get Movies.'));
-                }
-                // dispatch(failure(error.response.data.message.toString()));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
             });
     };
 
@@ -43,12 +60,8 @@ export const getSingleMovie = (token, data) => {
                 dispatch(success(response.data));
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to Get Movies.'));
-                }
-                // dispatch(failure(error.response.data.message.toString()));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
             });
     };
 
@@ -68,12 +81,8 @@ export const buyMovieTicket = (token, data) => {
                 dispatch(success(response.data));
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to Get Movies.'));
-                }
-                // dispatch(failure(error.response.data.message.toString()));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
             });
     };
 
@@ -94,12 +103,8 @@ export const getEvents = (token, data) => {
                 dispatch(success(response.data));
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to Get Movies.'));
-                }
-                // dispatch(failure(error.response.data.message.toString()));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
             });
     };
 
@@ -119,12 +124,8 @@ export const getSingleEvent = (token, data) => {
                 dispatch(success(response.data));
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to Get Movies.'));
-                }
-                // dispatch(failure(error.response.data.message.toString()));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
             });
     };
 
@@ -146,11 +147,8 @@ export const purchaseEventTicket = (token, data) => {
             })
             .catch(error => {
                 if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to Get Movies.'));
+                    dispatch(alertActions.error(modelStateErrorHandler(error)));
                 }
-                // dispatch(failure(error.response.data.message.toString()));
             });
     };
 
@@ -171,12 +169,8 @@ export const getAllEngagements = (token, data) => {
                 dispatch(success(response.data));
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to Get Movies.'));
-                }
-                // dispatch(failure(error.response.data.message.toString()));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
             });
     };
 
