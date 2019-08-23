@@ -13,8 +13,8 @@ import * as actions from '../../../redux/actions/savings/group-savings/group-sav
 import {GROUPSAVINGSCONSTANT} from "../../../redux/constants/savings/group/index";
 import {history} from '../../../_helpers/history';
 
-// if(window.performance.navigation.type == 1)
-//     window.location.replace("http://localhost:8080/");
+if(window.performance.navigation.type == 1)
+    window.location.replace("http://localhost:8080/");
     
 class EditGroupSavings extends React.Component {
     constructor(props){
@@ -233,13 +233,13 @@ class EditGroupSavings extends React.Component {
     }
 
     NavigateToGroupSavings = () => {
-        let groupSavings = this.props.groups.response; //returns an array
-        let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
-        if(groupSavings.length != 0 || rotatingSavings.length != 0){
+        // let groupSavings = this.props.groups.response; //returns an array
+        // let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
+        // if(groupSavings.length != 0 || rotatingSavings.length != 0){
             history.push('/savings/activityDashBoard');
-            return;
-        }
-        history.push('/savings/goal/group-savings-selection');
+        //     return;
+        // }
+        // history.push('/savings/goal/group-savings-selection');
     }
 
 

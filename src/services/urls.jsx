@@ -108,6 +108,7 @@ export const routes = {
     EDITGOAL: BASEURL + '/Savings.WebApi/api/Savings/EditGoal',
     EDITFLEXIGOAL: BASEURL + '/Savings.WebApi/api/Savings/EditFlexiGoal',
     PAUSEGOAL: BASEURL + '/Savings.WebApi/api/Savings/PauseGoal',
+    CASHOUTSTASH:BASEURL + '/Savings.WebApi/api/Savings/CashoutStashGoal',
 
     // Group Savings
     CREATEGOAL: BASEURL + '/Savings.WebApi/api/GroupSaving/CreateGroup',
@@ -129,5 +130,5 @@ export const routes = {
     GET_GROUPS: BASEURL + '/Savings.WebApi/api/EsusuSaving/GetGroups',
     EDIT_GROUP_ESUSU: BASEURL + '/Savings.WebApi/api/EsusuSaving/EditGroup',
     DELETE_GROUP_ESUSU: BASEURL + '/Savings.WebApi/api/EsusuSaving/DeleteGroup',
-    JOIN_GROUP_ESUSU: BASEURL + '/Savings.WebApi/api/EsusuSaving/JoinGroup'
+    JOIN_GROUP_ESUSU: BASEURL + '/Savings.WebApi/api/EsusuSaving/JoinGroup',
 };

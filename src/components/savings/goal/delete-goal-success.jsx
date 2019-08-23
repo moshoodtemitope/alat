@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import {customerGoalConstants} from '../../../redux/constants/goal/get-customer-trans-history.constant';
 import * as actions from '../../../redux/actions/savings/goal/get-customer-transaction-history.actions'
 
-class TopUpGoalSuccess extends React.Component {
+class DeleteGoalSuccess extends React.Component {
     constructor(props){
         super(props);
         this.state={
@@ -83,4 +83,4 @@ class TopUpGoalSuccess extends React.Component {
 const mapStateToProps = state => ({
     top_up_goal:state.top_up_goal,
 });
-export default connect(mapStateToProps)(TopUpGoalSuccess);
+export default connect(mapStateToProps)(DeleteGoalSuccess);

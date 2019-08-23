@@ -254,6 +254,56 @@ export function DeleteCustomerGoal(state=[], action) {
             return { ...state }
     }
 }
+export function StashCashoutStep1(state=[], action) {
+    switch (action.type) {
+        case customerGoalConstants.STASH_CASHOUT_STEP1_PENDING:
+            return {
+                stashout_goal_status_step1:customerGoalConstants.STASH_CASHOUT_STEP1_PENDING,
+                stashout_goal_data_step1: action
+            };
+        case customerGoalConstants.STASH_CASHOUT_STEP1_SUCCESS:
+            return {
+                stashout_goal_status_step1: customerGoalConstants.STASH_CASHOUT_STEP1_SUCCESS,
+                stashout_goal_data_step1: action
+            };
+        case customerGoalConstants.STASH_CASHOUT__STEP1_FAILURE:
+            return {
+                stashout_goal_status_step1: customerGoalConstants.STASH_CASHOUT__STEP1_FAILURE,
+                stashout_goal_data_step1: action
+            };
+
+
+        default:
+            return { ...state }
+    }
+}
+
+
+
+export function StashCashout(state=[], action) {
+    switch (action.type) {
+        case customerGoalConstants.STASH_CASHOUT__PENDING:
+            return {
+                stashout_goal_status:customerGoalConstants.STASH_CASHOUT__PENDING,
+                stashout_goal_data: action
+            };
+        case customerGoalConstants.STASH_CASHOUT_SUCCESS:
+            return {
+                stashout_goal_status: customerGoalConstants.STASH_CASHOUT_SUCCESS,
+                stashout_goal_data: action
+            };
+        case customerGoalConstants.STASH_CASHOUT_FAILURE:
+            return {
+                stashout_goal_status: customerGoalConstants.STASH_CASHOUT_FAILURE,
+                stashout_goal_data: action
+            };
+
+
+        default:
+            return { ...state }
+    }
+}
+
 
 
 

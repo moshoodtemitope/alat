@@ -6,7 +6,8 @@ import successLogo from '../../../assets/img/success.svg';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import Members from '../../savings/group/list-item';
 import { connect } from "react-redux";
-import * as actions from "../../../redux/actions/fund-account/fund-acount.action";
+import * as actions from '../../../redux/actions/savings/goal/create-stash-goal.actions'
+
 import {createGoalConstants} from '../../../redux/constants/goal/create-stash.constant'
 
 
@@ -47,7 +48,7 @@ class CreateStashSuccessMessage extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a className="active">Goals</a></li>
                                         </NavLink>
-                                        <NavLink to="/savings/goal/group-savings-selection">
+                                        <NavLink to="/savings/activityDashBoard">
                                             <li><a>Group Savings</a></li>
                                         </NavLink>
                                             <li><a href="#">Investments</a></li>

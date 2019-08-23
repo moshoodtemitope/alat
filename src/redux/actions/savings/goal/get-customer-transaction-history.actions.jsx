@@ -5,7 +5,6 @@ import {customerGoalConstants} from '../../../constants/goal/get-customer-trans-
 import {modelStateErrorHandler} from "../../../../shared/utils";
 import {alertActions} from "../../alert.actions";
 import {history} from "../../../../_helpers/history";
-import {GROUPSAVINGSCONSTANT} from "../../../constants/savings/group";
 
 export const getCustomerGoalTransHistory = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
@@ -117,6 +116,44 @@ export const WithDrawFromGoalStep1 = (data) =>{
         }
     }
 };
+export const StashCashoutStep1 = (data) =>{
+    return(dispatch)=>{
+        dispatch(success(data))
+    };
+    function success(data){
+        return{
+            type:customerGoalConstants.STASH_CASHOUT_STEP1_SUCCESS,
+            data:data
+        }
+    }
+};
+export const StashCashout =(data)=>{
+    return (dispatch) => {
+        let consume = ApiService.request(routes.WITHDRAWFROMGOAL,
+            "POST", data);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                //TODO: edit localDB accounts object
+                dispatch(success(response.data, data));
+                // history.push({
+                //     pathname:"/savings/top-up-goal-success",
+                //     state:{details:response.data}
+                // })
+            })
+            .catch(error => {
+                // console.log("error in here");
+                // dispatch(success(response.data, request));
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // throw(error);
+            });
+    };
+
+    function request(request) { return { type:customerGoalConstants.STASH_CASHOUT__PENDING,  request } }
+    function success(response, request) { return { type: customerGoalConstants.STASH_CASHOUT_SUCCESS, data: { response : response, request: request } }}
+    function failure(error) { return { type: customerGoalConstants.STASH_CASHOUT_FAILURE,error } }
+};
 export const WithDrawFromGoal =(data)=>{
     return (dispatch) => {
         let consume = ApiService.request(routes.WITHDRAWFROMGOAL,
@@ -144,6 +181,7 @@ export const WithDrawFromGoal =(data)=>{
     function success(response, request) { return { type: customerGoalConstants.WITH_DRAW_FROM_GOAL_SUCCESS, data: { response : response, request: request } }}
     function failure(error) { return { type: customerGoalConstants.WITH_DRAW_FROM_GOAL_FAILURE, error } }
 };
+
 export const PauseCustomerGoal =(token,data)=>{
     SystemConstant.HEADER['alat-token'] = token;
 
@@ -211,10 +249,10 @@ export const deleteCustomerGoal =(token,data)=>{
             .then(response => {
                 //TODO: edit localDB accounts object
                 dispatch(success(response.data, data));
-                // history.push({
-                //     pathname:"/savings/top-up-goal-success",
-                //     state:{details:response.data}
-                // })
+                history.push({
+                    pathname:"/savings/delete-goal-success",
+                    state:{details:response.data}
+                })
             })
             .catch(error => {
                 // console.log("error in here");
@@ -257,6 +295,13 @@ export const EditCustomerGoal =(token,data)=>{
     function success(response, request) { return { type: customerGoalConstants.EDIT_CUSTOMER_GOAL_SUCCESS, data: { response : response, request: request } }}
     function failure(error) { return { type: customerGoalConstants.EDIT_CUSTOMER_GOAL_FAILURE, error } }
 };
+
+    export const ClearAction=(type)=>{
+        return (dispatch) =>{
+            dispatch(clear(type))
+        };
+        function clear(type){return {type : type}}
+    };
 
 // export const EditFlexiCustomerGoal =(data)=>{
 //     return (dispatch) => {

@@ -10,7 +10,9 @@ import {history} from '../../../_helpers/history';
 import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
 import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 
-
+// if(window.performance.navigation.type == 1)
+//     window.location.replace("http://localhost:8080/");
+    
 class SuccessMessage extends React.Component {
     constructor(props){
         super(props);
@@ -37,13 +39,13 @@ class SuccessMessage extends React.Component {
     }
 
     NavigateToGroupSavings = () => {
-        let groupSavings = this.props.groups.response; //returns an array
-        let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
-        if(groupSavings.length != 0 || rotatingSavings.length != 0){
+        // let groupSavings = this.props.groups.response; //returns an array
+        // let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
+        // if(groupSavings.length != 0 || rotatingSavings.length != 0){
             history.push('/savings/activityDashBoard');
-            return;
-        }
-        history.push('/savings/goal/group-savings-selection');
+        //     return;
+        // }
+        // history.push('/savings/goal/group-savings-selection');
     }
 
 

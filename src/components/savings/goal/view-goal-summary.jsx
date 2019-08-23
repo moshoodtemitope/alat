@@ -52,6 +52,7 @@ class ViewGroupSummary extends React.Component {
             startDate:this.state.goal.startDate,
             targetAmount:parseFloat(this.state.goal.targetAmount),
             goalTypeId:parseInt(this.state.goal.goalTypeId),
+            id:parseInt(this.state.goal.id),
             debitAmount:parseFloat(this.state.goal.debitAmount),
             frequencyId:parseInt(this.state.goal.frequencyId),
             debitAccount:this.state.goal.debitAccount
@@ -136,7 +137,7 @@ class ViewGroupSummary extends React.Component {
                                             <NavLink to='/savings/choose-goal-plan'>
                                                 <li><a  href="#" className="active">Goals</a></li>
                                             </NavLink>
-                                            <NavLink to="/savings/goal/group-savings-selection">
+                                            <NavLink to="/savings/activityDashBoard">
                                                 <li><a href="#" >Group Savings</a></li>
                                             </NavLink>
                                             <li><a href="#">Investments</a></li>
@@ -170,24 +171,21 @@ class ViewGroupSummary extends React.Component {
 
                                                         <ProgressBar
                                                             discTopSpan="Goal Progress"
-                                                            discTopRight={details.percentageCompleted.toFixed(2) + "%" + " Completed"}
+                                                            discTopRight={details.percentageCompleted.toFixed(1) + "%" + " Completed"}
                                                             percentage={details.percentageCompleted}
                                                             discBottom={"₦" + details.amountSaved + " "}
                                                             discSpan={"  " + "of" + "  " + "₦" + details.targetAmount}
                                                             discBottomSib="Amount Saved"
                                                         /><br /><br/>
-                                                        <MoreDetails
-                                                            lefthead={"₦" + details.interestAccrued}
-                                                            leftBottom="Interest Accrued"
-                                                            middleTop={"₦" + details.interestEarned}
-                                                            middleBottom="Interest Earned"
-                                                            rightContent={moment(details.nextstandingDate).format("L")}
-                                                            rightContentBottom="Next Payment"/>
-                                                        <div className="btn-position">
-                                                            <NavLink to="/savings/stash-cashout">
-                                                                <span href="#"
-                                                                      className="btn-withdraw-goal btn-sm border-btn">Cash Out</span>
-                                                            </NavLink>
+                                                        <div className="btn-position" style={{paddingBottom:"50px"}} >
+                                                            {
+                                                                details.percentageCompleted ===100 ?
+                                                                    <NavLink to="/savings/stash-cashout">
+                                                                        <span href="#"
+                                                                              className="btn-withdraw-goal btn-sm border-btn">Cash Out</span>
+                                                                    </NavLink> :null
+
+                                                            }
 
                                                             <Link to={{
                                                                 pathname: "/savings/top-up-goal-step1",
@@ -202,20 +200,6 @@ class ViewGroupSummary extends React.Component {
 
                                                         </div>
 
-
-                                                        <NavButtons
-                                                            navType={this.state.navType}
-                                                            leftName='Edit'
-                                                            middleName='Pause'
-                                                            rightName='Delete'
-                                                            edit={details.id}
-                                                            delete={details.id}
-                                                            unpause={details.id}
-                                                            DeleteGroup={this.DeleteCustomerGoal}
-                                                            PauseGroup={this.PauseCustomerGoal}
-                                                            EditGroup={this.EditCustomerGoal}
-
-                                                        />
                                                     </div>
 
 
@@ -250,10 +234,10 @@ class ViewGroupSummary extends React.Component {
 
                                                     <ProgressBar
                                                         discTopSpan="Goal Progress"
-                                                        discTopRight={details.percentageCompleted.toFixed(2) +"%"+" Completed"}
+                                                        discTopRight={details.percentageCompleted.toFixed(1) +"%"+" Completed"}
                                                         percentage={details.percentageCompleted}
                                                         discBottom={"₦"+details.amountSaved}
-                                                        discSpan={"of"+"₦"+details.targetAmount}
+                                                        discSpan={"  " + "of" + "  " +  "₦"+details.targetAmount}
                                                         discBottomSib="Amount Saved"
                                                     />
                                                     <MoreDetails
@@ -264,34 +248,42 @@ class ViewGroupSummary extends React.Component {
                                                          rightContent={moment(details.nextstandingDate).format("L")}
                                                          rightContentBottom="Next Payment"/>
                                                     <div className="btn-position">
-                                                        <NavLink to="/savings/withdraw-from-goal_step1">
-                                                         <span href="#" className="btn-withdraw-goal btn-sm border-btn">Withdraw</span>
-                                                        </NavLink>
+                                                        {
+                                                            details.percentageCompleted ===100 ?
+                                                                <NavLink to="/savings/withdraw-from-goal_step1">
+                                                                    <span href="#" className="btn-withdraw-goal btn-sm border-btn">Withdraw</span>
+                                                                </NavLink>:null
 
-                                                         <Link to={{
-                                                             pathname:"/savings/top-up-goal-step1",
-                                                             state:{
-                                                                 name:details,
+                                                        }
+                                                        { details.percentageCompleted === 100 ? null :
+                                                            <Link to={{
+                                                                pathname:"/savings/top-up-goal-step1",
+                                                                state:{
+                                                                    name:details,
 
-                                                             }
-                                                         }}>
-                                                         <span href="#"  className="btn-top-up-goal btn-sm border-btn">Top Up Goal</span>
-                                                        </Link>
+                                                                }
+                                                            }}>
+                                                                <span href="#"  className="btn-top-up-goal btn-sm border-btn">Top Up Goal</span>
+                                                            </Link>
+
+
+                                                        }
+
 
                                                      </div>
 
 
                                                     <NavButtons
                                                        navType={this.state.navType}
-                                                        leftName='Edit'
-                                                        middleName='Pause'
+                                                        leftName='Pause'
+                                                        // middleName='Pause'
                                                         rightName='Delete'
                                                        edit={details.id}
                                                        delete={details.id}
                                                        unpause={details.id}
                                                        DeleteGroup={this.DeleteCustomerGoal}
                                                        PauseGroup={this.PauseCustomerGoal}
-                                                       EditGroup={this.EditCustomerGoal}
+                                                       EditGroup={this.PauseCustomerGoal}
 
                                                     />
                                                 </div>

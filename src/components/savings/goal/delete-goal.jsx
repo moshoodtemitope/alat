@@ -6,7 +6,6 @@ import {NavLink, Redirect} from "react-router-dom";
 import SelectDebitableAccounts from "../../../shared/components/selectDebitableAccounts";
 import {customerGoalConstants} from "../../../redux/constants/goal/get-customer-trans-history.constant";
 import {connect} from "react-redux"
-import Members from '../../savings/group/list-item'
 import {Description} from '../group/component'
 
 import * as actions from "../../../redux/actions/savings/goal/get-customer-transaction-history.actions";
@@ -81,7 +80,7 @@ class DeleteGoal extends Component {
                                             <NavLink to='/savings/choose-goal-plan'>
                                                 <li><a href="accounts.html" className="active">Goals</a></li>
                                             </NavLink>
-                                            <NavLink to='/savings/goal/group-savings-selection'>
+                                            <NavLink to='/savings/activityDashBoard'>
                                                 <li><a href="statement.html">Group Savings</a></li>
                                             </NavLink>
                                             <li><a href="#">Investments</a></li>
@@ -127,11 +126,12 @@ class DeleteGoal extends Component {
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <center>
-                                                            <button type="submit" value="Fund Account" className="btn-alat m-t-10 m-b-20 text-center">
+                                                            <button onClick={()=>{if(window.comfirm('Are you sure you wish to delete this item?')) thiis.onCancel(item)}} type="submit" value="Fund Account" className="btn-alat m-t-10 m-b-20 text-center">
                                                                 {this.props.delete_goal.delete_customer_goal_status === customerGoalConstants.DELETE_CUSTOMER_GOAL_PENDING ? "Processing..." : "Delete Goal"}
                                                             </button>
                                                         </center>
                                                     </div>
+
                                                 </div>
                                             </form>
                                         </div>

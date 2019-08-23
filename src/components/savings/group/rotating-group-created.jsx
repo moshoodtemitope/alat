@@ -18,7 +18,7 @@ import * as actions1 from '../../../redux/actions/savings/group-savings/group-sa
     
 class RotatingGroupCreated extends React.Component {
     constructor(props){
-        super(props)
+        super(props);
         this.state= {
             user: JSON.parse(localStorage.getItem("user"))
         }
@@ -50,13 +50,13 @@ class RotatingGroupCreated extends React.Component {
     } 
     
     NavigateToGroupSavings = () => {
-        let groupSavings = this.props.groups.response; //returns an array
-        let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
-        if(groupSavings.length != 0 || rotatingSavings.length != 0){
+        // let groupSavings = this.props.groups.response; //returns an array
+        // let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
+        // if(groupSavings.length != 0 || rotatingSavings.length != 0){
             history.push('/savings/activityDashBoard');
-            return;
-        }
-        history.push('/savings/goal/group-savings-selection');
+        //     return;
+        // }
+        // history.push('/savings/goal/group-savings-selection');
     }
 
 

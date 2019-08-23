@@ -96,6 +96,7 @@ class WithdrawFromGoal extends Component {
             this.props.dispatch(actions.WithDrawFromGoalStep1( {
                     'goalName':this.state.goal.goalName,
                     'goalId':this.state.goal.id,
+                    "goalTypeId":this.state.goalTypeId,
                     'amount': this.toCurrency(this.state.Amount),
                     "amountSaved":this.toCurrency(this.state.goal.amountSaved),
                     'accountNumber':this.state.accountToDebit
@@ -130,7 +131,7 @@ class WithdrawFromGoal extends Component {
                                             <NavLink to='/savings/choose-goal-plan'>
                                                 <li><a href="accounts.html" className="active">Goals</a></li>
                                             </NavLink>
-                                            <NavLink to='/savings/goal/group-savings-selection'>
+                                            <NavLink to='/savings/activityDashBoard'>
                                                 <li><a href="statement.html">Group Savings</a></li>
                                             </NavLink>
                                             <li><a href="#">Investments</a></li>

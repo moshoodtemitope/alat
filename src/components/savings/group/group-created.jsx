@@ -4,10 +4,6 @@ import InnerContainer from '../../../shared/templates/inner-container';
 import SavingsContainer from '../container';
 import {NavLink, Route} from "react-router-dom";
 import { connect } from "react-redux";
-import {Switch} from "react-router";
-import Select from 'react-select';
-import DatePicker from "react-datepicker";
-import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
 import "react-datepicker/dist/react-datepicker.css";
 import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
 import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
@@ -38,7 +34,6 @@ class GroupCreated extends React.Component {
         this.props.dispatch(actions.customerGroup(this.state.user.token, null));
     }
 
-
     GetGroupSummary = () => {
         const id = this.props.payload.response.id;
         const data = {
@@ -53,13 +48,13 @@ class GroupCreated extends React.Component {
     }
 
     NavigateToGroupSavings = () => {
-        let groupSavings = this.props.groups.response; //returns an array
-        let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
-        if(groupSavings.length != 0 || rotatingSavings.length != 0){
+        // let groupSavings = this.props.groups.response; //returns an array
+        // let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
+        // if(groupSavings.length != 0 || rotatingSavings.length != 0){
             history.push('/savings/activityDashBoard');
-            return;
-        }
-        history.push('/savings/goal/group-savings-selection');
+        //     return;
+        // }
+        // history.push('/savings/goal/group-savings-selection');
     }
 
 
