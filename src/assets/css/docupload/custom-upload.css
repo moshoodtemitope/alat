@@ -16,7 +16,7 @@
 
 .fileContainer >p {
     display: none;
-}
+} 
 
 .fileContainer .errorsContainer {
     max-width: 300px;
@@ -40,7 +40,7 @@
 
 
     background: none;
-    /* border-radius: 30px; */
+    
     color: white;
     font-weight: 300;
     font-size: 12px !important;
@@ -50,4 +50,15 @@
     cursor: pointer;
     outline: none;
     border: none !important;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
 }
