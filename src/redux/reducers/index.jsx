@@ -17,6 +17,7 @@ import { loanOnboardingConstants } from '../constants/onboarding/loan.constants'
 import { loanConstants } from '../constants/loans/loans.constants';
 //import { saveCardReducer } from "./fund-account.reducer";
 // import { * as dashboard_reducer } from './dashboard.reducer';
+import { movies } from './lifestyle/lifestyle-reducer';
 
 const rootReducer = (state, action)=>{
     if(action.type === userConstants.LOGOUT)
@@ -156,7 +157,18 @@ const appReducer = combineReducers({
     cardless_reducer: cardlessReducer,
     bills_reducer: billsReducer,
     accountsM_reducer : accountsReducer,
-    settings_reducer : settingsReducer
+    settings_reducer : settingsReducer,
+
+    //MOVIES
+    getCinemaList: movies.getCinemaList,
+    getSingleMovie: movies.getSingleMovie,
+    buyMovieTicket: movies.buyMovieTicket,
+
+    //EVENTS
+    getEvents: movies.getEvents,
+    getSingleEvent: movie.getSingleEvent,
+    purchaseEventTicket: movie.purchaseEventTicket,
+    getAllEngagements: movie.getAllEngagements
 });
 
 //export defualt appReducer;
