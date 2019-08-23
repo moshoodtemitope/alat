@@ -35,6 +35,8 @@ import { loanCalcDataReducer, loanApplyReducer, GetIndustriesReducer, GetEmploye
     LoanHistoryReducer, WorkIdFrontReducer, WorkIdBackReducer, loanRejectReducer, loanStandingOrderReducer,
      loanMandateStatusReducer, loanValidateRemitaOtpReducer } from './loan.reducer';
 
+import {getWesternUnionCountries,receiveWesternUnion } from './remittance.reducer';
+
 export const onboarding = {
     userRegistrationRequest,
     bvnDetailsReducer,
@@ -119,4 +121,9 @@ export const fundAccount={
     //fundFromTokenisedCardReducer,
     //fundFromCardWithPinReducer
     saveCardAfterTranReducer
+}
+
+export const receiveMoney={
+    getWesternUnionCountries,
+    receiveWesternUnion
 }

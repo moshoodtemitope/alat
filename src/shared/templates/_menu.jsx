@@ -35,7 +35,11 @@ class MenuContainer extends React.Component{
                                     </li>
                                     <li><a href="#" className="clearfix"><i className="demo-icon icon-movies" aria-hidden="true"></i> <span>Lifestyle</span></a>
                                     </li>
-                                    <li><NavLink to="/account" className="clearfix"><i className="fa fa-institution" aria-hidden="true"></i> <span>Accounts</span></NavLink></li>
+                                    <li><NavLink to={"/receive-money"} className="clearfix"><i className="demo-icon icon-western-union" aria-hidden="true"></i><span> Remittance</span></NavLink>
+                                        {/* <a href="#" className="clearfix"><i className="demo-icon icon-western-union" aria-hidden="true"></i>
+                                        <span>Remmitance</span></a> */}
+                                    </li> 
+                                    {/* <li><NavLink to="/account" className="clearfix"><i className="fa fa-institution" aria-hidden="true"></i> <span>Accounts</span></NavLink></li> */}
                                     <li><a href="#" className="clearfix"><i className="demo-icon icon-card" aria-hidden="true"></i><span> Cards</span></a>
                                     </li>
                                     <li><NavLink to="/settings" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i> <span>Settings</span></NavLink></li>

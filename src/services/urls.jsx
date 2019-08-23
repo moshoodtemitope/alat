@@ -64,7 +64,7 @@ export const routes = {
     INTERBANK_CHARGES: BASEURL + '/PaymentApi/api/InterBankCharges/All',
     GETLIMIT: BASEURL + '/AccountMaintenance/api/transactions/getTransactionlimit', 
     GetAllCustomerAccountsWithLimitsV2: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2', 
-    
+    FETCH_CUSTOMER_ACCOUNTS: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccounts', 
     //PaymentApi/api/Accounts/VerifyAccountName
 
     //Airtime
@@ -118,6 +118,10 @@ export const routes = {
     LOAN_REJECT : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/RejectLoan',
     LOAN_MANDATE_STATUS : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/MandateStatus',
     LOAN_OTP_MANDATE : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/ValidateOtpMandate',
+
+    //WesternUnion
+    WESTERNUNION_COUNTRIES: BASEURL + '/PaymentApi/api/WesternunionCountries',
+    RECEIVE_WESTERNUNION: BASEURL + '/PaymentApi/api/WesternUnionMoneyTransfer',
 
     //Settings
     CHANGE_PASSWORD : BASEURL + '/AccountSetting/api/password/change',
