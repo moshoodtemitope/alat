@@ -30,7 +30,7 @@ class ParentDashBoard extends React.Component {
                             <div className='topCard'>
                                     <div className="left">
                                         <p className='top'>Your Group Target</p>
-                                        <p className='bottom'>{element.purpose}</p>
+                                        <p className='bottom'>{element.name}</p>
                                     </div>
                                     <div className="right">
                                         <i></i>
@@ -343,5 +343,19 @@ function mapStateToProps(state){
  }
 
 export default connect(mapStateToProps)(ParentDashBoard);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

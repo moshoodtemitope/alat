@@ -30,7 +30,8 @@ class GroupAnalytics extends React.Component {
             buttonType: "bigButton",
             discTopSpan: 'something',
             groupDetails: null,
-            isAdmin: false
+            isAdmin: false,
+            adminValidity: false
         }
 
         this.HandleNavigation = this.HandleNavigation.bind(this);
@@ -48,14 +49,13 @@ class GroupAnalytics extends React.Component {
        })
        
        let isAdmin = this.props.groupDetails.response.isAdmin;
+       console.log(isAdmin);
        this.setState({
-           isAdmin: isAdmin
+           'isAdmin': isAdmin
        })
-    }
 
-    // GetGroupData = () => {
-    //     this.props.dispatch(actions.GetCustomerGroups(this.state.user));
-    // }
+       this.setState({'adminValidity': isAdmin});
+    }
 
 
     HandleNavigation = () => {
@@ -177,7 +177,7 @@ class GroupAnalytics extends React.Component {
 
     
     render() {
-        const {endDate,endDateInvalid, isAdmin} = this.state;
+        const {endDate,endDateInvalid,adminValidity, isAdmin} = this.state;
 
         return (
             <Fragment>
@@ -210,8 +210,8 @@ class GroupAnalytics extends React.Component {
                                     
                                              <div class='firstSubHead'>
                                                   <p>Target Group</p>
-                                                  <p>Summer Trip To Africa</p>
-                                                  <p>Trip to kenya with boys</p>
+                                                  <p>{this.props.groupDetails.response.name}</p>
+                                                  <p>{this.props.groupDetails.response.purpose}</p>
                                              </div>
                                                 <SubHead 
                                                 type={this.state.type}
@@ -257,18 +257,20 @@ class GroupAnalytics extends React.Component {
                                                         buttonName="contribute"
                                                         buttonClicked={this.GoToContributionPage} />
                                                 {isAdmin ? 
-                                                        <NavButtons 
-                                                            navType={this.state.navType}
-                                                            leftName='Edit'
-                                                            middleName='Pause'
-                                                            rightName='Delete'
-                                                            edit={this.props.groupDetails.response.id}
-                                                            pause={this.props.groupDetails.response.id}
-                                                            delete={this.props.groupDetails.response.id}
-                                                            DeleteGroup={this.GoToConfirmDelete}
-                                                            PauseGroup={this.PauseThisGroup}
-                                                            EditGroup={this.EditThisGroup}
-                                                            /> : ""}
+                                                           <NavButtons 
+                                                                navType={this.state.navType}
+                                                                leftName='Edit'
+                                                                middleName='Pause'
+                                                                rightName='Delete'
+                                                                edit={this.props.groupDetails.response.id}
+                                                                pause={this.props.groupDetails.response.id}
+                                                                delete={this.props.groupDetails.response.id}
+                                                                DeleteGroup={this.GoToConfirmDelete}
+                                                                PauseGroup={this.PauseThisGroup}
+                                                                EditGroup={this.EditThisGroup}
+                                                                /> : ""}
+
+                                                {adminValidity ? <div></div> : <div className={"setPadBottom"}></div> }
                                              </div>
 
                                         </div>

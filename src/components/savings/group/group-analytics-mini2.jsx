@@ -25,7 +25,7 @@ class GroupAnalyticsMini2 extends React.Component {
             navType: 2,
             buttonType: "bigButton",
             discTopSpan: 'something',
-
+            adminValidity: false,
             isAdmin: false
         }
     
@@ -34,6 +34,7 @@ class GroupAnalyticsMini2 extends React.Component {
     componentDidMount = () => {
         let isAdmin = this.props.groupDetails.response.isAdmin;
         this.setState({"isAdmin": isAdmin});
+        this.setState({'adminValidity': isAdmin});
     }
 
     ShowMembers = () => {
@@ -64,7 +65,7 @@ class GroupAnalyticsMini2 extends React.Component {
 
 
     render() {
-        const {isAdmin} = this.state;
+        const {isAdmin, adminValidity} = this.state;
 
         return (
             <Fragment>
@@ -97,7 +98,7 @@ class GroupAnalyticsMini2 extends React.Component {
                                    
                                              <div class='firstSubHead'>
                                                   <p>ROTATING SAVING GROUP</p>
-                                                  <p>Summer Trip To Africa</p>
+                                                  <p>{this.props.groupDetails.response.name}</p>
                                                   
                                              </div>
                                               <SubHead 
@@ -128,6 +129,7 @@ class GroupAnalyticsMini2 extends React.Component {
                                                                         key={index}
                                                                         userType="members"
                                                                         fullname={ element['lastName'] + " " + element['firstName'] }
+                                                                        
                                                                         />
                                                        }
                                                    })}
@@ -136,7 +138,7 @@ class GroupAnalyticsMini2 extends React.Component {
                                                    {/* <NavLink to='/group-savings/edit-members-slots'>
                                                          <p id='editSlots'>Edit Slot</p>
                                                    </NavLink> */}
-                                                   
+                                                   {adminValidity ? <div></div> : <div className={"setPadBottom"}></div> }
                                              </div>
             
                                         </div>

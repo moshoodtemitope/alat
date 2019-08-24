@@ -28,11 +28,13 @@ class GroupAnalyticsMini extends React.Component {
             buttonType: "bigButton",
             discTopSpan: 'something',
             isAdmin: false,
+            adminValidity: false
         }
     }
 
     componentDidMount = () => {
         let isAdmin = this.props.groupDetails.response.isAdmin;
+        this.setState({'adminValidity': isAdmin});
         this.setState({'isAdmin': isAdmin});
     }
 
@@ -117,7 +119,7 @@ class GroupAnalyticsMini extends React.Component {
 
 
     render() {
-        const {isAdmin} = this.state;
+        const {isAdmin, adminValidity} = this.state;
         
         return (
             <Fragment>
@@ -146,13 +148,12 @@ class GroupAnalyticsMini extends React.Component {
                             <div className="col-sm-12">
                                 <div className="row">
                                     <div className="col-sm-12">
+                                      {/* </div><div className={adminValidity ? "setPadBottom col-sm-12" : "col-sm-12"}> */}
                                       <div className="max-600">
                                        <div className="al-card no-pad">
-                                    
                                              <div class='firstSubHead'>
                                                   <p>ROTATING SAVING GROUP</p>
-                                                  <p>Summer Trip To Africa</p>
-                                                  
+                                                  <p>{this.props.groupDetails.response.name}</p>
                                              </div>
                                                 <SubHead 
                                                     type={this.state.type}
@@ -189,6 +190,8 @@ class GroupAnalyticsMini extends React.Component {
                                                         />
                                                     
                                                     {isAdmin ? this.GetSmallNavs() : ""}
+
+                                                    {adminValidity ? <div></div> : <div className={"setPadBottom"}></div> }
                                                     
                                              </div>
                                              

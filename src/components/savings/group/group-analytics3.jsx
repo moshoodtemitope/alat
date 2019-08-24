@@ -98,8 +98,8 @@ class GroupAnalytics3 extends React.Component {
                                     
                                              <div class='firstSubHead'>
                                                   <p>Target Group</p>
-                                                  <p>Summer Trip To Africa</p>
-                                                  <p>Trip to kenya with boys</p>
+                                                  <p>{this.props.groupDetails.response.name}</p>
+                                                  <p>{this.props.groupDetails.response.purpose}</p>
                                              </div>
                                                 <SubHead 
                                                 type={this.state.type}

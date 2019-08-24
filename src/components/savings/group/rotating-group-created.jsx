@@ -61,13 +61,10 @@ class RotatingGroupCreated extends React.Component {
 
 
     CopyCode = (event) => {
-       document.execCommand('copy');
-       event.target.focus();
-    }
-
-    CopyCode = (event) => {
-        this.textInput.select();
-        document.execCommand('copy');
+        console.log(this.textInputHidden);
+        this.textInputHidden.select();
+        document.execCommand("copy");
+        console.log('its here now');
     }
 
     render() {
@@ -102,6 +99,7 @@ class RotatingGroupCreated extends React.Component {
                                        <h4 className="m-b-10 center-text hd-underline">Group Created</h4>
 
                                             <form onSubmit={this.handleSubmit}>
+                                            <input type="text" id='hiddenReferralCode1' ref={ele => this.textInputHidden = ele} value={this.props.createdGroupSavings.response.referralCode}/>
                                                 <div className="form-group instruction">
                                                     <h6>Use the code below to invite your friends to join the group.</h6>
                                                 </div>

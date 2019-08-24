@@ -30,7 +30,8 @@ class GroupAnalytics2 extends React.Component {
             navType: 1,
             buttonType: "bigButton",
             discTopSpan: 'something',
-            isAdmin: false
+            isAdmin: false,
+            adminValidity: false
         };
 
         this.HandleNavigation = this.HandleNavigation.bind(this);
@@ -43,6 +44,8 @@ class GroupAnalytics2 extends React.Component {
         this.setState({
             isAdmin: isAdmin
         });
+
+        this.setState({'adminValidity': isAdmin});
     }
 
     HandleNavigation = () => {
@@ -72,7 +75,7 @@ class GroupAnalytics2 extends React.Component {
     }
   
     render() {
-        const { isAdmin } = this.state;
+        const { isAdmin, adminValidity } = this.state;
         return (
             <Fragment>
                 <InnerContainer>
@@ -105,8 +108,8 @@ class GroupAnalytics2 extends React.Component {
                                     
                                              <div class='firstSubHead'>
                                                   <p>Target Group</p>
-                                                  <p>Summer Trip To Africa</p>
-                                                  <p>Trip to kenya with boys</p>
+                                                  <p>{this.props.groupDetails.response.name}</p>
+                                                  <p>{this.props.groupDetails.response.purpose}</p>
                                              </div>
                                                 <SubHead 
                                                 type={this.state.type}
@@ -147,7 +150,7 @@ class GroupAnalytics2 extends React.Component {
                                                    </div>
                                                    <div></div>
                                                    {isAdmin ? this.ShowManageButton() : ""}
-                                                   
+                                                   {adminValidity ? <div></div> : <div className={"setPadBottom"}></div> }
                                              </div>
                                         </div>
 

@@ -20,24 +20,21 @@ class JoinedGroupSuccessfully extends React.Component {
     }
 
     componentDidMount = () => {
+        this.CheckRotatingSavingsAvailability()
+        this.CheckGroupSavingsAvailability()
         setTimeout(function(){
            history.push('/savings/activityDashBoard');
         }, 3000);
     }
 
-    // componentDidMount = () => {
-    //     this.CheckGroupSavingsAvailability();
-    //     this.CheckRotatingSavingsAvailability();
-    //  }
- 
-    //  CheckRotatingSavingsAvailability = () => {
-    //      this.props.dispatch(actions1.GetGroupsEsusu(this.state.user.token, null));
-    //  }
- 
-    //  CheckGroupSavingsAvailability = () => {
-    //      this.props.dispatch(actions.customerGroup(this.state.user.token, null));
-    //  }
- 
+    CheckRotatingSavingsAvailability = () => {
+        this.props.dispatch(actions1.GetGroupsEsusu(this.state.user.token, null));
+    }
+
+    CheckGroupSavingsAvailability = () => {
+        this.props.dispatch(actions.customerGroup(this.state.user.token, null));
+    }
+
 
     // NavigateToGroupSavings = () => {
     //     let groupSavings = Object.keys(this.props.groups); //returns an array

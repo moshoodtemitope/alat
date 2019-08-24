@@ -95,7 +95,6 @@ class GroupCreated extends React.Component {
                                       <div className="max-600">
                                        <div className="al-card no-pad">
                                        <h4 className="m-b-10 center-text hd-underline">Group Created</h4>
-
                                             <form onSubmit={this.handleSubmit}>
                                                 <input type="text" id='hiddenReferralCode' ref={ele => this.textInputHidden = ele} value={this.props.payload.response.referralCode}/>
                                                 <div className="form-group instruction">

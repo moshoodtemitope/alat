@@ -291,7 +291,19 @@
     padding-bottom: 10px;
  }
 
+ .setPadBottom  {
+     padding-bottom: 50px !important;
+ }
+
  #hiddenReferralCode {
+    position: absolute;
+    color: white;
+    border: none;
+    background-color: transparent;
+    top: 0px;
+ }
+
+ #hiddenReferralCode1 {
     position: absolute;
     color: white;
     border: none;
