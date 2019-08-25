@@ -1,11 +1,12 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
-import "../../assets/css/loan.css";
+// import "../../assets/css/loan.css";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
+import {getCinemaList} from '../../../redux/actions/lifestyle/movies-actions'
 
-import salaryLoan from "../../assets/img/salary_based_grey.svg";
-import Rectangle from "../../assets/img/Rectangle.svg";
+// import salaryLoan from "../../../assets/img/salary_based_grey.svg";
+// import Rectangle from "../../assets/img/Rectangle.svg";
 const selectedTime = [
     { value: "Film House, Lakki", label: "Film House, Lakki" },
     { value: "Film House, WEMA", label: "Film House WEMA" }
@@ -25,9 +26,18 @@ class Moviedetails extends React.Component {
             childAmount: 2500,
             initialAdultAmount: 2500,
             initialStudentAmount: 2500,
-            initialChildAmount: 2500
+            initialChildAmount: 2500,
+            user: JSON.parse(localStorage.getItem("user")),
+
+
         };
+        this.fetchCinemaList();
     }
+    fetchCinemaList(){
+        const { dispatch } = this.props;
+        dispatch(getCinemaList(this.state.user.token));
+
+    };
 
     handleSelectLocation = item => {
         this.setState({
@@ -103,6 +113,7 @@ class Moviedetails extends React.Component {
     };
 
     render() {
+        const details = this.props.location.state.details;
         let {
             movieLocation,
             movieDay,
@@ -112,12 +123,9 @@ class Moviedetails extends React.Component {
         } = this.state;
 
         return (
-            <div className="max-750">
-                <div className="loan-header-text loan">
-                    <h4 className="text-black">Loans</h4>
 
-                    <p className="m-t-20 text-black">Select a Loan type</p>
-                </div>
+            <div className="max-750">
+
                 <div className="al-card fund-al-card no-pad">
                     <div
                         style={{
@@ -125,7 +133,7 @@ class Moviedetails extends React.Component {
                             textAlign: "center",
                             fontSize: 18,
                             marginBottom: 16,
-                            fontFamily: "proxima_novaregular",
+                            fontFamily: "proxima_novasemibold",
                             color: "#4D4D4D"
                         }}
                     >
@@ -143,7 +151,7 @@ class Moviedetails extends React.Component {
                         <div className="col-sm-3">
                             <i className="toshow">
                                 <img
-                                    src={Rectangle}
+                                    src={details.artworkThumbnail}
                                     style={{
                                         width: 168,
                                         height: 226
@@ -155,8 +163,8 @@ class Moviedetails extends React.Component {
                             className="col-sm-9"
                             style={{ fontSize: 26, color: "#444444", paddingLeft: 55 }}
                         >
-                            <div style={{ fontFamily: "proxima_novaregular", marginBottom: 21 }}>
-                                Astroy Boy
+                            <div style={{ fontFamily: "proxima_novasemibold", marginBottom: 21 }}>
+                                {details.title}
                             </div>
                             <div
                                 style={{
@@ -177,17 +185,12 @@ class Moviedetails extends React.Component {
                                     // fontFamily: "Proxima Nova"
                                 }}
                             >
-                                On this day, the moon came out and never went back. Movie
-                                description shouldn’t be too long. On this day, the moon came
-                                out and never went back. Movie description shouldn’t be too
-                                long. On this day, the moon came out and never went back. Movie
-                                description shouldn’t be too long. On this day, the moon came
-                                out and never went back. Movie description shouldn’t be too long
+                                {details.description}
                             </div>
                             <div>
                                 <i className="toshow">
                                     <img
-                                        src={salaryLoan}
+                                        // src={salaryLoan}
                                         style={{
                                             width: 20,
                                             height: 20,
@@ -204,7 +207,7 @@ class Moviedetails extends React.Component {
                                         color: "#9C9C9C"
                                     }}
                                 >
-                  2hrs 45mins
+                                    {details.duration}
                 </span>
                             </div>
                         </div>
@@ -232,7 +235,6 @@ class Moviedetails extends React.Component {
                             <label style={{ marginTop: 16 }}>Select Day</label>
                             <DatePicker
                                 className="form-control"
-                                se
                                 // selected={movieDay}
                                 placeholder="June 31, 2019"
                                 dateFormat=" MMMM d, yyyy"
@@ -494,7 +496,7 @@ class Moviedetails extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        state: state
+        getCinemaList:state.getCinemaList
     };
 }
 

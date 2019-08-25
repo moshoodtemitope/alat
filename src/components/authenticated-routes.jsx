@@ -70,6 +70,7 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path='/settings' authed={this.props.user} component={AccountSettings}/>
                     <PrivateRoute path='/lifestyle' authed={this.props.user} component={LifestyleIndex}/>
 
+
                 </Switch>
             </Router>
             

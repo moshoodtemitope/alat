@@ -3,7 +3,7 @@ import {FetchMovieList} from "../../../redux/actions/lifestyle/movies-actions";
 import { connect } from "react-redux";
 import '../movie-preference-event.css'
 import * as utils from "../../../shared/utils";
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import {Fragment} from "react";
 
 import {listStyleConstants} from '../../../redux/constants/lifestyle/lifestyle-constants';
@@ -37,6 +37,7 @@ class Movie extends Component {
 
         // If the search bar isn't empty
         if (e.target.value !== "") {
+            console.log(e.target.value);
             // Assign the original list to currentList
             currentList = this.props.getMovieList.data.response;
             console.log("list",currentList);
@@ -87,9 +88,17 @@ class Movie extends Component {
                     {userMovies.map(function(film, index){
                         return(
                                 <div className="eventCards" key={index}>
+                                    <Link to={{
+                                        pathname:"/lifestyle/movie-details",
+                                        state:{
+                                            details:film
+                                        }
+                                    }}>
                                         <div className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
                                         </div>
-                                        <div className="boldHeader">{film.title.toString().length > 20 ? film.title.toString().substring(0, 20)+"...": film.title.toString()}</div>
+                                    </Link>
+
+                                    <div className="boldHeader">{film.title.toString().length > 20 ? film.title.toString().substring(0, 20)+"...": film.title.toString()}</div>
                                         <div id="disc">{ film.description.toString().length > 30 ? film.description.toString().substring(0, 60)+"...": film.description.toString() }</div>
                                         <div className="details">
                                             <div className="left">
@@ -116,8 +125,24 @@ class Movie extends Component {
         return(
             <Fragment>
 
+
                 <div>
-                    <input style={{width:'30%',float:"right", margin:10}} placeholder="search..." type="text" onChange={this.handleChange}/>
+                    <div className="col-sm-12">
+                        <p className="page-title">LifeStyle</p>
+                    </div>
+
+                    <div className="col-sm-12">
+                        <div>
+                            <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                <ul>
+                                    <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/event'}>Event</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div><input type="text" placeholder="search ..." value={this.state.filtered} onChange={this.handleChange}/></div>
                 {this.renderMovies(userMovies)}
                 </div>
             </Fragment>
