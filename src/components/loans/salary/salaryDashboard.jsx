@@ -10,6 +10,8 @@ import loanIcon from '../../../assets/img/loan_icon.svg';
 import loanCalendar from '../../../assets/img/loan_calendar.svg';
 import calendarFull from '../../../assets/img/calendar_full.svg';
 
+import { LoanApplicationProgress } from '../../../shared/constants';
+
 import * as util from '../../../shared/utils';
 
 class LoansDashboard extends React.Component {
@@ -90,25 +92,28 @@ class LoansDashboard extends React.Component {
 
     returnNextPageUrl = (LoanStatus) => {
         switch (LoanStatus) {
-            case 1:
+            case LoanApplicationProgress.InProgress_AccountDetails:
                 return "/loans/salary/employer";
                 break;
-            case 2: return "/loans/salary/entry"
+            case LoanApplicationProgress.Inprogress_SalaryEntries: return "/loans/salary/entry"
                 break;
-            case 3: return "/loans/salary/score-card"
+            case LoanApplicationProgress.Inprogress_ScoreCard: return "/loans/salary/score-card"
             break;
-            case 7: return "/loans/salary/terms"
+            case LoanApplicationProgress.Inprogress_Collection: return "/loans/salary/terms"
             break;
-            case 8: return "/loans/salary/wema-setup"
+            case LoanApplicationProgress.Inprogress_CollectionWemaAccountSetup: return "/loans/salary/wema-setup"
             break;
-            case 9: return "/loans/salary/remita-otp"
+            case LoanApplicationProgress.Inprogress_CollectionRemitaOtpSetup: return "/loans/salary/remita-otp"
             break;
-            case 10: return "/loans/salary/remita-mandate"
+            case LoanApplicationProgress.Inprogress_CollectionRemitaBankSetup: return "/loans/salary/remita-mandate"
             break;
         }
     }
 
-    continueApplication
+    continueApplication=()=>{
+        this.props.dispatch(LoanActions.continueApplication(this.state.pendingLoanApplication.LoanStatus));
+        this.props.history.push(this.returnNextPageUrl(this.state.pendingLoanApplication.LoanStatus));
+    }
 
     returnPendingLoanAppLication = () => {
         if (this.props.loan_history.loan_history_data.response.Response) {
@@ -255,12 +260,12 @@ class LoansDashboard extends React.Component {
                             </div>
                             }
                             {this.state.pendingLoanApplication != null && <Fragment>
-                                <input type="button" value="Proceed" className="btn-alat btn-block" />
+                                <input type="button" value="Proceed" onClick={this.continueApplication} className="btn-alat btn-block" />
                                 <input type="button" value="Discard Loan Application" onClick={() => this.props.history.push("/loans/salary/calc")}
                                     className="btn-alat btn-block btn-alat-outline" />
                             </Fragment>
                             }
-                            {this.state.pendingLoanApplication == null && <Fragment>
+                            {currentLoan != null && currentLoan.Response != null && <Fragment>
                                 <input type="button" disabled={currentLoan == null} value="Liquidate Current Loan" className="btn-alat btn-block" />
                                 <input type="button" value="Apply For Loan" onClick={() => this.props.history.push("/loans/salary/calc")}
                                     className="btn-alat btn-block btn-alat-outline" />

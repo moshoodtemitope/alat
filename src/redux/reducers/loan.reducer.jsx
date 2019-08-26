@@ -314,3 +314,17 @@ export function loanStatementUpload(state = {}, action) {
             };
     }
 }
+
+export function continueApplication(state = {}, action) {
+    switch (action.type) {
+        case loanConstants.LOAN_CONTINUE_APPLICATION:
+            return {
+                loan_app_status: loanConstants.LOAN_CONTINUE_APPLICATION,
+                loan_app_data: action
+            };
+        default:
+            return{
+                ...state,
+            };
+    }
+}

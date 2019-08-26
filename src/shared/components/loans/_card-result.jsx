@@ -86,7 +86,7 @@ class ScoreResult extends React.Component {
 										<br/>
 										<b>Monthly Repayment:  {this.state.loanDetails.MonthlyRepaymentAmount}</b>
 									</p>
-									<p>Click Accept to proceed</p></Fragment>}
+									<p>Click Continue to proceed</p></Fragment>}
 
 								{!this.returnScoreCardSuccessStatus() && <Fragment><p>Apologies!!! loan was not granted</p>
 									<p>Click Done to proceed</p></Fragment>}

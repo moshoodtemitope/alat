@@ -26,7 +26,7 @@ class LoanStatementUpload extends React.Component{
     render(){
         return(<StatementUpload
                 gotoPreviousPageMethod={this.goBack}
-                goToNextPage={this.goForward}
+                ParentGoToNextPage={this.goForward}
         />);
     }
 }

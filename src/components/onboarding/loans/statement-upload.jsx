@@ -24,7 +24,7 @@ class LoanOnboardingStatementUpload extends React.Component {
         return (<LoanOnboardingContainer>
             <StatementUpload
                 gotoPreviousPageMethod={this.goBack}
-                goToNextPage={this.goForward}
+                ParentGoToNextPage={this.goForward}
             />
         </LoanOnboardingContainer>);
     }

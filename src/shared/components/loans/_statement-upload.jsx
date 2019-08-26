@@ -79,7 +79,7 @@ class StatementUpload extends React.Component {
     goToNextPage=()=>{
       if(this.props.statement_upload)
       if(this.props.statement_upload.loan_statement_status == loanConstants.LOAN_STATEMENT_UPLOAD_SUCCESS){
-          this.props.goToNextPage();
+          this.props.ParentGoToNextPage();
       }
     }
 

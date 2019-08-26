@@ -98,7 +98,7 @@ class SalaryDetails extends React.Component {
                 );
             case FETCH_BANK_SUCCESS:
                 let banksList = props.bankList.banks_data.response.Response;
-                //var options = [];
+                options = [];
                 for (var bank in banksList) {
                     options.push({ value: banksList[bank].Id, label: banksList[bank].Name });
                 }
