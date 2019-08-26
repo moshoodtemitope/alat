@@ -3,20 +3,36 @@ import { connect } from "react-redux";
 // import "../../assets/css/loan.css";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
-import {getCinemaList} from '../../../redux/actions/lifestyle/movies-actions'
+import * as actions from '../../../redux/actions/lifestyle/movies-actions';
+
+import {getCinemaList,buyMovieTicket} from '../../../redux/actions/lifestyle/movies-actions'
 
 // import salaryLoan from "../../../assets/img/salary_based_grey.svg";
 // import Rectangle from "../../assets/img/Rectangle.svg";
 const selectedTime = [
-    { value: "Film House, Lakki", label: "Film House, Lakki" },
-    { value: "Film House, WEMA", label: "Film House WEMA" }
+    { value: "Film House, Lakki", label: "Filmhouse Surulere" },
+    { value: "Film House, WEMA", label: "FILMHOUSE BENIN, VEON MALL" },
+    { value: "Film House, WEMA", label: "Viva Cinemas Ilorin" },
+    { value: "Film House, WEMA", label: "Genesis Abuja, Gateway Mall" },
+    { value: "Film House, WEMA", label: "Filmhouse Dugbe" },
+    {value:"Filmhouse, Port Harcourt", label:"Filmhouse, Port Harcourt"},
+    {value:"Filmhouse, Samonda (Ibadan)", label:"Filmhouse, Samonda (Ibadan)"},
+    {value:"Genesis, Maryland", label:"Genesis, Maryland"}
+
+
+
 ];
 
 class Moviedetails extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            ShowTimeId:"",
+            TicketAmount:"",
             movieLocation: "",
+            StudentId:"",
+            ChildrenId:"",
+            AdultId:"",
             movieDay: "",
             adultNumber: 1,
             studentNumber: 1,
@@ -36,6 +52,12 @@ class Moviedetails extends React.Component {
     fetchCinemaList(){
         const { dispatch } = this.props;
         dispatch(getCinemaList(this.state.user.token));
+        // console.log(this.props.getCinemaList)
+
+    };
+    fetchShowTime(){
+        const { dispatch } = this.props;
+        dispatch(buyMovieTicket(this.state.user.token));
         // console.log(this.props.getCinemaList)
 
     };
@@ -112,6 +134,17 @@ class Moviedetails extends React.Component {
                 })
             );
     };
+    BuyTicket = () => {
+        const data = {
+            ShowTimeId:this.state.ShowTimeId,
+            TicketAmount: parseFloat(this.state.TicketAmount),
+                    
+        }
+        console.log(data)
+        // return;
+        this.props.dispatch(actions.buyMovieTicket(this.state.user.token, data));
+    }
+
 
     render() {
         const details = this.props.location.state.details;
@@ -122,8 +155,8 @@ class Moviedetails extends React.Component {
             studentNumber,
             childNumber
         } = this.state;
-        const {getCinemaList}=this.props
-        console.log("===========",getCinemaList.data)
+        // const {getCinemaList}=this.props
+        // console.log("===========",getCinemaList.data)
 
 
         return (
@@ -228,13 +261,22 @@ class Moviedetails extends React.Component {
                     >
                         <form onSubmit={this.onSubmit} style={{ width: "100%" }}>
                             <label>Select Location</label>
-                            {/*<Select*/}
-                                {/*type="text"*/}
-                                {/*options={selectedTime}*/}
-                                {/*name=""*/}
-                                {/*onChange={this.handleSelectLocation}*/}
-                                {/*value={movieLocation.label}*/}
-                            {/*/>*/}
+                            <Select
+                                type="text"
+                                options={selectedTime}
+                                name=""
+                                onChange={this.handleSelectLocation}
+                                value={movieLocation.label}/>
+                            <select>
+                                {/* {  
+                                    getCinemaList.map(event=> {
+                                        return <option key={event.name} value={event.name}>{event.name}</option>
+                                    })
+                                } */}
+                            </select>
+
+
+                            <label style={{ marginTop: 16 }}>Select Day</label>
                             <select>
                                 {  
                                     getCinemaList.map(event=> {
@@ -243,20 +285,6 @@ class Moviedetails extends React.Component {
                                 }
                             </select>
 
-
-                            <label style={{ marginTop: 16 }}>Select Day</label>
-                            <DatePicker
-                                className="form-control"
-                                placeholder="June 31, 2019"
-                                dateFormat=" MMMM d, yyyy"
-                                placeholderText="Sunday 18-08-2019 | 14:00"
-                                showMonthDropdown
-                                showYearDropdown
-                                onChange={this.handleSelectMovieDay}
-                                dropdownMode="select"
-                                showTimeInput
-                                timeFormat="HH:MM"
-                            />
                             <div
                                 className="row"
                                 style={{
