@@ -36,7 +36,7 @@ class Moviedetails extends React.Component {
     fetchCinemaList(){
         const { dispatch } = this.props;
         dispatch(getCinemaList(this.state.user.token));
-        console.log(this.props.getCinemaList)
+        // console.log(this.props.getCinemaList)
 
     };
 
@@ -122,9 +122,8 @@ class Moviedetails extends React.Component {
             studentNumber,
             childNumber
         } = this.state;
-        const getCinemaList =this.props;
-        console.log("cenima=========",getCinemaList);
-
+        const {getCinemaList}=this.props
+        console.log("===========",getCinemaList.data)
 
 
         return (
@@ -236,15 +235,18 @@ class Moviedetails extends React.Component {
                                 {/*onChange={this.handleSelectLocation}*/}
                                 {/*value={movieLocation.label}*/}
                             {/*/>*/}
-                            {/*<select>*/}
-                                {/*{getCinemaList.map((team) => <option key={team.name} value={team.name}>{team.name}</option>)}*/}
-                            {/*</select>*/}
+                            <select>
+                                {  
+                                    getCinemaList.map(event=> {
+                                        return <option key={event.name} value={event.name}>{event.name}</option>
+                                    })
+                                }
+                            </select>
 
 
                             <label style={{ marginTop: 16 }}>Select Day</label>
                             <DatePicker
                                 className="form-control"
-                                // selected={movieDay}
                                 placeholder="June 31, 2019"
                                 dateFormat=" MMMM d, yyyy"
                                 placeholderText="Sunday 18-08-2019 | 14:00"
@@ -505,7 +507,7 @@ class Moviedetails extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        getCinemaList:state.getCinemaList
+        getCinemaList:state.getCinemaList.data
     };
 }
 

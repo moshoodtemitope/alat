@@ -86,10 +86,10 @@ class Event extends Component {
                         return(
                             <div className="eventCards" key={index}>
                                 <Link to={{
-                                    pathname:"/lifestyle/movie-details",
-                                    state:{
-                                        details:event
-                                    }
+                                    // pathname:"/lifestyle/movie-details",
+                                    // state:{
+                                    //     details:event
+                                    // }
                                 }}>
                                     <div className="picCard" style={{backgroundImage: 'url("'+event.artworkThumbnail+'")'}}>
                                     </div>
