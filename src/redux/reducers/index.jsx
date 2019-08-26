@@ -1,7 +1,7 @@
 import {combineReducers} from "redux";
 import {authentication} from "./authentication.reducer";
 import { alert} from "./alert.reducer";
-import {dashboard, transfer, onboarding, airtime, global, fundAccount, movies,loanOnboarding, loans} from "./export";
+import {dashboard, transfer, onboarding, airtime, global, fundAccount, movies,loanOnboarding, loans, preferences} from "./export";
 import {bankListRequest, beneficiariesRequest} from "./transfer.reducer";
 import {accountHistoryReducer} from "./dashboard.reducer";
 import { userConstants } from "../constants/onboarding/user.constants";
@@ -167,8 +167,10 @@ const appReducer = combineReducers({
     getEvents: movies.getEvents,
     getSingleEvent: movies.getSingleEvent,
     purchaseEventTicket: movies.purchaseEventTicket,
-    getAllEngagements: movies.getAllEngagements,
-    getMovieList:movies.fetchMovieList
+    getMovieList:movies.fetchMovieList,
+
+    getAllEngagements: preferences.getAllEngagements,
+    getCustomersEngagements: preferences.getCustomersEngagements
 });
 
 //export defualt appReducer;

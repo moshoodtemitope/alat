@@ -143,6 +143,7 @@ export const routes = {
 
     //PREFERENCES
     GET_PREFENCE: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Account/GetAllEngagements',
+    GET_CUSTOMER_ENGAGEMENTS: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Account/GetCustomerEngagements',
 
     //movies
     FETCH_MOVIES_LIST : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetMovies?page=1',
