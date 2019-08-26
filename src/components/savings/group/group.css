@@ -17,8 +17,12 @@
     text-align: center;
 }
 
+.delSuccesMsg {
+    padding-bottom: 50px;
+}
 .sucMg {
     margin-bottom: 50px;
+    padding-bottom: 50px;
 }
 
 .forCode h2 {

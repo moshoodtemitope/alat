@@ -25,7 +25,7 @@ class SavingsGroupDeleted extends React.Component {
 
         setTimeout(() => {
             history.push('/savings/activityDashBoard');
-        }, 3000);
+        }, 200000);
     }
 
     CheckRotatingSavingsAvailability = () => {

@@ -87,9 +87,9 @@ class SuccessMessage extends React.Component {
                                             <form className=''>
                                                 <img src="/src/assets/img/success.svg" className="succefullMessage" alt=""/>
                                                 <div className="form-group">
-                                                    <label id="sucMessage">Scheduling was successfull</label>
+                                                    <label id="sucMessage" className="sucMg">Scheduling was successfull</label>
                                                 </div>
-                                                <div className="form-row">
+                                                {/* <div className="form-row">
                                                 <Members 
                                                    userType="admin"
                                                    name="Group Savings"
@@ -97,7 +97,7 @@ class SuccessMessage extends React.Component {
                                                    amount={this.props.setAmountToWithDraw}
                                                    intent={this.props.setFrequency}
                                                    id="autoSummary"/>
-                                                </div>
+                                                </div> */}
                                             </form>
 
                                         </div>

@@ -35,7 +35,6 @@ class JoinedGroupSuccessfully extends React.Component {
         this.props.dispatch(actions.customerGroup(this.state.user.token, null));
     }
 
-
     // NavigateToGroupSavings = () => {
     //     let groupSavings = Object.keys(this.props.groups); //returns an array
     //     let rotatingSavings = Object.keys(this.props.groupSavingsEsusu); //returns an array
@@ -82,7 +81,7 @@ class JoinedGroupSuccessfully extends React.Component {
                                             <form>
                                                 <img src="/src/assets/img/success.svg" className="succefullMessage" alt=""/>
                                                 <div className="form-group">
-                                                    <label id="sucMessage">Group Joined Successfully</label>
+                                                    <label id="sucMessage" className="sucMg">Group Joined Successfully</label>
                                                 </div>
                                                 <div className="form-row">
                                                 
