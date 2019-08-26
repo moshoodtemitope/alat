@@ -19,7 +19,7 @@ class Event extends Component {
 
         };
         console.log("state",this.state);
-        this.handleChange = this.handleChange.bind(this);
+        // this.handleChange = this.handleChange.bind(this);
         this.fetchEventList()
     }
     fetchEventList(){
@@ -27,42 +27,42 @@ class Event extends Component {
         dispatch(getEvents(this.state.user.token));
     };
 
-    handleChange(e) {
-        // Variable to hold the original version of the list
-        let currentList = [];
-        // Variable to hold the filtered list before putting into state
-        let newList = [];
-
-        // If the search bar isn't empty
-        if (e.target.value !== "") {
-            // Assign the original list to currentList
-            currentList = this.props.getMovieList.data.response;
-            console.log("list",currentList);
-
-            // Use .filter() to determine which items should be displayed
-            // based on the search terms
-            newList = currentList.filter(item => {
-                // change current item to lowercase
-                const lc = item.toString().toLowerCase();
-                // change search term to lowercase
-                const filter = e.target.value.toString().toLowerCase();
-                // check to see if the current list item includes the search term
-                // If it does, it will be added to newList. Using lowercase eliminates
-                // issues with capitalization in search terms and search content
-                return lc.includes(filter);
-            });
-        } else {
-            // If the search bar is empty, set newList to original task list
-            newList = this.props.getMovieList.data.response;
-        }
-        // Set the filtered state based on what our rules added to newList
-        this.setState({
-            filtered: newList
-
-
-        });
-
-    }
+    // handleChange(e) {
+    //     // Variable to hold the original version of the list
+    //     let currentList = [];
+    //     // Variable to hold the filtered list before putting into state
+    //     let newList = [];
+    //
+    //     // If the search bar isn't empty
+    //     if (e.target.value !== "") {
+    //         // Assign the original list to currentList
+    //         currentList = this.props.getMovieList.data.response;
+    //         console.log("list",currentList);
+    //
+    //         // Use .filter() to determine which items should be displayed
+    //         // based on the search terms
+    //         newList = currentList.filter(item => {
+    //             // change current item to lowercase
+    //             const lc = item.toString().toLowerCase();
+    //             // change search term to lowercase
+    //             const filter = e.target.value.toString().toLowerCase();
+    //             // check to see if the current list item includes the search term
+    //             // If it does, it will be added to newList. Using lowercase eliminates
+    //             // issues with capitalization in search terms and search content
+    //             return lc.includes(filter);
+    //         });
+    //     } else {
+    //         // If the search bar is empty, set newList to original task list
+    //         newList = this.props.getMovieList.data.response;
+    //     }
+    //     // Set the filtered state based on what our rules added to newList
+    //     this.setState({
+    //         filtered: newList
+    //
+    //
+    //     });
+    //
+    // }
 
     renderEvent(){
         let user = this.state.user;
@@ -117,7 +117,7 @@ class Event extends Component {
 
 
     render(){
-        let userEvent = this.props.getEvents.data.response;
+        let userEvent = this.props.getEvents;
         console.log(userEvent);
 
         return(

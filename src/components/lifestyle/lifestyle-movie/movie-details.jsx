@@ -36,6 +36,7 @@ class Moviedetails extends React.Component {
     fetchCinemaList(){
         const { dispatch } = this.props;
         dispatch(getCinemaList(this.state.user.token));
+        console.log(this.props.getCinemaList)
 
     };
 
@@ -121,6 +122,10 @@ class Moviedetails extends React.Component {
             studentNumber,
             childNumber
         } = this.state;
+        const getCinemaList =this.props;
+        console.log("cenima=========",getCinemaList);
+
+
 
         return (
 
@@ -224,13 +229,17 @@ class Moviedetails extends React.Component {
                     >
                         <form onSubmit={this.onSubmit} style={{ width: "100%" }}>
                             <label>Select Location</label>
-                            <Select
-                                type="text"
-                                options={selectedTime}
-                                name=""
-                                onChange={this.handleSelectLocation}
-                                value={movieLocation.label}
-                            />
+                            {/*<Select*/}
+                                {/*type="text"*/}
+                                {/*options={selectedTime}*/}
+                                {/*name=""*/}
+                                {/*onChange={this.handleSelectLocation}*/}
+                                {/*value={movieLocation.label}*/}
+                            {/*/>*/}
+                            {/*<select>*/}
+                                {/*{getCinemaList.map((team) => <option key={team.name} value={team.name}>{team.name}</option>)}*/}
+                            {/*</select>*/}
+
 
                             <label style={{ marginTop: 16 }}>Select Day</label>
                             <DatePicker
