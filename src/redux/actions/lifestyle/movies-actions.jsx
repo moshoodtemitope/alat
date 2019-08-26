@@ -158,23 +158,3 @@ export const purchaseEventTicket = (token, data) => {
 };
 
 
-export const getAllEngagements = (token, data) => {
-    SystemConstant.HEADER['alat-token'] = token;
-    return (dispatch) => {
-        let consume = ApiService.request(routes.GET_PREFENCE, "GET", data, SystemConstant.HEADER, false);
-        dispatch(request(consume));
-        return consume
-            .then(response => {
-                // consume.log(response);
-                dispatch(success(response.data));
-            })
-            .catch(error => {
-                dispatch(alertActions.error(modelStateErrorHandler(error)));
-
-            });
-    };
-
-    function request(request) { return { type:listStyleConstants.PREFERENCES_PENDING, request} }
-    function success(response) { return {type:listStyleConstants.PREFERENCES_SUCCESS, response} }
-    function failure(error) { return {type:listStyleConstants.PREFERENCES_ERROR, error} }
-};
