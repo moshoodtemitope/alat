@@ -137,7 +137,7 @@ export const routes = {
 
 
     //EVENTS
-    GET_EVENTS: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Events/GetEvents',
+    GET_EVENTS: BASEURL + 'LifeStylePaymentMoviesApi/api/v1/Events/GetEvents?pageNum=1',
     GET_SINGLE_EVENT: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Events/GetSingleEvent',
     BUY_EVENT_TICKET: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Events/BuyEventTicketV2',
 

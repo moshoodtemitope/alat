@@ -31,7 +31,7 @@ export const FetchMovie = (token) => {
 export const getCinemaList = (token) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.GET_CINEMA_LIST, "GET", null, SystemConstant.HEADER, false);
+        let consume = ApiService.request(routes.FETCH_MOVIE_CINEMAS, "GET", null, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
