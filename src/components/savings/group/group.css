@@ -1101,6 +1101,8 @@ color: #4D4D4D;
 
 .innerNav .left{
     /* width: 50%; */
+    border-left: 1px solid #A90836;
+
 }
 
 .innerNav .right {

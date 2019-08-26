@@ -277,7 +277,7 @@ class EditGroupSavings extends React.Component {
                                     <div className="col-sm-12">
                                       <div className="max-600">
                                        <div className="al-card no-pad">
-                                       <h4 className="m-b-10 center-text hd-underline">Create a Target Goal</h4>
+                                       <h4 className="m-b-10 center-text hd-underline"> Edit Target Goal </h4>
 
                                             <form onSubmit={this.handleSubmit}>
                                                 <div className={theGroupName ? "form-group form-error" : "form-group"}>
