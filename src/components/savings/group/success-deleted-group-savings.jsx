@@ -82,7 +82,7 @@ class SavingsGroupDeleted extends React.Component {
                                                     <label id="sucMessage" className="delSuccesMsg">Group Deleted Successfully!</label>
                                                 </div>
                                                 <div className="form-row">
-                                                
+                                                     
                                                 </div>
                                             </form>
 

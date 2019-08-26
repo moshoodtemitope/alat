@@ -148,7 +148,7 @@ class GroupAnalyticsMini extends React.Component {
                             <div className="col-sm-12">
                                 <div className="row">
                                     <div className="col-sm-12">
-                                      {/* </div><div className={adminValidity ? "setPadBottom col-sm-12" : "col-sm-12"}> */}
+                                     
                                       <div className="max-600">
                                        <div className="al-card no-pad">
                                              <div class='firstSubHead'>
@@ -158,12 +158,11 @@ class GroupAnalyticsMini extends React.Component {
                                                 <SubHead 
                                                     type={this.state.type}
                                                     rightname="Group Summary"
-                                                    middlename="Members"
-                                                    leftName="Automate Contributions"
+                                                    leftName="Members"
                                                     memberClicked={this.ShowMembers}
                                                     groupSummaryWasClicked={this.GroupSummary}
                                                     />
-                                                
+                                                    
                                              <div className='statContainer'>
                                                 <ProgressBar 
                                                     discTopSpan="Group Progress"

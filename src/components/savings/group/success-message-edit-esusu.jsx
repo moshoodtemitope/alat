@@ -25,7 +25,7 @@ class RotatingSavingsEditedSuccessfully extends React.Component {
 
         setTimeout(() => {
             history.push('/savings/activityDashBoard');
-        }, 5000);
+        }, 200000);
     }
 
     CheckRotatingSavingsAvailability = () => {
