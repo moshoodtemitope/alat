@@ -28,6 +28,8 @@ class MenuContainer extends React.Component{
                                             <li><a href="#">To Email / Phone No</a></li>
                                         </ul>
                                     </li>
+                                    <li><NavLink to="/profile" className="clearfix"><i className="demo-icon icon-bills" aria-hidden="true"></i> <span>Profile</span></NavLink>
+                                    </li>
                                     <li><NavLink to="/bills/airtime" className="clearfix"><i className="demo-icon icon-bills" aria-hidden="true"></i> <span>Airtime & Bills</span></NavLink>
                                     </li>
                                     <li><a href="#" className="clearfix"><i className="demo-icon icon-target" aria-hidden="true"></i><span> Savings</span></a></li>
