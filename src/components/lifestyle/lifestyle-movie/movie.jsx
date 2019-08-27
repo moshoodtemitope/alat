@@ -109,14 +109,14 @@ class Movie extends Component {
                                         </div>
                                     </Link>
 
-                                    <div className="boldHeader">{film.title.toString().length > 20 ? film.title.toString().substring(0, 20)+"...": film.title.toString()}</div>
-                                        <div id="disc">{ film.description.toString().length > 30 ? film.description.toString().substring(0, 60)+"...": film.description.toString() }</div>
+                                    <div className="boldHeader">{film.title.toString().length > 15 ? film.title.toString().substring(0, 15)+"...": film.title.toString()}</div>
+                                        <div id="disc">{ film.description.toString().length > 30 ? film.description.toString().substring(0, 30)+"...": film.description.toString() }</div>
                                         <div className="details">
                                             <div className="left">
                                                 <i></i>
                                             </div>
                                             <div className="right">
-                                                <div>Sunday, Oct 4 | {film.duration}</div>
+                                                <div>{film.duration}</div>
                                             </div>
                                         </div>
                                 </div>
@@ -149,7 +149,7 @@ class Movie extends Component {
                                     <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
                                     <li><NavLink to={'/lifestyle/event'}>Event</NavLink></li>
                                     <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li>
-                                    <li><input style={{width:"100%", float:'right'}} type="text" placeholder="search ..." value={this.state.filtered} onChange={this.handleChange}/></li>
+                                    <li style={{float:"right"}}><input style={{width:"100%",height:"30px", marginTop:14, float:'right'}} type="text" placeholder="search ..." value={this.state.filtered} onChange={this.handleChange}/></li>
 
                                 </ul>
                             </div>
@@ -172,7 +172,7 @@ class Movie extends Component {
                                             </Link>
 
                                             <div className="boldHeader">{film.title.toString().length > 20 ? film.title.toString().substring(0, 20)+"...": film.title.toString()}</div>
-                                            <div id="disc">{ film.description.toString().length > 30 ? film.description.toString().substring(0, 60)+"...": film.description.toString() }</div>
+                                            <div id="disc">{ film.description.toString().length > 30 ? film.description.toString().substring(0, 30)+"...": film.description.toString() }</div>
                                             <div className="details">
                                                 <div className="left">
                                                     <i></i>

@@ -57,7 +57,7 @@ class BuyTicket extends Component {
             console.log('tag', data);
 
             this.setState({
-                targetAmount:data.targetAmount,
+                initialAdultAmount:data.initialAdultAmount,
                 startDate: data.startDate,
                 goalName:data.goalName,
                 payOutInterest:data.payOutInterest,

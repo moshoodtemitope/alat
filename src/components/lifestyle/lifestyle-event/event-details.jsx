@@ -225,6 +225,11 @@ class EventDetails extends React.Component {
         // }
 
         return (
+            <div>
+            <div className="row" style={{justifyContent: "center"}}>
+            <img src={details.originalImage} class="img-responsive"/>
+            </div>
+       
             <div className="max-750">
                 <div className="al-card fund-al-card no-pad">
                     <div
@@ -255,6 +260,10 @@ class EventDetails extends React.Component {
                                     style={{
                                         width: 168,
                                         height: 226,
+                                        boxShadow:" 0px 4px 4px rgba(0, 0, 0, 0.15)",
+                                        borderRadius:"3px"
+
+
                                        
 
                                     }}
@@ -339,12 +348,13 @@ class EventDetails extends React.Component {
 
                             <label style={{ marginTop: 16 }}>Select Day</label>
                             <select onChange={this.UseSelectedTime}>
-                                {                                      
+                                <option key={details.date}>{details.date}</option>
+                                {/* {                                      
                                     ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
                                     ShowTime.data.response.map(event=> {
                                         return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children}>{event.date}</option>
                                     })
-                                } 
+                                }  */}
                             </select>
 
                             <div
@@ -591,6 +601,7 @@ class EventDetails extends React.Component {
                         </form>
                     </div>
                 </div>
+            </div>
             </div>
         );
     }

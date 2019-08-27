@@ -194,14 +194,19 @@ class Moviedetails extends React.Component {
          const {getCinemaList,ShowTime,buyMovieTicket}=this.props
          const details = this.props.location.state.details;
 
-        console.log("====================",getCinemaList)
+        console.log("====================",details)
         // if (getCinemaList.length > 0) {
         //     alert("yes")
         // }
 
         return (
+            <div>
+                    <div className="row" style={{justifyContent: "center"}}>
+                        <img src={details.bannerImage} class="img-responsive"/>
+                    </div>
+                    
             <div className="max-750">
-                <div className="al-card fund-al-card no-pad">
+                <div className="al-card fund-al-card no-pad" style={{marginTop: 10}}>
                     <div
                         style={{
                             marginTop: 18,
@@ -220,6 +225,7 @@ class Moviedetails extends React.Component {
                         style={{
                             marginLeft: 50,
                             marginTop: 20,
+                            // justifyContent: "center",
                             marginRight: 50
                         }}>
                         {this.gotobuyTicket()}
@@ -229,7 +235,9 @@ class Moviedetails extends React.Component {
                                     src={details.artworkThumbnail}
                                     style={{
                                         width: 168,
-                                        height: 226
+                                        height: 226,
+                                        BorderRadius:"3px"
+
                                     }}
                                 />
                             </i>
@@ -238,15 +246,15 @@ class Moviedetails extends React.Component {
                             className="col-sm-9"
                             style={{ fontSize: 26, color: "#444444", paddingLeft: 55 }}
                         >
-                            <div style={{ fontFamily: "proxima_novasemibold", marginBottom: 21 }}>
+                            <div style={{ fontFamily:"proxima_novasemibold", marginBottom: 21 }}>
                                 {details.title}
                             </div>
                             <div
                                 style={{
-                                    fontFamily: "proxima_novaregular",
-                                    fontSize: 12,
+                                    fontFamily:"proxima_novaregular",
+                                    fontSize:"12px",
                                     color: "#9C9C9C",
-                                    marginTop: 21
+                                    marginTop: "21px"
                                 }}
                             >
                                 Synopsis
@@ -254,9 +262,9 @@ class Moviedetails extends React.Component {
                             <div
                                 style={{
                                     fontFamily: "proxima_novaregular",
-                                    fontSize: 12,
+                                    fontSize:"12px",
                                     color: "#9C9C9C",
-                                    marginTop: 8,
+                                    marginTop:"8px",
                                     // fontFamily: "Proxima Nova"
                                 }}
                             >
@@ -564,6 +572,7 @@ class Moviedetails extends React.Component {
                         </form>
                     </div>
                 </div>
+            </div>
             </div>
         );
     }

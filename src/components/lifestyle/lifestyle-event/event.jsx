@@ -96,14 +96,14 @@ class Event extends Component {
                                     </div>
                                 </Link>
 
-                                <div className="boldHeader">{event.title.toString().length > 20 ? event.title.toString().substring(0, 20)+"...": event.title.toString()}</div>
-                                <div id="disc">{ event.location.toString().length > 30 ? event.location.toString().substring(0, 60)+"...": event.location.toString() }</div>
+                                <div className="boldHeader">{event.title.toString().length > 15 ? event.title.toString().substring(0, 15)+"...": event.title.toString()}</div>
+                                <div id="disc">{ event.location.toString().length > 30 ? event.location.toString().substring(0, 30)+"...": event.location.toString() }</div>
                                 <div className="details">
                                     <div className="left">
                                         <i></i>
                                     </div>
                                     <div className="right">
-                                        <div>Sunday, Oct 4 | {event.duration}</div>
+                                        <div style={{fontSize: 12}}> {moment(event.date).format('MMMM DD, h:mm:ss a')}</div>
                                     </div>
                                 </div>
                             </div>
