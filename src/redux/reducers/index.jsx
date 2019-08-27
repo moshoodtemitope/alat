@@ -1,7 +1,7 @@
 import {combineReducers} from "redux";
 import {authentication} from "./authentication.reducer";
 import { alert} from "./alert.reducer";
-import {dashboard, transfer, onboarding, airtime, global, fundAccount, loanOnboarding, loans} from "./export";
+import {dashboard, transfer, onboarding, airtime, global, fundAccount, loanOnboarding, loans, profile} from "./export";
 import {bankListRequest, beneficiariesRequest} from "./transfer.reducer";
 import {accountHistoryReducer} from "./dashboard.reducer";
 import { userConstants } from "../constants/onboarding/user.constants";
@@ -156,8 +156,27 @@ const appReducer = combineReducers({
     cardless_reducer: cardlessReducer,
     bills_reducer: billsReducer,
     accountsM_reducer : accountsReducer,
-    settings_reducer : settingsReducer
+    settings_reducer : settingsReducer,
+    
+    //PROFILE
+    linkBVN: profile.linkBVN
 });
 
 //export defualt appReducer;
 export default rootReducer;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import DatePicker from "react-datepicker";
-import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
-
+// import * as actions from '../../../../redux/actions/profile/profile-action';
+import * as actions from '../../redux/actions/onboarding/loan.actions';
 class LinkBvN extends Component {
    constructor(props){
        super(props);
