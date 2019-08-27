@@ -32,7 +32,10 @@ class EventDetails extends React.Component {
             itemId: null
         };
     }
-    
+    // fetchEventList(){
+    //     const { dispatch } = this.props;
+    //     dispatch(getEvents(this.state.user.token));
+    // };
     fetchCinemaList(){
         const { dispatch } = this.props;
         dispatch(getCinemaList(this.state.user.token));
@@ -173,15 +176,36 @@ class EventDetails extends React.Component {
         this.props.dispatch(actions.ShowTime(this.state.user.token, data))
     }
 
-    gotobuyTicket=()=>{
+    gotobuyEventTicket=()=>{
         if(this.props.SubmitTicketData)
         if(this.props.SubmitTicketData.message == listStyleConstants.SUBMIT_MOVIE_TICKET_SUCCESS){
             return<Redirect to="/lifestyle/buy-ticket-details"/>
         }
         
     }
-   
-    
+
+
+    LopEventList = () => {
+        // console.log('First -----------------------')
+        let container = [];
+        let title = []; //contains all titles
+        let loopContainer = (eachArrayClass) => {
+            eachArrayClass.map(element => {
+                title.push(element.title);
+                // return <option value={element}>{element}</option>
+            })
+        }
+
+        this.props.getEvents.data.response.eventList.map(event => {
+            console.log(typeof event);
+            if(typeof event == 'object')
+              loopContainer(event.ticketClassses); 
+        });
+
+        return title.map(element => {
+            return <option value={element}>{element}</option>
+        });
+    }
 
     render() {
        let {
@@ -193,6 +217,7 @@ class EventDetails extends React.Component {
         } = this.state;
          const {getCinemaList,getEvents,ShowTime,buyMovieTicket}=this.props
          const details = this.props.location.state.details;
+         console.log(details)
 
         console.log("====================",getCinemaList)
         // if (getCinemaList.length > 0) {
@@ -212,7 +237,7 @@ class EventDetails extends React.Component {
                             color: "#4D4D4D"
                         }}
                     >
-                        Buy Movie Ticket
+                        Buy Event Ticket
                     </div>
                     <div style={{ border: "1px solid rgba(205, 205, 205, 0.32)" }} />
                     <div
@@ -222,14 +247,16 @@ class EventDetails extends React.Component {
                             marginTop: 20,
                             marginRight: 50
                         }}>
-                        {this.gotobuyTicket()}
+                        {this.gotobuyEventTicket()}
                         <div className="col-sm-3">
                             <i className="toshow">
                                 <img
                                     src={details.thumbnailImage}
                                     style={{
                                         width: 168,
-                                        height: 226
+                                        height: 226,
+                                       
+
                                     }}
                                 />
                             </i>
@@ -249,7 +276,7 @@ class EventDetails extends React.Component {
                                     marginTop: 21
                                 }}
                             >
-                                Synopsis
+                                Synopsis:
                             </div>
                             <div
                                 style={{
@@ -260,7 +287,7 @@ class EventDetails extends React.Component {
                                     // fontFamily: "Proxima Nova"
                                 }}
                             >
-                                {details.description}
+                                {details.description.toString().length > 30 ? details.description.toString().substring(0, 60)+"...": details.description.toString()}
                             </div>
                             <div>
                                 <i className="toshow">
@@ -302,10 +329,10 @@ class EventDetails extends React.Component {
                             <select onChange={this.UseSelectedItem}>
                               
                                 {
-                                    getEvents.message == listStyleConstants.GET_EVENTS_SUCCESS && 
-                                    getEvents.data.response.eventList.map(event => {
-                                        console.log("checking what  up ...");    
-                                        return (<option key={event.cinemaUid} value={event.eventId + " " + "000" + event.ticketId}>{event.title}</option>)
+                                    // getEvents.message == listStyleConstants.GET_EVENTS_SUCCESS && 
+                                    //  this.LopEventList()
+                                    details.ticketClassses.map(event=> {
+                                        return <option key={event.title} value={event.ticketId + "8888" + event.ticketId + " " + event.ticketId + " " + event.ticketId}>{event.title}</option>
                                     })
                                 }
                             </select>
