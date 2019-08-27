@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import '../movie-preference-event.css'
 import {Link, NavLink} from "react-router-dom";
 import {Fragment} from "react";
+import moment from 'moment'
 
 import {listStyleConstants} from '../../../redux/constants/lifestyle/lifestyle-constants';
 import {getEvents} from "../../../redux/actions/lifestyle/movies-actions"
@@ -86,17 +87,17 @@ class Event extends Component {
                         return(
                             <div className="eventCards" key={index}>
                                 <Link to={{
-                                    // pathname:"/lifestyle/movie-details",
-                                    // state:{
-                                    //     details:event
-                                    // }
+                                    pathname:"/lifestyle/event-details",
+                                    state:{
+                                        details:event
+                                    }
                                 }}>
                                     <div className="picCard" style={{backgroundImage: 'url("'+event.thumbnailImage+'")'}}>
                                     </div>
                                 </Link>
 
                                 <div className="boldHeader">{event.title.toString().length > 20 ? event.title.toString().substring(0, 20)+"...": event.title.toString()}</div>
-                                <div id="disc">{ event.description.toString().length > 30 ? event.description.toString().substring(0, 60)+"...": event.description.toString() }</div>
+                                <div id="disc">{ event.location.toString().length > 30 ? event.location.toString().substring(0, 60)+"...": event.location.toString() }</div>
                                 <div className="details">
                                     <div className="left">
                                         <i></i>

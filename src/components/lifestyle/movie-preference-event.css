@@ -101,10 +101,54 @@
        margin-bottom: 30px;
   }
 
+  .puchaseSumTickets {
+      display: flex;
+      flex-wrap: nowrap;
+      width: 80%;
+      background-color: #5C3158;
+      border-radius: 6px;
+      border: 1px solid #EDEDED;
+      margin-left: 10%;
+      padding-top: 20px;
+      padding-left: 20px;
+  }
+
+  .puchaseSumTickets .left, .puchaseSumTickets .right {
+      width: 50%;
+  }
+
+  .puchaseSumTickets .right {
+      text-align: right;
+      padding-right: 20px;
+      font-weight: bold !important;
+  }
+
+  .puchaseSumTickets p {
+      color: white;
+  }
+
+  .puchaseSumTickets .left {
+      padding-right: 20px;
+  }
+
+  .puchaseSumTickets .left:nth-child(1) {
+    font-weight: bold;
+}
+
   .eventPreferences .buttons1:hover {
         color: #FFFFFF;
         font-size: 16px;
         font-family:"proxima_novasemibold";
         background-color: #AB2656;
         border: none;
+  }
+
+  #navButToMovieSelect {
+     background-color: white;
+     color: #AB2656;
+     border: 1px solid #AB2656;
+  }
+  .movieStyleL{
+    padding-left: 10%;
+    padding-right: 10%;
   }

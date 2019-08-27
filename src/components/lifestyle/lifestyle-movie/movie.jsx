@@ -149,11 +149,12 @@ class Movie extends Component {
                                     <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
                                     <li><NavLink to={'/lifestyle/event'}>Event</NavLink></li>
                                     <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li>
+                                    <li><input style={{width:"100%", float:'right'}} type="text" placeholder="search ..." value={this.state.filtered} onChange={this.handleChange}/></li>
+
                                 </ul>
                             </div>
                         </div>
                     </div>
-                <div><input type="text" placeholder="search ..." value={this.state.filtered} onChange={this.handleChange}/></div>
                     {
                         this.state.filtered.length > 0 ? (
                             <div className="eventTrays">
@@ -177,7 +178,7 @@ class Movie extends Component {
                                                     <i></i>
                                                 </div>
                                                 <div className="right">
-                                                    <div>Sunday, Oct 4 | {film.duration}</div>
+                                                    <div>{film.duration}</div>
                                                 </div>
                                             </div>
                                         </div>

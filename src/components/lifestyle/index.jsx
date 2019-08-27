@@ -4,7 +4,9 @@ import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import LifeStyle from '../lifestyle/lifestyle-movie/movie';
 import LifestylePreference from "../lifestyle/lifestyle-preference/preference";
 import LifeStyleEvent from "../lifestyle/lifestyle-event/event";
-import MovieDetail from '../lifestyle/lifestyle-movie/movie-details'
+import MovieDetail from '../lifestyle/lifestyle-movie/movie-details';
+import EventDetails from '../lifestyle/lifestyle-event/event-details'
+import BuyTicketData from '../lifestyle/lifestyle-movie/buy-ticket'
 
 
 class LifestyleIndex extends Component {
@@ -29,6 +31,10 @@ class LifestyleIndex extends Component {
                                 <Route path={'/lifestyle/event'} component={LifeStyleEvent} />
                                 <Route path={'/lifestyle/preference'} component={LifestylePreference} />
                                 <Route path={'/lifestyle/movie-details'} component={MovieDetail} />
+                                <Route path={'/lifestyle/buy-ticket-details'} component={BuyTicketData}/>
+                                <Route path={'/lifestyle/event-details'} component={EventDetails}/>
+
+
 
                             </div>
                         </div>

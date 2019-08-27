@@ -7,7 +7,7 @@ import * as actions from '../../../redux/actions/lifestyle/movies-actions';
 import {getCinemaList,} from '../../../redux/actions/lifestyle/movies-actions'
 
 
-class Moviedetails extends React.Component {
+class EventDetails extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -191,7 +191,7 @@ class Moviedetails extends React.Component {
             studentNumber,
             childNumber
         } = this.state;
-         const {getCinemaList,ShowTime,buyMovieTicket}=this.props
+         const {getCinemaList,getEvents,ShowTime,buyMovieTicket}=this.props
          const details = this.props.location.state.details;
 
         console.log("====================",getCinemaList)
@@ -226,7 +226,7 @@ class Moviedetails extends React.Component {
                         <div className="col-sm-3">
                             <i className="toshow">
                                 <img
-                                    src={details.artworkThumbnail}
+                                    src={details.thumbnailImage}
                                     style={{
                                         width: 168,
                                         height: 226
@@ -282,7 +282,7 @@ class Moviedetails extends React.Component {
                                         color: "#9C9C9C"
                                     }}
                                 >
-                                    {details.duration}
+                                    {details.location}
                 </span>
                             </div>
                         </div>
@@ -297,15 +297,15 @@ class Moviedetails extends React.Component {
                             marginTop: 37
                         }}>
                         <form onSubmit={this.ShowBuyTicketData  } style={{ width: "100%" }}>
-                            <label>Select Location</label>
+                            <label>Select Ticket Class</label>
                            
                             <select onChange={this.UseSelectedItem}>
                               
                                 {
-                                    getCinemaList.message == listStyleConstants.GET_CINEMA_LIST_SUCCESS && 
-                                    getCinemaList.data.response.map(event => {
+                                    getEvents.message == listStyleConstants.GET_EVENTS_SUCCESS && 
+                                    getEvents.data.response.eventList.map(event => {
                                         console.log("checking what  up ...");    
-                                        return (<option key={event.cinemaUid} value={event.cinemaUid + " " + "000" + details.id}>{event.name}</option>)
+                                        return (<option key={event.cinemaUid} value={event.eventId + " " + "000" + event.ticketId}>{event.title}</option>)
                                     })
                                 }
                             </select>
@@ -575,7 +575,8 @@ function mapStateToProps(state) {
         ShowTime:state.ShowTime,
         buyMovieTicket:state.buyMovieTicket,
         SubmitTicketData:state.SubmitTicketData,
+        getEvents: state.getEvents
     };
 }
 
-export default connect(mapStateToProps)(Moviedetails);
+export default connect(mapStateToProps)(EventDetails);
