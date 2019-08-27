@@ -77,7 +77,7 @@ class Event extends Component {
             );
         }
         else if (getEvents.message === listStyleConstants.GET_EVENTS_SUCCESS){
-            let userEvents = getEvents.data.response;
+            let userEvents = getEvents.data.response.eventList;
             // let userMovies = this.state.filtered;
 
             return(
@@ -91,7 +91,7 @@ class Event extends Component {
                                     //     details:event
                                     // }
                                 }}>
-                                    <div className="picCard" style={{backgroundImage: 'url("'+event.artworkThumbnail+'")'}}>
+                                    <div className="picCard" style={{backgroundImage: 'url("'+event.thumbnailImage+'")'}}>
                                     </div>
                                 </Link>
 
@@ -118,7 +118,6 @@ class Event extends Component {
 
     render(){
         let userEvent = this.props.getEvents;
-        console.log(userEvent);
 
         return(
             <Fragment>

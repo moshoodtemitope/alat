@@ -1,27 +1,13 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
+import {listStyleConstants} from "../../../redux/constants/lifestyle/lifestyle-constants"
 // import "../../assets/css/loan.css";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
 
-import {getCinemaList,buyMovieTicket} from '../../../redux/actions/lifestyle/movies-actions'
+import {getCinemaList,} from '../../../redux/actions/lifestyle/movies-actions'
 
-// import salaryLoan from "../../../assets/img/salary_based_grey.svg";
-// import Rectangle from "../../assets/img/Rectangle.svg";
-const selectedTime = [
-    { value: "Film House, Lakki", label: "Filmhouse Surulere" },
-    { value: "Film House, WEMA", label: "FILMHOUSE BENIN, VEON MALL" },
-    { value: "Film House, WEMA", label: "Viva Cinemas Ilorin" },
-    { value: "Film House, WEMA", label: "Genesis Abuja, Gateway Mall" },
-    { value: "Film House, WEMA", label: "Filmhouse Dugbe" },
-    {value:"Filmhouse, Port Harcourt", label:"Filmhouse, Port Harcourt"},
-    {value:"Filmhouse, Samonda (Ibadan)", label:"Filmhouse, Samonda (Ibadan)"},
-    {value:"Genesis, Maryland", label:"Genesis, Maryland"}
-
-
-
-];
 
 class Moviedetails extends React.Component {
     constructor(props) {
@@ -34,21 +20,20 @@ class Moviedetails extends React.Component {
             ChildrenId:"",
             AdultId:"",
             movieDay: "",
-            adultNumber: 1,
-            studentNumber: 1,
-            childNumber: 1,
-            adultAmount: 2500,
-            studentAmount: 2500,
-            childAmount: 2500,
-            initialAdultAmount: 2500,
-            initialStudentAmount: 2500,
-            initialChildAmount: 2500,
+            adultNumber: 0,
+            studentNumber: 0,
+            childNumber: 0,
+            adultAmount: 0,
+            studentAmount: 0,
+            childAmount: 0,
+            initialAdultAmount: 0,
+            initialStudentAmount: 0,
+            initialChildAmount: 0,
             user: JSON.parse(localStorage.getItem("user")),
-
-
+            dataContainer: null
         };
-        this.fetchCinemaList();
     }
+    
     fetchCinemaList(){
         const { dispatch } = this.props;
         dispatch(getCinemaList(this.state.user.token));
@@ -61,6 +46,17 @@ class Moviedetails extends React.Component {
         // console.log(this.props.getCinemaList)
 
     };
+    componentDidMount(){
+        this.fetchCinemaList();
+        const details = this.props.location.state.name;
+        this.setState({
+            SubmitTicketData: details
+
+        })
+
+
+    }
+
 
     handleSelectLocation = item => {
         this.setState({
@@ -134,35 +130,76 @@ class Moviedetails extends React.Component {
                 })
             );
     };
-    BuyTicket = () => {
+    ShowBuyTicketData = () => {
         const data = {
             ShowTimeId:this.state.ShowTimeId,
             TicketAmount: parseFloat(this.state.TicketAmount),
-                    
+            // initialAdultAmount:this.state.initialAdultAmount,
+            // initialStudentAmount:this.state.initialStudentAmount,
+            // initialChildAmount:this.state.initialChildAmount,        
         }
         console.log(data)
         // return;
-        this.props.dispatch(actions.buyMovieTicket(this.state.user.token, data));
+        this.props.dispatch(actions.SubmitTicketData(data));
+    }
+    
+    // value={event.date + "8888" + event.student + " " + event.adult + " " + event.children}>{event.date}</option>
+    UseSelectedTime = (event) => {
+        let amounts = event.target.value.split("8888")[1];
+        let adultAmount = amounts.split(" ")[1];
+        let childrenAmount = amounts.split(" ")[2];
+        let studentAmount = amounts.split(" ")[0];
+       
+        console.log(adultAmount);
+        console.log(childrenAmount);
+        console.log(studentAmount);
+        console.log('oooooooooooooooooooooooooooooooooooo');
+        this.setState({initialStudentAmount: studentAmount});
+        this.setState({initialAdultAmount: adultAmount});
+        this.setState({initialChildAmount: childrenAmount});
     }
 
+    UseSelectedItem = (event) => {
+        let gottenValue = event.target.value.split("000");
+       
+        console.log(gottenValue);
+        
+        let data = {
+            item: gottenValue[0],
+            id: gottenValue[1]
+        }
+        console.log(data);
+        this.props.dispatch(actions.ShowTime(this.state.user.token, data))
+    }
+
+    gotobuyTicket=()=>{
+        if(this.props.SubmitTicketData)
+        if(this.props.SubmitTicketData.message == listStyleConstants.SUBMIT_MOVIE_TICKET_SUCCESS){
+            return<Redirect to="/savings/submit-fixed-goal"/>
+        }
+        
+    }
+   
+    
 
     render() {
-        const details = this.props.location.state.details;
-        let {
+       let {
             movieLocation,
             movieDay,
             adultNumber,
             studentNumber,
             childNumber
         } = this.state;
-        // const {getCinemaList}=this.props
-        // console.log("===========",getCinemaList.data)
+         const {getCinemaList,ShowTime,buyMovieTicket}=this.props
+         const details = this.props.location.state.details;
 
+        console.log("====================",getCinemaList)
+        // if (getCinemaList.length > 0) {
+        //     alert("yes")
+        // }
 
         return (
-
             <div className="max-750">
-
                 <div className="al-card fund-al-card no-pad">
                     <div
                         style={{
@@ -257,32 +294,29 @@ class Moviedetails extends React.Component {
                             marginLeft: 69,
                             // marginTop: 20,
                             marginTop: 37
-                        }}
-                    >
-                        <form onSubmit={this.onSubmit} style={{ width: "100%" }}>
+                        }}>
+                        <form onSubmit={this.ShowBuyTicketData  } style={{ width: "100%" }}>
                             <label>Select Location</label>
-                            <Select
-                                type="text"
-                                options={selectedTime}
-                                name=""
-                                onChange={this.handleSelectLocation}
-                                value={movieLocation.label}/>
-                            <select>
-                                {/* {  
-                                    getCinemaList.map(event=> {
-                                        return <option key={event.name} value={event.name}>{event.name}</option>
-                                    })
-                                } */}
-                            </select>
-
-
-                            <label style={{ marginTop: 16 }}>Select Day</label>
-                            <select>
-                                {  
-                                    getCinemaList.map(event=> {
-                                        return <option key={event.name} value={event.name}>{event.name}</option>
+                           
+                            <select onChange={this.UseSelectedItem}>
+                              
+                                {
+                                    getCinemaList.message == listStyleConstants.GET_CINEMA_LIST_SUCCESS && 
+                                    getCinemaList.data.response.map(event => {
+                                        console.log("checking what  up ...");    
+                                        return (<option key={event.cinemaUid} value={event.cinemaUid + " " + "000" + details.id}>{event.name}</option>)
                                     })
                                 }
+                            </select>
+
+                            <label style={{ marginTop: 16 }}>Select Day</label>
+                            <select onChange={this.UseSelectedTime}>
+                                {                                      
+                                    ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
+                                    ShowTime.data.response.map(event=> {
+                                        return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children}>{event.date}</option>
+                                    })
+                                } 
                             </select>
 
                             <div
@@ -474,7 +508,7 @@ class Moviedetails extends React.Component {
                                         </div>
                                         <div
                                             onClick={this.increaseChild}
-                                            style={{
+                                            style = {{
                                                 width: 60,
                                                 height: 46,
                                                 cursor: "pointer",
@@ -511,7 +545,7 @@ class Moviedetails extends React.Component {
                                     marginBottom: 39
                                 }}
                             >
-                                <button
+                                <button disabled={this.props.buyMovieTicket.message == listStyleConstants.BUY_EVENT_TICKET_PENDING}
                                     style={{
                                         border: "0px solid #AB2656",
                                         height: 45,
@@ -522,7 +556,8 @@ class Moviedetails extends React.Component {
                                         cursor: "pointer"
                                     }}
                                 >
-                                    Buy Ticket
+                                
+                                    {this.props.buyMovieTicket.message ==listStyleConstants.BUY_EVENT_TICKET_PENDING ? "Processing..." :"Buy Ticket"}
                                 </button>
                             </div>
                         </form>
@@ -535,7 +570,10 @@ class Moviedetails extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        getCinemaList:state.getCinemaList.data
+        getCinemaList: state.getCinemaList,
+        ShowTime:state.ShowTime,
+        buyMovieTicket:state.buyMovieTicket,
+        SubmitTicketData:state.SubmitTicketData,
     };
 }
 

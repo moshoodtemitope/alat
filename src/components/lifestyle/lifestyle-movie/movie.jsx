@@ -5,7 +5,8 @@ import * as utils from "../../../shared/utils";
 import {Link, NavLink} from "react-router-dom";
 import {Fragment} from "react";
 import {listStyleConstants} from '../../../redux/constants/lifestyle/lifestyle-constants';
-import { FetchMovie } from "../../../redux/actions/lifestyle/movies-actions";
+import { FetchMovie,getCinemaList,buyMovieTicket } from "../../../redux/actions/lifestyle/movies-actions";
+
 
 
 
@@ -20,11 +21,18 @@ class Movie extends Component {
         };
         console.log("state",this.state);
         this.handleChange = this.handleChange.bind(this);
-        this.fetchMovieList()
+        this.fetchMovieList();
+        this.fetchCinemaList();
     }
     fetchMovieList(){
         const { dispatch } = this.props;
         dispatch(FetchMovie(this.state.user.token));
+    };
+    fetchCinemaList(){
+        const { dispatch } = this.props;
+        dispatch(getCinemaList(this.state.user.token));
+        // console.log(this.props.getCinemaList)
+
     };
 
     handleChange(e) {
@@ -190,7 +198,10 @@ class Movie extends Component {
 }
     function mapStateToProps(state){
     return {
-        getMovieList: state.getMovieList
+        getMovieList: state.getMovieList,
+        getCinemaList: state.getCinemaList.data,
+        
+
     };
 }
 

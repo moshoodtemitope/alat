@@ -156,5 +156,40 @@ export const purchaseEventTicket = (token, data) => {
     function success(response) { return {type:listStyleConstants.BUY_EVENT_TICKET_SUCCESS, response} }
     function failure(error) { return {type:listStyleConstants.BUY_EVENT_TICKET_ERROR, error} }
 };
+export const ShowTime = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.FETCH_MOVIE_SHOWTIME  + data.item + "&" + 'ticketId=' + data.id, "GET", data, SystemConstant.HEADER, false);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                // consume.log(response);
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                if(error.response.message){
+                    dispatch(alertActions.error(modelStateErrorHandler(error)));
+                }
+            });
+    };
+
+    function request(request) { return { type:listStyleConstants.GET_MOVIE_SHOWTIME_PENDING, request} }
+    function success(response) { return {type:listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS, response} }
+    function failure(error) { return {type:listStyleConstants.GET_MOVIE_SHOWTIME_ERROR, error} }
+};
+
+
+export const SubmitTicketData =(data) =>{
+    return(dispatch)=>{
+        dispatch(success(data))
+
+    }
+    function success(data){
+        return{
+            type:listStyleConstants.SUBMIT_MOVIE_TICKET_SUCCESS,
+            data:data
+        }
+    }
+}
 
 
