@@ -19,8 +19,11 @@ import { loanConstants } from '../constants/loans/loans.constants';
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
 const rootReducer = (state, action)=>{
+    console.log(action);
     if(action.type === userConstants.LOGOUT)
-        {   state = undefined;    }
+        { 
+              state = undefined;   
+             }
     return appReducer(state, action)
 
 };

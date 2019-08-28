@@ -68,6 +68,7 @@ class LoanTermsComponent extends React.Component {
     declineAction = () => {
         if (this.props.loan_reject) {
             if (this.props.loan_reject.loan_reject_status == loanConstants.LOAN_REJECT_SUCCESS) {
+                this.props.dispatch(actions.clearLoanOnboardingStore());
                 this.props.NavigateToPreviousPage();
             }
         }

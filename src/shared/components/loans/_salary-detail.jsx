@@ -21,7 +21,7 @@ import {
 const industriesOptions = [
 ];
 const _employerList = [];
-const options = [];
+//const options = [];
 
 class SalaryDetails extends React.Component {
     constructor(props) {
@@ -98,7 +98,7 @@ class SalaryDetails extends React.Component {
                 );
             case FETCH_BANK_SUCCESS:
                 let banksList = props.bankList.banks_data.response.Response;
-                options = [];
+                var options = [];
                 for (var bank in banksList) {
                     options.push({ value: banksList[bank].Id, label: banksList[bank].Name });
                 }

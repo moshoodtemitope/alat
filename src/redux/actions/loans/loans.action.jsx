@@ -254,3 +254,10 @@ export const continueApplication =(data)=>{
     }
     function success(data){ return { type: loanConstants.LOAN_CONTINUE_APPLICATION, data: data } }
 }
+
+export const clearLoanOnboardingStore =()=>{
+    return (dispatch) => { 
+        dispatch(clear());
+    }
+    function clear(){return {type: loanConstants.LOAN_ONBOARDING_CLEAR, clear_data: "" }}
+}

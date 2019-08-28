@@ -44,6 +44,20 @@ class LoansDashboard extends React.Component {
     componentDidMount = () => {
         this.init();
     }
+    
+    discardLoan =()=>{
+        this.props.dispatch(LoanActions.loanReject(this.state.user.token));
+    }
+
+    declineAction =()=>{
+		if(this.props.loan_reject){
+			if(this.props.loan_reject.loan_reject_status == loanConstants.LOAN_REJECT_SUCCESS){
+                this.props.dispatch(LoanActions.clearLoanOnboardingStore());
+               window.location.reload();
+			}
+		}
+	}
+    
 
     initCurrentLoan = () => {
         if (this.props.loan_current && !this.state.currentLoanSet)
@@ -152,7 +166,6 @@ class LoansDashboard extends React.Component {
                                         <span>Loan Amount</span>
                                     </p>
                                 </div>
-
                                 <div>
                                     <img src={loanIcon} />
                                     <p>--
@@ -182,6 +195,7 @@ class LoansDashboard extends React.Component {
     render() {
         this.initCurrentLoan();
         this.movetoCalculator();
+        this.declineAction();
         //this.returnPendingLoanAppLication();
         const { currentLoan } = this.state;
         return (<Fragment>
@@ -261,7 +275,7 @@ class LoansDashboard extends React.Component {
                             }
                             {this.state.pendingLoanApplication != null && <Fragment>
                                 <input type="button" value="Proceed" onClick={this.continueApplication} className="btn-alat btn-block" />
-                                <input type="button" value="Discard Loan Application" onClick={() => this.props.history.push("/loans/salary/calc")}
+                                <input type="button" value={this.props.loan_reject.loan_reject_status == loanConstants.LOAN_REJECT_PENDING ? "Processing..." : "Discard Loan Application"} onClick={this.discardLoan}
                                     className="btn-alat btn-block btn-alat-outline" />
                             </Fragment>
                             }
@@ -300,6 +314,7 @@ function mapStateToProps(state) {
         user: state.authentication.user.response,
         loan_current: state.loanReducerPile.loanCurrent,
         loan_history: state.loanReducerPile.loanHistory,
+        loan_reject: state.loanReducerPile.loanReject,
     }
 }
 
