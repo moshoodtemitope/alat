@@ -1540,8 +1540,9 @@ ul.menu-side {
     .page-title span a {
       min-width: initial; }
 
-.tab-overflow {
-  overflow: scroll; }
+/* .tab-overflow {
+  overflow: scroll;
+ } */
 
 .sub-tab-nav {
   margin-bottom: 50px;

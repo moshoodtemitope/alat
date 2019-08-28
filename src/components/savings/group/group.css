@@ -26,7 +26,7 @@
 }
 
 .forCode h2 {
-    font-family:"proxima_novasemibold";
+    font-family: "proxima_novasemibold",sans-serif !important;
     text-align: center;
     width: 100% !important;
     margin-left: 15%;
@@ -70,7 +70,7 @@
 .butLeft button {
     background: #AB2656;
     border-radius: 3px;
-    font-family:"proxima_novasemibold";
+    font-family:"proxima_novasemibold",sans-serif !important;
     font-size: 16px;
     line-height: 19px;
     /* identical to box height */
@@ -83,7 +83,7 @@
 
 .joinGroup h6 {
     text-align: center;
-    font-family:"proxima_novasemibold";
+    font-family:"proxima_novasemibold",sans-serif!important;
     font-size: 16px;
     line-height: 24px;
     color: #444444;
@@ -124,7 +124,7 @@
 .forDetailsComp .upper {
     margin-bottom: 2px;
     font-weight: bold;
-    font-family:"proxima_novasemibold";
+    font-family:"proxima_novasemibold",sans-serif!important;
     font-size: 14px;
     line-height: 17px;
     letter-spacing: 0.168px;
@@ -164,7 +164,7 @@
     padding-top: 10px;
     padding-bottom: 10px; 
     text-align: center;
-    font-family:"proxima_novasemibold";
+    font-family:"proxima_novasemibold",sans-serif!important;
     font-size: 16px;
     line-height: 19px;
     color: #FFFFFF;
@@ -179,14 +179,14 @@
     background: #AB2656;
     border-radius: 3px;
     color: white;
-    font-family:"proxima_novasemibold";
+    font-family:"proxima_novasemibold",sans-serif !important;
     margin-bottom: 40px;
 }
 
 .sumComponent {
     display: flex;
     flex-wrap: nowrap;
-    font-family:'proxima_novasemibold';
+    font-family:'proxima_novasemibold', sans-serif !important;
     background: linear-gradient(171.37deg, #FFFFFF 0%, rgba(195, 195, 195, 0.291752) 100%), linear-gradient(351.37deg, #7C5578 0%, #580637 100%);
     background-blend-mode: multiply, normal;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
@@ -250,7 +250,7 @@
 .forReadOnlyInput input {
     background-color: #F5F5F5;
     border-radius: 5px;
-    font-family:'proxima_novasemibold';
+    font-family:'proxima_novasemibold',sans-serif !important;
     font-size: 14px;
     border: none;
 }
@@ -264,7 +264,7 @@
     color: red;
     display: block;
     padding-top: 10px;
-    font-family:'proxima_novasemibold';
+    font-family:'proxima_novasemibold',sans-serif !important;
     font-size: 14px;
 }
 
@@ -331,7 +331,7 @@
     color: red;
     display: none;
     padding-top: 10px;
-    font-family:'proxima_novasemibold';
+    font-family:'proxima_novasemibold',sans-serif!important;
     font-size: 14px;
 }
 .compContainer .eachComp {
@@ -434,7 +434,7 @@
   color: #A90836;
   width: 100%;
   margin-bottom: 0px;
-  font-family:'proxima_novasemibold';
+  font-family:'proxima_novasemibold',sans-serif !important;
 font-size: 8px;
 line-height: 10px;
 /* color: #A90836; */
@@ -445,7 +445,7 @@ text-transform: uppercase !important;
 }
 
 .topCard .left .bottom {
-font-family:'proxima_novasemibold';
+font-family:'proxima_novasemibold',sans-serif !important;
 font-size: 12px;
 line-height: 14px;
 color: #4D4D4D;
@@ -481,7 +481,7 @@ font-weight: bold;
     display: flex;
     flex-wrap: nowrap;
     width: 100%;
-    font-family:'proxima_novasemibold';
+    font-family:'proxima_novasemibold',sans-serif !important;
 }
 
 .bottomDiscriptionDashBoard .left p {
@@ -507,7 +507,7 @@ font-weight: bold;
 }
 
 .bottomDiscriptionDashBoard .left #date {
-    font-family:'proxima_novasemibold';
+    font-family:'proxima_novasemibold',sans-serif !important;
     font-size: 10px;
     line-height: 12px;
     letter-spacing: 0.96px;
@@ -556,7 +556,7 @@ font-weight: bold;
    top: 170px;
    padding-left: 15px;
    padding-right: 15px;
-   font-family:'proxima_novasemibold';
+   font-family:'proxima_novasemibold',sans-serif !important;
 
 }
 
@@ -570,14 +570,14 @@ font-weight: bold;
 
 .bottomDisCriptionTray .left p:first-child {
     margin-bottom: 0px;
-    font-family:'proxima_novasemibold';
+    font-family:'proxima_novasemibold',sans-serif !important;
     font-size: 14px;
     line-height: 17px;
     color: #4D4D4D;
 }
 
 .bottomDisCriptionTray .left p:last-child {
-    font-family:"proxima_novaregular" !important;
+    font-family:"proxima_novaregular", sans-serif !important;
     font-size: 10.4px;
     color: #878686
 }
@@ -585,7 +585,7 @@ font-weight: bold;
 .bottomDisCriptionTray .right p {
     text-align: right;
     font-weight: bold;
-    font-family:'proxima_novasemibold';
+    font-family:'proxima_novasemibold',sans-serif !important;
     font-size: 12px;
     line-height: 14px;
     color: #AB2656;
@@ -595,7 +595,7 @@ font-weight: bold;
 .butRight button {
     background-color: transparent;
     border-radius: 3px;
-    font-family:'proxima_novasemibold';
+    font-family:'proxima_novasemibold',sans-serif !important;
     font-size: 16px;
     line-height: 19px;
     text-align: center;
@@ -646,7 +646,7 @@ font-weight: bold;
 
 .firstSubHead p:nth-child(1) {
     padding-top: 20px;
-    font-family:"proxima_novasemibold";
+    font-family:"proxima_novasemibold" !important;
     font-size: 8px;
     line-height: 10px;
     /* identical to box height, or 125% */
@@ -656,7 +656,7 @@ font-weight: bold;
 }
 
 .firstSubHead p:nth-child(2) {
-    font-family: "proxima_novasemibold";
+    font-family: "proxima_novasemibold", sans-serif !important;
     font-size: 12px;
     line-height: 14px;
     /* identical to box height */
@@ -666,7 +666,7 @@ font-weight: bold;
 }
 
 .firstSubHead p:nth-child(3) {
-    font-family: "proxima_novasemibold";
+    font-family: "proxima_novasemibold", sans-serif !important;
     font-size: 12px;
     line-height: 14px;
     text-align: center;
@@ -702,7 +702,7 @@ font-weight: bold;
 }
 
 .topDiscription .left p {
-    font-family:"proxima_novasemibold";
+    font-family:"proxima_novasemibold" ,sans-serif !important;
     font-size: 8px;
     line-height: 10px;
     color: #A90836;
@@ -710,7 +710,7 @@ font-weight: bold;
 }
 
 .topDiscription .right p {
-    font-family:"proxima_novasemibold";
+    font-family:"proxima_novasemibold",sans-serif !important;
   font-size: 10px;
   line-height: 12px;
   text-align: right;
@@ -724,7 +724,7 @@ font-weight: bold;
 }
 
 .bottomDiscription .left p:nth-child(1) {
-    font-family:"proxima_novasemibold";
+    font-family:"proxima_novasemibold",sans-serif !important;
     font-size: 10px;
     line-height: 14px;
     color: #4D4D4D;
@@ -733,7 +733,7 @@ font-weight: bold;
 .bottomDiscription .left p {
     color: #4D4D4D;
     font-size: 12px;
-    font-family:"proxima_novaregular";
+    font-family:"proxima_novaregular",sans-serif !important;
 }
 
 .bottomDiscription .right p:nth-child(1) {
@@ -763,7 +763,7 @@ font-weight: bold;
     width: 100%;
     background: #AB2656;
     border-radius: 3px;
-    font-family:"proxima_novasemibold";
+    font-family:"proxima_novasemibold",sans-serif !important;
     font-size: 16px;
     line-height: 19px;
     /* identical to box height */
@@ -784,7 +784,7 @@ font-weight: bold;
     padding-top: 20px;
     font-size: 12px;
     color: #444444;
-    font-family:"proxima_novasemibold";
+    font-family:"proxima_novasemibold",sans-serif !important;
 }
 
 .navRight p {
@@ -826,7 +826,7 @@ font-weight: bold;
 }
 
 .moreDetails .left p:first-child, .moreDetails .right p:first-child, .moreDetails .middle p:first-child {
-font-family:"proxima_novasemibold";
+font-family:"proxima_novasemibold",sans-serif !important;
 font-size: 14px;
 line-height: 17px;
 /* identical to box height */
@@ -837,13 +837,13 @@ color: #4D4D4D;
 }
 
 .moreDetails .left p:last-child, .moreDetails .right p:last-child, .moreDetails .middle p:last-child {
-    font-family:"proxima_novaregular";
+    font-family:"proxima_novaregular",sans-serif !important;
     font-size: 11px;
     color: #878686;
     }
 
 .butProgBar {
-    font-family:"proxima_novaregular";
+    font-family:"proxima_novaregular",sans-serif !important;
     font-size: 10px !important; 
     color: #717171 !important;
 }
@@ -897,7 +897,7 @@ color: #4D4D4D;
 }
 
 .listedItems p:first-child {
-    font-family:"proxima_novasemibold";
+    font-family:"proxima_novasemibold",sans-serif !important;
     font-size: 14px;
     line-height: 17px;
     color: #FFFFFF;
@@ -936,21 +936,21 @@ color: #4D4D4D;
 }
 
 .listedItems p:last-child {
-    font-family:"proxima_novasemibold";
+    font-family:"proxima_novasemibold",sans-serif !important;
     font-size: 12px;
     line-height: 14px;
     color: #9C9C9C;
 }
 
 .listedItemMembers .left p {
-    font-family:"proxima_novasemibold";
+    font-family:"proxima_novasemibold",sans-serif !important;
     font-size: 14px;
     line-height: 17px;
     color: #444444;
 }
 
 .listedItemMembers .right  p:first-child {
-    font-family:"proxima_novasemibold";
+    font-family:"proxima_novasemibold",sans-serif !important;
     font-size: 14px;
     line-height: 17px;
     text-align: right;
@@ -967,7 +967,7 @@ color: #4D4D4D;
 #manageButton {
     margin-top: 30px;
     color: #444444;
-    font-family:"proxima_novasemibold";
+    font-family:"proxima_novasemibold",sans-serif !important ;
     font-size: 12px;
     line-height: 14px;
     text-align: center;
@@ -979,7 +979,7 @@ color: #4D4D4D;
     text-align: center;
     margin-top: 70px;
     margin-bottom: 30px;
-    font-family:"proxima_novasemibold";
+    font-family:"proxima_novasemibold",sans-serif !important;
     font-size: 16px;
     line-height: 24px;
     text-align: center;
@@ -1007,12 +1007,12 @@ color: #4D4D4D;
 
 #autoSummary .right p:first-child { 
     padding-top: 10px;
-    font-family: "proxima_novaregular";
+    font-family: "proxima_novaregular",sans-serif !important;
 }
 
 #autoSummary .left p:first-child { 
     padding-top: 20px;
-    font-family:"proxima_novasemibold";
+    font-family:"proxima_novasemibold",sans-serif !important;
 
 }
 
@@ -1025,7 +1025,7 @@ color: #4D4D4D;
     justify-content: center;
     margin: auto;
     margin-left: 20%;
-    font-family:"proxima_novasemibold";
+    font-family:"proxima_novasemibold",sans-serif !important;
     font-size: 20px;
     line-height: 24px;
     text-align: center;
@@ -1058,7 +1058,7 @@ color: #4D4D4D;
 
 #firstPoint{
 
-    font-family:"proxima_novasemibold";
+    font-family:"proxima_novasemibold",sans-serif !important;
     font-size: 8px;
     line-height: 10px;
     text-transform: uppercase;
@@ -1070,7 +1070,7 @@ color: #4D4D4D;
 
 
 #secondPoint {
-    font-family:"proxima_novasemibold";
+    font-family:"proxima_novasemibold",sans-serif !important;
     font-size: 14px;
     line-height: 17px;
     color: #4D4D4D;
@@ -1078,7 +1078,7 @@ color: #4D4D4D;
 }
 
 #thirdPoint {
-    font-family:"proxima_novasemibold";
+    font-family:"proxima_novasemibold",sans-serif !important;
     font-size: 10px;
     line-height: 12px;
     color: #717171;
@@ -1120,7 +1120,7 @@ color: #4D4D4D;
 }
 
 .perc {
-    font-family:'proxima_novasemibold' !important;
+    font-family:'proxima_novasemibold',sans-serif !important;
     font-size: 12px !important;
     text-transform: lowercase !important;
 }
