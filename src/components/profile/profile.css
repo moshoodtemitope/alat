@@ -1,0 +1,185 @@
+
+form {
+    background-color: white;
+}
+
+.coverPropertiesofComponent {
+    width: 100%;
+}
+
+.packageContent input {
+    width: 80%;
+    margin-left: 20%;
+}
+
+.packageContent label {
+    margin-left: 20%;
+}
+
+.tickItems {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.tickItems p {
+    margin-left: 15px;
+    padding-bottom: 10px;
+    font-family: 'proxima_novasemibold' sans-serif;
+    font-size: 14px;
+    line-height: 17px;
+    color: #4D4D4D;
+}
+
+.tickItems img {
+    margin-left: 20px;
+}
+
+.packageContent .parentForm {
+    padding-bottom: 50px;
+    padding-top: 20px;
+    background: #FFFFFF;
+    border: 1px solid #EDEDED;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
+    border-radius: 6px;
+}
+
+.parentForm .twoBut{
+    background-color: #AB2656;
+    border-radius: 3px;
+    width: 185px;
+    height: 45px;
+    color: white;
+}
+
+.forProfilePicture {
+    background-color:white;
+    padding-top: 40px;
+    padding-bottom: 50px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
+    border-radius: 6px;
+}
+
+.forProfilePicture .detials {
+    font-family: 'proxima_novasemibold' sans-serif;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #666666; 
+}
+
+.forProfilePicture .personsName {
+    font-family: 'proxima_novasemibold' sans-serif;
+    font-size: 18px;
+    line-height: 22px;
+    color: #4D4D4D;
+    font-weight: bold;
+}
+
+.profilePixCircle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: black;
+    margin-left: 37%;
+    margin-bottom: 10px;
+}
+
+.forProfilePicture p {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.parentForm .twoBut1{
+    background-color: transparent;
+    border-radius: 3px;
+    width: 185px;
+    height: 45px;
+    color: #AB2656;
+    border: 1px solid #AB2656;
+    /* margin-left: 1%; */
+}
+
+.parentForm .forTwoButtons {
+    margin-left: 17%;
+}
+
+.parentForm .formHeading{
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.person-card {
+    border: 1px solid #ededed;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
+    border-radius: 6px;
+    margin-left: 44px;
+    padding-top: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .get-width {
+    padding-top: 50px;
+  }
+  
+  .text-format {
+    color: #4d4d4d;
+    font-size: 18px;
+    font-family: "Proxima Nova";
+  }
+  
+  .text-format-2 {
+    color: #666666;
+    font-size: 14px;
+    margin-top: 5px;
+    font-family: "Proxima Nova";
+  }
+  
+  .text-format-3 {
+    color: #666666;
+    font-size: 18px;
+    margin-top: 6px;
+    font-family: "Proxima Nova";
+  }
+  
+  .imag-size {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+  }
+  
+  .get-center {
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .bg-color {
+    background-color: white;
+  }
+  
+  .hr {
+    margin-top: 29px;
+    margin-bottom: 29px;
+  }
+  
+  .wrapper {
+    margin-left: 30px;
+  }
+  
+  .list-item-action {
+    font-family: "Proxima Nova";
+    font-size: 17px;
+    line-height: 17px;
+    color: #4d4d4d;
+    margin-bottom: 17px;
+  }
+  
+  .margin-right {
+    margin-right: 10px;
+  }
+  
+  .img-style {
+    margin-bottom: 4px;
+  }

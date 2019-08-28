@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import InnerContainer from '../../shared/templates/inner-container';
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import LinkBvN from './link-bvn';
+
 // import LifeStyle from '../lifestyle/lifestyle-movie/movie';
 // import LifestylePreference from "../lifestyle/lifestyle-preference/preference";
 // import LifeStyleEvent from "../lifestyle/lifestyle-event/event";
@@ -24,7 +25,8 @@ class ProfileIndex extends Component {
                         <div className="container">
                             <div className="row">
                                 {this.props.children}
-                                <Route path={'/linkBVN'} exact component={LinkBvN} />
+                                <Route exact path={'/linkBVN'} exact component={LinkBvN} />
+                                <Route path={'/linkBVNR'} exact component={LinkBvN} />
                                 {/* <Route path={'/lifestyle'} exact component={LifeStyle} />
                                 <Route path={'/lifestyle/movie'} exact component={LifeStyle} />
                                 <Route path={'/lifestyle/event'} component={LifeStyleEvent} />
@@ -35,7 +37,7 @@ class ProfileIndex extends Component {
                             </div>
                         </div>
                     </div>
-                </InnerContainer>
+                </InnerContainer>   
             </Fragment>
         );
     }

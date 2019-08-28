@@ -1,28 +1,27 @@
 import React, { Component } from 'react';
-import * as actions from '../../redux/actions/onboarding/loan.actions';
-import { SuccessMessage } from './success-message-parent';
 import "./profile.css";
+import DatePicker from "react-datepicker";
+import * as actions from '../../redux/actions/profile/profile-action';
 import {Fragment} from "react";
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
-class SuccessParentComp extends Component {
+
+class LinkBvN extends Component {
    constructor(props){
        super(props);
        this.state = {
+        
        }
    }
 
-   componentDidMount = () => {
-       setTimeout(function(){
-           
-       }, 2000000);
-   }
+  
+
+
 
    render(){
+       
        return(
            <Fragment>
-
-
-                <div>
+                <div className="coverPropertiesofComponent">
                     <div className="col-sm-12">
                         <p className="page-title">Account Setting</p>
                     </div>
@@ -34,22 +33,27 @@ class SuccessParentComp extends Component {
                                     <li><NavLink to={'/lifestyle/movie'}>Profile</NavLink></li>
                                     <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
                                     <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
-                                </ul> 
+                                </ul>
                             </div>
                         </div>
                     </div>
-                    {/* {this.renderEvent(userEvent)} */}
+                  
+                   <div className="row packageContent">
+                       <div className="col-sm-4">
+                          
+                       </div>
+                       <div className="col-sm-6">
+                       <form onSubmit={this.HandleSubmit} className="parentForm">
+                           
+                         
+                           
+                        </form>
+                    
+                       </div>
+                   </div>
 
-                    <div>
-                        <div className="form-row">
-                                <div className="form-group">
-                                        <SuccessMessage 
-                                        message={"Success"}
-                                        />
-                                </div>
-                        </div>
-                        
-                    </div>
+                   
+                       
        
                 </div>
             </Fragment>
@@ -57,4 +61,4 @@ class SuccessParentComp extends Component {
    }
 }
 
-export default SuccessParentComp;
+export default LinkBvN;

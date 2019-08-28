@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './profile.css';
 // import * as actions from '../../../../redux/actions/profile/profile-action';
 import * as actions from '../../redux/actions/onboarding/loan.actions';
+import {Fragment} from "react";
+import { Link, NavLink, Route, Switch } from 'react-router-dom';
 
 class ProfileLanding extends Component {
    constructor(props){
