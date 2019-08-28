@@ -24,6 +24,7 @@ class Moviedetails extends React.Component {
             adultAmount: 0,
             studentAmount: 0,
             childAmount: 0,
+            childrenAmount:0,
             initialAdultAmount: 0,
             initialStudentAmount: 0,
             initialChildAmount: 0,
@@ -153,9 +154,9 @@ class Moviedetails extends React.Component {
         console.log(childrenAmount);
         console.log(studentAmount);
         console.log('oooooooooooooooooooooooooooooooooooo');
-        this.setState({initialStudentAmount: studentAmount});
-        this.setState({initialAdultAmount: adultAmount});
-        this.setState({initialChildAmount: childrenAmount});
+        this.setState({initialStudentAmount: studentAmount, studentAmount});
+        this.setState({initialAdultAmount: adultAmount,adultAmount});
+        this.setState({initialChildAmount: childrenAmount,childrenAmount});
     }
 
     UseSelectedItem = (event) => {
@@ -236,7 +237,7 @@ class Moviedetails extends React.Component {
                                     style={{
                                         width: 168,
                                         height: 226,
-                                        BorderRadius:"3px"
+                                        borderRadius:"3px"
 
                                     }}
                                 />
@@ -542,7 +543,7 @@ class Moviedetails extends React.Component {
                                             fontSize: 14
                                         }}
                                     >
-                                        {this.state.childAmount}
+                                        {this.state.childrenAmount}
                                     </div>
                                 </div>
                             </div>
