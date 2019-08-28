@@ -1,7 +1,8 @@
 //
-// in app loan specific reducer
+// in-app loan specific reducer
 //
 import { loanConstants } from '../constants/loans/loans.constants';
+import { userConstants} from '../constants/onboarding/user.constants';
 
 export function loanCalcDataReducer(state = {}, action) {
     switch (action.type) {
@@ -321,6 +322,54 @@ export function continueApplication(state = {}, action) {
             return {
                 loan_app_status: loanConstants.LOAN_CONTINUE_APPLICATION,
                 loan_app_data: action
+            };
+        default:
+            return{
+                ...state,
+            };
+    }
+}
+
+export function PassportReducer(state = {}, action) {
+    switch (action.type) {
+        case userConstants.PASSPORT_UPLOAD_SUCCESS:
+            return {
+                passport_status: userConstants.PASSPORT_UPLOAD_SUCCESS,
+                passport_data: action
+            };
+        case userConstants.PASSPORT_UPLOAD_PENDING:
+            return {
+                passport_status: userConstants.PASSPORT_UPLOAD_PENDING,
+                passport_data: action
+            };
+        case userConstants.PASSPORT_UPLOAD_FAILURE:
+            return {
+                passport_status: userConstants.PASSPORT_UPLOAD_FAILURE,
+                passport_data: action
+            };
+        default:
+            return{
+                ...state,
+            };
+    }
+}
+
+export function SignatureReducer(state = {}, action) {
+    switch (action.type) {
+        case userConstants.SIGNATURE_UPLOAD_SUCCESS:
+            return {
+                sign_status: userConstants.SIGNATURE_UPLOAD_SUCCESS,
+                sign_data: action
+            };
+        case userConstants.SIGNATURE_UPLOAD_PENDING:
+            return {
+                sign_status: userConstants.SIGNATURE_UPLOAD_PENDING,
+                sign_data: action
+            };
+        case userConstants.SIGNATURE_UPLOAD_FAILURE:
+            return {
+                sign_status: userConstants.SIGNATURE_UPLOAD_FAILURE,
+                sign_data: action
             };
         default:
             return{

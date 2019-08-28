@@ -53,7 +53,9 @@ class LoansDashboard extends React.Component {
 		if(this.props.loan_reject){
 			if(this.props.loan_reject.loan_reject_status == loanConstants.LOAN_REJECT_SUCCESS){
                 this.props.dispatch(LoanActions.clearLoanOnboardingStore());
-               window.location.reload();
+                this.props.history.push('/loans/salary/calc');
+               //window.location.reload();
+              // this.setState();
 			}
 		}
 	}
@@ -267,14 +269,13 @@ class LoansDashboard extends React.Component {
                                 </div>
                                 <div style={{ border: "0.8px solid #F1F1F1", marginBottom: "10px" }}></div>
                                 <div className="shd-amt center-space">
-                                    <p className="text-grey-center">You have a pending loan setup. click proceed to continue from where you
-												stopped.</p>
+                                    <p className="text-grey-center">{this.state.pendingLoanApplication.StatusMessage}</p>
 
                                 </div>
                             </div>
                             }
                             {this.state.pendingLoanApplication != null && <Fragment>
-                                <input type="button" value="Proceed" onClick={this.continueApplication} className="btn-alat btn-block" />
+                                <input type="button" value="Proceed" disabled={!this.state.pendingLoanApplication.ProceedActive} onClick={this.continueApplication} className="btn-alat btn-block" />
                                 <input type="button" value={this.props.loan_reject.loan_reject_status == loanConstants.LOAN_REJECT_PENDING ? "Processing..." : "Discard Loan Application"} onClick={this.discardLoan}
                                     className="btn-alat btn-block btn-alat-outline" />
                             </Fragment>

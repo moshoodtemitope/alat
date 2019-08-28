@@ -128,7 +128,9 @@ const loansReducer = combineReducers({
     loanMandate: loans.loanMandateStatusReducer,
     loanValRemOtp: loans.loanValidateRemitaOtpReducer,
     loanStament: loans.loanStatementUpload,
-    loanAppStatus: loans.continueApplication
+    loanAppStatus: loans.continueApplication,
+    passport: loans.PassportReducer,
+    signature: loans.SignatureReducer,
 })
 
 const appReducer = combineReducers({
