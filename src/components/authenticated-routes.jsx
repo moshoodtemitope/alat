@@ -20,6 +20,9 @@ import FundAccountIndex from './fund-account/index';
 import AccountSettings from './account-settings/container';
 import LoansIndex from './loans';
 import ProfileIndex from './profile';
+import LinkBvN from './profile/link-bvn';
+import ProfileSuccessMessage from './profile/success-message';
+import PersonalInfoMation from './profile/personal-info';
 
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
@@ -67,7 +70,10 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path='/loans' authed={this.props.user} component={LoansIndex}/>
                     <PrivateRoute path='/account' authed={this.props.user} component={Accounts}/>
                     <PrivateRoute path='/settings' authed={this.props.user} component={AccountSettings}/>
-                    <PrivateRoute path='/linkBVN' authed={this.props.user} component={ProfileIndex} />
+                    <PrivateRoute path='/default-page' authed={this.props.user} component={ProfileIndex} />
+                    <PrivateRoute path="/linkBVN" authed={this.props.user} component={LinkBvN} />
+                    <PrivateRoute path="/profile-success-message" authed={this.props.user} component={ProfileSuccessMessage} />
+                    <PrivateRoute path="/profile-personalInfo" authed={this.props.user} component={PersonalInfoMation} />
                 </Switch>
             </Router>
             
