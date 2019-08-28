@@ -21,7 +21,7 @@ import {
 const industriesOptions = [
 ];
 const _employerList = [];
-const options = [];
+//const options = [];
 
 class SalaryDetails extends React.Component {
     constructor(props) {
@@ -98,7 +98,7 @@ class SalaryDetails extends React.Component {
                 );
             case FETCH_BANK_SUCCESS:
                 let banksList = props.bankList.banks_data.response.Response;
-                //var options = [];
+                var options = [];
                 for (var bank in banksList) {
                     options.push({ value: banksList[bank].Id, label: banksList[bank].Name });
                 }
@@ -179,6 +179,7 @@ class SalaryDetails extends React.Component {
                 if(data.response){
                 if (data.response.Response.NextScreen == 0) { return (<Redirect to={this.props.ticketUrl} />) }
                 //this.props.history.push("/loan/ticket");
+                if(data.response.Response.NextScreen == 1){ return (<Redirect to={this.props.statementUploadUrl} />) }
 
                 if (data.response.Response.NextScreen == 2) return (<Redirect to={this.props.salaryEntryUrl} />)
                 }

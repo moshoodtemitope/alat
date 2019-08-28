@@ -42,13 +42,14 @@ class ScoreResult extends React.Component {
 	}
 	
 	declineClikc =()=>{
-		this.props.dispatch(actions.clearLoanOnboardingStore());
+		//this.props.dispatch(actions.clearLoanOnboardingStore());
 		this.props.dispatch(LoanActions.loanReject(this.state.user.token)); //What should be done after firing reject loan
 	}
 
 	declineAction =()=>{
 		if(this.props.loan_reject){
 			if(this.props.loan_reject.loan_reject_status == loanConstants.LOAN_REJECT_SUCCESS){
+				this.props.dispatch(LoanActions.clearLoanOnboardingStore());
 				this.props.gotoPreviousPageMethod();
 			}
 		}
@@ -86,7 +87,7 @@ class ScoreResult extends React.Component {
 										<br/>
 										<b>Monthly Repayment:  {this.state.loanDetails.MonthlyRepaymentAmount}</b>
 									</p>
-									<p>Click Accept to proceed</p></Fragment>}
+									<p>Click Continue to proceed</p></Fragment>}
 
 								{!this.returnScoreCardSuccessStatus() && <Fragment><p>Apologies!!! loan was not granted</p>
 									<p>Click Done to proceed</p></Fragment>}

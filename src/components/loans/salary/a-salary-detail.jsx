@@ -28,7 +28,7 @@ class LoanSalaryDetail extends React.Component{
         if(this.props.loan_apply.loan_apply_status == loanConstants.LOAN_APPLY_SUCCESS){
          
         }else {
-           // this.props.history.push('/loans/salary/calc');
+            this.props.history.push('/loans/salary/calc');
         }
     }
 
@@ -38,6 +38,7 @@ class LoanSalaryDetail extends React.Component{
              token={this.state.user.token}
              ticketUrl={'/loans/salary/ticket'}
              salaryEntryUrl={'/loans/salary/entry'}
+             statementUploadUrl={'/loans/salary/statement-upload'}
             />
         );
     }

@@ -15,29 +15,29 @@ class LoanTerms extends React.Component {
 
     }
 
-    gotoPreviousPage=()=>{
+    PgotoPreviousPage=()=>{
         this.props.history.push('/loans')
     }
 
-    NavigateToWema=()=>{
+    PNavigateToWema=()=>{
         this.props.history.push('/loans/salary/wema-setup');
     }
 
-    NavigateToRemitaOtpSetup=()=>{
+    PNavigateToRemitaOtpSetup=()=>{
         this.props.history.push("/loans/salary/remita-otp")
     }
 
-    NavigateToRemitaBankSetup=()=>{
+    PNavigateToRemitaBankSetup=()=>{
         this.props.history.push('/loans/salary/remita-mandate');
     }
 
     render() {
         return (<Fragment>
             <LoanTermsComponent
-                NavigateToWema={this.NavigateToWema}
-                NavigateToRemitaOtpSetup = {this.NavigateToRemitaOtpSetup}
-                NavigateToRemitaBankSetup= { this.NavigateToRemitaBankSetup}
-                NavigateToPreviousPage= { this.gotoPreviousPage}
+                NavigateToWema={this.PNavigateToWema}
+                NavigateToRemitaOtpSetup = {this.PNavigateToRemitaOtpSetup}
+                NavigateToRemitaBankSetup= { this.PNavigateToRemitaBankSetup}
+                NavigateToPreviousPage= { this.PgotoPreviousPage}
             />
         </Fragment>);
     }

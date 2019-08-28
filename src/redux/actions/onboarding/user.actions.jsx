@@ -86,7 +86,10 @@ function logout() {
     localStorage.clear();
     history.push('/');
     // window.location.reload();
-    return { type: userConstants.LOGOUT };
+    return (dispatch)=>{
+    dispatch(logout());
+    }
+    function logout() {return { type: userConstants.LOGOUT }}
 }
 
 function skipBvn(bvnDetails){
