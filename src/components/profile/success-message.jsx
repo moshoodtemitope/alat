@@ -3,6 +3,7 @@ import "./profile.css";
 import DatePicker from "react-datepicker";
 import * as actions from '../../redux/actions/profile/profile-action';
 import {Fragment} from "react";
+import {history} from '../../_helpers/history';
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import InnerContainer from '../../shared/templates/inner-container';
 
@@ -12,6 +13,12 @@ class ProfileSuccessMessage extends Component {
        this.state = {
           user: JSON.parse(localStorage.getItem("user")),
        }
+   }
+
+   componentDidMount = () => {
+       setTimeout(function(){
+          history.push('/default-page');
+       }, 3000)
    }
 
 
