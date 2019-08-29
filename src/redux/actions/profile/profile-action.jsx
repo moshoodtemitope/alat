@@ -53,7 +53,8 @@ export const profileMenu = (token) => {
 
 export const profileSuccessMessage = (data) =>{
     return(dispatch)=>{
-        dispatch(success(data))
+        dispatch(success(data));
+        history.push('/profile-success-message');
     }
     function success(data){
         return{
