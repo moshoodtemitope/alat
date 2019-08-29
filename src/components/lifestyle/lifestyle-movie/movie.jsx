@@ -4,6 +4,8 @@ import '../movie-preference-event.css'
 import * as utils from "../../../shared/utils";
 import {Link, NavLink} from "react-router-dom";
 import {Fragment} from "react";
+import InnerContainer from '../../../shared/templates/inner-container';
+
 // import clock from '../../../assets/img/clockIcon'
 import {listStyleConstants} from '../../../redux/constants/lifestyle/lifestyle-constants';
 import { FetchMovie,getCinemaList,buyMovieTicket } from "../../../redux/actions/lifestyle/movies-actions";
@@ -136,7 +138,7 @@ class Movie extends Component {
 
         return(
             <Fragment>
-
+                <InnerContainer>
 
                 <div>
                     <div className="col-sm-12">
@@ -191,6 +193,7 @@ class Movie extends Component {
                     }
 
                 </div>
+                </InnerContainer>
             </Fragment>
 
 

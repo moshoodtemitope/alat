@@ -3,7 +3,9 @@ import { connect } from "react-redux";
 import '../movie-preference-event.css'
 import {Link, NavLink} from "react-router-dom";
 import {Fragment} from "react";
-import moment from 'moment'
+import moment from 'moment';
+import InnerContainer from '../../../shared/templates/inner-container';
+
 
 import {listStyleConstants} from '../../../redux/constants/lifestyle/lifestyle-constants';
 import {getEvents} from "../../../redux/actions/lifestyle/movies-actions"
@@ -83,6 +85,7 @@ class Event extends Component {
             // let userMovies = this.state.filtered;
 
             return(
+
                 <div className="eventTrays">
                     {userEvents.map(function(event, index){
                         return(
@@ -112,6 +115,7 @@ class Event extends Component {
                         );
                     })}
                 </div>
+
             );
         }
     }
@@ -123,26 +127,28 @@ class Event extends Component {
 
         return(
             <Fragment>
+                {/* <InnerContainer> */}
 
+                    <div>
+                        <div className="col-sm-12">
+                            <p className="page-title">LifeStyle</p>
+                        </div>
 
-                <div>
-                    <div className="col-sm-12">
-                        <p className="page-title">LifeStyle</p>
-                    </div>
-
-                    <div className="col-sm-12">
-                        <div>
-                            <div className="sub-tab-nav" style={{marginBottom: 10}}>
-                                <ul>
-                                    <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/event'}>Event</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li>
-                                </ul>
+                        <div className="col-sm-12">
+                            <div>
+                                <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                    <ul>
+                                        <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
+                                        <li><NavLink to={'/lifestyle/event'}>Event</NavLink></li>
+                                        <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
+                        {this.renderEvent(userEvent)}
                     </div>
-                    {this.renderEvent(userEvent)}
-                </div>
+                {/* </InnerContainer> */}
+
             </Fragment>
 
 

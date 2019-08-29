@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import {listStyleConstants} from "../../../redux/constants/lifestyle/lifestyle-constants";
 import {Redirect} from 'react-router-dom'
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
-import {getCinemaList,} from '../../../redux/actions/lifestyle/movies-actions'
+import {getCinemaList,} from '../../../redux/actions/lifestyle/movies-actions';
+
 
 
 class EventDetails extends React.Component {
