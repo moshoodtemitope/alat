@@ -15,6 +15,7 @@ import { TRANSFER_REDUCER_CLEAR } from "../constants/transfer.constants";
 import { fundAccountConstants } from "../constants/fund-account/fund-account.constant";
 import { loanOnboardingConstants } from '../constants/onboarding/loan.constants';
 import { loanConstants } from '../constants/loans/loans.constants';
+import movie from "../../components/lifestyle/lifestyle-movie/movie";
 //import { saveCardReducer } from "./fund-account.reducer";
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
@@ -165,6 +166,8 @@ const appReducer = combineReducers({
     ShowTime:movies.ShowTime,
     SubmitTicketData:movies.SubmitTicketData,
     SubmitEventTicketData:movies.SubmitEventTicketData,
+    SearchfetchMovieList:movies.SearchfetchMovieList,
+    SearchfetchEventList:movies.SearchfetchEventList,
 
     //EVENTS
     getEvents: movies.getEvents,

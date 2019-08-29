@@ -164,6 +164,52 @@ export function fetchMovieList(state=[], action){
             return {... state}
     }
 }
+export function SearchfetchMovieList(state=[], action){
+    switch(action.type){
+
+        case listStyleConstants.SEARCH_FETCH_MOVIE_PENDING:
+            return {
+                message: listStyleConstants.SEARCH_FETCH_MOVIE_PENDING,
+                data: action
+            };
+        case listStyleConstants.SEARCH_FETCH_MOVIE_SUCCESS:
+            return {
+                message: listStyleConstants.SEARCH_FETCH_MOVIE_SUCCESS,
+                data: action
+            };
+        case listStyleConstants.SEARCH_FETCH_MOVIE_FAILURE:
+            return {
+                message: listStyleConstants.SEARCH_FETCH_MOVIE_FAILURE,
+                data: action
+            };
+        default:
+            return {... state}
+    }
+}
+export function SearchfetchEventList(state=[], action){
+    switch(action.type){
+
+        case listStyleConstants.SEARCH_FETCH_EVENT_PENDING:
+            return {
+                message: listStyleConstants.SEARCH_FETCH_EVENT_PENDING,
+                data: action
+            };
+        case listStyleConstants.SEARCH_FETCH_EVENT_SUCCESS:
+            return {
+                message: listStyleConstants.SEARCH_FETCH_EVENT_SUCCESS,
+                data: action
+            };
+        case listStyleConstants.SEARCH_FETCH_EVENT_FAILURE:
+            return {
+                message: listStyleConstants.SEARCH_FETCH_EVENT_FAILURE,
+                data: action
+            };
+        default:
+            return {... state}
+    }
+}
+
+
 
 export function getAllEngagements(state=[], action){
     switch(action.type){

@@ -7,10 +7,10 @@ import {modelStateErrorHandler} from "../../../shared/utils";
 
 
 
-export const FetchMovie = (token) => {
+export const FetchMovie = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.FETCH_MOVIES_LIST, "GET", null, SystemConstant.HEADER, false);
+        let consume = ApiService.request(routes.FETCH_MOVIES_LIST, "GET", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
@@ -27,11 +27,32 @@ export const FetchMovie = (token) => {
     function failure(error) { return {type:listStyleConstants.GET_MOVIE_LIST_FAILURE, error} }
 };
 
-
-export const getCinemaList = (token) => {
+export const SearchFetchMovie = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.FETCH_MOVIE_CINEMAS, "GET", null, SystemConstant.HEADER, false);
+        let consume = ApiService.request(routes.FETCH_MOVIES_LIST + "&" + 'search=' + data, "GET", data, SystemConstant.HEADER, false);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                // consume.log(response);
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function request(request) { return { type:listStyleConstants.SEARCH_FETCH_MOVIE_PENDING, request} }
+    function success(response) { return {type:listStyleConstants.SEARCH_FETCH_MOVIE_SUCCESS, response} }
+    function failure(error) { return {type:listStyleConstants.SEARCH_FETCH_MOVIE_FAILURE, error} }
+};
+
+
+
+export const getCinemaList = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.FETCH_MOVIE_CINEMAS, "GET", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
@@ -203,5 +224,27 @@ export const SubmitEventTicketData =(data) =>{
         }
     }
 }
+
+
+export const SearchFetchEvent = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.GET_EVENTS + "&" + 'search=' + data, "GET", data, SystemConstant.HEADER, false);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                // consume.log(response);
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function request(request) { return { type:listStyleConstants.SEARCH_FETCH_EVENT_PENDING, request} }
+    function success(response) { return {type:listStyleConstants.SEARCH_FETCH_EVENT_SUCCESS, response} }
+    function failure(error) { return {type:listStyleConstants.SEARCH_FETCH_EVENT_FAILURE, error} }
+};
+
 
 

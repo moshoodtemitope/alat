@@ -4,9 +4,7 @@ import '../movie-preference-event.css'
 import {Link, NavLink} from "react-router-dom";
 import {Fragment} from "react";
 import moment from 'moment';
-import InnerContainer from '../../../shared/templates/inner-container';
-
-
+import * as actions from '../../../redux/actions/lifestyle/movies-actions';
 import {listStyleConstants} from '../../../redux/constants/lifestyle/lifestyle-constants';
 import {getEvents} from "../../../redux/actions/lifestyle/movies-actions"
 
@@ -18,11 +16,10 @@ class Event extends Component {
         super(props);
         this.state={
             user: JSON.parse(localStorage.getItem("user")),
-            filtered: []
+            event:null,
 
         };
         console.log("state",this.state);
-        // this.handleChange = this.handleChange.bind(this);
         this.fetchEventList()
     }
     fetchEventList(){
@@ -30,43 +27,73 @@ class Event extends Component {
         dispatch(getEvents(this.state.user.token));
     };
 
-    // handleChange(e) {
-    //     // Variable to hold the original version of the list
-    //     let currentList = [];
-    //     // Variable to hold the filtered list before putting into state
-    //     let newList = [];
-    //
-    //     // If the search bar isn't empty
-    //     if (e.target.value !== "") {
-    //         // Assign the original list to currentList
-    //         currentList = this.props.getMovieList.data.response;
-    //         console.log("list",currentList);
-    //
-    //         // Use .filter() to determine which items should be displayed
-    //         // based on the search terms
-    //         newList = currentList.filter(item => {
-    //             // change current item to lowercase
-    //             const lc = item.toString().toLowerCase();
-    //             // change search term to lowercase
-    //             const filter = e.target.value.toString().toLowerCase();
-    //             // check to see if the current list item includes the search term
-    //             // If it does, it will be added to newList. Using lowercase eliminates
-    //             // issues with capitalization in search terms and search content
-    //             return lc.includes(filter);
-    //         });
-    //     } else {
-    //         // If the search bar is empty, set newList to original task list
-    //         newList = this.props.getMovieList.data.response;
-    //     }
-    //     // Set the filtered state based on what our rules added to newList
-    //     this.setState({
-    //         filtered: newList
-    //
-    //
-    //     });
-    //
-    // }
+    search = async data => {
+        this.props.dispatch(actions.SearchFetchEvent(this.state.user.token, data))
+        const event = await this.props.SearchfetchEventList.data.response.eventList;
     
+        this.setState({ event });
+      };
+    
+    
+    onChangeHandler = async e => {
+        this.search(e.target.value);
+        this.setState({ value: e.target.value });
+
+        
+    };
+    renderEventSeach(){
+        let user = this.state.user;
+        let props = this.props;
+        let SearchfetchEventList = props.SearchfetchEventList;
+        if(SearchfetchEventList.message === listStyleConstants.SEARCH_FETCH_EVENT_PENDING){
+            return  <h4 className="text-center">Loading Event...</h4>;
+        }
+        else if(SearchfetchEventList.message === listStyleConstants.SEARCH_FETCH_EVENT_FAILURE){
+            return(
+                <h4 className="text-center" style={{ marginTop: '65px'}}>No Event Found</h4>
+            );
+        }
+        else if (SearchfetchEventList.message === listStyleConstants.SEARCH_FETCH_EVENT_SUCCESS){
+            let userEvents = SearchfetchEventList.data.response.eventList;
+            // let userMovies = this.state.filtered;
+
+            return(
+
+                <div className="eventTrays">
+                    {userEvents.map(function(event, index){
+                        return(
+                            <div className="eventCards" key={index}>
+                                <Link to={{
+                                    pathname:"/lifestyle/event-details",
+                                    state:{
+                                        details:event
+                                    }
+                                }}>
+                                    <div className="picCard" style={{backgroundImage: 'url("'+event.thumbnailImage+'")'}}>
+                                    </div>
+                                </Link>
+
+                                <div className="boldHeader">{event.title.toString().length > 15 ? event.title.toString().substring(0, 15)+"...": event.title.toString()}</div>
+                                <div id="disc">{ event.location.toString().length > 30 ? event.location.toString().substring(0, 30)+"...": event.location.toString() }</div>
+                                <div className="details">
+                                    <div className="left">
+                                        <i></i>
+                                    </div>
+                                    <div className="right">
+                                        <div style={{fontSize: 12}}> {moment(event.date).format('MMMM DD, h:mm:ss a')}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        );
+                    })}
+                </div>
+
+            );
+        }
+
+    }
+
 
     renderEvent(){
         let user = this.state.user;
@@ -119,6 +146,16 @@ class Event extends Component {
             );
         }
     }
+    resultu = () => {
+        if (this.state.event !== null && this.state.event !== "") {
+            return this.renderEventSeach();
+        }
+        else {
+            return this.renderEvent(); 
+        }
+        
+
+    }
 
 
 
@@ -127,9 +164,8 @@ class Event extends Component {
 
         return(
             <Fragment>
-                {/* <InnerContainer> */}
 
-                    <div>
+                    <div className="row" style={{justifyContent: "center"}}>
                         <div className="col-sm-12">
                             <p className="page-title">LifeStyle</p>
                         </div>
@@ -141,13 +177,17 @@ class Event extends Component {
                                         <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
                                         <li><NavLink to={'/lifestyle/event'}>Event</NavLink></li>
                                         <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li>
+                                        
+                                        <li style={{float:"right"}}>
+                                            {/* <label>Search by keyword</label> */}
+                                            <input style={{width:"100%",height:"30px", marginTop:14, float:'right'}} type="text" placeholder="search ..." value={this.state.value} onChange={ e => this.onChangeHandler(e)}/></li>
+
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                        {this.renderEvent(userEvent)}
+                        {this.resultu()}
                     </div>
-                {/* </InnerContainer> */}
 
             </Fragment>
 
@@ -158,7 +198,8 @@ class Event extends Component {
 }
 function mapStateToProps(state){
     return {
-        getEvents: state.getEvents
+        getEvents: state.getEvents,
+        SearchfetchEventList:state.SearchfetchEventList
     };
 }
 

@@ -42,12 +42,12 @@ class Moviedetails extends React.Component {
         // console.log(this.props.getCinemaList)
 
     };
-    fetchShowTime(){
-        const { dispatch } = this.props;
-        dispatch(buyMovieTicket(this.state.user.token));
-        // console.log(this.props.getCinemaList)
+    // fetchShowTime(){
+    //     const { dispatch } = this.props;
+    //     dispatch(buyMovieTicket(this.state.user.token));
+    //     // console.log(this.props.getCinemaList)
 
-    };
+    // };
     componentDidMount(){
         this.fetchCinemaList();
         
@@ -343,7 +343,6 @@ class Moviedetails extends React.Component {
                                 {
                                     getCinemaList.message == listStyleConstants.GET_CINEMA_LIST_SUCCESS && 
                                     getCinemaList.data.response.map(event => {
-                                        <option>Select Cinema</option>
                                         return (<option key={event.cinemaUid} value={event.cinemaUid + " " + "000" + details.id }>{event.name}</option>)
                                     })
                                 }
@@ -587,7 +586,7 @@ class Moviedetails extends React.Component {
                                     marginBottom: 39
                                 }}
                             >
-                                <button disabled={this.props.buyMovieTicket.message == listStyleConstants.BUY_EVENT_TICKET_PENDING}
+                                <button disabled={this.props.SubmitTicketData.message == listStyleConstants.SUBMIT_MOVIE_TICKET_PENDING}
                                     style={{
                                         border: "0px solid #AB2656",
                                         height: 45,
@@ -599,7 +598,7 @@ class Moviedetails extends React.Component {
                                     }}
                                 >
                                 
-                                    {this.props.buyMovieTicket.message ==listStyleConstants.BUY_EVENT_TICKET_PENDING ? "Processing..." :"Buy Ticket"}
+                                    {this.props.SubmitTicketData.message ==listStyleConstants.SUBMIT_MOVIE_TICKET_PENDING ? "Processing..." :"Buy Ticket"}
                                 </button>
                             </div>
                         </form>
@@ -615,7 +614,6 @@ function mapStateToProps(state) {
     return {
         getCinemaList: state.getCinemaList,
         ShowTime:state.ShowTime,
-        buyMovieTicket:state.buyMovieTicket,
         SubmitTicketData:state.SubmitTicketData,
     };
 }

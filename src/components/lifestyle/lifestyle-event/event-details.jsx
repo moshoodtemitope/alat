@@ -36,12 +36,12 @@ class EventDetails extends React.Component {
         // console.log(this.props.getCinemaList)
 
     };
-    fetchShowTime(){
-        const { dispatch } = this.props;
-        dispatch(buyMovieTicket(this.state.user.token));
-        // console.log(this.props.getCinemaList)
+    // fetchShowTime(){
+    //     const { dispatch } = this.props;
+    //     dispatch(buyMovieTicket(this.state.user.token));
+    //     // console.log(this.props.getCinemaList)
 
-    };
+    // };
     componentDidMount(){
         this.fetchCinemaList();
         const details = this.props.location.state.name;
@@ -405,7 +405,7 @@ class EventDetails extends React.Component {
                                     marginBottom: 39
                                 }}
                             >
-                                <button disabled={this.props.buyMovieTicket.message == listStyleConstants.BUY_EVENT_TICKET_PENDING}
+                                <button disabled={this.props.SubmitEventTicketData.message == listStyleConstants.SUBMIT_EVENT_TICKET_PENDING}
                                     style={{
                                         border: "0px solid #AB2656",
                                         height: 45,
@@ -417,7 +417,7 @@ class EventDetails extends React.Component {
                                     }}
                                 >
                                 
-                                    {this.props.buyMovieTicket.message ==listStyleConstants.BUY_EVENT_TICKET_PENDING ? "Processing..." :"Buy Ticket"}
+                                    {this.props.SubmitEventTicketData.message ==listStyleConstants.SUBMIT_EVENT_TICKET_PENDING ? "Processing..." :"Buy Ticket"}
                                 </button>
                             </div>
                         </form>
@@ -433,7 +433,6 @@ function mapStateToProps(state) {
     return {
         getCinemaList: state.getCinemaList,
         ShowTime:state.ShowTime,
-        buyMovieTicket:state.buyMovieTicket,
         SubmitEventTicketData:state.SubmitEventTicketData,
         getEvents: state.getEvents
     };

@@ -24,7 +24,6 @@ class LifestyleIndex extends Component {
                 <InnerContainer>
                     <div className="dashboard-wrapper">
                         <div className="container" style={{marginTop: -62}}>
-                            <div className="row" style={{justifyContent: "center"}}>
 
                                 {this.props.children}
                                 <Route path={'/lifestyle'} exact component={LifeStyle} />
@@ -35,10 +34,6 @@ class LifestyleIndex extends Component {
                                 <Route path={'/lifestyle/buy-ticket-details'} component={BuyTicketData}/>
                                 <Route path={'/lifestyle/event-details'} component={EventDetails}/>
                                 <Route path={'/lifestyle/buy-event-ticket'} component={BuyEventTicket}/>
-
-
-
-                            </div>
                         </div>
                     </div>
                 </InnerContainer>
