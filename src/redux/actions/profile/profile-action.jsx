@@ -1,3 +1,4 @@
+import {SystemConstant} from "../../../shared/constants";
 import {ApiService} from "../../../services/apiService";
 import {routes} from "../../../services/urls";
 import {history} from './../../../_helpers/history';
@@ -31,7 +32,7 @@ export const linkBVN = (token, data) => {
 export const profileMenu = (token) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.GET_PROFILE_MENU, "GET", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.GET_PROFILE_MENU, "GET", null, SystemConstant.HEADER, true);
         dispatch(request(consume));
         return consume
             .then(response => {
@@ -56,6 +57,7 @@ export const profileSuccessMessage = (data) =>{
         dispatch(success(data));
         history.push('/profile-success-message');
     }
+    
     function success(data){
         return{
             type:"profile success message",
