@@ -15,7 +15,11 @@ class PersonalDefault extends Component {
    }
 
    componentDidMount = () => {
-       
+       this.GetProfileMenu();
+   }
+
+   GetProfileMenu = () => {
+    //    this.props.dispatch();
    }
 
    NavigateToBVN = () => {
@@ -36,6 +40,10 @@ class PersonalDefault extends Component {
 
    NavigateToNextOfKin = () => {
        history.push('/profile-next-of-kin');
+   }
+
+   DispatchSuccessMessage = (data) => {
+    //    this.props.dispatch();
    }
 
    render(){
@@ -99,4 +107,11 @@ class PersonalDefault extends Component {
    }
 }
 
-export default PersonalDefault;
+function mapStateToProps(state){
+   return {
+       profileMenu: state.profileMenu.data,
+       profileSuccessMessage: state.profileSuccessMessage.data
+   }
+}
+
+export default connect(mapStateToProps)(PersonalDefault);
