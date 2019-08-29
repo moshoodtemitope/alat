@@ -42,7 +42,6 @@ class ScoreResult extends React.Component {
 	}
 	
 	declineClikc =()=>{
-		//this.props.dispatch(actions.clearLoanOnboardingStore());
 		this.props.dispatch(LoanActions.loanReject(this.state.user.token)); //What should be done after firing reject loan
 	}
 
@@ -50,7 +49,8 @@ class ScoreResult extends React.Component {
 		if(this.props.loan_reject){
 			if(this.props.loan_reject.loan_reject_status == loanConstants.LOAN_REJECT_SUCCESS){
 				this.props.dispatch(LoanActions.clearLoanOnboardingStore());
-				this.props.gotoPreviousPageMethod();
+				//this.props.gotoPreviousPageMethod();
+				this.props.abortClick();
 			}
 		}
 	}

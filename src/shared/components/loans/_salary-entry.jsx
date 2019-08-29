@@ -38,6 +38,7 @@ class SalaryEntry extends React.Component {
             }
         }
         else { this.props.dispatch(actions.salaryTransaction(this.state.user.token)); }
+        this.props.dispatch(actions.salaryTransaction(this.state.user.token));
         // if(this.props.user_detail.loan_userdetails_data)
         // this.setState({ FirstName :this.props.user_detail.loan_userdetails_data.data.FirstName }); 
     }

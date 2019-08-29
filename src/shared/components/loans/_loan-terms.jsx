@@ -26,7 +26,7 @@ class LoanTermsComponent extends React.Component {
         if (this.props.standing_order){
             if (this.props.standing_order.loan_standOrder_status == loanConstants.LOAN_STAND_ORDER_SUCCESS) {
             } else {
-                this.props.NavigateToPreviousPage();
+               // this.props.NavigateToPreviousPage();
             }
         }
         // else
@@ -36,7 +36,9 @@ class LoanTermsComponent extends React.Component {
         //         this.props.NavigateToPreviousPage();
         //     }
         // }
-        else { this.props.NavigateToPreviousPage(); }
+        else {
+            // this.props.NavigateToPreviousPage(); 
+        }
     }
 
     onAccept = () => {
