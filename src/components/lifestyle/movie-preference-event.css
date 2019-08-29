@@ -6,6 +6,10 @@
     margin-top: 10px;
     justify-content: center;
   }
+  .eventHeaderInfo{
+    display: flex;
+    justify-content: space-between
+  }
 
   .eventTrays .eventCards {
       width: 168px;
@@ -59,6 +63,13 @@
 
   .eventCards .bot .right p {
      margin-top: 0px !important;
+     
+  }
+  .movie-duration{
+    font-size: 12px;
+    font-family:"proxima_novasemibold" !important;
+
+
   }
 
   .eventPreferences {

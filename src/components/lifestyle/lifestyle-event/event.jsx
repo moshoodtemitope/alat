@@ -64,6 +64,7 @@ class Event extends Component {
     //     });
     //
     // }
+    
 
     renderEvent(){
         let user = this.state.user;

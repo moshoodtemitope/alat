@@ -4,6 +4,7 @@ import '../movie-preference-event.css'
 import * as utils from "../../../shared/utils";
 import {Link, NavLink} from "react-router-dom";
 import {Fragment} from "react";
+// import clock from '../../../assets/img/clockIcon'
 import {listStyleConstants} from '../../../redux/constants/lifestyle/lifestyle-constants';
 import { FetchMovie,getCinemaList,buyMovieTicket } from "../../../redux/actions/lifestyle/movies-actions";
 
@@ -113,10 +114,10 @@ class Movie extends Component {
                                         <div id="disc">{ film.description.toString().length > 30 ? film.description.toString().substring(0, 30)+"...": film.description.toString() }</div>
                                         <div className="details">
                                             <div className="left">
-                                                <i></i>
+                                                {/* <img src={clock} alt=""/> */}
                                             </div>
                                             <div className="right">
-                                                <div>{film.duration}</div>
+                                                <div className="movie-duration">{film.duration}</div>
                                             </div>
                                         </div>
                                 </div>

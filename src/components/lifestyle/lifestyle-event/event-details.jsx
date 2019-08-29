@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import {listStyleConstants} from "../../../redux/constants/lifestyle/lifestyle-constants";
 import {Redirect} from 'react-router-dom'
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
-
 import {getCinemaList,} from '../../../redux/actions/lifestyle/movies-actions'
 
 
@@ -18,18 +17,12 @@ class EventDetails extends React.Component {
             ChildrenId:"",
             AdultId:"",
             movieDay: "",
-            adultNumber: 0,
-            studentNumber: 0,
             childNumber: 0,
-            adultAmount: 0,
-            studentAmount: 0,
             childAmount: 0,
-            initialAdultAmount: 0,
-            initialStudentAmount: 0,
             initialChildAmount: 0,
+            ticketClassses:null,
             user: JSON.parse(localStorage.getItem("user")),
             dataContainer: null,
-            itemId: null
         };
     }
     // fetchEventList(){
@@ -72,28 +65,9 @@ class EventDetails extends React.Component {
         });
     };
 
-    increaseAdult = () => {
-        let { adultNumber } = this.state;
-        this.setState(
-            {
-                adultNumber: adultNumber + 1
-            },
-            () =>
-                this.setState({
-                    adultAmount: this.state.initialAdultAmount * this.state.adultNumber
-                })
-        );
-    };
+   
 
-    increaseStudent = () => {
-        this.setState({ studentNumber: this.state.studentNumber + 1 }, () =>
-            this.setState({
-                studentAmount:
-                    this.state.initialStudentAmount * this.state.studentNumber
-            })
-        );
-    };
-
+    
     increaseChild = () => {
         this.setState({ childNumber: this.state.childNumber + 1 }, () =>
             this.setState({
@@ -102,26 +76,8 @@ class EventDetails extends React.Component {
         );
     };
 
-    decreaseAdult = () => {
-        let { adultNumber } = this.state;
-        if (adultNumber !== 1)
-            this.setState({ adultNumber: adultNumber - 1 }, () =>
-                this.setState({
-                    adultAmount: this.state.initialAdultAmount * this.state.adultNumber
-                })
-            );
-    };
-
-    decreaseStudent = () => {
-        let { studentNumber } = this.state;
-        if (studentNumber !== 1)
-            this.setState({ studentNumber: studentNumber - 1 }, () =>
-                this.setState({
-                    studentAmount:
-                        this.state.initialStudentAmount * this.state.studentNumber
-                })
-            );
-    };
+    
+   
 
     decreaseChild = () => {
         let { childNumber } = this.state;
@@ -135,51 +91,59 @@ class EventDetails extends React.Component {
     ShowBuyTicketData = () => {
         const data = {
             ShowTimeId:this.state.itemId,
-            TicketAmount: parseFloat(this.state.TicketAmount),
-            initialAdultAmount:this.state.initialAdultAmount,
-            initialStudentAmount:this.state.initialStudentAmount,
-            initialChildAmount:this.state.initialChildAmount,        
+            TicketAmount:parseFloat(this.state.childAmount),
+            title:this.props.location.state.details.title,
+            quantity:this.state.childNumber,
+            ticketClassses:this.state.ticketClassses
         }
         console.log(data)
         // return;
-        this.props.dispatch(actions.SubmitTicketData(data));
+        this.props.dispatch(actions.SubmitEventTicketData(data));
     }
+    formatAmountNoDecimal = (amount) => {
+        return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+    };
     
     // value={event.date + "8888" + event.student + " " + event.adult + " " + event.children}>{event.date}</option>
-    UseSelectedTime = (event) => {
-        let amounts = event.target.value.split("8888")[1];
-        let adultAmount = amounts.split(" ")[1];
-        let childrenAmount = amounts.split(" ")[2];
-        let studentAmount = amounts.split(" ")[0];
+    // UseSelectedTime = (event) => {
+    //     let amounts = event.target.value.split("8888")[1];
+    //     let adultAmount = amounts.split(" ")[1];
+    //     let childrenAmount = amounts.split(" ")[2];
+    //     let studentAmount = amounts.split(" ")[0];
        
-        console.log(adultAmount);
-        console.log(childrenAmount);
-        console.log(studentAmount);
-        console.log('oooooooooooooooooooooooooooooooooooo');
-        this.setState({initialStudentAmount: studentAmount});
-        this.setState({initialAdultAmount: adultAmount});
-        this.setState({initialChildAmount: childrenAmount});
-    }
+    //     console.log(adultAmount);
+    //     console.log(childrenAmount);
+    //     console.log(studentAmount);
+    //     console.log('oooooooooooooooooooooooooooooooooooo');
+    //     this.setState({initialStudentAmount: studentAmount});
+    //     this.setState({initialAdultAmount: adultAmount});
+    //     this.setState({initialChildAmount: childrenAmount});
+    // }
 
     UseSelectedItem = (event) => {
         let gottenValue = event.target.value.split("000");
+
        
         console.log(gottenValue);
         
         let data = {
             item: gottenValue[0],
-            id: gottenValue[1]
+            id: gottenValue[1],
+            ticketClassses:gottenValue[2]
+
         }
   
-        this.setState({itemId: gottenValue[1]});
+        this.setState({initialChildAmount:gottenValue[0]});
+        this.setState({childAmount:gottenValue[0]});
+        this.setState({ticketClassses:gottenValue[2]})
         console.log(data);
         this.props.dispatch(actions.ShowTime(this.state.user.token, data))
     }
 
     gotobuyEventTicket=()=>{
-        if(this.props.SubmitTicketData)
-        if(this.props.SubmitTicketData.message == listStyleConstants.SUBMIT_MOVIE_TICKET_SUCCESS){
-            return<Redirect to="/lifestyle/buy-ticket-details"/>
+        if(this.props.SubmitEventTicketData)
+        if(this.props.SubmitEventTicketData.message == listStyleConstants.SUBMIT_EVENT_TICKET_SUCCESS){
+            return<Redirect to="/lifestyle/buy-event-ticket"/>
         }
         
     }
@@ -219,14 +183,9 @@ class EventDetails extends React.Component {
          const details = this.props.location.state.details;
          console.log(details)
 
-        console.log("====================",getCinemaList)
-        // if (getCinemaList.length > 0) {
-        //     alert("yes")
-        // }
-
         return (
             <div>
-            <div className="row" style={{justifyContent: "center"}}>
+            <div className="row" style={{justifyContent: "center", marginBottom:"15px"}}>
             <img src={details.originalImage} class="img-responsive"/>
             </div>
        
@@ -332,16 +291,17 @@ class EventDetails extends React.Component {
                             // marginTop: 20,
                             marginTop: 37
                         }}>
-                        <form onSubmit={this.ShowBuyTicketData  } style={{ width: "100%" }}>
+                      <form onSubmit={this.ShowBuyTicketData  } style={{ width: "100%" }}>
                             <label>Select Ticket Class</label>
                            
                             <select onChange={this.UseSelectedItem}>
-                              
+                             <option>Select Ticket Type</option>
+
                                 {
                                     // getEvents.message == listStyleConstants.GET_EVENTS_SUCCESS && 
                                     //  this.LopEventList()
                                     details.ticketClassses.map(event=> {
-                                        return <option key={event.title} value={event.ticketId + "8888" + event.ticketId + " " + event.ticketId + " " + event.ticketId}>{event.title}</option>
+                                        return <option key={event.title} value={event.ticketId + " " + "000" + event.price + " " + event.title}>{event.title}</option>
                                     })
                                 }
                             </select>
@@ -365,148 +325,9 @@ class EventDetails extends React.Component {
                                     justifyContent: "space-between"
                                 }}
                             >
-                                <div className="col-sm-4" style={{ paddingRight: 30 }}>
-                                    <div style={{ marginLeft: -13 }}>Adult</div>
-                                    <div
-                                        className="row"
-                                        style={{
-                                            border: "1px solid #CCCCCC",
-                                            borderRadius: 3,
-                                            flexDirection: "row",
-                                            justifyContent: "space-between"
-                                        }}
-                                    >
-                                        <div
-                                            onClick={this.decreaseAdult}
-                                            style={{
-                                                width: 60,
-                                                height: 46,
-                                                cursor: "pointer",
-                                                backgroundColor: "#F5F5F5",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                fontSize: 30
-                                            }}
-                                        >
-                                            -
-                                        </div>
-                                        <div
-                                            style={{
-                                                width: 60,
-                                                height: 46,
-                                                backgroundColor: "white",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                paddingTop: 14
-                                            }}
-                                        >
-                                            {adultNumber}
-                                        </div>
-                                        <div
-                                            onClick={this.increaseAdult}
-                                            style={{
-                                                width: 60,
-                                                height: 46,
-                                                cursor: "pointer",
-                                                backgroundColor: "#F5F5F5",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                paddingTop: 8,
-                                                fontSize: 20
-                                            }}
-                                        >
-                                            +
-                                        </div>
-                                    </div>
-                                    <div
-                                        style={{
-                                            textAlign: "center",
-                                            marginTop: 10,
-                                            color: "#000000",
-                                            fontFamily: "proxima_novaregular",
-                                            fontWeight: "bold",
-                                            fontSize: 14
-                                        }}
-                                    >
-                                        {this.state.adultAmount}
-                                    </div>
-                                </div>
-                                {/* student */}
-                                <div className="col-sm-4" style={{ paddingRight: 30 }}>
-                                    <div style={{ marginLeft: -13 }}>Student</div>
-                                    <div
-                                        className="row"
-                                        style={{
-                                            border: "1px solid #CCCCCC",
-                                            borderRadius: 3,
-                                            flexDirection: "row",
-                                            justifyContent: "space-between"
-                                        }}
-                                    >
-                                        <div
-                                            onClick={this.decreaseStudent}
-                                            style={{
-                                                cursor: "pointer",
-                                                width: 60,
-                                                height: 46,
-                                                backgroundColor: "#F5F5F5",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                fontSize: 30
-                                            }}
-                                        >
-                                            -
-                                        </div>
-                                        <div
-                                            style={{
-                                                width: 60,
-                                                height: 46,
-                                                backgroundColor: "white",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                paddingTop: 14
-                                            }}
-                                        >
-                                            {studentNumber}
-                                        </div>
-                                        <div
-                                            onClick={this.increaseStudent}
-                                            style={{
-                                                width: 60,
-                                                height: 46,
-                                                cursor: "pointer",
-                                                backgroundColor: "#F5F5F5",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                paddingTop: 8,
-                                                fontSize: 20
-                                            }}
-                                        >
-                                            +
-                                        </div>
-                                    </div>
-                                    <div
-                                        style={{
-                                            textAlign: "center",
-                                            marginTop: 10,
-                                            color: "#000000",
-                                            fontFamily: "proxima_novaregular",
-                                            fontWeight: "bold",
-                                            fontSize: 14
-                                        }}
-                                    >
-                                        {this.state.studentAmount}
-                                    </div>
-                                </div>
-                                {/* child */}
-                                <div className="col-sm-4" style={{ paddingRight: 30 }}>
-                                    <div style={{ marginLeft: -13 }}>Child</div>
+                                
+                               <div className="col-sm-4" style={{ paddingRight: 30 }}>
+                                    <div style={{ marginLeft: -13 }}>Quantity</div>
                                     <div
                                         className="row"
                                         style={{
@@ -533,8 +354,8 @@ class EventDetails extends React.Component {
                                         </div>
                                         <div
                                             style={{
-                                                width: 60,
-                                                height: 46,
+                                                // width: 60,
+                                                // height: 46,
                                                 backgroundColor: "white",
                                                 color: "#AB2656",
                                                 fontWeight: "bold",
@@ -571,8 +392,8 @@ class EventDetails extends React.Component {
                                             fontSize: 14
                                         }}
                                     >
-                                        {this.state.childAmount}
-                                    </div>
+                                        N{this.formatAmountNoDecimal(this.state.childAmount)}
+                                    </div> 
                                 </div>
                             </div>
                             <div
@@ -612,7 +433,7 @@ function mapStateToProps(state) {
         getCinemaList: state.getCinemaList,
         ShowTime:state.ShowTime,
         buyMovieTicket:state.buyMovieTicket,
-        SubmitTicketData:state.SubmitTicketData,
+        SubmitEventTicketData:state.SubmitEventTicketData,
         getEvents: state.getEvents
     };
 }

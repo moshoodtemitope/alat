@@ -30,7 +30,9 @@ class Moviedetails extends React.Component {
             initialChildAmount: 0,
             user: JSON.parse(localStorage.getItem("user")),
             dataContainer: null,
-            itemId: null
+            itemId: null,
+            title:"",
+            cinemaId:""
         };
     }
     
@@ -48,11 +50,7 @@ class Moviedetails extends React.Component {
     };
     componentDidMount(){
         this.fetchCinemaList();
-        const details = this.props.location.state.name;
-        this.setState({
-            SubmitTicketData: details
-
-        })
+        
 
 
     }
@@ -132,11 +130,13 @@ class Moviedetails extends React.Component {
     };
     ShowBuyTicketData = () => {
         const data = {
-            ShowTimeId:this.state.itemId,
-            TicketAmount: parseFloat(this.state.TicketAmount),
+            ShowTimeId:this.state.showTimeId,
+            TicketAmount:parseFloat(this.state.TicketAmount),
             initialAdultAmount:this.state.initialAdultAmount,
             initialStudentAmount:this.state.initialStudentAmount,
-            initialChildAmount:this.state.initialChildAmount,        
+            initialChildAmount:this.state.initialChildAmount, 
+            title:this.props.location.state.details.title,  
+            cinemaId:this.state.cinemaId     
         }
         console.log(data)
         // return;
@@ -149,14 +149,19 @@ class Moviedetails extends React.Component {
         let adultAmount = amounts.split(" ")[1];
         let childrenAmount = amounts.split(" ")[2];
         let studentAmount = amounts.split(" ")[0];
+        let showTimeId = amounts.split(" ")[3];
+        let ticketType = amounts.split(" ")[4]
        
         console.log(adultAmount);
         console.log(childrenAmount);
         console.log(studentAmount);
+        console.log(showTimeId);
+        console.log(ticketType)
         console.log('oooooooooooooooooooooooooooooooooooo');
         this.setState({initialStudentAmount: studentAmount, studentAmount});
         this.setState({initialAdultAmount: adultAmount,adultAmount});
         this.setState({initialChildAmount: childrenAmount,childrenAmount});
+        this.setState({ showTimeId:showTimeId })
     }
 
     UseSelectedItem = (event) => {
@@ -170,6 +175,7 @@ class Moviedetails extends React.Component {
         }
   
         this.setState({itemId: gottenValue[1]});
+        this.setState({cinemaId:gottenValue[0]})
         console.log(data);
         this.props.dispatch(actions.ShowTime(this.state.user.token, data))
     }
@@ -181,6 +187,10 @@ class Moviedetails extends React.Component {
         }
         
     }
+     formatAmountNoDecimal = (amount) => {
+        return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+    };
+
    
     
 
@@ -196,15 +206,35 @@ class Moviedetails extends React.Component {
          const details = this.props.location.state.details;
 
         console.log("====================",details)
-        // if (getCinemaList.length > 0) {
-        //     alert("yes")
-        // }
+       
 
         return (
             <div>
                     <div className="row" style={{justifyContent: "center"}}>
                         <img src={details.bannerImage} class="img-responsive"/>
                     </div>
+                <div
+                    className="video"
+                    style={{
+                        position: "relative",
+                        paddingBottom: "56.25%" /* 16:9 */,
+                        paddingTop: 25,
+                        height: 0
+                    }}
+                    >
+                <iframe
+                    style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%"
+                    }}
+                    src={`https://www.youtube.com/embed/${details.youtubeId}`}
+                    frameBorder="0"
+                />
+                </div>
+
                     
             <div className="max-750">
                 <div className="al-card fund-al-card no-pad" style={{marginTop: 10}}>
@@ -258,7 +288,7 @@ class Moviedetails extends React.Component {
                                     marginTop: "21px"
                                 }}
                             >
-                                Synopsis
+                                Synopsis:
                             </div>
                             <div
                                 style={{
@@ -302,29 +332,31 @@ class Moviedetails extends React.Component {
                         style={{
                             marginRight: 69,
                             marginLeft: 69,
-                            // marginTop: 20,
                             marginTop: 37
                         }}>
                         <form onSubmit={this.ShowBuyTicketData  } style={{ width: "100%" }}>
                             <label>Select Location</label>
                            
                             <select onChange={this.UseSelectedItem}>
+                                <option>Select Cinema Location</option>
                               
                                 {
                                     getCinemaList.message == listStyleConstants.GET_CINEMA_LIST_SUCCESS && 
                                     getCinemaList.data.response.map(event => {
-                                        console.log("checking what  up ...");    
-                                        return (<option key={event.cinemaUid} value={event.cinemaUid + " " + "000" + details.id}>{event.name}</option>)
+                                        <option>Select Cinema</option>
+                                        return (<option key={event.cinemaUid} value={event.cinemaUid + " " + "000" + details.id }>{event.name}</option>)
                                     })
                                 }
                             </select>
 
                             <label style={{ marginTop: 16 }}>Select Day</label>
-                            <select onChange={this.UseSelectedTime}>
+                            <select onChange={this.UseSelectedTime} >
+                                <option>Select ShowTime</option>
                                 {                                      
                                     ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
                                     ShowTime.data.response.map(event=> {
-                                        return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children}>{event.date}</option>
+                                        return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children  + " " + event.id + " " + event.ticketTypes[0].ticketNames}>
+                                        {event.date}</option>
                                     })
                                 } 
                             </select>
@@ -403,7 +435,7 @@ class Moviedetails extends React.Component {
                                             fontSize: 14
                                         }}
                                     >
-                                        {this.state.adultAmount}
+                                        {this.formatAmountNoDecimal(this.state.adultAmount)}
                                     </div>
                                 </div>
                                 {/* student */}
@@ -473,7 +505,7 @@ class Moviedetails extends React.Component {
                                             fontSize: 14
                                         }}
                                     >
-                                        {this.state.studentAmount}
+                                        {this.formatAmountNoDecimal(this.state.studentAmount)}
                                     </div>
                                 </div>
                                 {/* child */}
@@ -543,7 +575,7 @@ class Moviedetails extends React.Component {
                                             fontSize: 14
                                         }}
                                     >
-                                        {this.state.childrenAmount}
+                                        {this.formatAmountNoDecimal(this.state.childrenAmount)}
                                     </div>
                                 </div>
                             </div>

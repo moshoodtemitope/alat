@@ -5,8 +5,9 @@ import LifeStyle from '../lifestyle/lifestyle-movie/movie';
 import LifestylePreference from "../lifestyle/lifestyle-preference/preference";
 import LifeStyleEvent from "../lifestyle/lifestyle-event/event";
 import MovieDetail from '../lifestyle/lifestyle-movie/movie-details';
-import EventDetails from '../lifestyle/lifestyle-event/event-details'
-import BuyTicketData from '../lifestyle/lifestyle-movie/buy-ticket'
+import EventDetails from '../lifestyle/lifestyle-event/event-details';
+import BuyTicketData from '../lifestyle/lifestyle-movie/buy-ticket';
+import BuyEventTicket from '../lifestyle/lifestyle-event/buy-event-ticket'
 
 
 class LifestyleIndex extends Component {
@@ -33,6 +34,7 @@ class LifestyleIndex extends Component {
                                 <Route path={'/lifestyle/movie-details'} component={MovieDetail} />
                                 <Route path={'/lifestyle/buy-ticket-details'} component={BuyTicketData}/>
                                 <Route path={'/lifestyle/event-details'} component={EventDetails}/>
+                                <Route path={'/lifestyle/buy-event-ticket'} component={BuyEventTicket}/>
 
 
 

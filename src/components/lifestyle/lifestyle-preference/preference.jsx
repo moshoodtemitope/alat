@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import '../movie-preference-event.css'
 import { connect } from "react-redux";
 import * as actions from '../../../redux/actions/lifestyle/preferences-actions';
+import {NavLink} from 'react-router-dom'
 
 class Preference extends Component{
     constructor(props){
@@ -36,44 +37,46 @@ class Preference extends Component{
     }
 
     render(){
-        // if(this.props.getAllEngagements.response == undefined)
-        //     return(
-        //         <div>
-        //             <p>Checking for Engagements ...</p>
-        //         </div>
-        //     );
-        // if(this.props.getAllEngagements.response != undefined && this.props.getCustomersEngagements.response != undefined) {
-        //     if(this.props.allEngagements.response.length != 0){
-        //         return(
-        //             <div>{this.DisplayEngagements()}</div>
-        //         );
-        //     }
-        // }
         return(
             <div>
-                <p>the mind!</p>
+            <div>
+                <div className="col-sm-12">
+                            <p className="page-title">LifeStyle</p>
+                        </div>
+
+                        <div className="col-sm-12">
+                            <div>
+                                <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                    <ul>
+                                        <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
+                                        <li><NavLink to={'/lifestyle/event'}>Event</NavLink></li>
+                                        <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li>
+                                        <li style={{float:"right"}}><input style={{width:"100%",height:"30px", marginTop:14, float:'right'}} type="text" placeholder="search ..." value={this.state.filtered} onChange={this.handleChange}/></li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                
+                </div>
+                  <div className="eventPreferences">
+                        <button type="button" className="buttons">FootBall</button>
+                        <button type="button" className="buttons1">Fashion</button>
+                        <button type="button" className="buttons">Education</button>
+                        <button type="button" className="buttons1">Food</button>
+                        <button type="button" className="buttons">Technology</button>
+                        <button type="button" className="buttons1">Education</button>
+                        <button type="button" className="buttons">Food</button>
+                        <button type="button" className="buttons1">Technology</button>
+                        <button type="button" className="buttons">Education</button>
+                        <button type="button" className="buttons1">Food</button>
+                        <button type="button" className="buttons">Technology</button>
+                        <button type="button" className="buttons1">Education</button>
+                        <button type="button" className="buttons1">Food</button>
+                        <button type="button" className="buttons">Technology</button>
+                   </div>
             </div>
-        )
-        // return(
-        //     <div>
-        //           <div className="eventPreferences">
-        //                 <button type="button" className="buttons">FootBall</button>
-        //                 <button type="button" className="buttons1">Fashion</button>
-        //                 <button type="button" className="buttons">Education</button>
-        //                 <button type="button" className="buttons1">Food</button>
-        //                 <button type="button" className="buttons">Technology</button>
-        //                 <button type="button" className="buttons1">Education</button>
-        //                 <button type="button" className="buttons">Food</button>
-        //                 <button type="button" className="buttons1">Technology</button>
-        //                 <button type="button" className="buttons">Education</button>
-        //                 <button type="button" className="buttons1">Food</button>
-        //                 <button type="button" className="buttons">Technology</button>
-        //                 <button type="button" className="buttons1">Education</button>
-        //                 <button type="button" className="buttons1">Food</button>
-        //                 <button type="button" className="buttons">Technology</button>
-        //            </div>
-        //     </div>
-        // );
+        );
     }
 }
 

@@ -63,19 +63,21 @@ class BuyTicket extends Component {
     };
 
     init = () => {
-        if (this.props.SubmitTicketData.message !== listStyleConstants.SUBMIT_MOVIE_TICKET_SUCCESS)
+        if (this.props.SubmitEventTicketData.message !== listStyleConstants.SUBMIT_EVENT_TICKET_SUCCESS)
             this.props.history.push("/lifestyle/movie-details");
         else {
             let data = {
-                ...this.props.SubmitTicketData.data.data
+                ...this.props.SubmitEventTicketData.data.data
             };
             console.log('tag', data);
 
             this.setState({
-                TicketAmount:this.formatAmountNoDecimal(data.initialAdultAmount),
+                TicketAmount:data.TicketAmount,
                 title:data.title,
                 cinemaId:data.cinemaId,
                 ShowTimeId:data.ShowTimeId,
+                ticketClassses:data.ticketClassses,
+                quantity:data.quantity,
                 
             });
         }
@@ -98,7 +100,7 @@ class BuyTicket extends Component {
             };
             console.log(data)
         
-            this.props.dispatch(actions.buyMovieTicket(this.state.user.token, data));
+            this.props.dispatch(actions.purchaseEventTicket(this.state.user.token, data));
 
 
         }
@@ -148,10 +150,11 @@ class BuyTicket extends Component {
                                                        <div className="puchaseSumTickets">
                                                            <div className="left">
                                                                 <p style={{fontSize:12,fontFamily:"proxima_novasemibold"}}>{this.state.title}</p>
-                                                                {/* <p style={{fontSize:12, fontFamily:'proxima_novaregular'}}>Movie ticket</p> */}
+                                                                <p style={{fontSize:10, fontFamily:'proxima_novaregular'}}>{this.state.ticketClassses}</p>
                                                            </div>
                                                            <div className="right">
                                                                <p>N{this.formatAmountNoDecimal(this.state.TicketAmount)}</p>
+                                                               <p style={{fontSize:12, fontFamily:'proxima_novaregular'}}>Quantity {this.state.quantity}</p>
 
                                                            </div>
                                                        </div>
@@ -177,8 +180,8 @@ class BuyTicket extends Component {
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <center>
-                                                            <button disabled={this.props.buyMovieTicket.message === listStyleConstants.BUY_MOVIE_TICKET_PENDING } type="submit"  className="btn-alat m-t-10 m-b-20 text-center">
-                                                                {this.props.buyMovieTicket.message === listStyleConstants.BUY_MOVIE_TICKET_PENDING ? "Processing..." : "Next"}
+                                                            <button disabled={this.props.purchaseEventTicket.message === listStyleConstants.BUY_EVENT_TICKET_PENDING } type="submit" value="Fund Account" className="btn-alat m-t-10 m-b-20 text-center">
+                                                                {this.props.purchaseEventTicket.message === listStyleConstants.BUY_EVENT_TICKET_PENDING ? "Processing..." : "Next"}
                                                             </button>
                                                             
                                                         </center>
@@ -187,7 +190,11 @@ class BuyTicket extends Component {
                                                 </div>
                                                
                                             </form>
-                                           
+                                            {/* <center>
+                                                        <button onClick={this.NavigateBack} type="submit" id="navButToMovieSelect">
+                                                               Go Back
+                                                        </button>      
+                                                        </center> */}
                                         </div>
                                     </div>
                                 </div>
@@ -206,8 +213,8 @@ class BuyTicket extends Component {
 }
 const mapStateToProps = state => ({
     alert:state.alert,
-    SubmitTicketData:state.SubmitTicketData,
-    buyMovieTicket:state.buyMovieTicket
+    SubmitEventTicketData:state.SubmitEventTicketData,
+    purchaseEventTicket:state.purchaseEventTicket
 
 });
 

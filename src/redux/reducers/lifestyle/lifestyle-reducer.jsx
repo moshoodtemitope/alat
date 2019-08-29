@@ -254,6 +254,34 @@ export function SubmitTicketData(state=[], action){
 }
 
 
+export function SubmitEventTicketData(state=[], action){
+    switch(action.type){
+        case listStyleConstants.SUBMIT_EVENT_TICKET_PENDING: 
+           return {
+               message: listStyleConstants.SUBMIT_EVENT_TICKET_PENDING,
+               data: action
+           }
+        case listStyleConstants.SUBMIT_EVENT_TICKET_SUCCESS:
+           return {
+               message: listStyleConstants.SUBMIT_EVENT_TICKET_SUCCESS,
+               data: action
+           }
+        case listStyleConstants.SUBMIT_EVENT_TICKET_FAILURE:
+           return {
+               message: listStyleConstants.SUBMIT_EVENT_TICKET_FAILURE,
+               data: action
+           }
+        default: 
+           return {... state}
+    }
+}
+
+
+
+
+
+
+
 
 
 

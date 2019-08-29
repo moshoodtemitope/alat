@@ -164,6 +164,7 @@ const appReducer = combineReducers({
     buyMovieTicket: movies.buyMovieTicket,
     ShowTime:movies.ShowTime,
     SubmitTicketData:movies.SubmitTicketData,
+    SubmitEventTicketData:movies.SubmitEventTicketData,
 
     //EVENTS
     getEvents: movies.getEvents,
