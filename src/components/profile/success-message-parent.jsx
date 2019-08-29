@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as actions from '../../redux/actions/onboarding/loan.actions';
 import { SuccessMessage } from './success-message-parent';
-import "./profile.css";
+// import "./profile.css";
 import {Fragment} from "react";
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 class SuccessParentComp extends Component {

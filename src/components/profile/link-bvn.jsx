@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import "./profile.css";
+// import "./profile.css";
 import DatePicker from "react-datepicker";
 import * as actions from '../../redux/actions/profile/profile-action';
 import {Fragment} from "react";

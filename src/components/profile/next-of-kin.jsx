@@ -8,7 +8,7 @@ import InnerContainer from '../../shared/templates/inner-container';
 import {history} from '../../_helpers/history';
 
 
-class PersonalInfoMation extends Component {
+class NextOfKin extends Component {
    constructor(props){
        super(props);
        this.state = {
@@ -675,4 +675,4 @@ class PersonalInfoMation extends Component {
    }
 }
 
-export default PersonalInfoMation;
+export default NextOfKin;
