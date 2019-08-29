@@ -22,10 +22,7 @@ import {
     FETCH_BANK_SUCCESS,
     FETCH_BANK_FAILURE,
 } from "../../../redux/constants/transfer.constants";
-const industriesOptions = [
-];
-const _employerList = [];
-const options = [];
+
 const frontSide = "FrontSide";
 const backSide = "BackSide";
 
@@ -259,7 +256,7 @@ class EmployerDetails extends React.Component {
         switch (industStatus) {
             case loanConstants.LOAN_GETINDUSTRIES_SUCCESS:
                 let industriesList = this.props.industries.loan_industries_data.response.Response;
-                // var  = [];
+                 var industriesOptions = [];
                 for (var industry in industriesList) {
                     // console.log(industry);
                     industriesOptions.push({ value: industriesList[industry].Id, label: industriesList[industry].Name });
