@@ -6,7 +6,7 @@ import {Fragment} from "react";
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import InnerContainer from '../../shared/templates/inner-container';
 
-class ProfileSuccessMessage extends Component {
+class ProfileDocuments extends Component {
    constructor(props){
        super(props);
        this.state = {
@@ -75,7 +75,10 @@ class ProfileSuccessMessage extends Component {
                                     </div>
                                     <div className="col-sm-6">
                                     <form onSubmit={this.HandleSubmit} className="parentForm">
-                                           <p>BVN verified Successfully!</p>
+                                          <p className="formHeading">Documents</p>
+                                           <input type="file" required/>
+                                           <input type="file" required/>
+                                           <input type="file" required/>
                                     </form>
                                     
                                     </div>
@@ -89,4 +92,4 @@ class ProfileSuccessMessage extends Component {
    }
 }
 
-export default ProfileSuccessMessage;
+export default ProfileDocuments;

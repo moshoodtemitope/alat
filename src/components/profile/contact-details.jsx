@@ -12,6 +12,7 @@ class ContactDetails extends Component {
    constructor(props){
        super(props);
        this.state = {
+        user: JSON.parse(localStorage.getItem("user")),
         BVNValidity: false,
         dateValidity: false,
         bvnNumber: null,
@@ -494,7 +495,7 @@ class ContactDetails extends Component {
                                     </div>
                                     <div className="col-sm-7">
                                     <form onSubmit={this.HandleSubmit} className="parentForm">
-                                            <p className="formHeading">Personal Information</p>
+                                            <p className="formHeading">Contact Details</p>
                                         
                                             <div className="form-row">
                                                         <div className={TitleValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>

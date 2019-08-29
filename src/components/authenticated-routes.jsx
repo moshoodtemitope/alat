@@ -23,7 +23,9 @@ import ProfileIndex from './profile';
 import LinkBvN from './profile/link-bvn';
 import ProfileSuccessMessage from './profile/success-message';
 import PersonalInfoMation from './profile/personal-info';
-
+import ContactDetails from './profile/contact-details';
+import NextOfKin from './profile/next-of-kin';
+import ProfileDocuments from './profile/profile-documents';
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
     return (
@@ -74,6 +76,9 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path="/linkBVN" authed={this.props.user} component={LinkBvN} />
                     <PrivateRoute path="/profile-success-message" authed={this.props.user} component={ProfileSuccessMessage} />
                     <PrivateRoute path="/profile-personalInfo" authed={this.props.user} component={PersonalInfoMation} />
+                    <PrivateRoute path="/profile-contact-detail" authed={this.props.user} component={ContactDetails} />
+                    <PrivateRoute path="/profile-next-of-kin" authed={this.props.user} component={NextOfKin} />
+                    <PrivateRoute path="/profile-documents" authed={this.props.user} component={ProfileDocuments} />
                 </Switch>
             </Router>
             

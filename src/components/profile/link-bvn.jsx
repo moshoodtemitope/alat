@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import "./profile.css";
+import "./profile.css";
 import DatePicker from "react-datepicker";
 import * as actions from '../../redux/actions/profile/profile-action';
 import {Fragment} from "react";
@@ -12,6 +12,7 @@ class LinkBvN extends Component {
    constructor(props){
        super(props);
        this.state = {
+        user: JSON.parse(localStorage.getItem("user")),
         BVNValidity: false,
         dateValidity: false,
         bvnNumber: null,

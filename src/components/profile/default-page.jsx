@@ -10,7 +10,7 @@ class PersonalDefault extends Component {
    constructor(props){
        super(props);
        this.state = {
-          
+        user: JSON.parse(localStorage.getItem("user")),
        }
    }
 
@@ -20,6 +20,18 @@ class PersonalDefault extends Component {
 
    NavigateToPersonalInfo = () => {
        history.push('/profile-personalInfo');
+   }
+
+   NavigateToContact = () => {
+       history.push('/profile-contact-detail');
+   }
+
+   NavigateToDocuments = () => {
+       history.push('/profile-documents');
+   }
+
+   NavigateToNextOfKin = () => {
+       history.push('/profile-next-of-kin');
    }
 
    render(){
@@ -58,15 +70,15 @@ class PersonalDefault extends Component {
                                                     <img src="" alt="" />
                                                     <p>Personal Information</p>
                                                 </div>
-                                                <div className="tickItems">
+                                                <div className="tickItems" onClick={this.NavigateToContact}>
                                                     <img src="" alt="" />
                                                     <p>Contact Details</p>
                                                 </div>
-                                                <div className="tickItems">
+                                                <div className="tickItems" onClick={this.NavigateToDocuments}>
                                                     <img src="" alt="" />
                                                     <p>Document Upload</p>
                                                 </div>
-                                                <div className="tickItems">
+                                                <div className="tickItems" onClick={this.NavigateToNextOfKin}>
                                                     <img src="" alt="" />
                                                     <p>Next of Kin</p>
                                                 </div>

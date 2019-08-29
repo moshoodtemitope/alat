@@ -12,6 +12,7 @@ class PersonalInfoMation extends Component {
    constructor(props){
        super(props);
        this.state = {
+        user: JSON.parse(localStorage.getItem("user")),
         BVNValidity: false,
         dateValidity: false,
         bvnNumber: null,
