@@ -25,7 +25,6 @@ export function linkBVN(state=[], action){
 
 export function profileMenu (state=[], action){
     switch(action.type){
-        
         case profile.GET_PROFILE_MENU_PENDING: 
            return {
                message: profile.GET_PROFILE_MENU_PENDING,
