@@ -159,7 +159,9 @@ const appReducer = combineReducers({
     settings_reducer : settingsReducer,
     
     //PROFILE
-    linkBVN: profile.linkBVN
+    linkBVN: profile.linkBVN,
+    profileSuccessMessage: profile.profileSuccessMessage,
+    profileMenu: profile.profileMenu
 });
 
 //export defualt appReducer;

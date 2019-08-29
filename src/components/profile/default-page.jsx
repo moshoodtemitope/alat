@@ -14,6 +14,10 @@ class PersonalDefault extends Component {
        }
    }
 
+   componentDidMount = () => {
+       
+   }
+
    NavigateToBVN = () => {
        history.push('/linkBVN');
    }

@@ -44,3 +44,17 @@ export function profileMenu (state=[], action){
            return {... state}
     }
 }
+
+export function profileSuccessMessage (state=[], action){
+    switch(action.type){
+        case 'profile success message': 
+           return {
+               message: 'profile success message',
+               data: action
+           }
+      
+        default: 
+           return {... state}
+    }
+}
+

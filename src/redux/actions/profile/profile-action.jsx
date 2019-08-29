@@ -49,3 +49,17 @@ export const profileMenu = (token) => {
     function success(response) { return {type: profile.GET_PROFILE_MENU_SUCCESS, response} }
     function failure(error) { return {type: profile.GET_PROFILE_MENU_FAILURE, error} }
 };
+
+
+export const profileSuccessMessage = (data) =>{
+    return(dispatch)=>{
+        dispatch(success(data))
+    }
+    function success(data){
+        return{
+            type:"profile success message",
+            data:data
+        }
+    }
+}
+
