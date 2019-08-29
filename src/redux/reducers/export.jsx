@@ -35,6 +35,11 @@ import { loanCalcDataReducer, loanApplyReducer, GetIndustriesReducer, GetEmploye
     LoanHistoryReducer, WorkIdFrontReducer, WorkIdBackReducer, loanRejectReducer, loanStandingOrderReducer,
      loanMandateStatusReducer, loanValidateRemitaOtpReducer } from './loan.reducer';
 
+import{
+    getExistingPolicy,
+    getNewPolicyDataChunk 
+} from './insurance.reducer'
+
 export const onboarding = {
     userRegistrationRequest,
     bvnDetailsReducer,
@@ -119,4 +124,9 @@ export const fundAccount={
     //fundFromTokenisedCardReducer,
     //fundFromCardWithPinReducer
     saveCardAfterTranReducer
+}
+
+export const insurance = {
+    getExistingPolicy,
+    getNewPolicyDataChunk
 }

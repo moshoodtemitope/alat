@@ -126,4 +126,19 @@ export const routes = {
     CHECK_ANSWER: BASEURL + '/AccountSetting/api/securityquestion/validate',
     CHANGE_PIN: BASEURL + '/AccountSetting/api/pin/change',
     RESET_PIN :BASEURL + '/AccountSetting/api/pin/CreateOrReset',
+
+
+    //Insurance
+     FETCH_EXISTING_POLICIES: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceTransactionHistory',
+     FETCH_ACCIDENT_SCHEDULE: BASEURL + '/PaymentApi/api/Insurance/PersonalAccidentSchedule',
+     FETCH_BILLS_BENEFICIARIES: BASEURL + '/PaymentApi/api/Insurance/TravelSchedule',
+     FETCH_INSURANCE_PRODUCTS: BASEURL + '/PaymentApi/api/Insurance/GetProduct',
+     FETCH_INSURANCE_COUNTRIES: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceCountries',
+     FETCH_INSURANCE_COLORLIST: BASEURL + '/PaymentApi/api/Insurance/GetColorList',
+     FETCH_INSURANCE_LGA: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceAllLga',
+     FETCH_INSURANCE_BODYTYPES: BASEURL + '/PaymentApi/api/Insurance/GetBodyTypes',
+     FETCH_INSURANCE_MANUFACTUREYEAR: BASEURL + '/PaymentApi/api/Insurance/GetManufactureYear',
+     FETCH_INSURANCE_TITLES: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceTitles',
+     FETCH_INSURANCE_GENDERS: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceGenders',
+     FETCH_INSURANCE_NONSCHENGENCOUNTRIES: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceNonSchengenCountries'
 };

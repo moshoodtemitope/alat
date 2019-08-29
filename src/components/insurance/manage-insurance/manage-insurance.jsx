@@ -14,8 +14,21 @@ import  {routes} from '../../../services/urls';
 import successIcon from "../../../assets/img/success-tick.svg";
 import noPolicy from "../../../assets/img/empty-policy.svg";
 
+import {
+    FETCH_EXISTING_POLICIES_SUCCESS,
+    FETCH_EXISTING_POLICIES_PENDING,
+    FETCH_EXISTING_POLICIES_FAILURE,
+    FETCH_NEWINSURANCE_INFOSETS_SUCCESS,
+    FETCH_NEWINSURANCE_INFOSETS_PENDING,
+    FETCH_NEWINSURANCE_INFOSETS_FAILURE
+ }from "../../../redux/constants/insurance/insurance.constants";
 
 
+ import {
+    getNewPolicyDataChunk,
+    getExistingPolicies
+    // clearCardsStore
+} from "../../../redux/actions/insurance/insurance.actions";
 
 // const options = [
 // ];
@@ -35,10 +48,22 @@ class ManageInsurance extends React.Component {
     }
 
     componentDidMount() {
+        this.getCustomerPolicies();
+        this.getNewPolicyData();
+    }
+
+    getCustomerPolicies(){
+        const { dispatch } = this.props;
+        dispatch(getExistingPolicies(this.state.user.token));
         
     }
 
-    renderExistingPolicy(){
+    getNewPolicyData(){
+        const { dispatch } = this.props;
+        dispatch(getNewPolicyDataChunk(this.state.user.token));
+    }
+
+    renderNoExistingPolicy(){
         return(
             <div className="col-sm-12">
                 <div className="row">
@@ -65,6 +90,16 @@ class ManageInsurance extends React.Component {
         )
     }
 
+    renderPoliciesContainer(){
+        let getExistingPolicyRequest = this.props.getExistingPolicy;
+            console.log('status is',getExistingPolicyRequest.fetch_status);
+            return(
+                <div>
+                    jghjgjjjghkhk
+                </div>
+            )
+    }
+
 
    
    
@@ -73,7 +108,7 @@ class ManageInsurance extends React.Component {
     render() {
         return (
             <Fragment>
-               {this.renderExistingPolicy()}
+               {this.renderPoliciesContainer()}
             </Fragment>
         );
     }
@@ -81,8 +116,8 @@ class ManageInsurance extends React.Component {
 
 
 function mapStateToProps(state){
-    console.error(state);
     return {
+        getExistingPolicy   : state.insurancePile.getExistingPolicy,
     };
 }
 
