@@ -126,4 +126,7 @@ export const routes = {
     CHECK_ANSWER: BASEURL + '/AccountSetting/api/securityquestion/validate',
     CHANGE_PIN: BASEURL + '/AccountSetting/api/pin/change',
     RESET_PIN :BASEURL + '/AccountSetting/api/pin/CreateOrReset',
+    
+    //PROFILE MENU
+    GET_PROFILE_MENU: BASEURL + '/api/ProfileMenu'
 };

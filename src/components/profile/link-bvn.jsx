@@ -127,7 +127,7 @@ class LinkBvN extends Component {
                                         <div>
                                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                                 <ul>
-                                                    <li><NavLink to={'/lifestyle/movie'}>Profile</NavLink></li>
+                                                    <li><NavLink to={'/default-page'} className="active">Profile</NavLink></li>
                                                     <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
                                                     <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
                                                 </ul>
@@ -175,14 +175,14 @@ class LinkBvN extends Component {
                                             <div className="form-row">
                                                         <div className={BVNValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
                                                             <label className="label-text">BVN</label>
-                                                            <input type="Number" className="form-control" onChange={this.SetBvNNumber} placeholder="0000 0000 0000"/>
+                                                            <input type="Number" className="form-control linkBVN" onChange={this.SetBvNNumber} placeholder="0000 0000 0000"/>
                                                         </div>
                                             </div>
                                             
                                             <div className="form-row">
                                                     <div className={dateValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
                                                             <label className="label-text">Date of Birth</label>
-                                                            <DatePicker className="form-control" selected={birthDate} 
+                                                            <DatePicker className="form-control linkBVN" selected={birthDate} 
                                                             placeholder="June 31, 2019"
                                                             dateFormat=" MMMM d, yyyy"
                                                             showMonthDropdown
@@ -195,10 +195,11 @@ class LinkBvN extends Component {
                                                     </div>
                                             </div>
                                             <div className="form-row">
-                                                    <div className="form-group forTwoButtons">
-                                                            
-                                                            <button type="submit" className="twoBut1">Submit</button>
+                                                    <div className="form-group col-md-5">
                                                             <button type="submit" className="twoBut">Back</button>
+                                                    </div>
+                                                    <div className="form-group col-md-6">
+                                                            <button type="submit" className="twoBut1">Submit</button>       
                                                     </div>
                                             </div>
                                         </form>

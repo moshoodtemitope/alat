@@ -32,7 +32,7 @@ class SuccessParentComp extends Component {
                         <div>
                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                 <ul>
-                                    <li><NavLink to={'/lifestyle/movie'}>Profile</NavLink></li>
+                                    <li><NavLink to={'/default-page'} className="active">Profile</NavLink></li>
                                     <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
                                     <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
                                 </ul> 

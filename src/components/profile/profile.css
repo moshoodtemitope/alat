@@ -20,7 +20,7 @@ form {
     float: left;
     width: 100%;
     margin-left: 0% !important;
-    font-family: "Proxima Novasemibold" sans-serif;
+    font-family: "Proxima Novasemibold", sans-serif;
 }
 
 .packageContent select {
@@ -39,7 +39,7 @@ form {
 .tickItems p {
     margin-left: 15px;
     padding-bottom: 10px;
-    font-family: 'proxima_novasemibold' sans-serif;
+    font-family: 'proxima_novasemibold', sans-serif !important;
     font-size: 14px;
     line-height: 17px;
     color: #4D4D4D;
@@ -119,11 +119,18 @@ form {
     margin-left: 17%;
 }
 
+
+
+.parentForm .linkBVN {
+    width: 100%;
+}
+
 .parentForm .formHeading{
-    text-align: center;
     padding: 10px;
+    padding-left: 35%;
     font-weight: bold;
     border-bottom: 1px solid #eeeeee;
+    color: #AB2656;
 }
 
 .person-card {
@@ -199,3 +206,7 @@ form {
   .img-style {
     margin-bottom: 4px;
   } 
+
+ .parentForm button {
+    margin-left: 22% !important;
+}

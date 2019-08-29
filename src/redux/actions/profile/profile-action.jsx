@@ -27,3 +27,25 @@ export const linkBVN = (token, data) => {
     function success(response) { return {type: profile.LINK_BVN_SUCCESS, response} }
     function failure(error) { return {type: profile.LINK_BVN_FAILURE, error} }
 };
+
+export const profileMenu = (token) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.GET_PROFILE_MENU, "GET", data, SystemConstant.HEADER, true);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+                // history.push('/');
+            })
+            .catch(error => {
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // dispatch(failure(error.response.data.message.toString()));
+            });
+    };
+    
+    function request(request) { return {type: profile.GET_PROFILE_MENU_PENDING, request} }
+    function success(response) { return {type: profile.GET_PROFILE_MENU_SUCCESS, response} }
+    function failure(error) { return {type: profile.GET_PROFILE_MENU_FAILURE, error} }
+};
