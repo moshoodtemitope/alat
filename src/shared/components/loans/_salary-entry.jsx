@@ -7,6 +7,7 @@ import { Redirect } from 'react-router-dom';
 import * as actions from '../../../redux/actions/onboarding/loan.actions';
 import { loanOnboardingConstants } from '../../../redux/constants/onboarding/loan.constants';
 import { alertActions } from '../../../redux/actions/alert.actions';
+import { LoanApplicationProgress } from '../../../shared/constants';
 
 class SalaryEntry extends React.Component {
     constructor(props) {
@@ -26,8 +27,17 @@ class SalaryEntry extends React.Component {
     }
 
     init = () => {
-        if (this.props.loan_reqStat)
+        if (this.props.loan_reqStat){
         if (this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS)
+         {this.props.dispatch(actions.salaryTransaction(this.state.user.token));}
+        }
+        else
+         if (this.props.loan_status) {
+         if (this.props.loan_status.loan_app_data.data == LoanApplicationProgress.Inprogress_SalaryEntries) { 
+            this.props.dispatch(actions.salaryTransaction(this.state.user.token));
+            }
+        }
+        else { this.props.dispatch(actions.salaryTransaction(this.state.user.token)); }
         this.props.dispatch(actions.salaryTransaction(this.state.user.token));
         // if(this.props.user_detail.loan_userdetails_data)
         // this.setState({ FirstName :this.props.user_detail.loan_userdetails_data.data.FirstName }); 
@@ -48,7 +58,6 @@ class SalaryEntry extends React.Component {
     }
 
     postSalarEntries = () => {
-        console.log(this.state.selectedEntryList.length);
         if (this.state.selectedEntryList.length > 0)
             {this.props.dispatch(actions.salaryEntry(this.state.user.token,this.state.selectedEntryList));}
         else {
@@ -162,6 +171,7 @@ function mapStateToProps(state) {
         salary_trans: state.loanOnboardingReducerPile.loanOnboardingSalaryTransaction,
         salary_entry: state.loanOnboardingReducerPile.loanSalaryEntryReducer,
         //user_detail: state.loanOnboardingReducerPile.loanUserDetails,
+        loan_status: state.loanReducerPile.loanAppStatus,
     };
 }
 export default connect(mapStateToProps)(SalaryEntry);
