@@ -12,14 +12,15 @@ class WemaCollectionSetup extends React.Component {
     }
 
     onDoneClick = () => {
+        this.props.history.push('/loans/salary/dashboard')
         if (this.props.standing_order)
             if (this.props.standing_order.standing_order_status == loanConstants.LOAN_STAND_ORDER_SUCCESS) {
                 let data = {
                     ...this.props.standing_order.standing_order_data.response.Response
                 }
-                if(data.kycRequired == true)
-                this.props.history.push('/loans/salary/kyc');
-                else this.props.history.push('/loans')  //url to be completed.
+               if(data.kycRequired == true){
+               this.props.history.push('/loans/salary/kyc');}
+                this.props.history.push('/loans/salary/dashboard')
             }
             else { 
                 this.props.goToPreviousPage()

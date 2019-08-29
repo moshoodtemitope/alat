@@ -8,6 +8,7 @@ import * as actions from '../../../redux/actions/onboarding/loan.actions';
 import { loanOnboardingConstants } from '../../../redux/constants/onboarding/loan.constants';
 import { alertActions } from '../../../redux/actions/alert.actions';
 import { LoanApplicationProgress } from '../../../shared/constants';
+import * as util from '../../utils'
 
 class SalaryEntry extends React.Component {
     constructor(props) {
@@ -108,8 +109,8 @@ class SalaryEntry extends React.Component {
                                             <th scope="row"><input type="checkbox" value={key} checked={entry.isChecked} onChange={(e) => this.entryChecked(entry, e)}
                                                 style={{ opacity: "unset", position: "unset" }} /></th>
                                             <td>{entry.Description}</td>
-                                            <td>{entry.Amount}</td>
-                                            <td>{entry.TransactionDate}</td>
+                                            <td>{util.mapCurrency('NGN')}{util.formatAmount(entry.Amount)}</td>
+                                            <td>{util.FormartDate(entry.TransactionDate)}</td>
                                         </tr>
                                     )
                                 })}
