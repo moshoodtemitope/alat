@@ -157,6 +157,10 @@ export const routes = {
     LOAN_MANDATE_STATUS : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/MandateStatus',
     LOAN_OTP_MANDATE : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/ValidateOtpMandate',
 
+    //WesternUnion
+    WESTERNUNION_COUNTRIES: BASEURL + '/PaymentApi/api/WesternunionCountries',
+    RECEIVE_WESTERNUNION: BASEURL + '/PaymentApi/api/WesternUnionMoneyTransfer',
+
     //Settings
     CHANGE_PASSWORD : BASEURL + '/AccountSetting/api/password/change',
     GET_RANDOM_SECURITY_QUESTION: BASEURL + '/AccountSetting/api/securityquestion/Random',

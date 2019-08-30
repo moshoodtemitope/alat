@@ -54,6 +54,7 @@ import { geCurrentVirtualCardsRequest,
          infoForATMCardRequest,
          otpForATMCardRequest,
          postATMCardRequest} from './alatcards.reducer'
+import {getWesternUnionCountries,receiveWesternUnion } from './remittance.reducer';
 
 export const onboarding = {
     userRegistrationRequest,
@@ -161,4 +162,8 @@ export const alatCards={
     infoForATMCardRequest,
     otpForATMCardRequest,
     postATMCardRequest
+}
+export const receiveMoney={
+    getWesternUnionCountries,
+    receiveWesternUnion
 }

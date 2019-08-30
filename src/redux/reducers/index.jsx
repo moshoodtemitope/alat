@@ -10,7 +10,9 @@ import {dashboard,
         fundAccount, 
         loanOnboarding,
         loans,
+        receiveMoney,
         alatCards} from "./export";
+
 import {bankListRequest, beneficiariesRequest} from "./transfer.reducer";
 import {accountHistoryReducer} from "./dashboard.reducer";
 import { userConstants } from "../constants/onboarding/user.constants";
@@ -25,6 +27,8 @@ import { fundAccountConstants } from "../constants/fund-account/fund-account.con
 import { loanOnboardingConstants } from '../constants/onboarding/loan.constants';
 import { loanConstants } from '../constants/loans/loans.constants';
 import { ALATCARD_REDUCER_CLEAR } from '../constants/cards/cards.constants';
+import { WESTERNUNION_REDUCER_CLEAR } from '../constants/remittance/remittance.constants';
+
 //import { saveCardReducer } from "./fund-account.reducer";
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
@@ -75,6 +79,12 @@ const alatCardReducersPile = (state, action)=>{
         state = undefined;
     }
     return alatCardsReducer(state, action);
+}
+const remittanceReducerPile = (state, action)=>{
+    if(action.type ===WESTERNUNION_REDUCER_CLEAR){
+        state = undefined;
+    }
+    return remittanceReducer(state, action);
 }
 
 
@@ -162,7 +172,13 @@ const alatCardsReducer = combineReducers({
     updateALATCardSettingsRequest: alatCards.updateALATCardSettingsRequest,
     infoForATMCardRequest: alatCards.infoForATMCardRequest,
     otpForATMCardRequest: alatCards.otpForATMCardRequest,
-    postATMCardRequest: alatCards.postATMCardRequest,
+    postATMCardRequest: alatCards.postATMCardRequest
+})
+
+const remittanceReducer = combineReducers({
+    getCountries: receiveMoney.getWesternUnionCountries,
+    receiveWUMoney: receiveMoney.receiveWesternUnion
+    
 })
 
 const appReducer = combineReducers({
@@ -188,6 +204,7 @@ const appReducer = combineReducers({
     accounts: global.debitableAccountsReducer,
     encrypt_rule: global.getEncryptionRuleReducer,
     verify_pan: global.verifyPANReducer,
+    remittanceReducerPile,
     // storage_reducer
     // storage_reducer
 

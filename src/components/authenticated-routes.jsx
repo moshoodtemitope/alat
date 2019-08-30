@@ -20,6 +20,7 @@ import FundAccountIndex from './fund-account/index';
 import AccountSettings from './account-settings/container';
 import LoansIndex from './loans';
 import CardsContainer from './cards/cards-container';
+import RemittanceContainer from './remittance/remittance-container'
 
 
 
@@ -73,6 +74,7 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path='/setcard-pin' authed={this.props.user} component={CardsContainer}/>
                     <PrivateRoute path='/cards-control' authed={this.props.user} component={CardsContainer}/>
                     <PrivateRoute path='/virtual-cards' authed={this.props.user} component={CardsContainer}/>
+                    <PrivateRoute path='/receive-money' authed={this.props.user} component={RemittanceContainer}/>
                 </Switch>
             </Router>
             
