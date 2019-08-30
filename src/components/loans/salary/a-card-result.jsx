@@ -16,12 +16,12 @@ class LoanCardResult extends React.Component{
 
      finishClick=()=>{
         this.props.dispatch(OnbaordingActions.clearLoanOnboardingStore());
-        this.props.history.push('/loans');
+        this.props.history.push('/loans/salary/dashboard');
      }
 
      abortClick=()=>{
         this.props.dispatch(OnbaordingActions.clearLoanOnboardingStore());
-        this.props.history.push('/loans');
+        this.props.history.push('/loans/salary/dashboard');
      }
 
      goBackWard=()=>{
