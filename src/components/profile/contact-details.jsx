@@ -233,6 +233,7 @@ class ContactDetails extends Component {
                             result = null;
                             break;
                         }
+
                 case 'houseNumber':
                         if(this.state[x] == null || this.state[x] == ""){
                             console.log(x)
@@ -245,24 +246,7 @@ class ContactDetails extends Component {
                             result = null;
                             break;
                         }
-                case 'title':
-                        if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
-                            result = null;
-                            break;
-                        }
-                case 'houseNumber':
-                        if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
-                            result = null;
-                            break;
-                        }
-                case 'apartment': 
-                        if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
-                            result = null;
-                            break;
-                        }
+                
                 case 'personalAddress':
                         if(this.state[x] == null || this.state[x] == ""){
                             console.log(x)
@@ -276,6 +260,37 @@ class ContactDetails extends Component {
                             break;
                         }
                 case 'busStop': 
+                        if(this.state[x] == null || this.state[x] == ""){
+                            console.log(x)
+                            result = null;
+                            break;
+                        }
+                case 'houseNumber2':
+                        if(this.state[x] == null || this.state[x] == ""){
+                            console.log(x)
+                            result = null;
+                            break;
+                        }
+                case 'apartment2': 
+                        if(this.state[x] == null || this.state[x] == ""){
+                            console.log(x)
+                            result = null;
+                            break;
+                        }
+
+                case 'personalAddress2':
+                        if(this.state[x] == null || this.state[x] == ""){
+                            console.log(x)
+                            result = null;
+                            break;
+                        }
+                case 'street2':
+                        if(this.state[x] == null || this.state[x] == ""){
+                            console.log(x)
+                            result = null;
+                            break;
+                        }
+                case 'busStop2': 
                         if(this.state[x] == null || this.state[x] == ""){
                             console.log(x)
                             result = null;
@@ -597,7 +612,7 @@ class ContactDetails extends Component {
    }
 
    render(){
-       const { PinValidity, SectorValidity, EmployerPhoneNumberValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
+       const { PinValidity, sameAddressAsAbove,SectorValidity, EmployerPhoneNumberValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
         EmailAddressValidity, streetValidity, streetValidity2, busstopValidity, busstopValidity2, apartmentValidity, apartmentValidity2, personalAddressValidity, 
         personalAddressValidity2, houseNumberValidity, houseNumberValidity2} = this.state;
 
@@ -736,7 +751,7 @@ class ContactDetails extends Component {
                                                         </div>
                                             </div>
                                             
-                                            <div className="form-row">
+                                            <div className={sameAddressAsAbove + " " + "form-row"}>
                                                     <div className={houseNumberValidity2 ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                     <label className="label-text">House Number</label>
                                                                     <input type="text" name="houseNumber2" className="form-control" onChange={this.SetInputValue} placeholder="1"/>
@@ -749,20 +764,20 @@ class ContactDetails extends Component {
                                                     </div>
                                                 
                                             </div>
-                                            <div className="form-row">
+                                            <div className={sameAddressAsAbove + " " + "form-row"}>
                                                         <div className={streetValidity2 ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Streat / Compound Name</label>
                                                             <input type="text" name="street2" className="form-control" onChange={this.SetInputValue} placeholder=""/>
                                                         </div>
                                             </div>
-                                            <div className="form-row">
+                                            <div className={sameAddressAsAbove + " " + "form-row"}>
                                                         <div className={busstopValidity2 ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Nearest Bustop</label>
                                                             <input type="text" name="busStop2" className="form-control" onChange={this.SetInputValue} placeholder=""/>
                                                         </div>
                                             </div>
 
-                                            <div className="form-row">
+                                            <div className={sameAddressAsAbove + " " + "form-row"}>
                                                         <div className={personalAddressValidity2 ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Address</label>
                                                             <input type="text" name="personalAddress2" className="form-control" onChange={this.SetInputValue} placeholder="Address"/>
@@ -805,9 +820,6 @@ class ContactDetails extends Component {
                                                         </div>
                                             </div>
 
-                                           
-                                            
-                                                     
                                             <button type="submit" className="twoBut">Submit</button>
                                                      
                                                  
