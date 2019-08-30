@@ -246,5 +246,16 @@ export const SearchFetchEvent = (token, data) => {
     function failure(error) { return {type:listStyleConstants.SEARCH_FETCH_EVENT_FAILURE, error} }
 };
 
+export const movieDetails = (data) =>{
+    return(dispatch)=>{
+        dispatch(success(data))
+    }
+    function success(data){
+        return{
+            type: "movie detials info",
+            data:data
+        }
+    }
+}
 
 

@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import {listStyleConstants} from "../../../redux/constants/lifestyle/lifestyle-constants";
 import {Redirect} from 'react-router-dom'
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
-
 import {getCinemaList,} from '../../../redux/actions/lifestyle/movies-actions'
 
 
@@ -32,7 +31,12 @@ class Moviedetails extends React.Component {
             dataContainer: null,
             itemId: null,
             title:"",
-            cinemaId:""
+            ticketId:"",
+            cinemaId:"",
+            selectedLocationInvalid:false,
+            formsubmitted:"",
+            isSubmitted:false,
+            fee:""
         };
     }
     
@@ -107,6 +111,13 @@ class Moviedetails extends React.Component {
                 })
             );
     };
+    checkSelectedLocation = (event) => {
+        if (this.state.itemId == "") {
+            this.setState({ selectedLocationInvalid: true });
+            return true;
+        }
+    };
+
 
     decreaseStudent = () => {
         let { studentNumber } = this.state;
@@ -129,18 +140,26 @@ class Moviedetails extends React.Component {
             );
     };
     ShowBuyTicketData = () => {
-        const data = {
-            ShowTimeId:this.state.showTimeId,
-            TicketAmount:parseFloat(this.state.TicketAmount),
-            initialAdultAmount:this.state.initialAdultAmount,
-            initialStudentAmount:this.state.initialStudentAmount,
-            initialChildAmount:this.state.initialChildAmount, 
-            title:this.props.location.state.details.title,  
-            cinemaId:this.state.cinemaId     
-        }
-        console.log(data)
+        this.setState({ isSubmitted: true });
+        if (this.checkSelectedLocation()) {
+
+        } else {
+
+            const data = {
+                ShowTimeId:this.state.showTimeId,
+                TicketAmount:parseFloat(this.state.TicketAmount),
+                initialAdultAmount:this.state.initialAdultAmount,
+                initialStudentAmount:this.state.initialStudentAmount,
+                initialChildAmount:this.state.initialChildAmount, 
+                title:this.props.location.state.details.title,  
+                cinemaId:this.state.cinemaId,
+                ticketId:this.state.ticketId,
+                fee:this.state.fee
+            }
+            console.log(data)
         // return;
         this.props.dispatch(actions.SubmitTicketData(data));
+    }
     }
     
     // value={event.date + "8888" + event.student + " " + event.adult + " " + event.children}>{event.date}</option>
@@ -150,30 +169,33 @@ class Moviedetails extends React.Component {
         let childrenAmount = amounts.split(" ")[2];
         let studentAmount = amounts.split(" ")[0];
         let showTimeId = amounts.split(" ")[3];
-        let ticketType = amounts.split(" ")[4]
+        let ticketId = amounts.split(" ")[4]
+        let fee = amounts.split(" ")[5]
        
         console.log(adultAmount);
         console.log(childrenAmount);
         console.log(studentAmount);
         console.log(showTimeId);
-        console.log(ticketType)
+        console.log(ticketId);
+        console.log(fee);
         console.log('oooooooooooooooooooooooooooooooooooo');
         this.setState({initialStudentAmount: studentAmount, studentAmount});
         this.setState({initialAdultAmount: adultAmount,adultAmount});
         this.setState({initialChildAmount: childrenAmount,childrenAmount});
-        this.setState({ showTimeId:showTimeId })
+        this.setState({ showTimeId:showTimeId });
+        this.setState({ticketId:ticketId});
+        this.setState({fee:fee});
     }
-
+   
     UseSelectedItem = (event) => {
         let gottenValue = event.target.value.split("000");
-       
         console.log(gottenValue);
         
         let data = {
             item: gottenValue[0],
             id: gottenValue[1]
         }
-  
+
         this.setState({itemId: gottenValue[1]});
         this.setState({cinemaId:gottenValue[0]})
         console.log(data);
@@ -185,13 +207,11 @@ class Moviedetails extends React.Component {
         if(this.props.SubmitTicketData.message == listStyleConstants.SUBMIT_MOVIE_TICKET_SUCCESS){
             return<Redirect to="/lifestyle/buy-ticket-details"/>
         }
-        
     }
      formatAmountNoDecimal = (amount) => {
         return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
     };
 
-   
     
 
     render() {
@@ -200,7 +220,7 @@ class Moviedetails extends React.Component {
             movieDay,
             adultNumber,
             studentNumber,
-            childNumber
+            childNumber,
         } = this.state;
          const {getCinemaList,ShowTime,buyMovieTicket}=this.props
          const details = this.props.location.state.details;
@@ -210,7 +230,7 @@ class Moviedetails extends React.Component {
 
         return (
             <div>
-                    <div className="row" style={{justifyContent: "center"}}>
+                    <div className="row" style={{justifyContent: "center", paddingBotom:"10px"}}>
                         <img src={details.bannerImage} class="img-responsive"/>
                     </div>
                 <div
@@ -336,17 +356,18 @@ class Moviedetails extends React.Component {
                         }}>
                         <form onSubmit={this.ShowBuyTicketData  } style={{ width: "100%" }}>
                             <label>Select Location</label>
-                           
-                            <select onChange={this.UseSelectedItem}>
-                                <option>Select Cinema Location</option>
-                              
-                                {
-                                    getCinemaList.message == listStyleConstants.GET_CINEMA_LIST_SUCCESS && 
-                                    getCinemaList.data.response.map(event => {
-                                        return (<option key={event.cinemaUid} value={event.cinemaUid + " " + "000" + details.id }>{event.name}</option>)
-                                    })
-                                }
-                            </select>
+
+                                <select onChange={this.UseSelectedItem}>
+                                    <option>Select Cinema Location</option>
+                                
+                                    {
+                                        getCinemaList.message == listStyleConstants.GET_CINEMA_LIST_SUCCESS && 
+                                        getCinemaList.data.response.map(event => {
+                                            return (<option key={event.cinemaUid} value={event.cinemaUid + " " + "000" + details.id }>{event.name}</option>)
+                                        })
+                                    }
+                                </select>
+
 
                             <label style={{ marginTop: 16 }}>Select Day</label>
                             <select onChange={this.UseSelectedTime} >
@@ -354,7 +375,7 @@ class Moviedetails extends React.Component {
                                 {                                      
                                     ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
                                     ShowTime.data.response.map(event=> {
-                                        return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children  + " " + event.id + " " + event.ticketTypes[0].ticketNames}>
+                                        return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children  + " " + event.id + " " + event.ticketId + " " + event.fee}>
                                         {event.date}</option>
                                     })
                                 } 

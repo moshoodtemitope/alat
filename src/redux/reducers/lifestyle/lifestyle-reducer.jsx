@@ -322,6 +322,19 @@ export function SubmitEventTicketData(state=[], action){
     }
 }
 
+export function movieDetails (state=[], action){
+    switch(action.type){
+        case '"movie detials info"': 
+           return {  
+               message: "data from movie",
+               data: action
+           }
+        
+        default: 
+           return {... state}
+    }
+}
+
 
 
 

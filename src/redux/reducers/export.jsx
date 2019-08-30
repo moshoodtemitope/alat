@@ -1,5 +1,5 @@
 import {userRegistrationRequest, bvnDetailsReducer,bvnSkipReducer, bvnCustomerDetailsReducer} from "./onboarding.reducer";
-import {getCinemaList, getSingleMovie, buyMovieTicket, getEvents, getSingleEvent, SearchfetchMovieList, purchaseEventTicket, getAllEngagements, getCustomersEngagements, fetchMovieList,ShowTime,SubmitTicketData,SubmitEventTicketData,SearchfetchEventList} from './lifestyle/lifestyle-reducer';
+import {getCinemaList, getSingleMovie, buyMovieTicket, getEvents, getSingleEvent, SearchfetchMovieList, purchaseEventTicket, getAllEngagements, getCustomersEngagements, fetchMovieList,ShowTime,SubmitTicketData,SubmitEventTicketData,SearchfetchEventList, movieDetails} from './lifestyle/lifestyle-reducer';
 
 
 import {
@@ -119,8 +119,6 @@ export const fundAccount={
     tranCardDetailsReducer,
     deleteCardReducer,
     fundWemaAccountReducer,
-    //fundFromTokenisedCardReducer,
-    //fundFromCardWithPinReducer
     saveCardAfterTranReducer
 }
 
@@ -136,8 +134,8 @@ export const movies = {
     SubmitTicketData,
     SubmitEventTicketData,
     SearchfetchMovieList,
-    SearchfetchEventList
-    
+    SearchfetchEventList,
+    movieDetails
 }
 
 export const preferences = {

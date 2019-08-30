@@ -176,7 +176,9 @@ const appReducer = combineReducers({
     getMovieList:movies.fetchMovieList,
 
     getAllEngagements: preferences.getAllEngagements,
-    getCustomersEngagements: preferences.getCustomersEngagements
+    getCustomersEngagements: preferences.getCustomersEngagements,
+
+    movieDetails: movies.movieDetails
 });
 
 //export defualt appReducer;

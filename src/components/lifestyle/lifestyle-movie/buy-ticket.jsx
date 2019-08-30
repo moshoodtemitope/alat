@@ -72,10 +72,15 @@ class BuyTicket extends Component {
             console.log('tag', data);
 
             this.setState({
-                TicketAmount:this.formatAmountNoDecimal(data.initialAdultAmount),
+                TicketAmount:data.initialAdultAmount,
                 title:data.title,
                 cinemaId:data.cinemaId,
                 ShowTimeId:data.ShowTimeId,
+                initialAdultAmount:data.initialAdultAmount,
+                initialStudentAmount:data.initialStudentAmount,
+                initialChildAmount:data.initialChildAmount,
+                ticketId:data.ticketId,
+                fee:data.fee
                 
             });
         }
@@ -90,11 +95,17 @@ class BuyTicket extends Component {
             //not valid
         }else {
             let data={
-                'ticketAmount':parseFloat(this.state.TicketAmount),
-                'accountNo':this.state.accountToDebit,
-                'pin':parseInt(this.state.Pin),
-                "showTimeId":this.state.ShowTimeId,	
-                "cinemaId":this.state.cinemaId
+                'TicketAmount':parseFloat(this.state.TicketAmount),
+                'AccountNo':this.state.accountToDebit,
+                'Pin':parseInt(this.state.Pin),
+                "ShowTimeId":this.state.ShowTimeId,	
+                "CinemaId":this.state.cinemaId,
+                "Children":parseInt(this.state.initialChildAmount),
+                "Student":parseInt(this.state.initialStudentAmount),
+                "Adult":parseInt(this.state.initialAdultAmount),
+                "TicketId":this.state.ticketId,
+                "fee":this.state.fee,
+
             };
             console.log(data)
         
@@ -148,7 +159,7 @@ class BuyTicket extends Component {
                                                        <div className="puchaseSumTickets">
                                                            <div className="left">
                                                                 <p style={{fontSize:12,fontFamily:"proxima_novasemibold"}}>{this.state.title}</p>
-                                                                {/* <p style={{fontSize:12, fontFamily:'proxima_novaregular'}}>Movie ticket</p> */}
+                                                                <p style={{fontSize:12, fontFamily:'proxima_novaregular'}}>Movie ticket</p>
                                                            </div>
                                                            <div className="right">
                                                                <p>N{this.formatAmountNoDecimal(this.state.TicketAmount)}</p>
