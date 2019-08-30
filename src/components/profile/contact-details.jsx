@@ -800,7 +800,7 @@ class ContactDetails extends Component {
                                             <div className="form-row">
                                                         <div className={EmployerPhoneNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Phone Number</label>
-                                                            <input type="number" name="EmployerPhoneNumber" className="form-control" onChange={this.SetInputValue} placeholder="Employers Phone Number"/>
+                                                            <input type="number" name="EmployerPhoneNumber" className="form-control" onChange={this.SetInputValue} placeholder="Phone Number"/>
                                                         </div>
                                             </div>
                                             

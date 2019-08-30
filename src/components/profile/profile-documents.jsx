@@ -74,11 +74,18 @@ class ProfileDocuments extends Component {
                                         
                                     </div>
                                     <div className="col-sm-6">
-                                    <form onSubmit={this.HandleSubmit} className="parentForm">
-                                          <p className="formHeading">Documents</p>
-                                           <input type="file" required/>
-                                           <input type="file" required/>
-                                           <input type="file" required/>
+                                    <form onSubmit={this.HandleSubmit} className="parentForm docUpLoadFormProfile">
+                                           <p className="formHeading">Documents</p>
+
+                                           <label htmlFor="file-upload1">Photograph</label>
+                                           <input type="file" id="file-upload1" required/>
+
+                                           <label htmlFor="file-upload2">Signature</label>
+                                           <input type="file" id="file-upload2" required/>
+
+                                           <label htmlFor="file-upload3">Identity Card</label>
+                                           <input type="file" id="file-upload3" required/>
+
                                            <button type="submit" className="twoBut">Submit</button>
                                     </form>
                                     

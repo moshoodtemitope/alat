@@ -48,7 +48,7 @@ class NextOfKin extends Component {
          street2: null,
          busStop2: null,
          personalAddress2: null,
- 
+         nextOfKinBVN: null,
  
          NationalityValidity: false, 
          OtherNameValidity: false, 
@@ -74,6 +74,7 @@ class NextOfKin extends Component {
          busstopValidity: false,
          streetValidity: false,
          personalAddressValidity: false,
+         
  
          personalAddressValidity2: false,
          streetValidity2: false,
@@ -296,7 +297,7 @@ class NextOfKin extends Component {
                              result = null;
                              break;
                          }
-                 
+            
              }
  
              console.log(result)
@@ -612,8 +613,9 @@ class NextOfKin extends Component {
     }
  
    render(){
-       const {BVNValidity, birthDate, PinValidity, SectorValidity, EmployerPhoneNumberValidity,EmploymentValidity, AddressValidity, EmployersNameValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
-        SurnameValidity, EmailAddressValidity, FirstNameValidity, MaritalStatusValidity, TitleValidity, OccupationValidity,GenderValidity, DateOfBirthValidity, OtherNameValidity, MothersMaidenNameValidity} = this.state;
+    const { birthDate, PinValidity, sameAddressAsAbove, SurnameValidity, MaritalStatusValidity, TitleValidity, EmployerPhoneNumberValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
+        EmailAddressValidity, streetValidity, GenderValidity, busstopValidity, DateOfBirthValidity, FirstNameValidity, OtherNameValidity
+        } = this.state;
 
        return(
         <Fragment>
@@ -688,7 +690,7 @@ class NextOfKin extends Component {
                                                         </div>
 
                                                         <div className={MaritalStatusValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                            <label className="label-text">Marital Status</label>
+                                                            <label className="label-text">Relationship</label>
                                                             <select onChange={this.SetInputValue} name="maritalStatus" placeholder="marital status">
                                                                 
                                                                 <option value="Mr">Married</option>
@@ -699,7 +701,7 @@ class NextOfKin extends Component {
 
                                             <div className="form-row">
                                                         <div className={SurnameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Surname Name</label>
+                                                            <label className="label-text">Surname</label>
                                                             <input type="text" name="SurName" className="form-control" onChange={this.SetInputValue} placeholder="Surname"/>
                                                         </div>
                                             </div>
@@ -716,6 +718,27 @@ class NextOfKin extends Component {
                                                         <div className={OtherNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Other Name</label>
                                                             <input type="text" name="OtherName" className="form-control" onChange={this.SetInputValue} placeholder="Other Name"/>
+                                                        </div>
+                                            </div>
+
+                                            <div className="form-row">
+                                                        <div className={EmployerPhoneNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                            <label className="label-text">Phone Number</label>
+                                                            <input type="number" name="EmployerPhoneNumber" className="form-control" onChange={this.SetInputValue} placeholder="Telephone"/>
+                                                        </div>
+                                            </div>
+
+                                            <div className="form-row">
+                                                        <div className={EmailAddressValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                            <label className="label-text">Email</label>
+                                                            <input type="email" name="EmailAddress" className="form-control" onChange={this.SetInputValue} placeholder="Email"/>
+                                                        </div>
+                                            </div>
+
+                                            <div className="form-row">
+                                                        <div className="form-group col-md-12">
+                                                            <label className="label-text">Next of Kin BVN (Optional)</label>
+                                                            <input type="number" name="nextOfKinBVN" className="form-control" onChange={this.SetInputValue} placeholder="BVN"/>
                                                         </div>
                                             </div>
                                            
@@ -768,66 +791,40 @@ class NextOfKin extends Component {
                                             </div>
                                             
                                             <div className="form-row">
-                                                        <div className={MothersMaidenNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Mothers Maiden Name</label>
-                                                            <input type="text" name="mothersMaidenName" className="form-control" onChange={this.SetInputValue} placeholder="First Name"/>
-                                                        </div>
-                                            </div>
-                                           
-                                            <div className="form-row">
-                                            <div className={BVNValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
-                                                            <label className="label-text">BVN</label>
-                                                            <input type="Number" name= "BVNnumber" className="form-control" onChange={this.SetBvNNumber} placeholder="0000 0000 0000"/>
-                                                        </div>
-
-                                                        <div className={EmploymentValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                            <label className="label-text">Employment Status</label>
-                                                            <select onChange={this.SetInputValue} name="EmploymentStatus">
-                                                                <option value="Male"> Employed </option>
-                                                                <option value="Female"> UnEmployed </option>
-                                                            </select>
-                                                        </div>
-                                            </div>
-                                           
-                                            <div className="form-row">
-                                                        <div className={EmployersNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Employer's Name</label>
-                                                            <input type="text" name="EmployerName" className="form-control" onChange={this.SetInputValue} placeholder="Employers Name"/>
-                                                        </div>
-                                            </div>
-                                          
-                                            <div className="form-row">
-                                                        <div className={EmailAddressValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Employer's Address</label>
-                                                            <input type="email" name="EmailAddress" className="form-control" onChange={this.SetInputValue} placeholder="Employers Address"/>
-                                                        </div>
+                                                   <div className="form-group col-md-12">
+                                                      <p>Full Address</p>
+                                                   </div>
                                             </div>
 
                                             <div className="form-row">
-                                                        <div className={EmployerPhoneNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Employer's Phone Number</label>
-                                                            <input type="number" name="EmployerPhoneNumber" className="form-control" onChange={this.SetInputValue} placeholder="Employers Phone Number"/>
-                                                        </div>
+                                                   <div className="form-group col-md-9">
+                                                         <p>Same as mine</p>
+                                                   </div>
+                                                   <div className="form-group col-md-3">
+                                                      
+                                                   </div>
                                             </div>
                                             
-                                            <div className="form-row">
-                                                        <div className={SectorValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Sector</label>
-                                                            <input type="text" name="Sector" className="form-control" onChange={this.SetInputValue} placeholder="Sector"/>
+                                
+                                            <div className={sameAddressAsAbove + " " + "form-row"}>
+                                                        <div className={streetValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                            <label className="label-text">Streat / Compound Name</label>
+                                                            <input type="text" name="street" className="form-control" onChange={this.SetInputValue} placeholder=""/>
                                                         </div>
                                             </div>
 
-                                            <div className="form-row">
-                                                        <div className={OccupationValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Occupation</label>
-                                                            <input type="text" name="Occupation" className="form-control" onChange={this.SetInputValue} placeholder="Occupation"/>
+
+                                            <div className={sameAddressAsAbove + " " + "form-row"}>
+                                                        <div className={busstopValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                            <label className="label-text">Nearest Bustop</label>
+                                                            <input type="text" name="busStop" className="form-control" onChange={this.SetInputValue} placeholder=""/>
                                                         </div>
                                             </div>
-                                          
+                                                   
                                             <div className="form-row">
                                                         <div className={PinValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Alat Pin</label>
-                                                            <input type="text" name="AlatPin" className="form-control" onChange={this.SetInputValue} placeholder="Alat Pin"/>
+                                                            <input type="number" name="AlatPin" className="form-control" onChange={this.SetInputValue} placeholder="Alat Pin"/>
                                                         </div>
                                             </div>
 

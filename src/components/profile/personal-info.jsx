@@ -452,8 +452,8 @@ class PersonalInfoMation extends Component {
                                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                                 <ul>
                                                     <li><NavLink to={'/default-page'} className="active">Profile</NavLink></li>
-                                                    <li><NavLink to={'/default-page'}>Pin Management</NavLink></li>
-                                                    <li><NavLink to={'/default-page'}>Security Questions</NavLink></li>
+                                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+                                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -649,7 +649,7 @@ class PersonalInfoMation extends Component {
                                             <div className="form-row">
                                                         <div className={PinValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Alat Pin</label>
-                                                            <input type="number" name="AlatPin" className="form-control" onChange={this.SetInputValue} placeholder="Alat Pin"/>
+                                                            <input type="text" name="AlatPin" className="form-control" onChange={this.SetInputValue} placeholder="Alat Pin"/>
                                                         </div>
                                             </div>
 
