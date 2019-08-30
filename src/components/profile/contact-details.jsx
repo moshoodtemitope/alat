@@ -71,9 +71,17 @@ class ContactDetails extends Component {
         MaritalStatusValidity: false,
         houseNumberValidity: false,
         apartmentValidity: false,
-        
+        busstopValidity: false,
+        streetValidity: false,
+        personalAddressValidity: false,
+
+        personalAddressValidity2: false,
+        streetValidity2: false,
+        busstopValidity2: false,
         houseNumberValidity2: false,
-        apartmentValidity2: false
+        apartmentValidity2: false,
+
+        sameAddressAsAbove: "sameAddressAsAbove"
        }
    }
 
@@ -336,6 +344,13 @@ class ContactDetails extends Component {
        this.checkPersonalAddressValidity();
        this.checkBusstopValidity();
        this.checkStreetValidity();
+
+       this.checkStreetValidity2();
+       this.checkBusstopValidity2(); 
+       this.checkPersonalAddressValidity2();
+       this.checkHouseNumberValidity2();
+       this.checkApartmentValidity2();
+
        console.log('code got here');
 
        return;
@@ -551,7 +566,7 @@ class ContactDetails extends Component {
             this.setState({houseNumberValidity2: false});
         }
     }
-
+    
     checkStreetValidity2 = () => {
         if(this.state.street2 == null || this.state.street2 == ""){
             this.setState({streetValidity2: true});
@@ -756,7 +771,7 @@ class ContactDetails extends Component {
                                             <div className="form-row">
                                                         <div className={EmailAddressValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Email Address</label>
-                                                            <input type="email" name="EmailAddress" className="form-control" onChange={this.SetInputValue} placeholder="Email"/>
+                                                            <input type="email" name="EmailAddress" className="form-control" onChange={this.SetInputValue} placeholder="Email Address"/>
                                                         </div>
                                             </div>
                                             
