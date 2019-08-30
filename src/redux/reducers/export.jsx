@@ -35,6 +35,26 @@ import { loanCalcDataReducer, loanApplyReducer, GetIndustriesReducer, GetEmploye
     LoanHistoryReducer, WorkIdFrontReducer, WorkIdBackReducer, loanRejectReducer, loanStandingOrderReducer,
      loanMandateStatusReducer, loanValidateRemitaOtpReducer } from './loan.reducer';
 
+import { geCurrentVirtualCardsRequest,
+         sendVCNewCardinfo,
+         sendTopVCCardinfo,
+         getAVirtualCardinfo,
+         liquidateCard,
+         deleteVirtualCard,
+         getVirtualCardHistoryRequest,
+         changeCardStatus,
+         getAtmCardRequest,
+         getAtmCardHotlistReasonsRequest,
+         atmCardHotlistRequest,
+         randomQuestionRequest,
+         answerRandomQuestionRequest,
+         activateALATCardRequest,
+         loadALATCardSettingsRequest,
+         updateALATCardSettingsRequest,
+         infoForATMCardRequest,
+         otpForATMCardRequest,
+         postATMCardRequest} from './alatcards.reducer'
+
 export const onboarding = {
     userRegistrationRequest,
     bvnDetailsReducer,
@@ -119,4 +139,26 @@ export const fundAccount={
     //fundFromTokenisedCardReducer,
     //fundFromCardWithPinReducer
     saveCardAfterTranReducer
+}
+
+export const alatCards={
+    geCurrentVirtualCardsRequest,
+    sendVCNewCardinfo,
+    sendTopVCCardinfo,
+    getAVirtualCardinfo,
+    liquidateCard,
+    deleteVirtualCard,
+    getVirtualCardHistoryRequest,
+    changeCardStatus,
+    getAtmCardRequest,
+    getAtmCardHotlistReasonsRequest,
+    atmCardHotlistRequest,
+    randomQuestionRequest,
+    answerRandomQuestionRequest,
+    activateALATCardRequest,
+    loadALATCardSettingsRequest,
+    updateALATCardSettingsRequest,
+    infoForATMCardRequest,
+    otpForATMCardRequest,
+    postATMCardRequest
 }

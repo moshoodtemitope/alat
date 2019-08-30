@@ -36,9 +36,25 @@ export const routes = {
     SEND_STATEMENT: BASEURL + '/AccountMaintenance/api/transactions/statementsV2',
     GET_TRANSACTION_LIMIT: BASEURL + '/AccountMaintenance/api/transactions/getTransactionlimit',
     SET_TRANSACTION_LIMIT: BASEURL + '/AccountMaintenance/api/transactions/setTransactionlimit',
+    GETSTATES: BASEURL + '/AccountMaintenance/api/account/GetStatesAndLgas',
+    
 
     //goals and savings
     CUSTOMERGOALS: BASEURL + '/Savings.WebApi/api/Savings/CustomergoalsV2',
+
+    //Virtual Cards
+    GET_VC_EXCHENGE_RATE: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/GetCurrentExchangeRateV2',
+    CREAT_VIRTUAL_CARD_INITIAL: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/CreateVirtualCardInit',
+    CREAT_VIRTUAL_CARD_FINAL: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/CreateVirtualCardFinal',
+    GET_CURRENT_VC: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/GetCurrrentVirtualCardWeb',
+    GET_SINGLE_VC: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/GetSingleVirtualCardWeb',
+    DELETE_VIRTUAL_CARD: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/Delete',
+    TOPUP_VIRTUAL_CARD_INITIAL: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/FundVirtualCardInit',
+    TOPUP_VIRTUAL_CARD_FINAL: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/FundVirtualCardFinal',
+    LIQUIDATE_VIRTUAL_CARD: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/LiquidateVirtualCard',
+    VIRTUAL_CARD_HISTORY: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/VirtualCardHistory',
+    VIRTUAL_CARD_CHANGE_STATE: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/ChangeVirtualCardState',
+    VIRTUAL_CARD_ENCRYPTED_NUMBER: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/GetEncryptedNumberList',
 
     //Payment
 
@@ -64,6 +80,28 @@ export const routes = {
     INTERBANK_CHARGES: BASEURL + '/PaymentApi/api/InterBankCharges/All',
     GETLIMIT: BASEURL + '/AccountMaintenance/api/transactions/getTransactionlimit', 
     GetAllCustomerAccountsWithLimitsV2: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2', 
+    FETCH_CUSTOMER_ACCOUNTS: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccounts', 
+    
+    // Card Maintenance
+   
+    GET_CARD_CONTROL_SETTINGS: BASEURL + '/CardMaintenanceApi/api/v1/CardControl/CardSettingFromCardControl',
+    GET_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getpans',
+    ACTIVATE_CARD: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/activatecard',
+    GET_ACTIVE_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getactivepans',
+    GET_CARD_EXISTING_SETTINGS: BASEURL + '/CardMaintenanceApi/api/v1/CardControl/CustomerCardsFromCardControl',
+    GETCARDDESIGN: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/GetJson',
+    HOTLIST_CARD: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/hotlistcard',
+    GETCUSTOMERINFO: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/GetAllCustomerInfo',
+    GETALLACCOUNTS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/GetAllCustomerAccounts',
+    HOTLIST_CARD_REASONS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/gethotlistreasons',
+    SAVECARD: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/Save',
+    UPDATE_CARD_CONTROL: BASEURL + '/CardMaintenanceApi/api/v1/CardControl/UpdateCustomerCardsFromCardControl',
+    CARD_STATUS: BASEURL + '/cardmaintenanceapi/api/v1/CardMaintenance/getcardstatus',
+    CARD_STATUS_ERROR: BASEURL + '/cardmaintenanceapi/api/v1/CardMaintenance/LogCardDeliveryError',
+
+    //Account Settings
+    GETRANDOMSECURITYQUESTION: BASEURL + '/AccountSetting/api/securityquestion/Random',
+    VERIFY_SECURITY_QUESTION: BASEURL + '/AccountSetting/api/securityquestion/validatewithoutotp',
     
     //PaymentApi/api/Accounts/VerifyAccountName
 

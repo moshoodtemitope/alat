@@ -7,6 +7,21 @@ export const formatAmountNoDecimal = (amount) => {
     return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
 };
 
+export const toCurrency = (currency)=>{
+    if (currency) {
+      currency = typeof currency !== 'string' ? currency.toString() : currency;
+      let numberValueArray = currency.split('.');
+      let numberValue = removeComma(numberValueArray[0]);
+      currency = numberValueArray.length > 1 ? numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+        + '.' + numberValueArray[1] : numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+    }
+    return currency;
+  }
+
+export const removeComma= (currencyValue)=> {
+    return currencyValue.replace(/,/g, '');
+  }
+
 export const cc_format = (value) => {
 
     var v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
