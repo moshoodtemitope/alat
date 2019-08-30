@@ -40,8 +40,8 @@ class CardsControl extends React.Component {
         this.state = {
             user: JSON.parse(localStorage.getItem("user")),
             ForeignTravelCountriesField:'',
-            StartDateField:'',
-            EndDateField:'',
+            // StartDateField:'',
+            // EndDateField:'',
             invalidInterval: false,
             hasCountryChanged: false
         };
@@ -120,7 +120,8 @@ class CardsControl extends React.Component {
             }
             payload.pan = this.props.loadALATCardSetting.alatcardsettings_info.response.panDetails.maskedPan.replace(/\*/g, '');
 
-            // console.log('payload is', payload);
+           
+            
         
 
         dispatch(updateALATCardSettings(payload,this.state.user.token));
@@ -170,7 +171,7 @@ class CardsControl extends React.Component {
             let StartDateField = new Date(startDate).getUTCFullYear()+'-'+(new Date(startDate).getUTCMonth()+1)+'-'+(new Date(startDate).getUTCDate())+'T00:00:00';
             
             
-            this.setState({ startDate,StartDateField });
+            this.setState({ startDate,StartDateField, defaultStartDate:'' });
         }else{
             
             this.setState({ startDate:'',StartDateField:'' });
@@ -186,13 +187,16 @@ class CardsControl extends React.Component {
            
             
             
-            this.setState({ endDate,EndDateField, });
+            this.setState({ endDate,EndDateField, defaultEndDate:''});
         }else{
             
             this.setState({ endDate:'',EndDateField:'' });
         }
     }
 
+    setDefaultDate(){
+        document.querySelector('#startdate').value = this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField;
+    }
 
     handleChange(ForeignTravelCountriesField){
         this.setState({ ForeignTravelCountriesField: ForeignTravelCountriesField.value });
@@ -205,6 +209,8 @@ class CardsControl extends React.Component {
         let {startDate,
             endDate, invalidInterval} = this.state;
 
+           
+
             switch(loadSettings.fetch_status){
                 case GETALAT_CARDSETTINGS_PENDING:
                     return(
@@ -214,7 +220,11 @@ class CardsControl extends React.Component {
                     );
                 case GETALAT_CARDSETTINGS_SUCCESS:
                         let cardDetails = loadSettings.alatcardsettings_info.response,
-                            cardDataInfo, settingInfo, otherSettingsInfo;
+                            cardDataInfo, settingInfo, otherSettingsInfo,
+                            defaultStartDate='',
+                            defaultEndDate='',
+                            StartDateField,
+                            EndDateField;
                         if(cardDetails.panDetails!==null){
                             cardDataInfo        = cardDetails.panDetails; 
                             settingInfo         = cardDetails.cardControlSettings;
@@ -228,7 +238,52 @@ class CardsControl extends React.Component {
                                 })
                             })
 
+                            if(this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField!==undefined
+                                && this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField!==''){
+                                    // document.querySelector('#startdate').value = this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField;
+                                    defaultStartDate =  this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField;
+                                    defaultStartDate = new Date(defaultStartDate);
+
+                                    defaultEndDate = this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.endDateField
+                                    defaultEndDate = new Date(defaultEndDate);
+                                    
+
+                                    if(typeof defaultStartDate ==='object'){
+                                        defaultStartDate.setHours(defaultStartDate.getHours() + 1);
+                                        
+                                         StartDateField = new Date(defaultStartDate).getUTCFullYear()+'-'+(new Date(defaultStartDate).getUTCMonth()+1)+'-'+(new Date(defaultStartDate).getUTCDate())+'T00:00:00';
+                                        
+                                        
+                                        // this.setState({StartDateField});
+                                    }
+
+                                    if(typeof defaultEndDate ==='object'){
+                                        defaultEndDate.setHours(defaultEndDate.getHours() + 1);
                             
+                                        EndDateField = new Date(defaultEndDate).getUTCFullYear()+'-'+(new Date(defaultEndDate).getUTCMonth()+1)+'-'+(new Date(defaultEndDate).getUTCDate())+'T00:00:00';
+                                        
+                                      
+                                        
+                                        
+                                        // this.setState({ endDate,EndDateField, defaultEndDate:''});
+                                    }
+                                
+
+                                    this.state= Object.assign({},{
+                                        defaultEndDate,
+                                        defaultStartDate,
+                                        StartDateField,
+                                        EndDateField
+                                    }, this.state);
+
+                                    // this.setState({defaultEndDate,defaultStartDate});
+                                }else{
+                                    this.state= Object.assign({},{
+                                        StartDateField:'',
+                                        EndDateField:''
+                                    }, this.state);
+
+                                }
                            
                             let cardDesignUrl = `${BASEURL}/${cardDataInfo.design.url}`,
                                 cardStyle= {
@@ -318,6 +373,7 @@ class CardsControl extends React.Component {
                                                             <label>Start Date</label>
                                                                 <DatePicker placeholderText="" selected={startDate}
                                                                     onChange={this.handleStartDatePicker}
+                                                                    selected={this.state.defaultStartDate!==''?this.state.defaultStartDate:this.state.startDate}
                                                                     dateFormat="d MMMM, yyyy"
                                                                     showMonthDropdown
                                                                     showYearDropdown
@@ -325,12 +381,18 @@ class CardsControl extends React.Component {
                                                                     minDate={new Date()}
                                                                     id="startdate"
                                                                 />
+                                                                {/* {(this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField!==undefined
+                                                                && this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField!=='') &&
+                                                                    // document.querySelector('#startdate').value = this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField;
+                                                                    this.setDefaultDate()
+                                                                } */}
                                                                 {/* {this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.startDateField||''} */}
                                                         </div>
                                                         <div className="eachdate-wrap">
                                                             <label>End Date</label>
-                                                            <DatePicker placeholderText="" selected={endDate}
+                                                            <DatePicker placeholderText=""
                                                                 onChange={this.handleEndDatePicker}
+                                                                selected={this.state.defaultEndDate!==''?this.state.defaultEndDate:this.state.endDate}
                                                                 dateFormat="d MMMM, yyyy"
                                                                 peekNextMonth
                                                                 showMonthDropdown
@@ -350,20 +412,21 @@ class CardsControl extends React.Component {
                                     <div className="input-ctn inputWrap">
                                         <center>
                                             <button type="button" onClick={()=>{
+                                                                                console.log('state is ', this.state);
                                                                                 if((this.state.ForeignTravelStatusField===true 
                                                                                     && this.state.StartDateField!==''
                                                                                     && this.state.EndDateField!==''
                                                                                     && this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.foreignTravelCountriesField!==''
                                                                                 )){
                                                                                     if(this.state.hasCountryChanged===false){
-                                                                                        console.log('hereeeee', this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.foreignTravelCountriesField);
+                                                                                        
                                                                                         this.setState({
                                                                                             showForeignError: false,
                                                                                             ForeignTravelCountriesField:this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.foreignTravelCountriesField}
                                                                                             ,this.updateCardSettings());
                                                                                         
                                                                                     }else{
-                                                                                        console.log('crakcsdsd');
+                                                                                        
                                                                                         this.setState({showForeignError: false})
                                                                                         this.updateCardSettings();
                                                                                     }
@@ -480,7 +543,6 @@ class CardsControl extends React.Component {
 
 
 function mapStateToProps(state){
-    console.error(state);
     return {
         loadALATCardSetting   : state.alatCardReducersPile.loadALATCardSettingsRequest,
         updateCustomerCardSettings   : state.alatCardReducersPile.updateALATCardSettingsRequest,
