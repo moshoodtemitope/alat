@@ -30,9 +30,10 @@ class Dashboard extends React.Component{
         };
     }
 
-    componentDidMount = () => {
-       this.CheckRotatingSavingsAvailability();
-       this.CheckGroupSavingsAvailability();
+    componentDidMount() {
+        this.fetchAccounts();
+        this.CheckRotatingSavingsAvailability();
+        this.CheckGroupSavingsAvailability();
     }
 
     CheckRotatingSavingsAvailability = () => {
@@ -43,16 +44,11 @@ class Dashboard extends React.Component{
         this.props.dispatch(actions.customerGroup(this.state.user.token, null));
     }
 
-
     fetchAccounts(){
         const { dispatch } = this.props;
         // console.log(this.props);
         console.log(this.state.user.token);
         dispatch(getAccounts(this.state.user.token, true));
-    }
-
-    componentDidMount() {
-        this.fetchAccounts();
     }
 
     renderAccounts(){
