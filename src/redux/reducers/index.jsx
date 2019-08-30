@@ -126,6 +126,9 @@ const alatCardsReducer = combineReducers({
     activateALATCardRequest: alatCards.activateALATCardRequest,
     loadALATCardSettingsRequest: alatCards.loadALATCardSettingsRequest,
     updateALATCardSettingsRequest: alatCards.updateALATCardSettingsRequest,
+    infoForATMCardRequest: alatCards.infoForATMCardRequest,
+    otpForATMCardRequest: alatCards.otpForATMCardRequest,
+    postATMCardRequest: alatCards.postATMCardRequest,
 })
 
 const appReducer = combineReducers({

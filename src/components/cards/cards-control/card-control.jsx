@@ -14,7 +14,7 @@ import * as utils from '../../../shared/utils';
 import whitelogo from "../../../assets/img/white-logo.svg"; 
 import  {routes} from '../../../services/urls';
 import emptyVC from "../../../assets/img/credit-card-2.svg"; 
-import successIcon from "../../../assets/img/success-tick";
+import successIcon from "../../../assets/img/success-tick.svg";
 import {
     getALATCardSettings,
     updateALATCardSettings,

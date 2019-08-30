@@ -9,13 +9,12 @@ import {
 
 import {Fragment} from "react";
 import {connect} from "react-redux";
-import { Link } from 'react-router-dom';
 import successIcon from "../../../assets/img/success-tick.svg";
-import Select from 'react-select';
-import Modal from 'react-responsive-modal';
-import {Textbox} from "react-inputs-validation";
 
-class VirtualCardsFundSuccess extends React.Component{
+import { 
+    POSTINGDATA_FOR_CARDREQUEST_SUCCESS} from "../../../redux/constants/cards/cards.constants";
+
+class RequestCardSuccess extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -31,13 +30,11 @@ class VirtualCardsFundSuccess extends React.Component{
     }
 
     verifyTransferStage(){
-        let props                   = this.props,
-        newCardCompletionStatus     = props.sendVCNewCardinfo.new_vc_info!==undefined? this.props.sendVCNewCardinfo.new_vc_info.isCompleted : undefined,
-        topUpCardStatus             = props.sendTopVCCardinfo.topup_vc_info!==undefined? this.props.sendTopVCCardinfo.topup_vc_info.isCompleted : undefined;
-            
-            if((newCardCompletionStatus===false || newCardCompletionStatus===undefined) 
-                && ( topUpCardStatus===false ||  topUpCardStatus===undefined)){
-                this.props.history.push("/virtual-cards");
+        let props = this.props,
+        postCardData      = this.props.postCardRequest;
+
+            if(postCardData.fetch_status!==POSTINGDATA_FOR_CARDREQUEST_SUCCESS){
+                this.props.history.push("/cards");
             }
     }
 
@@ -45,19 +42,7 @@ class VirtualCardsFundSuccess extends React.Component{
 
 
     renderSuccess(){
-        let newCardFundResponse         = this.props.sendVCNewCardinfo,
-            topupFundResponse           = this.props.sendTopVCCardinfo,
-            newCardCompletionStatus     = this.props.sendVCNewCardinfo.new_vc_info!==undefined? this.props.sendVCNewCardinfo.new_vc_info.isCompleted : undefined,
-            topUpCardStatus             = this.props.sendTopVCCardinfo.topup_vc_info!==undefined? this.props.sendTopVCCardinfo.topup_vc_info.isCompleted : undefined,
-            amountPaid;
-
-            if(newCardCompletionStatus!==undefined && newCardCompletionStatus===true){
-                amountPaid = newCardFundResponse.new_vc_info.cardpayload.Amount;
-            }
-
-            if(topUpCardStatus!==undefined && topUpCardStatus===true){
-                amountPaid = topupFundResponse.topup_vc_info.cardpayload.Dollar;
-            }
+        
 
         return(
             <div className="col-sm-12">
@@ -70,9 +55,9 @@ class VirtualCardsFundSuccess extends React.Component{
                                         <img src={successIcon} />
                                     </center>
                                     <div className="m-t-30 width-300">
-                                        <h4 className="success-heading">Transaction Successful</h4>
+                                        <h4 className="success-heading">Card request successful</h4>
                                         <div className="success-mg">
-                                        You just funded your ALAT Dollar Card with <span> ${amountPaid}</span> 
+                                           You card request was successful 
                                         </div>
                                         
                                         
@@ -94,8 +79,6 @@ class VirtualCardsFundSuccess extends React.Component{
 
     render(){
         let props = this.props;
-            // newCardotpRequestStatus = props.sendVCNewCardinfo;
-            // newCardotpRequestStatus = props.sendTopVCCardinfo;
         
         return(
             <Fragment>
@@ -108,10 +91,8 @@ class VirtualCardsFundSuccess extends React.Component{
 
 function mapStateToProps(state){
     return {
-        virtualCards        : state.alatCardReducersPile.getVirtualCards,
-        sendVCNewCardinfo   : state.alatCardReducersPile.sendVCNewCardinfo,
-        sendTopVCCardinfo   : state.alatCardReducersPile.sendTopVCCardinfo,
+        postCardRequest   : state.alatCardReducersPile.postATMCardRequest,
     };
 }
 
-export default connect(mapStateToProps)(VirtualCardsFundSuccess);
+export default connect(mapStateToProps)(RequestCardSuccess);
