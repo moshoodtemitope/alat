@@ -3,6 +3,7 @@ import {ApiService} from "../../../../services/apiService";
 import {routes} from "../../../../services/urls";
 import {history} from '../../../../_helpers/history';
 import { modelStateErrorHandler } from "../../../../shared/utils";
+import {alertActions} from "../../alert.actions";
 import {GROUPSAVINGSCONSTANT} from "../../../constants/savings/group/index";
 
 export const groupSavingsTargetGoal = (token, data) => {
@@ -16,12 +17,8 @@ export const groupSavingsTargetGoal = (token, data) => {
                 history.push("/savings/group/group-created");
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to create group savings.'));
-                }
-                // dispatch(failure(error.response.data.message.toString()));
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
 
@@ -40,13 +37,13 @@ export const groupDetails = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                if(data.parent != undefined)
+                    history.push('/savings/group/group-analytics');
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to get GroupCustomersDetails'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -59,18 +56,18 @@ export const groupDetails = (token, data) => {
 export const deleteGroup = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.DELETE_GROUP, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.DELETE_GROUP, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                if(data.deleteGroup != undefined)
+                     history.push('/savings/delete-group-savings-mod');
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to get GroupCustomersDetails'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -88,13 +85,12 @@ export const contribute = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                history.push('/');
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('You are unable to contribute now!'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -107,18 +103,17 @@ export const contribute = (token, data) => {
 export const editGroup = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.DELETE_GROUP, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.EDIT_GROUP_SAVINGS, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                history.push('/savings/group/success-message');
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('You are unable to contribute now!'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -131,18 +126,17 @@ export const editGroup = (token, data) => {
 export const pauseGroup = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.DELETE_GROUP, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.PAUSE_GROUP, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                history.push('/savings/group/success-message');  
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('WE are unable to PAUSE GROUP NOW!'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -156,18 +150,17 @@ export const pauseGroup = (token, data) => {
 export const findGroup = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.DELETE_GROUP, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.FIND_GROUP.concat("?referralCode=", data.referralCode), "GET", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                history.push('/savings/join-group-summary');
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('WE are unable to PAUSE GROUP NOW!'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -177,21 +170,21 @@ export const findGroup = (token, data) => {
     function failure(error) { return {type:GROUPSAVINGSCONSTANT.FIND_GROUP_ERROR, error} }
 };
 
-export const customerGroup = (token, data) => {
+export const customerGroup = (token, data = null) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.DELETE_GROUP, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.GROUPCUSTOMERS, "GET", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                // if(data.parent != undefined)
+                //     history.push('/savings/group/group-analytics');
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('WE are unable to PAUSE GROUP NOW!'));
-                }
+                 dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -204,18 +197,17 @@ export const customerGroup = (token, data) => {
 export const joinGroup = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.DELETE_GROUP, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.JOIN_GROUP, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                this.history.push('/savings/joined-group-successfully');
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('WE are unable to PAUSE GROUP NOW!'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -225,7 +217,6 @@ export const joinGroup = (token, data) => {
     function failure(error) { return {type:GROUPSAVINGSCONSTANT.JOIN_GROUP_ERROR, error} }
 };
 
-
 export const scheduleContribution = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
@@ -234,13 +225,12 @@ export const scheduleContribution = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                history.push('/savings/group/success-message');
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('WE are unable to Schedule Group Contribution Now!'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -261,11 +251,9 @@ export const deleteMember = (token, data) => {
                 dispatch(success(response.data));
             })
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to delete this member now!'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -285,11 +273,9 @@ export const cashOut = (token, data) => {
                 dispatch(success(response.data));
             }) 
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to delete this member now!'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -309,11 +295,9 @@ export const continueScheduleGroupPayment = (token, data) => {
                 dispatch(success(response.data));
             }) 
             .catch(error => {
-                if(error.response.message){
-                    dispatch(failure(error.response.message.toString()));
-                }else{
-                    dispatch(failure('We are unable to delete this member now!'));
-                }
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
                 // dispatch(failure(error.response.data.message.toString()));
             });
     };
@@ -365,7 +349,6 @@ export const setAmountToWithDraw =(data) =>{
 export const setFrequency =(data) =>{
     return(dispatch)=>{
         dispatch(success(data))
-
     }
     function success(data){
         return{
@@ -374,6 +357,10 @@ export const setFrequency =(data) =>{
         }
     }
 }
+
+
+
+
 
 
 

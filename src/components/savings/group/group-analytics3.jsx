@@ -16,7 +16,11 @@ import Buttons from './button';
 import { NavButtons } from './component';
 import MoreDetails from './details';
 import Members from './list-item';
+import {history} from '../../../_helpers/history';
 
+// if(window.performance.navigation.type == 1)
+//     window.location.replace("http://localhost:8080/");
+    
 class GroupAnalytics3 extends React.Component {
     constructor(props){
         super(props);
@@ -47,6 +51,17 @@ class GroupAnalytics3 extends React.Component {
         this.props.history.push('/savings/group/group-analytics');
     }
 
+    NavigateToGroupSavings = () => {
+        // let groupSavings = this.props.groups.response; //returns an array
+        // let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
+        // if(groupSavings.length != 0 || rotatingSavings.length != 0){
+            history.push('/savings/activityDashBoard');
+        //     return;
+        // }
+        // history.push('/savings/goal/group-savings-selection');
+    }
+
+
   
     render() {
         const {endDate,endDateInvalid} = this.state;
@@ -66,9 +81,9 @@ class GroupAnalytics3 extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a href="#">Goals</a></li>
                                         </NavLink>
-                                        <NavLink to="/savings/goal/group-savings-selection">
-                                            <li><a className="active">Group Savings</a></li>
-                                        </NavLink>
+                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
+                                            <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                        {/* </NavLink> */}
                                             <li><a href="#">Investments</a></li>
 
                                         </ul>
@@ -83,8 +98,8 @@ class GroupAnalytics3 extends React.Component {
                                     
                                              <div class='firstSubHead'>
                                                   <p>Target Group</p>
-                                                  <p>Summer Trip To Africa</p>
-                                                  <p>Trip to kenya with boys</p>
+                                                  <p>{this.props.groupDetails.response.name}</p>
+                                                  <p>{this.props.groupDetails.response.purpose}</p>
                                              </div>
                                                 <SubHead 
                                                 type={this.state.type}
@@ -129,7 +144,9 @@ class GroupAnalytics3 extends React.Component {
 
 function mapStateToProps(state){
     return {
-        groupDetails: state.groupDetails.data
+        groupDetails: state.groupDetails.data,
+        groupSavingsEsusu: state.getGroupSavingsEsusu.data,
+        groups: state.customerGroup.data
     }
 }
 

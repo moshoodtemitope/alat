@@ -1,5 +1,4 @@
 import React from 'react';
-import {NavLink, Route, Redirect} from "react-router-dom";
 import { prop } from 'cramda';
 
 export default (props) => {
@@ -28,12 +27,12 @@ export default (props) => {
                 
                       <div className='innerNav row'>
                             <div className='col-sm-6 left'>
-                                <p>{props.rightname}</p>
+                                <p onClick={props.groupSummaryWasClicked}>{props.rightname}</p>
                             </div>
                             <div className='col-sm-6 right'>
-                                <p>{props.leftName}</p>
+                                <p onClick={props.memberClicked}>{props.leftName}</p>
                             </div>
-                     </div>
+                      </div>
                
             );
     }

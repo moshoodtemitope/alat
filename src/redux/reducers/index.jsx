@@ -1,7 +1,7 @@
 import {combineReducers} from "redux";
 import {authentication} from "./authentication.reducer";
 import { alert} from "./alert.reducer";
-import {dashboard, transfer, onboarding, airtime, global,fixedGoal,flexGoal,stashGoal,groupSavings,rotatingSavings,fundAccount, loanOnboarding} from "./export";
+import {dashboard, transfer, onboarding, airtime, global,fixedGoal,flexGoal,stashGoal,groupSavings,rotatingSavings,fundAccount, customerGoal, loanOnboarding} from "./export";
 import {bankListRequest, beneficiariesRequest} from "./transfer.reducer";
 import {accountHistoryReducer} from "./dashboard.reducer";
 import { userConstants } from "../constants/onboarding/user.constants";
@@ -12,7 +12,7 @@ import { airtimeConstants } from "../constants/airtime/airtime.constants";
 import { TRANSFER_REDUCER_CLEAR } from "../constants/transfer.constants";
 import { fundAccountConstants } from "../constants/fund-account/fund-account.constant";
 import { loanOnboardingConstants } from '../constants/onboarding/loan.constants';
-import stashRedux from './goal/stash-reducer';
+import {flexGoalConstants} from '../constants/goal/flex-goal.constant'
 import { findGroup, joinGroup } from "./group-savings/group-savings-reducers";
 import { joinAGroup } from "./group-savings/rotating-group-reducers";
 //import { saveCardReducer } from "./fund-account.reducer";
@@ -30,16 +30,6 @@ const airtimeReducerPile = (state, action)=>{
     return airtimeReducer(state, action);
 }
 
-const stashReducerPile = (state, action) => {
-    if(action.type === 'stash'){
-        state = undefined;
-    }
-
-    if(action.type === 'saveStash'){
-        state = undefined;
-    }
-    return stashReducers(state, action);
-}
 
 const transferReducerPile =(state, action)=>{
     if(action.type === TRANSFER_REDUCER_CLEAR){
@@ -61,10 +51,14 @@ const loanOnboardingReducerPile = (state, action)=>{
     }
     return loanOnboardingReducer(state, action);
 }
+// const flexReducerPile = (state, action)=>{
+//     if(action.type === flexGoalConstants.FLEX_GOAL_REDUCER_CLEAR){
+//         state = undefined;
+//     }
+//     return flexGoalReducer (state, action);
+// }
 
-const stashReducers = combineReducers({
-    amount: stashRedux
-})
+
 
 
 const transferReducers = combineReducers({
@@ -88,7 +82,7 @@ const airtimeReducer = combineReducers({
     airtime_webpin: airtime.buyAirtimeWebPinReducer,
     airtime_webpinotp: airtime.buyAirtimeWebPinOTPReducer,
     airtime_save_bene: airtime.airtimeSaveBeneficiaryReducer
-})
+});
 
 const fundAccountReducer = combineReducers({
     fundAccount : fundAccount.fundAccountReducer,
@@ -100,7 +94,7 @@ const fundAccountReducer = combineReducers({
     fundwema_alat: fundAccount.fundWemaAccountReducer
     //fundFromCardToken: fundAccount.fundFromTokenisedCardReducer,
     //fundfromWithPin: fundAccount.fundFromCardWithPinReducer
-})
+});
 
 const loanOnboardingReducer = combineReducers({
     loanOnboardingStep1 : loanOnboarding.loanOnboardingStep1Reducer,
@@ -108,8 +102,11 @@ const loanOnboardingReducer = combineReducers({
     loanOnboardingBVN: loanOnboarding.loanOnboardingVerifyBVNReducer,
     loanOnboardingStep3 : loanOnboarding.loanOnboardingStep3Reducer,
     loanOnboardingValidateOTP : loanOnboarding.loanOnboardingValidateOTPReducer
-})
+});
 
+// const flexGoalReducer = combineReducers({
+//
+// });
 
 
 const appReducer = combineReducers({
@@ -125,11 +122,12 @@ const appReducer = combineReducers({
     dashboard_userGoals: dashboard.userGoalsReducer,
     dashboard_userOnboardingPriority: dashboard.onboardingPriorityReducer,
     dashboard_announcementCard: dashboard.announcementReducer,
-    stashReducerPile,
     airtimeReducerPile,
     transferReducerPile,
     fundAccountReducerPile,
     loanOnboardingReducerPile,
+    // goal reducer
+    // flexReducerPile,
     accounts: global.debitableAccountsReducer,
     encrypt_rule: global.getEncryptionRuleReducer,
     verify_pan: global.verifyPANReducer,
@@ -140,6 +138,7 @@ const appReducer = combineReducers({
     data_reducer: dataReducer,
     cardless_reducer: cardlessReducer,
     bills_reducer: billsReducer,
+
 
     //fixed goal reducers
     fixed_goal_step1:fixedGoal.fixedGoalStep1Reducer,
@@ -152,6 +151,21 @@ const appReducer = combineReducers({
     add_flex_goal:flexGoal.addFlexGoalReducer,
     create_stash_goal:stashGoal.createStashGoalReducer,
     create_stash_step1:stashGoal.createStashGoalStep1Reducer,
+
+    //customer Goal reducers
+    customerGoalTransHistory:customerGoal.getCustomerGoalTransHistoryReducer,
+    customerGoalType:customerGoal.GET_GOAL_TYPE,
+    customerGoalFormular:customerGoal.GET_FORMULAR,
+    top_up_goal:customerGoal.TopUPGoal,
+    top_up_goal_step1:customerGoal.TopUPGoalStep1,
+    withdraw_from_goal_step1:customerGoal.WithDrawFromGoalStep1,
+    withdraw_from_goal:customerGoal.WithDrawFromGoal,
+    delete_goal:customerGoal.DeleteCustomerGoal,
+    edit_goal:customerGoal.EditCustomerGoal,
+    pause_goal:customerGoal.PauseCustomerGoal,
+    unpause_goal:customerGoal.unPauseCustomerGoal,
+    stashGoal:customerGoal.StashCashout,
+    stashGoal_step1:customerGoal.StashCashoutStep1,
 
     //Group Savings Reducers (GROUP SAVINGS)
     groupSavings: groupSavings.groupSavingsTargetGoal,
@@ -175,7 +189,14 @@ const appReducer = combineReducers({
     /// ESUSU (GROUP SAVINGS)
     createRotatingGroupSavings: rotatingSavings.createRotatingSavings,
     rotatingGroupDetails: rotatingSavings.rotatingGroupDetails,
-    joinAGroup: rotatingSavings.joinAGroup
+    joinAGroup: rotatingSavings.joinAGroup,
+    editSlot: rotatingSavings.EditSlots,
+    getGroupSavingsEsusu: rotatingSavings.GetGroupsEsusu,
+    editGroupEsusu: rotatingSavings.editGroupEsusu,
+    deleteGroupEsusu: rotatingSavings.deleteGroupEsusu,
+    joinGroupEsusu: rotatingSavings.joinGroupEsusu,
+    refferalCode: rotatingSavings.refferalCode
+    // pauseGroupEsusu: rotatingSavings.pauseGroupEsusu
 });
 
 //export defualt appReducer;

@@ -16,7 +16,11 @@ import Buttons from './button';
 import { NavButtons } from './component';
 import MoreDetails from './details';
 import Members from './list-item';
+import {history} from '../../../_helpers/history';
 
+// if(window.performance.navigation.type == 1)
+//     window.location.replace("http://localhost:8080/");
+    
 class GroupAnalytics2 extends React.Component {
     constructor(props){
         super(props);
@@ -25,31 +29,53 @@ class GroupAnalytics2 extends React.Component {
             userType: 'members',
             navType: 1,
             buttonType: "bigButton",
-            discTopSpan: 'something'
-        }
+            discTopSpan: 'something',
+            isAdmin: false,
+            adminValidity: false
+        };
 
         this.HandleNavigation = this.HandleNavigation.bind(this);
         this.Automated = this.Automated.bind(this);
         this.NavigateToGroupSummary = this.NavigateToGroupSummary.bind(this);
     }
 
+    componentDidMount = () => {
+        let isAdmin = this.props.groupDetails.response.isAdmin;
+        this.setState({
+            isAdmin: isAdmin
+        });
+
+        this.setState({'adminValidity': isAdmin});
+    }
+
     HandleNavigation = () => {
         this.props.history.push("/savings/group/group-analytics2");
-    }
+    };
 
     Automated = () => {
         this.props.history.push('/savings/group/automate-contributions');
-    }
+    };
 
     NavigateToGroupSummary = () => {
         this.props.history.push('/savings/group/group-analytics');
+    };
+
+    NavigateToGroupSavings = () => {
+        // let groupSavings = this.props.groups.response; //returns an array
+        // let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
+        // if(groupSavings.length != 0 || rotatingSavings.length != 0){
+            history.push('/savings/activityDashBoard');
+        //     return;
+        // }
+        // history.push('/savings/goal/group-savings-selection');
     }
 
-    
-
+    ShowManageButton = () => {
+        return <p id="manageButton">Manage</p>
+    }
   
     render() {
-
+        const { isAdmin, adminValidity } = this.state;
         return (
             <Fragment>
                 <InnerContainer>
@@ -65,9 +91,9 @@ class GroupAnalytics2 extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a href="#">Goals</a></li>
                                         </NavLink>
-                                        <NavLink to="/savings/goal/group-savings-selection">
-                                            <li><a className="active">Group Savings</a></li>
-                                        </NavLink>
+                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
+                                            <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                        {/* </NavLink> */}
                                             <li><a href="#">Investments</a></li>
 
                                         </ul>
@@ -82,8 +108,8 @@ class GroupAnalytics2 extends React.Component {
                                     
                                              <div class='firstSubHead'>
                                                   <p>Target Group</p>
-                                                  <p>Summer Trip To Africa</p>
-                                                  <p>Trip to kenya with boys</p>
+                                                  <p>{this.props.groupDetails.response.name}</p>
+                                                  <p>{this.props.groupDetails.response.purpose}</p>
                                              </div>
                                                 <SubHead 
                                                 type={this.state.type}
@@ -123,7 +149,8 @@ class GroupAnalytics2 extends React.Component {
                                                       })}
                                                    </div>
                                                    <div></div>
-                                                   <p id="manageButton">Manage</p>
+                                                   {isAdmin ? this.ShowManageButton() : ""}
+                                                   {adminValidity ? <div></div> : <div className={"setPadBottom"}></div> }
                                              </div>
                                         </div>
 
@@ -146,7 +173,9 @@ class GroupAnalytics2 extends React.Component {
 
 function mapStateToProps(state){
     return {
-      groupDetails: state.groupDetails.data
+      groupDetails: state.groupDetails.data,
+      groupSavingsEsusu: state.getGroupSavingsEsusu.data,
+      groups: state.customerGroup.data
     }
 }
 
