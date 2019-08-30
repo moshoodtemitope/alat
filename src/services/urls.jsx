@@ -1,6 +1,6 @@
 // const URL = 'https://api.alat.ng';
-// const URL = 'https://196.43.215.170';
-const URL = 'https://196.43.215.157';
+const URL = 'https://196.43.215.170';
+// const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
 
@@ -29,6 +29,7 @@ export const routes = {
     //account maintanance
     CUSTOMERACCOUNTS_ACCOUNT_MAINTANANCE: BASEURL + '/AccountMaintenance/api/account/customeraccounts',
     GETACCOUNTHISTORY: BASEURL + '/AccountMaintenance/api/transactions',
+    GETSTATES: BASEURL + '/AccountMaintenance/api/account/GetStatesAndLgas',
     
 
     //goals and savings
@@ -80,7 +81,7 @@ export const routes = {
     GET_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getpans',
     ACTIVATE_CARD: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/activatecard',
     GET_ACTIVE_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getactivepans',
-    GET_CARD_STATES: BASEURL + '/CardMaintenanceApi/api/v1/CardControl/CustomerCardsFromCardControl',
+    GET_CARD_EXISTING_SETTINGS: BASEURL + '/CardMaintenanceApi/api/v1/CardControl/CustomerCardsFromCardControl',
     GETCARDDESIGN: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/GetJson',
     HOTLIST_CARD: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/hotlistcard',
     GETCUSTOMERINFO: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/GetAllCustomerInfo',

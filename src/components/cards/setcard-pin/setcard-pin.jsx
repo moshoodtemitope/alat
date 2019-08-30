@@ -13,7 +13,7 @@ import * as utils from '../../../shared/utils';
 import whitelogo from "../../../assets/img/white-logo.svg"; 
 import  {routes} from '../../../services/urls';
 import emptyVC from "../../../assets/img/credit-card-2.svg"; 
-import successIcon from "../../../assets/img/success-tick";
+import successIcon from "../../../assets/img/success-tick.svg";
 import {getCurrentATMCard,
     getRandomSecurityQuestion,
     answerRandomSecurityQuestion,
@@ -68,6 +68,7 @@ class SetCardPin extends React.Component {
     }
 
     componentDidMount() {
+        // this.props.dispatch(clearCardsStore());
         this.makeInitialRequest();
         // this.getRandomQuestion();
         // this.getHotlistReasonsForCustomer();
@@ -149,7 +150,7 @@ class SetCardPin extends React.Component {
                         
                         </div>
                     </div>
-                    <div class="return-text"><a className="btn-alat m-t-30 text-center" onClick={(e)=>{
+                    <div className="return-text"><a className="btn-alat m-t-30 text-center" onClick={(e)=>{
                                                                     e.preventDefault();
                                                                     this.props.dispatch(clearCardsStore()); 
                                                                     this.props.history.push("/dashboard");
@@ -303,6 +304,7 @@ class SetCardPin extends React.Component {
             randomQuestionAnswer    = props.answerRandomQuestionRequest, 
             currentCardRequest      = props.existingAtmCard; 
 
+            
            return(
                 <div>
                     <div className="input-ctn inputWrap">
@@ -353,9 +355,10 @@ class SetCardPin extends React.Component {
             activateCardRequest     = props.activateALATCardRequest,
             currentCardRequest      = props.existingAtmCard; 
 
-        return(
-            <div className="col-sm-12">
-                <div className="row">
+            
+
+            // if(currentCardRequest.fetch_status===GETCURRENT_ATMCARD_SUCCESS && currentCardRequest.atmcards_info.response.data.length>=1){
+                return(
                     <div className="col-sm-12">
                         <div className="max-600">
                             <div className="al-card no-pad">
@@ -363,6 +366,16 @@ class SetCardPin extends React.Component {
                                 <div className="transfer-ctn ">
 
                                     {/* Loading Current ATM Card and Random question */}
+                                    {/* {(currentCardRequest.fetch_status === GETCURRENT_ATMCARD_PENDING ||
+                                            randomQuestion.fetch_status === GETRANDOM_SECURITYQUESTION_PENDING) &&
+                                                <center>
+                                                    <img className="nocards-icon" src={emptyVC} />
+                                                    <p> You currently do not have an  ALAT card</p>
+                                                    <button type="submit" onClick={()=>this.props.history.push("/cards")}   
+                                                        className="btn-alat m-t-10 m-b-20 text-center">Request Card</button>
+                                                </center>
+                                            } */}
+
                                     {(currentCardRequest.fetch_status === GETCURRENT_ATMCARD_PENDING ||
                                             randomQuestion.fetch_status === GETRANDOM_SECURITYQUESTION_PENDING) &&
                                                 <center>
@@ -370,15 +383,8 @@ class SetCardPin extends React.Component {
                                                 </center>
                                     }
 
-                                    {/* {(currentCardRequest.fetch_status === GETCURRENT_ATMCARD_PENDING &&
-                                            randomQuestion.fetch_status !== GETRANDOM_SECURITYQUESTION_PENDING) &&
-                                                <center>
-                                                    Loading ATM card details...
-                                                </center>
-                                    } */}
-
                                     {/* If Loading Current ATM Card and/or Fails */}
-                                    {(currentCardRequest.is_processing === false ||
+                                    {(currentCardRequest.is_processing === false &&
                                             randomQuestion.fetch_status === GETRANDOM_SECURITYQUESTION_FAILURE) &&
                                                 <center>
                                                     An error occured
@@ -399,31 +405,51 @@ class SetCardPin extends React.Component {
                                         </div>
                                     }
 
-                                    {/* Show Random Question */}
+                                            {/* Show Random Question */}
 
-                                    {!showAcceptTerms && (randomQuestionAnswer.fetch_status!==VALIDATE_SECURITYQUESTION_WITHOUTOTP_SUCCESS) &&
-                                       this.renderSecurityQuestion()
-                                    }
+                                            {!showAcceptTerms && (randomQuestionAnswer.fetch_status!==VALIDATE_SECURITYQUESTION_WITHOUTOTP_SUCCESS) &&
+                                            this.renderSecurityQuestion()
+                                            }
 
-                                    {/* Show Card Details and Accept Card Pin */}
+                                            {/* Show Card Details and Accept Card Pin */}
 
-                                    {(!showAcceptTerms && (randomQuestionAnswer.fetch_status===VALIDATE_SECURITYQUESTION_WITHOUTOTP_SUCCESS)
-                                        && activateCardRequest.fetch_status!==ACTIVATE_ALATCARD_SUCCESS) &&
-                                       this.renderCardInfo()
-                                    }
+                                            {(!showAcceptTerms && (randomQuestionAnswer.fetch_status===VALIDATE_SECURITYQUESTION_WITHOUTOTP_SUCCESS)
+                                                && activateCardRequest.fetch_status!==ACTIVATE_ALATCARD_SUCCESS) &&
+                                            this.renderCardInfo()
+                                            }
 
-                                    {/* Show message for Successfully Updated Card Pin */}
-                                    {activateCardRequest.fetch_status===ACTIVATE_ALATCARD_FAILURE &&
-                                        this.renderSuccesfullPinUpdate()
-                                    }
+                                            {/* Show message for Successfully Updated Card Pin */}
+                                            {activateCardRequest.fetch_status===ACTIVATE_ALATCARD_SUCCESS &&
+                                                this.renderSuccesfullPinUpdate()
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-        )
+                    
+                )
+            // }else{
+            //     return(
+            //         <div className="col-sm-12">
+            //             <div className="row">
+            //                     <div className="col-sm-12">
+            //                         <div className="max-600">
+            //                             <div className="al-card no-pad">
+            //                                 <div className="transfer-ctn ">
+            //                                     <center>
+            //                                         <img className="nocards-icon" src={emptyVC} />
+            //                                         <p> You currently do not have an  ALAT card</p>
+            //                                         <button type="submit" onClick={()=>this.props.history.push("/cards")}   
+            //                                             className="btn-alat m-t-10 m-b-20 text-center">Request Card</button>
+            //                                     </center>
+            //                                 </div>
+            //                             </div>
+            //                         </div>
+            //                     </div>
+            //             </div>
+            //         </div>
+            //     )
+            // }
            
     }
 

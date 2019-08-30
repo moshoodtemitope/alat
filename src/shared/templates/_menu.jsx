@@ -44,7 +44,7 @@ class MenuContainer extends React.Component{
                                             <li>
                                                 <NavLink to="/cards">Request card</NavLink>
                                             </li>
-                                            <li><a href="#">Card Control</a></li>
+                                            <li><NavLink to="/cards-control">Card Control</NavLink></li>
                                             <li><NavLink to="/setcard-pin">Set Card Pin</NavLink></li>
                                             <li><NavLink to="/hotlist">Hotlist Card</NavLink></li>
                                             <li><NavLink to="/virtual-cards"> Alat Dollar Card </NavLink></li>

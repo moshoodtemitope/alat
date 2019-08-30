@@ -46,6 +46,21 @@ import {
     ACTIVATE_ALATCARD_SUCCESS,
     ACTIVATE_ALATCARD_PENDING,
     ACTIVATE_ALATCARD_FAILURE,
+    GETALAT_CARDSETTINGS_SUCCESS,
+    GETALAT_CARDSETTINGS_PENDING,
+    GETALAT_CARDSETTINGS_FAILURE,
+    UPDATEALAT_CARDSETTINGS_SUCCESS,
+    UPDATEALAT_CARDSETTINGS_PENDING,
+    UPDATEALAT_CARDSETTINGS_FAILURE,
+    LOADING_INFOFOR_CARDREQUEST_SUCCESS,
+    LOADING_INFOFOR_CARDREQUEST_PENDING,
+    LOADING_INFOFOR_CARDREQUEST_FAILURE,
+    REQUESTINGOTP_FOR_CARDREQUEST_SUCCESS,
+    REQUESTINGOTP_FOR_CARDREQUEST_PENDING,
+    REQUESTINGOTP_FOR_CARDREQUEST_FAILURE,
+    POSTINGDATA_FOR_CARDREQUEST_SUCCESS,
+    POSTINGDATA_FOR_CARDREQUEST_PENDING,
+    POSTINGDATA_FOR_CARDREQUEST_FAILURE,
     ALATCARD_REDUCER_CLEAR
 } from "../../constants/cards/cards.constants";
 
@@ -661,6 +676,455 @@ export const activateALATCard = (payload,token)=>{
     function failure(error) { return {type:ACTIVATE_ALATCARD_FAILURE, error} }
 }
 
+export const getALATCardSettings = (token)=>{
+    SystemConstant.HEADER['alat-token'] = token;  
+
+    return (dispatch)=>{
+        let consume =  ApiService.request(routes.GET_PANS, "GET", null, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{
+                if(response.data.length>=1){
+                    let consume2 = ApiService.request(routes.GET_CARD_EXISTING_SETTINGS, "GET", SystemConstant.HEADER); 
+                    
+                    dispatch(request(consume2))
+                    return consume2
+                        .then(response2=>{
+                            let panNum = response.data[0].maskedPan.replace(/\*/g, '');
+                            let consume3 = ApiService.request(routes.GET_CARD_CONTROL_SETTINGS, "POST", {pan:panNum}, SystemConstant.HEADER); 
+        
+                            dispatch(request(consume3))
+                            return consume3
+                                .then(response3=>{
+                                    let bulkResponse={
+                                            panDetails              : response.data[0],
+                                            cardControlSettings     : response2.data,
+                                            otherCardControlDetails : response3.data
+                                    }
+                                    dispatch(success(bulkResponse));
+                                })
+                                .catch(error=>{
+                                    if(error.response && typeof(error.response.message) !=="undefined"){
+                                        dispatch(failure(error.response.message.toString()));
+                                    }
+                                    else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                                        if(error.response.data.Message){
+                                            dispatch(failure(error.response.data.Message.toString()));
+                                        }
+                    
+                                        if(error.response!==undefined && error.response.data.message){
+                                            dispatch(failure(error.response.data.message.toString()));
+                                        }
+                                    }
+                                    else{
+                                        dispatch(failure('An error occured. Please try again '));
+                                    }
+                                })
+                        })
+                        .catch(error=>{
+                            if(error.response && typeof(error.response.message) !=="undefined"){
+                                dispatch(failure(error.response.message.toString()));
+                            }
+                            else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                                if(error.response.data.Message){
+                                    dispatch(failure(error.response.data.Message.toString()));
+                                }
+            
+                                if(error.response!==undefined && error.response.data.message){
+                                    dispatch(failure(error.response.data.message.toString()));
+                                }
+                            }
+                            else{
+                                dispatch(failure('An error occured. Please try again '));
+                            }
+                        })
+                }
+                else{
+                    let bulkResponse={
+                        panDetails : null
+                    }
+                    dispatch(success(bulkResponse));
+                }
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+    
+    function request(request) { return { type:GETALAT_CARDSETTINGS_PENDING, request} }
+    function success(response) { return {type:GETALAT_CARDSETTINGS_SUCCESS, response} }
+    function failure(error) { return {type:GETALAT_CARDSETTINGS_FAILURE, error} }
+}
+
+export const updateALATCardSettings = (payload,token)=>{
+    SystemConstant.HEADER['alat-token'] = token;  
+
+    return (dispatch)=>{
+        let consume =  ApiService.request(routes.UPDATE_CARD_CONTROL, "POST", payload, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{
+                dispatch(success(response));
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+    
+    function request(request) { return { type:UPDATEALAT_CARDSETTINGS_PENDING, request} }
+    function success(response) { return {type:UPDATEALAT_CARDSETTINGS_SUCCESS, response} }
+    function failure(error) { return {type:UPDATEALAT_CARDSETTINGS_FAILURE, error} }
+}
+
+export const loadInfoForCardRequest = (token)=>{
+    SystemConstant.HEADER['alat-token'] = token; 
+    
+    return(dispatch)=>{
+        let consume =  ApiService.request(routes.GETCUSTOMERINFO, "GET", null, SystemConstant.HEADER); 
+        dispatch(request(consume));
+
+        return consume
+            .then(response=>{
+                    let consume2 =  ApiService.request(routes.GETCARDDESIGN, "GET", null, SystemConstant.HEADER); 
+                    dispatch(request(consume2));
+                    return consume2
+                        .then(response2=>{
+                            if(response.data.customerCardIds.length===0){
+                            // if(response.data.customerCardIds.length!==0){ //To be removed
+                                // call get debittable accounts 
+                                let consume4 =  ApiService.request(routes.GETALLACCOUNTS, "GET", null, SystemConstant.HEADER); 
+                                dispatch(request(consume4));
+                                return consume4
+                                    .then(response4=>{
+                                        // let infoForNewCard;
+
+                                        // infoForNewCard = {
+                                        //     allCardDesigns  : response2.data,
+                                        //     customerAccounts: response4.data
+                                        // }
+                                        // dispatch(success(infoForNewCard));
+
+                                        // Get States and LGAs
+                                        let consume6 =  ApiService.request(routes.GETSTATES, "GET", null, SystemConstant.HEADER); 
+                                        dispatch(request(consume6));
+                                            return consume6
+                                                .then(response6=>{
+                                                    let existingcardDetails;
+
+                                                    existingcardDetails = {
+                                                        allCardDesigns  : response2.data,
+                                                        customerAccounts: response4.data,
+                                                        statesData      : response6.data.States,
+                                                        citiesData      : response6.data.Cities,
+                                                    }
+                                                   
+                                                    dispatch(success(existingcardDetails));
+                                                })
+                                                .catch(error=>{
+                                                    if(error.response && typeof(error.response.message) !=="undefined"){
+                                                        dispatch(failure(error.response.message.toString()));
+                                                    }
+                                                    else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                                                        if(error.response.data.Message){
+                                                            dispatch(failure(error.response.data.Message.toString()));
+                                                        }
+                                    
+                                                        if(error.response!==undefined && error.response.data.message){
+                                                            dispatch(failure(error.response.data.message.toString()));
+                                                        }
+                                                    }
+                                                    else{
+                                                        dispatch(failure('An error occured. Please try again '));
+                                                    }
+                                                })
+                                       
+                                    })
+                                    .catch(error=>{
+                                        if(error.response && typeof(error.response.message) !=="undefined"){
+                                            dispatch(failure(error.response.message.toString()));
+                                        }
+                                        else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                                            if(error.response.data.Message){
+                                                dispatch(failure(error.response.data.Message.toString()));
+                                            }
+                        
+                                            if(error.response!==undefined && error.response.data.message){
+                                                dispatch(failure(error.response.data.message.toString()));
+                                            }
+                                        }
+                                        else{
+                                            dispatch(failure('An error occured loading your account(s) details. Please try again '));
+                                        }
+                                    })
+                                    
+                            }else{
+                                // call get pans
+                                let consume3 =  ApiService.request(routes.GET_PANS, "GET", null, SystemConstant.HEADER); 
+                                dispatch(request(consume3));
+                                return consume3
+                                    .then(response3=>{
+
+
+                                        let existingcardDetails;
+
+                                        if(response3.data.length>=1){
+                                            existingcardDetails = {
+                                                cardDesignId    : response.data.customerCardIds,
+                                                allCardDesigns  : response2.data,
+                                                pans            : response3.data,
+                                            }
+                                        }else{
+                                            existingcardDetails = {
+                                                cardDesignId    : response.data.customerCardIds,
+                                                allCardDesigns  : response2.data,
+                                                pans            :null
+                                            }
+                                        }
+                                        dispatch(success(existingcardDetails));
+
+                                        /// Section To be deleted after test
+
+                                            // Get customer accounts
+                                        // let consume5 =  ApiService.request(routes.GETALLACCOUNTS, "GET", null, SystemConstant.HEADER); 
+                                        // dispatch(request(consume5));
+                                        // return consume5
+                                        //     .then(response5=>{
+
+                                        //         // Get States and LGAs
+                                        //         let consume6 =  ApiService.request(routes.GETSTATES, "GET", null, SystemConstant.HEADER); 
+                                        //         dispatch(request(consume6));
+                                        //             return consume6
+                                        //                 .then(response6=>{
+                                        //                     let existingcardDetails;
+
+                                        //                     if(response3.data.length>=1){
+                                        //                         existingcardDetails = {
+                                        //                             cardDesignId    : response.data.customerCardIds,
+                                        //                             allCardDesigns  : response2.data,
+                                        //                             pans            : response3.data,
+                                        //                             customerAccounts: response5.data,
+                                        //                             statesData      : response6.data.States,
+                                        //                             citiesData      : response6.data.Cities,
+                                        //                         }
+                                        //                     }else{
+                                        //                         existingcardDetails = {
+                                        //                             cardDesignId    : response.data.customerCardIds,
+                                        //                             allCardDesigns  : response2.data,
+                                        //                             pans            :null,
+                                        //                             customerAccounts: response5.data,
+                                        //                             statesData      : response6.data.States,
+                                        //                             citiesData      : response6.data.Cities,
+                                        //                         }
+                                        //                     }
+                                        //                     dispatch(success(existingcardDetails));
+                                        //                 })
+                                        //                 .catch(error=>{
+                                        //                     if(error.response && typeof(error.response.message) !=="undefined"){
+                                        //                         dispatch(failure(error.response.message.toString()));
+                                        //                     }
+                                        //                     else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                                        //                         if(error.response.data.Message){
+                                        //                             dispatch(failure(error.response.data.Message.toString()));
+                                        //                         }
+                                            
+                                        //                         if(error.response!==undefined && error.response.data.message){
+                                        //                             dispatch(failure(error.response.data.message.toString()));
+                                        //                         }
+                                        //                     }
+                                        //                     else{
+                                        //                         dispatch(failure('An error occured. Please try again '));
+                                        //                     }
+                                        //                 })
+
+                                                
+                                        //     })
+                                        //     .catch(error=>{
+                                        //         if(error.response && typeof(error.response.message) !=="undefined"){
+                                                    
+                                        //             dispatch(failure(error.response.message.toString()));
+                                        //         }
+                                        //         else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                                        //             if(error.response.data.Message){
+                                                       
+                                        //                 dispatch(failure(error.response.data.Message.toString()));
+                                        //             }
+                                
+                                        //             if(error.response!==undefined && error.response.data.message){
+                                        //                 if(error.response.data.message.toString().indexOf('You already have an active card')>-1){
+                                        //                     console.log('hadddddd');
+                                        //                 }
+                                        //                 dispatch(failure(error.response.data.message.toString()));
+                                        //             }
+                                        //         }
+                                        //         else{
+                                        //             dispatch(failure('An error occured loading your accounts details. Please try again '));
+                                        //         }
+                                        //     })
+
+                                        /// To be deleted after test
+                                       
+                                    })
+                                    .catch(error=>{
+                                        if(error.response && typeof(error.response.message) !=="undefined"){
+                                            dispatch(failure(error.response.message.toString()));
+                                        }
+                                        else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                                            if(error.response.data.Message){
+                                                dispatch(failure(error.response.data.Message.toString()));
+                                            }
+                        
+                                            if(error.response!==undefined && error.response.data.message){
+                                                dispatch(failure(error.response.data.message.toString()));
+                                            }
+                                        }
+                                        else{
+                                            dispatch(failure('An error occured loading your ATM card details. Please try again '));
+                                        }
+                                    })
+
+                                    
+                            }
+                        })
+                        .catch(error=>{
+                            if(error.response && typeof(error.response.message) !=="undefined"){
+                                dispatch(failure(error.response.message.toString()));
+                            }
+                            else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                                if(error.response.data.Message){
+                                    dispatch(failure(error.response.data.Message.toString()));
+                                }
+            
+                                if(error.response!==undefined && error.response.data.message){
+                                    dispatch(failure(error.response.data.message.toString()));
+                                }
+                            }
+                            else{
+                                dispatch(failure('An error occured loading your card design. Please try again '));
+                            }
+                        })
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+
+
+    function request(request) { return { type:LOADING_INFOFOR_CARDREQUEST_PENDING, request} }
+    function success(response) { return {type:LOADING_INFOFOR_CARDREQUEST_SUCCESS, response} }
+    function failure(error) { return {type:LOADING_INFOFOR_CARDREQUEST_FAILURE, error} }
+}
+
+export const requestOtpForNewATMCard = (payload, token, newCardRequestData)=>{
+    SystemConstant.HEADER['alat-token'] = token; 
+    
+    return(dispatch)=>{
+        let consume =  ApiService.request(routes.GET_OTP_FOR_CUSTOMER, "POST", payload, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{
+                dispatch(success(response));
+                history.push("/cards/cardrequest-otp");
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+
+    function request(request) { return { type:REQUESTINGOTP_FOR_CARDREQUEST_PENDING, request} }
+    function success(response) { return {type:REQUESTINGOTP_FOR_CARDREQUEST_SUCCESS, response, payload, newCardRequestData} }
+    function failure(error) { return {type:REQUESTINGOTP_FOR_CARDREQUEST_FAILURE, error} }
+}
+
+export const postDataForNewATMCard = (payload, token)=>{
+    SystemConstant.HEADER['alat-token'] = token; 
+    
+    return(dispatch)=>{
+        let consume =  ApiService.request(routes.SAVECARD, "POST", payload, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{
+                dispatch(success(response));
+                history.push("/cards/cardrequest-success");
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+
+    function request(request) { return { type:POSTINGDATA_FOR_CARDREQUEST_PENDING, request} }
+    function success(response) { return {type:POSTINGDATA_FOR_CARDREQUEST_SUCCESS, response} }
+    function failure(error) { return {type:POSTINGDATA_FOR_CARDREQUEST_FAILURE, error} }
+}
 
 
 export const clearCardsStore =()=>{
