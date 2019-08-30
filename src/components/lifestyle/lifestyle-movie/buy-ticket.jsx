@@ -97,7 +97,7 @@ class BuyTicket extends Component {
             let data={
                 'TicketAmount':parseFloat(this.state.TicketAmount),
                 'AccountNo':this.state.accountToDebit,
-                'Pin':parseInt(this.state.Pin),
+                'Pin':this.state.Pin,
                 "ShowTimeId":this.state.ShowTimeId,	
                 "CinemaId":this.state.cinemaId,
                 "Children":parseInt(this.state.initialChildAmount),
