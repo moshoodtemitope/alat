@@ -29,6 +29,7 @@ export const routes = {
     //account maintanance
     CUSTOMERACCOUNTS_ACCOUNT_MAINTANANCE: BASEURL + '/AccountMaintenance/api/account/customeraccounts',
     GETACCOUNTHISTORY: BASEURL + '/AccountMaintenance/api/transactions',
+    GETSTATES: BASEURL + '/AccountMaintenance/api/account/GetStatesAndLgas',
     
 
     //goals and savings
