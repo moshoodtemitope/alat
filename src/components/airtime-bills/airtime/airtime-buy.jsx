@@ -144,7 +144,12 @@ class BuyAirtime extends Component {
                                             }
                                         </div>
 
-                                        <AmountInput value={formattedValue} onChange={this.handleAmount} name="Amount" intValue={Amount} AmountInvalid={AmountInvalid} />
+                                        <AmountInput 
+                                        value={formattedValue} 
+                                        onChange={this.handleAmount} 
+                                        name="Amount" 
+                                        intValue={Amount} 
+                                        AmountInvalid={AmountInvalid} />
 
                                         <div className="row">
                                             <div className="col-sm-12">

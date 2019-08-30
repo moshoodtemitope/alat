@@ -10,6 +10,7 @@ import {dashboard,
         fundAccount, 
         loanOnboarding,
         loans,
+        fixedGoal,flexGoal,stashGoal,groupSavings,rotatingSavings,
         receiveMoney,
         alatCards} from "./export";
 
@@ -29,6 +30,9 @@ import { loanConstants } from '../constants/loans/loans.constants';
 import { ALATCARD_REDUCER_CLEAR } from '../constants/cards/cards.constants';
 import { WESTERNUNION_REDUCER_CLEAR } from '../constants/remittance/remittance.constants';
 
+import stashRedux from './goal/stash-reducer';
+import { findGroup, joinGroup } from "./group-savings/group-savings-reducers";
+import { joinAGroup } from "./group-savings/rotating-group-reducers";
 //import { saveCardReducer } from "./fund-account.reducer";
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
@@ -36,26 +40,35 @@ const rootReducer = (state, action)=>{
     if(action.type === userConstants.LOGOUT)
         {   state = undefined;    }
     return appReducer(state, action)
-
 };
 
-
-const airtimeReducerPile =(state, action)=>{
+const airtimeReducerPile = (state, action)=>{
     if(action.type === airtimeConstants.AIRTIME_REDUCER_CLEAR)
     { state = undefined; }
     return airtimeReducer(state, action);
 }
 
+const stashReducerPile = (state, action) => {
+    if(action.type === 'stash'){
+        state = undefined;
+    }
+
+    if(action.type === 'saveStash'){
+        state = undefined;
+    }
+    return stashReducers(state, action);
+}
+
 const transferReducerPile =(state, action)=>{
-    if(action.type === TRANSFER_REDUCER_CLEAR){ 
-        state = undefined; 
+    if(action.type === TRANSFER_REDUCER_CLEAR){
+        state = undefined;
     }
     return transferReducers(state, action);
 }
 
 const fundAccountReducerPile = (state, action)=>{
-    if(action.type === fundAccountConstants.FUND_ACCOUNT_REDUCER_CLEAR){ 
-        state = undefined; 
+    if(action.type === fundAccountConstants.FUND_ACCOUNT_REDUCER_CLEAR){
+        state = undefined;
     }
     return fundAccountReducer(state, action);
 }
@@ -86,6 +99,9 @@ const remittanceReducerPile = (state, action)=>{
     }
     return remittanceReducer(state, action);
 }
+const stashReducers = combineReducers({
+    amount: stashRedux
+})
 
 
 const transferReducers = combineReducers({
@@ -100,13 +116,13 @@ const transferReducers = combineReducers({
     transfer_processsend_money: transfer.processMoneyTransferRequest,
     tranferlimit_info: transfer.fetchTransactionLimitRequest,
     transfer_bank_charges: transfer.getBankChargesReducer
-})
+});
 
 const airtimeReducer = combineReducers({
     airtime_beneficiaries: airtime.airtimeBeneficiariesReducer,
     airtime_beneDelete: airtime.deleteBeneficiaryReducer,
     airtime_buydata: airtime.buyAirtimeReducer,
-    airtime_webpin: airtime.buyAirtimeWebPinReducer,  
+    airtime_webpin: airtime.buyAirtimeWebPinReducer,
     airtime_webpinotp: airtime.buyAirtimeWebPinOTPReducer,
     airtime_save_bene: airtime.airtimeSaveBeneficiaryReducer
 })
@@ -117,7 +133,7 @@ const fundAccountReducer = combineReducers({
     saveCard: fundAccount.saveCardReducer,
     cardDetails: fundAccount.tranCardDetailsReducer,
     deleteCard: fundAccount.deleteCardReducer,
-    saveTransCard: fundAccount.saveCardAfterTranReducer, 
+    saveTransCard: fundAccount.saveCardAfterTranReducer,
     fundwema_alat: fundAccount.fundWemaAccountReducer
     //fundFromCardToken: fundAccount.fundFromTokenisedCardReducer,
     //fundfromWithPin: fundAccount.fundFromCardWithPinReducer
@@ -181,6 +197,8 @@ const remittanceReducer = combineReducers({
     
 })
 
+
+
 const appReducer = combineReducers({
     authentication,
     // registration,
@@ -194,7 +212,7 @@ const appReducer = combineReducers({
     dashboard_userGoals: dashboard.userGoalsReducer,
     dashboard_userOnboardingPriority: dashboard.onboardingPriorityReducer,
     dashboard_announcementCard: dashboard.announcementReducer,
-    
+    stashReducerPile,
     airtimeReducerPile,
     transferReducerPile,
     fundAccountReducerPile,
@@ -213,8 +231,61 @@ const appReducer = combineReducers({
     cardless_reducer: cardlessReducer,
     bills_reducer: billsReducer,
     accountsM_reducer : accountsReducer,
-    settings_reducer : settingsReducer
+    settings_reducer : settingsReducer,
+
+    //fixed goal reducers
+    fixed_goal_step1:fixedGoal.fixedGoalStep1Reducer,
+    fixed_goal_step2:fixedGoal.fixedGoalStep2Reducer,
+    add_goal_reducer:fixedGoal.addGoalReducer,
+
+    // flex goal reducers
+    flex_goal_step1:flexGoal.flexGoalStep1Reducer,
+    flex_goal_step2:flexGoal.flexGoalStep2Reducer,
+    add_flex_goal:flexGoal.addFlexGoalReducer,
+    create_stash_goal:stashGoal.createStashGoalReducer,
+    create_stash_step1:stashGoal.createStashGoalStep1Reducer,
+
+    //Group Savings Reducers (GROUP SAVINGS)
+    groupSavings: groupSavings.groupSavingsTargetGoal,
+    groupDetails: groupSavings.groupDetails,
+    deleteGroup: groupSavings.deleteGroup,
+    contribute: groupSavings.contribute,
+    editGroup: groupSavings.editGroup,
+    findGroup: groupSavings.findGroup,
+    customerGroup: groupSavings.customerGroup,
+    joinGroup: groupSavings.joinGroup,
+    scheduleContribution: groupSavings.scheduleContribution,
+    deleteMember: groupSavings.deleteMember,
+    cashOut: groupSavings.cashOut,
+    continueScheduleGroupPayment: groupSavings.continueScheduleGroupPayment,
+    pauseGroup: groupSavings.pauseGroup,
+    automateContributionStartDate: groupSavings.setAutomateSavingsStartDate,
+    automateContributionEndDate: groupSavings.setAutomateSavingsEndDate,
+    setFrequency: groupSavings.setFrequency,
+    setAmountToWithDraw: groupSavings.setAmountToWithDraw,
+   
+    /// ESUSU (GROUP SAVINGS)
+    createRotatingGroupSavings: rotatingSavings.createRotatingSavings,
+    rotatingGroupDetails: rotatingSavings.rotatingGroupDetails,
+    joinAGroup: rotatingSavings.joinAGroup
 });
 
 //export defualt appReducer;
 export default rootReducer;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

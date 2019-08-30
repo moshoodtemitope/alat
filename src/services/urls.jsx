@@ -19,7 +19,7 @@ export const routes = {
     GETALLQUESTIONS: BASEURL + '/UserSecurityApi/api/v1/Account/AllQuestions',
     REGISTRATIONURLV2: BASEURL + '/UserSecurityApi/api/v1/Account/RegistrationV2',
     DOCUMENT_UPLOAD: BASEURL + '/DocumentUpload/api/upload/document',
-   
+
     //user security
     ONBOARDING_PRIORITY: BASEURL + '/UserSecurityApi/api/v1/Account/GetOnboardingPriority',
     ANNOUNCEMENT: BASEURL + '/UserSecurityapi/api/v1/Account/GetNewsFeeds',
@@ -58,7 +58,7 @@ export const routes = {
 
     //Payment
 
-    //FundAccount 
+    //FundAccount
     WEMA_TO_ALAT_TRANSFER_WITHOUT_OTP: BASEURL + '/PaymentApi/api/WemaAccountToAlatAccountWithoutOTP',
     GET_TOKENIZED_CARDS: BASEURL + '/PaymentCardServicesApi/api/v1/TokenizationApi/GetTokenizedCards',
     SAVE_CARD: BASEURL +  '/PaymentCardServicesApi/api/v1/TokenizationApi/TokenizedCardsBeforeTrans',
@@ -103,6 +103,9 @@ export const routes = {
     GETRANDOMSECURITYQUESTION: BASEURL + '/AccountSetting/api/securityquestion/Random',
     VERIFY_SECURITY_QUESTION: BASEURL + '/AccountSetting/api/securityquestion/validatewithoutotp',
     
+    GETLIMIT: BASEURL + '/AccountMaintenance/api/transactions/getTransactionlimit',
+    GetAllCustomerAccountsWithLimitsV2: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2',
+
     //PaymentApi/api/Accounts/VerifyAccountName
 
     //Airtime
@@ -168,4 +171,28 @@ export const routes = {
     CHECK_ANSWER: BASEURL + '/AccountSetting/api/securityquestion/validate',
     CHANGE_PIN: BASEURL + '/AccountSetting/api/pin/change',
     RESET_PIN :BASEURL + '/AccountSetting/api/pin/CreateOrReset',
+
+
+    //savings&goals
+    ADDGOAL: BASEURL + '/Savings.WebApi/api/Savings/AddGoal',
+    ADDFLEXIGOAL: BASEURL + '/Savings.WebApi/api/Savings/AddFlexiGoal',
+    ADDSTACHGOAL: BASEURL + '/Savings.WebApi/api/Savings/AddStashGoal',
+    FETCH_DEBITABLE_ACCOUNTS_WITH_LIMITS: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2',
+    GOALTYPE: BASEURL + '/Savings.WebApi/api/Savings/GoalType',
+    GOAL_FORMULAR: BASEURL + '/Savings.WebApi/api/savings/GetValues',
+
+
+
+
+    // Group Savings
+    CREATEGOAL: BASEURL + '/Savings.WebApi/api/GroupSaving/CreateGroup',
+    GROUPCUSTOMERS: BASEURL + '/Savings.WebApi/api/GroupSaving/GetCustomerGroups',
+    DELETE_GROUP: BASEURL + '/Savings.WebApi/api/GroupSaving/DeleteGroup',
+    GETGROUPDETAILS: BASEURL + '/Savings.WebApi/api/GroupSaving/GetGroupDetails',
+    SCHEDULE_CONTRIBUTION: BASEURL + '/Savings.WebApi/api/GroupSaving/ScheduleContribution',
+
+    // ROTATING SAVINGS (ESUSU)
+    CREATE_ROTATING_SAVINGS: BASEURL + '/Savings.WebApi/api/EsusuSaving/CreateGroup',
+    ROTATING_GROUP_DETAILS: BASEURL +  '/Savings.WebApi/api/EsusuSaving/GetGroupDetails',
+    JOIN_A_GROUP: BASEURL + '/Savings.WebApi/api/EsusuSaving/JoinGroup'
 };

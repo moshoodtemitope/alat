@@ -56,6 +56,13 @@ import { geCurrentVirtualCardsRequest,
          postATMCardRequest} from './alatcards.reducer'
 import {getWesternUnionCountries,receiveWesternUnion } from './remittance.reducer';
 
+     import {fixedGoalStep1Reducer,fixedGoalStep2Reducer,addGoalReducer} from './goal/fixed-goal.reducers';
+     import {flexGoalStep1Reducer,flexGoalStep2Reducer,addFlexGoalReducer} from './goal/flex-goal.reducer';
+     import {createStashGoalReducer,createStashGoalStep1Reducer} from './goal/create-stash.reducer'
+    import {groupSavingsTargetGoal, groupDetails, deleteGroup, contribute, editGroup, pauseGroup, findGroup, customerGroup, joinGroup, scheduleContribution, deleteMember, cashOut,
+    continueScheduleGroupPayment, setAutomateSavingsEndDate, setAutomateSavingsStartDate, setAmountToWithDraw, setFrequency} from './group-savings/group-savings-reducers';
+import {createRotatingSavings, rotatingGroupDetails, joinAGroup} from './group-savings/rotating-group-reducers';
+
 export const onboarding = {
     userRegistrationRequest,
     bvnDetailsReducer,
@@ -167,3 +174,45 @@ export const receiveMoney={
     getWesternUnionCountries,
     receiveWesternUnion
 }
+export const fixedGoal ={
+    fixedGoalStep1Reducer,
+    fixedGoalStep2Reducer,
+    addGoalReducer
+ }
+ export const flexGoal={
+    flexGoalStep1Reducer,
+    flexGoalStep2Reducer,
+    addFlexGoalReducer
+
+ }
+ export const groupSavings ={
+    groupSavingsTargetGoal,
+    groupDetails,
+    deleteGroup, 
+    contribute, 
+    editGroup, 
+    pauseGroup, 
+    findGroup, 
+    customerGroup, 
+    joinGroup, 
+    scheduleContribution, 
+    deleteMember, 
+    cashOut,
+    continueScheduleGroupPayment,
+    setAutomateSavingsEndDate,
+    setAutomateSavingsStartDate,
+    setAmountToWithDraw,
+    setFrequency
+}
+
+export const rotatingSavings = {
+    createRotatingSavings,
+    rotatingGroupDetails,
+    joinAGroup
+}
+export const stashGoal={
+    createStashGoalStep1Reducer,
+    createStashGoalReducer,
+}
+ 
+ 

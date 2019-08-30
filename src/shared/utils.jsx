@@ -6,17 +6,42 @@ export const formatAmount = (amount) => {
 export const formatAmountNoDecimal = (amount) => {
     return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
 };
-
-export const toCurrency = (currency)=>{
-    if (currency) {
-      currency = typeof currency !== 'string' ? currency.toString() : currency;
-      let numberValueArray = currency.split('.');
-      let numberValue = removeComma(numberValueArray[0]);
-      currency = numberValueArray.length > 1 ? numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,')
-        + '.' + numberValueArray[1] : numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+export const formatDate =(dateData, seperator) =>{
+    seperator = seperator ? seperator : '/';
+    let monthList = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
+    let splitedDate = dateData.split(' ');
+    if (splitedDate.length > 1) {
+      splitedDate[1] = splitedDate[1].replace(',', '');
+      return this.startWithZero((+monthList.indexOf(splitedDate[1]) + 1))
+        + seperator + this.startWithZero(splitedDate[0])
+        + seperator + splitedDate[2];
     }
-    return currency;
+    return dateData;
   }
+
+// export const toCurrency = (currency)=>{
+//     if (currency) {
+//       currency = typeof currency !== 'string' ? currency.toString() : currency;
+//       let numberValueArray = currency.split('.');
+//       let numberValue = removeComma(numberValueArray[0]);
+//       currency = numberValueArray.length > 1 ? numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+//         + '.' + numberValueArray[1] : numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+//     }
+//     return currency;
+//   }
 
 export const removeComma= (currencyValue)=> {
     return currencyValue.replace(/,/g, '');
@@ -225,3 +250,81 @@ export const getBase64=(file, cb)=> {
     };
 }
 
+export const toCurrency=(currency) =>{
+    if (currency) {
+      currency = typeof currency !== 'string' ? currency.toString() : currency;
+      let numberValueArray = currency.split('.');
+      let numberValue = this.removeComma(numberValueArray[0]);
+      currency = numberValueArray.length > 1 ? numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+        + '.' + numberValueArray[1] : numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+    }
+    return currency;
+}
+export const GetGoalFutureValue = (debitAmount, annualInterestRate, month) =>{
+      let months = Math.round(month);
+      let futureValue = 0;
+      let rate = ((annualInterestRate - 0.01) / 12);
+      for (let n = 1; n <= months; n++)
+      {
+          var multiplier = (1 + rate);
+          futureValue += debitAmount * (Math.pow(multiplier, n));     
+      }
+      let amount = futureValue - (debitAmount * months);
+      return this.toCurrency( parseFloat(amount).toFixed(2));
+}
+export const GetDailyFutureValue =(debitAmount, annualInterestRate, days) =>{
+    let futureValue = debitAmount;
+    let dailyRate = (annualInterestRate * 100) / 36500;
+    let interestAccrued = 0;
+    for (let i = 1; i <= days; i++)
+    {
+        if (i < days)
+        {
+            futureValue += debitAmount;
+        }
+        interestAccrued += dailyRate * futureValue;
+        //Monthly compounding
+        if (i % 30 == 0)
+        {
+            futureValue += interestAccrued;
+            interestAccrued = 0;
+        }
+    }
+    return futureValue += interestAccrued;
+}
+export const  GetWeeklyFutureValue =(debitAmount, annualInterestRate, days)=>{
+    let futureValue = debitAmount;  
+    let dailyRate = (annualInterestRate * 100) / 36500;
+    let interestAccrued = 0;
+    for (let i = 1; i <= days; i++)
+    {
+        //weekly addition
+        if (i < days && i % 7 == 0)
+        {
+            futureValue += debitAmount;
+        }
+        interestAccrued = interestAccrued + (dailyRate * futureValue);
+        //Monthly compounding
+        if (i % 30 == 0)
+        {
+            futureValue += interestAccrued;
+            interestAccrued = 0;
+        }
+    }
+    let result = futureValue += interestAccrued;
+    return result;
+    
+}
+export const GetMonthlyGoalFutureValue =(debitAmount, annualInterestRate, months, goalType)=>{
+    let futureValue = 0;
+    var result;
+    let rate = (annualInterestRate - 0.01) / 12;
+    for (let n = 1; n <= months; n++)
+    {
+        var multiplier = (1 + rate);
+        futureValue += debitAmount * (Math.pow(multiplier, n));
+    }
+    return (futureValue - (debitAmount * months)).toFixed(2);
+}
+
+ 
