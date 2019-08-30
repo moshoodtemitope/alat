@@ -4,7 +4,10 @@ import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import LifeStyle from '../lifestyle/lifestyle-movie/movie';
 import LifestylePreference from "../lifestyle/lifestyle-preference/preference";
 import LifeStyleEvent from "../lifestyle/lifestyle-event/event";
-import MovieDetail from '../lifestyle/lifestyle-movie/movie-details'
+import MovieDetail from '../lifestyle/lifestyle-movie/movie-details';
+import EventDetails from '../lifestyle/lifestyle-event/event-details';
+import BuyTicketData from '../lifestyle/lifestyle-movie/buy-ticket';
+import BuyEventTicket from '../lifestyle/lifestyle-event/buy-event-ticket'
 
 
 class LifestyleIndex extends Component {
@@ -20,8 +23,7 @@ class LifestyleIndex extends Component {
             <Fragment>
                 <InnerContainer>
                     <div className="dashboard-wrapper">
-                        <div className="container">
-                            <div className="row">
+                        <div className="container" style={{marginTop: -62}}>
 
                                 {this.props.children}
                                 <Route path={'/lifestyle'} exact component={LifeStyle} />
@@ -29,8 +31,9 @@ class LifestyleIndex extends Component {
                                 <Route path={'/lifestyle/event'} component={LifeStyleEvent} />
                                 <Route path={'/lifestyle/preference'} component={LifestylePreference} />
                                 <Route path={'/lifestyle/movie-details'} component={MovieDetail} />
-
-                            </div>
+                                <Route path={'/lifestyle/buy-ticket-details'} component={BuyTicketData}/>
+                                <Route path={'/lifestyle/event-details'} component={EventDetails}/>
+                                <Route path={'/lifestyle/buy-event-ticket'} component={BuyEventTicket}/>
                         </div>
                     </div>
                 </InnerContainer>

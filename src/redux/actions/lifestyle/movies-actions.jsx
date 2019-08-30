@@ -7,10 +7,10 @@ import {modelStateErrorHandler} from "../../../shared/utils";
 
 
 
-export const FetchMovie = (token) => {
+export const FetchMovie = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.FETCH_MOVIES_LIST, "GET", null, SystemConstant.HEADER, false);
+        let consume = ApiService.request(routes.FETCH_MOVIES_LIST, "GET", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
@@ -27,11 +27,32 @@ export const FetchMovie = (token) => {
     function failure(error) { return {type:listStyleConstants.GET_MOVIE_LIST_FAILURE, error} }
 };
 
-
-export const getCinemaList = (token) => {
+export const SearchFetchMovie = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.FETCH_MOVIE_CINEMAS, "GET", null, SystemConstant.HEADER, false);
+        let consume = ApiService.request(routes.FETCH_MOVIES_LIST + "&" + 'search=' + data, "GET", data, SystemConstant.HEADER, false);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                // consume.log(response);
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function request(request) { return { type:listStyleConstants.SEARCH_FETCH_MOVIE_PENDING, request} }
+    function success(response) { return {type:listStyleConstants.SEARCH_FETCH_MOVIE_SUCCESS, response} }
+    function failure(error) { return {type:listStyleConstants.SEARCH_FETCH_MOVIE_FAILURE, error} }
+};
+
+
+
+export const getCinemaList = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.FETCH_MOVIE_CINEMAS, "GET", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
@@ -138,7 +159,28 @@ export const getSingleEvent = (token, data) => {
 export const purchaseEventTicket = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.BUY_EVENT_TICKET, "POST", data, SystemConstant.HEADER, false);
+        let consume = ApiService.request(routes.BUY_MOVIE_TICKET, "POST", data, SystemConstant.HEADER, false);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                // consume.log(response);
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                
+                    dispatch(alertActions.error(modelStateErrorHandler(error)));
+                
+            });
+    };
+
+    function request(request) { return { type:listStyleConstants.BUY_EVENT_TICKET_PENDING, request} }
+    function success(response) { return {type:listStyleConstants.BUY_EVENT_TICKET_SUCCESS, response} }
+    function failure(error) { return {type:listStyleConstants.BUY_EVENT_TICKET_ERROR, error} }
+};
+export const ShowTime = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.FETCH_MOVIE_SHOWTIME  + data.item + "&" + 'ticketId=' + data.id, "GET", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
@@ -152,16 +194,42 @@ export const purchaseEventTicket = (token, data) => {
             });
     };
 
-    function request(request) { return { type:listStyleConstants.BUY_EVENT_TICKET_PENDING, request} }
-    function success(response) { return {type:listStyleConstants.BUY_EVENT_TICKET_SUCCESS, response} }
-    function failure(error) { return {type:listStyleConstants.BUY_EVENT_TICKET_ERROR, error} }
+    function request(request) { return { type:listStyleConstants.GET_MOVIE_SHOWTIME_PENDING, request} }
+    function success(response) { return {type:listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS, response} }
+    function failure(error) { return {type:listStyleConstants.GET_MOVIE_SHOWTIME_ERROR, error} }
 };
 
 
-export const getAllEngagements = (token, data) => {
+export const SubmitTicketData =(data) =>{
+    return(dispatch)=>{
+        dispatch(success(data))
+
+    }
+    function success(data){
+        return{
+            type:listStyleConstants.SUBMIT_MOVIE_TICKET_SUCCESS,
+            data:data
+        }
+    }
+}
+export const SubmitEventTicketData =(data) =>{
+    return(dispatch)=>{
+        dispatch(success(data))
+
+    }
+    function success(data){
+        return{
+            type:listStyleConstants.SUBMIT_EVENT_TICKET_SUCCESS,
+            data:data
+        }
+    }
+}
+
+
+export const SearchFetchEvent = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.GET_PREFENCE, "GET", data, SystemConstant.HEADER, false);
+        let consume = ApiService.request(routes.GET_EVENTS + "&" + 'search=' + data, "GET", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
@@ -170,11 +238,24 @@ export const getAllEngagements = (token, data) => {
             })
             .catch(error => {
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
-
             });
     };
 
-    function request(request) { return { type:listStyleConstants.PREFERENCES_PENDING, request} }
-    function success(response) { return {type:listStyleConstants.PREFERENCES_SUCCESS, response} }
-    function failure(error) { return {type:listStyleConstants.PREFERENCES_ERROR, error} }
+    function request(request) { return { type:listStyleConstants.SEARCH_FETCH_EVENT_PENDING, request} }
+    function success(response) { return {type:listStyleConstants.SEARCH_FETCH_EVENT_SUCCESS, response} }
+    function failure(error) { return {type:listStyleConstants.SEARCH_FETCH_EVENT_FAILURE, error} }
 };
+
+export const movieDetails = (data) =>{
+    return(dispatch)=>{
+        dispatch(success(data))
+    }
+    function success(data){
+        return{
+            type: "movie detials info",
+            data:data
+        }
+    }
+}
+
+

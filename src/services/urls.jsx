@@ -137,12 +137,13 @@ export const routes = {
 
 
     //EVENTS
-    GET_EVENTS: BASEURL + 'LifeStylePaymentMoviesApi/api/v1/Events/GetEvents?pageNum=1',
+    GET_EVENTS: BASEURL + '/LifeStylePaymentMoviesApi/api/events/getevents?pageNum=1',
     GET_SINGLE_EVENT: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Events/GetSingleEvent',
     BUY_EVENT_TICKET: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Events/BuyEventTicketV2',
 
     //PREFERENCES
     GET_PREFENCE: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Account/GetAllEngagements',
+    GET_CUSTOMER_ENGAGEMENTS: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Account/GetCustomerEngagements',
 
     //movies
     FETCH_MOVIES_LIST : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetMovies?page=1',
