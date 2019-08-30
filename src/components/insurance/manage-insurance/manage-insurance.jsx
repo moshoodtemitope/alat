@@ -94,8 +94,27 @@ class ManageInsurance extends React.Component {
         let getExistingPolicyRequest = this.props.getExistingPolicy;
             console.log('status is',getExistingPolicyRequest.fetch_status);
             return(
-                <div>
-                    jghjgjjjghkhk
+                <div className="col-sm-12">
+                    <div className="row">
+                            <div className="col-sm-12">
+                                <div className="max-600">
+                                    <div className="al-card no-pad">
+                                        <div className="transfer-ctn text-center">
+                                            <div>
+                                                <center>
+                                                    <img src={noPolicy} />
+                                                </center>
+                                                <div className="m-t-30 width-300">
+                                                    <div className="success-mg">
+                                                    You don’t have any insurance policy at the moment. 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
                 </div>
             )
     }
