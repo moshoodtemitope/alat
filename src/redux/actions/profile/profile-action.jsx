@@ -57,7 +57,7 @@ export const profileSuccessMessage = (data) =>{
         dispatch(success(data));
         history.push('/profile-success-message');
     }
-    
+
     function success(data){
         return{
             type:"profile success message",

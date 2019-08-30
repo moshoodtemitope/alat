@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import "./profile.css"; 
+import {connect} from 'react-redux';
 import DatePicker from "react-datepicker";
 import * as actions from '../../redux/actions/profile/profile-action';
 import {Fragment} from "react";
@@ -18,7 +19,7 @@ class ProfileSuccessMessage extends Component {
    componentDidMount = () => {
        setTimeout(function(){
           history.push('/default-page');
-       }, 3000)
+       }, 500)
    }
 
 
@@ -82,7 +83,7 @@ class ProfileSuccessMessage extends Component {
                                     </div>
                                     <div className="col-sm-6">
                                     <form onSubmit={this.HandleSubmit} className="parentForm">
-                                           <p>BVN verified Successfully!</p>
+                                           <p>{this.props.profileSuccessMessage}</p>
                                     </form>
                                     
                                     </div>
@@ -96,4 +97,10 @@ class ProfileSuccessMessage extends Component {
    }
 }
 
-export default ProfileSuccessMessage;
+function mapStateToProps(state){
+   return {
+       profileSuccessMessage: state.profileSuccessMessage.data
+   }
+}
+
+export default connect(mapStateToProps)(ProfileSuccessMessage);

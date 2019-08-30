@@ -452,8 +452,8 @@ class PersonalInfoMation extends Component {
                                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                                 <ul>
                                                     <li><NavLink to={'/default-page'} className="active">Profile</NavLink></li>
-                                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                                    <li><NavLink to={'/default-page'}>Pin Management</NavLink></li>
+                                                    <li><NavLink to={'/default-page'}>Security Questions</NavLink></li>
                                                 </ul>
                                             </div>
                                         </div>
