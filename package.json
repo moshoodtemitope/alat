@@ -12,8 +12,13 @@
     "axios": "^0.19.0",
     "babel-core": "^7.0.0-bridge.0",
     "history": "^4.6.3",
+<<<<<<< HEAD
     "jquery": "^3.4.1",
     "lodash": "^4.17.15",
+=======
+    "jquery": "^1.11.1",
+    "lodash": "^4.17.11",
+>>>>>>> lifestyle/lifestyle-master
     "moment": "^2.24.0",
     "node-sass": "^4.12.0",
     "react": "^16.8.3",

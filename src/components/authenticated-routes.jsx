@@ -21,6 +21,7 @@ import AccountSettings from './account-settings/container';
 import LoansIndex from './loans';
 import CardsContainer from './cards/cards-container';
 import RemittanceContainer from './remittance/remittance-container';
+import LifestyleIndex from './lifestyle/index'
 
 
 import ChooseGoalPlan from './savings/goal/goal-plan';
@@ -260,6 +261,7 @@ class AuthenticatedRoutes extends React.Component {
                     <PrivateRoute path="/savings/delete-group-savings" authed={this.props.user} component={GroupDelete} />
                     <PrivateRoute path="/savings/delete-group-savings-mod" authed={this.props.user} component={SavingsGroupDeleted} />
                     <PrivateRoute path="/savings/contribute-to-group" authed={this.props.user} component={ContributeToGroup} />
+                    <PrivateRoute path='/lifestyle' authed={this.props.user} component={LifestyleIndex}/>
 
 
                 </Switch>

@@ -11,7 +11,7 @@ import {dashboard,
         loanOnboarding,
         loans,
         receiveMoney,
-        fixedGoal,flexGoal,stashGoal,groupSavings,rotatingSavings, customerGoal,
+        fixedGoal,flexGoal,stashGoal,groupSavings,rotatingSavings, customerGoal,movies,preferences,
         alatCards} from "./export";
 
 import {bankListRequest, beneficiariesRequest} from "./transfer.reducer";
@@ -30,6 +30,7 @@ import { loanConstants } from '../constants/loans/loans.constants';
 import { ALATCARD_REDUCER_CLEAR } from '../constants/cards/cards.constants';
 import { WESTERNUNION_REDUCER_CLEAR } from '../constants/remittance/remittance.constants';
 
+import movie from "../../components/lifestyle/lifestyle-movie/movie";
 //import { saveCardReducer } from "./fund-account.reducer";
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
@@ -280,8 +281,30 @@ const appReducer = combineReducers({
     editGroupEsusu: rotatingSavings.editGroupEsusu,
     deleteGroupEsusu: rotatingSavings.deleteGroupEsusu,
     joinGroupEsusu: rotatingSavings.joinGroupEsusu,
-    refferalCode: rotatingSavings.refferalCode
+    refferalCode: rotatingSavings.refferalCode,
     // pauseGroupEsusu: rotatingSavings.pauseGroupEsusu
+
+
+     //MOVIES
+     getCinemaList: movies.getCinemaList,
+     getSingleMovie: movies.getSingleMovie,
+     buyMovieTicket: movies.buyMovieTicket,
+     ShowTime:movies.ShowTime,
+     SubmitTicketData:movies.SubmitTicketData,
+     SubmitEventTicketData:movies.SubmitEventTicketData,
+     SearchfetchMovieList:movies.SearchfetchMovieList,
+     SearchfetchEventList:movies.SearchfetchEventList,
+ 
+     //EVENTS
+     getEvents: movies.getEvents,
+     getSingleEvent: movies.getSingleEvent,
+     purchaseEventTicket: movies.purchaseEventTicket,
+     getMovieList:movies.fetchMovieList,
+ 
+     getAllEngagements: preferences.getAllEngagements,
+     getCustomersEngagements: preferences.getCustomersEngagements,
+ 
+     movieDetails: movies.movieDetails
 });
 
 //export defualt appReducer;
