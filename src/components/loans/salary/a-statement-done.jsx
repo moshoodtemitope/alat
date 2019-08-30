@@ -4,30 +4,26 @@ import * as LoanActions from '../../../redux/actions/loans/loans.action';
 import * as OnbaordingActions from '../../../redux/actions/onboarding/loan.actions';
 import { loanConstants } from '../../../redux/constants/loans/loans.constants';
 import { Route, Switch } from "react-router-dom";
-import StatementUpload from '../../../shared/components/loans/_statement-upload';
+import StatementUploadDone from '../../../shared/components/loans/_statement-upload-done';
 
-
-class LoanStatementUpload extends React.Component{
+class LoanStatementUploadDone extends React.Component{
     constructor(props){
         super(props);
         this.state = {
 
         }
     }
-
-    goBack=()=>{
-        this.props.history.push("/loans/salary/detail");
-    }
-
-    goForward=()=>{
-        this.props.history.push('/loans/salary/upload-done');
+    
+    NavigateToDashBoard=()=>{
+        this.props.dispatch(LoanActions.clearLoanOnboardingStore());
+       this.props.history.push('/loans/salary/dashboard');
     }
 
     render(){
-        return(<StatementUpload
-                gotoPreviousPageMethod={this.goBack}
-                ParentGoToNextPage={this.goForward}
-        />);
+        return(
+            <StatementUploadDone 
+             gotoDashboard = {this.NavigateToDashBoard}
+             />);
     }
 }
 
@@ -37,4 +33,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps)(LoanStatementUpload);
+export default connect(mapStateToProps)(LoanStatementUploadDone);

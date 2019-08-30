@@ -12,7 +12,7 @@ class ScoreResult extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			user: JSON.stringify(localStorage.getItem("user")),
+			user: JSON.parse(localStorage.getItem("user")),
 			loanDetails: {}
 		}
 	}
@@ -38,7 +38,7 @@ class ScoreResult extends React.Component {
 
 	doneClick = () => {
 		this.props.dispatch(actions.clearLoanOnboardingStore());
-		this.props.doneClick();
+		this.props.abortClick();
 	}
 	
 	declineClikc =()=>{
@@ -66,7 +66,7 @@ class ScoreResult extends React.Component {
 	}
 
 	render() {
-		
+		this.declineAction();
 		return (
 
 			<div className="col-sm-12">
@@ -81,11 +81,11 @@ class ScoreResult extends React.Component {
 
 								<p>Dear {this.state.user.fullName}</p>
 								{this.returnScoreCardSuccessStatus() && <Fragment><p>Congratulations!!! your loan have been granted.View Details Below </p>
-									<p><b>Loan Amount:{util.mapCurrency("NGN")} : {this.state.loanDetails.LoanAmountGranted}</b>
+									<p><b>Loan Amount:{util.mapCurrency("NGN")}{this.state.loanDetails.LoanAmountGranted}</b>
 									<br/>
 										<b>Loan Tenure: {this.state.loanDetails.LoanTenure} Months</b>
 										<br/>
-										<b>Monthly Repayment:  {this.state.loanDetails.MonthlyRepaymentAmount}</b>
+										<b>Monthly Repayment:  {util.mapCurrency("NGN")}{this.state.loanDetails.MonthlyRepaymentAmount}</b>
 									</p>
 									<p>Click Continue to proceed</p></Fragment>}
 
@@ -131,7 +131,7 @@ function mapStateToProps(state) {
 		score_card_Q: state.loanOnboardingReducerPile.loanGetScoreCardQuestion,
 		score_card_A: state.loanOnboardingReducerPile.loanPostScoreCardAnswer,
 
-		loan_reject: state.loanOnboardingReducerPile.loanRejectReducer
+		loan_reject: state.loanReducerPile.loanReject
 	}
 }
 

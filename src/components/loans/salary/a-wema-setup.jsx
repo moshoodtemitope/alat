@@ -4,7 +4,7 @@ import * as LoanActions from '../../../redux/actions/loans/loans.action';
 import * as OnbaordingActions from '../../../redux/actions/onboarding/loan.actions';
 import { loanConstants } from '../../../redux/constants/loans/loans.constants';
 import { Route, Switch } from "react-router-dom";
-import  WemaCollectionComponent  from '../../../shared/components/loans/_wema-setup';
+import WemaCollectionComponent from '../../../shared/components/loans/_wema-setup';
 
 class WemaCollectionSetup extends React.Component {
     constructor(props) {
@@ -12,23 +12,25 @@ class WemaCollectionSetup extends React.Component {
     }
 
     onDoneClick = () => {
-        this.props.history.push('/loans/salary/dashboard')
+        // this.props.history.push('/loans/salary/dashboard')
         if (this.props.standing_order)
-            if (this.props.standing_order.standing_order_status == loanConstants.LOAN_STAND_ORDER_SUCCESS) {
-                let data = {
-                    ...this.props.standing_order.standing_order_data.response.Response
+            if (this.props.standing_order.loan_standOrder_status == loanConstants.LOAN_STAND_ORDER_SUCCESS) {
+                var data = {
+                    ...this.props.standing_order.loan_standOrder_data.response.Response
                 }
-               if(data.kycRequired == true){
-               this.props.history.push('/loans/salary/kyc');}
+                if (data.kycRequired == true) {
+                    this.props.history.push('/loans/salary/kyc');
+                }
+                this.props.dispatch(LoanActions.clearLoanOnboardingStore());
                 this.props.history.push('/loans/salary/dashboard')
             }
-            else { 
+            else {
                 this.props.goToPreviousPage()
             }
-        this.props.history.push('/loans/salary/kyc');
+       
     }
 
-    goBack= ()=>{
+    goBack = () => {
         this.props.history.push('/loans/salary/terms');
     }
 
@@ -42,7 +44,7 @@ class WemaCollectionSetup extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        standing_order: state.loanOnboardingReducerPile.loanStandingOrder,
+        standing_order: state.loanReducerPile.loanStandingOrder,
     }
 }
 
