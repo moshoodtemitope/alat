@@ -19,7 +19,9 @@ class ProfileSuccessMessage extends Component {
    componentDidMount = () => {
        setTimeout(function(){
           history.push('/default-page');
-       }, 500)
+       }, 50000000);
+
+       console.log(this.props.profileSuccessMessage.data);
    }
 
 
@@ -79,11 +81,11 @@ class ProfileSuccessMessage extends Component {
                                                     <p>Next of Kin</p>
                                                 </div>
                                         </div>
-                                        
                                     </div>
                                     <div className="col-sm-6">
                                     <form onSubmit={this.HandleSubmit} className="parentForm">
-                                           <p>{this.props.profileSuccessMessage}</p>
+                                           <p>{this.props.profileSuccessMessage.data}</p>
+                                           
                                     </form>
                                     
                                     </div>

@@ -649,7 +649,7 @@ class PersonalInfoMation extends Component {
                                             <div className="form-row">
                                                         <div className={PinValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Alat Pin</label>
-                                                            <input type="text" name="AlatPin" className="form-control" onChange={this.SetInputValue} placeholder="Alat Pin"/>
+                                                            <input type="number" name="AlatPin" className="form-control" onChange={this.SetInputValue} placeholder="Alat Pin"/>
                                                         </div>
                                             </div>
 

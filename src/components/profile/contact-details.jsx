@@ -38,6 +38,16 @@ class ContactDetails extends Component {
         PlaceOfBirth: null, 
         maritalStatus: null,
         title: null,
+        apartment: null,
+        houseNumber: null,
+        street: null,
+        busStop: null,
+        personalAddress: null,
+        apartment2: null,
+        houseNumber2: null,
+        street2: null,
+        busStop2: null,
+        personalAddress2: null,
 
 
         NationalityValidity: false, 
@@ -58,8 +68,12 @@ class ContactDetails extends Component {
         PinValidity: false,
         OccupationValidity: false,
         TitleValidity: false,
-        MaritalStatusValidity: false
-  
+        MaritalStatusValidity: false,
+        houseNumberValidity: false,
+        apartmentValidity: false,
+        
+        houseNumberValidity2: false,
+        apartmentValidity2: false
        }
    }
 
@@ -211,6 +225,54 @@ class ContactDetails extends Component {
                             result = null;
                             break;
                         }
+                case 'houseNumber':
+                        if(this.state[x] == null || this.state[x] == ""){
+                            console.log(x)
+                            result = null;
+                            break;
+                        }
+                case 'apartment': 
+                        if(this.state[x] == null || this.state[x] == ""){
+                            console.log(x)
+                            result = null;
+                            break;
+                        }
+                case 'title':
+                        if(this.state[x] == null || this.state[x] == ""){
+                            console.log(x)
+                            result = null;
+                            break;
+                        }
+                case 'houseNumber':
+                        if(this.state[x] == null || this.state[x] == ""){
+                            console.log(x)
+                            result = null;
+                            break;
+                        }
+                case 'apartment': 
+                        if(this.state[x] == null || this.state[x] == ""){
+                            console.log(x)
+                            result = null;
+                            break;
+                        }
+                case 'personalAddress':
+                        if(this.state[x] == null || this.state[x] == ""){
+                            console.log(x)
+                            result = null;
+                            break;
+                        }
+                case 'street':
+                        if(this.state[x] == null || this.state[x] == ""){
+                            console.log(x)
+                            result = null;
+                            break;
+                        }
+                case 'busStop': 
+                        if(this.state[x] == null || this.state[x] == ""){
+                            console.log(x)
+                            result = null;
+                            break;
+                        }
                 
             }
 
@@ -269,6 +331,11 @@ class ContactDetails extends Component {
        this.checkEmploymentValidity();
        this.checkOtherNameValidity();
        this.checkMothersMaidenNameValidity();
+       this.checkApartmentValidity();
+       this.checkHouseNumberValidity();
+       this.checkPersonalAddressValidity();
+       this.checkBusstopValidity();
+       this.checkStreetValidity();
        console.log('code got here');
 
        return;
@@ -429,13 +496,95 @@ class ContactDetails extends Component {
         }
     }
 
+    checkApartmentValidity = () => {
+        if(this.state.apartment == null || this.state.apartment == ""){
+            this.setState({apartmentValidity: true});
+        }else{
+            this.setState({apartmentValidity: false});
+        }
+    }
+
+    checkHouseNumberValidity = () => {
+        if(this.state.houseNumber == null || this.state.houseNumber == ""){
+            this.setState({houseNumberValidity: true});
+        }else{
+            this.setState({houseNumberValidity: false});
+        }
+    }
+
+    checkStreetValidity = () => {
+        if(this.state.street == null || this.state.street == ""){
+            this.setState({streetValidity: true});
+        }else{
+            this.setState({streetValidity: false});
+        }
+    }
+
+    checkBusstopValidity = () => {
+        if(this.state.busStop == null || this.state.busStop == ""){
+            this.setState({busstopValidity: true});
+        }else{
+            this.setState({busstopValidity: false});
+        }
+    }
+
+    checkPersonalAddressValidity = () => {
+        if(this.state.personalAddress == null || this.state.personalAddress == ""){
+            this.setState({personalAddressValidity: true});
+        }else{
+            this.setState({personalAddressValidity: false});
+        }
+    }
+
+    checkApartmentValidity2 = () => {
+        if(this.state.apartment2 == null || this.state.apartment2 == ""){
+            this.setState({apartmentValidity2: true});
+        }else{
+            this.setState({apartmentValidity2: false});
+        }
+    }
+
+    checkHouseNumberValidity2 = () => {
+        if(this.state.houseNumber2 == null || this.state.houseNumber2 == ""){
+            this.setState({houseNumberValidity2: true});
+        }else{
+            this.setState({houseNumberValidity2: false});
+        }
+    }
+
+    checkStreetValidity2 = () => {
+        if(this.state.street2 == null || this.state.street2 == ""){
+            this.setState({streetValidity2: true});
+        }else{
+            this.setState({streetValidity2: false});
+        }
+    }
+
+    checkBusstopValidity2 = () => {
+        if(this.state.busStop2 == null || this.state.busStop2 == ""){
+            this.setState({busstopValidity2: true});
+        }else{
+            this.setState({busstopValidity2: false});
+        }
+    }
+
+    checkPersonalAddressValidity2 = () => {
+        if(this.state.personalAddress2 == null || this.state.personalAddress2 == ""){
+            this.setState({personalAddressValidity2: true});
+        }else{
+            this.setState({personalAddressValidity2: false});
+        }
+    }
+
+
    NavigateToSuccessPage = () => {
        history.push('/profile-success-message');
    }
 
    render(){
-       const {BVNValidity, birthDate, PinValidity, SectorValidity, EmployerPhoneNumberValidity,EmploymentValidity, AddressValidity, EmployersNameValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
-        SurnameValidity, EmailAddressValidity, FirstNameValidity, MaritalStatusValidity, TitleValidity, OccupationValidity,GenderValidity, DateOfBirthValidity, OtherNameValidity, MothersMaidenNameValidity} = this.state;
+       const { PinValidity, SectorValidity, EmployerPhoneNumberValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
+        EmailAddressValidity, streetValidity, streetValidity2, busstopValidity, busstopValidity2, apartmentValidity, apartmentValidity2, personalAddressValidity, 
+        personalAddressValidity2, houseNumberValidity, houseNumberValidity2} = this.state;
 
        return(
         <Fragment>
@@ -491,88 +640,51 @@ class ContactDetails extends Component {
                                                     <p>Next of Kin</p>
                                                 </div>
                                         </div>
-                                        
                                     </div>
                                     <div className="col-sm-7">
                                     <form onSubmit={this.HandleSubmit} className="parentForm">
                                             <p className="formHeading">Contact Details</p>
-                                        
                                             <div className="form-row">
-                                                        <div className={TitleValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
-                                                            <label className="label-text">Title</label>
-                                                            <select onChange={this.SetInputValue} name="title" placeholder="title">
-                                                                <option value="Mr">Mr</option>
-                                                                <option value="Mrs">Mrs</option>
-                                                                <option value="Dr">Dr</option>
-                                                                <option value="Prof">Prof</option>
-                                                                <option value="master">Master</option>
-                                                            </select>
-                                                        </div>
+                                                    <div className={houseNumberValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                    <label className="label-text">House Number</label>
+                                                                    <input type="text" name="houseNumber" className="form-control" onChange={this.SetInputValue} placeholder="1"/>
+                                                               
+                                                    </div>
 
-                                                        <div className={MaritalStatusValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                            <label className="label-text">Marital Status</label>
-                                                            <select onChange={this.SetInputValue} name="maritalStatus" placeholder="marital status">
-                                                                
-                                                                <option value="Mr">Married</option>
-                                                                <option value="Mrs">Single</option>
-                                                            </select>
+                                                    <div className={apartmentValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
+                                                                    <label className="label-text">Apartment</label>
+                                                                    <input type="text" name="apartment" className="form-control" onChange={this.SetInputValue} placeholder=""/>
+                                                    </div>
+                                                
+                                            </div>
+                                            <div className="form-row">
+                                                        <div className={streetValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                            <label className="label-text">Streat / Compound Name</label>
+                                                            <input type="text" name="street" className="form-control" onChange={this.SetInputValue} placeholder=""/>
+                                                        </div>
+                                            </div>
+                                            <div className="form-row">
+                                                        <div className={busstopValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                            <label className="label-text">Nearest Bustop</label>
+                                                            <input type="text" name="busStop" className="form-control" onChange={this.SetInputValue} placeholder=""/>
                                                         </div>
                                             </div>
 
                                             <div className="form-row">
-                                                        <div className={SurnameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Surname Name</label>
-                                                            <input type="text" name="SurName" className="form-control" onChange={this.SetInputValue} placeholder="Surname"/>
+                                                        <div className={personalAddressValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                            <label className="label-text">Address</label>
+                                                            <input type="text" name="personalAddress" className="form-control" onChange={this.SetInputValue} placeholder="Address"/>
                                                         </div>
-                                            </div>
-
-                                            <div className="form-row">
-                                                        <div className={FirstNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">First Name</label>
-                                                            <input type="text" name="FirstName" className="form-control" onChange={this.SetInputValue} placeholder="First Name"/>
-                                                        </div>
-                                            </div>
-                                            
-                                            
-                                            <div className="form-row">
-                                                        <div className={OtherNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Other Name</label>
-                                                            <input type="text" name="OtherName" className="form-control" onChange={this.SetInputValue} placeholder="Other Name"/>
-                                                        </div>
-                                            </div>
-                                           
-                                            <div className="form-row">
-                                                        <div className={GenderValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
-                                                            <label className="label-text">Gender</label>
-                                                            <select onChange={this.SetInputValue} name="Gender" placeholder="Gender">
-                                                                <option value=""> </option>
-                                                                <option value="Male"> Male </option>
-                                                                <option value="Female"> Female</option>
-                                                            </select>
-                                                        </div>
-
-                                                        <div className={DateOfBirthValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                                <label className="label-text">Date of Birth</label>
-                                                                <DatePicker className="form-control" selected={birthDate} 
-                                                                placeholder="June 31, 2019"
-                                                                dateFormat=" MMMM d, yyyy"
-                                                                showMonthDropdown
-                                                                showYearDropdown
-                                                                onChange={this.SetBirthDay}
-                                                                dropdownMode="select"
-                                                                // minDate={new Date()}
-                                                                />
-                                                        </div> 
                                             </div>
 
                                             <div className="form-row">
                                                         <div className={NationalityValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
-                                                            <label className="label-text">Nationality</label>
+                                                            <label className="label-text">Country</label>
                                                             <input type="text" name="Nationality" className="form-control" onChange={this.SetInputValue} placeholder="Nationality"/>
                                                         </div>
 
                                                         <div className={StateOfOriginValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                            <label className="label-text">State of Origin</label>
+                                                            <label className="label-text">State</label>
                                                             <input type="text" name="StateOfOrigin" className="form-control" onChange={this.SetInputValue} placeholder="state of origin"/>
                                                         </div>
                                             </div>
@@ -584,50 +696,80 @@ class ContactDetails extends Component {
                                                         </div>
 
                                                         <div className={PlaceOfBirthValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                            <label className="label-text">Place of Birth (State of Origin)</label>
+                                                            <label className="label-text">City</label>
                                                             <input type="text" name="PlaceOfBirth" className="form-control" onChange={this.SetInputValue} placeholder="Place of Birth"/>
                                                         </div>
                                             </div>
                                             
                                             <div className="form-row">
-                                                        <div className={MothersMaidenNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Mothers Maiden Name</label>
-                                                            <input type="text" name="mothersMaidenName" className="form-control" onChange={this.SetInputValue} placeholder="First Name"/>
+                                                        <div className="form-group col-md-12">
+                                                            <label className="label-text">Mailing Address</label>
+                                    
+                                                            
                                                         </div>
                                             </div>
-                                           
                                             <div className="form-row">
-                                            <div className={BVNValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
-                                                            <label className="label-text">BVN</label>
-                                                            <input type="Number" name= "BVNnumber" className="form-control" onChange={this.SetBvNNumber} placeholder="0000 0000 0000"/>
+                                                        <div className="form-group col-md-9">
+                                                           
+                                                            <label className="label-text">Same as address above</label>
+                                                            
                                                         </div>
+                                                        <div className="form-group col-md-3">
+                                                           
+                                                            
+                                                            
+                                                        </div>
+                                            </div>
+                                            
+                                            <div className="form-row">
+                                                    <div className={houseNumberValidity2 ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                    <label className="label-text">House Number</label>
+                                                                    <input type="text" name="houseNumber2" className="form-control" onChange={this.SetInputValue} placeholder="1"/>
+                                                               
+                                                    </div>
 
-                                                        <div className={EmploymentValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                            <label className="label-text">Employment Status</label>
-                                                            <select onChange={this.SetInputValue} name="EmploymentStatus">
-                                                                <option value="Male"> Employed </option>
-                                                                <option value="Female"> UnEmployed </option>
-                                                            </select>
-                                                        </div>
+                                                    <div className={apartmentValidity2 ? "form-group form-error col-md-5" : "form-group col-md-5"}>
+                                                                    <label className="label-text">Apartment</label>
+                                                                    <input type="text" name="apartment2" className="form-control" onChange={this.SetInputValue} placeholder=""/>
+                                                    </div>
+                                                
                                             </div>
-                                           
                                             <div className="form-row">
-                                                        <div className={EmployersNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Employer's Name</label>
-                                                            <input type="text" name="EmployerName" className="form-control" onChange={this.SetInputValue} placeholder="Employers Name"/>
+                                                        <div className={streetValidity2 ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                            <label className="label-text">Streat / Compound Name</label>
+                                                            <input type="text" name="street2" className="form-control" onChange={this.SetInputValue} placeholder=""/>
                                                         </div>
                                             </div>
-                                          
+                                            <div className="form-row">
+                                                        <div className={busstopValidity2 ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                            <label className="label-text">Nearest Bustop</label>
+                                                            <input type="text" name="busStop2" className="form-control" onChange={this.SetInputValue} placeholder=""/>
+                                                        </div>
+                                            </div>
+
+                                            <div className="form-row">
+                                                        <div className={personalAddressValidity2 ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                            <label className="label-text">Address</label>
+                                                            <input type="text" name="personalAddress2" className="form-control" onChange={this.SetInputValue} placeholder="Address"/>
+                                                        </div>
+                                            </div>
                                             <div className="form-row">
                                                         <div className={EmailAddressValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Employer's Address</label>
-                                                            <input type="email" name="EmailAddress" className="form-control" onChange={this.SetInputValue} placeholder="Employers Address"/>
+                                                            <label className="label-text">Email Address</label>
+                                                            <input type="email" name="EmailAddress" className="form-control" onChange={this.SetInputValue} placeholder="Email"/>
+                                                        </div>
+                                            </div>
+                                            
+                                            <div className="form-row">
+                                                        <div className={EmailAddressValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                            <label className="label-text">Alternate Email</label>
+                                                            <input type="email" name="EmailAddress" className="form-control" onChange={this.SetInputValue} placeholder="Email"/>
                                                         </div>
                                             </div>
 
                                             <div className="form-row">
                                                         <div className={EmployerPhoneNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Employer's Phone Number</label>
+                                                            <label className="label-text">Phone Number</label>
                                                             <input type="number" name="EmployerPhoneNumber" className="form-control" onChange={this.SetInputValue} placeholder="Employers Phone Number"/>
                                                         </div>
                                             </div>
@@ -639,24 +781,19 @@ class ContactDetails extends Component {
                                                         </div>
                                             </div>
 
-                                            <div className="form-row">
-                                                        <div className={OccupationValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Occupation</label>
-                                                            <input type="text" name="Occupation" className="form-control" onChange={this.SetInputValue} placeholder="Occupation"/>
-                                                        </div>
-                                            </div>
+                        
                                           
                                             <div className="form-row">
                                                         <div className={PinValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Alat Pin</label>
-                                                            <input type="text" name="AlatPin" className="form-control" onChange={this.SetInputValue} placeholder="Alat Pin"/>
+                                                            <input type="number" name="AlatPin" className="form-control" onChange={this.SetInputValue} placeholder="Alat Pin"/>
                                                         </div>
                                             </div>
 
                                            
                                             
                                                      
-                                                             <button type="submit" className="twoBut">Submit</button>
+                                            <button type="submit" className="twoBut">Submit</button>
                                                      
                                                  
                                         </form>
