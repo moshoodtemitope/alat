@@ -291,7 +291,7 @@ export const GetDailyFutureValue =(debitAmount, annualInterestRate, days) =>{
         }
     }
     return futureValue += interestAccrued;
-}
+};
 export const  GetWeeklyFutureValue =(debitAmount, annualInterestRate, days)=>{
     let futureValue = debitAmount;  
     let dailyRate = (annualInterestRate * 100) / 36500;
@@ -314,7 +314,7 @@ export const  GetWeeklyFutureValue =(debitAmount, annualInterestRate, days)=>{
     let result = futureValue += interestAccrued;
     return result;
     
-}
+};
 export const GetMonthlyGoalFutureValue =(debitAmount, annualInterestRate, months, goalType)=>{
     let futureValue = 0;
     var result;

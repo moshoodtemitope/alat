@@ -28,7 +28,7 @@ export const fundAlatWemaAccount =(token, data)=>{
     function request(request) { return { type: fundAccountConstants.FUND_ALAT_WEMA_PENDING, request } }
     function success(response, request) { return { type: fundAccountConstants.FUND_ALAT_WEMA_SUCCESS, response : response, data: request } }
     function failure(error) { return { type: fundAccountConstants.FUND_ALAT_WEMA_FAILURE, error } }
-}
+};
 
 export const saveCardAfterTransaction =(token, data)=>{
     SystemConstant.HEADER['alat-token'] = token;
@@ -223,11 +223,11 @@ export const verifyPAN=(token, data)=>{
     function request(request) { return { type: fundAccountConstants.VERIFY_PAN_PENDING, request } }
     function success(response) { return { type: fundAccountConstants.VERIFY_PAN_SUCCESS, response  } }
     function failure(error) { return { type: fundAccountConstants.VERIFY_PAN_FAILURE, error } }
-}
+};
 
 export const ClearAction=(type)=>{
     return (dispatch) =>{
        dispatch(clear(type))
     };
     function clear(type){return {type : type}}
-}
+};

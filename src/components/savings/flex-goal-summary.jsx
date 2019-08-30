@@ -13,19 +13,20 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
 
  class FlexGoalSummary extends Component {
      constructor(props){
-         super(props)
+         super(props);
 
         this.state={
-            targetAmount:"",
+            targetAmount:null,
             startDate:"",
-            endDate:"",
-            goalName:"",
+            goalName:"flex",
             goalFrequency:"",
             debitAccount:"",
-            debitAmount:"",
+            debitAmount:null,
             showInterests:"",
-            GoalTypeId:3,
-            frequencyId:6,
+            GoalTypeId:6,
+            frequencyId:3,
+            FrequencyDurationId:12,
+            goalFrequencyValue:""
 
 
         }
@@ -34,43 +35,43 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
 
     componentDidMount = () => {
         this.init();
-    }
+    };
 
     init = () => {
-        if (this.props.flex_goal_step2.flex_step2_status != flexGoalConstants.FETCH_FLEX_GOAL_SUCCESS_STEP2)
-            this.props.history.push("/savings/flex-goal-step2");
+        if (this.props.flex_goal_step2.flex_step2_status !== flexGoalConstants.FETCH_FLEX_GOAL_SUCCESS_STEP2)
+            this.props.history.push("/savings/flex-goal");
         else {
             var data = {
                 ...this.props.flex_goal_step2.flex_step2_data.data
             };
-            console.log('tag', data)
+            console.log('tag', data);
 
             this.setState({
                 targetAmount:data.targetAmount,
-                startDate:data.startDate,
-                endDate:data.endDate,  
+                startDate: data.startDate,
                 goalName:data.goalName,
                 goalFrequency:data.goalFrequency,
                 debitAccount:data.debitAccount,
-                debitAmount	:data.showInterests
+                debitAmount:data.debitAmount,
+                goalFrequencyValue:data.goalFrequencyValue
 
             });
         }
-    }
+    };
     handleSubmit=(event)=>{
-        event.preventDefault()
+        event.preventDefault();
         this.props.dispatch(actions.addFlexGoal({
-            "goalName":this.state.goalName,
-            "startDate":this.state.startDate,
-            "targetAmount":this.state.targetAmount,
+            "GoalName":this.state.goalName,
+            "StartDate":this.state.startDate,
             "goalFrequency":this.state.goalFrequency,
-            "debitAccount":this.state.debitAccount,
-            "debitAmount":this.state.debitAmount,
+            "DebitAccount":this.state.debitAccount,
+            "DebitAmount":this.state.debitAmount,
             "GoalTypeId":this.state.GoalTypeId,
-            "frequencyId":this.state.frequencyId
+            "FrequencyId":this.state.frequencyId,
+            'FrequencyDurationId':this.state.FrequencyDurationId
         }));
 
-    }
+    };
     render() {
         return (
            <Fragment>
@@ -95,7 +96,7 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
                         </div>
                     </div>
                     {this.props.alert && this.props.alert.message &&
-                        <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                        <div style={{width: "100%", marginLeft:"150px",marginRight:"150px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                     }
                     <h1 style={{margin:"auto", color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>Flexi Goal Summary</h1>
                         <div style={{margin:"30px"}}></div>
@@ -130,7 +131,7 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
                                         <div className="coverForSummary">
                                             <div className="left">
                                                 <p className='GoalText'>Contributions</p>
-                                                <p className='boldedText'>₦{this.state.debitAmount}/{this.state.goalFrequency}</p>
+                                                <p className='boldedText'>₦{this.state.debitAmount}/{this.state.goalFrequency}-{this.state.goalFrequencyValue}</p>
                                             </div>
                                             <div className="right">
                                                 <p className='GoalText'>Account to Debit</p>
@@ -142,7 +143,11 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
                                     <div className="row">
                                         <div className="col-sm-12">
                                             <center>
-                                                <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Create Goal</button>
+                                                <button  disabled={this.props.add_flex_goal.add_flex_goal_status === flexGoalConstants.ADD_FLEX_GOAL_PENDING}
+
+                                                         type="submit" className="btn-alat m-t-10 m-b-20 text-center">
+                                                    {this.props.add_flex_goal.add_flex_goal_status === flexGoalConstants.ADD_FLEX_GOAL_PENDING ? "Processing..." :"Create Goal"}
+                                                </button>
                                             </center>
                                         </div>
                                     
@@ -151,6 +156,10 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
 
                                 
                                 </div>
+                                <center>
+                                    <a onClick={() => { this.props.dispatch(actions.ClearAction(flexGoalConstants.FLEX_GOAL_REDUCER_CLEAR));
+                                        this.props.history.push('/savings/flex-goal') }} className="add-bene m-t-50">Go to Back</a>
+                                </center>
 
                             
                             </div>
@@ -177,7 +186,8 @@ const mapStateToProps = state => ({
     flex_goal_step1: state.flex_goal_step1,
     flex_goal_step2:state.flex_goal_step2,
     alert: state.alert,
+    add_flex_goal:state.add_flex_goal
 
-})
+});
 export default connect(mapStateToProps)(FlexGoalSummary);
 

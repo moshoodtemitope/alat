@@ -10,20 +10,61 @@ import SelectDebitableAccounts from '../../../shared/components/selectDebitableA
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
+import {history} from '../../../_helpers/history';
+import * as actions1 from '../../../redux/actions/savings/group-savings/group-savings-actions';
 
+// if(window.performance.navigation.type == 1)
+//     window.location.replace("http://localhost:8080/");
+    
 class RotatingGroupCreated extends React.Component {
     constructor(props){
-        super(props)
+        super(props);
         this.state= {
-            
+            user: JSON.parse(localStorage.getItem("user"))
         }
-
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    componentDidMount = () => {
+       this.CheckGroupSavingsAvailability();
+       this.CheckRotatingSavingsAvailability();
+
+       const data = {
+           groupId: this.props.createdGroupSavings.response.id
+       }
+       console.log(data);
+       this.props.dispatch(actions.rotatingGroupDetails(this.state.user.token, data))
+    }
+
+    CheckRotatingSavingsAvailability = () => {
+        this.props.dispatch(actions.GetGroupsEsusu(this.state.user.token, null));
+    }
+
+    CheckGroupSavingsAvailability = () => {
+        this.props.dispatch(actions1.customerGroup(this.state.user.token, null));
+    }
+
 
     handleSubmit = (event) => {
         event.preventDefault();
         return null;
+    } 
+    
+    NavigateToGroupSavings = () => {
+        // let groupSavings = this.props.groups.response; //returns an array
+        // let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
+        // if(groupSavings.length != 0 || rotatingSavings.length != 0){
+            history.push('/savings/activityDashBoard');
+        //     return;
+        // }
+        // history.push('/savings/goal/group-savings-selection');
+    }
+
+
+    CopyCode = (event) => {
+        console.log(this.textInputHidden);
+        this.textInputHidden.select();
+        document.execCommand("copy");
+        console.log('its here now');
     }
 
     render() {
@@ -42,9 +83,9 @@ class RotatingGroupCreated extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a href="#">Goals</a></li>
                                         </NavLink>
-                                        <NavLink to='/savings/goal/group-savings-selection'>
-                                            <li><a className="active">Group Savings</a></li>
-                                        </NavLink>
+                                        {/* <NavLink to='/savings/goal/group-savings-selection'> */}
+                                            <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                        {/* </NavLink> */}
                                             <li><a href="#">Investments</a></li>
                                         </ul>
                                     </div>
@@ -58,15 +99,16 @@ class RotatingGroupCreated extends React.Component {
                                        <h4 className="m-b-10 center-text hd-underline">Group Created</h4>
 
                                             <form onSubmit={this.handleSubmit}>
+                                            <input type="text" id='hiddenReferralCode1' ref={ele => this.textInputHidden = ele} value={this.props.createdGroupSavings.response.referralCode}/>
                                                 <div className="form-group instruction">
                                                     <h6>Use the code below to invite your friends to join the group.</h6>
                                                 </div>
                                                 <div className="forCode">
                                                         <div className="left">
-                                                            <h2>{this.props.createdGroupSavings.response.referralCode}</h2>
+                                                            <h2 id={this.props.createdGroupSavings.response.referralCode} ref={element => this.textInput = element}>{this.props.createdGroupSavings.response.referralCode}</h2>
                                                         </div>
                                                         <div className="right">
-                                                            <i></i>
+                                                        <img onClick={this.CopyCode} className='itemToCopy' src="/src/assets/img/Group.png" alt=""/>
                                                         </div>
                                                 </div>
                                                 <div className="form-row">
@@ -104,7 +146,9 @@ class RotatingGroupCreated extends React.Component {
 
 function mapStateToProps(state){
    return {
-       createdGroupSavings: state.createRotatingGroupSavings.data
+       createdGroupSavings: state.createRotatingGroupSavings.data,
+       groupSavingsEsusu: state.getGroupSavingsEsusu.data,
+       groups: state.customerGroup.data
    }
 }
 

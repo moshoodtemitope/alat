@@ -1,14 +1,14 @@
 import React from 'react';
 
-export function description(props){
-    return(<div>
-               <div className="col-xs-6">
-                   <p>{this.props.leftHeader}</p>
+export function Description(props){
+    return(<div className='sumComponent'>
+               <div className="left">
+                   <p>{props.leftHeader}</p>
                    <p>{props.leftDescription}</p>
                </div>
-               <div className="col-xs-6">
-                   <p>{this.props.rightHeader}</p>
-                   <p>{this.props.rightDiscription}</p>
+               <div className="right">
+                   <p>{props.rightHeader}</p>
+                   <p>{props.rightDiscription}</p>
                </div>
            </div>)
 }
@@ -31,14 +31,21 @@ export function NavButtons(props){
         case 3:
             return(<div className='row butNav'>
                         <div className="col-xs-4 navLeft">
-                            <p>{props.leftName}</p>
+                            <p id={props.edit} onClick={props.EditGroup}>{props.leftName}</p>
                         </div>
                         <div className="col-xs-4 navMiddle">
-                            <p>{props.middleName}</p>
+                            <p id={props.pause} onClick={props.PauseGroup}>{props.middleName}</p>
                         </div>
                         <div className="col-xs-4 navRight">
-                            <p>{props.rightName}</p>
+                            <p id={props.delete} onClick={props.DeleteGroup}>{props.rightName}</p>
                         </div>
                 </div>);
     }
 }
+
+
+
+
+
+
+

@@ -29,14 +29,14 @@ const selectedTime = [
 class FixedGoal extends React.Component {
 
     constructor(props){
-        super(props)
+        super(props);
         this.state={
             goalName:"",
             startDate:null,
             endDate:null,
             AmountSavedText:"",
             targetAmount:"",
-            SelectedtimeSaved:"",
+            frequency:"",
             goalFrequency:"",
             isSubmitted : false,
             endDateInvalid:false,
@@ -49,20 +49,15 @@ class FixedGoal extends React.Component {
             frequencyAmount:""
 
 
-
-         };
+        };
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleStartDatePicker = this.handleStartDatePicker.bind(this);
         this.handleEndDatePicker = this.handleEndDatePicker.bind(this)
-
-        
-      
-
     }
     componentDidMount(){
         console.log('interest loan rate',this.state.targetAmount)
-    }
+    };
     valStartDate = () => {
         if (this.state.startDate == null) {
             this.setState({ startDateInvalid: true });
@@ -71,7 +66,7 @@ class FixedGoal extends React.Component {
             this.setState({ startDateInvalid: false });
             return false;
         }
-    }
+    };
     valEndDate = () => {
         if (this.state.endDate == null) {
             this.setState({ endDateInvalid: true });
@@ -80,38 +75,38 @@ class FixedGoal extends React.Component {
             this.setState({ endDateInvalid: false });
             return false;
         }
-    }
+    };
     handleChange = (e) => {
         let name = e.target.name;
         this.setState({ [name]: e.target.value })
-    }
+    };
     checkGoalName = () => {
         if (this.state.goalName == "") {
             this.setState({ GoalNameInvalid: true });
             return true;
         }
-    }
+    };
     handleStartDatePicker = (startDate) => {
         startDate.setHours(startDate.getHours() + 1);
         this.setState({ startDate: startDate });
-    }
+    };
     handleEndDatePicker = (endDate) => {
         endDate.setHours(endDate.getHours() + 1);
         this.setState({ endDate: endDate });
-    }
+    };
     
     checkAmount = () => {
         if (this.state.targetAmount == "") {
             this.setState({ targetAmountInvalid: true });
             return true;
         }
-    }
+    };
     checkgoalFrequency = () => {
         if (this.state.goalFrequency == "") {
             this.setState({ goalFrequencyInvalid: true });
             return true;
         }
-    }
+    };
     
     handleAmount = (e) => {
         // console.log
@@ -131,7 +126,7 @@ class FixedGoal extends React.Component {
                     if (e != "")
                         this.setState( {  targetAmountInvalid: false });
                 }
-    }
+    };
  
     toCurrency(number) {
          // console.log(number);
@@ -142,25 +137,22 @@ class FixedGoal extends React.Component {
          });
  
          return formatter.format(number);
-    }
+    };
     removeComma(currencyValue) {
         return currencyValue.replace(/,/g, '');
-    }
+    };
     
  
-    handleSelectChange = (SelectedtimeSaved) => {
-        this.setState({ "goalFrequency": SelectedtimeSaved.value,
-                        "goalFrequency" : SelectedtimeSaved.label
+    handleSelectChange = (frequency) => {
+        this.setState({ "goalFrequency": frequency.value,
+                        "goalFrequency" : frequency.label
               });
-        if (this.state.formsubmitted && SelectedtimeSaved.value != "")
+        if (this.state.formsubmitted && frequency.value != "")
             this.setState({ goalFrequencyInvalid: false })
-    }
+    };
     setFregValue = () => {
         this.setState({ showInterests: this.calculateMonthly(this.state.targetAmount, this.state.startDate, this.state.endDate) })
-        
-       
-
-    } 
+    };
     getMonthsBetween(from,to){
       if (from > to) return this.getMonthsBetween(to, from);
       let fromYear = moment(from).year();
@@ -192,7 +184,7 @@ class FixedGoal extends React.Component {
         for (let n = 1; n <= months; n++)
         {
             var multiplier = (1 + rate);
-            futureValue += debitAmount * (Math.pow(multiplier, n));     
+            futureValue += debitAmount * (Math.pow(multiplier, n));
         }
         result = futureValue - (debitAmount * months); //I dont even know why, with the /6.02, it matched with mobile calc
         return this.toCurrency2(parseFloat(result).toFixed(2));
@@ -206,7 +198,7 @@ class FixedGoal extends React.Component {
             + '.' + numberValueArray[1] : numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,');
         }
         return currency;
-    }
+    };
     getAbsoulteMonths(momentDate) {
         var months = Number(momentDate.format("MM"));
         var years = Number(momentDate.format("YYYY"));
@@ -259,11 +251,11 @@ class FixedGoal extends React.Component {
             if (this.props.fixed_goal_step1.fixed_step1_status == fixedGoalConstants.FETCH_FIXED_GOAL_SUCCESS) {
                 return <Redirect to="/savings/fixed-goal-complete" />
             }
-    }
+    };
 
     showInterest = () =>  {
         this.setState({showMessage: true})
-    }
+    };
     
 
     
@@ -287,8 +279,11 @@ class FixedGoal extends React.Component {
                                 <div className="tab-overflow">
                                     <div className="sub-tab-nav">
                                         <ul>
-                                            <li><a href="accounts.html" className="active">Goals</a></li>
-                                            <NavLink to="/savings/goal/group-savings-selection">
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                            <li><a className="active">Goals</a></li>
+                                            </NavLink>
+
+                                            <NavLink to="/savings/activityDashBoard">
                                             <li><a href="statement.html">Group Savings</a></li>
                                             </NavLink>
                                             <li><a href="#">Investments</a></li>
@@ -337,6 +332,7 @@ class FixedGoal extends React.Component {
                                                             dropdownMode="select"
                                                             useShortMonthInDropdown
                                                             dropdownMode="select"
+                                                            minDate={new Date()}
                                                             showWeekNumbers
                                                             onChange={this.handleStartDatePicker}
                                                             value={this.state.startDate}
@@ -363,7 +359,8 @@ class FixedGoal extends React.Component {
                                                             showMonthDropdown
                                                             showYearDropdown
                                                             useShortMonthInDropdown
-                                                            dropdownMode="select" 
+                                                            dropdownMode="select"
+                                                            minDate={new Date()}
                                                             showWeekNumbers
                                                             onChange={this.handleEndDatePicker}
                                                             value={this.state.endDate}
@@ -407,9 +404,8 @@ class FixedGoal extends React.Component {
                                                         <Select type="text" 
                                                             options={selectedTime}
                                                             name="goalFrequency"
-                                                            autoComplete="off" 
-
-                                                            onChange={this.handleSelectChange}
+                                                            autoComplete="off"
+                                                                onChange={this.handleSelectChange}
                                                             value={goalFrequency.label}
                                                           />
                                                           {goalFrequencyInvalid && <div className='text-danger'>Enter saving duration</div>}
@@ -421,10 +417,10 @@ class FixedGoal extends React.Component {
 
 
                                                             <button 
-                                                            disabled={this.props.fixed_goal_step1.fixed_step1_status == fixedGoalConstants.FETCH_FIXED_GOAL_PENDING}
+                                                            disabled={this.props.fixed_goal_step1.fixed_step1_status === fixedGoalConstants.FETCH_FIXED_GOAL_PENDING}
 
                                                             type="submit" className="btn-alat m-t-10 m-b-20 text-center">
-                                                            {this.props.fixed_goal_step1.fixed_step1_status == fixedGoalConstants.FETCH_FIXED_GOAL_PENDING ? "Processing..." :"Next"}
+                                                            {this.props.fixed_goal_step1.fixed_step1_status === fixedGoalConstants.FETCH_FIXED_GOAL_PENDING ? "Processing..." :"Next"}
 
                                                             </button>
                                                         </center>

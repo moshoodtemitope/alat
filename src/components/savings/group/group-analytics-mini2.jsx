@@ -11,7 +11,12 @@ import Buttons from './button';
 import { NavButtons } from './component';
 import MoreDetails from './details';
 import Members from './list-item';
+import { connect } from "react-redux";
+import {history} from '../../../_helpers/history';
 
+// if(window.performance.navigation.type == 1)
+//     window.location.replace("http://localhost:8080/");
+    
 class GroupAnalyticsMini2 extends React.Component {
     constructor(props){
         super(props);
@@ -19,23 +24,48 @@ class GroupAnalyticsMini2 extends React.Component {
             type: 2,
             navType: 2,
             buttonType: "bigButton",
-            discTopSpan: 'something'
+            discTopSpan: 'something',
+            adminValidity: false,
+            isAdmin: false
         }
-        
-        this.HandleNavigation = this.HandleNavigation.bind(this);
-        this.Automated = this.Automated.bind(this);
+    
     }
 
-    HandleNavigation = () => {
-        
+    componentDidMount = () => {
+        let isAdmin = this.props.groupDetails.response.isAdmin;
+        this.setState({"isAdmin": isAdmin});
+        this.setState({'adminValidity': isAdmin});
     }
 
-    Automated = () => {
-
+    ShowMembers = () => {
+        this.props.history.push("/savings/group-mini2");
     }
+    
+    GroupSummary = () => {
+        this.props.history.push("/savings/group-analytics-mini");
+    }
+
+    MoveToEditSlot = () => {
+        history.push('/group-savings/edit-members-slots');
+    }
+
+    ShowEditButton = () => {
+        return  <p id='editSlots' onClick={this.MoveToEditSlot}>Edit Slot</p>
+    }
+
+    NavigateToGroupSavings = () => {
+        // let groupSavings = this.props.groups.response; //returns an array
+        // let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
+        // if(groupSavings.length != 0 || rotatingSavings.length != 0){
+            history.push('/savings/activityDashBoard');
+        //     return;
+        // }
+        // history.push('/savings/goal/group-savings-selection');
+    }
+
 
     render() {
-        const {endDate,endDateInvalid} = this.state;
+        const {isAdmin, adminValidity} = this.state;
 
         return (
             <Fragment>
@@ -52,9 +82,9 @@ class GroupAnalyticsMini2 extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a href="#">Goals</a></li>
                                         </NavLink>
-                                        <NavLink to="/savings/goal/group-savings-selection">
-                                            <li><a className="active">Group Savings</a></li>
-                                        </NavLink>
+                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
+                                            <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                        {/* </NavLink> */}
                                             <li><a href="#">Investments</a></li>
                                         </ul>
                                     </div>
@@ -68,48 +98,49 @@ class GroupAnalyticsMini2 extends React.Component {
                                    
                                              <div class='firstSubHead'>
                                                   <p>ROTATING SAVING GROUP</p>
-                                                  <p>Summer Trip To Africa</p>
+                                                  <p>{this.props.groupDetails.response.name}</p>
                                                   
                                              </div>
-                                                <SubHead 
-                                                type={this.state.type}
-                                                rightname="Group Summary"
-                                                middlename="Members"
-                                                leftName="Automate Contributions"
-                                                memberClicked={this.HandleNavigation}
-                                                automatedwasclicked={this.Automated}
-                                                />
+                                              <SubHead 
+                                                    type={this.state.type}
+                                                    rightname="Group Summary"
+                                                    middlename="Members"
+                                                    leftName="Members"
+                                                    memberClicked={this.ShowMembers}
+                                                    groupSummaryWasClicked={this.GroupSummary}
+                                                    />
                                            
                                              <div className='statContainer'>
-                                             <Members 
-                                                   userType="admin"
-                                                   name="Hasan Danfodio"
-                                                   position="admin"
-                                                   amount="N10, 000"
-                                                   intent="Contribution"/>
+                                             
+                                                   {this.props.groupDetails.response.members.map((element,index) => {
+                                                       if(element['isAdmin'] == true){
+                                                           return <Members 
+                                                            key={index}
+                                                            userType="admin"
+                                                            name={ element['lastName'] + " " + element['firstName'] }
+                                                            position="admin"
+                                                            />
+                                                      }
+                                                   })}
 
-                                               <Members 
-                                                   userType="members"
-                                                   fullname="Stan Lee"
-                                    
-                                                   amount="N10, 000"
-                                                   intent="Contribution"/>
+                                                   {this.props.groupDetails.response.members.map((element, index) => {
+                                                       if(element['isAdmin'] == false){
+                                                           return <Members 
+                                                                        key={index}
+                                                                        userType="members"
+                                                                        fullname={ element['lastName'] + " " + element['firstName'] }
+                                                                        
+                                                                        />
+                                                       }
+                                                   })}
 
-                                                <Members 
-                                                   userType="members"
-                                                   fullname="Christopher Columbus"
-                                    
-                                                   amount="N10, 000"
-                                                   intent="Contribution"/>
-                                                <Members 
-                                                   userType="members"
-                                                   fullname="Odelade Hammed"
-                                    
-                                                   amount="N10, 000"
-                                                   intent="Contribution"/>
+                                                   {isAdmin ? this.ShowEditButton() : ""}
+                                                   {/* <NavLink to='/group-savings/edit-members-slots'>
+                                                         <p id='editSlots'>Edit Slot</p>
+                                                   </NavLink> */}
+                                                   {adminValidity ? <div></div> : <div className={"setPadBottom"}></div> }
                                              </div>
-                                             
-                                             
+            
                                         </div>
 
                                        </div>
@@ -129,8 +160,16 @@ class GroupAnalyticsMini2 extends React.Component {
     }
 }
 
+function mapStateToProps(state){
+   return {
+       groupDetails: state.rotatingGroupDetails.data,
+       groupSavingsEsusu: state.getGroupSavingsEsusu.data,
+       groups: state.customerGroup.data
+   }
+}
 
-export default GroupAnalyticsMini2;
+export default connect(mapStateToProps)(GroupAnalyticsMini2)
+//export default GroupAnalyticsMini2;
 
 
 

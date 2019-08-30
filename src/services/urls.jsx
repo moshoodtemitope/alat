@@ -1,5 +1,5 @@
-// const URL = 'https://api.alat.ng';
-const URL = 'https://196.43.215.170';
+const URL = 'https://api.alat.ng';
+//const URL = 'https://196.43.215.170';
 // const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
@@ -73,7 +73,6 @@ export const routes = {
     FETCH_TRANSFER_BENEFICIARIES: BASEURL + '/PaymentApi/api/Beneficiary/All',
     SAVE_TRANSFER_BENEFICIARY: BASEURL + '/PaymentApi/api/Beneficiary/Save',
     FETCH_ACCOUNT_DETAILS: BASEURL + '/PaymentApi/api/Accounts/VerifyAccountName',
-    DELETE_TRANSFER_BENEFICIARIES: BASEURL + '/PaymentApi/api/Beneficiary/Delete',
     DELETE_TRANSFER_BENEFICIARIES: BASEURL + '/PaymentApi/api/Beneficiary/Delete',
     BANK_TRANSFER_WITHPIN: BASEURL + '/PaymentApi/api/BankTransferRequestWebWithPin',
     BANK_TRANSFER_WITHPIN_ANDOTP: BASEURL + '/PaymentApi/api/BankTransferRequestWebWithPinAndOTP',
@@ -180,9 +179,16 @@ export const routes = {
     FETCH_DEBITABLE_ACCOUNTS_WITH_LIMITS: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2',
     GOALTYPE: BASEURL + '/Savings.WebApi/api/Savings/GoalType',
     GOAL_FORMULAR: BASEURL + '/Savings.WebApi/api/savings/GetValues',
-
-
-
+    GOALTRANSACTIONHISTORY: BASEURL + '/Savings.WebApi/api/Savings/GetCustomerGoalTransHistory',
+    CUSTOMERGOALDASHBOARD: BASEURL + '/Savings.WebApi/api/Savings/CustomergoalDashBoard',
+    TOPUPGOAL: BASEURL + '/Savings.WebApi/api/Savings/TopUpGoal',
+    UNPAUSEGOAL: BASEURL + '/Savings.WebApi/api/Savings/ContinueGoal',
+    WITHDRAWFROMGOAL: BASEURL + '/Savings.WebApi/api/Savings/WithDrawal',
+    DELETEGOAL: BASEURL + '/Savings.WebApi/api/Savings/DeleteGoal',
+    EDITGOAL: BASEURL + '/Savings.WebApi/api/Savings/EditGoal',
+    EDITFLEXIGOAL: BASEURL + '/Savings.WebApi/api/Savings/EditFlexiGoal',
+    PAUSEGOAL: BASEURL + '/Savings.WebApi/api/Savings/PauseGoal',
+    CASHOUTSTASH:BASEURL + '/Savings.WebApi/api/Savings/CashoutStashGoal',
 
     // Group Savings
     CREATEGOAL: BASEURL + '/Savings.WebApi/api/GroupSaving/CreateGroup',
@@ -190,9 +196,19 @@ export const routes = {
     DELETE_GROUP: BASEURL + '/Savings.WebApi/api/GroupSaving/DeleteGroup',
     GETGROUPDETAILS: BASEURL + '/Savings.WebApi/api/GroupSaving/GetGroupDetails',
     SCHEDULE_CONTRIBUTION: BASEURL + '/Savings.WebApi/api/GroupSaving/ScheduleContribution',
-
+    EDIT_GROUP_SAVINGS: BASEURL + '/Savings.WebApi/api/GroupSaving/EditGroup',
+    PAUSE_GROUP: BASEURL + '/Savings.WebApi/api/GroupSaving/PauseScheduledGroupPayemnt',
+    FIND_GROUP: BASEURL + '/Savings.WebApi/api/GroupSaving/FindGroup',
+    JOIN_GROUP: BASEURL + '/Savings.WebApi/api/GroupSaving/JoinGroup',
+    CONTRIBUTE: BASEURL + '/Savings.WebApi/api/GroupSaving/Contribute',
+    
     // ROTATING SAVINGS (ESUSU)
     CREATE_ROTATING_SAVINGS: BASEURL + '/Savings.WebApi/api/EsusuSaving/CreateGroup',
     ROTATING_GROUP_DETAILS: BASEURL +  '/Savings.WebApi/api/EsusuSaving/GetGroupDetails',
-    JOIN_A_GROUP: BASEURL + '/Savings.WebApi/api/EsusuSaving/JoinGroup'
+    JOIN_A_GROUP: BASEURL + '/Savings.WebApi/api/EsusuSaving/JoinGroup',
+    EDIT_SLOTS: BASEURL + '/Savings.WebApi/api/EsusuSaving/EditSlots',
+    GET_GROUPS: BASEURL + '/Savings.WebApi/api/EsusuSaving/GetGroups',
+    EDIT_GROUP_ESUSU: BASEURL + '/Savings.WebApi/api/EsusuSaving/EditGroup',
+    DELETE_GROUP_ESUSU: BASEURL + '/Savings.WebApi/api/EsusuSaving/DeleteGroup',
+    JOIN_GROUP_ESUSU: BASEURL + '/Savings.WebApi/api/EsusuSaving/JoinGroup',
 };

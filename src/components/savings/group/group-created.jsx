@@ -4,12 +4,14 @@ import InnerContainer from '../../../shared/templates/inner-container';
 import SavingsContainer from '../container';
 import {NavLink, Route} from "react-router-dom";
 import { connect } from "react-redux";
-import {Switch} from "react-router";
-import Select from 'react-select';
-import DatePicker from "react-datepicker";
-import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
 import "react-datepicker/dist/react-datepicker.css";
 import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
+import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
+import {history} from '../../../_helpers/history';
+
+// if(window.performance.navigation.type == 1)
+//     window.location.replace("http://localhost:8080/");
+
 class GroupCreated extends React.Component {
     constructor(props){
         super(props)
@@ -18,23 +20,49 @@ class GroupCreated extends React.Component {
         }
     }
 
+    componentDidMount(){
+        this.GetGroupSummary();
+        this.CheckGroupSavingsAvailability();
+        this.CheckRotatingSavingsAvailability();
+    }
+
+    CheckRotatingSavingsAvailability = () => {
+        this.props.dispatch(actions1.GetGroupsEsusu(this.state.user.token, null));
+    }
+
+    CheckGroupSavingsAvailability = () => {
+        this.props.dispatch(actions.customerGroup(this.state.user.token, null));
+    }
+
     GetGroupSummary = () => {
-        console.log('Getting CustomerGroups');
         const id = this.props.payload.response.id;
         const data = {
             groupId: id
         }
         this.props.dispatch(actions.groupDetails(this.state.user.token, data));
     }
-
-    componentDidMount(){
-        // console.log(this.state.user);
-        this.GetGroupSummary();
-    }
-
+    
     handleSubmit = (event) => {
         event.preventDefault();
         return null;
+    }
+
+    NavigateToGroupSavings = () => {
+        // let groupSavings = this.props.groups.response; //returns an array
+        // let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
+        // if(groupSavings.length != 0 || rotatingSavings.length != 0){
+            history.push('/savings/activityDashBoard');
+        //     return;
+        // }
+        // history.push('/savings/goal/group-savings-selection');
+    }
+
+
+    CopyCode = (event) => {
+        console.log(this.textInputHidden);
+        this.textInputHidden.select();
+        document.execCommand("copy");
+        console.log('its here now');
     }
 
     render() {
@@ -53,9 +81,9 @@ class GroupCreated extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a href="#">Goals</a></li>
                                         </NavLink>
-                                        <NavLink to="/savings/goal/group-savings-selection">
-                                            <li><a className="active">Group Savings</a></li>
-                                        </NavLink>
+                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
+                                            <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                        {/* </NavLink> */}
                                             <li><a href="#">Investments</a></li>
                                         </ul>
                                     </div>
@@ -67,18 +95,20 @@ class GroupCreated extends React.Component {
                                       <div className="max-600">
                                        <div className="al-card no-pad">
                                        <h4 className="m-b-10 center-text hd-underline">Group Created</h4>
-
                                             <form onSubmit={this.handleSubmit}>
+                                                <input type="text" id='hiddenReferralCode' ref={ele => this.textInputHidden = ele} value={this.props.payload.response.referralCode}/>
                                                 <div className="form-group instruction">
                                                     <h6>Use the code below to invite your friends to join the group.</h6>
                                                 </div>
                                                 <div className="forCode">
                                                         <div className="left">
-                                                            <h2>{this.props.payload.response.referralCode}</h2>
+                                                            <h2 id='itemToCopy' ref={element => this.textInput = element}>{this.props.payload.response.referralCode}</h2>
                                                         </div>
                                                         <div className="right">
-                                                            <i></i>
+                                                            <img onClick={this.CopyCode} className='itemToCopy' src="/src/assets/img/Group.png" alt=""/>
+            
                                                         </div>
+                                                
                                                 </div>
                                                 <div className="form-row">
                                                     <div className="form-group col-md-6 butLeft">
@@ -115,7 +145,9 @@ class GroupCreated extends React.Component {
 
 function mapStateToProps(state){
     return {
-        payload: state.groupSavings.data
+        payload: state.groupSavings.data,
+        groupSavingsEsusu: state.getGroupSavingsEsusu.data,
+        groups: state.customerGroup.data
     }
 }
 export default connect(mapStateToProps)(GroupCreated);
