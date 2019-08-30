@@ -33,7 +33,8 @@ import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingV
 
 import { loanCalcDataReducer, loanApplyReducer, GetIndustriesReducer, GetEmployerReducer, CurrentLoanReducer, 
     LoanHistoryReducer, WorkIdFrontReducer, WorkIdBackReducer, loanRejectReducer, loanStandingOrderReducer,
-     loanMandateStatusReducer, loanValidateRemitaOtpReducer } from './loan.reducer';
+     loanMandateStatusReducer, loanValidateRemitaOtpReducer, loanStatementUpload, continueApplication, 
+     SignatureReducer , PassportReducer } from './loan.reducer';
 
 import { geCurrentVirtualCardsRequest,
          sendVCNewCardinfo,
@@ -88,7 +89,11 @@ export const loans = {
     loanRejectReducer,
     loanStandingOrderReducer,
     loanMandateStatusReducer,
-    loanValidateRemitaOtpReducer
+    loanValidateRemitaOtpReducer,
+    loanStatementUpload,
+    continueApplication,
+    SignatureReducer,
+     PassportReducer
 }
 
 export const loanOnboarding = {

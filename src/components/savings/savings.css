@@ -176,12 +176,12 @@
    font-family:"proxima_novaregular", sans-serif !important;
    padding-top: 20px;
 }
-.css-vj8t7z{
+/* .css-vj8t7z{
    height:25px;
 }
 .css-19bqh2r{
    height: 25px;
-}
+} */
 .date-picker-icon {
     float: right;
     margin-right: 6px;
@@ -212,7 +212,6 @@
   ;
   }
   .btn-withdraw-goal{
-      /*margin-top: 40px;*/
       background:#AB2656;
       color:#ffffff;
       display: inline-block;
@@ -242,9 +241,7 @@
       text-decoration: none;
 
   }
-  /* .col-sm-4{
-      border-bottom: 1px solid #AB2656;
-  } */
+ 
   .top-goal-Message{
       color: #9F083E;
       font-size: 14px;

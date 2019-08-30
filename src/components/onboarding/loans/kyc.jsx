@@ -14,10 +14,16 @@ class LoanOnbaordingKyc extends React.Component{
     constructor(props){
         super(props)
     }
+    goToNextPage=()=>{
+        this.props.dispatch(LoanActions.clearLoanOnboardingStore());
+        this.props.history.push('/loans/salary/dashboard');
+    }
 
     render(){
         return(<LoanOnboardingContainer>
-            <LoanKycComponent/>
+            <LoanKycComponent
+             goForward={this.goToNextPage}
+            />
         </LoanOnboardingContainer>)
     }
 }

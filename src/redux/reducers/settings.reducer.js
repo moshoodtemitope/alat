@@ -4,8 +4,6 @@ import { getOnlyNumericPhoneNumber } from '../../shared/utils'
 
 import { updateObject } from '../actions/dataActions/data.actions';
 
-
-
 //--------------------------//
 //Page status
 // 0-correct/good to go
@@ -19,7 +17,8 @@ const initialState = {
     pageState: 2,
     forgotPinData: null,
     changePinData: null,
-    storedInfo: null
+    storedInfo: null,
+    questionsData: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -46,6 +45,12 @@ const reducer = (state = initialState, action) => {
             return updateObject(state, { pageState: 0, isFetching: false });
         case actionTypes.RESET_PIN_SUCCESS:
             return updateObject(state, { pageState: 0, isFetching: false });
+        case actionTypes.SAVE_SECURITY_QUESTION_SUCCESS:
+            return updateObject(state, { pageState: 0, isFetching: false });
+        case actionTypes.CLEAR_QUESTION_DATA:
+            return updateObject(state, { pageState: 2, questionsData: null });
+        case actionTypes.GET_SECURITY_QUESTIONS_SUCCESS:
+            return updateObject(state, { pageState: 0, isFetching: false, questionsData: action.data });
         case actionTypes.CLEAR_CHANGE_PIN_DATA:
             return updateObject(state, { pageState: 2, changePinData: null, forgotPinData: null });
         default: return state;

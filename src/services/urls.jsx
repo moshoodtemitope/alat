@@ -1,6 +1,6 @@
 // const URL = 'https://api.alat.ng';
 const URL = 'https://196.43.215.170';
-// const URL = 'https://196.43.215.157';
+//const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
 
@@ -211,4 +211,6 @@ export const routes = {
     EDIT_GROUP_ESUSU: BASEURL + '/Savings.WebApi/api/EsusuSaving/EditGroup',
     DELETE_GROUP_ESUSU: BASEURL + '/Savings.WebApi/api/EsusuSaving/DeleteGroup',
     JOIN_GROUP_ESUSU: BASEURL + '/Savings.WebApi/api/EsusuSaving/JoinGroup',
+    GET_ALL_SECURITY_QUESTIONS : BASEURL + '/AccountSetting/api/securityquestion',
+    SAVE_SECURITY_QUESTION : BASEURL + '/AccountSetting/api/securityquestion/saveorupdate',
 };

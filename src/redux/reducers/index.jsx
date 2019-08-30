@@ -34,8 +34,11 @@ import { WESTERNUNION_REDUCER_CLEAR } from '../constants/remittance/remittance.c
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
 const rootReducer = (state, action)=>{
+    console.log(action);
     if(action.type === userConstants.LOGOUT)
-        {   state = undefined;    }
+        { 
+              state = undefined;   
+             }
     return appReducer(state, action)
 
 };
@@ -159,7 +162,11 @@ const loansReducer = combineReducers({
     loanReject: loans.loanRejectReducer,
     loanStandingOrder: loans.loanStandingOrderReducer,
     loanMandate: loans.loanMandateStatusReducer,
-    loanValRemOtp: loans.loanValidateRemitaOtpReducer
+    loanValRemOtp: loans.loanValidateRemitaOtpReducer,
+    loanStament: loans.loanStatementUpload,
+    loanAppStatus: loans.continueApplication,
+    passport: loans.PassportReducer,
+    signature: loans.SignatureReducer,
 })
 
 const alatCardsReducer = combineReducers({

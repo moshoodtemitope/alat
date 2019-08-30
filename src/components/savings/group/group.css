@@ -73,7 +73,6 @@
     font-family:"proxima_novasemibold",sans-serif !important;
     font-size: 16px;
     line-height: 19px;
-    /* identical to box height */
     text-align: center;
     color: #FFFFFF;
     width: 100%;
@@ -116,10 +115,10 @@
     top: 150px;
 }
 
-.row {
+/* .row {
     margin-left: 0px !important;
     margin-right: 0px !important;
-}
+} */
 
 .forDetailsComp .upper {
     margin-bottom: 2px;
@@ -139,6 +138,10 @@
     padding-left: 15px;
     padding-right: 15px;
 }
+.row.forDetailsComp, .topDiscription{
+    margin-left: 0!important;
+    margin-right: 0!important;
+}
 
 .accountSelect {
     padding-left: 50px;
@@ -154,7 +157,6 @@
 }
 
 .smallnavtop  ul {
-    /* width: 100% !important; */
     float: right !important;
     margin-left: 145px !important;
 }
@@ -426,10 +428,6 @@
     width: 80%;
 }
 
-/* .topCard .left p:nth-child(1) {
-    text-transform: capitalize !important;
-} */
-
 .topCard .left .top {
   color: #A90836;
   width: 100%;
@@ -437,7 +435,6 @@
   font-family:'proxima_novasemibold',sans-serif !important;
 font-size: 8px;
 line-height: 10px;
-/* color: #A90836; */
 padding-bottom: 5px;
 padding-top: 20px;
 font-weight: bold;
@@ -458,10 +455,6 @@ font-weight: bold;
 
 }
 
-/* .bottomDiscription .right {
-    width: 40%;
-    position: relative;
-} */
 
 #progressBarDashBoard {
     padding-left: 15px;
@@ -528,7 +521,6 @@ font-weight: bold;
 }
 
 .bottomDiscriptionDashBoard .left #message {
-    /* padding-left: 10px; */
     font-family: Proxima Nova;
     font-size: 10px;
     line-height: 12px;
@@ -541,7 +533,6 @@ font-weight: bold;
 .bottomDiscriptionDashBoard .left #dot {
     font-size: 70px;
     color: #A90836 !important;
-    /* padding-left: 15px; */
     position: absolute;
     top: 0px;
     z-index: 5;
@@ -649,7 +640,6 @@ font-weight: bold;
     font-family:"proxima_novasemibold" !important;
     font-size: 8px;
     line-height: 10px;
-    /* identical to box height, or 125% */
     text-align: center;
     text-transform: uppercase;
     color: #AB2656;
@@ -659,7 +649,6 @@ font-weight: bold;
     font-family: "proxima_novasemibold", sans-serif !important;
     font-size: 12px;
     line-height: 14px;
-    /* identical to box height */
     text-align: center;
     color: #4D4D4D;
     font-weight: bold;
@@ -678,9 +667,6 @@ font-weight: bold;
 }
 
 .row {
-    /* margin-left: 0px;
-    margin-right: 0px;
-    width: 100%; */
 }
 
 .topDiscription {
@@ -706,7 +692,6 @@ font-weight: bold;
     font-size: 8px;
     line-height: 10px;
     color: #A90836;
-    /* text-transform: uppercase; */
 }
 
 .topDiscription .right p {
@@ -766,7 +751,6 @@ font-weight: bold;
     font-family:"proxima_novasemibold",sans-serif !important;
     font-size: 16px;
     line-height: 19px;
-    /* identical to box height */
 
     text-align: center;
 
@@ -829,7 +813,6 @@ font-weight: bold;
 font-family:"proxima_novasemibold",sans-serif !important;
 font-size: 14px;
 line-height: 17px;
-/* identical to box height */
 
 letter-spacing: 0.168px;
 
@@ -1100,13 +1083,11 @@ color: #4D4D4D;
 
 
 .innerNav .left{
-    /* width: 50%; */
     border-left: 1px solid #A90836;
 
 }
 
 .innerNav .right {
-    /* width: 50%; */
 }
 
 
@@ -1126,7 +1107,6 @@ color: #4D4D4D;
 }
 
 .shiftLeft {
-    /* padding-left: 5px; */
 }
 .innerRight{
     margin-top:57px;
