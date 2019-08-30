@@ -114,6 +114,10 @@ class RequestCardsOtp extends React.Component{
                                         <div className="m-b-20">Please enter the OTP sent to {customerOtpRequest.requestingotp_foratm_info.response.data.phoneNo}</div>
                                     }
 
+                                    {(postCardData.is_processing===false && postCardData.fetch_status===POSTINGDATA_FOR_CARDREQUEST_FAILURE)&&
+                                        <div className="error-msg m-b-20">{postCardData.postdata_foratm_info.error}</div>
+                                    }
+
                                     <form action="" onSubmit={this.handleSubmit}>
                                         <div className="centered-input otpInput">
 

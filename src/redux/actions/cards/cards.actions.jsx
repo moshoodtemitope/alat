@@ -1064,7 +1064,7 @@ export const requestOtpForNewATMCard = (payload, token, newCardRequestData)=>{
         return consume
             .then(response=>{
                 dispatch(success(response));
-                history.push("/cards/otp");
+                history.push("/cards/cardrequest-otp");
             })
             .catch(error=>{
                 if(error.response && typeof(error.response.message) !=="undefined"){
@@ -1099,6 +1099,7 @@ export const postDataForNewATMCard = (payload, token)=>{
         return consume
             .then(response=>{
                 dispatch(success(response));
+                history.push("/cards/cardrequest-success");
             })
             .catch(error=>{
                 if(error.response && typeof(error.response.message) !=="undefined"){

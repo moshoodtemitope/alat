@@ -557,7 +557,11 @@ class RequestCard extends React.Component {
                             <div className="transfer-ctn">
                                 <div className="text-center">
                                     <div>{loadCardError}</div>
-                                    <a className="cta-link" onClick={this.getCustomerATMCardsData}> Retry</a>
+                                    {(loadCardError!=='You currently have a pending card request' &&
+                                    loadCardError!=='You already have an active card') &&
+                                        <a className="cta-link" onClick={this.getCustomerATMCardsData}> Retry</a>
+                                    }
+                                    
                                 </div>
                             </div>
                         );
@@ -626,6 +630,7 @@ class RequestCard extends React.Component {
 function mapStateToProps(state){
     console.error(state);
     return {
+        debitable_accounts  : state.accounts,
         infoForCardRequest   : state.alatCardReducersPile.infoForATMCardRequest,
         otpForCardRequest   : state.alatCardReducersPile.otpForATMCardRequest,
         postCardRequest   : state.alatCardReducersPile.postATMCardRequest,

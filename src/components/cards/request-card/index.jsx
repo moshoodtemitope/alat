@@ -29,8 +29,8 @@ class RequestCardContainer extends Component {
            <Fragment>
                 {this.props.children}
                 <Route exact path='/cards' render={(props) => <RequestCard {...props} />} />
-                <Route exact path='/cards/otp' render={(props) => <RequestCardsOtp {...props} />} />
-                <Route exact path='/cards/success' render={(props) => <RequestCardSuccess {...props} />} />
+                <Route exact path='/cards/cardrequest-otp' render={(props) => <RequestCardsOtp {...props} />} />
+                <Route exact path='/cards/cardrequest-success' render={(props) => <RequestCardSuccess {...props} />} />
            </Fragment>
        );
    }
