@@ -82,11 +82,6 @@ const alatCardReducersPile = (state, action)=>{
     return alatCardsReducer(state, action);
 }  
 
-const remittanceReducer = combineReducers({
-    getCountries: receiveMoney.getWesternUnionCountries,
-    receiveWUMoney: receiveMoney.receiveWesternUnion
-    
-})
 
 const remittanceReducerPile = (state, action)=>{
     if(action.type ===WESTERNUNION_REDUCER_CLEAR){
@@ -94,6 +89,12 @@ const remittanceReducerPile = (state, action)=>{
     }
     return remittanceReducer(state, action);
 }
+
+const remittanceReducer = combineReducers({
+    getCountries: receiveMoney.getWesternUnionCountries,
+    receiveWUMoney: receiveMoney.receiveWesternUnion
+    
+})
 
 
 const transferReducers = combineReducers({

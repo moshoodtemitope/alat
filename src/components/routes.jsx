@@ -1,8 +1,7 @@
-import React, {Fragment, Suspense} from "react";
+import React, { Fragment, Suspense } from "react";
 import { Redirect, Route, Router, Switch } from "react-router";
 import { connect } from "react-redux";
 import OnboardingRoute from "./onboarding/routes";
-import SavingRoute from './savings/routes';
 // import {OnboardingRoute} from "./onboarding/routes";
 import { history } from './../_helpers/history';
 import AuthenticatedRoutes from "./authenticated-routes";
@@ -16,6 +15,10 @@ import TransferRoute from "./transfer/routes";
 
 // const AuthenticatedRoutes = React.lazy(() =>
 //   import(/* webpackChunkName: 'AuthenticatedRoutes' */ "./authenticated-routes")
+// );
+
+// const OnboardingRoute = React.lazy(() =>
+//   import(/* webpackChunkName: 'OnboardingRoute' */ "./onboarding/routes")
 // );
 
 // function PrivateRoute ({component: Component, authed, ...rest}) {
@@ -42,18 +45,42 @@ const PrivateRoute = ({ component: Component, authed, ...rest }) => (
 );
 
 class IndexedRoute extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: JSON.parse(localStorage.getItem("user"))
+        };
+    }
 
     componentDidMount() {
         console.log('==== Routes mounted!');
     }
 
     render() {
-        return (
-            <div>
+        console.warn("user----------------------- ", this.props.user);
+        var layers = (
+            <Fragment>
                 <OnboardingRoute />
-                <AuthenticatedRoutes />
-                <SavingRoute />
-            </div>
+            </Fragment>
+        )
+        if (this.props.user) {
+            console.log("..///..//---////name auth loaded")
+            layers = (
+                <Fragment>
+                    <OnboardingRoute />
+                    <AuthenticatedRoutes />
+                </Fragment>
+            )
+        }else{
+            
+        }
+        return layers;
+        
+        // (
+        //     <div>
+
+
+        //     </div>
 
             // <Fragment>
             //     <OnboardingRoute />
@@ -79,15 +106,15 @@ class IndexedRoute extends React.Component {
             //         {/*<AccountsRoute/>*/}
             //     </Switch>
             // </Router>
-        );
+        // );
     }
 }
 
 function mapStateToProps(state) {
-    const { authentication } = state;
-    const { user } = authentication;
+    // const { authentication } = state;
+    // const { user } = authentication;
     return {
-        user
+        user: state.authentication.user
     };
 }
 

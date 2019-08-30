@@ -18,8 +18,6 @@ import {getAccountHistory, getAccounts} from "../../redux/actions/dashboard/dash
 import {dashboardConstants as userConstants} from "../../redux/constants/dashboard/dashboard.constants";
 import Slider from "react-animated-slider";
 import * as utils from "../../shared/utils";
-import * as actions from '../../../../ALATWebV2/src/redux/actions/savings/group-savings/group-savings-actions'
-import * as actions1 from '../../../../ALATWebV2/src/redux/actions/savings/group-savings/rotating-group-saving-action'
 
 class Dashboard extends React.Component{
     constructor(props) {
@@ -29,20 +27,6 @@ class Dashboard extends React.Component{
             user: JSON.parse(localStorage.getItem("user"))
         };
     }
-
-    componentDidMount = () => {
-       this.CheckRotatingSavingsAvailability();
-       this.CheckGroupSavingsAvailability();
-    }
-
-    CheckRotatingSavingsAvailability = () => {
-        this.props.dispatch(actions1.GetGroupsEsusu(this.state.user.token, null));
-    }
-
-    CheckGroupSavingsAvailability = () => {
-        this.props.dispatch(actions.customerGroup(this.state.user.token, null));
-    }
-
 
     fetchAccounts(){
         const { dispatch } = this.props;
