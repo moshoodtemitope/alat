@@ -1,7 +1,7 @@
 import {combineReducers} from "redux";
 import {authentication} from "./authentication.reducer";
 import { alert} from "./alert.reducer";
-import {dashboard, transfer, onboarding, airtime, global, fundAccount, loanOnboarding, loans} from "./export";
+// import {dashboard, transfer, onboarding, airtime, global, fundAccount, loanOnboarding, loans} from "./export";
 import {dashboard, 
         transfer, 
         onboarding, 
@@ -9,6 +9,7 @@ import {dashboard,
         global, 
         fundAccount, 
         loanOnboarding,
+        loans,
         alatCards} from "./export";
 import {bankListRequest, beneficiariesRequest} from "./transfer.reducer";
 import {accountHistoryReducer} from "./dashboard.reducer";
@@ -62,19 +63,18 @@ const loanOnboardingReducerPile = (state, action)=>{
     return loanOnboardingReducer(state, action);
 }
 
-<<<<<<< HEAD
 const loanReducerPile =(state, action)=>{
     if(action.type === loanConstants.LOAN_ONBOARDING_CLEAR){
         state = undefined;
     }
     return loansReducer(state, action);
-=======
+}
+
 const alatCardReducersPile = (state, action)=>{
     if(action.type ===ALATCARD_REDUCER_CLEAR){
         state = undefined;
     }
     return alatCardsReducer(state, action);
->>>>>>> cards/cards-master
 }
 
 
@@ -183,11 +183,8 @@ const appReducer = combineReducers({
     transferReducerPile,
     fundAccountReducerPile,
     loanOnboardingReducerPile,
-<<<<<<< HEAD
     loanReducerPile,
-=======
     alatCardReducersPile,
->>>>>>> cards/cards-master
     accounts: global.debitableAccountsReducer,
     encrypt_rule: global.getEncryptionRuleReducer,
     verify_pan: global.verifyPANReducer,
