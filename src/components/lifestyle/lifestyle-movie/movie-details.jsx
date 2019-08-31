@@ -3,7 +3,9 @@ import { connect } from "react-redux";
 import {listStyleConstants} from "../../../redux/constants/lifestyle/lifestyle-constants";
 import {Redirect} from 'react-router-dom'
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
-import {getCinemaList,} from '../../../redux/actions/lifestyle/movies-actions'
+import {getCinemaList,} from '../../../redux/actions/lifestyle/movies-actions';
+import clock from '../../../assets/img/clock-circular-outline'
+
 
 
 class Moviedetails extends React.Component {
@@ -36,8 +38,12 @@ class Moviedetails extends React.Component {
             selectedLocationInvalid:false,
             formsubmitted:"",
             isSubmitted:false,
-            fee:""
+            fee:"",
+            error: false,
+            ticketType:""
+
         };
+        this.UseSelectedItem = this.UseSelectedItem.bind(this)
     }
     
     fetchCinemaList(){
@@ -154,7 +160,8 @@ class Moviedetails extends React.Component {
                 title:this.props.location.state.details.title,  
                 cinemaId:this.state.cinemaId,
                 ticketId:this.state.ticketId,
-                fee:this.state.fee
+                fee:this.state.fee,
+                ticketType:this.state.ticketType
             }
             console.log(data)
         // return;
@@ -169,8 +176,9 @@ class Moviedetails extends React.Component {
         let childrenAmount = amounts.split(" ")[2];
         let studentAmount = amounts.split(" ")[0];
         let showTimeId = amounts.split(" ")[3];
-        let ticketId = amounts.split(" ")[4]
-        let fee = amounts.split(" ")[5]
+        let ticketId = amounts.split(" ")[4];
+        let fee = amounts.split(" ")[5];
+        let ticketType = amounts.split(" ")[6]
        
         console.log(adultAmount);
         console.log(childrenAmount);
@@ -178,6 +186,7 @@ class Moviedetails extends React.Component {
         console.log(showTimeId);
         console.log(ticketId);
         console.log(fee);
+        console.log(ticketType)
         console.log('oooooooooooooooooooooooooooooooooooo');
         this.setState({initialStudentAmount: studentAmount, studentAmount});
         this.setState({initialAdultAmount: adultAmount,adultAmount});
@@ -185,11 +194,24 @@ class Moviedetails extends React.Component {
         this.setState({ showTimeId:showTimeId });
         this.setState({ticketId:ticketId});
         this.setState({fee:fee});
+        this.setState({ticketType:ticketType})
     }
    
     UseSelectedItem = (event) => {
         let gottenValue = event.target.value.split("000");
-        console.log(gottenValue);
+        let selectedItem = event.target.value;
+        console.log(selectedItem);
+        if(gottenValue ===null){
+            this.setState({
+              error: true
+          })
+        
+        }else{
+        this.setState({
+              error: false
+          })
+        
+        }
         
         let data = {
             item: gottenValue[0],
@@ -215,12 +237,13 @@ class Moviedetails extends React.Component {
     
 
     render() {
-       let {
+       const {
             movieLocation,
             movieDay,
             adultNumber,
             studentNumber,
             childNumber,
+            error
         } = this.state;
          const {getCinemaList,ShowTime,buyMovieTicket}=this.props
          const details = this.props.location.state.details;
@@ -230,16 +253,18 @@ class Moviedetails extends React.Component {
 
         return (
             <div>
-                    <div className="row" style={{justifyContent: "center", paddingBotom:"10px"}}>
+                    {/* <div className="row" style={{justifyContent: "center", margin:5}}>
                         <img src={details.bannerImage} class="img-responsive"/>
-                    </div>
+                    </div> */}
                 <div
                     className="video"
                     style={{
                         position: "relative",
-                        paddingBottom: "56.25%" /* 16:9 */,
+                        paddingBottom: "30.25%",
                         paddingTop: 25,
-                        height: 0
+                        height: 0,
+                        marginLeft:"22%"
+
                     }}
                     >
                 <iframe
@@ -247,11 +272,12 @@ class Moviedetails extends React.Component {
                     position: "absolute",
                     top: 0,
                     left: 0,
-                    width: "100%",
-                    height: "100%"
+                    width: 640,
+                    height: 360
                     }}
                     src={`https://www.youtube.com/embed/${details.youtubeId}`}
-                    frameBorder="0"
+                    frameBorder='0'
+
                 />
                 </div>
 
@@ -324,7 +350,7 @@ class Moviedetails extends React.Component {
                             <div>
                                 <i className="toshow">
                                     <img
-                                        // src={salaryLoan}
+                                         src={clock}
                                         style={{
                                             width: 20,
                                             height: 20,
@@ -357,7 +383,7 @@ class Moviedetails extends React.Component {
                         <form onSubmit={this.ShowBuyTicketData  } style={{ width: "100%" }}>
                             <label>Select Location</label>
 
-                                <select onChange={this.UseSelectedItem}>
+                                <select onChange={this.UseSelectedItem}     required>
                                     <option>Select Cinema Location</option>
                                 
                                     {
@@ -367,6 +393,8 @@ class Moviedetails extends React.Component {
                                         })
                                     }
                                 </select>
+                                {error && <p>Please select location </p>}
+
 
 
                             <label style={{ marginTop: 16 }}>Select Day</label>
@@ -375,7 +403,7 @@ class Moviedetails extends React.Component {
                                 {                                      
                                     ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
                                     ShowTime.data.response.map(event=> {
-                                        return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children  + " " + event.id + " " + event.ticketId + " " + event.fee}>
+                                        return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children  + " " + event.id + " " + event.ticketId + " " + event.fee + " " + event.ticketTypes[0].ticketName}>
                                         {event.date}</option>
                                     })
                                 } 

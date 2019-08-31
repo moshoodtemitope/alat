@@ -58,7 +58,7 @@
   }
 
   .eventCards .details .left {
-     padding-right: 15px;
+     padding-right: 5px;
   }
 
   .eventCards .bot .right p {
@@ -68,6 +68,7 @@
   .movie-duration{
     font-size: 12px;
     font-family:"proxima_novasemibold" !important;
+    margin-top: 1.8px;
 
 
   }

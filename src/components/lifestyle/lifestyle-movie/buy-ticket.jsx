@@ -80,7 +80,8 @@ class BuyTicket extends Component {
                 initialStudentAmount:data.initialStudentAmount,
                 initialChildAmount:data.initialChildAmount,
                 ticketId:data.ticketId,
-                fee:data.fee
+                fee:data.fee,
+                ticketType:data.ticketType
                 
             });
         }
@@ -95,15 +96,15 @@ class BuyTicket extends Component {
             //not valid
         }else {
             let data={
-                'TicketAmount':parseFloat(this.state.TicketAmount),
-                'AccountNo':this.state.accountToDebit,
-                'Pin':this.state.Pin,
                 "ShowTimeId":this.state.ShowTimeId,	
                 "CinemaId":this.state.cinemaId,
-                "Children":parseInt(this.state.initialChildAmount),
-                "Student":parseInt(this.state.initialStudentAmount),
-                "Adult":parseInt(this.state.initialAdultAmount),
                 "TicketId":this.state.ticketId,
+                'AccountNo':this.state.accountToDebit,
+                'Pin':this.state.Pin,
+                'TicketAmount':parseFloat(this.state.TicketAmount),
+                "Adult":parseInt(this.state.initialAdultAmount),
+                "Student":parseInt(this.state.initialStudentAmount),
+                "Children":parseInt(this.state.initialChildAmount),
                 "fee":this.state.fee,
 
             };
@@ -159,7 +160,7 @@ class BuyTicket extends Component {
                                                        <div className="puchaseSumTickets">
                                                            <div className="left">
                                                                 <p style={{fontSize:12,fontFamily:"proxima_novasemibold"}}>{this.state.title}</p>
-                                                                <p style={{fontSize:12, fontFamily:'proxima_novaregular'}}>Movie ticket</p>
+                                                                <p style={{fontSize:12, fontFamily:'proxima_novaregular'}}>{this.state.ticketType}</p>
                                                            </div>
                                                            <div className="right">
                                                                <p>N{this.formatAmountNoDecimal(this.state.TicketAmount)}</p>
@@ -200,6 +201,16 @@ class BuyTicket extends Component {
                                             </form>
                                            
                                         </div>
+                                        <div className="row">
+                                                        <div className="col-sm-12">
+                                                            <center>
+                                                                <button onClick={() => { this.props.dispatch(actions.ClearAction(fundAccountConstants.FUND_ACCOUNT_REDUCER_CLEAR)); 
+                                                                    this.props.history.push('/dashboard') }} className="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</button>
+                                                                {/* <Link to={'/dashboard'} className="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</Link> */}
+                                                            </center>
+                                                        </div>
+                                                    </div>
+
                                     </div>
                                 </div>
                                 </div>

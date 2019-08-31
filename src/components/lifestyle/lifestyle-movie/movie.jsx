@@ -5,7 +5,7 @@ import * as utils from "../../../shared/utils";
 import {Link, NavLink} from "react-router-dom";
 import {Fragment} from "react";
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
-// import clock from '../../../assets/img/clockIcon'
+import clock from '../../../assets/img/clock-circular-outline'
 import {listStyleConstants} from '../../../redux/constants/lifestyle/lifestyle-constants';
 import { FetchMovie,getCinemaList } from "../../../redux/actions/lifestyle/movies-actions";
 
@@ -103,7 +103,9 @@ class Movie extends Component {
                                         <div id="disc">{ film.description.toString().length > 30 ? film.description.toString().substring(0, 30)+"...": film.description.toString() }</div>
                                         <div className="details">
                                             <div className="left">
-                                                {/* <img src={clock} alt=""/> */}
+                                                <img
+                                                                                                
+                                                src={clock} alt=""/> 
                                             </div>
                                             <div className="right">
                                                 <div className="movie-duration">{film.duration}</div>
@@ -126,7 +128,7 @@ class Movie extends Component {
         let SearchfetchMovieList = props.SearchfetchMovieList;
 
         if(SearchfetchMovieList.message === listStyleConstants.SEARCH_FETCH_MOVIE_PENDING){
-            return  <h4 className="text-center">Loading Movies...</h4>;
+            return  <h4 style={{marginTop:"60px"}} className="text-center">Loading Movies...</h4>;
 
         }
         else if(SearchfetchMovieList.message === listStyleConstants.SEARCH_FETCH_MOVIE_FAILURE){
@@ -156,7 +158,7 @@ class Movie extends Component {
                                         <div id="disc">{ film.description.toString().length > 30 ? film.description.toString().substring(0, 30)+"...": film.description.toString() }</div>
                                         <div className="details">
                                             <div className="left">
-                                                {/* <img src={clock} alt=""/> */}
+                                                <img src={clock} alt=""/>
                                             </div>
                                             <div className="right">
                                                 <div className="movie-duration">{film.duration}</div>

@@ -6,7 +6,9 @@ import {Fragment} from "react";
 import moment from 'moment';
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
 import {listStyleConstants} from '../../../redux/constants/lifestyle/lifestyle-constants';
-import {getEvents} from "../../../redux/actions/lifestyle/movies-actions"
+import {getEvents} from "../../../redux/actions/lifestyle/movies-actions";
+import clock from '../../../assets/img/clock-circular-outline'
+
 
 
 
@@ -46,7 +48,7 @@ class Event extends Component {
         let props = this.props;
         let SearchfetchEventList = props.SearchfetchEventList;
         if(SearchfetchEventList.message === listStyleConstants.SEARCH_FETCH_EVENT_PENDING){
-            return  <h4 className="text-center">Loading Event...</h4>;
+            return  <h4  style={{marginTop:"60px"}} className="text-center">Loading Event...</h4>;
         }
         else if(SearchfetchEventList.message === listStyleConstants.SEARCH_FETCH_EVENT_FAILURE){
             return(
@@ -131,7 +133,8 @@ class Event extends Component {
                                 <div id="disc">{ event.location.toString().length > 30 ? event.location.toString().substring(0, 30)+"...": event.location.toString() }</div>
                                 <div className="details">
                                     <div className="left">
-                                        <i></i>
+                                    <img src={clock} alt=""/> 
+                                                
                                     </div>
                                     <div className="right">
                                         <div style={{fontSize: 12}}> {moment(event.date).format('MMMM DD, h:mm:ss a')}</div>

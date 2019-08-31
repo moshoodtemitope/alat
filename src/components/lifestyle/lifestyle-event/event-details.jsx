@@ -4,6 +4,8 @@ import {listStyleConstants} from "../../../redux/constants/lifestyle/lifestyle-c
 import {Redirect} from 'react-router-dom'
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
 import {getCinemaList,} from '../../../redux/actions/lifestyle/movies-actions';
+import clock from '../../../assets/img/clock-circular-outline'
+
 
 
 
@@ -261,7 +263,7 @@ class EventDetails extends React.Component {
                             <div>
                                 <i className="toshow">
                                     <img
-                                        // src={salaryLoan}
+                                        src={clock}
                                         style={{
                                             width: 20,
                                             height: 20,
