@@ -205,7 +205,7 @@ class Event extends Component {
                                         <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li>
                                         
                                         <li style={{float:"right"}}>
-                                            {/* <label>Search by keyword</label> */}
+                                             <label>Search by keyword</label>
                                             <input style={{width:"100%",height:"30px", marginTop:14, float:'right'}} type="text" placeholder="search ..." value={this.state.value} onChange={ e => this.onChangeHandler(e)}/></li>
 
                                     </ul>
