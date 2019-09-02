@@ -131,6 +131,7 @@ const loansReducer = combineReducers({
     loanAppStatus: loans.continueApplication,
     passport: loans.PassportReducer,
     signature: loans.SignatureReducer,
+    kycrequired : loans.KycRequired,
 })
 
 const appReducer = combineReducers({

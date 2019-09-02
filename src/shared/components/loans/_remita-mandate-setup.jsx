@@ -17,35 +17,62 @@ class RemitaMandateSetupComponent extends React.Component {
         }
     }
 
+    componentDidMount = () => {
+        this.init();
+    }
+
     init = () => {
-        if (this.props.standing_order)
+        //console.log(this.props.standing_order);
+        if (this.props.standing_order.loan_standOrder_status) {
+            //console.log("am here");
             if (this.props.standing_order.loan_standOrder_status == loanConstants.LOAN_STAND_ORDER_SUCCESS) {
                 var data = {
                     ...this.props.standing_order.loan_standOrder_data.response.Response
                 }
+                //console.log(data);
                 if (data.GetCollectionScreenOption == CollectionScreenOption.RemitaBankSetup) {
-                    this.setState({ collectionModel : data});
+                    this.setState({ collectionModel: data });
                 }
                 else { this.props.NavigateToPreviousPage(); }
             } else {
                 this.props.NavigateToPreviousPage();
             }
-    }
-
-    confirmClick=()=>{
-      this.props.onConfirm();
-    }
-
-    gotoNextPage=()=>{
-        if(this.props.mandate_status)
-        if(this.props.mandate_status.loan_mandate_status == loanConstants.LOAN_MANDATE_STATUS_SUCCESS){
-            //call method to check for KYC
-            //this.props.checkKycStatus();
-            if(this.collectionModel.kycRequired)
-            this.props.NavigateToKyc();
-            else { //Navigate to another page
-             }
+        } else {
+            //console.log("fire loan sanding order===");
+            this.props.dispatch(actions.loanStandingOrder(this.state.user.token));
         }
+    }
+
+    // updateCollectionModel = () =>{
+    //     if (this.props.standing_order.loan_standOrder_status) {
+    //         //console.log("am here");
+    //         if (this.props.standing_order.loan_standOrder_status == loanConstants.LOAN_STAND_ORDER_SUCCESS) {
+    //             var data = {
+    //                 ...this.props.standing_order.loan_standOrder_data.response.Response
+    //             }
+    //             //console.log(data);
+    //             if (data.GetCollectionScreenOption == CollectionScreenOption.RemitaBankSetup) {
+    //                 this.setState({ collectionModel: data });
+    //             }
+    //             else { this.props.NavigateToPreviousPage(); }
+    //         } else {
+    //             this.props.NavigateToPreviousPage();
+    //         }
+    //     } else {
+    //         //console.log("fire loan sanding order===");
+             
+    //     }
+    // }
+
+    confirmClick = () => {
+        this.props.onConfirm();
+    }
+
+    gotoNextPage = () => {
+        if (this.props.mandate_status)
+            if (this.props.mandate_status.loan_mandate_status == loanConstants.LOAN_MANDATE_STATUS_SUCCESS) {
+                this.props.NavigateToCollectionDone();
+            }
     }
 
     render() {
@@ -67,17 +94,18 @@ class RemitaMandateSetupComponent extends React.Component {
                                 <form>
                                     <div className="input-ctn">
                                         <label>Reference Number</label>
-                                        <input type="text" name="remitaRefrence" disabled={true} 
-                                        value={this.state.collectionModel.RemitaMandateReference} />
+                                        <input type="text" name="remitaRefrence" disabled={true}
+                                            value={this.state.collectionModel.RemitaMandateReference} />
                                     </div>
 
                                     <div className="row">
                                         <div className="col-sm-12">
                                             <center>
-                                            {/* disabled={this.returnGenPendingStat()} */}
-                                            {/* value={this.returnGenPendingStat() ? "Processing..." : "Confirm"} */}
-                                                <input type="button"  confirmClick={this.confirmClick}
-                                                    value={"Confirm"}
+                                                {/* disabled={this.returnGenPendingStat()} */}
+                                                {/* value={this.returnGenPendingStat() ? "Processing..." : "Confirm"} */}
+                                                <input type="button" onClick={this.confirmClick}
+                                                    value={this.props.mandate_status.loan_mandate_status == loanConstants.LOAN_MANDATE_STATUS_PENDING ? "Processing..." : "Confirm"}
+                                                    disabled={this.props.mandate_status.loan_mandate_status == loanConstants.LOAN_MANDATE_STATUS_PENDING}
                                                     className="btn-alat m-t-10 m-b-20 text-center" />
                                             </center>
                                         </div>
@@ -85,7 +113,7 @@ class RemitaMandateSetupComponent extends React.Component {
                                 </form>
                             </div>
                         </div>
-                       
+
                     </div>
                 </div>
             </div>
@@ -98,8 +126,8 @@ function mapStateToProps(state) {
         alert: state.alert,
         score_card_Q: state.loanOnboardingReducerPile.loanGetScoreCardQuestion,
         score_card_A: state.loanOnboardingReducerPile.loanPostScoreCardAnswer,
-        standing_order: state.loanOnboardingReducerPile.loanStandingOrder,
-        mandate_status: state.loanOnboardingReducerPile.loanMandate
+        standing_order: state.loanReducerPile.loanStandingOrder,
+        mandate_status: state.loanReducerPile.loanMandate
     }
 }
 

@@ -377,3 +377,28 @@ export function SignatureReducer(state = {}, action) {
             };
     }
 }
+
+export function KycRequired(state = {}, action) {
+    switch (action.type) {
+        case loanConstants.LOAN_KYCREQUIRED_SUCCESS:
+            return {
+                kyc_required_status: loanConstants.LOAN_KYCREQUIRED_SUCCESS,
+                kyc_required_data: action
+            };
+        case loanConstants.LOAN_KYCREQUIRED_PENDING:
+            return {
+                kyc_required_status: loanConstants.LOAN_KYCREQUIRED_PENDING,
+                kyc_required_data: action
+            };
+        case loanConstants.LOAN_KYCREQUIRED_FAILURE:
+            return {
+                kyc_required_status: loanConstants.LOAN_KYCREQUIRED_FAILURE,
+                kyc_required_data: action
+            };
+        default:
+            return{
+                ...state,
+            };
+    }
+}
+

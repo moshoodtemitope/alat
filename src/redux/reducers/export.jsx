@@ -34,7 +34,7 @@ import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingV
 import { loanCalcDataReducer, loanApplyReducer, GetIndustriesReducer, GetEmployerReducer, CurrentLoanReducer, 
     LoanHistoryReducer, WorkIdFrontReducer, WorkIdBackReducer, loanRejectReducer, loanStandingOrderReducer,
      loanMandateStatusReducer, loanValidateRemitaOtpReducer, loanStatementUpload, continueApplication, 
-     SignatureReducer , PassportReducer } from './loan.reducer';
+     SignatureReducer , PassportReducer, KycRequired } from './loan.reducer';
 
 export const onboarding = {
     userRegistrationRequest,
@@ -59,7 +59,8 @@ export const loans = {
     loanStatementUpload,
     continueApplication,
     SignatureReducer,
-     PassportReducer
+    PassportReducer,
+    KycRequired
 }
 
 export const loanOnboarding = {

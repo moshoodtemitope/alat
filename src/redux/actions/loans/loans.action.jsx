@@ -248,6 +248,28 @@ export const loanValidateRemitaOtp =(token, data) =>{
     function failure(error) { return { type: loanConstants.LOAN_VALIDATEOTP_FAILURE, error } }
 }
 
+
+export const checkKycRequired =(token) =>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.LOAN_KYC_REQIURED,
+             "GET", null, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                 dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function request(request) { return { type: loanConstants.LOAN_KYCREQUIRED_PENDING, request } }
+    function success(response) { return { type: loanConstants.LOAN_KYCREQUIRED_SUCCESS, response }}
+    function failure(error) { return { type: loanConstants.LOAN_KYCREQUIRED_FAILURE, error } }
+}
+
 export const continueApplication =(data)=>{
     return (dispatch) =>{
         dispatch(success(data));
