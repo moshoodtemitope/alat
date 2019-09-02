@@ -11,12 +11,109 @@ class ProfileDocuments extends Component {
        super(props);
        this.state = {
           user: JSON.parse(localStorage.getItem("user")),
+          file1: null,
+          file2: null,
+          file3: null,
+
+          photoGraphUploadValidity: false, 
+          signatureValidity: false, 
+          idCardValidity: false
        }
+   }
+
+   checkValidity = () => {
+       let result = 'valid';
+       for(let x in this.state){
+           switch(x){
+               case 'file1': 
+                  if(this.state[x] == null || this.state[x] == ""){
+                       console.log(x);
+                       result = null
+                       break;
+                  }
+               case 'file2': 
+                  if(this.state[x] == null || this.state[x] == ""){
+                       console.log(x);
+                       result = null
+                       break;
+                  }
+               case 'file3': 
+                  if(this.state[x] == null || this.state[x] == ""){
+                       console.log(x);
+                       result = null
+                       break;
+                  }
+           }
+       }
+
+       console.log(result);
+       return result;
+   }
+
+   checkPhotoGraphUploadValidity = () => {
+       if(this.state.file1 == null || this.state.file1 == ""){
+           this.setState({photoGraphUploadValidity: true});
+       }else{
+           this.setState({photoGraphUploadValidity: false});
+       }
+   }
+
+   checkSignatureValidity = () => {
+        if(this.state.file2 == null || this.state.file2 == ""){
+            this.setState({signatureValidity: true});
+        }else{
+            this.setState({signatureValidity: false});
+        }
+   }
+   
+   checkIdCardValidity = () => {
+        if(this.state.file3 == null || this.state.file3 == ""){
+            this.setState({idCardValidity: true});
+            console.log('CODE NEVER RAN2')
+        }else{
+            console.log('CODE NEVER RAN1')
+            this.setState({idCardValidity: false});
+        }
+
+        console.log('CODE NEVER RAN')
+   }
+
+   HandleFileUpLoad = (event) => {
+       let name = event.target.name;
+       console.log(name);
+       console.log(event.target.value);
+       return;
+       this.setState({[name]: event.target.value});
+   }
+
+   SubmitDocuments = () => {
+       let payload = {
+
+       }
+   }
+
+   HandleSubmit = (event) => {
+        event.preventDefault();
+
+        this.checkIdCardValidity();
+        this.checkSignatureValidity(); 
+        this.checkPhotoGraphUploadValidity();
+        console.log("code Got here");
+
+        return;
+        switch(this.checkValidity()){
+            case null: 
+                console.log('Empty Field Found');
+                break;
+            case 'valid': 
+                console.log('No Empty Field Found');
+                this.SubmitDocuments();
+        }
    }
 
 
    render(){
-      
+      const {photoGraphUploadValidity, signatureValidity, idCardValidity} = this.state;
        return(
         <Fragment>
              <InnerContainer>
@@ -77,15 +174,27 @@ class ProfileDocuments extends Component {
                                     <form onSubmit={this.HandleSubmit} className="parentForm docUpLoadFormProfile">
                                            <p className="formHeading">Documents</p>
 
-                                           <label htmlFor="file-upload1">Photograph</label>
-                                           <input type="file" id="file-upload1" required/>
+                                           <div className="form-row">
+                                                <div className={photoGraphUploadValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
+                                                        <label htmlFor="file-upload1">Photograph</label>
+                                                        <input type="file" name="file1" id="file-upload1" onChange={this.HandleFileUpLoad}/>
+                                                </div>
+                                           </div>
 
-                                           <label htmlFor="file-upload2">Signature</label>
-                                           <input type="file" id="file-upload2" required/>
+                                           <div className="form-row">
+                                                <div className={signatureValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
+                                                            <label htmlFor="file-upload2">Signature</label>
+                                                            <input name="file2" type="file" id="file-upload2"  onChange={this.HandleFileUpLoad}/>
+                                                </div>
+                                           </div>
 
-                                           <label htmlFor="file-upload3">Identity Card</label>
-                                           <input type="file" id="file-upload3" required/>
-
+                                           <div className="form-row">
+                                                <div className={idCardValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
+                                                            <label htmlFor="file-upload3">Identity Card</label>
+                                                            <input name="file3" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/>
+                                                </div>
+                                           </div>
+                                           
                                            <button type="submit" className="twoBut">Submit</button>
                                     </form>
                                     

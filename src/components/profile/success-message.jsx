@@ -19,7 +19,7 @@ class ProfileSuccessMessage extends Component {
    componentDidMount = () => {
        setTimeout(function(){
           history.push('/default-page');
-       }, 500);
+       }, 5000);
 
        console.log(this.props.profileSuccessMessage.data);
    }
