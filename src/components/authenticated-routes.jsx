@@ -80,18 +80,19 @@ class AuthenticatedRoutes extends React.Component {
 
         if (this.logoutTimeout) clearTimeout(this.logoutTimeout);
         if(isIncludingSetIterval)clearInterval(this.run);
-    }
+    }  
 
     setTimeout() {
         this.warnTimeout = setTimeout(this.warn, 4 * 59 * 1000);
-
-        this.logoutTimeout = setTimeout(this.logout, 5 * 10 * 1000);
+ 
+        this.logoutTimeout = setTimeout(this.logout, 5 * 60 * 1000);
     }
     reissue() {
         this.props.getAnotherToken()
         
     }
     resetTimeout() {
+        console.log("you are active")
         this.clearTimeout();
         this.setTimeout();
     }
