@@ -148,9 +148,7 @@ const appReducer = combineReducers({
     accounts: global.debitableAccountsReducer,
     encrypt_rule: global.getEncryptionRuleReducer,
     verify_pan: global.verifyPANReducer,
-    // storage_reducer
-    // storage_reducer
-
+    
     //data_reducer
     data_reducer: dataReducer,
     cardless_reducer: cardlessReducer,
@@ -161,7 +159,12 @@ const appReducer = combineReducers({
     //PROFILE
     linkBVN: profile.linkBVN,
     profileSuccessMessage: profile.profileSuccessMessage,
-    profileMenu: profile.profileMenu
+    profileMenu: profile.profileMenu,
+    capturePersonalInformation: profile.capturePersonalInformation,
+    addNextOfKin: profile.addNextOfKin,
+    addContactDetails: profile.addContactDetails,
+    occupationAndSector: profile.occupationAndSector,
+    addDocuments: profile.addDocuments
 });
 
 //export defualt appReducer;

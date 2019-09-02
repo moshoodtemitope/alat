@@ -7,7 +7,6 @@ import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import InnerContainer from '../../shared/templates/inner-container';
 import {history} from '../../_helpers/history';
 
-
 class PersonalInfoMation extends Component {
    constructor(props){
        super(props);
@@ -25,7 +24,7 @@ class PersonalInfoMation extends Component {
         EmployerPhoneNumber: null,
         BVNnumber: null,
         SurName: null,
-        EmailAddress: null,
+        EmployersAddress: null,
         FirstName: null, 
         OtherName: null, 
         EmployerName: null,
@@ -59,9 +58,44 @@ class PersonalInfoMation extends Component {
         OccupationValidity: false,
         TitleValidity: false,
         MaritalStatusValidity: false
-  
        }
    }
+
+   InitiateNetworkCall = () => {
+        // let data = {
+        //     bvn: this.state.bvnNumber,
+        //     date: this.state.dateValue
+        // }
+
+        let data = {
+            title: this.state.title,
+            maritalStatus: this.state.maritalStatus,
+            firstName: this.state.FirstName,
+            surname: this.state.SurName,
+            otherNames: this.state.OtherName,
+            gender: this.state.Gender,
+            birthDate: this.state.birthDate,
+            nationality: this.state.Nationality,
+            stateOrigin: this.state.StateOfOriginValidity,
+            lga: this.state.LocalGv,
+            birthPlace: this.state.PlaceOfBirth,
+            motherMaidenName: this.state.mothersMaidenName,
+            bvn: this.state.bvnNumber,
+            pin: this.state.AlatPin,
+            occupation: this.state.Occupation,
+            employerName: this.state.EmployerName,
+            employerAddress: this.state.EmployersAddress,
+            employerPhoneNumber: this.state.EmployerPhoneNumber,
+            addressType: '',
+            employmentSectorCode: this.state.Sector,
+            employmentStatus: this.state.EmploymentStatus
+        }
+
+        console.log(data);
+        return;
+        this.props.dispatch(actions.capturePersonalInformation(this.state.user.token, data));
+   }
+   
 
    SetBVNValidityStatus = () => {
       console.log();
@@ -131,7 +165,7 @@ class PersonalInfoMation extends Component {
                             break;
                         }
 
-                case 'EmailAddress':
+                case 'EmployersAddress':
                         if(this.state[x] == null || this.state[x] == ""){
                             console.log(x)
                             result = null;
@@ -222,14 +256,6 @@ class PersonalInfoMation extends Component {
        return result;
    }
 
-   InitiateNetworkCall = () => {
-       let data = {
-           bvn: this.state.bvnNumber,
-           date: this.state.dateValue
-       }
-
-       this.props.dispatch(actions.linkBVN(this.state.user.token, data));
-   }
 
    SetBvNNumber = (event) => {
        this.setState({bvnNumber: event.target.value});
@@ -337,7 +363,7 @@ class PersonalInfoMation extends Component {
     }
 
     checkEmailAddressValidity = () => {
-        if(this.state.EmailAddress == null || this.state.EmailAddress == ""){
+        if(this.state.EmployersAddress == null || this.state.EmployersAddress == ""){
             this.setState({EmailAddressValidity: true});
         }else{
             this.setState({EmailAddressValidity: false});
@@ -432,6 +458,7 @@ class PersonalInfoMation extends Component {
    NavigateToSuccessPage = () => {
        history.push('/profile-success-message');
    }
+
 
    render(){
        const {BVNValidity, birthDate, PinValidity, SectorValidity, EmployerPhoneNumberValidity,EmploymentValidity, AddressValidity, EmployersNameValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
@@ -621,7 +648,7 @@ class PersonalInfoMation extends Component {
                                             <div className="form-row">
                                                         <div className={EmailAddressValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Employer's Address</label>
-                                                            <input type="email" name="EmailAddress" className="form-control" onChange={this.SetInputValue} placeholder="Employers Address"/>
+                                                            <input type="text" name="EmployersAddress" className="form-control" onChange={this.SetInputValue} placeholder="Employers Address"/>
                                                         </div>
                                             </div>
 

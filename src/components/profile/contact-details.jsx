@@ -22,7 +22,7 @@ class ContactDetails extends Component {
         Occupation: null,
         AlatPin: null,
         Sector: null,
-        EmployerPhoneNumber: null,
+        phoneNumber: null,
         BVNnumber: null,
         SurName: null,
         EmailAddress: null,
@@ -48,7 +48,8 @@ class ContactDetails extends Component {
         street2: null,
         busStop2: null,
         personalAddress2: null,
-
+        alternateEmail: null,
+        alternatePhoneNumber: null,
 
         NationalityValidity: false, 
         OtherNameValidity: false, 
@@ -59,7 +60,7 @@ class ContactDetails extends Component {
         SurnameValidity: false, 
         FirstNameValidity: false, 
         SectorValidity: false,
-        EmployerPhoneNumberValidity: false,
+        phoneNumberValidity: false,
         EmailAddressValidity: false,
         EmployersNameValidity: false, 
         EmploymentValidity: false, 
@@ -74,6 +75,8 @@ class ContactDetails extends Component {
         busstopValidity: false,
         streetValidity: false,
         personalAddressValidity: false,
+        AlternateEmailValidity: false,
+        alternatePhoneNumberValidity: false,
 
         personalAddressValidity2: false,
         streetValidity2: false,
@@ -140,7 +143,7 @@ class ContactDetails extends Component {
                             break;
                         }
 
-                case 'EmployerPhoneNumber':
+                case 'phoneNumber':
                         if(this.state[x] == null || this.state[x] == ""){
                             console.log(x)
                             result = null;
@@ -308,11 +311,38 @@ class ContactDetails extends Component {
    }
 
    InitiateNetworkCall = () => {
-       let data = {
-           bvn: this.state.bvnNumber,
-           date: this.state.dateValue
-       }
+    //    let data = {
+    //        bvn: this.state.bvnNumber,
+    //        date: this.state.dateValue
+    //    }
 
+    let data =   {
+        mailingAddress: this.state.personalAddress,
+        email: this.state.EmailAddress,
+        alternateEmail: this.state.alternateEmail,
+        phoneNumber: this.state.phoneNumber,
+        alternatePhoneNumber: this.state.alternatePhoneNumber,
+        country: "sample string 6",
+        mailingCountry: "sample string 7",
+        mailingStateId: 8,
+        mailingCityId: 9,
+        pin: this.state.AlatPin,
+        residentialAddress: {
+          street: this.state.street,
+          town: 2,
+          landmark: this.state.busStop,
+          buildingNo: this.state.houseNumber,
+          apartment: this.state.apartment,
+          stateId: 6, 
+          lgaId: 7,
+          lcdaId: 8,
+          isReactivation: true,
+          address: this.state.personalAddress
+        }
+      }
+
+      console.log(data);
+      return;
        this.props.dispatch(actions.linkBVN(this.state.user.token, data));
    }
 
@@ -338,7 +368,7 @@ class ContactDetails extends Component {
        this.checkPinValidity(); 
        this.checkOccupationValidity();
        this.checkSectorValidity(); 
-       this.checkEmployerPhoneNumberValidity();
+       this.checkphoneNumberValidity();
        this.checkEmailAddressValidity(); 
        this.checkEmployersNameValidity(); 
        this.checkLocalGovValidity(); 
@@ -359,7 +389,8 @@ class ContactDetails extends Component {
        this.checkPersonalAddressValidity();
        this.checkBusstopValidity();
        this.checkStreetValidity();
-
+       this.checkAlternateEmailValidity();
+       this.checkAlternatePhoneNumberValidity();
        this.checkStreetValidity2();
        this.checkBusstopValidity2(); 
        this.checkPersonalAddressValidity2();
@@ -396,6 +427,14 @@ class ContactDetails extends Component {
         }
    }
 
+   checkAlternatePhoneNumberValidity = () => {
+       if(this.state.alternateEmail == null || this.state.alternateEmail == ""){
+           this.setState({alternatePhoneNumberValidity: true});
+       }else{
+           this.setState({alternatePhoneNumberValidity: false});
+       }
+   }
+
     checkMaritalStatusValidity = () => {
         if(this.state.maritalStatus == null || this.state.maritalStatus == ""){
             this.setState({MaritalStatusValidity: true});
@@ -411,6 +450,15 @@ class ContactDetails extends Component {
             this.setState({PinValidity: false});
         }
     }
+
+    checkAlternateEmailValidity = () => {
+        if(this.state.alternateEmail == null || this.state.alternateEmail == ""){
+             this.setState({AlternateEmailValidity: true});
+        }else{
+            this.setState({AlternateEmailValidity: false});
+        }
+    }
+
     checkOccupationValidity = () => {
         if(this.state.Occupation == null || this.state.Occupation == ""){
             this.setState({OccupationValidity: true});
@@ -425,11 +473,11 @@ class ContactDetails extends Component {
             this.setState({SectorValidity: false});
         }
     }
-    checkEmployerPhoneNumberValidity = () => {
-        if(this.state.EmployerPhoneNumber == null || this.state.EmployerPhoneNumber == ""){
-            this.setState({EmployerPhoneNumberValidity: true});
+    checkphoneNumberValidity = () => {
+        if(this.state.phoneNumber == null || this.state.phoneNumber == ""){
+            this.setState({phoneNumberValidity: true});
         }else{
-            this.setState({EmployerPhoneNumberValidity: false});
+            this.setState({phoneNumberValidity: false});
         }
     }
 
@@ -612,9 +660,9 @@ class ContactDetails extends Component {
    }
 
    render(){
-       const { PinValidity, sameAddressAsAbove,SectorValidity, EmployerPhoneNumberValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
+       const { PinValidity, AlternateEmailValidity, sameAddressAsAbove,SectorValidity, phoneNumberValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
         EmailAddressValidity, streetValidity, streetValidity2, busstopValidity, busstopValidity2, apartmentValidity, apartmentValidity2, personalAddressValidity, 
-        personalAddressValidity2, houseNumberValidity, houseNumberValidity2} = this.state;
+        personalAddressValidity2, alternatePhoneNumberValidity, houseNumberValidity, houseNumberValidity2} = this.state;
 
        return(
         <Fragment>
@@ -740,13 +788,9 @@ class ContactDetails extends Component {
                                             </div>
                                             <div className="form-row">
                                                         <div className="form-group col-md-9">
-                                                           
                                                             <label className="label-text">Same as address above</label>
-                                                            
                                                         </div>
-                                                        <div className="form-group col-md-3">
-                                                           
-                                                            
+                                                        <div className="form-group col-md-3">                                 
                                                             
                                                         </div>
                                             </div>
@@ -791,16 +835,22 @@ class ContactDetails extends Component {
                                             </div>
                                             
                                             <div className="form-row">
-                                                        <div className={EmailAddressValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                        <div className={AlternateEmailValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Alternate Email</label>
-                                                            <input type="email" name="EmailAddress" className="form-control" onChange={this.SetInputValue} placeholder="Email"/>
+                                                            <input type="email" name="alternateEmail" className="form-control" onChange={this.SetInputValue} placeholder="Alternate Email"/>
                                                         </div>
                                             </div>
 
                                             <div className="form-row">
-                                                        <div className={EmployerPhoneNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                        <div className={phoneNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Phone Number</label>
-                                                            <input type="number" name="EmployerPhoneNumber" className="form-control" onChange={this.SetInputValue} placeholder="Phone Number"/>
+                                                            <input type="number" name="phoneNumber" className="form-control" onChange={this.SetInputValue} placeholder="Phone Number"/>
+                                                        </div>
+                                            </div>
+                                            <div className="form-row">
+                                                        <div className={alternatePhoneNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                            <label className="label-text">Phone Number</label>
+                                                            <input type="number" name="alternatePhoneNumber" className="form-control" onChange={this.SetInputValue} placeholder="Alternate Phone Number"/>
                                                         </div>
                                             </div>
                                             

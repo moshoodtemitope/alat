@@ -128,5 +128,9 @@ export const routes = {
     RESET_PIN :BASEURL + '/AccountSetting/api/pin/CreateOrReset',
     
     //PROFILE MENU
-    GET_PROFILE_MENU: BASEURL + '/ProfileManagement.WebApi/api/ProfileMenu'
+    GET_PROFILE_MENU: BASEURL + '/ProfileManagement.WebApi/api/ProfileMenu',
+    POST_PROFILE_INFO: BASEURL + '/ProfileManagement.WebApi/api/PersonalInfo/Add',
+    ADD_NEXT_OF_KIN: BASEURL + '/ProfileManagement.WebApi/api/nextOfKin/AddV2',
+    ADD_CONTACT: BASEURL + '/ProfileManagement.WebApi/api/ContactDetails/SaveV2',
+    OCCUPA_AND_SECTOR: BASEURL + '/ProfileManagement.WebApi/api/OccupationAndSector'
 };

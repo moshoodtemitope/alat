@@ -45,6 +45,118 @@ export function profileMenu (state=[], action){
     }
 }
 
+
+export function capturePersonalInformation (state=[], action){
+    switch(action.type){
+        case profile.POST_PROFILE_INFORMATION_PENDING: 
+           return {
+               message: profile.POST_PROFILE_INFORMATION_PENDING,
+               data: action
+           }
+        case profile.POST_PROFILE_INFORMATION_SUCCESS:
+           return {
+               message: profile.POST_PROFILE_INFORMATION_SUCCESS,
+               data: action
+           }
+        case profile.POST_PROFILE_INFORMATION_FAILURE:
+           return {
+               message: profile.POST_PROFILE_INFORMATION_FAILURE,
+               data: action
+           }
+        default: 
+           return {... state}
+    }
+}
+
+export function addNextOfKin (state=[], action){
+    switch(action.type){
+        case profile.POST_NEXT_OF_KIN_PENDING: 
+           return {
+               message: profile.POST_NEXT_OF_KIN_PENDING,
+               data: action
+           }
+        case profile.POST_NEXT_OF_KIN_SUCCESS:
+           return {
+               message: profile.POST_NEXT_OF_KIN_SUCCESS,
+               data: action
+           }
+        case profile.POST_NEXT_OF_KIN_FAILURE:
+           return {
+               message: profile.POST_NEXT_OF_KIN_FAILURE,
+               data: action
+           }
+        default: 
+           return {... state}
+    }
+}
+
+export function addContactDetails (state=[], action){
+    switch(action.type){
+        case profile.POST_CONTACT_DETAILS_PENDING: 
+           return {
+               message: profile.POST_CONTACT_DETAILS_PENDING,
+               data: action
+           }
+        case profile.POST_CONTACT_DETAILS_SUCCESS:
+           return {
+               message: profile.POST_CONTACT_DETAILS_SUCCESS,
+               data: action
+           }
+        case profile.POST_CONTACT_DETAILS_FAILURE:
+           return {
+               message: profile.POST_CONTACT_DETAILS_FAILURE,
+               data: action
+           }
+        default: 
+           return {... state}
+    }
+}
+
+export function occupationAndSector (state=[], action){
+    switch(action.type){
+        case profile.POST_CONTACT_DETAILS_PENDING: 
+           return {
+               message: profile.POST_CONTACT_DETAILS_PENDING,
+               data: action
+           }
+        case profile.POST_CONTACT_DETAILS_SUCCESS:
+           return {
+               message: profile.POST_CONTACT_DETAILS_SUCCESS,
+               data: action
+           }
+        case profile.POST_CONTACT_DETAILS_FAILURE:
+           return {
+               message: profile.POST_CONTACT_DETAILS_FAILURE,
+               data: action
+           }
+        default: 
+           return {... state}
+    }
+}
+
+export function addDocuments (state=[], action){
+    switch(action.type){
+        case profile.DOCUMENTS_PENDING: 
+           return {
+               message: profile.DOCUMENTS_PENDING,
+               data: action
+           }
+        case profile.DOCUMENTS_SUCCESS:
+           return {
+               message: profile.DOCUMENTS_SUCCESS,
+               data: action
+           }
+        case profile.DOCUMENTS_FAILURE:
+           return {
+               message: profile.DOCUMENTS_FAILURE,
+               data: action
+           }
+        default: 
+           return {... state}
+    }
+}
+
+
 export function profileSuccessMessage (state=[], action){
     switch(action.type){
         case 'profile success message': 
@@ -57,4 +169,16 @@ export function profileSuccessMessage (state=[], action){
            return {... state}
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
