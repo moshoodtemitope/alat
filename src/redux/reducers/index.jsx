@@ -168,6 +168,7 @@ const appReducer = combineReducers({
     SubmitEventTicketData:movies.SubmitEventTicketData,
     SearchfetchMovieList:movies.SearchfetchMovieList,
     SearchfetchEventList:movies.SearchfetchEventList,
+    FetchMovieGenre:movies.FetchMovieGenre,
 
     //EVENTS
     getEvents: movies.getEvents,

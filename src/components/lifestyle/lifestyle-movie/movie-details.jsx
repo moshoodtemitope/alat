@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import {listStyleConstants} from "../../../redux/constants/lifestyle/lifestyle-constants";
 import {Redirect} from 'react-router-dom'
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
-import {getCinemaList,} from '../../../redux/actions/lifestyle/movies-actions';
+import {getCinemaList, getSingleMovie} from '../../../redux/actions/lifestyle/movies-actions';
 import clock from '../../../assets/img/clock-circular-outline'
 
 
@@ -52,18 +52,20 @@ class Moviedetails extends React.Component {
         // console.log(this.props.getCinemaList)
 
     };
-    // fetchShowTime(){
-    //     const { dispatch } = this.props;
-    //     dispatch(buyMovieTicket(this.state.user.token));
-    //     // console.log(this.props.getCinemaList)
-
-    // };
+    
     componentDidMount(){
         this.fetchCinemaList();
+        
         
 
 
     }
+    fetchSingleTicket( data){
+        const { dispatch } = this.props;
+        dispatch(getSingleMovie(this.state.user.token, ));
+        // console.log(this.props.getCinemaList)
+
+    };
 
 
     handleSelectLocation = item => {

@@ -7,7 +7,7 @@ import {Fragment} from "react";
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
 import clock from '../../../assets/img/clock-circular-outline'
 import {listStyleConstants} from '../../../redux/constants/lifestyle/lifestyle-constants';
-import { FetchMovie,getCinemaList } from "../../../redux/actions/lifestyle/movies-actions";
+import { FetchMovie,getCinemaList, fetchMovieGenre } from "../../../redux/actions/lifestyle/movies-actions";
 
 
 
@@ -19,15 +19,18 @@ class Movie extends Component {
         this.state={
             user: JSON.parse(localStorage.getItem("user")),
             value:"",
+            genre:null,
             movies:null,
             pagesize: 4,
-            currentpage:1
+            currentpage:1,
+            values:""
     
 
         };
         console.log("state",this.state);
         this.fetchMovieList();
         this.fetchCinemaList();
+        this.fetchGenre();
     }
 
     // componentDidMount(){
@@ -49,12 +52,28 @@ class Movie extends Component {
         // console.log(this.props.getCinemaList)
 
     };
+    fetchGenre(){
+        const{dispatch} =this.props;
+        dispatch(fetchMovieGenre(this.state.user.token))
+    }
     search = async data => {
         this.props.dispatch(actions.SearchFetchMovie(this.state.user.token, data))
         const movies = await this.props.SearchfetchMovieList.data.response;
     
         this.setState({ movies });
       };
+
+    filterGenre = () => {
+        const genre = this.props.getMovieList.data.response;
+        this.setState({ genre });
+    };
+    filterGenreOnchangeHandler(e){
+        this.filterGenre(e.target.value);
+        this.setState({values:this.props.getMovieList.data.response})
+        console.log("values",e.target.value)
+
+    }
+    
     
     
     onChangeHandler = async e => {
@@ -172,14 +191,124 @@ class Movie extends Component {
             );
         }
     }
+    renderGenre(){
+        let user = this.state.user;
+        let props = this.props;
+        let getMovieList = props.getMovieList;         
+        if(this.state.values ==="ADVENTURE"){
+            let userMovies = getMovieList.data.response;
+
+            return  <div className="eventTrays">
+            {userMovies.map(function(film, index){
+                return(
+                        <div className="eventCards" key={index}>
+                            <Link to={{
+                                pathname:"/lifestyle/movie-details",
+                                state:{
+                                    details:film
+                                }
+                            }}>
+                                <div className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
+                                </div>
+                            </Link>
+
+                            <div className="boldHeader">{film.title.toString().length > 15 ? film.title.toString().substring(0, 15)+"...": film.title.toString()}</div>
+                                <div id="disc">{ film.description.toString().length > 30 ? film.description.toString().substring(0, 30)+"...": film.description.toString() }</div>
+                                <div className="details">
+                                    <div className="left">
+                                        <img src={clock} alt=""/>
+                                    </div>
+                                    <div className="right">
+                                        <div className="movie-duration">{film.duration}</div>
+                                    </div>
+                                </div>
+                        </div>
+
+                );
+            })}
+        </div>;
+
+        }
+        else if(this.state.values === "FANTASY"){
+            let userMovies = getMovieList.data.response;
+
+            return  <div className="eventTrays">
+            {this.state.values.map(function(film, index){
+                return(
+                        <div className="eventCards" key={index}>
+                            <Link to={{
+                                pathname:"/lifestyle/movie-details",
+                                state:{
+                                    details:film
+                                }
+                            }}>
+                                <div className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
+                                </div>
+                            </Link>
+
+                            <div className="boldHeader">{film.title.toString().length > 15 ? film.title.toString().substring(0, 15)+"...": film.title.toString()}</div>
+                                <div id="disc">{ film.description.toString().length > 30 ? film.description.toString().substring(0, 30)+"...": film.description.toString() }</div>
+                                <div className="details">
+                                    <div className="left">
+                                        <img src={clock} alt=""/>
+                                    </div>
+                                    <div className="right">
+                                        <div className="movie-duration">{film.duration}</div>
+                                    </div>
+                                </div>
+                        </div>
+
+                );
+            })}
+        </div>;
+
+        }
+        else if (this.state.values === "DRAMA"){
+            let userMovies = getMovieList.data.response;
+
+            return(
+                <div className="eventTrays">
+                    {this.state.genre.map(function(film, index){
+                        return(
+                                <div className="eventCards" key={index}>
+                                    <Link to={{
+                                        pathname:"/lifestyle/movie-details",
+                                        state:{
+                                            details:film
+                                        }
+                                    }}>
+                                        <div className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
+                                        </div>
+                                    </Link>
+
+                                    <div className="boldHeader">{film.title.toString().length > 15 ? film.title.toString().substring(0, 15)+"...": film.title.toString()}</div>
+                                        <div id="disc">{ film.description.toString().length > 30 ? film.description.toString().substring(0, 30)+"...": film.description.toString() }</div>
+                                        <div className="details">
+                                            <div className="left">
+                                                <img src={clock} alt=""/>
+                                            </div>
+                                            <div className="right">
+                                                <div className="movie-duration">{film.duration}</div>
+                                            </div>
+                                        </div>
+                                </div>
+
+                        );
+                    })}
+                </div>
+            );
+        }
+
+    }
     
     resultu = () => {
         if (this.state.movies !== null && this.state.movies !== "") {
             return this.renderMoviesSeach();
         }
-        else {
+        else{
             return this.renderMovies(); 
         }
+    
         
 
     }
@@ -190,6 +319,7 @@ class Movie extends Component {
 
     render(){
         let userMovies = this.props.getMovieList;
+        
         
         
         return(
@@ -207,13 +337,25 @@ class Movie extends Component {
                                     <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
                                     <li><NavLink to={'/lifestyle/event'}>Event</NavLink></li>
                                     <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li>
-                                    <li style={{float:"right"}}><input style={{width:"100%",height:"30px", marginTop:14, float:'right'}} type="text" placeholder="search ..." value={this.state.value} onChange={ e => this.onChangeHandler(e)}/></li>
+                                    <li style={{float:"right"}}><input style={{width:"100%",height:"40px", marginTop:4, float:'right'}} type="text" placeholder="search ..." value={this.state.value} onChange={ e => this.onChangeHandler(e)}/></li>
+                                    <li style={{float:"right"}} >
+                                        <select style={{width:"100%",height:"40px", marginTop:8, margin:4, float:'right'}} onChange={e=>this.filterGenreOnchangeHandler(e)}>
+                                            <option>Show Result By</option>
+                                            {                                      
+                                                this.props.FetchMovieGenre.message == listStyleConstants.FETCH_MOVIE_GENRE_SUCCESS && 
+                                                this.props.FetchMovieGenre.data.response.map(genre=> {
+                                                    return <option key={genre} value={genre}>{genre}</option>
+                                                })
+                                            } 
+                                        </select>
+                                    </li>
 
                                 </ul>
                             </div>
                         </div>
                     </div>
                    {this.resultu()}
+                   {this.renderGenre()}
                    {/* <Pagination
                     // itemsCount={this.state.movies.length}
                     pageSize={this.state.pagesize}
@@ -236,7 +378,8 @@ class Movie extends Component {
     return {
         getMovieList: state.getMovieList,
         getCinemaList: state.getCinemaList.data,
-        SearchfetchMovieList:state.SearchfetchMovieList
+        SearchfetchMovieList:state.SearchfetchMovieList,
+        FetchMovieGenre:state.FetchMovieGenre
         
 
     };

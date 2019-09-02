@@ -15,7 +15,7 @@ export const FetchMovie = (token, data) => {
         return consume
             .then(response => {
                 // consume.log(response);
-                dispatch(success(response.data));
+                dispatch(success(response.data, data));
             })
             .catch(error => {
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
@@ -73,7 +73,7 @@ export const getCinemaList = (token, data) => {
 export const getSingleMovie = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.GET_SINGLE_MOVIE, "GET", null, SystemConstant.HEADER, false);
+        let consume = ApiService.request(routes.GET_SINGLE_MOVIE, "GET", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
@@ -90,6 +90,26 @@ export const getSingleMovie = (token, data) => {
     function success(response) { return {type:listStyleConstants.GET_SINGLE_MOVIE_SUCCESS, response} }
     function failure(error) { return {type:listStyleConstants.GET_SINGLE_MOVIE_ERROR, error} }
 };
+export const fetchMovieGenre = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.FETCH_MOVIE_GENRE, "GET", data, SystemConstant.HEADER, false);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                // consume.log(response);
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
+            });
+    };
+
+    function request(request) { return { type:listStyleConstants.FETCH_MOVIE_GENRE_PENDING, request} }
+    function success(response) { return {type:listStyleConstants.FETCH_MOVIE_GENRE_SUCCESS, response} }
+    function failure(error) { return {type:listStyleConstants.FETCH_MOVIE_GENRE_FAILURE, error} }
+};
 
 export const buyMovieTicket = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
@@ -102,7 +122,9 @@ export const buyMovieTicket = (token, data) => {
                 dispatch(success(response.data));
             })
             .catch(error => {
+                dispatch(failure(modelStateErrorHandler(error)));
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+
 
             });
     };
@@ -167,8 +189,8 @@ export const purchaseEventTicket = (token, data) => {
                 dispatch(success(response.data));
             })
             .catch(error => {
-                
-                    dispatch(alertActions.error(modelStateErrorHandler(error)));
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
                 
             });
     };
