@@ -87,7 +87,7 @@ class RotatingSavingsEditedSuccessfullyDeleted extends React.Component {
                                                 <div className="form-group">
                                                     <label id="sucMessage" className="sucMg">Group Deleted Successfully!</label>
                                                 </div>
-                                                {/* <div className="form-row"> */}
+                                                <div className="form-row">
                                                 {/* <Members 
                                                    userType="admin"
                                                    name="Group Savings"
@@ -95,7 +95,7 @@ class RotatingSavingsEditedSuccessfullyDeleted extends React.Component {
                                                    amount={this.props.setAmountToWithDraw}
                                                    intent={this.props.setFrequency}
                                                    id="autoSummary"/> */}
-                                                {/* </div> */}
+                                                </div>
                                             </form>
 
                                         </div>

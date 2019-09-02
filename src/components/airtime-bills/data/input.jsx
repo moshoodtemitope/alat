@@ -8,8 +8,9 @@ export const Input = (props) => {
             {...props.elementConfig}
             value={props.value}
             onChange={props.changed}
-            disabled={props.isDisabled} 
+            disabled={props.isDisabled}
             style={props.inputStyle}
+            placeholder={props.aplaceHold}
             readonly={props.isReadonly} />;
 
     switch (props.elementType) {
@@ -29,8 +30,8 @@ export const Input = (props) => {
                 onChange={props.changed}
                 className={props.inputStyle} />;
     }
-    return inputElement;
 
+    return inputElement;
 }
 
 export const Select = (props) =>(
@@ -40,6 +41,6 @@ export const Select = (props) =>(
             {props.optionsList.map((option, counter) => (
                 <option value={option.value} key={counter+1}>{option.displayValue}</option>
             ))}
-            
+
         </select>
     </div>);

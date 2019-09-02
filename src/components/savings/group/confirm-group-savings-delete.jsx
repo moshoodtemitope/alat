@@ -105,7 +105,8 @@ class GroupDelete extends React.Component {
                                                         <center>
 
                                                         <button type="submit" onClick={this.GoBackToGroupAnalytics} className="btn-alat m-t-10 m-b-20 text-center goBackButMini">Go Back</button>
-                                                        <button type="submit" onClick={this.SubmitForm} className="btn-alat m-t-10 m-b-20 text-center">Proceed</button>  
+                                                            <button type="submit" onClick={this.SubmitForm} className="btn-alat m-t-10 m-b-20 text-center">Proceed</button>
+                                                            
                                                         </center>
                                                     </div>
                                                 </div>

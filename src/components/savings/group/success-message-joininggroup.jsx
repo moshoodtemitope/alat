@@ -80,18 +80,31 @@ class JoinGroupSuccessMessage extends React.Component {
                                       <div className="max-600">
                                        <div className="al-card no-pad">
                                             <form>
+<<<<<<< HEAD
+                                                <div className="form-group">
+                                                    <label id="sucMessage">Joined Successfully</label>
+                                                </div>
+                                                <div className="form-row">
+                                                <Members 
+=======
                                                 <img src="/src/assets/img/success.svg" className="succefullMessage" alt=""/>
                                                 <div className="form-group">
                                                     <label id="sucMessage" className="sucMg">Group Deleted Successfully!</label>
                                                 </div>
                                                 {/* <Members 
+>>>>>>> lifestyle/lifestyle-master
                                                    userType="admin"
                                                    name={this.props.joinAGroup.CurrentSlot}
                                                    position="Current Slot"
                                                    amount={this.props.joinAGroup.response.MemberCount}
                                                    intent="Member Count"
+<<<<<<< HEAD
+                                                   id="autoSummary"/>
+                                                </div>
+=======
                                                    id="autoSummary"/> */}
                                                 
+>>>>>>> lifestyle/lifestyle-master
                                             </form>
                                         </div>
                                        </div>

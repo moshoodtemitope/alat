@@ -1,9 +1,15 @@
 import React, { Component, Fragment } from 'react';
 import InnerContainer from '../../shared/templates/inner-container';
-import { Link, NavLink, Route, Switch } from 'react-router-dom';
+import { NavLink, Route } from 'react-router-dom';
 import ChangePassword from './change-password/change-password';
 import PinManagement from './pin-management';
-// import Limit from './trans-limit/trans-limit'
+import ChangeSecurityQuestion from './pin-management/change-pin/change-security-question';
+import ForgotSecurityQuestion from './pin-management/forgot-pin/forgot-security-question';
+import ChangePin from './pin-management/change-pin/change-pin';
+import VerifyOtp from './pin-management/forgot-pin/verify-otp';
+import ForgotPin from './pin-management/forgot-pin/forgot-pin';
+import SecurityQuestionPin from './security-management/pin-input';
+import ChangeQuestions from './security-management/change-questions';
 
 
 class AccountSettings extends Component {
@@ -37,10 +43,21 @@ class AccountSettings extends Component {
                                 </div>
                                 {this.props.children}
                                 <Route path={'/settings'} exact component={ChangePassword} />
-                                <Route path={'/settings/change-password'} exact component={ChangePassword} />
-                                <Route path={'/settings/pin-management'} component={PinManagement} />
-                                {/* <Route path={'/account/account-statement'} component={Statement} /> */}
-                                {/* <Route path={'/account/account-limit'} component={Limit} /> */}
+                                <Route path={'/settings/change-password'}  component={ChangePassword} />
+
+
+                                <Route path={'/settings/pin-management'} exact  component={PinManagement} />
+
+                                <Route path={'/settings/pin-management/change/security-question'}  component={ChangeSecurityQuestion} />
+                                <Route path={'/settings/pin-management/change/change-pin'}  component={ChangePin} />
+
+                                <Route path={'/settings/pin-management/forgot/forgot-pin'}  component={ForgotPin} />
+                                <Route path={'/settings/pin-management/forgot/security-question'}  component={ForgotSecurityQuestion} />
+                                <Route path={'/settings/pin-management/forgot/verify-otp'}  component={VerifyOtp} />
+                                
+                                
+                                <Route path={'/settings/security-questions'} exact component={SecurityQuestionPin} />
+                                <Route path={'/settings/security-questions/questions'} component={ChangeQuestions} />
                             </div>
                         </div>
                     </div>

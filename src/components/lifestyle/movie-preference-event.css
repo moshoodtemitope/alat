@@ -6,10 +6,6 @@
     margin-top: 10px;
     justify-content: center;
   }
-  .eventHeaderInfo{
-    display: flex;
-    justify-content: space-between
-  }
 
   .eventTrays .eventCards {
       width: 168px;
@@ -25,6 +21,8 @@
     color: #9C9C9C;
     font-size: 12px;
   }
+
+
   .eventTrays .picCard {
       width: 100%;
       background-color: black;
@@ -34,6 +32,14 @@
       background-position: center;
       background-size: cover;
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  }
+
+
+  .eventTrays .boldHeader {
+     color: #444444;
+     font-size: 16px;
+     font-family:"proxima_novasemibold";
+   
 
   }
 
@@ -49,7 +55,6 @@
      color: #9C9C9C;
      font-size: 12px;
   }
-
 
   .eventCards .details {
     display: flex;
@@ -78,6 +83,7 @@
      margin-top: 20px;
   }
 
+
   .eventPreferences .buttons {
        width: 197px;
        height: 45px;
@@ -88,7 +94,7 @@
        margin-right: 10px;
        color: #FFFFFF;
        font-size: 16px;
-       font-family:"proxima_novasemibold" !important;
+       font-family:"proxima_novasemibold";
        background-color: #AB2656;
        border: none;
   }
@@ -97,7 +103,7 @@
       color: white;
       font-size: 16px;
       border: 1px solid #AB2656;
-      font-family:"proxima_novasemibold" !important;
+      font-family:"proxima_novasemibold";
       margin-bottom: 30px;
   }
 
@@ -111,62 +117,16 @@
        color: #AB2656;
        font-size: 16px;
        border: 1px solid #AB2656;
-       font-family:"proxima_novasemibold" !important;
+       font-family:"proxima_novasemibold";
        margin-bottom: 30px;
   }
 
-  .puchaseSumTickets {
-      display: flex;
-      flex-wrap: nowrap;
-      width: 80%;
-      background-color: #5C3158;
-      border-radius: 6px;
-      border: 1px solid #EDEDED;
-      margin-left: 10%;
-      padding-top: 20px;
-      padding-left: 20px;
-  }
-
-  .puchaseSumTickets .left, .puchaseSumTickets .right {
-      width: 50%;
-  }
-
-  .puchaseSumTickets .right {
-      text-align: right;
-      padding-right: 20px;
-      font-weight: bold !important;
-      font-family:'proxima_novaregular'
-      
-  }
-
-  .puchaseSumTickets p {
-      color: white;
-  }
-
-  .puchaseSumTickets .left {
-      padding-right: 20px;
-  }
-
-  .puchaseSumTickets .left:nth-child(1) {
-    font-weight: bold;
-}
-
   .eventPreferences .buttons1:hover {
-        color: #FFFFFF;
-        font-size: 16px;
-        font-family:"proxima_novasemibold" !important;
-        background-color: #AB2656;
-        border: none;
-  }
-
-  #navButToMovieSelect {
-     background-color: white;
-     color: #AB2656;
-     border: 1px solid #AB2656;
-  }
-  .movieStyleL{
-    padding-left: 10%;
-    padding-right: 10%;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-family:"proxima_novasemibold";
+    background-color: #AB2656;
+    border: none;
   }
   .pagination {
     margin-top: 25px;

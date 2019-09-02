@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import successLogo from '../../assets/img/success.svg';
+import successLogo from '../../../assets/img/success.svg';
 
 const success = (props) => (
     <div className="col-sm-12">

@@ -19,7 +19,7 @@ export const routes = {
     GETALLQUESTIONS: BASEURL + '/UserSecurityApi/api/v1/Account/AllQuestions',
     REGISTRATIONURLV2: BASEURL + '/UserSecurityApi/api/v1/Account/RegistrationV2',
     DOCUMENT_UPLOAD: BASEURL + '/DocumentUpload/api/upload/document',
-   
+
     //user security
     ONBOARDING_PRIORITY: BASEURL + '/UserSecurityApi/api/v1/Account/GetOnboardingPriority',
     ANNOUNCEMENT: BASEURL + '/UserSecurityapi/api/v1/Account/GetNewsFeeds',
@@ -36,13 +36,29 @@ export const routes = {
     SEND_STATEMENT: BASEURL + '/AccountMaintenance/api/transactions/statementsV2',
     GET_TRANSACTION_LIMIT: BASEURL + '/AccountMaintenance/api/transactions/getTransactionlimit',
     SET_TRANSACTION_LIMIT: BASEURL + '/AccountMaintenance/api/transactions/setTransactionlimit',
+    GETSTATES: BASEURL + '/AccountMaintenance/api/account/GetStatesAndLgas',
+    
 
     //goals and savings
     CUSTOMERGOALS: BASEURL + '/Savings.WebApi/api/Savings/CustomergoalsV2',
 
+    //Virtual Cards
+    GET_VC_EXCHENGE_RATE: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/GetCurrentExchangeRateV2',
+    CREAT_VIRTUAL_CARD_INITIAL: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/CreateVirtualCardInit',
+    CREAT_VIRTUAL_CARD_FINAL: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/CreateVirtualCardFinal',
+    GET_CURRENT_VC: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/GetCurrrentVirtualCardWeb',
+    GET_SINGLE_VC: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/GetSingleVirtualCardWeb',
+    DELETE_VIRTUAL_CARD: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/Delete',
+    TOPUP_VIRTUAL_CARD_INITIAL: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/FundVirtualCardInit',
+    TOPUP_VIRTUAL_CARD_FINAL: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/FundVirtualCardFinal',
+    LIQUIDATE_VIRTUAL_CARD: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/LiquidateVirtualCard',
+    VIRTUAL_CARD_HISTORY: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/VirtualCardHistory',
+    VIRTUAL_CARD_CHANGE_STATE: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/ChangeVirtualCardState',
+    VIRTUAL_CARD_ENCRYPTED_NUMBER: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/GetEncryptedNumberList',
+
     //Payment
 
-    //FundAccount 
+    //FundAccount
     WEMA_TO_ALAT_TRANSFER_WITHOUT_OTP: BASEURL + '/PaymentApi/api/WemaAccountToAlatAccountWithoutOTP',
     GET_TOKENIZED_CARDS: BASEURL + '/PaymentCardServicesApi/api/v1/TokenizationApi/GetTokenizedCards',
     SAVE_CARD: BASEURL +  '/PaymentCardServicesApi/api/v1/TokenizationApi/TokenizedCardsBeforeTrans',
@@ -58,13 +74,37 @@ export const routes = {
     SAVE_TRANSFER_BENEFICIARY: BASEURL + '/PaymentApi/api/Beneficiary/Save',
     FETCH_ACCOUNT_DETAILS: BASEURL + '/PaymentApi/api/Accounts/VerifyAccountName',
     DELETE_TRANSFER_BENEFICIARIES: BASEURL + '/PaymentApi/api/Beneficiary/Delete',
-    DELETE_TRANSFER_BENEFICIARIES: BASEURL + '/PaymentApi/api/Beneficiary/Delete',
     BANK_TRANSFER_WITHPIN: BASEURL + '/PaymentApi/api/BankTransferRequestWebWithPin',
     BANK_TRANSFER_WITHPIN_ANDOTP: BASEURL + '/PaymentApi/api/BankTransferRequestWebWithPinAndOTP',
     INTERBANK_CHARGES: BASEURL + '/PaymentApi/api/InterBankCharges/All',
     GETLIMIT: BASEURL + '/AccountMaintenance/api/transactions/getTransactionlimit', 
     GetAllCustomerAccountsWithLimitsV2: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2', 
+    FETCH_CUSTOMER_ACCOUNTS: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccounts', 
     
+    // Card Maintenance
+   
+    GET_CARD_CONTROL_SETTINGS: BASEURL + '/CardMaintenanceApi/api/v1/CardControl/CardSettingFromCardControl',
+    GET_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getpans',
+    ACTIVATE_CARD: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/activatecard',
+    GET_ACTIVE_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getactivepans',
+    GET_CARD_EXISTING_SETTINGS: BASEURL + '/CardMaintenanceApi/api/v1/CardControl/CustomerCardsFromCardControl',
+    GETCARDDESIGN: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/GetJson',
+    HOTLIST_CARD: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/hotlistcard',
+    GETCUSTOMERINFO: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/GetAllCustomerInfo',
+    GETALLACCOUNTS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/GetAllCustomerAccounts',
+    HOTLIST_CARD_REASONS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/gethotlistreasons',
+    SAVECARD: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/Save',
+    UPDATE_CARD_CONTROL: BASEURL + '/CardMaintenanceApi/api/v1/CardControl/UpdateCustomerCardsFromCardControl',
+    CARD_STATUS: BASEURL + '/cardmaintenanceapi/api/v1/CardMaintenance/getcardstatus',
+    CARD_STATUS_ERROR: BASEURL + '/cardmaintenanceapi/api/v1/CardMaintenance/LogCardDeliveryError',
+
+    //Account Settings
+    GETRANDOMSECURITYQUESTION: BASEURL + '/AccountSetting/api/securityquestion/Random',
+    VERIFY_SECURITY_QUESTION: BASEURL + '/AccountSetting/api/securityquestion/validatewithoutotp',
+    
+    GETLIMIT: BASEURL + '/AccountMaintenance/api/transactions/getTransactionlimit',
+    GetAllCustomerAccountsWithLimitsV2: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2',
+
     //PaymentApi/api/Accounts/VerifyAccountName
 
     //Airtime
@@ -119,22 +159,60 @@ export const routes = {
     LOAN_MANDATE_STATUS : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/MandateStatus',
     LOAN_OTP_MANDATE : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/ValidateOtpMandate',
 
+    //WesternUnion
+    WESTERNUNION_COUNTRIES: BASEURL + '/PaymentApi/api/WesternunionCountries',
+    RECEIVE_WESTERNUNION: BASEURL + '/PaymentApi/api/WesternUnionMoneyTransfer',
+
     //Settings
     CHANGE_PASSWORD : BASEURL + '/AccountSetting/api/password/change',
     GET_RANDOM_SECURITY_QUESTION: BASEURL + '/AccountSetting/api/securityquestion/Random',
     CHECK_ANSWER_WITHOUT_OTP: BASEURL + '/AccountSetting/api/securityquestion/validatewithoutotp',
+    CHECK_ANSWER: BASEURL + '/AccountSetting/api/securityquestion/validate',
     CHANGE_PIN: BASEURL + '/AccountSetting/api/pin/change',
+    RESET_PIN :BASEURL + '/AccountSetting/api/pin/CreateOrReset',
 
-    //Movies
-    // GET_CINEMA_LIST: BASEURL + '/LifeStylePaymentMoviesApi/api/v3/Movies/GetCinemaList',
-    // GET_SINGLE_MOVIE: BASEURL + '/LifeStylePaymentMoviesApi/api/v3/Movies/GetSingleMovie',
-    // BUY_MOVIE_TICKET: BASEURL + '/LifeStylePaymentMoviesApi/api/v3/Movies/BuyMovieTicketV2',
-    // FETCH_MOVIES_LIST : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetMovies?page',
-    // FETCH_MOVIE_SHOWTIME : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetShowTimes?cinemaUid=',
-    // FETCH_MOVIE_GENRE : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetGenreList',
-    // FETCH_MOVIE_CINEMAS : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetCinemaList',
-    // GET_CONVENIENCE_FEE : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetCinemaListAndFee',
 
+    //savings&goals
+    ADDGOAL: BASEURL + '/Savings.WebApi/api/Savings/AddGoal',
+    ADDFLEXIGOAL: BASEURL + '/Savings.WebApi/api/Savings/AddFlexiGoal',
+    ADDSTACHGOAL: BASEURL + '/Savings.WebApi/api/Savings/AddStashGoal',
+    FETCH_DEBITABLE_ACCOUNTS_WITH_LIMITS: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2',
+    GOALTYPE: BASEURL + '/Savings.WebApi/api/Savings/GoalType',
+    GOAL_FORMULAR: BASEURL + '/Savings.WebApi/api/savings/GetValues',
+    GOALTRANSACTIONHISTORY: BASEURL + '/Savings.WebApi/api/Savings/GetCustomerGoalTransHistory',
+    CUSTOMERGOALDASHBOARD: BASEURL + '/Savings.WebApi/api/Savings/CustomergoalDashBoard',
+    TOPUPGOAL: BASEURL + '/Savings.WebApi/api/Savings/TopUpGoal',
+    UNPAUSEGOAL: BASEURL + '/Savings.WebApi/api/Savings/ContinueGoal',
+    WITHDRAWFROMGOAL: BASEURL + '/Savings.WebApi/api/Savings/WithDrawal',
+    DELETEGOAL: BASEURL + '/Savings.WebApi/api/Savings/DeleteGoal',
+    EDITGOAL: BASEURL + '/Savings.WebApi/api/Savings/EditGoal',
+    EDITFLEXIGOAL: BASEURL + '/Savings.WebApi/api/Savings/EditFlexiGoal',
+    PAUSEGOAL: BASEURL + '/Savings.WebApi/api/Savings/PauseGoal',
+    CASHOUTSTASH:BASEURL + '/Savings.WebApi/api/Savings/CashoutStashGoal',
+
+    // Group Savings
+    CREATEGOAL: BASEURL + '/Savings.WebApi/api/GroupSaving/CreateGroup',
+    GROUPCUSTOMERS: BASEURL + '/Savings.WebApi/api/GroupSaving/GetCustomerGroups',
+    DELETE_GROUP: BASEURL + '/Savings.WebApi/api/GroupSaving/DeleteGroup',
+    GETGROUPDETAILS: BASEURL + '/Savings.WebApi/api/GroupSaving/GetGroupDetails',
+    SCHEDULE_CONTRIBUTION: BASEURL + '/Savings.WebApi/api/GroupSaving/ScheduleContribution',
+    EDIT_GROUP_SAVINGS: BASEURL + '/Savings.WebApi/api/GroupSaving/EditGroup',
+    PAUSE_GROUP: BASEURL + '/Savings.WebApi/api/GroupSaving/PauseScheduledGroupPayemnt',
+    FIND_GROUP: BASEURL + '/Savings.WebApi/api/GroupSaving/FindGroup',
+    JOIN_GROUP: BASEURL + '/Savings.WebApi/api/GroupSaving/JoinGroup',
+    CONTRIBUTE: BASEURL + '/Savings.WebApi/api/GroupSaving/Contribute',
+    
+    // ROTATING SAVINGS (ESUSU)
+    CREATE_ROTATING_SAVINGS: BASEURL + '/Savings.WebApi/api/EsusuSaving/CreateGroup',
+    ROTATING_GROUP_DETAILS: BASEURL +  '/Savings.WebApi/api/EsusuSaving/GetGroupDetails',
+    JOIN_A_GROUP: BASEURL + '/Savings.WebApi/api/EsusuSaving/JoinGroup',
+    EDIT_SLOTS: BASEURL + '/Savings.WebApi/api/EsusuSaving/EditSlots',
+    GET_GROUPS: BASEURL + '/Savings.WebApi/api/EsusuSaving/GetGroups',
+    EDIT_GROUP_ESUSU: BASEURL + '/Savings.WebApi/api/EsusuSaving/EditGroup',
+    DELETE_GROUP_ESUSU: BASEURL + '/Savings.WebApi/api/EsusuSaving/DeleteGroup',
+    JOIN_GROUP_ESUSU: BASEURL + '/Savings.WebApi/api/EsusuSaving/JoinGroup',
+    GET_ALL_SECURITY_QUESTIONS : BASEURL + '/AccountSetting/api/securityquestion',
+    SAVE_SECURITY_QUESTION : BASEURL + '/AccountSetting/api/securityquestion/saveorupdate',
 
     //EVENTS
     GET_EVENTS: BASEURL + '/LifeStylePaymentMoviesApi/api/events/getevents?pageNum=',
@@ -152,9 +230,5 @@ export const routes = {
     FETCH_MOVIE_GENRE : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetGenreList',
     FETCH_MOVIE_CINEMAS : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetCinemaList',
     GET_CONVENIENCE_FEE : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetCinemaListAndFee',
-
-
-
-
 
 };
