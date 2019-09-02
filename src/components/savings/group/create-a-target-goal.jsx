@@ -13,11 +13,6 @@ import * as actions from '../../../redux/actions/savings/group-savings/group-sav
 import {GROUPSAVINGSCONSTANT} from "../../../redux/constants/savings/group/index";
 import {history} from '../../../_helpers/history';
 
-<<<<<<< HEAD
-if(window.performance.navigation.type == 1)
-    window.location.replace("http://localhost:8080/");
-=======
->>>>>>> lifestyle/lifestyle-master
 
 class CreateATargetGoal extends React.Component {
     constructor(props){
@@ -238,7 +233,6 @@ class CreateATargetGoal extends React.Component {
     }
 
     NavigateToGroupSavings = () => {
-<<<<<<< HEAD
         // let groupSavings = this.props.groups.response; //returns an array
         // let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
         // if(groupSavings.length != 0 || rotatingSavings.length != 0){
@@ -249,17 +243,6 @@ class CreateATargetGoal extends React.Component {
     }
 
 
-=======
-         let groupSavings = Object.keys(this.props.groups); //returns an array
-         let rotatingSavings = Object.keys(this.props.groupSavingsEsusu); //returns an array
-         if(groupSavings.length != 0 || rotatingSavings.length != 0){
-             history.push('/savings/activityDashBoard');
-             return;
-         }
-         history.push('/savings/goal/group-savings-selection');
-    }
-
->>>>>>> lifestyle/lifestyle-master
     render() {
         const {targetDate, theGroupName, Purpose, howMuchValidity, GroupEndDate, AmountToContribute, NoAccountSelectionWasDon, selectedAccount} = this.state;
         return (

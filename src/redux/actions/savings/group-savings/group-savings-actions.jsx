@@ -62,11 +62,7 @@ export const deleteGroup = (token, data) => {
             .then(response => {
                 dispatch(success(response.data));
                 if(data.deleteGroup != undefined)
-<<<<<<< HEAD
                      history.push('/savings/delete-group-savings-mod');
-=======
-                     history.push('/savings/group/success-message');
->>>>>>> lifestyle/lifestyle-master
             })
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
@@ -89,10 +85,7 @@ export const contribute = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
-<<<<<<< HEAD
                 history.push('/');
-=======
->>>>>>> lifestyle/lifestyle-master
             })
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
@@ -189,11 +182,7 @@ export const customerGroup = (token, data = null) => {
                 //     history.push('/savings/group/group-analytics');
             })
             .catch(error => {
-<<<<<<< HEAD
-                 dispatch(failure(modelStateErrorHandler(error)));
-=======
-                dispatch(failure(modelStateErrorHandler(error)));
->>>>>>> lifestyle/lifestyle-master
+                //  dispatch(failure(modelStateErrorHandler(error)));
                  dispatch(alertActions.error(modelStateErrorHandler(error)));
 
                 // dispatch(failure(error.response.data.message.toString()));
@@ -213,11 +202,7 @@ export const joinGroup = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
-<<<<<<< HEAD
                 this.history.push('/savings/joined-group-successfully');
-=======
-                this.history.push('/savings/group/joingroup-success-message');
->>>>>>> lifestyle/lifestyle-master
             })
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));

@@ -11,11 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import * as action from '../../../redux/actions/savings/group-savings/group-savings-actions';
 import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
-<<<<<<< HEAD
 import {history} from '../../../_helpers/history';
-=======
-import { history } from '../../../_helpers/history';
->>>>>>> lifestyle/lifestyle-master
 
 class JoinAGroup extends React.Component {
     constructor(props){
