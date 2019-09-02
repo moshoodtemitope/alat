@@ -10,7 +10,7 @@ import {modelStateErrorHandler} from "../../../shared/utils";
 export const FetchMovie = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.FETCH_MOVIES_LIST, "GET", data, SystemConstant.HEADER, false);
+        let consume = ApiService.request(routes.FETCH_MOVIES_LIST + data, "GET", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
@@ -30,7 +30,7 @@ export const FetchMovie = (token, data) => {
 export const SearchFetchMovie = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.FETCH_MOVIES_LIST + "&" + 'search=' + data, "GET", data, SystemConstant.HEADER, false);
+        let consume = ApiService.request(routes.FETCH_MOVIES_LIST + 1 + "&" + 'search=' + data, "GET", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
@@ -138,7 +138,7 @@ export const buyMovieTicket = (token, data) => {
 export const getEvents = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.GET_EVENTS, "GET", data, SystemConstant.HEADER, false);
+        let consume = ApiService.request(routes.GET_EVENTS + data, "GET", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {

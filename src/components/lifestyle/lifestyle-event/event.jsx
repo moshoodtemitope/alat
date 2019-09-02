@@ -19,14 +19,21 @@ class Event extends Component {
         this.state={
             user: JSON.parse(localStorage.getItem("user")),
             event:null,
+            total:5,
+            per_page: 4,
+            current_page: 1
 
         };
         console.log("state",this.state);
-        this.fetchEventList()
     }
-    fetchEventList(){
+    componentDidMount(){
+        this.fetchEventList(1)
+
+
+    }
+    fetchEventList(pageNumber){
         const { dispatch } = this.props;
-        dispatch(getEvents(this.state.user.token));
+        dispatch(getEvents(this.state.user.token, pageNumber));
     };
 
     search = async data => {
@@ -137,7 +144,7 @@ class Event extends Component {
                                                 
                                     </div>
                                     <div className="right">
-                                        <div style={{fontSize: 12}}> {moment(event.date).format('MMMM DD, h:mm:ss a')}</div>
+                                        <div style={{fontSize: 12, marginTop:3}}> {moment(event.date).format('MMMM DD, h:mm:ss a')}</div>
                                     </div>
                                 </div>
                             </div>
@@ -164,6 +171,22 @@ class Event extends Component {
 
     render(){
         let userEvent = this.props.getEvents;
+        let  renderPageNumbers;
+
+
+        const pageNumbers = [];
+        if (this.state.total !== null) {
+        for (let i = 2; i <= Math.ceil(this.state.total / this.state.per_page); i++){
+        pageNumbers.push(i);
+      }
+    }
+    renderPageNumbers = pageNumbers.map(number => {
+        let classes = this.state.current_page === number ? styles.pagination : '';
+
+        return (
+          <span style={{color:"#43063C", fontSize:16, fontFamily:'proxima_novaregular', position:"relative"}} key={number} className={classes} onClick={() => this.fetchEventList(number)}>Load More</span>
+        );
+      });
 
         return(
             <Fragment>
@@ -190,6 +213,11 @@ class Event extends Component {
                             </div>
                         </div>
                         {this.resultu()}
+                        <span onClick={() => this.fetchEventList(1)}></span> 
+                            {renderPageNumbers}
+                        <span onClick={() => this.fetchEventList(1)}></span> 
+                   
+
                     </div>
 
             </Fragment>

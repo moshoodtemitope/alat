@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from "react-redux";
-import '../movie-preference-event.css'
+import styles from '../movie-preference-event.css'
 import * as utils from "../../../shared/utils";
 import {Link, NavLink} from "react-router-dom";
 import {Fragment} from "react";
@@ -21,35 +21,32 @@ class Movie extends Component {
             value:"",
             genre:null,
             movies:null,
-            pagesize: 4,
-            currentpage:1,
-            values:""
-    
+            values:"",
+            total:5,
+            per_page: 4,
+            current_page: 1
 
         };
         console.log("state",this.state);
-        this.fetchMovieList();
+       
+    }
+
+    componentDidMount(){
+        this.fetchMovieList(1);
         this.fetchCinemaList();
         this.fetchGenre();
     }
-
-    // componentDidMount(){
-    //     this.fetchMovieList();
-    //     this.fetchCinemaList();
-    // }
-    handlePageChange = page => {
-        this.setState({currentpage:page});
-    };
+    
 
     
-    fetchMovieList(){
+    fetchMovieList(pageNumber){
         const { dispatch } = this.props;
-        dispatch(FetchMovie(this.state.user.token));
+        dispatch(FetchMovie(this.state.user.token, pageNumber));
     };
     fetchCinemaList(){
         const { dispatch } = this.props;
         dispatch(getCinemaList(this.state.user.token));
-        // console.log(this.props.getCinemaList)
+        console.log(this.props.getCinemaList)
 
     };
     fetchGenre(){
@@ -75,17 +72,13 @@ class Movie extends Component {
     }
     
     
-    
     onChangeHandler = async e => {
         this.search(e.target.value);
         this.setState({ value: e.target.value });
 
         
     };
-    paginate(items, pageNumber, pageSize) {
-        const startIndex = (pageNumber - 1) * pageSize;
-        return (items).slice(startIndex).take(pageSize).value();
-    }
+   
     renderMovies(){
 
         let user = this.state.user;
@@ -97,7 +90,7 @@ class Movie extends Component {
         }
         else if(getMovieList.message === listStyleConstants.GET_MOVIE_LIST_FAILURE){
             return(
-                <h4 className="text-center" style={{ marginTop: '65px'}}>No Movie Found</h4>
+                <h4 className="text-center" >No Movie Found</h4>
             );
         }
         else if (getMovieList.message === listStyleConstants.GET_MOVIE_LIST_SUCCESS){
@@ -318,8 +311,24 @@ class Movie extends Component {
 
 
     render(){
-        let userMovies = this.props.getMovieList;
-        
+        let  renderPageNumbers;
+
+
+        const pageNumbers = [];
+        if (this.state.total !== null) {
+        for (let i = 2; i <= Math.ceil(this.state.total / this.state.per_page); i++){
+        pageNumbers.push(i);
+      }
+    }
+    renderPageNumbers = pageNumbers.map(number => {
+        let classes = this.state.current_page === number ? styles.pagination : '';
+
+        return (
+          <span style={{color:"#43063C", fontSize:16, fontFamily:'proxima_novaregular', position:"relative"}} key={number} className={classes} onClick={() => this.fetchMovieList(number)}>Load More</span>
+        );
+      });
+      let userMovies = this.props.getMovieList;
+
         
         
         return(
@@ -337,9 +346,9 @@ class Movie extends Component {
                                     <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
                                     <li><NavLink to={'/lifestyle/event'}>Event</NavLink></li>
                                     <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li>
-                                    <li style={{float:"right"}}><input style={{width:"100%",height:"40px", marginTop:4, float:'right'}} type="text" placeholder="search ..." value={this.state.value} onChange={ e => this.onChangeHandler(e)}/></li>
+                                    <li style={{float:"right" ,borderRadius:3,}}><input style={{width:"100%",height:"40px", marginTop:4, float:'right'}} type="text" placeholder="search ..." value={this.state.value} onChange={ e => this.onChangeHandler(e)}/></li>
                                     <li style={{float:"right"}} >
-                                        <select style={{width:"100%",height:"40px", marginTop:8, margin:4, float:'right'}} onChange={e=>this.filterGenreOnchangeHandler(e)}>
+                                        <select style={{width:"100%",height:"40px", marginTop:8, margin:4, float:'right', borderRadius:3}} onChange={e=>this.filterGenreOnchangeHandler(e)}>
                                             <option>Show Result By</option>
                                             {                                      
                                                 this.props.FetchMovieGenre.message == listStyleConstants.FETCH_MOVIE_GENRE_SUCCESS && 
@@ -356,11 +365,14 @@ class Movie extends Component {
                     </div>
                    {this.resultu()}
                    {this.renderGenre()}
-                   {/* <Pagination
-                    // itemsCount={this.state.movies.length}
-                    pageSize={this.state.pagesize}
-                    onPageChange={this.handlePageChange}>
-                    </Pagination> */}
+
+                        <span onClick={() => this.fetchMovieList(1)}></span> 
+                            {renderPageNumbers}
+                        <span onClick={() => this.fetchMovieList(1)}></span> 
+                   
+
+                   
+                  
 
                    
         

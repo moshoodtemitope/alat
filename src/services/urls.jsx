@@ -1,6 +1,6 @@
-const URL = 'https://api.alat.ng';
+//const URL = 'https://api.alat.ng';
 //const URL = 'https://196.43.215.170';
-//const URL = 'https://196.43.215.157';
+const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
 
@@ -137,7 +137,7 @@ export const routes = {
 
 
     //EVENTS
-    GET_EVENTS: BASEURL + '/LifeStylePaymentMoviesApi/api/events/getevents?pageNum=1',
+    GET_EVENTS: BASEURL + '/LifeStylePaymentMoviesApi/api/events/getevents?pageNum=',
     GET_SINGLE_EVENT: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Events/GetSingleEvent',
     BUY_EVENT_TICKET: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Events/BuyEventTicketV2',
 
@@ -146,7 +146,7 @@ export const routes = {
     GET_CUSTOMER_ENGAGEMENTS: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Account/GetCustomerEngagements',
 
     //movies
-    FETCH_MOVIES_LIST : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetMovies?page=1',
+    FETCH_MOVIES_LIST : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetMovies?page=',
     FETCH_MOVIE_SHOWTIME : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetShowTimes?cinemaUid=',
     BUY_MOVIE_TICKET : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/BuyMovieTicket',
     FETCH_MOVIE_GENRE : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetGenreList',
