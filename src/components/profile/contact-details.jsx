@@ -272,7 +272,7 @@ class ContactDetails extends Component {
        this.checkEmailAddressValidity(); 
        this.checkLocalGovValidity(); 
        this.checkPlaceOfBirthValidity();
-       this.checkTitleValidity();
+    //    this.checkTitleValidity();
        this.checkNationalityValidity(); 
        this.checkStateOfOriginValidity();
        this.checkDateOfBirthValidity();
@@ -288,7 +288,7 @@ class ContactDetails extends Component {
        this.checkPersonalAddressValidity2();
        this.checkHouseNumberValidity2();
        this.checkApartmentValidity2();
-
+       this.checkSectorValidity();
        console.log('code got here');
 
        return;
@@ -308,9 +308,8 @@ class ContactDetails extends Component {
     SetInputValue = (event) => {
         let name = event.target.name;
         this.setState({[name] : event.target.value});
-        console.log("  was just invoked");
+        console.log("was just invoked");
     } 
-  
 
     checkAlternatePhoneNumberValidity = () => {
        if(this.state.alternateEmail == null || this.state.alternateEmail == ""){
@@ -350,6 +349,14 @@ class ContactDetails extends Component {
             this.setState({EmailAddressValidity: true});
         }else{
             this.setState({EmailAddressValidity: false});
+        }
+    }
+
+    checkSectorValidity = () => {
+        if(this.state.Sector == null || this.state.Sector == ""){
+            this.setState({SectorValidity: true});
+        }else{
+            this.setState({SectorValidity: false});
         }
     }
     
@@ -400,7 +407,7 @@ class ContactDetails extends Component {
         }
     }
 
-    
+
     checkHouseNumberValidity = () => {
         if(this.state.houseNumber == null || this.state.houseNumber == ""){
             this.setState({houseNumberValidity: true});
@@ -431,6 +438,7 @@ class ContactDetails extends Component {
         }else{
             this.setState({personalAddressValidity: false});
         }
+        console.log('was invoked  iiiiiiii');
     }
 
     checkApartmentValidity2 = () => {
@@ -498,8 +506,8 @@ class ContactDetails extends Component {
                                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                                 <ul>
                                                     <li><NavLink to={'/default-page'} className="active">Profile</NavLink></li>
-                                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                                    <li><NavLink to={'/default-page'}>Pin Management</NavLink></li>
+                                                    <li><NavLink to={'/default-page'}>Security Questions</NavLink></li>
                                                 </ul>
                                             </div>
                                         </div>

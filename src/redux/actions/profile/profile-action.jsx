@@ -9,8 +9,8 @@ import { profile } from "../../constants/profile/profile-constants";
 
 export const linkBVN = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
-    return (dispatch) => {
-        let consume = ApiService.request(routes.DELETE_GROUP, "POST", data, SystemConstant.HEADER, true);
+    return (dispatch) => {  
+        let consume = ApiService.request(routes.BVN_VERIFICATION, "POST", data, SystemConstant.HEADER, true);
         dispatch(request(consume));
         return consume
             .then(response => {
@@ -177,4 +177,6 @@ export const profileSuccessMessage = (data) =>{
         }
     }
 }
+
+
 
