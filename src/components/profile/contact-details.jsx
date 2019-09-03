@@ -400,6 +400,7 @@ class ContactDetails extends Component {
         }
     }
 
+    
     checkHouseNumberValidity = () => {
         if(this.state.houseNumber == null || this.state.houseNumber == ""){
             this.setState({houseNumberValidity: true});
