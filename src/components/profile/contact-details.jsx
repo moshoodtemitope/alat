@@ -31,7 +31,6 @@ class ContactDetails extends Component {
         EmployerName: null,
         EmploymentStatus: null,
         mothersMaidenName: null,
-        Gender: null,
         LocalGv: null,
         StateOfOrigin: null,
         Nationality: null,
@@ -62,8 +61,6 @@ class ContactDetails extends Component {
         SectorValidity: false,
         phoneNumberValidity: false,
         EmailAddressValidity: false,
-        EmployersNameValidity: false, 
-        EmploymentValidity: false, 
         LocalGovValidity: false, 
         PlaceOfBirthValidity: false,
         PinValidity: false,
@@ -77,7 +74,6 @@ class ContactDetails extends Component {
         personalAddressValidity: false,
         AlternateEmailValidity: false,
         alternatePhoneNumberValidity: false,
-
         personalAddressValidity2: false,
         streetValidity2: false,
         busstopValidity2: false,
@@ -110,96 +106,26 @@ class ContactDetails extends Component {
        let result = 'valid';
        for(let x in this.state){
             switch(x){
-                case 'bvnNumber':
-                        if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
-                            result = null;
-                            break;
-                        }
-
-                case 'birthDate':
-                        if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
-                            result = null;
-                            break;
-                        }
-                case 'Occupation':
-                        if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
-                            result = null;
-                            break;
-                        }
-
                 case 'AlatPin':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            console.log(x);
                             result = null;
                             break;
                         }
-                case 'Sector':
-                        if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
-                            result = null;
-                            break;
-                        }
-
                 case 'phoneNumber':
                         if(this.state[x] == null || this.state[x] == ""){
                             console.log(x)
                             result = null;
                             break;
                         }
-                case 'SurName':
-                        if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
-                            result = null;
-                            break;
-                        }
-
+        
                 case 'EmailAddress':
                         if(this.state[x] == null || this.state[x] == ""){
                             console.log(x)
                             result = null;
                             break;
                         }
-                case 'FirstName':
-                        if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
-                            result = null;
-                            break;
-                        }
-
-                case 'OtherName':
-                        if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
-                            result = null;
-                            break;
-                        }
-                case 'EmployerName':
-                        if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
-                            result = null;
-                            break;
-                        }
-
-                case 'EmploymentStatus':
-                        if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
-                            result = null;
-                            break;
-                        }
-                case 'Gender':
-                        if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
-                            result = null;
-                            break;
-                        }
-                case 'mothersMaidenName':
-                        if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
-                            result = null;
-                            break;
-                        }
+               
                 case 'LocalGv':
                         if(this.state[x] == null || this.state[x] == ""){
                             console.log(x)
@@ -208,7 +134,7 @@ class ContactDetails extends Component {
                         }
                 case 'StateOfOrigin':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            console.log(x);
                             result = null;
                             break;
                         }
@@ -218,25 +144,6 @@ class ContactDetails extends Component {
                             result = null;
                             break;
                         }
-                case 'PlaceOfBirth':
-                        if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
-                            result = null;
-                            break;
-                        }
-                case 'maritalStatus':
-                        if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
-                            result = null;
-                            break;
-                        }
-                case 'title':
-                        if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
-                            result = null;
-                            break;
-                        }
-
                 case 'houseNumber':
                         if(this.state[x] == null || this.state[x] == ""){
                             console.log(x)
@@ -301,9 +208,6 @@ class ContactDetails extends Component {
                         }
                 
             }
-
-            console.log(result)
-            return result;
         }
 
        console.log(result);
@@ -362,28 +266,16 @@ class ContactDetails extends Component {
 
    HandleSubmit = () => {
        event.preventDefault();
-       this.SetDateValidity();
-       this.SetBVNValidityStatus();
-
+      
        this.checkPinValidity(); 
-       this.checkOccupationValidity();
-       this.checkSectorValidity(); 
        this.checkphoneNumberValidity();
        this.checkEmailAddressValidity(); 
-       this.checkEmployersNameValidity(); 
        this.checkLocalGovValidity(); 
        this.checkPlaceOfBirthValidity();
        this.checkTitleValidity();
-       this.checkMaritalStatusValidity();
        this.checkNationalityValidity(); 
        this.checkStateOfOriginValidity();
-       this.checkSurnameValidity(); 
-       this.checkFirstNameValidity() 
-       this.checkGenderValidity() 
        this.checkDateOfBirthValidity();
-       this.checkEmploymentValidity();
-       this.checkOtherNameValidity();
-       this.checkMothersMaidenNameValidity();
        this.checkApartmentValidity();
        this.checkHouseNumberValidity();
        this.checkPersonalAddressValidity();
@@ -411,36 +303,21 @@ class ContactDetails extends Component {
              this.InitiateNetworkCall();
              break;
        }
-   }
+    }
    
-   SetInputValue = (event) => {
-       let name = event.target.name;
-       this.setState({[name] : event.target.value});
-       console.log("  was just invoked");
-   } 
-   
-   checkTitleValidity = () => {
-        if(this.state.title == null || this.state.title == ""){
-            this.setState({TitleValidity: true});
-        }else{
-            this.setState({TitleValidity: false});
-        }
-   }
+    SetInputValue = (event) => {
+        let name = event.target.name;
+        this.setState({[name] : event.target.value});
+        console.log("  was just invoked");
+    } 
+  
 
-   checkAlternatePhoneNumberValidity = () => {
+    checkAlternatePhoneNumberValidity = () => {
        if(this.state.alternateEmail == null || this.state.alternateEmail == ""){
            this.setState({alternatePhoneNumberValidity: true});
        }else{
            this.setState({alternatePhoneNumberValidity: false});
        }
-   }
-
-    checkMaritalStatusValidity = () => {
-        if(this.state.maritalStatus == null || this.state.maritalStatus == ""){
-            this.setState({MaritalStatusValidity: true});
-        }else{
-            this.setState({MaritalStatusValidity: false});
-        }
     }
 
     checkPinValidity = () => {
@@ -459,20 +336,7 @@ class ContactDetails extends Component {
         }
     }
 
-    checkOccupationValidity = () => {
-        if(this.state.Occupation == null || this.state.Occupation == ""){
-            this.setState({OccupationValidity: true});
-        }else{
-            this.setState({OccupationValidity: false});
-        }
-    }
-    checkSectorValidity = () => {
-        if(this.state.Sector == null || this.state.Sector == ""){
-            this.setState({SectorValidity: true});
-        }else{
-            this.setState({SectorValidity: false});
-        }
-    }
+    
     checkphoneNumberValidity = () => {
         if(this.state.phoneNumber == null || this.state.phoneNumber == ""){
             this.setState({phoneNumberValidity: true});
@@ -488,21 +352,7 @@ class ContactDetails extends Component {
             this.setState({EmailAddressValidity: false});
         }
     }
-    checkEmployersNameValidity = () => {
-        if(this.state.EmployerName == null || this.state.EmployerName == ""){
-            this.setState({EmployersNameValidity: true});
-        }else{
-            this.setState({EmployersNameValidity: false});
-        }
-    }
-    checkEmploymentValidity = () => {
-        if(this.state.EmploymentStatus == null || this.state.EmploymentStatus == ""){
-            this.setState({EmploymentValidity: true});
-        }else{
-            this.setState({EmploymentValidity: false});
-        }
-    }
-
+    
     checkLocalGovValidity = () => {
         if(this.state.LocalGv == null || this.state.LocalGv == ""){
             this.setState({LocalGovValidity: true});
@@ -517,6 +367,7 @@ class ContactDetails extends Component {
             this.setState({PlaceOfBirthValidity: false});
         }
     } 
+
     checkNationalityValidity = () => {
         if(this.state.Nationality == null || this.state.Nationality == ""){
             this.setState({NationalityValidity: true});
@@ -524,6 +375,7 @@ class ContactDetails extends Component {
             this.setState({NationalityValidity: false});
         }
     }
+
     checkStateOfOriginValidity = () => {
         if(this.state.StateOfOrigin == null || this.state.StateOfOrigin == ""){
             this.setState({StateOfOriginValidity: true});
@@ -531,46 +383,12 @@ class ContactDetails extends Component {
             this.setState({StateOfOriginValidity: false});
         }
     }
-    checkSurnameValidity = () => {
-        if(this.state.SurName == null || this.state.SurName == ""){
-            this.setState({SurnameValidity: true});
-        }else{
-            this.setState({SurnameValidity: false});
-        }
-    }
-    checkFirstNameValidity = () => {
-        if(this.state.FirstName == null || this.state.FirstName == ""){
-            this.setState({FirstNameValidity: true});
-        }else{
-            this.setState({FirstNameValidity: false});
-        }
-    }
-    checkGenderValidity = () => {
-        if(this.state.Gender == null || this.state.Gender == ""){
-            this.setState({GenderValidity: true});
-        }else{
-            this.setState({GenderValidity: false});
-        }
-    }
+    
     checkDateOfBirthValidity = () => {
         if(this.state.birthDate == null || this.state.birthDate == ""){
             this.setState({DateOfBirthValidity: true});
         }else{
             this.setState({DateOfBirthValidity: false});
-        }
-    }
-    checkOtherNameValidity = () => {
-        if(this.state.OtherName == null || this.state.OtherName == ""){
-            this.setState({OtherNameValidity: true});
-        }else{
-            this.setState({OtherNameValidity: false});
-        }
-    }
-    checkMothersMaidenNameValidity = () => {
-        if(this.state.mothersMaidenName == null || this.state.mothersMaidenName == ""){
-            this.setState({MothersMaidenNameValidity: true});
-        }else{
-            this.setState({MothersMaidenNameValidity: false});
         }
     }
 

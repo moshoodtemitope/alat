@@ -22,7 +22,7 @@ class NextOfKin extends Component {
          Occupation: null,
          AlatPin: null,
          Sector: null,
-         EmployerPhoneNumber: null,
+         phoneNumber: null,
          BVNnumber: null,
          SurName: null,
          EmailAddress: null,
@@ -49,7 +49,8 @@ class NextOfKin extends Component {
          busStop2: null,
          personalAddress2: null,
          nextOfKinBVN: null,
- 
+         relationship: null,
+
          NationalityValidity: false, 
          OtherNameValidity: false, 
          MothersMaidenNameValidity: false,
@@ -59,7 +60,7 @@ class NextOfKin extends Component {
          SurnameValidity: false, 
          FirstNameValidity: false, 
          SectorValidity: false,
-         EmployerPhoneNumberValidity: false,
+         phoneNumberValidity: false,
          EmailAddressValidity: false,
          EmployersNameValidity: false, 
          EmploymentValidity: false, 
@@ -68,7 +69,7 @@ class NextOfKin extends Component {
          PinValidity: false,
          OccupationValidity: false,
          TitleValidity: false,
-         MaritalStatusValidity: false,
+         relationshipValidity: false,
          houseNumberValidity: false,
          apartmentValidity: false,
          busstopValidity: false,
@@ -141,7 +142,7 @@ class NextOfKin extends Component {
                              break;
                          }
  
-                 case 'EmployerPhoneNumber':
+                 case 'phoneNumber':
                          if(this.state[x] == null || this.state[x] == ""){
                              console.log(x)
                              result = null;
@@ -309,11 +310,32 @@ class NextOfKin extends Component {
     }
  
     InitiateNetworkCall = () => {
+        // let data = {
+        //     bvn: this.state.bvnNumber,
+        //     date: this.state.dateValue
+        // }
+
         let data = {
-            bvn: this.state.bvnNumber,
-            date: this.state.dateValue
-        }
- 
+            gender: this.state.Gender,
+            dateOfBirth: this.state.dateOfBirth,
+            title: this.state.title,
+            relationship: this.state.relationship,
+            firstName: this.state.FirstName,
+            surname: this.state.SurName,
+            otherNames: this.state.OtherName,
+            phoneNumber: this.state.phoneNumber,
+            email: this.state.EmailAddress,
+            bvNumber: this.state.BVNnumber,
+            streetAddress: this.state.street,
+            landMark: this.state.busStop,
+            country: this.state.Nationality,
+            state: this.state.StateOfOrigin,
+            town: this.state.LocalGv,
+            isAddressSame: true,
+            pin: this.state.AlatPin,
+            address: this.state.address
+          }
+    
         this.props.dispatch(actions.linkBVN(this.state.user.token, data));
     }
  
@@ -339,13 +361,13 @@ class NextOfKin extends Component {
         this.checkPinValidity(); 
         this.checkOccupationValidity();
         this.checkSectorValidity(); 
-        this.checkEmployerPhoneNumberValidity();
+        this.checkphoneNumberValidity();
         this.checkEmailAddressValidity(); 
         this.checkEmployersNameValidity(); 
         this.checkLocalGovValidity(); 
         this.checkPlaceOfBirthValidity();
         this.checkTitleValidity();
-        this.checkMaritalStatusValidity();
+        this.checkrelationshipValidity();
         this.checkNationalityValidity(); 
         this.checkStateOfOriginValidity();
         this.checkSurnameValidity(); 
@@ -360,7 +382,6 @@ class NextOfKin extends Component {
         this.checkPersonalAddressValidity();
         this.checkBusstopValidity();
         this.checkStreetValidity();
- 
         this.checkStreetValidity2();
         this.checkBusstopValidity2(); 
         this.checkPersonalAddressValidity2();
@@ -397,11 +418,11 @@ class NextOfKin extends Component {
          }
     }
  
-     checkMaritalStatusValidity = () => {
-         if(this.state.maritalStatus == null || this.state.maritalStatus == ""){
-             this.setState({MaritalStatusValidity: true});
+     checkrelationshipValidity = () => {
+         if(this.state.relationship == null || this.state.relationship == ""){
+             this.setState({relationshipValidity: true});
          }else{
-             this.setState({MaritalStatusValidity: false});
+             this.setState({relationshipValidity: false});
          }
      }
  
@@ -426,11 +447,11 @@ class NextOfKin extends Component {
              this.setState({SectorValidity: false});
          }
      }
-     checkEmployerPhoneNumberValidity = () => {
-         if(this.state.EmployerPhoneNumber == null || this.state.EmployerPhoneNumber == ""){
-             this.setState({EmployerPhoneNumberValidity: true});
+     checkphoneNumberValidity = () => {
+         if(this.state.phoneNumber == null || this.state.phoneNumber == ""){
+             this.setState({phoneNumberValidity: true});
          }else{
-             this.setState({EmployerPhoneNumberValidity: false});
+             this.setState({phoneNumberValidity: false});
          }
      }
  
@@ -613,7 +634,7 @@ class NextOfKin extends Component {
     }
  
    render(){
-    const { birthDate, PinValidity, sameAddressAsAbove, SurnameValidity, MaritalStatusValidity, TitleValidity, EmployerPhoneNumberValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
+    const { birthDate, PinValidity, sameAddressAsAbove, SurnameValidity, relationshipValidity, TitleValidity, phoneNumberValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
         EmailAddressValidity, streetValidity, GenderValidity, busstopValidity, DateOfBirthValidity, FirstNameValidity, OtherNameValidity
         } = this.state;
 
@@ -689,12 +710,11 @@ class NextOfKin extends Component {
                                                             </select>
                                                         </div>
 
-                                                        <div className={MaritalStatusValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                        <div className={relationshipValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">Relationship</label>
-                                                            <select onChange={this.SetInputValue} name="maritalStatus" placeholder="marital status">
-                                                                
-                                                                <option value="Mr">Married</option>
-                                                                <option value="Mrs">Single</option>
+                                                            <select onChange={this.SetInputValue} name="relationship" placeholder="marital status">
+                                                                <option value="Mr">Sister</option>
+                                                                <option value="Mrs">Brother</option>
                                                             </select>
                                                         </div>
                                             </div>
@@ -720,13 +740,13 @@ class NextOfKin extends Component {
                                                             <input type="text" name="OtherName" className="form-control" onChange={this.SetInputValue} placeholder="Other Name"/>
                                                         </div>
                                             </div>
-
+                   
                                             <div className="form-row">
-                                                        <div className={EmployerPhoneNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                        <div className={phoneNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Phone Number</label>
-                                                            <input type="number" name="EmployerPhoneNumber" className="form-control" onChange={this.SetInputValue} placeholder="Telephone"/>
+                                                            <input type="number" name="phoneNumber" className="form-control" onChange={this.SetInputValue} placeholder="Telephone"/>
                                                         </div>
-                                            </div>
+                                            </div>       
 
                                             <div className="form-row">
                                                         <div className={EmailAddressValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
@@ -771,7 +791,7 @@ class NextOfKin extends Component {
                                                             <label className="label-text">Nationality</label>
                                                             <input type="text" name="Nationality" className="form-control" onChange={this.SetInputValue} placeholder="Nationality"/>
                                                         </div>
-
+                                              
                                                         <div className={StateOfOriginValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">State of Origin</label>
                                                             <input type="text" name="StateOfOrigin" className="form-control" onChange={this.SetInputValue} placeholder="state of origin"/>
@@ -839,7 +859,6 @@ class NextOfKin extends Component {
                         </div>
                  </InnerContainer>
         </Fragment>
-            
        )
    }
 }
