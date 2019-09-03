@@ -6,6 +6,7 @@ import {Fragment} from "react";
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import InnerContainer from '../../shared/templates/inner-container';
 import {history} from '../../_helpers/history';
+import { connect } from 'react-redux';
 
 
 class LinkBvN extends Component {
@@ -67,6 +68,7 @@ class LinkBvN extends Component {
            date: this.state.dateValue
        }
 
+       console.log(data)
        this.props.dispatch(actions.linkBVN(this.state.user.token, data));
    }
 
@@ -215,14 +217,14 @@ class LinkBvN extends Component {
                         </div>
                  </InnerContainer>
         </Fragment>
-                            
-                
-                    
-                        
-           
-                
        )
    }
 }
 
-export default LinkBvN;
+const mapStateToProps = (state) => {
+    return {
+        
+    }
+}
+
+export default connect(mapStateToProps)(LinkBvN);

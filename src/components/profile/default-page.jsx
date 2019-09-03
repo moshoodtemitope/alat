@@ -8,8 +8,7 @@ import {Fragment} from "react";
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import {history} from '../../_helpers/history';
 import { profile } from '../../redux/constants/profile/profile-constants'
-// import * as actions from '../redux/actions/profile/profile-action';
-
+ // import * as actions from '../redux/actions/profile/profile-action';
 
 class PersonalDefault extends Component {
    constructor(props){
@@ -55,6 +54,7 @@ class PersonalDefault extends Component {
 
         history.push('/profile-contact-detail');
    }
+
 
    NavigateToDocuments = () => {
     //    console.log(this.props.profileMenu.response.documentUploaded);

@@ -459,10 +459,21 @@ class PersonalInfoMation extends Component {
        history.push('/profile-success-message');
    }
 
+   PersonalInfomationHasBeenLinked = () => {
+        this.DispatchSuccessMessage('Personal Information Linked Successfully');
+   }
+
+   DispatchSuccessMessage = (data) => {
+        this.props.dispatch(actions.profileSuccessMessage(data));
+   }
 
    render(){
        const {BVNValidity, birthDate, PinValidity, SectorValidity, EmployerPhoneNumberValidity,EmploymentValidity, AddressValidity, EmployersNameValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
         SurnameValidity, EmailAddressValidity, FirstNameValidity, MaritalStatusValidity, TitleValidity, OccupationValidity,GenderValidity, DateOfBirthValidity, OtherNameValidity, MothersMaidenNameValidity} = this.state;
+
+    //    if(this.props.capturePersonalInformation.response != undefined){
+    //        this.PersonalInfomationHasBeenLinked();
+    //    }
 
        return(
         <Fragment>
@@ -694,6 +705,14 @@ class PersonalInfoMation extends Component {
             
        )
    }
+}
+
+const mapStateTopProps = (state) => {
+    return {
+        profileMenu:state.profileMenu.data,
+        profileSuccessMessage: state.profileSuccessMessage.data,
+        capturePersonalInformation: state.capturePersonalInformation.data
+    }
 }
 
 export default PersonalInfoMation;
