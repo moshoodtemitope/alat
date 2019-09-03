@@ -65,26 +65,18 @@ class ManageInsurance extends React.Component {
 
     renderNoExistingPolicy(){
         return(
-            <div className="col-sm-12">
-                <div className="row">
-                        <div className="col-sm-12">
-                            <div className="max-600">
-                                <div className="al-card no-pad">
-                                    <div className="transfer-ctn text-center">
-                                        <div>
-                                            <center>
-                                                <img src={noPolicy} />
-                                            </center>
-                                            <div className="m-t-30 width-300">
-                                                <div className="success-mg">
-                                                You don’t have any insurance policy at the moment. 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <div>
+                <center>
+                    <img src={noPolicy} />
+                </center>
+                <div className="m-t-30 width-300">
+                    <div className="success-mg">
+                        You don’t have any insurance policy at the moment. 
+                    </div>
+                    <center>
+                        <button type="button"  
+                            className="btn-alat m-t-10 m-b-20 text-center">Buy Insurance</button>
+                    </center>
                 </div>
             </div>
         )
@@ -100,16 +92,14 @@ class ManageInsurance extends React.Component {
                                 <div className="max-600">
                                     <div className="al-card no-pad">
                                         <div className="transfer-ctn text-center">
-                                            <div>
-                                                <center>
-                                                    <img src={noPolicy} />
-                                                </center>
-                                                <div className="m-t-30 width-300">
-                                                    <div className="success-mg">
-                                                    You don’t have any insurance policy at the moment. 
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            {getExistingPolicyRequest.fetch_status===FETCH_EXISTING_POLICIES_PENDING &&
+                                                <div>Loading yor existing policies...</div>
+                                            }
+
+                                            {(getExistingPolicyRequest.fetch_status===FETCH_EXISTING_POLICIES_SUCCESS 
+                                            && getExistingPolicyRequest.existingpolicy_data.response.data.InsuranceDetails===null) &&
+                                                this.renderNoExistingPolicy()
+                                            }
                                         </div>
                                     </div>
                                 </div>
