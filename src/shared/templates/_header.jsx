@@ -48,6 +48,7 @@ class HeaderContainer extends React.Component{
                 <div className="mini-nav" style={{display: 'block'}}>
                     <ul>
                         <li><a href="#">Profile</a></li>
+                        <li><NavLink to="/settings">Settings</NavLink></li>
                         <li>
                             {/*<NavLink to="/logout">Logout</NavLink>*/}
                             <a onClick={this.logout.bind(this)}>Logout</a>
@@ -62,6 +63,8 @@ class HeaderContainer extends React.Component{
                 <div className="mini-nav">
                     <ul>
                         <li><a href="#">Profile</a></li>
+                        <li><NavLink to="/account">Accounts</NavLink></li>
+                        <li><NavLink to="/settings">Settings</NavLink></li>
                         <li>
                             <NavLink to="/logout">Logout</NavLink>
                             {/*<a onClick={this.logout.bind(this)}>Logout</a>*/}

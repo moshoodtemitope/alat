@@ -247,3 +247,17 @@ export const loanValidateRemitaOtp =(token, data) =>{
     function success(response) { return { type: loanConstants.LOAN_VALIDATEOTP_SUCCESS, response }}
     function failure(error) { return { type: loanConstants.LOAN_VALIDATEOTP_FAILURE, error } }
 }
+
+export const continueApplication =(data)=>{
+    return (dispatch) =>{
+        dispatch(success(data));
+    }
+    function success(data){ return { type: loanConstants.LOAN_CONTINUE_APPLICATION, data: data } }
+}
+
+export const clearLoanOnboardingStore =()=>{
+    return (dispatch) => { 
+        dispatch(clear());
+    }
+    function clear(){return {type: loanConstants.LOAN_ONBOARDING_CLEAR, clear_data: "" }}
+}

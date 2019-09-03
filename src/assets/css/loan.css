@@ -159,3 +159,30 @@ max-width: 40%;
 .term-acpt-link{
   margin-right: 30px;
 }
+
+.center-space{
+  align-items: center;
+  min-height: 150px;
+}
+
+.text-grey-center{
+color: #717171;
+text-align: center;
+}
+
+.outer-bar{
+margin-right: 25px;
+margin-top: 10px;
+margin-bottom: 5px;
+border-radius: 5px;
+min-width: 120px;
+max-height: 10px;
+background-color: #D8D8D8;
+}
+
+.inner-bar{
+  max-width: 75%;
+  background-color: #9F083E;
+  min-height: 10px;
+  border-radius: 5px;
+}

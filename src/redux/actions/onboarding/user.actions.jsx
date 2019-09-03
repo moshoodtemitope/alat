@@ -17,8 +17,29 @@ export const userActions = {
     skipBvn,
     saveBvnInfo,
     saveBvnData,
-    loginAfterOnboarding
+    loginAfterOnboarding,
+    reissueToken
 };
+
+function reissueToken(payload) {
+    let userDetails = JSON.parse(localStorage.getItem("user"));
+    SystemConstant.HEADER['alat-token'] = userDetails.token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.REISSUE_TOKEN, "GET", payload, SystemConstant.HEADER);
+        return consume
+            .then(response => {
+                
+                if(userDetails){
+                    userDetails.token = response.data.token;
+                    localStorage.setItem("user", JSON.stringify(userDetails));
+                    console.log("reissuired token---------")
+                }
+            })
+            .catch(error => {
+                console.log("reissue token failed", error)
+            });
+    };
+}
 
 function login(email, password) {
     return dispatch => {
@@ -80,13 +101,16 @@ function loginAfterOnboarding(loginData){
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
-function logout() {
+function logout(type) {
     // userService.logout();
     //console.error("We are logging you out...");
     localStorage.clear();
     history.push('/');
     // window.location.reload();
-    return { type: userConstants.LOGOUT };
+    return (dispatch)=>{
+    dispatch(logout());
+    }
+    function logout() {return { type: userConstants.LOGOUT }}
 }
 
 function skipBvn(bvnDetails){
