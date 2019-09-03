@@ -173,7 +173,7 @@ class StashCashout extends Component {
                                                     <div className="col-sm-12">
                                                         <center>
                                                             <button type="submit" value="Fund Account" className="btn-alat m-t-10 m-b-20 text-center">
-                                                                {this.props.stashGoal_step1.stashout_goal_status_step1 === customerGoalConstants.STASH_CASHOUT_STEP1_PENDING ? "Processing..." : "Proceed and Checkout"}
+                                                                {this.props.stashGoal_step1.stashout_goal_status_step1 === customerGoalConstants.STASH_CASHOUT_STEP1_PENDING ? "Processing..." : "Proceed and Cashout"}
                                                             </button>
                                                         </center>
                                                     </div>

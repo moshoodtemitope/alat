@@ -220,7 +220,8 @@ class FlexGoal extends React.Component {
         var days = null;
         var res;
         let amount= parseFloat(this.removeComma(this.state.targetAmount));
-        // console.log('chika',amount);
+        let selectedFrequency = this.state.goalFrequencyValue.split(" ",1);
+
         console.log("monthly", this.state.goalFrequencyName);
         if (this.state.targetAmount ==="") {
             this.setState({interest: 0});
@@ -235,8 +236,10 @@ class FlexGoal extends React.Component {
                 this.setState({interest: this.interest});
             }else if(this.state.goalFrequencyName === "Weekly"){
                 res = this.state.goalFrequencyValue.split(" ",1) * 7;
-                this.interest = this.GetWeeklyFutureValue(amount, 0.10, res) - (amount * res);
+                this.interest = this.GetWeeklyFutureValue(amount, 0.10, res) - (amount * selectedFrequency);
                 this.interest = this.toCurrency(this.interest.toFixed(2));
+                this.setState({interest: this.interest});
+
 
             }else{
                 res = this.state.goalFrequencyValue.split(" ",1) * 1;
@@ -330,6 +333,7 @@ class FlexGoal extends React.Component {
                 })}>
                     <option>2 Weeks</option>
                     <option>4 Weeks</option>
+                    <option>6 Weeks</option>
                     <option>8 Weeks</option>
                     <option>12 Weeks</option>
                     <option>24 Weeks</option>

@@ -152,9 +152,9 @@ class ParentDashBoard extends React.Component {
                                 <div className="row">
                                     <div className="bodyDetails">
                                           
-                                          <h4 className="m-b-10 center-text hd-underline">Automate Group Savings</h4>
+                                          <h4 className="m-b-10 text-center hd-underline">Automate Group Savings</h4>
                                             <div className="loadingData">
-                                                <p>loading data ...</p>
+                                                <p style={{textAlign:"center",}}>Loading group savings ...</p>
                                             </div>
                                     </div>
                                </div>

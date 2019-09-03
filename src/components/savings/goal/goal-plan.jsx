@@ -94,7 +94,7 @@ class GoalPlan extends React.Component {
                     <NavLink to="/savings/flex-goal">
                         <div className="flex-goal">
                             <img className="goal-icon" src={graph} alt=''/>
-                            <p className="plan-text">Flex Goal</p>
+                            <p className="plan-text">Flexi Goal</p>
                             <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days
                                 but you will lose your interest if you don't meet your</p>
                         </div>
@@ -134,7 +134,7 @@ class GoalPlan extends React.Component {
                             <NavLink to="/savings/flex-goal">
                                 <div className="flex-goal">
                                     <img className="goal-icon" src={graph} alt=''/>
-                                    <p className="plan-text">Flex Goal</p>
+                                    <p className="plan-text">Flexi Goal</p>
                                     <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days
                                         but you will lose your interest if you don't meet your</p>
                                 </div>
@@ -267,7 +267,7 @@ class GoalPlan extends React.Component {
                         <NavLink to="/savings/flex-goal">
                             <div className="flex-goal">
                                 <img className="goal-icon" src={graph} alt=''/>
-                                <p className="plan-text">Flex Goal</p>
+                                <p className="plan-text">Flexi Goal</p>
                                 <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days
                                     but you will lose your interest if you don't meet your</p>
                             </div>

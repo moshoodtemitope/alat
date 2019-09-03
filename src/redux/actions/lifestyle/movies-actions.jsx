@@ -181,7 +181,7 @@ export const getSingleEvent = (token, data) => {
 export const purchaseEventTicket = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.BUY_MOVIE_TICKET, "POST", data, SystemConstant.HEADER, false);
+        let consume = ApiService.request(routes.BUY_EVENT_TICKET, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
@@ -256,7 +256,7 @@ export const SearchFetchEvent = (token, data) => {
         return consume
             .then(response => {
                 // consume.log(response);
-                dispatch(success(response.data));
+                dispatch(success(response.data, data));
             })
             .catch(error => {
                 dispatch(alertActions.error(modelStateErrorHandler(error)));

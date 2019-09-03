@@ -144,7 +144,7 @@ class BuyTicket extends Component {
                         </div>
                     </div>
                         {this.props.alert && this.props.alert.message &&
-                        <div style={{width: "100%", marginRight:"120px",marginLeft:"120px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                        <div style={{width: "50%", marginRight:"120px",marginLeft:"25%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                         }
                         <div className="col-sm-12">
                             <div className="row">
@@ -201,15 +201,7 @@ class BuyTicket extends Component {
                                             </form>
                                            
                                         </div>
-                                        <div className="row">
-                                                        <div className="col-sm-12">
-                                                            <center>
-                                                                <button onClick={() => { this.props.dispatch(actions.ClearAction(fundAccountConstants.FUND_ACCOUNT_REDUCER_CLEAR)); 
-                                                                    this.props.history.push('/dashboard') }} className="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</button>
-                                                                {/* <Link to={'/dashboard'} className="btn-alat m-t-10 m-b-20 text-center">Go to Dashboard</Link> */}
-                                                            </center>
-                                                        </div>
-                                                    </div>
+                                        
 
                                     </div>
                                 </div>

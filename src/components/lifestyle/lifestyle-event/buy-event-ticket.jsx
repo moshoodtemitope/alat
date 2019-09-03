@@ -23,6 +23,7 @@ class BuyTicket extends Component {
             cinemaId:"",
             title:"",
             Pin:"",
+            source:"",
             isPinInvalid: false,
 
 
@@ -78,6 +79,8 @@ class BuyTicket extends Component {
                 ShowTimeId:data.ShowTimeId,
                 ticketClassses:data.ticketClassses,
                 quantity:data.quantity,
+                source:data.source,
+                eventId:data.eventId
                 
             });
         }
@@ -92,9 +95,8 @@ class BuyTicket extends Component {
             //not valid
         }else {
             let data={
-                'Email':this.state.TicketAmount,
+                'Email':this.state.user.email,
                 'accountNo':this.state.accountToDebit,
-                'pin':parseInt(this.state.Pin),
                 "ClassId":this.state.ShowTimeId,	
                 "EventId":this.state.cinemaId,
                 "Source":this.state.source,

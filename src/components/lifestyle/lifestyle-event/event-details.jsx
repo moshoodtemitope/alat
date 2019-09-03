@@ -4,7 +4,7 @@ import {listStyleConstants} from "../../../redux/constants/lifestyle/lifestyle-c
 import {Redirect} from 'react-router-dom'
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
 import {getCinemaList,} from '../../../redux/actions/lifestyle/movies-actions';
-import clock from '../../../assets/img/clock-circular-outline'
+import clock from '../../../assets/img/clock-circular-outline.svg'
 
 
 
@@ -26,6 +26,7 @@ class EventDetails extends React.Component {
             ticketClassses:null,
             user: JSON.parse(localStorage.getItem("user")),
             dataContainer: null,
+            eventId:""
         };
     }
     // fetchEventList(){
@@ -97,7 +98,9 @@ class EventDetails extends React.Component {
             TicketAmount:parseFloat(this.state.childAmount),
             title:this.props.location.state.details.title,
             quantity:this.state.childNumber,
-            ticketClassses:this.state.ticketClassses
+            ticketClassses:this.state.ticketClassses,
+            eventId:this.state.eventId,
+            source:this.props.location.state.details.source
         }
         console.log(data)
         // return;
@@ -107,21 +110,7 @@ class EventDetails extends React.Component {
         return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
     };
     
-    // value={event.date + "8888" + event.student + " " + event.adult + " " + event.children}>{event.date}</option>
-    // UseSelectedTime = (event) => {
-    //     let amounts = event.target.value.split("8888")[1];
-    //     let adultAmount = amounts.split(" ")[1];
-    //     let childrenAmount = amounts.split(" ")[2];
-    //     let studentAmount = amounts.split(" ")[0];
-       
-    //     console.log(adultAmount);
-    //     console.log(childrenAmount);
-    //     console.log(studentAmount);
-    //     console.log('oooooooooooooooooooooooooooooooooooo');
-    //     this.setState({initialStudentAmount: studentAmount});
-    //     this.setState({initialAdultAmount: adultAmount});
-    //     this.setState({initialChildAmount: childrenAmount});
-    // }
+    
 
     UseSelectedItem = (event) => {
         let gottenValue = event.target.value.split("000");
@@ -132,13 +121,15 @@ class EventDetails extends React.Component {
         let data = {
             item: gottenValue[0],
             id: gottenValue[1],
-            ticketClassses:gottenValue[2]
+            ticketClassses:gottenValue[2],
+            eventId:gottenValue[3],
 
         }
   
         this.setState({initialChildAmount:gottenValue[0]});
         this.setState({childAmount:gottenValue[0]});
-        this.setState({ticketClassses:gottenValue[2]})
+        this.setState({ticketClassses:gottenValue[2]});
+        this.setState({eventId:gottenValue[3]});
         console.log(data);
         this.props.dispatch(actions.ShowTime(this.state.user.token, data))
     }
@@ -304,7 +295,7 @@ class EventDetails extends React.Component {
                                     // getEvents.message == listStyleConstants.GET_EVENTS_SUCCESS && 
                                     //  this.LopEventList()
                                     details.ticketClassses.map(event=> {
-                                        return <option key={event.title} value={event.ticketId + " " + "000" + event.price + " " + event.title}>{event.title}</option>
+                                        return <option key={event.title} value={event.ticketId + " " + "000" + event.price + " " + event.title + " " + event.eventId}>{event.title}</option>
                                     })
                                 }
                             </select>

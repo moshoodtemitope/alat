@@ -4,7 +4,7 @@ import {listStyleConstants} from "../../../redux/constants/lifestyle/lifestyle-c
 import {Redirect} from 'react-router-dom'
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
 import {getCinemaList, getSingleMovie} from '../../../redux/actions/lifestyle/movies-actions';
-import clock from '../../../assets/img/clock-circular-outline'
+import clock from '../../../assets/img/clock-circular-outline.svg'
 
 
 

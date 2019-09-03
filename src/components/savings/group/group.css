@@ -97,6 +97,7 @@
     background-color: transparent;
     display: flex !important;
     flex-wrap: wrap !important;
+    justify-content: center;
 }
 
 .compContainer2 {
@@ -104,6 +105,7 @@
     background-color: transparent;
     display: flex !important;
     flex-wrap: wrap !important;
+    justify-content: center;
 }
 
 
@@ -149,16 +151,18 @@
 }
 
 .smallnavtop {
-    width: 86% !important;
+    width: 50% !important;
     position: absolute;
     top: 238px;
     z-index: 0;
-    left: 50%;
+    /* right: 0px; */
+    left: 50%;  
 }
 
 .smallnavtop  ul {
-    float: right !important;
+    /* float: right !important; */
     margin-left: 145px !important;
+    /* padding-left: 20%; */
 }
 
 .smallnavtop ul li {
@@ -433,12 +437,12 @@
   width: 100%;
   margin-bottom: 0px;
   font-family:'proxima_novasemibold',sans-serif !important;
-font-size: 8px;
-line-height: 10px;
-padding-bottom: 5px;
-padding-top: 20px;
-font-weight: bold;
-text-transform: uppercase !important;
+    font-size: 8px;
+    line-height: 10px;
+    padding-bottom: 5px;
+    padding-top: 20px;
+    font-weight: bold;
+/* text-transform: uppercase !important; */
 }
 
 .topCard .left .bottom {
@@ -737,7 +741,7 @@ font-weight: bold;
 
 .bottomDiscription span, .topDiscription span {
     color: #A90836;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 }
 
 .bottomDiscription p {

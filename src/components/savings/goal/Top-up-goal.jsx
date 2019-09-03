@@ -89,55 +89,26 @@ class TopUPGoal extends Component {
         return formatter.format(number);
     }
     setFregValue = () => {
-        this.setState({ payOutInterest: this.calculateInterest()});
+        this.setState({ payOutInterest: this.calculateStashInterest() });
 
 
     };
-    calculateInterest(){
-
-        let days = null;
-        let res;
-        if(this.state.Amount){
-
-            /* let start = moment(this.formula.startDate).format('DD-MM-YYYY').toString();
-             let end = moment(this.formula.targetDate).format('DD MMMM, YYYY').toString();
-             let startDate = moment(start, 'DD MMMM, YYYY');
-             let enddate = moment(end, 'DD MMMM, YYYY');
-             //let date = moment(enddate, 'DD-MM-YYYY').add(res, 'days');
-
-             res = enddate.diff(startDate, 'days'); */
-
-            let amount = this.removeComma(this.state.Amount) + this.state.goal.targetAmount;
-
-            //var ia:any = ((amount / 365) * this.formula.interestRate );
-
-            // let diff_in_months = Math.floor(enddate.diff(startDate, 'months', true));
-            let dailycontribution;
-
-
-            let ia = ((amount / 365) * 0.10 );
-            dailycontribution = 1 * ( ia - (0.10) *ia);
-            this.interest =  parseFloat(dailycontribution).toFixed(2);
-
-            if(this.state.goal.goalTypeName.indexOf('Stash') >= 0){
-               return this.showInterests = true;
-                this.calculateStashInterest();
-            }else{
-                return this.showInterests = false;
-            }
-        }
-    }
+    
     calculateStashInterest(){
             let days = null;
             let res;
             if(this.state.Amount){
                 let amount = parseFloat(this.removeComma(this.state.Amount)) + this.state.goal.amountSaved;
+                console.log(amount)
+                console.log(this.state.goal.amountSaved)
                 let ia = ((amount / 365) * 0.10 );
                 let interest = (ia - (parseFloat(0.10) * ia)).toFixed(2);
                 this.interest =  interest;
-                return this.showInterests = true;
+                this.showInterests = true;
+                return this.interest
             }else{
-                return this.showInterests = false;
+                this.showInterests = false;
+                return this.interest
             }
         }
 

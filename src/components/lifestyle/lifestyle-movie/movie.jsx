@@ -5,7 +5,7 @@ import * as utils from "../../../shared/utils";
 import {Link, NavLink} from "react-router-dom";
 import {Fragment} from "react";
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
-import clock from '../../../assets/img/clock-circular-outline'
+import clock from '../../../assets/img/clock-circular-outline.svg';
 import {listStyleConstants} from '../../../redux/constants/lifestyle/lifestyle-constants';
 import { FetchMovie,getCinemaList, fetchMovieGenre } from "../../../redux/actions/lifestyle/movies-actions";
 

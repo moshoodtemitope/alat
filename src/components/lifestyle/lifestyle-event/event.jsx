@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
 import { connect } from "react-redux";
-import '../movie-preference-event.css'
+import styles from '../movie-preference-event.css'
 import {Link, NavLink} from "react-router-dom";
 import {Fragment} from "react";
 import moment from 'moment';
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
 import {listStyleConstants} from '../../../redux/constants/lifestyle/lifestyle-constants';
 import {getEvents} from "../../../redux/actions/lifestyle/movies-actions";
-import clock from '../../../assets/img/clock-circular-outline'
+import clock from '../../../assets/img/clock-circular-outline.svg'
 
 
 
