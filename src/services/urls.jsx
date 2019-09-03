@@ -1,6 +1,6 @@
 // const URL = 'https://api.alat.ng';
-const URL = 'https://196.43.215.170';
-// const URL = 'https://196.43.215.157';
+//const URL = 'https://196.43.215.170';
+const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
 
@@ -126,4 +126,11 @@ export const routes = {
     CHECK_ANSWER: BASEURL + '/AccountSetting/api/securityquestion/validate',
     CHANGE_PIN: BASEURL + '/AccountSetting/api/pin/change',
     RESET_PIN :BASEURL + '/AccountSetting/api/pin/CreateOrReset',
+    
+    //PROFILE MENU
+    GET_PROFILE_MENU: BASEURL + '/ProfileManagement.WebApi/api/ProfileMenu',
+    POST_PROFILE_INFO: BASEURL + '/ProfileManagement.WebApi/api/PersonalInfo/Add',
+    ADD_NEXT_OF_KIN: BASEURL + '/ProfileManagement.WebApi/api/nextOfKin/AddV2',
+    ADD_CONTACT: BASEURL + '/ProfileManagement.WebApi/api/ContactDetails/SaveV2',
+    OCCUPA_AND_SECTOR: BASEURL + '/ProfileManagement.WebApi/api/OccupationAndSector'
 };
