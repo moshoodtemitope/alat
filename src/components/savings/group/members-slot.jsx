@@ -16,8 +16,6 @@ var slot = [];
 var groupMembers;
 var selectCounter = 0;
 
-// if(window.performance.navigation.type == 1)
-//     window.location.replace("http://localhost:8080/");
 
 class MemberSlots extends React.Component{
     constructor(props){

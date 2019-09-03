@@ -15,9 +15,6 @@ import * as actions from '../../../redux/actions/savings/group-savings/rotating-
 import {history} from '../../../_helpers/history';
 import moment from 'moment'
 
-// if(window.performance.navigation.type == 1)
-//     window.location.replace("http://localhost:8080/");
-
 class GroupAnalyticsMini extends React.Component {
     constructor(props){
         super(props);
