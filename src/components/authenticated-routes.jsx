@@ -46,7 +46,7 @@ import RotatingGroupCreated from './savings/group/rotating-group-created';
 import GroupAnalyticsMini from './savings/group/group-analytics-mini';
 import JoinAGroup from './savings/group/join-a-group';
 import JoinedGroupSuccessfully from './savings/group/joined-group-successfully';
-import  CreateStashSuccessMessage from './savings/goal/create-stash-success';
+import CreateStashSuccessMessage from './savings/goal/create-stash-success';
 import GroupAnalyticsMini2 from './savings/group/group-analytics-mini2';
 import ParentDashBoard from './savings/group/parent-dashboard';
 import ViewGoalSummary from './savings/goal/view-goal-summary';
@@ -232,7 +232,6 @@ class AuthenticatedRoutes extends React.Component {
             this.props.logout();
         }
         return (
-<<<<<<< HEAD
             <Fragment>
                 <Modal open={this.state.openModal} onClose={this.closeModal} center>
                     <div className="div-modal">
@@ -250,13 +249,8 @@ class AuthenticatedRoutes extends React.Component {
                 </Modal>
                 <Router history={history}>
                     <Switch>
-                        {/*<Route path="/dashboard" component={Dashboard} />*/}
                         <PrivateRoute path='/dashboard' authed={this.props.user} component={Dashboard} />
                         <PrivateRoute path='/fund' authed={this.props.user} component={FundAccountIndex} />
-                        {/* <BillsRoute authed={this.props.user}/> */}
-                        {/* <PrivateRoute exact path='/bills' authed={this.props.user} component= {Bills}>
-                        <Redirect to={'/bills/airtime'} />
-                    </PrivateRoute> */}
                         <PrivateRoute path='/bills/airtime' authed={this.props.user} component={Bills} />
                         <PrivateRoute path='/bills/data' authed={this.props.user} component={Bills} />
                         <PrivateRoute path='/bills/paybills' authed={this.props.user} component={Bills} />
@@ -266,87 +260,66 @@ class AuthenticatedRoutes extends React.Component {
                         <PrivateRoute path='/loans' authed={this.props.user} component={LoansIndex} />
                         <PrivateRoute path='/account' authed={this.props.user} component={Accounts} />
                         <PrivateRoute path='/settings' authed={this.props.user} component={AccountSettings} />
+                        <PrivateRoute path='/cards' authed={this.props.user} component={CardsContainer} />
+                        <PrivateRoute path='/hotlist' authed={this.props.user} component={CardsContainer} />
+                        <PrivateRoute path='/setcard-pin' authed={this.props.user} component={CardsContainer} />
+                        <PrivateRoute path='/cards-control' authed={this.props.user} component={CardsContainer} />
+                        <PrivateRoute path='/virtual-cards' authed={this.props.user} component={CardsContainer} />
+                        <PrivateRoute path='/receive-money' authed={this.props.user} component={RemittanceContainer} />
+                        <PrivateRoute path='/savings/choose-goal-plan' authed={this.props.user} component={ChooseGoalPlan} />
+                        <PrivateRoute path='/savings/fixed-goal' authed={this.props.user} component={FixedGoal} />
+                        <PrivateRoute path='/savings/fixed-goal-complete' authed={this.props.user} component={FixedGoalComplete} />
+                        <PrivateRoute path='/savings/fixed-goal-summary' authed={this.props.user} component={FixedGoalSummary} />
+                        <PrivateRoute path='/savings/flex-goal' authed={this.props.user} component={FlexGoal} />
+                        <PrivateRoute path='/savings/flex-goal-summary' authed={this.props.user} component={FlexGoalSummary} />
+                        <PrivateRoute path='/savings/create-stash_step1' authed={this.props.user} component={CreateStashGoal} />
+                        <PrivateRoute path='/savings/create-stash_step2' authed={this.props.user} component={CreateStashGoalStep2} />
+                        <PrivateRoute path='/savings/goal/group-savings-selection' authed={this.props.user} component={GroupSavingsSelection} />
+                        <PrivateRoute path='/savings/group/save-towards-a-target' authed={this.props.user} component={CreateATargetGoal} />
+                        <PrivateRoute path='/savings/group/group-created' authed={this.props.user} component={GroupCreated} />
+                        <PrivateRoute path='/savings/group/group-analytics' authed={this.props.user} component={GroupAnalytics} />
+                        <PrivateRoute path='/savings/group/group-analytics2' authed={this.props.user} component={GroupAnalytics2} />
+                        <PrivateRoute path="/savings/group/automate-contributions" authed={this.props.user} component={GroupAnalytics3} />
+                        <PrivateRoute path="/savings/group/automate-group-savings" authed={this.props.user} component={AutomateGroupSavings} />
+                        <PrivateRoute path="/savings/group/success-message" authed={this.props.user} component={SuccessMessage} />
+                        <PrivateRoute path="/savings/group/create-rotating" authed={this.props.user} component={RotatingGroup} />
+                        <PrivateRoute path="/savings/rotating-group" authed={this.props.user} component={RotatingGroupCreated} />
+                        <PrivateRoute path='/savings/group-analytics-mini' authed={this.props.user} component={GroupAnalyticsMini} />
+                        <PrivateRoute path='/savings/group-mini2' authed={this.props.user} component={GroupAnalyticsMini2} />
+                        <PrivateRoute path='/savings/group/join-a-group' authed={this.props.user} component={JoinAGroup} />
+                        <PrivateRoute path="/savings/group/joingroup-success-message" authed={this.props.user} component={JoinedGroupSuccessfully} />
+                        <PrivateRoute path="/savings/goal/create-stash-success-message" authed={this.props.user} component={CreateStashSuccessMessage} />
+                        <PrivateRoute path='/savings/fixed-goal-success' authed={this.props.user} component={FixedGoalSuccess} />
+                        <PrivateRoute path='/savings/activityDashBoard' authed={this.props.user} component={ParentDashBoard} />
+                        <PrivateRoute path='/savings/view-goal-summary' authed={this.props.user} component={ViewGoalSummary} />
+                        <PrivateRoute path='/savings/withdraw-from-goal_step1' authed={this.props.user} component={WithDrawFromGoal} />
+                        <PrivateRoute path='/savings/withdraw-from-goal_summary' authed={this.props.user} component={WithDrawFromGoalSummary} />
+                        <PrivateRoute path='/savings/top-up-goal-step1' authed={this.props.user} component={TopUpGoal} />
+                        <PrivateRoute path='/savings/top-up-goal-summary' authed={this.props.user} component={TopUpGoalSummary} />
+                        <PrivateRoute path='/savings/top-up-goal-success' authed={this.props.user} component={TopUpGoalSuccess} />
+                        <PrivateRoute path='/group-savings/edit-members-slots' authed={this.props.user} component={MemberSlots} />
+                        <PrivateRoute path='/group-savings/edit-group' authed={this.props.user} component={EditGroupSavings} />
+                        <PrivateRoute path='/group-savings/edit-rotating' authed={this.props.user} component={EditRotatingGroup} />
+                        <PrivateRoute path='/savings/delete-goal' authed={this.props.user} component={DeleteGoal} />
+                        <PrivateRoute path='/savings/edit-goal' authed={this.props.user} component={EditGoal} />
+                        <PrivateRoute path='/savings/flex-goal-step2' authed={this.props.user} component={FlexGoalStep2} />
+                        <PrivateRoute path='/savings/stash-cashout' authed={this.props.user} component={StashCashout} />
+                        <PrivateRoute path='/savings/flex-success-message' authed={this.props.user} component={FlexSuccessMessage} />
+                        <PrivateRoute path="/savings/join-group-summary" authed={this.props.user} component={JoinGroupSummary} />
+                        <PrivateRoute path="/savings/joined-group-successfully" authed={this.props.user} component={JoinGroupSuccessMessage} />
+                        <PrivateRoute path="/savings/cashout-goal-summary" authed={this.props.user} component={CashoutStashGoal} />
+                        <PrivateRoute path="/savings/delete-goal-success" authed={this.props.user} component={deleteGoalSucess} />
+                        <PrivateRoute path="/savings/rotating-edited-successfully" authed={this.props.user} component={RotatingSavingsEditedSuccessfully} />
+                        <PrivateRoute path="/savings/rotating-deleted-successfully" authed={this.props.user} component={RotatingSavingsEditedSuccessfullyDeleted} />
+                        <PrivateRoute path="/savings/rotating-confirm-delete" authed={this.props.user} component={RotatingDelete} />
+                        <PrivateRoute path="/savings/delete-group-savings" authed={this.props.user} component={GroupDelete} />
+                        <PrivateRoute path="/savings/delete-group-savings-mod" authed={this.props.user} component={SavingsGroupDeleted} />
+                        <PrivateRoute path="/savings/contribute-to-group" authed={this.props.user} component={ContributeToGroup} />
+                        <PrivateRoute path='/lifestyle' authed={this.props.user} component={LifestyleIndex} />
+
                     </Switch>
                 </Router>
             </Fragment>
-
-=======
-            <Router history={history}>
-                <Switch>
-                   
-                    <PrivateRoute path='/dashboard' authed={this.props.user} component={Dashboard} />
-                    <PrivateRoute path='/fund' authed={this.props.user} component={FundAccountIndex} />
-                    
-                    <PrivateRoute path='/bills/airtime' authed={this.props.user} component={Bills}/>
-                    <PrivateRoute path='/bills/data' authed={this.props.user} component={Bills}/>
-                    <PrivateRoute path='/bills/paybills' authed={this.props.user} component={Bills}/>
-                    <PrivateRoute path='/transfer' authed={this.props.user} component={TransferContainer}/>
-                    <PrivateRoute path='/cardless-withdrawal' authed={this.props.user} component={TransferContainer}/>
-                    <PrivateRoute path='/fx-transfer' authed={this.props.user} component={TransferContainer}/>
-                    <PrivateRoute path='/loans' authed={this.props.user} component={LoansIndex}/>
-                    <PrivateRoute path='/account' authed={this.props.user} component={Accounts}/>
-                    <PrivateRoute path='/settings' authed={this.props.user} component={AccountSettings}/>
-                    <PrivateRoute path='/cards' authed={this.props.user} component={CardsContainer}/>
-                    <PrivateRoute path='/hotlist' authed={this.props.user} component={CardsContainer}/>
-                    <PrivateRoute path='/setcard-pin' authed={this.props.user} component={CardsContainer}/>
-                    <PrivateRoute path='/cards-control' authed={this.props.user} component={CardsContainer}/>
-                    <PrivateRoute path='/virtual-cards' authed={this.props.user} component={CardsContainer}/>
-                    <PrivateRoute path='/receive-money' authed={this.props.user} component={RemittanceContainer}/>
-                    <PrivateRoute path='/savings/choose-goal-plan' authed={this.props.user} component={ChooseGoalPlan}/>
-                    <PrivateRoute path='/savings/fixed-goal' authed={this.props.user} component={FixedGoal}/>
-                    <PrivateRoute path='/savings/fixed-goal-complete' authed={this.props.user} component={FixedGoalComplete}/>
-                    <PrivateRoute path='/savings/fixed-goal-summary' authed={this.props.user} component={FixedGoalSummary}/>
-                    <PrivateRoute path='/savings/flex-goal' authed={this.props.user} component={FlexGoal}/>
-                    <PrivateRoute path='/savings/flex-goal-summary' authed={this.props.user} component={FlexGoalSummary}/>
-                    <PrivateRoute path='/savings/create-stash_step1' authed={this.props.user} component={CreateStashGoal}/>
-                    <PrivateRoute path='/savings/create-stash_step2' authed={this.props.user} component={CreateStashGoalStep2}/>
-                    <PrivateRoute path='/savings/goal/group-savings-selection' authed={this.props.user} component={GroupSavingsSelection} />
-                    <PrivateRoute path='/savings/group/save-towards-a-target' authed={this.props.user} component={CreateATargetGoal} />
-                    <PrivateRoute path='/savings/group/group-created' authed={this.props.user} component={GroupCreated} />
-                    <PrivateRoute path='/savings/group/group-analytics' authed={this.props.user} component={GroupAnalytics} />
-                    <PrivateRoute path='/savings/group/group-analytics2' authed={this.props.user} component={GroupAnalytics2} />
-                    <PrivateRoute path="/savings/group/automate-contributions" authed={this.props.user} component={GroupAnalytics3} />
-                    <PrivateRoute path="/savings/group/automate-group-savings" authed={this.props.user} component={AutomateGroupSavings} /> 
-                    <PrivateRoute path="/savings/group/success-message" authed={this.props.user} component={SuccessMessage} />
-                    <PrivateRoute path="/savings/group/create-rotating" authed={this.props.user} component={RotatingGroup} />
-                    <PrivateRoute path="/savings/rotating-group" authed={this.props.user} component={RotatingGroupCreated} />
-                    <PrivateRoute path='/savings/group-analytics-mini' authed={this.props.user} component={GroupAnalyticsMini} />
-                    <PrivateRoute path='/savings/group-mini2' authed={this.props.user} component={GroupAnalyticsMini2} />
-                    <PrivateRoute path='/savings/group/join-a-group' authed={this.props.user} component={JoinAGroup} />
-                    <PrivateRoute path="/savings/group/joingroup-success-message" authed={this.props.user} component={JoinedGroupSuccessfully} />
-                    <PrivateRoute path="/savings/goal/create-stash-success-message" authed={this.props.user} component={CreateStashSuccessMessage} />
-                    <PrivateRoute path='/savings/fixed-goal-success' authed={this.props.user} component={FixedGoalSuccess} />
-                    <PrivateRoute path='/savings/activityDashBoard' authed={this.props.user} component={ParentDashBoard} />
-                    <PrivateRoute path='/savings/view-goal-summary' authed={this.props.user} component={ViewGoalSummary} />
-                    <PrivateRoute path='/savings/withdraw-from-goal_step1' authed={this.props.user} component={WithDrawFromGoal} />
-                    <PrivateRoute path='/savings/withdraw-from-goal_summary' authed={this.props.user} component={WithDrawFromGoalSummary} />
-                    <PrivateRoute path='/savings/top-up-goal-step1' authed={this.props.user} component={TopUpGoal} />
-                    <PrivateRoute path='/savings/top-up-goal-summary' authed={this.props.user} component={TopUpGoalSummary} />
-                    <PrivateRoute path='/savings/top-up-goal-success' authed={this.props.user} component={TopUpGoalSuccess} />
-                    <PrivateRoute path='/group-savings/edit-members-slots' authed={this.props.user} component={MemberSlots} />
-                    <PrivateRoute path='/group-savings/edit-group' authed={this.props.user} component={EditGroupSavings} />
-                    <PrivateRoute path='/group-savings/edit-rotating' authed={this.props.user} component={EditRotatingGroup} />
-                    <PrivateRoute path='/savings/delete-goal' authed={this.props.user} component={DeleteGoal} />
-                    <PrivateRoute path='/savings/edit-goal' authed={this.props.user} component={EditGoal} />
-                    <PrivateRoute path='/savings/flex-goal-step2' authed={this.props.user} component={FlexGoalStep2} />
-                    <PrivateRoute path='/savings/stash-cashout' authed={this.props.user} component={StashCashout} />
-                    <PrivateRoute path='/savings/flex-success-message' authed={this.props.user} component={FlexSuccessMessage} />
-                    <PrivateRoute path="/savings/join-group-summary" authed={this.props.user} component={JoinGroupSummary} />
-                    <PrivateRoute path="/savings/joined-group-successfully" authed={this.props.user} component={JoinGroupSuccessMessage} />
-                    <PrivateRoute path="/savings/cashout-goal-summary" authed={this.props.user} component={CashoutStashGoal} />
-                    <PrivateRoute path="/savings/delete-goal-success" authed={this.props.user} component={deleteGoalSucess} />
-                    <PrivateRoute path="/savings/rotating-edited-successfully" authed={this.props.user} component={RotatingSavingsEditedSuccessfully} />
-                    <PrivateRoute path="/savings/rotating-deleted-successfully" authed={this.props.user} component={RotatingSavingsEditedSuccessfullyDeleted} />
-                    <PrivateRoute path="/savings/rotating-confirm-delete" authed={this.props.user} component={RotatingDelete} />
-                    <PrivateRoute path="/savings/delete-group-savings" authed={this.props.user} component={GroupDelete} />
-                    <PrivateRoute path="/savings/delete-group-savings-mod" authed={this.props.user} component={SavingsGroupDeleted} />
-                    <PrivateRoute path="/savings/contribute-to-group" authed={this.props.user} component={ContributeToGroup} />
-                    <PrivateRoute path='/lifestyle' authed={this.props.user} component={LifestyleIndex}/>
-
-
-                </Switch>
-            </Router>
->>>>>>> 636bbdb29d6ba7416187102b2ebbb152519602ab
 
             // <Router history={history}>
             //     <Switch>
