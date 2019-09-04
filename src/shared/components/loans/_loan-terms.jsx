@@ -14,7 +14,7 @@ class LoanTermsComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: JSON.stringify(localStorage.getItem("user")),
+            user: JSON.parse(localStorage.getItem("user"))
         }
     }
 
@@ -77,6 +77,7 @@ class LoanTermsComponent extends React.Component {
     }
 
     render() {
+        {this.declineAction()}
         return (
             <Fragment>
                 {this.onNextPage()}
@@ -117,8 +118,8 @@ class LoanTermsComponent extends React.Component {
                                 </div>
                                 <div className="term-ctn">
                                     <center>
-                                        <a onClick={this.onAccept} className="term-acpt-link" href="">Accept</a>
-                                        <a href="" onClick={this.onDecline} className="grey-text">Decline</a>
+                                        <a onClick={this.onAccept} className="term-acpt-link" style={{cursor : "pointer", color: "red"}}>Accept</a>
+                                        <a href onClick={this.onDecline} className="grey-text" style={{cursor : "pointer"}}>Decline</a>
                                     </center>
                                 </div>
                             </div>
@@ -134,8 +135,8 @@ function mapStateToProps(state) {
     return {
         alert: state.alert,
         score_card_A: state.loanOnboardingReducerPile.loanPostScoreCardAnswer,
-        standing_order: state.loanOnboardingReducerPile.loanStandingOrder,
-        loan_reject: state.loanOnboardingReducerPile.loanRejectReducer,
+        standing_order: state.loanReducerPile.loanStandingOrder,
+        loan_reject: state.loanReducerPile.loanReject,
         loan_status: state.loanReducerPile.loanAppStatus,
     }
 }

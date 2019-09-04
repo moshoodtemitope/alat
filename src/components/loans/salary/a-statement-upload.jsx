@@ -19,8 +19,8 @@ class LoanStatementUpload extends React.Component{
         this.props.history.push("/loans/salary/detail");
     }
 
-    goFoward=()=>{
-        this.props.history.push('/loans/salary/dashboard');
+    goForward=()=>{
+        this.props.history.push('/loans/salary/upload-done');
     }
 
     render(){

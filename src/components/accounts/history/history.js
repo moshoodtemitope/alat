@@ -300,7 +300,7 @@ class History extends Component {
             this.sortAccountsForSelect();
         }
 
-        const { selectedAccount, accounts, startDate, endDate, isReceipt, invalidInterval, showDropOptions, currentTransactions, currency } = this.state;
+        const { selectedAccount, c, accounts,startDate, endDate, isReceipt, invalidInterval, showDropOptions, currentTransactions, currency } = this.state;
         return (
             <Fragment>
                 <div class="col-sm-12 col-md-4">

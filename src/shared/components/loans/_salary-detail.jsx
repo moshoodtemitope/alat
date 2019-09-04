@@ -18,10 +18,7 @@ import {
     FETCH_BANK_SUCCESS,
     FETCH_BANK_FAILURE,
 } from "../../../redux/constants/transfer.constants";
-const industriesOptions = [
-];
-const _employerList = [];
-//const options = [];
+
 
 class SalaryDetails extends React.Component {
     constructor(props) {

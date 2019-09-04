@@ -16,7 +16,7 @@ class LoanTerms extends React.Component {
     }
 
     PgotoPreviousPage=()=>{
-        this.props.history.push('/loans')
+        this.props.history.push('/loans/salary/dashboard')
     }
 
     PNavigateToWema=()=>{

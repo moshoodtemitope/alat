@@ -13,15 +13,24 @@ class WemaCollectionComponent extends React.Component {
         super(props);
         this.state = {
             user: JSON.parse(localStorage.getItem("user")),
+            data : { }
         }
         
     }
+
+    componentDidMount=()=>{
+      this.init();
+    }
+
     init = () => {
+        console.log(this.props.standing_order);
         if (this.props.standing_order)
-            if (this.props.standing_order.standing_order_status == loanConstants.LOAN_STAND_ORDER_SUCCESS) {
-                let data = {
-                    ...this.props.standing_order.standing_order_data.response.Response
+            if (this.props.standing_order.loan_standOrder_status == loanConstants.LOAN_STAND_ORDER_SUCCESS) {
+                var data = {
+                    ...this.props.standing_order.loan_standOrder_data.response
                 }
+                this.setState({data : data})
+                    
             }
             else { 
                 this.props.goToPreviousPage()
@@ -35,9 +44,10 @@ class WemaCollectionComponent extends React.Component {
     render() {
         return (<div className="row">
             <div className="col-sm-12">
-                <div className="max-650">
+                <div className="max-460">
                     <div className="loan-header-text text-center">
-                        <h4 className="text-black"><span>You've set up your</span><br /><span>repayment mandate</span></h4>
+                        {this.state.data.Message && <h4 className="text-black"><span>{this.state.data.Message}</span><br /><span></span></h4>}
+                        {/* <h4 className="text-black"><span>Congratulations! We are currently generating your loan account.</span><br /><span></span></h4> */}
                         <p>Thank you for choosing ALAT Salary Loans.</p>
                     </div>
 
@@ -59,7 +69,7 @@ function mapStateToProps(state) {
     return {
         alert: state.alert,
         score_card_A: state.loanOnboardingReducerPile.loanPostScoreCardAnswer,
-        standing_order: state.loanOnboardingReducerPile.loanStandingOrder,
+        standing_order: state.loanReducerPile.loanStandingOrder,
         loan_reject: state.loanOnboardingReducerPile.loanRejectReducer
     }
 }
