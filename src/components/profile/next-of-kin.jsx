@@ -335,7 +335,9 @@ class NextOfKin extends Component {
             pin: this.state.AlatPin,
             address: this.state.address
           }
-    
+          
+          console.log(data);
+          return;
         this.props.dispatch(actions.linkBVN(this.state.user.token, data));
     }
  
@@ -390,7 +392,7 @@ class NextOfKin extends Component {
  
         console.log('code got here');
  
-        return;
+        // return;
         console.log('was fired');
  
         switch(this.checkValidity()){

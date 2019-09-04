@@ -57,13 +57,11 @@ class PersonalDefault extends Component {
 
 
    NavigateToDocuments = () => {
-    //    console.log(this.props.profileMenu.response.documentUploaded);
-    //    return;
         if(this.props.profileMenu.response.documentUploaded == true){
             this.DispatchSuccessMessage('Document has been uploaded');
             return;
         }
-        
+   
         history.push('/profile-documents');
    }
 

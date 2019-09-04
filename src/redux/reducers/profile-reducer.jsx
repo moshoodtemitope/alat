@@ -114,19 +114,19 @@ export function addContactDetails (state=[], action){
 
 export function occupationAndSector (state=[], action){
     switch(action.type){
-        case profile.POST_CONTACT_DETAILS_PENDING: 
+        case profile.OCCU_AND_SECTOR_PENDING: 
            return {
-               message: profile.POST_CONTACT_DETAILS_PENDING,
+               message: profile.OCCU_AND_SECTOR_PENDING,
                data: action
            }
-        case profile.POST_CONTACT_DETAILS_SUCCESS:
+        case profile.OCCU_AND_SECTOR_SUCCESS:
            return {
-               message: profile.POST_CONTACT_DETAILS_SUCCESS,
+               message: profile.OCCU_AND_SECTOR_SUCCESS,
                data: action
            }
-        case profile.POST_CONTACT_DETAILS_FAILURE:
+        case profile.OCCU_AND_SECTOR_FAILURE:
            return {
-               message: profile.POST_CONTACT_DETAILS_FAILURE,
+               message: profile.OCCU_AND_SECTOR_FAILURE,
                data: action
            }
         default: 

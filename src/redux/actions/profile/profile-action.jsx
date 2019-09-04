@@ -10,12 +10,11 @@ import { profile } from "../../constants/profile/profile-constants";
 export const linkBVN = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {  
-        let consume = ApiService.request(routes.BVN_VERIFICATION, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.BVN_VERIFICATION, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
                 dispatch(success(response.data));
-                history.push('/');
             })
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
@@ -165,7 +164,7 @@ export const addDocuments = (token, data) => {
 
 
 export const profileSuccessMessage = (data) =>{
-    return(dispatch)=>{
+    return (dispatch) => {
         dispatch(success(data));
         history.push('/profile-success-message');
     }
@@ -177,6 +176,29 @@ export const profileSuccessMessage = (data) =>{
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

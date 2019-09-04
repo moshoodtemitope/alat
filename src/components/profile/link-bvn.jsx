@@ -7,7 +7,8 @@ import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import InnerContainer from '../../shared/templates/inner-container';
 import {history} from '../../_helpers/history';
 import { connect } from 'react-redux';
-
+import {profile} from '../../redux/constants/profile/profile-constants';
+import moment from 'moment'
 
 class LinkBvN extends Component {
    constructor(props){
@@ -48,6 +49,12 @@ class LinkBvN extends Component {
                             console.log(x)
                             result = null;
                             break;
+                        }else{
+                            if(this.state[x].toString().length < 11){
+                                console.log(this.state[x]);
+                                result = null;
+                                break;
+                            }
                         }
                 case 'birthDate':
                         if(this.state[x] == null || this.state[x] == ""){
@@ -65,10 +72,14 @@ class LinkBvN extends Component {
    InitiateNetworkCall = () => {
        let data = {
            bvn: this.state.bvnNumber,
-           date: this.state.dateValue
+           channelId: 2,
+           dob: moment(this.state.birthDate).format("MMMM,DD,YYYY"),
+           phoneNo: this.state.user.phoneNo,
+           isOnBoarding: false
        }
 
        console.log(data)
+    //    return;
        this.props.dispatch(actions.linkBVN(this.state.user.token, data));
    }
 
@@ -77,21 +88,21 @@ class LinkBvN extends Component {
    }
 
    SetBirthDay = (birthDate) => {
+       console.log(birthDate + " " + "ududududu");
         this.setState({
             birthDate: birthDate
+        }, () => {
+            console.log(this.state.birthDate);
         });
-   }
 
-   NavigateToSuccessPage = () => {
-       history.push('/profile-success-message');
+        console.log("fififififif");
    }
 
    HandleSubmit = () => {
        event.preventDefault();
        this.SetDateValidity();
        this.SetBVNValidityStatus();
-       //Navigate (Test Cenaro)
-    //    this.NavigateToSuccessPage();
+
        console.log('was fired');
 
        switch(this.checkValidity()){
@@ -105,17 +116,20 @@ class LinkBvN extends Component {
        }
    }
 
-   NavigateToSuccessPage = () => {
-    history.push('/profile-success-message');
+   DispatchSuccessMessage = (data) => {
+        this.props.dispatch(actions.profileSuccessMessage(data));
    }
-
-
-
+  
+   NavigateToSuccessPage = () => {
+        this.DispatchSuccessMessage("BVN Linked Successfully!");
+   }
+ 
    render(){
        const {dateValidity, BVNValidity, birthDate} = this.state;
+    //    if(this.props.linkBvn == "LINK_BVN_SUCCESS"){
+    //          this.NavigateToSuccessPage();
+    //    }
        return(
-        
-            
         <Fragment>
              <InnerContainer>
                     <div className="dashboard-wrapper">
@@ -186,7 +200,7 @@ class LinkBvN extends Component {
                                                             <label className="label-text">Date of Birth</label>
                                                             <DatePicker className="form-control linkBVN" selected={birthDate} 
                                                             placeholder="June 31, 2019"
-                                                            dateFormat=" MMMM d, yyyy"
+                                                            dateFormat="MMMM d, yyyy"
                                                             showMonthDropdown
                                                             showYearDropdown
                                                             onChange={this.SetBirthDay}
@@ -223,7 +237,8 @@ class LinkBvN extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        
+        profileSuccessMessage: state.profileSuccessMessage.data,
+        linkBvn: state.linkBVN.message
     }
 }
 

@@ -125,7 +125,6 @@ class PersonalInfoMation extends Component {
                             result = null;
                             break;
                         }
-
                 case 'birthDate':
                         if(this.state[x] == null || this.state[x] == ""){
                             console.log(x)
@@ -297,7 +296,7 @@ class PersonalInfoMation extends Component {
        this.checkMothersMaidenNameValidity();
        console.log('code got here');
 
-       return;
+    //    return;
        console.log('was fired');
 
        switch(this.checkValidity()){

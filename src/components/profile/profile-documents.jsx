@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import "./profile.css"; 
 import DatePicker from "react-datepicker";
-import * as actions from '../../redux/actions/profile/profile-action';
+// import * as actions from '../../redux/actions/profile/profile-action';
 import {Fragment} from "react";
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import InnerContainer from '../../shared/templates/inner-container';
+import * as actions from '../../redux/actions/profile/profile-action';
+
 
 class ProfileDocuments extends Component {
    constructor(props){
@@ -21,34 +23,6 @@ class ProfileDocuments extends Component {
        }
    }
 
-   checkValidity = () => {
-       let result = 'valid';
-       for(let x in this.state){
-           switch(x){
-               case 'file1': 
-                  if(this.state[x] == null || this.state[x] == ""){
-                       console.log(x);
-                       result = null
-                       break;
-                  }
-               case 'file2': 
-                  if(this.state[x] == null || this.state[x] == ""){
-                       console.log(x);
-                       result = null
-                       break;
-                  }
-               case 'file3': 
-                  if(this.state[x] == null || this.state[x] == ""){
-                       console.log(x);
-                       result = null
-                       break;
-                  }
-           }
-       }
-
-       console.log(result);
-       return result;
-   }
 
    checkPhotoGraphUploadValidity = () => {
        if(this.state.file1 == null || this.state.file1 == ""){
@@ -78,19 +52,54 @@ class ProfileDocuments extends Component {
         console.log('CODE NEVER RAN')
    }
 
+
+   checkValidity = () => {
+       let result = 'valid';
+       for(let x in this.state){
+           switch(x){
+               case 'file1':
+                    if(this.state[x] == null || this.state[x] == ""){
+                        console.log(this.state[x]);
+                        result = null;
+                        break;
+                    }
+               case 'file2':
+                    if(this.state[x] == null || this.state[x] == ""){
+                        console.log(this.state[x]);
+                        result = null;
+                        break;
+                    }
+               case 'file3':
+                    if(this.state[x] == null || this.state[x] == ""){
+                        console.log(this.state[x]);
+                        result = null;
+                        break;
+                    }
+           }
+       }
+
+       console.log(result);
+       return result;
+   }
+
    HandleFileUpLoad = (event) => {
        let name = event.target.name;
        console.log(name);
        console.log(event.target.value);
-       return;
+    //    return;
        this.setState({[name]: event.target.value});
    }
 
    SubmitDocuments = () => {
        let payload = {
-
+          file1: this.state.file1,
+          file2: this.state.file2,
+          file2: this.state.file3
        }
+
+       this.props.dispatch(addDocuments(payload(this.state.user.token, payload)));
    }
+
 
    HandleSubmit = (event) => {
         event.preventDefault();
@@ -100,7 +109,6 @@ class ProfileDocuments extends Component {
         this.checkPhotoGraphUploadValidity();
         console.log("code Got here");
 
-        return;
         switch(this.checkValidity()){
             case null: 
                 console.log('Empty Field Found');
@@ -173,7 +181,6 @@ class ProfileDocuments extends Component {
                                     <div className="col-sm-6">
                                     <form onSubmit={this.HandleSubmit} className="parentForm docUpLoadFormProfile">
                                            <p className="formHeading">Documents</p>
-
                                            <div className="form-row">
                                                 <div className={photoGraphUploadValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
                                                         <label htmlFor="file-upload1">Photograph</label>
