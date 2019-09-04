@@ -98,11 +98,11 @@ class AuthenticatedRoutes extends React.Component {
     }
 
     setTimeout() {
-        // this.warnTimeout = setTimeout(this.warn, 4 * 59 * 1000);
-        this.warnTimeout = setTimeout(this.warn, 10 * 1000);
+        this.warnTimeout = setTimeout(this.warn, 4 * 59 * 1000);
+        // this.warnTimeout = setTimeout(this.warn, 10 * 1000);
 
-        // this.logoutTimeout = setTimeout(this.logout, 5 * 60 * 1000);
-        this.logoutTimeout = setTimeout(this.logout, 71 * 1000);
+        this.logoutTimeout = setTimeout(this.logout, 5 * 60 * 1000);
+        // this.logoutTimeout = setTimeout(this.logout, 71 * 1000);
     }
     reissue() {
         this.props.getAnotherToken()
@@ -110,7 +110,7 @@ class AuthenticatedRoutes extends React.Component {
     }
 
     countSec() {
-        console.log("do -1 here", this.state.countDownSeconds)
+        // console.log("do -1 here", this.state.countDownSeconds)
         this.setState({ countDownSeconds: timer });
         timer--;
     }
@@ -130,7 +130,6 @@ class AuthenticatedRoutes extends React.Component {
     logout() {
         this.destroy();
         this.props.logout();
-
     }
 
     logoutButton(event) {
@@ -223,10 +222,10 @@ class AuthenticatedRoutes extends React.Component {
 }
 
 function mapStateToProps(state) {
-    // const { authentication } = state;
-    // const { user } = authentication;
+    const { authentication } = state;
+    const { user } = authentication;
     return {
-        user: state.authentication.user
+        user
     }
 }
 const mapDispatchToProps = dispatch => {
