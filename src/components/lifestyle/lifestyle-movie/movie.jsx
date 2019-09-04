@@ -24,7 +24,8 @@ class Movie extends Component {
             values:"",
             total:5,
             per_page: 4,
-            current_page: 1
+            current_page: 1,
+            showMovies: true
 
         };
         console.log("state",this.state);
@@ -66,7 +67,7 @@ class Movie extends Component {
     };
     filterGenreOnchangeHandler(e){
         this.filterGenre(e.target.value);
-        this.setState({values:this.props.getMovieList.data.response})
+        this.setState({values:e.target.value})
         console.log("values",e.target.value)
 
     }
@@ -74,7 +75,7 @@ class Movie extends Component {
     
     onChangeHandler = async e => {
         this.search(e.target.value);
-        this.setState({ value: e.target.value });
+        this.setState({ value: e.target.value }, () => this.renderFilter());
 
         
     };
@@ -184,17 +185,23 @@ class Movie extends Component {
             );
         }
     }
-    renderGenre(){
+    renderFilter(){
         let user = this.state.user;
         let props = this.props;
         let getMovieList = props.getMovieList;         
         if(this.state.values ==="ADVENTURE"){
             let userMovies = getMovieList.data.response;
-
+            this.setState({showMovies: false})
+            
             return  <div className="eventTrays">
             {userMovies.map(function(film, index){
                 return(
+
+                    <div>
+                    {
+                        film.genre.includes("Adventure" ) ? 
                         <div className="eventCards" key={index}>
+                            Movie{film.genre}
                             <Link to={{
                                 pathname:"/lifestyle/movie-details",
                                 state:{
@@ -202,6 +209,7 @@ class Movie extends Component {
                                 }
                             }}>
                                 <div className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
+                                    <p></p>
                                 </div>
                             </Link>
 
@@ -215,7 +223,10 @@ class Movie extends Component {
                                         <div className="movie-duration">{film.duration}</div>
                                     </div>
                                 </div>
-                        </div>
+                        </div>: <div>{film.genre}</div>
+                    }
+                        
+                    </div>
 
                 );
             })}
@@ -253,44 +264,44 @@ class Movie extends Component {
 
                 );
             })}
-        </div>;
+        </div>
 
         }
-        else if (this.state.values === "DRAMA"){
-            let userMovies = getMovieList.data.response;
+        // else if (this.state.values === "DRAMA"){
+        //     let userMovies = getMovieList.data.response;
 
-            return(
-                <div className="eventTrays">
-                    {this.state.genre.map(function(film, index){
-                        return(
-                                <div className="eventCards" key={index}>
-                                    <Link to={{
-                                        pathname:"/lifestyle/movie-details",
-                                        state:{
-                                            details:film
-                                        }
-                                    }}>
-                                        <div className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
-                                        </div>
-                                    </Link>
+        //     return(
+        //         <div className="eventTrays">
+        //             {this.state.genre.map(function(film, index){
+        //                 return(
+        //                         <div className="eventCards" key={index}>
+        //                             <Link to={{
+        //                                 pathname:"/lifestyle/movie-details",
+        //                                 state:{
+        //                                     details:film
+        //                                 }
+        //                             }}>
+        //                                 <div className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
+        //                                 </div>
+        //                             </Link>
 
-                                    <div className="boldHeader">{film.title.toString().length > 15 ? film.title.toString().substring(0, 15)+"...": film.title.toString()}</div>
-                                        <div id="disc">{ film.description.toString().length > 30 ? film.description.toString().substring(0, 30)+"...": film.description.toString() }</div>
-                                        <div className="details">
-                                            <div className="left">
-                                                <img src={clock} alt=""/>
-                                            </div>
-                                            <div className="right">
-                                                <div className="movie-duration">{film.duration}</div>
-                                            </div>
-                                        </div>
-                                </div>
+        //                             <div className="boldHeader">{film.title.toString().length > 15 ? film.title.toString().substring(0, 15)+"...": film.title.toString()}</div>
+        //                                 <div id="disc">{ film.description.toString().length > 30 ? film.description.toString().substring(0, 30)+"...": film.description.toString() }</div>
+        //                                 <div className="details">
+        //                                     <div className="left">
+        //                                         <img src={clock} alt=""/>
+        //                                     </div>
+        //                                     <div className="right">
+        //                                         <div className="movie-duration">{film.duration}</div>
+        //                                     </div>
+        //                                 </div>
+        //                         </div>
 
-                        );
-                    })}
-                </div>
-            );
-        }
+        //                 );
+        //             })}
+        //         </div>
+        //     );
+        // }
 
     }
     
@@ -363,21 +374,16 @@ class Movie extends Component {
                             </div>
                         </div>
                     </div>
-                   {this.resultu()}
-                   {this.renderGenre()}
+                   {/* {this.resultu()} */}
+                   {/* {this.renderGenre()}  */}
+                   {
+                       this.state.showMovies ? this.resultu() : this.renderFilter()
+                   }
 
                         <span onClick={() => this.fetchMovieList(1)}></span> 
                             {renderPageNumbers}
                         <span onClick={() => this.fetchMovieList(1)}></span> 
-                   
-
-                   
-                  
-
-                   
-        
-                  
-
+               
                 </div>
             </Fragment>
 
