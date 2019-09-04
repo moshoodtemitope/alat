@@ -15,9 +15,6 @@ import successIcon from "../../../assets/img/success-tick.svg";
 import noPolicy from "../../../assets/img/empty-policy.svg";
 
 import {
-    FETCH_EXISTING_POLICIES_SUCCESS,
-    FETCH_EXISTING_POLICIES_PENDING,
-    FETCH_EXISTING_POLICIES_FAILURE,
     FETCH_NEWINSURANCE_INFOSETS_SUCCESS,
     FETCH_NEWINSURANCE_INFOSETS_PENDING,
     FETCH_NEWINSURANCE_INFOSETS_FAILURE
@@ -35,7 +32,7 @@ import {
 
 const BASEURL = routes.BASEURL;
 
-class ManageInsurance extends React.Component {
+class BuyPolicy extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -75,17 +72,16 @@ class ManageInsurance extends React.Component {
                     </div>
                     <center>
                         <button type="button"  
-                            className="btn-alat m-t-10 m-b-20 text-center"
-                            onClick={()=>this.props.history.push("/insurance/buy-insurance")}>Buy Insurance</button>
+                            className="btn-alat m-t-10 m-b-20 text-center">Buy Insurance</button>
                     </center>
                 </div>
             </div>
         )
     }
 
-    renderPoliciesContainer(){
-        let getExistingPolicyRequest = this.props.getExistingPolicy;
-            console.log('status is',getExistingPolicyRequest.fetch_status);
+    renderNewPolicyContainer(){
+        let getNewPolicyChunkRequest = this.props.newPolicyDataChunk;
+            console.log('status is',getNewPolicyChunkRequest.fetch_status);
             return(
                 <div className="col-sm-12">
                     <div className="row">
@@ -93,12 +89,11 @@ class ManageInsurance extends React.Component {
                                 <div className="max-600">
                                     <div className="al-card no-pad">
                                         <div className="transfer-ctn text-center">
-                                            {getExistingPolicyRequest.fetch_status===FETCH_EXISTING_POLICIES_PENDING &&
-                                                <div>Loading yor existing policies...</div>
+                                            {getNewPolicyChunkRequest.fetch_status===FETCH_NEWINSURANCE_INFOSETS_PENDING &&
+                                                <div>Please wait...</div>
                                             }
 
-                                            {(getExistingPolicyRequest.fetch_status===FETCH_EXISTING_POLICIES_SUCCESS 
-                                            && getExistingPolicyRequest.existingpolicy_data.response.data.InsuranceDetails===null) &&
+                                            {(getNewPolicyChunkRequest.fetch_status===FETCH_NEWINSURANCE_INFOSETS_SUCCESS) &&
                                                 this.renderNoExistingPolicy()
                                             }
                                         </div>
@@ -118,7 +113,7 @@ class ManageInsurance extends React.Component {
     render() {
         return (
             <Fragment>
-               {this.renderPoliciesContainer()}
+               {this.renderNewPolicyContainer()}
             </Fragment>
         );
     }
@@ -127,8 +122,8 @@ class ManageInsurance extends React.Component {
 
 function mapStateToProps(state){
     return {
-        getExistingPolicy   : state.insurancePile.getExistingPolicy,
+        newPolicyDataChunk   : state.insurancePile.getNewPolicyDataChunk,
     };
 }
 
-export default connect(mapStateToProps)(ManageInsurance);
+export default connect(mapStateToProps)(BuyPolicy);
