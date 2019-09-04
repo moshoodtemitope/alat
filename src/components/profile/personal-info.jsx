@@ -8,7 +8,7 @@ import InnerContainer from '../../shared/templates/inner-container';
 import {connect} from 'react-redux'
 import {history} from '../../_helpers/history';
 import {profile} from '../../redux/constants/profile/profile-constants';
-import {occupationAndSector, getResidentialDetails, getContactDetails,getPersonalInfo} from "../../redux/actions/profile/profile-action"
+import {occupationAndSector, getResidentialDetails, getContactDetails,getPersonalInfo,getStates} from "../../redux/actions/profile/profile-action"
 
 
 class PersonalInfoMation extends Component {
@@ -65,6 +65,7 @@ class PersonalInfoMation extends Component {
        this.fetchResidentialDetails();
        this.fetchContactDetails();
        this.fetchPersonalInfo();
+       this.fetchStates();
    }
    fetchOccupation(){
     const { dispatch } = this.props;
@@ -81,6 +82,10 @@ class PersonalInfoMation extends Component {
     fetchPersonalInfo(){
         const{ dispatch } =this.props;
         dispatch(getPersonalInfo(this.state.user.token))
+    };
+    fetchStates(){
+        const {dispatch}=this.props;
+        dispatch(getStates(this.state.user.token))
     }
 
    InitiateNetworkCall = () => {
@@ -480,7 +485,7 @@ class PersonalInfoMation extends Component {
    render(){
        const {BVNValidity, birthDate, PinValidity, SectorValidity, EmployerPhoneNumberValidity,EmploymentValidity, AddressValidity, EmployersNameValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
         SurnameValidity, EmailAddressValidity, FirstNameValidity, MaritalStatusValidity, TitleValidity, OccupationValidity,GenderValidity, DateOfBirthValidity, OtherNameValidity, MothersMaidenNameValidity} = this.state;
-        const {occupationAndSector} = this.props
+        const {occupationAndSector, getContactDetail} = this.props
         console.log('=======',occupationAndSector)
 
        return(
@@ -619,14 +624,35 @@ class PersonalInfoMation extends Component {
 
                                                         <div className={StateOfOriginValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">State of Origin</label>
-                                                            <input type="text" name="StateOfOrigin" className="form-control" onChange={this.SetInputValue} placeholder="state of origin"/>
+                                                            <select onChange={this.SetInputValue} name="StateOfOrigin" >
+                                                                    <option>Select State of Origin</option>
+                                                                    {                                      
+                                                                        getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
+                                                                        getContactDetail.data.response.states.map(state=> {
+                                                                            
+                                                                            return <option key={state} value={state}>
+                                                                            {state.name}</option>
+                                                                        })
+                                                                    } 
+                                                            </select>
                                                         </div>
                                             </div>
 
                                             <div className="form-row">
                                                         <div className={LocalGovValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
                                                             <label className="label-text">Local Government</label>
-                                                            <input type="text" name="LocalGv" className="form-control" onChange={this.SetInputValue} placeholder="Local Government"/>
+                                                            <select onChange={this.SetInputValue} name="StateOfOrigin" >
+                                                                    <option>Select Local Government</option>
+                                                                    {                                      
+                                                                        getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
+                                                                        getContactDetail.data.response.cities.map(city=> {
+                                                                            
+                                                                            return <option key={city.name} value={city.name}>
+                                                                            {city.name}</option>
+                                                                        })
+                                                                    } 
+                                                            </select>
+                                                            {/* <input type="text" name="LocalGv" className="form-control" onChange={this.SetInputValue} placeholder="Local Government"/> */}
                                                         </div>
 
                                                         <div className={PlaceOfBirthValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
@@ -749,6 +775,7 @@ function mapStateToProps(state){
         occupationAndSector:state.occupationAndSector,
         getResidential:state.getResidential,
         getContactDetail:state.getContactDetail,
+        getStates:state.getStates,
     };
 }
 

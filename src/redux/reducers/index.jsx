@@ -167,7 +167,8 @@ const appReducer = combineReducers({
     addDocuments:profile.addDocuments,
     getResidential:profile.getResidential,
     getContactDetail:profile.getContactDetail,
-    getPersonalInfo:profile.getPersonalInfo
+    getPersonalInfo:profile.getPersonalInfo,
+    getStates:profile.getStates
 });
 
 //export defualt appReducer;

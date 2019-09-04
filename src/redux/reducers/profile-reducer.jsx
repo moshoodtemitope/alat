@@ -178,6 +178,29 @@ export function getContactDetail (state=[], action){
     }
 }
 
+export function getStates (state=[], action){
+    switch(action.type){
+        case profile.GET_STATE_PENDING: 
+           return {
+               message: profile.GET_STATE_PENDING,
+               data: action
+           }
+        case profile.GET_STATE_SUCCESS:
+           return {
+               message: profile.GET_STATE_SUCCESS,
+               data: action
+           }
+        case profile.GET_STATE_FAILURE:
+           return {
+               message: profile.GET_STATE_FAILURE,
+               data: action
+           }
+        default: 
+           return {... state}
+    }
+}
+
+
 export function getResidential (state=[], action){
     switch(action.type){
         case profile.GET_RESIDENTIAL_PENDING: 
