@@ -49,11 +49,6 @@ class BuyPolicy extends React.Component {
         this.getNewPolicyData();
     }
 
-    getCustomerPolicies(){
-        const { dispatch } = this.props;
-        dispatch(getExistingPolicies(this.state.user.token));
-        
-    }
 
     getNewPolicyData(){
         const { dispatch } = this.props;
