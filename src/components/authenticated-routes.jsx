@@ -8,6 +8,7 @@ import { Fragment } from "react";
 import Login from "./onboarding/login";
 import Signup from "./onboarding/signup";
 import Bvn from "./onboarding/signup/bvn";
+import Modal from 'react-responsive-modal';
 import connect from "react-redux/es/connect/connect";
 import Bills from './airtime-bills/airtime-bills-home';
 import TransferContainer from "./transfer/container";
@@ -21,7 +22,7 @@ import AccountSettings from './account-settings/container';
 import LoansIndex from './loans';
 import { userActions } from "../redux/actions/onboarding/user.actions";
 
-
+var timer = 60
 var user = JSON.parse(localStorage.getItem("user"));
 console.log("ouside", user);
 function PrivateRoute({ component: Component, authed, ...rest }) {
@@ -39,6 +40,9 @@ class AuthenticatedRoutes extends React.Component {
         super(props);
         this.state = {
             clearInterval: false,
+            countDownTimeOn: false,
+            countDownSeconds: 60,
+            openModal: false
         };
         this.events = [
             "load",
@@ -53,13 +57,16 @@ class AuthenticatedRoutes extends React.Component {
         this.logout = this.logout.bind(this);
         this.resetTimeout = this.resetTimeout.bind(this);
         this.reissue = this.reissue.bind(this);
-        this.func = this.reissue
+        this.func = this.reissue;
+        this.countSec = this.countSec.bind(this);
+        this.secFunc = this.countSec;
+        this.logoutButton = this.logoutButton.bind(this);
 
         for (var i in this.events) {
             window.addEventListener(this.events[i], this.resetTimeout);
         }
-        
-        
+
+
         this.setPlayInterval();
         this.setTimeout();
 
@@ -72,25 +79,42 @@ class AuthenticatedRoutes extends React.Component {
     }
 
     setPlayInterval() {
-        this.run = setInterval(this.func, 4 * 60 *1000);
+        this.run = setInterval(this.func, 4 * 60 * 1000);
+    }
+
+    setCountDown() {
+
+        this.countDown = setInterval(this.secFunc, 1000);
     }
 
     clearTimeout(isIncludingSetIterval = false) {
         if (this.warnTimeout) clearTimeout(this.warnTimeout);
 
         if (this.logoutTimeout) clearTimeout(this.logoutTimeout);
-        if(isIncludingSetIterval)clearInterval(this.run);
-    }  
+        if (isIncludingSetIterval) {
+            clearInterval(this.run);
+            clearInterval(this.countDown);
+        }
+    }
 
     setTimeout() {
-        this.warnTimeout = setTimeout(this.warn, 4 * 59 * 1000);
- 
-        this.logoutTimeout = setTimeout(this.logout, 5 * 60 * 1000);
+        // this.warnTimeout = setTimeout(this.warn, 4 * 59 * 1000);
+        this.warnTimeout = setTimeout(this.warn, 10 * 1000);
+
+        // this.logoutTimeout = setTimeout(this.logout, 5 * 60 * 1000);
+        this.logoutTimeout = setTimeout(this.logout, 71 * 1000);
     }
     reissue() {
         this.props.getAnotherToken()
-        
+
     }
+
+    countSec() {
+        console.log("do -1 here", this.state.countDownSeconds)
+        this.setState({ countDownSeconds: timer });
+        timer--;
+    }
+
     resetTimeout() {
         console.log("you are active")
         this.clearTimeout();
@@ -98,15 +122,21 @@ class AuthenticatedRoutes extends React.Component {
     }
 
     warn() {
-        console.log("You will be logged out automatically in 1 minute.");
+        timer = 60;
+        this.setState({ openModal: true, countDownTimeOn: true })
+        this.setCountDown()
     }
 
     logout() {
-        
-        clearInterval(this.run);
         this.destroy();
         this.props.logout();
 
+    }
+
+    logoutButton(event) {
+        event.preventDefault();
+        this.destroy();
+        this.props.logout();
     }
 
     destroy() {
@@ -115,6 +145,13 @@ class AuthenticatedRoutes extends React.Component {
         for (var i in this.events) {
             window.removeEventListener(this.events[i], this.resetTimeout);
         }
+    }
+
+    closeModal = (event) => {
+        event.preventDefault();
+        timer = 60;
+        this.setState({ openModal: false, countDownTimeOn: false }, clearInterval(this.countDown))
+
     }
 
     componentDidMount() {
@@ -126,30 +163,50 @@ class AuthenticatedRoutes extends React.Component {
             // after 5 seconds stop
             // setTimeout(() => { clearInterval(timerId); alert('stop'); }, 5000);
         }
-        
-        
 
+        if (timer == 0 && this.state.countDownTimeOn) {
+            this.closeModal();
+            this.destroy();
+            this.props.logout();
+        }
         return (
-            <Router history={history}>
-                <Switch>
-                    {/*<Route path="/dashboard" component={Dashboard} />*/}
-                    <PrivateRoute path='/dashboard' authed={this.props.user} component={Dashboard} />
-                    <PrivateRoute path='/fund' authed={this.props.user} component={FundAccountIndex} />
-                    {/* <BillsRoute authed={this.props.user}/> */}
-                    {/* <PrivateRoute exact path='/bills' authed={this.props.user} component= {Bills}>
+            <Fragment>
+                <Modal open={this.state.openModal} onClose={this.closeModal} center>
+                    <div className="div-modal">
+
+                        <h3>You will be logged out in <strong>{this.state.countDownSeconds} seconds</strong></h3>
+
+                        <div className="btn-opt">
+                            {/* <button onClick={this.toggleModal} className="border-btn">Log out now</button>
+                                    <button onClick={this.deleteBeneficiary} disabled={this.getDeleteStatus()}
+                                        className="btn-alat">Continue</button> */}
+                            <button onClick={this.logoutButton} className="border-btn">Log out</button>
+                            <button onClick={this.closeModal} className="btn-alat">Continue</button>
+                        </div>
+                    </div>
+                </Modal>
+                <Router history={history}>
+                    <Switch>
+                        {/*<Route path="/dashboard" component={Dashboard} />*/}
+                        <PrivateRoute path='/dashboard' authed={this.props.user} component={Dashboard} />
+                        <PrivateRoute path='/fund' authed={this.props.user} component={FundAccountIndex} />
+                        {/* <BillsRoute authed={this.props.user}/> */}
+                        {/* <PrivateRoute exact path='/bills' authed={this.props.user} component= {Bills}>
                         <Redirect to={'/bills/airtime'} />
                     </PrivateRoute> */}
-                    <PrivateRoute path='/bills/airtime' authed={this.props.user} component={Bills} />
-                    <PrivateRoute path='/bills/data' authed={this.props.user} component={Bills} />
-                    <PrivateRoute path='/bills/paybills' authed={this.props.user} component={Bills} />
-                    <PrivateRoute path='/transfer' authed={this.props.user} component={TransferContainer} />
-                    <PrivateRoute path='/cardless-withdrawal' authed={this.props.user} component={TransferContainer} />
-                    <PrivateRoute path='/fx-transfer' authed={this.props.user} component={TransferContainer} />
-                    <PrivateRoute path='/loans' authed={this.props.user} component={LoansIndex} />
-                    <PrivateRoute path='/account' authed={this.props.user} component={Accounts} />
-                    <PrivateRoute path='/settings' authed={this.props.user} component={AccountSettings} />
-                </Switch>
-            </Router>
+                        <PrivateRoute path='/bills/airtime' authed={this.props.user} component={Bills} />
+                        <PrivateRoute path='/bills/data' authed={this.props.user} component={Bills} />
+                        <PrivateRoute path='/bills/paybills' authed={this.props.user} component={Bills} />
+                        <PrivateRoute path='/transfer' authed={this.props.user} component={TransferContainer} />
+                        <PrivateRoute path='/cardless-withdrawal' authed={this.props.user} component={TransferContainer} />
+                        <PrivateRoute path='/fx-transfer' authed={this.props.user} component={TransferContainer} />
+                        <PrivateRoute path='/loans' authed={this.props.user} component={LoansIndex} />
+                        <PrivateRoute path='/account' authed={this.props.user} component={Accounts} />
+                        <PrivateRoute path='/settings' authed={this.props.user} component={AccountSettings} />
+                    </Switch>
+                </Router>
+            </Fragment>
+
 
             // <Router history={history}>
             //     <Switch>
