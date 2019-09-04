@@ -34,7 +34,8 @@ import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingV
 import { loanCalcDataReducer, loanApplyReducer, GetIndustriesReducer, GetEmployerReducer, CurrentLoanReducer, 
     LoanHistoryReducer, WorkIdFrontReducer, WorkIdBackReducer, loanRejectReducer, loanStandingOrderReducer,
      loanMandateStatusReducer, loanValidateRemitaOtpReducer } from './loan.reducer';
-import { linkBVN, profileSuccessMessage, profileMenu, capturePersonalInformation, addNextOfKin, addContactDetails, occupationAndSector, addDocuments } from './profile-reducer';
+import { linkBVN, profileSuccessMessage, profileMenu, capturePersonalInformation,getContactDetail,
+    getResidential, addNextOfKin, addContactDetails, occupationAndSector, addDocuments,getPersonalInfo } from './profile-reducer';
 
 export const onboarding = {
     userRegistrationRequest,
@@ -130,7 +131,10 @@ export const profile = {
     addNextOfKin,
     addContactDetails,
     occupationAndSector,
-    addDocuments
+    addDocuments,
+    getContactDetail,
+    getResidential,
+    getPersonalInfo
 }
 
 
