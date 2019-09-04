@@ -9,10 +9,6 @@ import clock from '../../../assets/img/clock-circular-outline.svg';
 import {listStyleConstants} from '../../../redux/constants/lifestyle/lifestyle-constants';
 import { FetchMovie,getCinemaList, fetchMovieGenre } from "../../../redux/actions/lifestyle/movies-actions";
 
-
-
-
-
 class Movie extends Component {
     constructor(props){
         super(props);
@@ -25,9 +21,11 @@ class Movie extends Component {
             total:5,
             per_page: 4,
             current_page: 1,
-            showMovies: true
+            isLoading: false
 
         };
+
+        this.showMovies = true;
         console.log("state",this.state);
        
     }
@@ -67,7 +65,7 @@ class Movie extends Component {
     };
     filterGenreOnchangeHandler(e){
         this.filterGenre(e.target.value);
-        this.setState({values:e.target.value})
+        this.setState({values:e.target.value}, () => this.renderFilter())
         console.log("values",e.target.value)
 
     }
@@ -75,7 +73,7 @@ class Movie extends Component {
     
     onChangeHandler = async e => {
         this.search(e.target.value);
-        this.setState({ value: e.target.value }, () => this.renderFilter());
+        this.setState({ value: e.target.value });
 
         
     };
@@ -87,7 +85,7 @@ class Movie extends Component {
         let getMovieList = props.getMovieList;
 
         if(getMovieList.message === listStyleConstants.GET_MOVIE_LIST_PENDING){
-            return  <h4 className="text-center">Loading Movies...</h4>;
+            return  <h4 style={{marginTop:100}} className="text-center">Loading Movies...</h4>;
         }
         else if(getMovieList.message === listStyleConstants.GET_MOVIE_LIST_FAILURE){
             return(
@@ -189,19 +187,19 @@ class Movie extends Component {
         let user = this.state.user;
         let props = this.props;
         let getMovieList = props.getMovieList;         
-        if(this.state.values ==="ADVENTURE"){
+        if(this.state.values ==="ACTION"){
             let userMovies = getMovieList.data.response;
-            this.setState({showMovies: false})
+            this.showMovies = false;
+            console.log("====",this.showMovies)
             
             return  <div className="eventTrays">
             {userMovies.map(function(film, index){
                 return(
 
-                    <div>
+                    <div key={index}>
                     {
-                        film.genre.includes("Adventure" ) ? 
+                        film.genre.includes("Action" ) ? 
                         <div className="eventCards" key={index}>
-                            Movie{film.genre}
                             <Link to={{
                                 pathname:"/lifestyle/movie-details",
                                 state:{
@@ -223,7 +221,7 @@ class Movie extends Component {
                                         <div className="movie-duration">{film.duration}</div>
                                     </div>
                                 </div>
-                        </div>: <div>{film.genre}</div>
+                        </div>: null
                     }
                         
                     </div>
@@ -323,7 +321,9 @@ class Movie extends Component {
 
     render(){
         let  renderPageNumbers;
+        const {getMovieList} =this.props
 
+        // if (getMovieList.message === listStyleConstants.GET_MOVIE_LIST_SUCCESS) this.setState({isLoading: true})
 
         const pageNumbers = [];
         if (this.state.total !== null) {
@@ -335,7 +335,8 @@ class Movie extends Component {
         let classes = this.state.current_page === number ? styles.pagination : '';
 
         return (
-          <span style={{color:"#43063C", fontSize:16, fontFamily:'proxima_novaregular', position:"relative"}} key={number} className={classes} onClick={() => this.fetchMovieList(number)}>Load More</span>
+            
+          <span  key={number} className={classes} onClick={() => this.fetchMovieList(number)}>{this.props.getMovieList.message ===listStyleConstants.GET_MOVIE_LIST_SUCCESS ? <p style={{color:"#43063C", fontSize:16, fontFamily:'proxima_novaregular', position:"relative"}}>Load More</p>:null}</span>
         );
       });
       let userMovies = this.props.getMovieList;
@@ -377,7 +378,7 @@ class Movie extends Component {
                    {/* {this.resultu()} */}
                    {/* {this.renderGenre()}  */}
                    {
-                       this.state.showMovies ? this.resultu() : this.renderFilter()
+                       this.showMovies ? this.resultu() : this.renderFilter()
                    }
 
                         <span onClick={() => this.fetchMovieList(1)}></span> 

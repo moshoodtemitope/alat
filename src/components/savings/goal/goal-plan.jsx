@@ -6,6 +6,7 @@ import calender from '../../../assets/img/calender.svg' ;
 import graph from '../../../assets/img/graph.svg';
 import stash from '../../../assets/img/stash.svg';
 import {NavLink, Link} from "react-router-dom";
+import {customerGoalConstants} from '../../../redux/constants/goal/get-customer-trans-history.constant'
 import '../savings.css';
 import { connect } from "react-redux";
 import {getCustomerGoalTransHistory, GoalType, GoalFormula} from '../../../redux/actions/savings/goal/get-customer-transaction-history.actions'
@@ -119,7 +120,7 @@ class GoalPlan extends React.Component {
                 let goals = customerGoalTransHistory.customer_goal_data.response.data;
 
 
-                if(goals.length === 0 && !this.state.visible){
+                if(goals.length === 0){
                     return(
                         <div className="row">
                             <NavLink to="/savings/fixed-goal">
@@ -313,8 +314,8 @@ class GoalPlan extends React.Component {
                                             <li><a href="#">Investments</a></li>
                                         </NavLink>
                                         {
-                                            this.state.visible ?
-                                            <li style={{float:'right',color:'white',fontSize:'16px, font-family:"proxima_novaregular'}}> <a onClick={this.togglePage} className="btn-alat">Create a Savings Goal</a> </li> : null
+                                            this.props.customerGoalTransHistory.customer_goal === customerGoalConstants.FETCH_CUSTOMER_GOAL_TRANS_HISTORY_SUCCESS ? 
+                                            <li style={{float:'right',color:'white',fontSize:'16px, font-family:"proxima_novaregular'}}> <a  className="btn-alat">Create a Savings Goal</a> </li> :null 
                                         }
                                     </ul>
                                 </div>
