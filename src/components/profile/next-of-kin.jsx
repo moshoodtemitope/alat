@@ -7,7 +7,9 @@ import { Link, NavLink, Route } from 'react-router-dom';
 import InnerContainer from '../../shared/templates/inner-container';
 import {history} from '../../_helpers/history';
 import { ToggleButton }  from '../../shared/elements/_toggle';
-import { connect } from 'tls';
+import {connect} from 'react-redux'
+// import { on } from 'cluster';
+
 
 class NextOfKin extends Component {
     constructor(props){
@@ -84,7 +86,8 @@ class NextOfKin extends Component {
          busstopValidity2: false,
          houseNumberValidity2: false,
          apartmentValidity2: false,
- 
+         
+         isAddressSame: 'on',
          sameAddressAsAbove: "sameAddressAsAbove"
         }
     }
@@ -328,6 +331,13 @@ class NextOfKin extends Component {
         //     bvn: this.state.bvnNumber,
         //     date: this.state.dateValue
         // }
+        let checkeBoxValue = '';
+        switch(checkeBoxValue){
+            case 'on':      
+               checkeBoxValue = true;
+            case 'off':  
+               checkeBoxValue = false;
+        }
 
         let data = {
             gender: this.state.Gender,
@@ -345,7 +355,7 @@ class NextOfKin extends Component {
             country: this.state.Nationality,
             state: this.state.StateOfOrigin,
             town: this.state.LocalGv,
-            isAddressSame: true,
+            isAddressSame: checkeBoxValue,
             pin: this.state.AlatPin,
             address: this.state.address
         }
@@ -467,7 +477,7 @@ class NextOfKin extends Component {
              this.setState({SectorValidity: false});
          }
      }
-     
+     jy
      checkphoneNumberValidity = () => {
          if(this.state.phoneNumber == null || this.state.phoneNumber == ""){
              this.setState({phoneNumberValidity: true});
@@ -664,7 +674,12 @@ class NextOfKin extends Component {
             this.setState({streetCompoundValidity: false});
         }
     }
- 
+
+    HandleCheckBoxInput = (event) => {
+        console.log(event.target.value);
+        this.setState({isAddressSame: event.target.value});
+    }
+
  
     NavigateToSuccessPage = () => {
         history.push('/profile-success-message');
@@ -855,7 +870,7 @@ class NextOfKin extends Component {
                                                    <div className="form-group col-md-3">
                                                       <div class="custom-control custom-switch">
                                                             <input type="checkbox" class="custom-control-input" id="customSwitch1" />
-                                                             <label class="custom-control-label" for="customSwitch1"></label>
+                                                            <label class="custom-control-label" for="customSwitch1"></label>
                                                       </div>
                                                    </div>
                                             </div>
