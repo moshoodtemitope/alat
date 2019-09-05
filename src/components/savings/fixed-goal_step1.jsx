@@ -1,7 +1,7 @@
-import * as React from "react";
+import  React, {Component} from "react";
 import {Fragment} from "react";
 import InnerContainer from '../../shared/templates/inner-container';
-import SavingsContainer from './container';
+import SavingsContainer from '.';
 import {NavLink, Redirect} from "react-router-dom";
 import {Switch} from "react-router";
 import Select from 'react-select';
@@ -26,12 +26,13 @@ const selectedTime = [
 
 
 
-class FixedGoal extends React.Component {
+class FixedGoal extends Component {
 
     constructor(props){
         super(props);
         this.state={
             goalName:"",
+            user: JSON.parse(localStorage.getItem("user")),
             startDate:null,
             endDate:null,
             AmountSavedText:"",
@@ -268,10 +269,9 @@ class FixedGoal extends React.Component {
 
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
-                    {this.gotoStep2()}
                         <div className="row">
+                        {this.gotoStep2()}
+
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
                             </div>
@@ -443,11 +443,7 @@ class FixedGoal extends React.Component {
                             </div>
                         
                         </div>
-
-                    
-                    </SavingsContainer>
-
-                </InnerContainer>
+ 
 
 
             </Fragment>

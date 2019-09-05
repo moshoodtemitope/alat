@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '../container';
+import SavingsContainer from '..';
 import {Fragment} from "react";
 import { connect } from 'react-redux';
 import * as actions from "../../../redux/actions/savings/goal/get-customer-transaction-history.actions";
@@ -94,8 +94,6 @@ class WithDrawFromGoalSummmary extends Component {
 
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -193,8 +191,6 @@ class WithDrawFromGoalSummmary extends Component {
 
 
 
-                    </SavingsContainer>
-                </InnerContainer>
 
             </Fragment>
         )

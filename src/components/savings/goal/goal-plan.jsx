@@ -1,12 +1,9 @@
 import React from 'react';
 import {Fragment} from "react";
-import SavingsContainer from '../container';
-import InnerContainer from '../../../shared/templates/inner-container';
 import calender from '../../../assets/img/calender.svg' ;
 import graph from '../../../assets/img/graph.svg';
 import stash from '../../../assets/img/stash.svg';
 import {NavLink, Link} from "react-router-dom";
-import {customerGoalConstants} from '../../../redux/constants/goal/get-customer-trans-history.constant'
 import '../savings.css';
 import { connect } from "react-redux";
 import {getCustomerGoalTransHistory, GoalType, GoalFormula} from '../../../redux/actions/savings/goal/get-customer-transaction-history.actions'
@@ -120,10 +117,10 @@ class GoalPlan extends React.Component {
                 let goals = customerGoalTransHistory.customer_goal_data.response.data;
 
 
-                if(goals.length === 0){
+                if(goals.length === 0 && !this.state.visible){
                     return(
                         <div className="row">
-                            <NavLink to="/savings/fixed-goal">
+                            <NavLink to={"/savings/fixed-goal"}>
                                 <div className="fixed-goal">
                                     <img className="goal-icon" src={calender} alt=''/>
                                     <p className="flex-text">Fixed Goal</p>
@@ -132,7 +129,7 @@ class GoalPlan extends React.Component {
                                     </p>
                                 </div>
                             </NavLink>
-                            <NavLink to="/savings/flex-goal">
+                            <NavLink to={"/savings/flex-goal"}>
                                 <div className="flex-goal">
                                     <img className="goal-icon" src={graph} alt=''/>
                                     <p className="plan-text">Flexi Goal</p>
@@ -140,7 +137,7 @@ class GoalPlan extends React.Component {
                                         but you will lose your interest if you don't meet your</p>
                                 </div>
                             </NavLink>
-                            <NavLink to="/savings/create-stash_step1">
+                            <NavLink to={"/savings/create-stash_step1"}>
                                 <div className="stash-goal">
                                     <img className="goal-icon" src={stash} alt=''/>
                                     <p className="plan-text">Stash</p>
@@ -296,8 +293,7 @@ class GoalPlan extends React.Component {
 
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
+               
                     <div className="row checkSome">
                         <div className="col-sm-12">
                             <p className="page-title">Savings & Goals</p>
@@ -314,8 +310,8 @@ class GoalPlan extends React.Component {
                                             <li><a href="#">Investments</a></li>
                                         </NavLink>
                                         {
-                                            this.props.customerGoalTransHistory.customer_goal === customerGoalConstants.FETCH_CUSTOMER_GOAL_TRANS_HISTORY_SUCCESS ? 
-                                            <li style={{float:'right',color:'white',fontSize:'16px, font-family:"proxima_novaregular'}}> <a  className="btn-alat">Create a Savings Goal</a> </li> :null 
+                                            this.state.visible ?
+                                            <li style={{float:'right',color:'white',fontSize:'16px, font-family:"proxima_novaregular'}}> <a onClick={this.togglePage} className="btn-alat">Create a Savings Goal</a> </li> : null
                                         }
                                     </ul>
                                 </div>
@@ -325,8 +321,7 @@ class GoalPlan extends React.Component {
                             {this.renderGoalsElement(GoalTransHistory)}
                         </div>
                     </div>
-                    </SavingsContainer>
-                </InnerContainer>
+                   
             </Fragment>
         );
     }

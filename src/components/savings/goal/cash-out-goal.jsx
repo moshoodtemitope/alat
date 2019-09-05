@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Fragment} from 'react';
 import InnerContainer from "../../../shared/templates/inner-container";
-import SavingsContainer from "../container";
+import SavingsContainer from "..";
 import {NavLink, Redirect} from "react-router-dom";
 import SelectDebitableAccounts from "../../../shared/components/selectDebitableAccounts";
 import {customerGoalConstants} from "../../../redux/constants/goal/get-customer-trans-history.constant";
@@ -114,8 +114,7 @@ class StashCashout extends Component {
         const {AmountInvalid} =this.state;
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
+               
                         {this.gotoStep2()}
                         <div className="row">
                             <div className="col-sm-12">
@@ -189,9 +188,6 @@ class StashCashout extends Component {
                             </div>
 
                         </div>
-
-                    </SavingsContainer>
-                </InnerContainer>
 
             </Fragment>
 

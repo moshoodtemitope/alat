@@ -1,7 +1,7 @@
 import React from 'react'
  import {Fragment} from "react";
  import InnerContainer from '../../shared/templates/inner-container';
- import SavingsContainer from './container';
+ import SavingsContainer from '.';
  import Select from 'react-select';
  import { connect } from 'react-redux';
  import {flexGoalConstants} from '../../redux/constants/goal/flex-goal.constant'
@@ -23,6 +23,8 @@ import React from 'react'
          super(props)
          this.state={
              targetAmount:"",
+             user: JSON.parse(localStorage.getItem("user")),
+
              startDate:"",
              endDate:"",
              goalName:"",
@@ -131,8 +133,7 @@ import React from 'react'
 
          return (
              <Fragment>
-                 <InnerContainer>
-                     <SavingsContainer>
+                 
                      {this.gotoStep3()}
                          <div className="row">
                              <div className="col-sm-12">
@@ -202,9 +203,7 @@ import React from 'react'
                          </div>
 
 
-                     </SavingsContainer>
-
-                 </InnerContainer>
+                     
 
 
              </Fragment>

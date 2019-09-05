@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Fragment} from 'react';
 import InnerContainer from "../../../shared/templates/inner-container";
-import SavingsContainer from "../container";
+import SavingsContainer from "..";
 import {NavLink, Redirect} from "react-router-dom";
 import Members from '../../savings/group/list-item'
 import SelectDebitableAccounts from "../../../shared/components/selectDebitableAccounts";
@@ -117,8 +117,7 @@ class WithdrawFromGoal extends Component {
         const {AmountInvalid} =this.state;
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
+                
                         {this.gotoStep2()}
                         <div className="row">
                             <div className="col-sm-12">
@@ -208,8 +207,6 @@ class WithdrawFromGoal extends Component {
 
                         </div>
 
-                    </SavingsContainer>
-                </InnerContainer>
 
             </Fragment>
 

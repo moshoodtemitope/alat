@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Fragment} from "react";
 import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from './../container';
+import SavingsContainer from '..';
 import {NavLink} from "react-router-dom";
 import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
 import "react-datepicker/dist/react-datepicker.css";
@@ -98,8 +98,6 @@ class JoinGroupSummary extends React.Component {
         if(this.props.findGroup.response.groupData != null && this.props.findGroup.response.esusuData == null){
             return (
                 <Fragment>
-                    <InnerContainer>
-                        <SavingsContainer>
                             <div className="row">
                                 <div className="col-sm-12">
                                     <p className="page-title">Savings & Goals</p>
@@ -184,8 +182,6 @@ class JoinGroupSummary extends React.Component {
     
                             </div>
     
-                        </SavingsContainer>
-                    </InnerContainer>
                 </Fragment>
             );
         }
@@ -193,8 +189,6 @@ class JoinGroupSummary extends React.Component {
         if(this.props.findGroup.response.groupData == null && this.props.findGroup.response.esusuData != null){
             return (
                 <Fragment>
-                    <InnerContainer>
-                        <SavingsContainer>
                             <div className="row">
                                 <div className="col-sm-12">
                                     <p className="page-title">Savings & Goals</p>
@@ -279,8 +273,6 @@ class JoinGroupSummary extends React.Component {
     
                             </div>
     
-                        </SavingsContainer>
-                    </InnerContainer>
                 </Fragment>
             );
         }

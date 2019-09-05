@@ -1,7 +1,7 @@
 import React from 'react'
 import {Fragment} from "react";
 import InnerContainer from '../../shared/templates/inner-container';
-import SavingsContainer from './container';
+import SavingsContainer from '.';
 import {NavLink, Redirect} from "react-router-dom";
 import Select from 'react-select';
 import { connect } from 'react-redux';
@@ -23,6 +23,7 @@ class FlexGoal extends React.Component {
         super(props);
         this.state={
             goalName:"",
+            user: JSON.parse(localStorage.getItem("user")),
             startDate:null,
             endDate:null,
             targetAmount:"",
@@ -371,9 +372,8 @@ class FlexGoal extends React.Component {
 
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
-                        {this.gotoStep2()}
+                
+                    {this.gotoStep2()}
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -553,9 +553,7 @@ class FlexGoal extends React.Component {
                         </div>
 
 
-                    </SavingsContainer>
-
-                </InnerContainer>
+                 
 
 
             </Fragment>

@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Fragment} from "react";
 import InnerContainer from '../../shared/templates/inner-container';
-import SavingsContainer from './container';
+import SavingsContainer from '.';
 import {NavLink, Redirect} from "react-router-dom";
 import Select from 'react-select';
 import { connect } from 'react-redux';
@@ -194,8 +194,7 @@ class CreateStash extends React.Component {
 
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
+              
                     {this.gotoStep2()}
                         <div className="row">
                             <div className="col-sm-12">
@@ -206,10 +205,10 @@ class CreateStash extends React.Component {
                                     <div className="sub-tab-nav">
                                         <ul>
                                             <NavLink to='/savings/choose-goal-plan'>
-                                            <li><a href="accounts.html" className="active">Goals</a></li>
+                                            <li><a  className="active">Goals</a></li>
                                             </NavLink>
                                             <NavLink to="/savings/activityDashBoard">
-                                            <li><a href="statement.html">Group Savings</a></li>
+                                            <li><a>Group Savings</a></li>
                                             </NavLink>
                                             <li><a href="#">Investments</a></li>
                                         
@@ -319,10 +318,6 @@ class CreateStash extends React.Component {
                         
                         </div>
 
-                    
-                    </SavingsContainer>
-
-                </InnerContainer>
 
 
             </Fragment>

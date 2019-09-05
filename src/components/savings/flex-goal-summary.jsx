@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import InnerContainer from '../../shared/templates/inner-container';
-import SavingsContainer from './container';
+import SavingsContainer from '.';
 import {Fragment} from "react";
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -75,8 +75,7 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
     render() {
         return (
            <Fragment>
-           <InnerContainer>
-                <SavingsContainer>
+           
                 <div className="row">
                     <div className="col-sm-12">
                         <p className="page-title">Savings & Goals</p>
@@ -175,9 +174,7 @@ import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
                 
                 </div>
                 
-                </SavingsContainer>
-            </InnerContainer>
-           
+                
            </Fragment>
         )
     }
