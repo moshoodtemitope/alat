@@ -64,6 +64,11 @@ class LoansIndex extends React.Component {
                                     <Route path={'/loans/salary/kyc'} component={LoansKYC} />
                                     <Route path={'/loans/salary/statement-upload'} component={LoanStatementUpload} />
                                     <Route path={'/loans/salary/upload-done'} component={LoanStatementUploadDone} />
+
+
+                                    {/* Alat loans */}
+
+                                    <Route path={'/loans/alat/dashboard'} component={LoansDashboard} />
                                 </div>
 
                             </div>

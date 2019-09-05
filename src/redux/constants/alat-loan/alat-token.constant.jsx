@@ -1,0 +1,2 @@
+export const IS_FETCHING_TRUE = 'IS_FETCHING_TRUE';
+export const IS_FETCHING_FALSE = 'IS_FETCHING_FALSE';
