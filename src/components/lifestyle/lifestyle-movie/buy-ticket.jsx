@@ -23,7 +23,12 @@ class BuyTicket extends Component {
             cinemaId:"",
             title:"",
             Pin:"",
+            adult:"",
+            child:"",
+            student:"",
             isPinInvalid: false,
+            goal: JSON.parse(localStorage.getItem("goal")),
+
 
 
         };
@@ -76,9 +81,9 @@ class BuyTicket extends Component {
                 title:data.title,
                 cinemaId:data.cinemaId,
                 ShowTimeId:data.ShowTimeId,
-                initialAdultAmount:data.initialAdultAmount,
-                initialStudentAmount:data.initialStudentAmount,
-                initialChildAmount:data.initialChildAmount,
+                adult:data.adultQuantity,
+                child:data.childQuantity,
+                student:data.studentQuantity,
                 ticketId:data.ticketId,
                 fee:data.fee,
                 ticketType:data.ticketType
@@ -101,10 +106,10 @@ class BuyTicket extends Component {
                 "TicketId":this.state.ticketId,
                 'AccountNo':this.state.accountToDebit,
                 'Pin':this.state.Pin,
-                'TicketAmount':parseFloat(this.state.TicketAmount),
-                "Adult":parseInt(this.state.initialAdultAmount),
-                "Student":parseInt(this.state.initialStudentAmount),
-                "Children":parseInt(this.state.initialChildAmount),
+                'TicketAmount':this.state.TicketAmount,
+                "Adult":this.state.adult,
+                "Student":this.state.student,
+                "Children":this.state.child,
                 "fee":this.state.fee,
 
             };
@@ -159,7 +164,7 @@ class BuyTicket extends Component {
                                                 <div className="form-group">
                                                        <div className="puchaseSumTickets">
                                                            <div className="left">
-                                                                <p style={{fontSize:12,fontFamily:"proxima_novasemibold"}}>{this.state.title}</p>
+                                                                <p style={{fontSize:12,fontFamily:"proxima_novasemibold"}}>{this.state.goal.title}</p>
                                                                 <p style={{fontSize:12, fontFamily:'proxima_novaregular'}}>{this.state.ticketType}</p>
                                                            </div>
                                                            <div className="right">

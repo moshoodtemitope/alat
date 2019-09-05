@@ -21,7 +21,8 @@ class Movie extends Component {
             total:5,
             per_page: 4,
             current_page: 1,
-            isLoading: false
+            isLoading: false,
+            doFilter: false
 
         };
 
@@ -64,9 +65,11 @@ class Movie extends Component {
         this.setState({ genre });
     };
     filterGenreOnchangeHandler(e){
-        this.filterGenre(e.target.value);
-        this.setState({values:e.target.value}, () => this.renderFilter())
-        console.log("values",e.target.value)
+        let {value} = e.target
+        // this.filterGenre(e.target.value);
+        this.setState({doFilter: true})
+        return this.renderFilter(value)
+        // console.log("values",e.target.value)
 
     }
     
@@ -89,7 +92,7 @@ class Movie extends Component {
         }
         else if(getMovieList.message === listStyleConstants.GET_MOVIE_LIST_FAILURE){
             return(
-                <h4 className="text-center" >No Movie Found</h4>
+                <h4 className="text-center">No Movie Found</h4>
             );
         }
         else if (getMovieList.message === listStyleConstants.GET_MOVIE_LIST_SUCCESS){
@@ -183,22 +186,25 @@ class Movie extends Component {
             );
         }
     }
-    renderFilter(){
+    renderFilter(data){
         let user = this.state.user;
         let props = this.props;
-        let getMovieList = props.getMovieList;         
-        if(this.state.values ==="ACTION"){
+        let getMovieList = props.getMovieList; 
+             
+        if(data == "ACTION"){
             let userMovies = getMovieList.data.response;
-            this.showMovies = false;
-            console.log("====",this.showMovies)
+            console.log(data, "==================", userMovies)   
             
-            return  <div className="eventTrays">
+            return  (<div className="eventTrays">
+                <p>fgggggggggggggggfggg</p>
             {userMovies.map(function(film, index){
                 return(
 
                     <div key={index}>
+                        <p>eeeeeeeeeeeeeeeeeeee</p>
+
                     {
-                        film.genre.includes("Action" ) ? 
+                        film.genre.toLowerCase().toString().includes("action" ) ? 
                         <div className="eventCards" key={index}>
                             <Link to={{
                                 pathname:"/lifestyle/movie-details",
@@ -228,7 +234,7 @@ class Movie extends Component {
 
                 );
             })}
-        </div>;
+            </div>);
 
         }
         else if(this.state.values === "FANTASY"){
@@ -378,7 +384,7 @@ class Movie extends Component {
                    {/* {this.resultu()} */}
                    {/* {this.renderGenre()}  */}
                    {
-                       this.showMovies ? this.resultu() : this.renderFilter()
+                       !this.state.doFilter ? this.renderMovies() : this.renderFilter("")
                    }
 
                         <span onClick={() => this.fetchMovieList(1)}></span> 

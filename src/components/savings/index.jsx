@@ -2,13 +2,13 @@ import  React, {Component, Fragment}from "react";
 import InnerContainer from '../../shared/templates/inner-container';
 import { Route, NavLink } from "react-router-dom";
 import ChooseGoalPlan from './goal/goal-plan';
-import FixedGoal from './fixed-goal_step1'
-import FixedGoalComplete from './fixed-goal-step2';
-import FixedGoalSummary from './fixed-goal-summary';
-import FlexGoal from './flex-goal-step1';
-import FlexGoalSummary from './flex-goal-summary';
-import CreateStashGoal from './create-stash_step1';
-import CreateStashGoalStep2 from './create-stash-step2'
+import FixedGoal from './goal/fixed-goal_step1'
+import FixedGoalComplete from './goal/fixed-goal-step2';
+import FixedGoalSummary from './goal/fixed-goal-summary';
+import FlexGoal from './goal/flex-goal-step1';
+import FlexGoalSummary from './goal/flex-goal-summary';
+import CreateStashGoal from './goal/create-stash_step1';
+import CreateStashGoalStep2 from './goal/create-stash-step2'
 import GroupSavingsSelection from './group/group-saving-selection';
 import CreateATargetGoal from './group/create-a-target-goal';
 import GroupCreated from './group/group-created';
@@ -37,7 +37,7 @@ import EditGroupSavings from './group/edit-group-savings';
 import EditRotatingGroup from './group/edit-rotating-savings-group';
 import DeleteGoal from './goal/delete-goal';
 import EditGoal from './goal/Edit-Goal';
-import FlexGoalStep2 from './flex-goal-step2';
+import FlexGoalStep2 from './goal/flex-goal-step2';
 import StashCashout from './goal/cash-out-goal';
 import FlexSuccessMessage from './goal/flex-goal-success';
 import JoinGroupSummary from './group/join-group-summary';
@@ -73,7 +73,7 @@ class SavingsContainer extends Component {
                     <div className="dashboard-wrapper">
                         <div className="container">
                         {this.props.children}
-                            <Route exact path={'/savings/choose-goal'}  component={ChooseGoalPlan}/>
+                            <Route exact path={'/savings'}  component={ChooseGoalPlan}/>
                             <Route  path={'/savings/choose-goal-plan'}  component={ChooseGoalPlan}/>
                             <Route path={'/savings/fixed-goal'}  component={FixedGoal}/>
                             <Route path={'/savings/fixed-goal-complete'} component={FixedGoalComplete}/>

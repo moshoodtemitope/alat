@@ -1,16 +1,16 @@
 import  React, {Component} from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../shared/templates/inner-container';
-import SavingsContainer from '.';
+import InnerContainer from '../../../shared/templates/inner-container';
+import SavingsContainer from '..';
 import {NavLink, Redirect} from "react-router-dom";
 import {Switch} from "react-router";
 import Select from 'react-select';
 import { connect } from 'react-redux';
 import DatePicker from "react-datepicker";
-import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant'
-import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
+import {fixedGoalConstants} from '../../../redux/constants/goal/fixed-goal.constant'
+import * as actions from '../../../redux/actions/savings/goal/fixed-goal.actions'
 import "react-datepicker/dist/react-datepicker.css";
-import * as util from '../../shared/utils'
+import * as util from '../../../shared/utils'
 import moment from 'moment';
 
 

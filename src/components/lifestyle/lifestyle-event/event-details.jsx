@@ -15,46 +15,75 @@ class EventDetails extends React.Component {
         this.state = {
             ShowTimeId:"",
             TicketAmount:"",
-            movieLocation: "",
+            movieLocation:"",
             StudentId:"",
             ChildrenId:"",
             AdultId:"",
-            movieDay: "",
-            childNumber: 0,
-            childAmount: 0,
-            initialChildAmount: 0,
+            movieDay:"",
+            childNumber:0,
+            childAmount:0,
+            initialChildAmount:0,
             ticketClassses:null,
             user: JSON.parse(localStorage.getItem("user")),
             dataContainer: null,
-            eventId:""
+            eventId:"",
+            ticketClass: null,
+            TicketClassValidity:false,
+            goal: JSON.parse(localStorage.getItem("goal")),
+
+
         };
+        this.fetchCinemaList();
+
     }
-    // fetchEventList(){
-    //     const { dispatch } = this.props;
-    //     dispatch(getEvents(this.state.user.token));
-    // };
+
+    componentDidMount(){
+        const details = this.props.location.state.details;
+        this.setState({
+            getCinemaList: details,
+
+        },()=>{  localStorage.setItem('goal', JSON.stringify(details))
+        });
+
+    }
+    
+    
     fetchCinemaList(){
         const { dispatch } = this.props;
         dispatch(getCinemaList(this.state.user.token));
         // console.log(this.props.getCinemaList)
 
     };
-    // fetchShowTime(){
-    //     const { dispatch } = this.props;
-    //     dispatch(buyMovieTicket(this.state.user.token));
-    //     // console.log(this.props.getCinemaList)
-
-    // };
-    componentDidMount(){
-        this.fetchCinemaList();
-        const details = this.props.location.state.name;
-        this.setState({
-            SubmitTicketData: details
-
-        })
-
-
+    
+    checkTicketClassValidity = () => {
+        if(this.state.ticketClass == null || this.state.ticketClass == ""){
+            this.setState({TicketClassValidity: true});
+        }else{
+            this.setState({TicketClassValidity: false});
+        }
     }
+    checkValidity = () => {
+        let result = 'valid';
+        for(let x in this.state){
+             switch(x){
+                 
+                 case 'ticketClass':
+                         if(this.state[x] == null || this.state[x] == ""){
+                             console.log(x)
+                             result = null;
+                             break;
+                         }
+ 
+                 
+             }
+         }
+ 
+        console.log(result);
+        return result;
+    }
+ 
+
+   
 
 
     handleSelectLocation = item => {
@@ -92,19 +121,40 @@ class EventDetails extends React.Component {
                 })
             );
     };
-    ShowBuyTicketData = () => {
+    InitiateNetworkCall=()=>{
         const data = {
             ShowTimeId:this.state.itemId,
-            TicketAmount:parseFloat(this.state.childAmount),
+            TicketAmount:this.state.childAmount,
             title:this.props.location.state.details.title,
             quantity:this.state.childNumber,
+            adultquatity:this.state.adultNumber,
+            studentQuantity:this.state.studentNumber,
             ticketClassses:this.state.ticketClassses,
             eventId:this.state.eventId,
             source:this.props.location.state.details.source
         }
-        console.log(data)
+        
+        this.props.dispatch(actions.SubmitEventTicketData(this.state.user.token, data));
+
+
+    }
+
+    ShowBuyTicketData = () => {
+        event.preventDefault();
+
+
+        this.checkTicketClassValidity();
+        
+        switch(this.checkValidity()){
+            case null:
+              console.log('Empty value was found');
+              break;
+            case 'valid': 
+              console.log("No Empty Value Found");
+              this.InitiateNetworkCall();
+              break;
+        }
         // return;
-        this.props.dispatch(actions.SubmitEventTicketData(data));
     }
     formatAmountNoDecimal = (amount) => {
         return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
@@ -114,6 +164,8 @@ class EventDetails extends React.Component {
 
     UseSelectedItem = (event) => {
         let gottenValue = event.target.value.split("000");
+        let name = event.target.name;
+
 
        
         console.log(gottenValue);
@@ -130,6 +182,8 @@ class EventDetails extends React.Component {
         this.setState({childAmount:gottenValue[0]});
         this.setState({ticketClassses:gottenValue[2]});
         this.setState({eventId:gottenValue[3]});
+        this.setState({[name] : event.target.value});
+
         console.log(data);
         this.props.dispatch(actions.ShowTime(this.state.user.token, data))
     }
@@ -166,16 +220,14 @@ class EventDetails extends React.Component {
     }
 
     render() {
+        const details = this.props.location.state.details;
+
        let {
-            movieLocation,
-            movieDay,
-            adultNumber,
-            studentNumber,
-            childNumber
+            
+            childNumber,
+            TicketClassValidity
         } = this.state;
          const {getCinemaList,getEvents,ShowTime,buyMovieTicket}=this.props
-         const details = this.props.location.state.details;
-         console.log(details)
 
         return (
             <div>
@@ -286,19 +338,21 @@ class EventDetails extends React.Component {
                             marginTop: 37
                         }}>
                       <form onSubmit={this.ShowBuyTicketData  } style={{ width: "100%" }}>
-                            <label>Select Ticket Class</label>
-                           
-                            <select onChange={this.UseSelectedItem}>
-                             <option>Select Ticket Type</option>
+                           <div  className={TicketClassValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                    <label>Select Ticket Class</label>
 
-                                {
-                                    // getEvents.message == listStyleConstants.GET_EVENTS_SUCCESS && 
-                                    //  this.LopEventList()
-                                    details.ticketClassses.map(event=> {
-                                        return <option key={event.title} value={event.ticketId + " " + "000" + event.price + " " + event.title + " " + event.eventId}>{event.title}</option>
-                                    })
-                                }
-                            </select>
+                                        <select onChange={this.UseSelectedItem } name="ticketClass">
+                                        <option>Select Ticket Type</option>
+
+                                            {
+                                                // getEvents.message == listStyleConstants.GET_EVENTS_SUCCESS && 
+                                                //  this.LopEventList()
+                                                details.ticketClassses.map(event=> {
+                                                    return <option key={event.title} value={event.ticketId + " " + "000" + event.price + " " + event.title + " " + event.eventId}>{event.title}</option>
+                                                })
+                                            }
+                                        </select>
+                                        </div>
 
                             <label style={{ marginTop: 16 }}>Select Day</label>
                             <select onChange={this.UseSelectedTime}>
@@ -398,7 +452,7 @@ class EventDetails extends React.Component {
                                     marginBottom: 39
                                 }}
                             >
-                                <button disabled={this.props.SubmitEventTicketData.message == listStyleConstants.SUBMIT_EVENT_TICKET_PENDING}
+                                <button
                                     style={{
                                         border: "0px solid #AB2656",
                                         height: 45,
@@ -409,8 +463,8 @@ class EventDetails extends React.Component {
                                         cursor: "pointer"
                                     }}
                                 >
+                                    Next
                                 
-                                    {this.props.SubmitEventTicketData.message ==listStyleConstants.SUBMIT_EVENT_TICKET_PENDING ? "Processing..." :"Buy Ticket"}
                                 </button>
                             </div>
                         </form>

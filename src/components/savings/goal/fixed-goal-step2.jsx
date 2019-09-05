@@ -1,15 +1,15 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../shared/templates/inner-container';
-import SavingsContainer from '.';
+import InnerContainer from '../../../shared/templates/inner-container';
+import SavingsContainer from '..';
 import Select from 'react-select';
 import { connect } from 'react-redux';
 import { Redirect,Link,NavLink } from 'react-router-dom';
-import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions'
-import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant';
-import SelectDebitableAccounts from '../../shared/components/selectDebitableAccounts';
+import * as actions from '../../../redux/actions/savings/goal/fixed-goal.actions'
+import {fixedGoalConstants} from '../../../redux/constants/goal/fixed-goal.constant';
+import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
 import moment from 'moment';
-import * as util from '../../shared/utils'
+import * as util from '../../../shared/utils'
 import "react-datepicker/dist/react-datepicker.css";
 const selectedTime = [
 

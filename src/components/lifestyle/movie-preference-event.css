@@ -118,11 +118,9 @@
 .puchaseSumTickets {
     display: flex;
     flex-wrap: nowrap;
-    width: 80%;
     background-color: #5C3158;
     border-radius: 6px;
     border: 1px solid #EDEDED;
-    margin-left: 10%;
     padding-top: 20px;
     padding-left: 20px;
 }

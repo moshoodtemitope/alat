@@ -14,7 +14,8 @@ import {getCinemaList,
      SubmitEventTicketData,
      SearchfetchEventList,
       movieDetails,
-      FetchMovieGenre} from './lifestyle/lifestyle-reducer';
+      FetchMovieGenre
+    } from './lifestyle/lifestyle-reducer';
 
 
 import {
@@ -50,7 +51,7 @@ import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingV
       postScoreCardAnswerReducer} from './loan-onboarding.reducer';
 
 import { loanCalcDataReducer, loanApplyReducer, GetIndustriesReducer, GetEmployerReducer, CurrentLoanReducer, 
-    LoanHistoryReducer, WorkIdFrontReducer, WorkIdBackReducer, loanRejectReducer, loanStandingOrderReducer,
+        LoanHistoryReducer, WorkIdFrontReducer, WorkIdBackReducer, loanRejectReducer, loanStandingOrderReducer,
      loanMandateStatusReducer, loanValidateRemitaOtpReducer, loanStatementUpload, continueApplication, 
      SignatureReducer , PassportReducer } from './loan.reducer';
 

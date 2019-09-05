@@ -251,12 +251,12 @@ export const SubmitEventTicketData =(data) =>{
 export const SearchFetchEvent = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.GET_EVENTS + "&" + 'search=' + data, "GET", data, SystemConstant.HEADER, false);
+        let consume = ApiService.request(routes.GET_EVENTS + 1 + "&" + 'search=' + data, "GET", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
                 // consume.log(response);
-                dispatch(success(response.data, data));
+                dispatch(success(response.data));
             })
             .catch(error => {
                 dispatch(alertActions.error(modelStateErrorHandler(error)));

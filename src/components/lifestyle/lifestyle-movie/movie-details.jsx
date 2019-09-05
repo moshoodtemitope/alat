@@ -14,21 +14,21 @@ class Moviedetails extends React.Component {
         this.state = {
             ShowTimeId:"",
             TicketAmount:"",
-            movieLocation: "",
+            movieLocation:"",
             StudentId:"",
             ChildrenId:"",
             AdultId:"",
-            movieDay: "",
-            adultNumber: 0,
-            studentNumber: 0,
-            childNumber: 0,
-            adultAmount: 0,
-            studentAmount: 0,
-            childAmount: 0,
+            movieDay:"",
+            adultNumber:0,
+            studentNumber:0,
+            childNumber:0,
+            adultAmount:0,
+            studentAmount:0,
+            childAmount:0,
             childrenAmount:0,
-            initialAdultAmount: 0,
-            initialStudentAmount: 0,
-            initialChildAmount: 0,
+            initialAdultAmount:0,
+            initialStudentAmount:0,
+            initialChildAmount:0,
             user: JSON.parse(localStorage.getItem("user")),
             dataContainer: null,
             itemId: null,
@@ -40,10 +40,19 @@ class Moviedetails extends React.Component {
             isSubmitted:false,
             fee:"",
             error: false,
-            ticketType:""
+            ticketType:"",
+            CinemaLocationValidity:false,
+            CinemaLocation:null,
+            showTime:null,
+            showTimeValidity:false,
+            goal:JSON.parse(localStorage.getItem('goal')) || [],
+
+            
 
         };
-        this.UseSelectedItem = this.UseSelectedItem.bind(this)
+        this.UseSelectedItem = this.UseSelectedItem.bind(this);
+        this.fetchCinemaList();
+
     }
     
     fetchCinemaList(){
@@ -52,14 +61,20 @@ class Moviedetails extends React.Component {
         // console.log(this.props.getCinemaList)
 
     };
-    
-    componentDidMount(){
-        this.fetchCinemaList();
-        
-        
 
+    componentDidMount(){
+        const details = this.props.location.state.details;
+        this.setState({
+            getCinemaList: details,
+
+        },()=>{  localStorage.setItem('goal', JSON.stringify(details))
+        });
 
     }
+    
+   
+        
+        
     fetchSingleTicket( data){
         const { dispatch } = this.props;
         dispatch(getSingleMovie(this.state.user.token, ));
@@ -73,6 +88,48 @@ class Moviedetails extends React.Component {
             movieLocation: item.value
         });
     };
+
+    checkCinemaLocationValidity = () => {
+        if(this.state.CinemaLocation == null || this.state.CinemaLocation == ""){
+            this.setState({CinemaLocationValidity: true});
+        }else{
+            this.setState({CinemaLocationValidity: false});
+        }
+    }
+    checkShowTimeValidity =()=>{
+        if(this.state.showTime ==null || this.state.showTime == ""){
+            this.setState({showTimeValidity:true});
+        }else{
+            this.setState({showTimeValidity:false})
+        }
+    }
+    checkValidity = () => {
+        let result = 'valid';
+        for(let x in this.state){
+             switch(x){
+                 
+                 case 'CinemaLocation':
+                         if(this.state[x] == null || this.state[x] == ""){
+                             console.log(x)
+                             result = null;
+                             break;
+                         }
+                case 'showTime':
+                        if(this.state[x] == null || this.state[x] ==""){
+                                 console.log(x)
+                                 result =null;
+                                 break;
+                             }
+ 
+                 
+             }
+         }
+ 
+        console.log(result);
+        return result;
+    }
+ 
+
 
     handleSelectMovieDay = movieDay => {
         this.setState({
@@ -147,28 +204,44 @@ class Moviedetails extends React.Component {
                 })
             );
     };
-    ShowBuyTicketData = () => {
-        this.setState({ isSubmitted: true });
-        if (this.checkSelectedLocation()) {
-
-        } else {
-
-            const data = {
-                ShowTimeId:this.state.showTimeId,
-                TicketAmount:parseFloat(this.state.TicketAmount),
-                initialAdultAmount:this.state.initialAdultAmount,
-                initialStudentAmount:this.state.initialStudentAmount,
-                initialChildAmount:this.state.initialChildAmount, 
-                title:this.props.location.state.details.title,  
-                cinemaId:this.state.cinemaId,
-                ticketId:this.state.ticketId,
-                fee:this.state.fee,
-                ticketType:this.state.ticketType
-            }
-            console.log(data)
-        // return;
+    InitiateNetworkCall=()=>{
+        const data = {
+            ShowTimeId:this.state.showTimeId,
+            TicketAmount:this.state.TicketAmount,
+            initialAdultAmount:this.state.initialAdultAmount,
+            initialStudentAmount:this.state.initialStudentAmount,
+            initialChildAmount:this.state.initialChildAmount, 
+            adultQuantity:this.state.adultNumber,
+            childQuantity:this.state.childNumber,
+            studentQuantity:this.state.studentNumber,
+            title:this.props.location.state.details.title,  
+            cinemaId:this.state.cinemaId,
+            ticketId:this.state.ticketId,
+            fee:this.state.fee,
+            ticketType:this.state.ticketType
+        }
+        console.log(data)
         this.props.dispatch(actions.SubmitTicketData(data));
+
+
     }
+
+    ShowBuyTicketData = (event) => {
+        event.preventDefault();
+
+        this.checkCinemaLocationValidity();
+        this.checkShowTimeValidity();
+
+        switch(this.checkValidity()){
+            case null:
+              console.log('Empty value was found');
+              break;
+            case 'valid': 
+              console.log("No Empty Value Found");
+              this.InitiateNetworkCall();
+              break;
+        }
+    
     }
     
     // value={event.date + "8888" + event.student + " " + event.adult + " " + event.children}>{event.date}</option>
@@ -180,7 +253,9 @@ class Moviedetails extends React.Component {
         let showTimeId = amounts.split(" ")[3];
         let ticketId = amounts.split(" ")[4];
         let fee = amounts.split(" ")[5];
-        let ticketType = amounts.split(" ")[6]
+        let ticketType = amounts.split(" ")[6];
+        let name = event.target.name;
+
        
         console.log(adultAmount);
         console.log(childrenAmount);
@@ -197,23 +272,17 @@ class Moviedetails extends React.Component {
         this.setState({ticketId:ticketId});
         this.setState({fee:fee});
         this.setState({ticketType:ticketType})
+        this.setState({[name] : event.target.value});
+
     }
    
     UseSelectedItem = (event) => {
         let gottenValue = event.target.value.split("000");
         let selectedItem = event.target.value;
+        let name = event.target.name;
+
         console.log(selectedItem);
-        if(gottenValue ===null){
-            this.setState({
-              error: true
-          })
         
-        }else{
-        this.setState({
-              error: false
-          })
-        
-        }
         
         let data = {
             item: gottenValue[0],
@@ -222,6 +291,8 @@ class Moviedetails extends React.Component {
 
         this.setState({itemId: gottenValue[1]});
         this.setState({cinemaId:gottenValue[0]})
+        this.setState({[name] : event.target.value});
+
         console.log(data);
         this.props.dispatch(actions.ShowTime(this.state.user.token, data))
     }
@@ -239,16 +310,19 @@ class Moviedetails extends React.Component {
     
 
     render() {
+         const details = this.props.location.state.details;
+
        const {
             movieLocation,
             movieDay,
             adultNumber,
             studentNumber,
             childNumber,
-            error
+            error,
+            CinemaLocationValidity,
+            showTimeValidity
         } = this.state;
          const {getCinemaList,ShowTime,buyMovieTicket}=this.props
-         const details = this.props.location.state.details;
 
         console.log("====================",details)
        
@@ -382,10 +456,11 @@ class Moviedetails extends React.Component {
                             marginLeft: 69,
                             marginTop: 37
                         }}>
-                        <form onSubmit={this.ShowBuyTicketData  } style={{ width: "100%" }}>
+                        <form onSubmit={this.ShowBuyTicketData} style={{ width: "100%" }}>
+                            <div  className={CinemaLocationValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                             <label>Select Location</label>
 
-                                <select onChange={this.UseSelectedItem}     required>
+                                <select onChange={this.UseSelectedItem} name="CinemaLocation">
                                     <option>Select Cinema Location</option>
                                 
                                     {
@@ -395,12 +470,16 @@ class Moviedetails extends React.Component {
                                         })
                                     }
                                 </select>
-                                {error && <p>Please select location </p>}
+                                {CinemaLocationValidity && <div className='text-danger'>Select cinema location </div>}
+
+                                </div>
 
 
 
+                            <div  className={showTimeValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                             <label style={{ marginTop: 16 }}>Select Day</label>
-                            <select onChange={this.UseSelectedTime} >
+
+                            <select onChange={this.UseSelectedTime}  name="showTime">
                                 <option>Select ShowTime</option>
                                 {                                      
                                     ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
@@ -410,6 +489,8 @@ class Moviedetails extends React.Component {
                                     })
                                 } 
                             </select>
+                            {showTimeValidity && <div className='text-danger'>Select cinema show time </div>}
+                            </div>
 
                             <div
                                 className="row"
@@ -637,7 +718,7 @@ class Moviedetails extends React.Component {
                                     marginBottom: 39
                                 }}
                             >
-                                <button disabled={this.props.SubmitTicketData.message == listStyleConstants.SUBMIT_MOVIE_TICKET_PENDING}
+                                <button
                                     style={{
                                         border: "0px solid #AB2656",
                                         height: 45,
@@ -648,8 +729,8 @@ class Moviedetails extends React.Component {
                                         cursor: "pointer"
                                     }}
                                 >
+                                    Next
                                 
-                                    {this.props.SubmitTicketData.message ==listStyleConstants.SUBMIT_MOVIE_TICKET_PENDING ? "Processing..." :"Buy Ticket"}
                                 </button>
                             </div>
                         </form>

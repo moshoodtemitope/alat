@@ -1,15 +1,13 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../shared/templates/inner-container';
-import SavingsContainer from '.';
 import {NavLink, Redirect} from "react-router-dom";
 import Select from 'react-select';
 import { connect } from 'react-redux';
-import {createGoalConstants} from '../../redux/constants/goal/create-stash.constant'
-import * as actions from '../../redux/actions/savings/goal/create-stash-goal.actions'
-import * as util from '../../shared/utils'
+import {createGoalConstants} from '../../../redux/constants/goal/create-stash.constant'
+import * as actions from '../../../redux/actions/savings/goal/create-stash-goal.actions'
+import * as util from '../../../shared/utils'
 import moment from 'moment';
-import SelectDebitableAccounts from '../../shared/components/selectDebitableAccounts';
+import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
 
 
 

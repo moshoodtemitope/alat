@@ -21,7 +21,8 @@ class Event extends Component {
             event:null,
             total:5,
             per_page: 4,
-            current_page: 1
+            current_page: 1,
+            searchItem: ""
 
         };
         console.log("state",this.state);
@@ -36,9 +37,16 @@ class Event extends Component {
         dispatch(getEvents(this.state.user.token, pageNumber));
     };
 
-    search = async data => {
-        this.props.dispatch(actions.SearchFetchEvent(this.state.user.token, data))
-        const event = await this.props.SearchfetchEventList.data.response.eventList;
+    search = data => {
+
+        this.setState({searchItem: data}, () => this.renderEvent());
+        // this.props.dispatch(actions.SearchFetchEvent(this.state.user.token, data))
+        // const events = this.props.getEvents.data.response.eventList;
+        // events.map((event) => {
+        //     if ((event.title).toLowerCase().toString().includes(data)) {
+        //        console.log("=====", event.title)
+        //     }
+        // })
     
         this.setState({ event });
       };
@@ -118,8 +126,8 @@ class Event extends Component {
         }
         else if (getEvents.message === listStyleConstants.GET_EVENTS_SUCCESS){
             let userEvents = getEvents.data.response.eventList;
-            // let userMovies = this.state.filtered;
 
+            if(this.state.searchItem == "") {
             return(
 
                 <div className="eventTrays">
@@ -154,18 +162,60 @@ class Event extends Component {
                 </div>
 
             );
+            }
+            else {
+                let {searchItem} = this.state;
+                return(
+
+                    <div className="eventTrays">
+                        {userEvents.map(function(event, index){
+                            if ((event.title).toLowerCase().toString().includes(searchItem)) {
+                                {console.log("======", event.title)}
+                               return(
+                                <div className="eventCards" key={index}>
+                                    <Link to={{
+                                        pathname:"/lifestyle/event-details",
+                                        state:{
+                                            details:event
+                                        }
+                                    }}>
+                                        <div className="picCard" style={{backgroundImage: 'url("'+event.thumbnailImage+'")'}}>
+                                        </div>
+                                    </Link>
+    
+                                    <div className="boldHeader">{event.title.toString().length > 15 ? event.title.toString().substring(0, 15)+"...": event.title.toString()}</div>
+                                    <div id="disc">{ event.location.toString().length > 30 ? event.location.toString().substring(0, 30)+"...": event.location.toString() }</div>
+                                    <div className="details">
+                                        <div className="left">
+                                        <img src={clock} alt=""/> 
+                                                    
+                                        </div>
+                                        <div className="right">
+                                            <div style={{fontSize: 12, marginTop:3}}> {moment(event.date).format('MMMM DD, h:mm:ss a')}</div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                            ); 
+                            }
+                            
+                        })}
+                    </div>
+    
+                );
+            }
         }
     }
-    resultu = () => {
-        if (this.state.event !== null && this.state.event !== "") {
-            return this.renderEventSeach();
-        }
-        else {
-            return this.renderEvent(); 
-        }
+    // resultu = () => {
+    //     if (this.state.event !== null && this.state.event !== "") {
+    //         return this.renderEventSeach();
+    //     }
+    //     else {
+    //         return this.renderEvent(); 
+    //     }
         
 
-    }
+    // }
 
 
 
@@ -212,7 +262,7 @@ class Event extends Component {
                                 </div>
                             </div>
                         </div>
-                        {this.resultu()}
+                        {this.renderEvent()}
                         <span onClick={() => this.fetchEventList(1)}></span> 
                             {renderPageNumbers}
                         <span onClick={() => this.fetchEventList(1)}></span> 
