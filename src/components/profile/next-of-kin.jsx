@@ -7,6 +7,7 @@ import { Link, NavLink, Route } from 'react-router-dom';
 import InnerContainer from '../../shared/templates/inner-container';
 import {history} from '../../_helpers/history';
 import { ToggleButton }  from '../../shared/elements/_toggle';
+import { connect } from 'tls';
 
 class NextOfKin extends Component {
     constructor(props){
@@ -50,7 +51,7 @@ class NextOfKin extends Component {
          personalAddress2: null,
          nextOfKinBVN: null,
          relationship: null,
-
+         
          NationalityValidity: false, 
          OtherNameValidity: false, 
          MothersMaidenNameValidity: false,
@@ -72,6 +73,7 @@ class NextOfKin extends Component {
          relationshipValidity: false,
          houseNumberValidity: false,
          apartmentValidity: false,
+         yourAddressValidity: false,
          busstopValidity: false,
          streetValidity: false,
          personalAddressValidity: false,
@@ -186,7 +188,7 @@ class NextOfKin extends Component {
                              result = null;
                              break;
                          }
- 
+                  
                  case 'EmploymentStatus':
                          if(this.state[x] == null || this.state[x] == ""){
                              console.log(x)
@@ -262,6 +264,12 @@ class NextOfKin extends Component {
                              break;
                          }
                  case 'street':
+                         if(this.state[x] == null || this.state[x] == ""){
+                             console.log(x)
+                             result = null;
+                             break;
+                         }
+                 case 'address':
                          if(this.state[x] == null || this.state[x] == ""){
                              console.log(x)
                              result = null;
@@ -395,6 +403,7 @@ class NextOfKin extends Component {
         this.checkPersonalAddressValidity2();
         this.checkHouseNumberValidity2();
         this.checkApartmentValidity2();
+        this.checkYourAddressValidity();
  
 
         console.log('code got here');
@@ -442,6 +451,7 @@ class NextOfKin extends Component {
              this.setState({PinValidity: false});
          }
      }
+
      checkOccupationValidity = () => {
          if(this.state.Occupation == null || this.state.Occupation == ""){
              this.setState({OccupationValidity: true});
@@ -449,6 +459,7 @@ class NextOfKin extends Component {
              this.setState({OccupationValidity: false});
          }
      }
+
      checkSectorValidity = () => {
          if(this.state.Sector == null || this.state.Sector == ""){
              this.setState({SectorValidity: true});
@@ -456,6 +467,7 @@ class NextOfKin extends Component {
              this.setState({SectorValidity: false});
          }
      }
+     
      checkphoneNumberValidity = () => {
          if(this.state.phoneNumber == null || this.state.phoneNumber == ""){
              this.setState({phoneNumberValidity: true});
@@ -629,24 +641,40 @@ class NextOfKin extends Component {
          }
      }
  
-     checkPersonalAddressValidity2 = () => {
-         if(this.state.personalAddress2 == null || this.state.personalAddress2 == ""){
-             this.setState({personalAddressValidity2: true});
+     checkYourAddressValidity = () => {
+         if(this.state.address == null || this.state.address == ""){
+             this.setState({yourAddressValidity: true});
          }else{
-             this.setState({personalAddressValidity2: false});
+             this.setState({yourAddressValidity: false});
          }
      }
+
+     checkPersonalAddressValidity2 = () => {
+        if(this.state.personalAddress2 == null || this.state.personalAddress2 == ""){
+            this.setState({personalAddressValidity2: true});
+        }else{
+            this.setState({personalAddressValidity2: false});
+        }
+    }
+
+    checkStreetCompoundValidity = () => {
+        if(this.state.street == null || this.state.street == ""){
+            this.setState({streetCompoundValidity: true});
+        }else{
+            this.setState({streetCompoundValidity: false});
+        }
+    }
  
  
     NavigateToSuccessPage = () => {
         history.push('/profile-success-message');
     }
- 
+    
    render(){
-    const { birthDate, PinValidity, sameAddressAsAbove, SurnameValidity, relationshipValidity, TitleValidity, phoneNumberValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
+    const { birthDate, PinValidity, streetCompoundValidity, yourAddressValidity, sameAddressAsAbove, SurnameValidity, relationshipValidity, TitleValidity, phoneNumberValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
         EmailAddressValidity, streetValidity, GenderValidity, busstopValidity, DateOfBirthValidity, FirstNameValidity, OtherNameValidity
         } = this.state;
-
+       
        return(
         <Fragment>
              <InnerContainer>
@@ -832,17 +860,24 @@ class NextOfKin extends Component {
                                                    </div>
                                             </div>
                                             
-                                            <div className={sameAddressAsAbove + " " + "form-row"}>
+                                            <div className={yourAddressValidity + " " + "form-row"}>
                                                         <div className={streetValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Streat / Compound Name</label>
-                                                            <input type="text" name="street" className="form-control" onChange={this.SetInputValue} placeholder=""/>
+                                                            <label className="label-text"> Address </label>
+                                                            <input type="text" name="address" className="form-control" onChange={this.SetInputValue} placeholder="Address"/>
                                                         </div>
                                             </div>
 
-                                            <div className={sameAddressAsAbove + " " + "form-row"}>
+                                            <div className={"form-row"}>
+                                                        <div className={streetCompoundValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                            <label className="label-text">Streat / Compound Name</label>
+                                                            <input type="text" name="street" className="form-control" onChange={this.SetInputValue} placeholder="Streat / Compound Name"/>
+                                                        </div>
+                                            </div>
+
+                                            <div className={"form-row"}>
                                                         <div className={busstopValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Nearest Bustop</label>
-                                                            <input type="text" name="busStop" className="form-control" onChange={this.SetInputValue} placeholder=""/>
+                                                            <input type="text" name="busStop" className="form-control" onChange={this.SetInputValue} placeholder="Nearest Bus - stop"/>
                                                         </div>
                                             </div>
                                                    
@@ -856,7 +891,6 @@ class NextOfKin extends Component {
                                            
                                             <button type="submit" className="twoBut">Submit</button>
                                         </form>
-                                    
                                     </div>
                                 </div>
                                 </div>
@@ -868,4 +902,10 @@ class NextOfKin extends Component {
    }
 }
 
-export default NextOfKin;
+const mapStateToProps = (state) => {
+    return {
+        nextOfKinsRelationship: state.nextOfKinsRelationship.data
+    }
+}
+
+export default connect(mapStateToProps)(NextOfKin);

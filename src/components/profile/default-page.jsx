@@ -8,6 +8,7 @@ import {Fragment} from "react";
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import {history} from '../../_helpers/history';
 import { profile } from '../../redux/constants/profile/profile-constants'
+// import { nextOfKinsRelationship } from '../../redux/reducers/profile-reducer';
  // import * as actions from '../redux/actions/profile/profile-action';
 
 class PersonalDefault extends Component {
@@ -21,6 +22,11 @@ class PersonalDefault extends Component {
    
    componentDidMount = () => {
        this.GetProfileMenu();
+       this.GetRelationShips();
+   }
+
+   GetRelationShips = () => {
+       this.props.dispatch(actions.nextOfKinsRelationship(this.state.user.token));
    }
 
    GetProfileMenu = () => {
