@@ -163,6 +163,29 @@ export const addDocuments = (token, data) => {
 };
 
 
+export const nextOfKinsRelationship = (token) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.NEXT_OF_KIN_RELATIONSHIP, "GET", null, SystemConstant.HEADER, true);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+                // history.push('/');
+            })
+            .catch(error => {
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // dispatch(failure(error.response.data.message.toString()));
+            });
+    };
+
+    function request(request) { return {type: profile.GET_NEXT_OF_KIN_RELATIONSHIP_PENDING, request} }
+    function success(response) { return {type: profile.GET_NEXT_OF_KIN_RELATIONSHIP_SUCCESS, response} }
+    function failure(error) { return {type: profile.GET_NEXT_OF_KIN_RELATIONSHIP_FAILURE, error} }
+};
+
+
 export const profileSuccessMessage = (data) =>{
     return (dispatch) => {
         dispatch(success(data));

@@ -156,6 +156,29 @@ export function addDocuments (state=[], action){
     }
 }
 
+export function nextOfKinsRelationship (state=[], action){
+    switch(action.type){
+        case profile.GET_NEXT_OF_KIN_RELATIONSHIP_PENDING: 
+           return {
+               message: profile.GET_NEXT_OF_KIN_RELATIONSHIP_PENDING,
+               data: action
+           }
+        case profile.GET_NEXT_OF_KIN_RELATIONSHIP_SUCCESS:
+           return {
+               message: profile.GET_NEXT_OF_KIN_RELATIONSHIP_SUCCESS,
+               data: action
+           }
+        case profile.GET_NEXT_OF_KIN_RELATIONSHIP_FAILURE:
+           return {
+               message: profile.GET_NEXT_OF_KIN_RELATIONSHIP_FAILURE,
+               data: action
+           }
+        default: 
+           return {... state}
+    }
+}
+
+
 
 export function profileSuccessMessage (state=[], action){
     switch(action.type){

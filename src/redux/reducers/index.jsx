@@ -164,7 +164,8 @@ const appReducer = combineReducers({
     addNextOfKin: profile.addNextOfKin,
     addContactDetails: profile.addContactDetails,
     occupationAndSector: profile.occupationAndSector,
-    addDocuments: profile.addDocuments
+    addDocuments: profile.addDocuments,
+    nextOfKinsRelationship: profile.nextOfKinsRelationship
 });
 
 //export defualt appReducer;

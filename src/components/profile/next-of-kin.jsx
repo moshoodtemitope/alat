@@ -3,10 +3,10 @@ import "./profile.css";
 import DatePicker from "react-datepicker";
 import * as actions from '../../redux/actions/profile/profile-action';
 import {Fragment} from "react";
-import { Link, NavLink, Route, Switch } from 'react-router-dom';
+import { Link, NavLink, Route } from 'react-router-dom';
 import InnerContainer from '../../shared/templates/inner-container';
 import {history} from '../../_helpers/history';
-
+import { ToggleButton }  from '../../shared/elements/_toggle';
 
 class NextOfKin extends Component {
     constructor(props){
@@ -143,6 +143,12 @@ class NextOfKin extends Component {
                          }
  
                  case 'phoneNumber':
+                         if(this.state[x] == null || this.state[x] == ""){
+                             console.log(x)
+                             result = null;
+                             break;
+                         }
+                case 'relationship':
                          if(this.state[x] == null || this.state[x] == ""){
                              console.log(x)
                              result = null;
@@ -317,7 +323,7 @@ class NextOfKin extends Component {
 
         let data = {
             gender: this.state.Gender,
-            dateOfBirth: this.state.dateOfBirth,
+            dateOfBirth: this.state.birthDate,
             title: this.state.title,
             relationship: this.state.relationship,
             firstName: this.state.FirstName,
@@ -325,7 +331,7 @@ class NextOfKin extends Component {
             otherNames: this.state.OtherName,
             phoneNumber: this.state.phoneNumber,
             email: this.state.EmailAddress,
-            bvNumber: this.state.BVNnumber,
+            bvNumber: this.state.nextOfKinBVN,
             streetAddress: this.state.street,
             landMark: this.state.busStop,
             country: this.state.Nationality,
@@ -334,7 +340,7 @@ class NextOfKin extends Component {
             isAddressSame: true,
             pin: this.state.AlatPin,
             address: this.state.address
-          }
+        }
           
           console.log(data);
           return;
@@ -350,7 +356,7 @@ class NextOfKin extends Component {
              birthDate: birthDate
          });
     }
- 
+     
     NavigateToSuccessPage = () => {
         history.push('/profile-success-message');
     }
@@ -390,18 +396,19 @@ class NextOfKin extends Component {
         this.checkHouseNumberValidity2();
         this.checkApartmentValidity2();
  
+
         console.log('code got here');
  
         // return;
         console.log('was fired');
- 
+        this.InitiateNetworkCall();
         switch(this.checkValidity()){
             case null:
               console.log('Empty value was found');
               break;
             case 'valid': 
               console.log("No Empty Value Found");
-              this.InitiateNetworkCall();
+            //   this.InitiateNetworkCall();
               break;
         }
     }
@@ -715,8 +722,8 @@ class NextOfKin extends Component {
                                                         <div className={relationshipValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">Relationship</label>
                                                             <select onChange={this.SetInputValue} name="relationship" placeholder="marital status">
-                                                                <option value="Mr">Sister</option>
-                                                                <option value="Mrs">Brother</option>
+                                                                <option value="Sister">Sister</option>
+                                                                <option value="Brother">Brother</option>
                                                             </select>
                                                         </div>
                                             </div>
@@ -801,14 +808,9 @@ class NextOfKin extends Component {
                                             </div>
 
                                             <div className="form-row">
-                                                        <div className={LocalGovValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
+                                                        <div className={LocalGovValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Local Government</label>
                                                             <input type="text" name="LocalGv" className="form-control" onChange={this.SetInputValue} placeholder="Local Government"/>
-                                                        </div>
-
-                                                        <div className={PlaceOfBirthValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                            <label className="label-text">Place of Birth (State of Origin)</label>
-                                                            <input type="text" name="PlaceOfBirth" className="form-control" onChange={this.SetInputValue} placeholder="Place of Birth"/>
                                                         </div>
                                             </div>
                                             
@@ -823,18 +825,19 @@ class NextOfKin extends Component {
                                                          <p>Same as mine</p>
                                                    </div>
                                                    <div className="form-group col-md-3">
-                                                      
+                                                      <div class="custom-control custom-switch">
+                                                            <input type="checkbox" class="custom-control-input" id="customSwitch1" />
+                                                             <label class="custom-control-label" for="customSwitch1"></label>
+                                                      </div>
                                                    </div>
                                             </div>
                                             
-                                
                                             <div className={sameAddressAsAbove + " " + "form-row"}>
                                                         <div className={streetValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Streat / Compound Name</label>
                                                             <input type="text" name="street" className="form-control" onChange={this.SetInputValue} placeholder=""/>
                                                         </div>
                                             </div>
-
 
                                             <div className={sameAddressAsAbove + " " + "form-row"}>
                                                         <div className={busstopValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
