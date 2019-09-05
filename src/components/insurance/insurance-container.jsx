@@ -33,7 +33,7 @@ class InsuranceContainer extends React.Component {
                                 </div>
                                 {this.props.children}
                                 {/* <Route exact to={'/insurance'} component={ManageInsuranceContainer} /> */}
-                                <Route exact to={'/insurance/manage-insurance'} component={ManageInsuranceContainer} />
+                                <Route exact to={'/insurance'} component={ManageInsuranceContainer} />
                             </div>
                         </div>
                     </div>

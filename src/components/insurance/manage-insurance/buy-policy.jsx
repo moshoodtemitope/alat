@@ -13,6 +13,8 @@ import whitelogo from "../../../assets/img/white-logo.svg";
 import  {routes} from '../../../services/urls';
 import successIcon from "../../../assets/img/success-tick.svg";
 import noPolicy from "../../../assets/img/empty-policy.svg";
+// import aiicoLogo from "/../src/assets/img/aiico_logo.jpg";
+import "./../insurance.scss";
 
 import {
     FETCH_NEWINSURANCE_INFOSETS_SUCCESS,
@@ -23,7 +25,6 @@ import {
 
  import {
     getNewPolicyDataChunk,
-    getExistingPolicies
     // clearCardsStore
 } from "../../../redux/actions/insurance/insurance.actions";
 
@@ -37,39 +38,133 @@ class BuyPolicy extends React.Component {
         super(props);
         this.state = {
             user: JSON.parse(localStorage.getItem("user")),
+            showAgreementAndProviders: true,
+            showAcceptTerms: true,
+            showProviders: false,
+            isProviderSelected: false
         };
         
-       
+       this.handleSelectedProvider = this.handleSelectedProvider.bind(this);
         
         
     }
 
     componentDidMount() {
-        this.getCustomerPolicies();
-        this.getNewPolicyData();
+        // this.getCustomerPolicies();
+        // this.getNewPolicyData();
     }
 
+    handleSelectedProvider(){
+        this.setState({showProviders:false, isProviderSelected: true})
+    }
+
+    renderProductsInCategory(e){
+        let getNewPolicyChunkRequest = this.props.newPolicyDataChunk,
+            productList                =getNewPolicyChunkRequest.newpolicy_data.response.ProductsList.Result;
+    }
+
+
+    renderPolicyCategories(){
+        let getNewPolicyChunkRequest = this.props.newPolicyDataChunk,
+            productList                =getNewPolicyChunkRequest.newpolicy_data.response.ProductsList.Result,
+            productCategories =[],
+            allPolices;
+
+            // console.log('producs', getNewPolicyChunkRequest.newpolicy_data.response);
+
+            productList.map(product=>{
+                if(!productCategories.includes(product.ProductCategory)){
+                    productCategories.push(product.ProductCategory)
+                }
+            })
+            console.log('categories fhggf fddf', productCategories);
+
+            allPolices = (
+                <div>
+                    <h4 className="m-b-10 center-text hd-underline">Select Insurance category</h4>
+                    <div className="transfer-ctn text-center" onClick={this.handleSelectedProvider}>
+                        <div className="productcategory-list">
+                        {productCategories.map((eachCat, index) => {
+                            if(eachCat==="Auto"){
+                                return (
+                                    <div className="eachproduct-category" data-cat  key={index}>
+                                        <div className="productcategory-name">{eachCat}</div>
+                                    </div>
+                                )
+                            }
+
+                        })}
+                        </div>
+                    </div>
+                </div>
+            )
+            // console.log('categories are', productCategories);
+
+
+        return allPolices;
+    }
 
     getNewPolicyData(){
         const { dispatch } = this.props;
         dispatch(getNewPolicyDataChunk(this.state.user.token));
     }
 
-    renderNoExistingPolicy(){
+    renderAgreement(){
+        return(
+            <div className="transfer-ctn text-center">
+                <h3 className="text-center"> Disclaimer</h3>
+                <div className="agreement-text">
+                    <ul>
+                        <li>This service is offered through us by our partners.</li>
+                        <li>Our partners may get in touch with you from time to time.</li>
+                        <li>Premium, claims and other related services are determined and controlled, entirely, by our partners.</li>
+                        <li>Click <a href="https://www.aiicoplc.com/index.php/terms-of-use"><span>here</span></a> to read the terms and conditions from our partners.</li>
+                        <li>Clicking <span>"Okay, I understand"</span>  below absolves ALAT/Wema Bank Plc of any form of liability or claim relating to this service.</li>
+                    </ul>
+                </div>
+                <center>
+                        <button type="button"  className="btn-alat m-t-10 m-b-20 text-center"
+                                                onClick={()=>this.setState({showAcceptTerms:false, showProviders:true})}> Okay I understand</button>
+                    </center>
+            </div>
+        )
+    }
+
+
+    renderProviders(){
         return(
             <div>
-                <center>
-                    <img src={noPolicy} />
-                </center>
-                <div className="m-t-30 width-300">
-                    <div className="success-mg">
-                        You don’t have any insurance policy at the moment. 
+                <h4 className="m-b-10 center-text hd-underline">Select Insurance provider</h4>
+                <div className="transfer-ctn text-center" onClick={this.handleSelectedProvider}>
+                    <div className="providerslist">
+                        <div className="each-provider">
+                            <div className="provider-logo"><img src="/../src/assets/img/aiico_logo.jpg" alt=""/></div>
+                            <div className="provider-name">Aiico</div>
+                        </div>
                     </div>
-                    <center>
-                        <button type="button"  
-                            className="btn-alat m-t-10 m-b-20 text-center">Buy Insurance</button>
-                    </center>
                 </div>
+            </div>
+        )
+    }
+
+    renderAgreementAndProviders(){
+        let {showAcceptTerms,
+             showProviders,
+             isProviderSelected} = this.state;
+        return(
+            <div>
+                {showAcceptTerms &&
+                    this.renderAgreement()
+                }
+
+                {showProviders && 
+                    this.renderProviders()
+                }
+
+                {isProviderSelected &&
+                    this.renderPolicyCategories()
+                }
+                
             </div>
         )
     }
@@ -83,15 +178,19 @@ class BuyPolicy extends React.Component {
                             <div className="col-sm-12">
                                 <div className="max-600">
                                     <div className="al-card no-pad">
-                                        <div className="transfer-ctn text-center">
+                                        
+                                        {/* <div className="transfer-ctn text-center"> */}
                                             {getNewPolicyChunkRequest.fetch_status===FETCH_NEWINSURANCE_INFOSETS_PENDING &&
-                                                <div>Please wait...</div>
+                                               
+                                                <div className="transfer-ctn text-center">
+                                                    Please wait...
+                                                </div>
                                             }
 
                                             {(getNewPolicyChunkRequest.fetch_status===FETCH_NEWINSURANCE_INFOSETS_SUCCESS) &&
-                                                this.renderNoExistingPolicy()
+                                                this.renderAgreementAndProviders()
                                             }
-                                        </div>
+                                        {/* </div> */}
                                     </div>
                                 </div>
                             </div>

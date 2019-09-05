@@ -84,7 +84,8 @@ class ManageInsurance extends React.Component {
     }
 
     renderPoliciesContainer(){
-        let getExistingPolicyRequest = this.props.getExistingPolicy;
+        let getExistingPolicyRequest = this.props.getExistingPolicy,
+            newPolicyRequest         = this.props.newPolicyDataChunk;
             console.log('status is',getExistingPolicyRequest.fetch_status);
             return(
                 <div className="col-sm-12">
@@ -93,12 +94,14 @@ class ManageInsurance extends React.Component {
                                 <div className="max-600">
                                     <div className="al-card no-pad">
                                         <div className="transfer-ctn text-center">
-                                            {getExistingPolicyRequest.fetch_status===FETCH_EXISTING_POLICIES_PENDING &&
-                                                <div>Loading yor existing policies...</div>
+                                            {(getExistingPolicyRequest.fetch_status===FETCH_EXISTING_POLICIES_PENDING ||
+                                              newPolicyRequest.fetch_status===FETCH_NEWINSURANCE_INFOSETS_PENDING) &&
+                                                <div>Loading your existing policies...</div>
                                             }
 
                                             {(getExistingPolicyRequest.fetch_status===FETCH_EXISTING_POLICIES_SUCCESS 
-                                            && getExistingPolicyRequest.existingpolicy_data.response.data.InsuranceDetails===null) &&
+                                                && getExistingPolicyRequest.existingpolicy_data.response.data.InsuranceDetails===null
+                                                && newPolicyRequest.fetch_status===FETCH_NEWINSURANCE_INFOSETS_SUCCESS) &&
                                                 this.renderNoExistingPolicy()
                                             }
                                         </div>
@@ -128,6 +131,7 @@ class ManageInsurance extends React.Component {
 function mapStateToProps(state){
     return {
         getExistingPolicy   : state.insurancePile.getExistingPolicy,
+        newPolicyDataChunk   : state.insurancePile.getNewPolicyDataChunk,
     };
 }
 

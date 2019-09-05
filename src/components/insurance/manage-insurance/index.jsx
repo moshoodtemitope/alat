@@ -4,6 +4,7 @@ import {Link, NavLink, Route} from 'react-router-dom';
 import { connect } from "react-redux";
 
 import ManageInsurance from "./manage-insurance";
+import BuyPolicy from "./buy-policy";
 
 class ManageInsuranceContainer extends Component {
     constructor(props) {
@@ -19,7 +20,8 @@ class ManageInsuranceContainer extends Component {
        return(
            <Fragment>
                 {this.props.children}
-                <Route exact path='/insurance/manage-insurance' render={(props) => <ManageInsurance {...props} />} />
+                <Route exact path='/insurance' render={(props) => <ManageInsurance {...props} />} />
+                <Route exact path='/insurance/buy-insurance' render={(props) => <BuyPolicy {...props} />} />
            </Fragment>
        );
    }
