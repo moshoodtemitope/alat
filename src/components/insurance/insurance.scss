@@ -37,3 +37,44 @@
     font-size: 15px;
     font-weight: 600;
 }
+.covername.hd-underline{
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 20px;
+    padding: 15px 0;
+}
+.btn-alat:focus{
+    outline: none;
+}
+.btn-alat.btn-inverse{
+    background: transparent;
+    color: #AB2656;
+    border: 1px solid #AB2656;
+    &:hover{
+        color: #AB2656;
+    }
+}
+.policyinfo-wrap{
+    padding: 5px 20px;
+    .product-name{
+        font-weight: 600;
+        color: #5D6D7E;
+        font-size: 13px;
+    }
+    .help-info {
+        font-size: 13px;
+    }
+    .product-ctas {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        .btn-alat {
+            min-width: unset;
+            flex: 1 1 0;
+            margin-right: 10px;
+            &:last-of-type{
+                margin-right: 0;
+            }
+        }
+    }
+}

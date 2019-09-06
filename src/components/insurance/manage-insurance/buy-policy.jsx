@@ -19,12 +19,16 @@ import "./../insurance.scss";
 import {
     FETCH_NEWINSURANCE_INFOSETS_SUCCESS,
     FETCH_NEWINSURANCE_INFOSETS_PENDING,
-    FETCH_NEWINSURANCE_INFOSETS_FAILURE
+    FETCH_NEWINSURANCE_INFOSETS_FAILURE,
+    FETCH_COVERSIN_PRODUCTS_SUCCESS,
+    FETCH_COVERSIN_PRODUCTS_PENDING,
+    FETCH_COVERSIN_PRODUCTS_FAILURE
  }from "../../../redux/constants/insurance/insurance.constants";
 
 
  import {
     getNewPolicyDataChunk,
+    getCoversInProduct
     // clearCardsStore
 } from "../../../redux/actions/insurance/insurance.actions";
 
@@ -41,10 +45,15 @@ class BuyPolicy extends React.Component {
             showAgreementAndProviders: true,
             showAcceptTerms: true,
             showProviders: false,
-            isProviderSelected: false
+            isProviderSelected: false,
+            isCategorySelected: false,
+            disabledBtn: true
         };
         
-       this.handleSelectedProvider = this.handleSelectedProvider.bind(this);
+       this.handleSelectedProvider   = this.handleSelectedProvider.bind(this);
+       this.handleProviderChange     = this.handleProviderChange.bind(this);
+       this.handleSelectedCategory   = this.handleSelectedCategory.bind(this);
+       this.handleSelectedProduct   = this.handleSelectedProduct.bind(this);
         
         
     }
@@ -58,9 +67,27 @@ class BuyPolicy extends React.Component {
         this.setState({showProviders:false, isProviderSelected: true})
     }
 
-    renderProductsInCategory(e){
-        let getNewPolicyChunkRequest = this.props.newPolicyDataChunk,
-            productList                =getNewPolicyChunkRequest.newpolicy_data.response.ProductsList.Result;
+    handleProviderChange(selectedProvider){
+        // this.setState({selectedProvider, showProviders:false, isProviderSelected: true})
+        this.setState({selectedProvider, isProviderSelected: true})
+    }
+
+    handleSelectedCategory(selectedCat){
+        this.setState({selectedCat: selectedCat.value, isCategorySelected: true})
+    }
+
+    handleSelectedProduct(selectedProduct){
+        this.setState({selectedProduct: selectedProduct.value, isProductSelected: true, disabledBtn:false })
+    }
+
+    
+    getCoversInProduct(){
+        // console.log('select Id',this.state.selectedProduct);
+        const {dispatch} = this.props;
+
+        let payload = {productId: this.state.selectedProduct}
+
+        dispatch(getCoversInProduct(this.state.user.token, payload))
     }
 
 
@@ -70,38 +97,62 @@ class BuyPolicy extends React.Component {
             productCategories =[],
             allPolices;
 
-            // console.log('producs', getNewPolicyChunkRequest.newpolicy_data.response);
-
+            
             productList.map(product=>{
-                if(!productCategories.includes(product.ProductCategory)){
-                    productCategories.push(product.ProductCategory)
-                }
+                    productCategories.push({ value:product.ProductCategory, label:product.ProductCategory })
             })
-            console.log('categories fhggf fddf', productCategories);
 
+            const filteredCategories = productCategories.reduce((acc, current) => {
+                const x = acc.find(item => item.value === current.value);
+                if (!x) {
+                  return acc.concat([current]);
+                } else {
+                  return acc;
+                }
+              }, []);
             allPolices = (
-                <div>
-                    <h4 className="m-b-10 center-text hd-underline">Select Insurance category</h4>
-                    <div className="transfer-ctn text-center" onClick={this.handleSelectedProvider}>
-                        <div className="productcategory-list">
-                        {productCategories.map((eachCat, index) => {
-                            if(eachCat==="Auto"){
-                                return (
-                                    <div className="eachproduct-category" data-cat  key={index}>
-                                        <div className="productcategory-name">{eachCat}</div>
-                                    </div>
-                                )
-                            }
-
-                        })}
-                        </div>
-                    </div>
+                <div className="input-ctn m-t-30">
+                    <label>Select Category</label>
+                    <Select
+                        options={filteredCategories}
+                        placeholder="Select category"
+                        onChange={this.handleSelectedCategory}
+                    />
                 </div>
             )
             // console.log('categories are', productCategories);
 
 
         return allPolices;
+    }
+
+    renderProductsInCategory(){
+        let categoryChosen              = this.state.selectedCat,
+            getNewPolicyChunkRequest    = this.props.newPolicyDataChunk,
+            productList                 = getNewPolicyChunkRequest.newpolicy_data.response.ProductsList.Result,
+            productsInCategory          = productList.filter(product=>product.ProductCategory===categoryChosen),
+            productTodisplay = [];   
+
+            
+            productsInCategory.map(product=>{
+                productTodisplay.push({
+                    value: product.Id,
+                    label: product.Name
+                })
+            })
+
+            productsInCategory= (
+                <div className="input-ctn m-t-30">
+                    <label>Select Product</label>
+                    <Select
+                        options={productTodisplay}
+                        placeholder="Select product"
+                        onChange={this.handleSelectedProduct}
+                    />
+                </div>
+            )
+
+        return productsInCategory;
     }
 
     getNewPolicyData(){
@@ -131,17 +182,39 @@ class BuyPolicy extends React.Component {
     }
 
 
-    renderProviders(){
+    renderInitialScreen(){
+        let providers = [{ value:"Aiico", label:"Aiico"}],
+            {isProviderSelected,
+            isCategorySelected, 
+            isProductSelected,
+            disabledBtn} = this.state;
+
+            let productCoversRequest = this.props.getProductCovers;
         return(
             <div>
-                <h4 className="m-b-10 center-text hd-underline">Select Insurance provider</h4>
-                <div className="transfer-ctn text-center" onClick={this.handleSelectedProvider}>
-                    <div className="providerslist">
-                        <div className="each-provider">
-                            <div className="provider-logo"><img src="/../src/assets/img/aiico_logo.jpg" alt=""/></div>
-                            <div className="provider-name">Aiico</div>
-                        </div>
+                <h4 className="m-b-10 center-text hd-underline">Buy Insurance</h4>
+                <div className="transfer-ctn">
+                    <div className="input-ctn m-t-30">
+                        <label>Select Insurance Vendor</label>
+                        <Select
+                            options={providers}
+                            placeholder="Select insurance provider"
+                            onChange={this.handleProviderChange}
+                        />
                     </div>
+                    {isProviderSelected && this.renderPolicyCategories()}
+                    {isCategorySelected && this.renderProductsInCategory()}
+
+                     
+                    <center>
+                        <button type="submit"  
+                            className="btn-alat m-t-10 m-b-20 text-center"
+                            disabled={disabledBtn}
+                            onClick={()=>this.getCoversInProduct()}>
+                            {productCoversRequest.is_processing===true?'Processing...':'Next'}    
+                            </button>
+                    </center>
+                    
                 </div>
             </div>
         )
@@ -149,8 +222,7 @@ class BuyPolicy extends React.Component {
 
     renderAgreementAndProviders(){
         let {showAcceptTerms,
-             showProviders,
-             isProviderSelected} = this.state;
+             showProviders} = this.state;
         return(
             <div>
                 {showAcceptTerms &&
@@ -158,20 +230,15 @@ class BuyPolicy extends React.Component {
                 }
 
                 {showProviders && 
-                    this.renderProviders()
+                    this.renderInitialScreen()
                 }
 
-                {isProviderSelected &&
-                    this.renderPolicyCategories()
-                }
-                
             </div>
         )
     }
 
     renderNewPolicyContainer(){
         let getNewPolicyChunkRequest = this.props.newPolicyDataChunk;
-            console.log('status is',getNewPolicyChunkRequest.fetch_status);
             return(
                 <div className="col-sm-12">
                     <div className="row">
@@ -200,6 +267,9 @@ class BuyPolicy extends React.Component {
     }
 
 
+    
+
+
    
    
 
@@ -217,6 +287,7 @@ class BuyPolicy extends React.Component {
 function mapStateToProps(state){
     return {
         newPolicyDataChunk   : state.insurancePile.getNewPolicyDataChunk,
+        getProductCovers   : state.insurancePile.getCoversInPoductRequest
     };
 }
 

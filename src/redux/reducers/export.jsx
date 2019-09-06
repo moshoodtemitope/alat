@@ -74,7 +74,8 @@ import {getWesternUnionCountries,receiveWesternUnion } from './remittance.reduce
 
 import{
     getExistingPolicy,
-    getNewPolicyDataChunk 
+    getNewPolicyDataChunk,
+    getCoversInPoductRequest 
 } from './insurance.reducer'
 
 export const onboarding = {
@@ -167,7 +168,8 @@ export const fundAccount={
 
 export const insurance = {
     getExistingPolicy,
-    getNewPolicyDataChunk
+    getNewPolicyDataChunk,
+    getCoversInPoductRequest
 }
 export const alatCards={
     geCurrentVirtualCardsRequest,

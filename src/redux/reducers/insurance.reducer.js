@@ -4,7 +4,10 @@ import {
     FETCH_EXISTING_POLICIES_FAILURE,
     FETCH_NEWINSURANCE_INFOSETS_SUCCESS,
     FETCH_NEWINSURANCE_INFOSETS_PENDING,
-    FETCH_NEWINSURANCE_INFOSETS_FAILURE
+    FETCH_NEWINSURANCE_INFOSETS_FAILURE,
+    FETCH_COVERSIN_PRODUCTS_SUCCESS,
+    FETCH_COVERSIN_PRODUCTS_PENDING,
+    FETCH_COVERSIN_PRODUCTS_FAILURE
  }from "../constants/insurance/insurance.constants";
 
 
@@ -49,6 +52,33 @@ export function getNewPolicyDataChunk(state=[], action) {
             return {
                 fetch_status: FETCH_NEWINSURANCE_INFOSETS_FAILURE,
                 newpolicy_data: action
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+//Get Covers in Product
+export function getCoversInPoductRequest(state=[], action) {
+    switch (action.type) {
+        case FETCH_COVERSIN_PRODUCTS_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: FETCH_COVERSIN_PRODUCTS_PENDING,
+                policycover_data: action
+            };
+        case FETCH_COVERSIN_PRODUCTS_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: FETCH_COVERSIN_PRODUCTS_SUCCESS,
+                policycover_data: action
+            };
+        case FETCH_COVERSIN_PRODUCTS_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: FETCH_COVERSIN_PRODUCTS_FAILURE,
+                policycover_data: action
             };
 
         default:

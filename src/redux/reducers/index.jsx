@@ -89,7 +89,8 @@ const insurancePile = (state, action)=>{
 
 const alatInsuranceReducer = combineReducers({
     getExistingPolicy: insurance.getExistingPolicy,
-    getNewPolicyDataChunk: insurance.getNewPolicyDataChunk
+    getNewPolicyDataChunk: insurance.getNewPolicyDataChunk,
+    getCoversInPoductRequest: insurance.getCoversInPoductRequest
 })
 const alatCardReducersPile = (state, action)=>{
     if(action.type ===ALATCARD_REDUCER_CLEAR){

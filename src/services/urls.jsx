@@ -185,6 +185,7 @@ export const routes = {
      FETCH_INSURANCE_TITLES: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceTitles',
      FETCH_INSURANCE_GENDERS: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceGenders',
      FETCH_INSURANCE_NONSCHENGENCOUNTRIES: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceNonSchengenCountries',
+     FETCH_COVERS_IN_PRODCUTS: BASEURL + '/PaymentApi/api/Insurance/GetProductSubClassCoverTypes',
 
     //savings&goals
     ADDGOAL: BASEURL + '/Savings.WebApi/api/Savings/AddGoal',

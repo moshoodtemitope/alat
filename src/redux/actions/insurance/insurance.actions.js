@@ -9,7 +9,10 @@ import {
    FETCH_EXISTING_POLICIES_FAILURE,
    FETCH_NEWINSURANCE_INFOSETS_SUCCESS,
    FETCH_NEWINSURANCE_INFOSETS_PENDING,
-   FETCH_NEWINSURANCE_INFOSETS_FAILURE
+   FETCH_NEWINSURANCE_INFOSETS_FAILURE,
+   FETCH_COVERSIN_PRODUCTS_SUCCESS,
+   FETCH_COVERSIN_PRODUCTS_PENDING,
+   FETCH_COVERSIN_PRODUCTS_FAILURE
 }from "../../constants/insurance/insurance.constants";
 
 
@@ -297,4 +300,41 @@ export const getNewPolicyDataChunk = (token) => {
     function success(response) { return {type:FETCH_NEWINSURANCE_INFOSETS_SUCCESS, response} }
     function failure(error) { return {type:FETCH_NEWINSURANCE_INFOSETS_FAILURE, error} }
 
+}
+
+export const getCoversInProduct =(token, payload)=>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch)=>{ 
+
+        // Get Insurance Products
+        let consume =  ApiService.request(routes.FETCH_COVERS_IN_PRODCUTS, "POST", payload, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{ 
+                dispatch(success(response));
+                history.push("/insurance/buy-insurance/choose-cover");
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+
+
+    function request(request) { return { type:FETCH_COVERSIN_PRODUCTS_PENDING, request} }
+    function success(response) { return {type:FETCH_COVERSIN_PRODUCTS_SUCCESS, response} }
+    function failure(error) { return {type:FETCH_COVERSIN_PRODUCTS_FAILURE, error} }
 }

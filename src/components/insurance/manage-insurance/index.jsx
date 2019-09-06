@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 
 import ManageInsurance from "./manage-insurance";
 import BuyPolicy from "./buy-policy";
+import SelectInsuranceCover from "./select-cover";
 
 class ManageInsuranceContainer extends Component {
     constructor(props) {
@@ -22,6 +23,7 @@ class ManageInsuranceContainer extends Component {
                 {this.props.children}
                 <Route exact path='/insurance' render={(props) => <ManageInsurance {...props} />} />
                 <Route exact path='/insurance/buy-insurance' render={(props) => <BuyPolicy {...props} />} />
+                <Route exact path='/insurance/buy-insurance/choose-cover' render={(props) => <SelectInsuranceCover {...props} />} />
            </Fragment>
        );
    }
