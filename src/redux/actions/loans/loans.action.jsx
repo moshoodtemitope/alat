@@ -270,6 +270,27 @@ export const checkKycRequired =(token) =>{
     function failure(error) { return { type: loanConstants.LOAN_KYCREQUIRED_FAILURE, error } }
 }
 
+export const getTerms =(token) =>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.LOAN_TERMS,
+             "GET", null, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                 dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function request(request) { return { type: loanConstants.LOAN_TERMS_PENDING, request } }
+    function success(response) { return { type: loanConstants.LOAN_TERMS_SUCCESS, response }}
+    function failure(error) { return { type: loanConstants.LOAN_TERMS_FAILURE, error } }
+}
+
 export const continueApplication =(data)=>{
     return (dispatch) =>{
         dispatch(success(data));

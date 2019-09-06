@@ -402,3 +402,27 @@ export function KycRequired(state = {}, action) {
     }
 }
 
+export function termsReducer(state = {}, action) {
+    switch (action.type) {
+        case loanConstants.LOAN_TERMS_SUCCESS:
+            return {
+                terms_status: loanConstants.LOAN_TERMS_SUCCESS,
+                terms_data: action
+            };
+        case loanConstants.LOAN_TERMS_PENDING:
+            return {
+                terms_status: loanConstants.LOAN_TERMS_PENDING,
+                terms_data: action
+            };
+        case loanConstants.LOAN_TERMS_FAILURE:
+            return {
+                terms_status: loanConstants.LOAN_TERMS_FAILURE,
+                terms_data: action
+            };
+        default:
+            return{
+                ...state,
+            };
+    }
+}
+

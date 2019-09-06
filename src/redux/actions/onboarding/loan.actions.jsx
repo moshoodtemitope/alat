@@ -325,6 +325,32 @@ export const salaryEntry =(token, data)=>{
     function failure(error) { return {type:FETCH_BANK_FAILURE, error} }
 };
 
+export const ReSendOtp =(data)=>{
+    //  let url = `${routes.LOAN_REQUEST_STATEMENT}?${url}`;
+      
+      return (dispatch) => {
+          let consume = ApiService.request(routes.LOAN_RESEND_OTP,
+               "POST", data);
+          dispatch(request(consume));
+          return consume
+              .then(response => {
+                  //TODO: edit localDB accounts object
+                  dispatch(success(response.data, data));
+              })
+              .catch(error => {
+                 // console.log("error in here");
+                 // dispatch(success(response.data, request));
+                   dispatch(failure(modelStateErrorHandler(error)));
+                   dispatch(alertActions.error(modelStateErrorHandler(error)));
+                  // throw(error);
+              });
+      };
+  
+      function request(request) { return { type: loanOnboardingConstants.LOAN_RESENTOTP_PENDING, request } }
+      function success(response, request) { return { type: loanOnboardingConstants.LOAN_RESENTOTP_SUCCESS, response : response }}
+      function failure(error) { return { type: loanOnboardingConstants.LOAN_RESENTOTP_FAILURE, error } }
+  }
+
 export const clearLoanOnboardingStore =()=>{
     return (dispatch) => { 
         dispatch(clear());

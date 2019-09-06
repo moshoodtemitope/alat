@@ -85,7 +85,7 @@ class AuthenticatedRoutes extends React.Component {
     setTimeout() {
         this.warnTimeout = setTimeout(this.warn, 4 * 59 * 1000);
 
-        this.logoutTimeout = setTimeout(this.logout, 5 * 10 * 1000);
+        this.logoutTimeout = setTimeout(this.logout, 5 * 60 * 1000);
     }
     reissue() {
         this.props.getAnotherToken()
@@ -97,7 +97,7 @@ class AuthenticatedRoutes extends React.Component {
     }
 
     warn() {
-        console.log("You will be logged out automatically in 1 minute.");
+       // console.log("You will be logged out automatically in 1 minute.");
     }
 
     logout() {

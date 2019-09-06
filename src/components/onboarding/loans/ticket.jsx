@@ -6,6 +6,7 @@ import * as actions from '../../../redux/actions/onboarding/loan.actions';
 import { loanOnboardingConstants } from '../../../redux/constants/onboarding/loan.constants';
 import LoanOnboardingContainer from './loanOnboarding-container';
 import OtpValidation from '../../../shared/components/otpvalidation';
+import Ticket from '../../../shared/components/loans/_ticket';
 
 class LoanOnboardingTicket extends React.Component {
     constructor(props) {
@@ -21,21 +22,21 @@ class LoanOnboardingTicket extends React.Component {
     }
 
     componentDidMount = () => {
-         this.init();
+        this.init();
     }
 
     init = () => {
-        console.log("in init");
-        if (this.props.loan_reqStat)
-            if (this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS) {
-            
-            } else this.props.history.push("/loan/salary-detail");
-        else this.props.history.push("/loan/salary-detail");
+        // console.log("in init");
+        // if (this.props.loan_reqStat)
+        //     if (this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS) {
+
+        //     } else this.props.history.push("/loan/salary-detail");
+        // else this.props.history.push("/loan/salary-detail");
     }
 
     handleChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value },()=>{
-            if(this.state.isSubmitted){
+        this.setState({ [e.target.name]: e.target.value }, () => {
+            if (this.state.isSubmitted) {
                 this.validateFields();
             }
         });
@@ -43,7 +44,7 @@ class LoanOnboardingTicket extends React.Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-        this.setState({ isSubmitted : true});
+        this.setState({ isSubmitted: true });
         if (this.validateFields()) {
 
         } else {
@@ -86,11 +87,11 @@ class LoanOnboardingTicket extends React.Component {
                 this.props.history.push("/loan/salary-entry")
     }
 
-    returnGenPendingStat(){
+    returnGenPendingStat() {
         if (this.props.loan_genStat)
-        if(this.props.loan_genStat.loan_genStat_status == loanOnboardingConstants.LOAN_GENERATE_STATEMENT_PENDING)
-        return true; 
-        else return false
+            if (this.props.loan_genStat.loan_genStat_status == loanOnboardingConstants.LOAN_GENERATE_STATEMENT_PENDING)
+                return true;
+            else return false
     }
 
     render() {
@@ -99,7 +100,7 @@ class LoanOnboardingTicket extends React.Component {
         return (
             <LoanOnboardingContainer UserName={this.state.user.firstname}>
                 {/* {this.init()} */}
-                {this.gotoNextPage()}
+                {/* {this.gotoNextPage()}
                 <div className="row">
                     <div className="col-sm-12">
                         <div className="max-500">
@@ -138,7 +139,11 @@ class LoanOnboardingTicket extends React.Component {
                             <center>
                                 <Link to={'/loan/salary-detail'} className="add-bene m-t-50">Go Back</Link>
                             </center>
-                        </div></div></div>
+                        </div></div></div> */}
+                <Ticket
+                    backwardUrl={'/loan/salary-detail'}
+                    forwardUrl={"/loan/salary-entry"}
+                />
             </LoanOnboardingContainer>
         )
     };

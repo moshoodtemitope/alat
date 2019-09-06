@@ -83,8 +83,9 @@ class RemitaMandateSetupComponent extends React.Component {
                     <div className="max-500">
                         <div className="loan-header-text text-center">
                             <h4 className="text-black">Repayment Mandate Setup.</h4>
-                            <p>-Provide your Remita reference number to setup automatic repayment</p>
-                            <p>-Cilck on confirm mandate to verify that its done.</p>
+                            {/* Provide your Remita reference number to setup automatic repayment */}
+                            <p>- {this.state.collectionModel.DebitBankActionMessage}</p>
+                            <p>- Cilck on confirm mandate to verify that its done.</p>
                         </div>
                         <div className="al-card no-pad">
                             <div className="transfer-ctn">
