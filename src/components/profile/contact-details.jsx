@@ -6,6 +6,12 @@ import {Fragment} from "react";
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import InnerContainer from '../../shared/templates/inner-container';
 import {history} from '../../_helpers/history';
+import {connect} from 'react-redux'
+import {profile} from '../../redux/constants/profile/profile-constants';
+
+
+import {occupationAndSector, getResidentialDetails, getContactDetails,getPersonalInfo,getStates} from "../../redux/actions/profile/profile-action"
+
 
 
 class ContactDetails extends Component {
@@ -18,7 +24,6 @@ class ContactDetails extends Component {
         bvnNumber: null,
         dateValue: null,
         birthDate: null,
-        
         Occupation: null,
         AlatPin: null,
         Sector: null,
@@ -79,10 +84,34 @@ class ContactDetails extends Component {
         busstopValidity2: false,
         houseNumberValidity2: false,
         apartmentValidity2: false,
-
         sameAddressAsAbove: "sameAddressAsAbove"
        }
+       this.fetchOccupation();
+       this.fetchResidentialDetails();
+       this.fetchContactDetails();
+       this.fetchPersonalInfo();
+       this.fetchStates();
    }
+   fetchOccupation(){
+    const { dispatch } = this.props;
+    dispatch(occupationAndSector(this.state.user.token));
+    };
+    fetchResidentialDetails(){
+        const { dispatch } = this.props;
+        dispatch(getResidentialDetails(this.state.user.token));
+    };
+    fetchContactDetails(){
+        const { dispatch } = this.props;
+        dispatch(getContactDetails(this.state.user.token));
+    };
+    fetchPersonalInfo(){
+        const{ dispatch } =this.props;
+        dispatch(getPersonalInfo(this.state.user.token))
+    };
+    fetchStates(){
+        const {dispatch}=this.props;
+        dispatch(getStates(this.state.user.token))
+    }
 
    SetBVNValidityStatus = () => {
       console.log();
@@ -246,8 +275,7 @@ class ContactDetails extends Component {
       }
 
       console.log(data);
-      return;
-       this.props.dispatch(actions.linkBVN(this.state.user.token, data));
+    this.props.dispatch(actions.addContactDetails(this.state.user.token, data));
    }
 
    SetBvNNumber = (event) => {
@@ -272,7 +300,7 @@ class ContactDetails extends Component {
        this.checkEmailAddressValidity(); 
        this.checkLocalGovValidity(); 
        this.checkPlaceOfBirthValidity();
-       this.checkTitleValidity();
+    //  this.checkTitleValidity();
        this.checkNationalityValidity(); 
        this.checkStateOfOriginValidity();
        this.checkDateOfBirthValidity();
@@ -291,7 +319,7 @@ class ContactDetails extends Component {
 
        console.log('code got here');
 
-       return;
+    //    return;
        console.log('was fired');
 
        switch(this.checkValidity()){
@@ -483,6 +511,8 @@ class ContactDetails extends Component {
         EmailAddressValidity, streetValidity, streetValidity2, busstopValidity, busstopValidity2, apartmentValidity, apartmentValidity2, personalAddressValidity, 
         personalAddressValidity2, alternatePhoneNumberValidity, houseNumberValidity, houseNumberValidity2} = this.state;
 
+        const {getContactDetail, occupationAndSector} =this.props
+
        return(
         <Fragment>
              <InnerContainer>
@@ -582,19 +612,51 @@ class ContactDetails extends Component {
 
                                                         <div className={StateOfOriginValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">State</label>
-                                                            <input type="text" name="StateOfOrigin" className="form-control" onChange={this.SetInputValue} placeholder="state of origin"/>
+                                                            <select onChange={this.SetInputValue} name="StateOfOrigin" >
+                                                                    <option>Select State of Origin</option>
+                                                                    {                                      
+                                                                        getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
+                                                                        getContactDetail.data.response.states.map(state=> {
+                                                                            
+                                                                            return <option key={state.name} value={state}>
+                                                                            {state.name}</option>
+                                                                        })
+                                                                    } 
+                                                            </select>
                                                         </div>
                                             </div>
 
                                             <div className="form-row">
                                                         <div className={LocalGovValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
                                                             <label className="label-text">Local Government</label>
-                                                            <input type="text" name="LocalGv" className="form-control" onChange={this.SetInputValue} placeholder="Local Government"/>
+                                                            <select onChange={this.SetInputValue} name="LocalGv" >
+                                                                    <option>Select Local Government</option>
+                                                                    {                                      
+                                                                        getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
+                                                                        getContactDetail.data.response.cities.map(city=> {
+                                                                            
+                                                                            return <option key={city.cityId} value={city.name}>
+                                                                            {city.name}</option>
+                                                                        })
+                                                                    } 
+                                                            </select>
+                                                            {/* <input type="text" name="LocalGv" className="form-control" onChange={this.SetInputValue} placeholder="Local Government"/> */}
                                                         </div>
 
                                                         <div className={PlaceOfBirthValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">City</label>
-                                                            <input type="text" name="PlaceOfBirth" className="form-control" onChange={this.SetInputValue} placeholder="Place of Birth"/>
+                                                            <select onChange={this.SetInputValue} name="PlaceOfBirth" >
+                                                                    <option>Select City</option>
+                                                                    {                                      
+                                                                        getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
+                                                                        getContactDetail.data.response.cities.map(city=> {
+                                                                            
+                                                                            return <option key={city.code} value={city.name}>
+                                                                            {city.name}</option>
+                                                                        })
+                                                                    } 
+                                                            </select>
+                                                            {/* <input type="text" name="PlaceOfBirth" className="form-control" onChange={this.SetInputValue} placeholder="Place of Birth"/> */}
                                                         </div>
                                             </div>
                                             
@@ -676,7 +738,19 @@ class ContactDetails extends Component {
                                             <div className="form-row">
                                                         <div className={SectorValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Sector</label>
-                                                            <input type="text" name="Sector" className="form-control" onChange={this.SetInputValue} placeholder="Sector"/>
+                                                            <select onChange={this.SetInputValue} name="Sector" >
+                                                                    <option>Select Sector</option>
+                                                                    {                                      
+                                                                        occupationAndSector.message === profile.OCCU_AND_SECTOR_SUCCESS && 
+                                                                        occupationAndSector.data.response.result.employmentSectors.map(sector=> {
+                                                                            
+                                                                            return <option key={sector.description} value={sector.code + " " + sector.description}>
+                                                                            {sector.description}</option>
+                                                                        })
+                                                                    } 
+                                                                </select>
+
+                                                            {/* <input type="text" name="Sector" className="form-control" onChange={this.SetInputValue} placeholder="Sector"/> */}
                                                         </div>
                                             </div>
 
@@ -705,5 +779,13 @@ class ContactDetails extends Component {
        )
    }
 }
+function mapStateToProps(state){
+    return {
+        occupationAndSector:state.occupationAndSector,
+        getResidential:state.getResidential,
+        getContactDetail:state.getContactDetail,
+        getStates:state.getStates,
+    };
+}
 
-export default ContactDetails;
+export default connect (mapStateToProps)(ContactDetails);
