@@ -13,7 +13,7 @@ class LoanOnboardingWemaSetup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-			user: JSON.stringify(localStorage.getItem("user")),
+			user: JSON.parse(localStorage.getItem("user")),
 		}
 
     }
@@ -27,6 +27,7 @@ class LoanOnboardingWemaSetup extends React.Component {
         //         if (data.kycRequired == true)
         //             this.props.history.push('/loans/kyc');
         //        else 
+        this.props.dispatch(LoanActions.clearLoanOnboardingStore());
                 this.props.history.push('/loans/salary/dashboard')  //url to be completed.
         //     }
         //     else {
@@ -40,11 +41,11 @@ class LoanOnboardingWemaSetup extends React.Component {
     }
 
     NavigateToKycPage =()=>{
-        this.props.history.push('/loans/kyc');
+        this.props.history.push('/loan/kyc');
     }
 
     goBack = () => {
-        this.props.history.push('/loans/terms');
+        this.props.history.push('/loan/terms');
     }
 
     render() {

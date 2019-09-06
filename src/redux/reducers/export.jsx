@@ -32,12 +32,12 @@ import { fundAccountReducer, getTokenizedCardsReducer,
 import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingVerifyBVNReducer,
      loanOnboardingStep3Reducer, loanOnboardingValidateOTPReducer, generateStatementReducer,
       requestStatementReducer,salaryTransactionReducer, salaryEntryReducer, saveUserDetailsReducer, getScoreCardQuestionReducer,
-      postScoreCardAnswerReducer} from './loan-onboarding.reducer';
+      postScoreCardAnswerReducer, resendOTPReducer} from './loan-onboarding.reducer';
 
 import { loanCalcDataReducer, loanApplyReducer, GetIndustriesReducer, GetEmployerReducer, CurrentLoanReducer, 
     LoanHistoryReducer, WorkIdFrontReducer, WorkIdBackReducer, loanRejectReducer, loanStandingOrderReducer,
      loanMandateStatusReducer, loanValidateRemitaOtpReducer, loanStatementUpload, continueApplication, 
-     SignatureReducer , PassportReducer, KycRequired } from './loan.reducer';
+     SignatureReducer , PassportReducer, KycRequired, termsReducer } from './loan.reducer';
 
 import { geCurrentVirtualCardsRequest,
          sendVCNewCardinfo,
@@ -97,7 +97,8 @@ export const loans = {
     continueApplication,
     SignatureReducer,
     PassportReducer,
-    KycRequired
+    KycRequired,
+    termsReducer
 }
 
 export const loanOnboarding = {
@@ -112,7 +113,8 @@ export const loanOnboarding = {
     salaryEntryReducer,
     getScoreCardQuestionReducer,
     postScoreCardAnswerReducer,
-    saveUserDetailsReducer
+    saveUserDetailsReducer,
+    resendOTPReducer
 }
 
 export const dashboard = {

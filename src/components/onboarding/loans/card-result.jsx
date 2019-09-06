@@ -36,16 +36,21 @@ class LoanOnboardingScoreResult extends React.Component {
 	// 		}
 	// }
 	goForward=()=>{
-        this.props.history.push('/loans/terms');
+        this.props.history.push('/loan/terms');
      }
 
 	doneClick = () => {
 		this.props.dispatch(actions.clearLoanOnboardingStore());
-		this.props.history.push("/loans");
+		this.props.history.push("/loan");
 	}
 
+	abortClick=()=>{
+        this.props.dispatch(actions.clearLoanOnboardingStore());
+        this.props.history.push('/loan');
+     }
+
 	goBackWard=()=>{
-		this.props.history.push('/loans/card-result');
+		this.props.history.push('/loan/card-result');
 	   }
 
 	// returnScoreCardSuccessStatus = () => {
@@ -102,6 +107,7 @@ class LoanOnboardingScoreResult extends React.Component {
 					gotoPreviousPageMethod={this.goBackWard}
 					gotoNextPageMethod={this.goForward}
 					doneClick={this.doneClick}
+					abortClick = {this.abortClick}
 				/>);
 			</LoanOnboardingContainer>
 		)

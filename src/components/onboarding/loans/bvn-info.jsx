@@ -81,6 +81,8 @@ class LoanOnboardingBVNInfo extends React.Component {
       if(this.props.loan_createprofile)
       if(this.props.loan_createprofile.loan_step3_status == loanOnboardingConstants.LOAN_STEP3_SUCCESS){
         //   this.props.history.push("/loan/salary-detail");
+       // console.log();
+        localStorage.setItem("user", JSON.stringify(this.props.loan_createprofile.loan_step3_data.data.response));
         this.props.history.push("/loan/work-detail");
       }
     }

@@ -21,17 +21,24 @@ class LoanOnboardingRemitaMandateSetup extends React.Component {
         this.props.dispatch(LoanActions.loanMandateStatus(this.state.user.token));
     }
 
+    NavigateToCollectionDone =()=>{
+        this.props.history.push("/loan/wema-setup");
+    }
+
     checkKycStatus = () => {
         //this.props.dispatch();
-        this.props.history.push("/loans/kyc");
+        this.props.history.push("/loan/kyc");
     }
+    goBack=()=>{}
 
     render() {
         return (
             <LoanOnboardingContainer UserName={this.state.user.fullName}>
                 <RemitaMandateSetupComponent
-                    onConfirmClick={this.onConfirm}
+                    onConfirm={this.confirmClick}
+                    NavigateToCollectionDone ={this.NavigateToCollectionDone}
                     NavigateToKyc={this.checkKycStatus}
+                    NavigateToPreviousPage = {this.goBack}
                 />
             </LoanOnboardingContainer>);
     }
