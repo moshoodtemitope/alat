@@ -25,7 +25,6 @@ class BuyTicket extends Component {
             Pin:"",
             source:"",
             isPinInvalid: false,
-            Occupation,
             goal: JSON.parse(localStorage.getItem("goal")),
 
 

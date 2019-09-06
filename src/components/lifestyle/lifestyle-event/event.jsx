@@ -48,7 +48,7 @@ class Event extends Component {
         //     }
         // })
     
-        this.setState({ event });
+        // this.setState({ event });
       };
     
     

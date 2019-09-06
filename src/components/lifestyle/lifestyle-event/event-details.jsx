@@ -139,7 +139,7 @@ class EventDetails extends React.Component {
 
     }
 
-    ShowBuyTicketData = () => {
+    ShowBuyTicketData = (event) => {
         event.preventDefault();
 
 

@@ -46,7 +46,7 @@ class GroupAnalyticsMini2 extends React.Component {
     }
 
     MoveToEditSlot = () => {
-        history.push('/group-savings/edit-members-slots');
+        history.push('/savings/group-savings/edit-members-slots');
     }
 
     ShowEditButton = () => {

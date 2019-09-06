@@ -14,6 +14,7 @@ import ProgressBar from './progress-bar';
 // import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
 import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import {history} from '../../../_helpers/history';
+import {GROUPSAVINGSCONSTANT} from '../../../redux/constants/savings/group/index'
 
 class ParentDashBoard extends React.Component {
     constructor(props){
@@ -51,7 +52,7 @@ class ParentDashBoard extends React.Component {
                                     <p>Members</p>
                                 </div>
                                 <div className='right'>
-                                    <p id={element.id} onClick={this.GoToGroup}>View Details</p>
+                                    <p style={{cursor:"pointer"}} id={element.id} onClick={this.GoToGroup}>View Details</p>
                                 </div>
                             </div>
                    </div>
@@ -88,7 +89,7 @@ class ParentDashBoard extends React.Component {
                                 <p>Up Next</p>
                             </div>
                             <div className='right'>
-                                <p id={element.id} onClick={this.GoToRotatingGroup}>View Details</p>
+                                <p style={{cursor:"pointer"}} id={element.id} onClick={this.GoToRotatingGroup}>View Details</p>
                             </div>
                         </div>
                    </div>

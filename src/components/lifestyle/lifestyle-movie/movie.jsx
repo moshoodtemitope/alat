@@ -9,6 +9,8 @@ import clock from '../../../assets/img/clock-circular-outline.svg';
 import {listStyleConstants} from '../../../redux/constants/lifestyle/lifestyle-constants';
 import { FetchMovie,getCinemaList, fetchMovieGenre } from "../../../redux/actions/lifestyle/movies-actions";
 
+import FilterSearch from './filter-result';
+
 class Movie extends Component {
     constructor(props){
         super(props);
@@ -21,7 +23,7 @@ class Movie extends Component {
             total:5,
             per_page: 4,
             current_page: 1,
-            isLoading: false,
+            genreType: "",
             doFilter: false
 
         };
@@ -67,8 +69,8 @@ class Movie extends Component {
     filterGenreOnchangeHandler(e){
         let {value} = e.target
         // this.filterGenre(e.target.value);
-        this.setState({doFilter: true})
-        return this.renderFilter(value)
+        this.setState({doFilter: true, genreType: value }, () => this.renderFilter(this.state.genreType))
+        // return 
         // console.log("values",e.target.value)
 
     }
@@ -196,116 +198,138 @@ class Movie extends Component {
             console.log(data, "==================", userMovies)   
             
             return  (<div className="eventTrays">
-                <p>fgggggggggggggggfggg</p>
+                
             {userMovies.map(function(film, index){
-                return(
-
-                    <div key={index}>
-                        <p>eeeeeeeeeeeeeeeeeeee</p>
-
-                    {
-                        film.genre.toLowerCase().toString().includes("action" ) ? 
-                        <div className="eventCards" key={index}>
-                            <Link to={{
-                                pathname:"/lifestyle/movie-details",
-                                state:{
-                                    details:film
-                                }
-                            }}>
-                                <div className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
-                                    <p></p>
-                                </div>
-                            </Link>
-
-                            <div className="boldHeader">{film.title.toString().length > 15 ? film.title.toString().substring(0, 15)+"...": film.title.toString()}</div>
-                                <div id="disc">{ film.description.toString().length > 30 ? film.description.toString().substring(0, 30)+"...": film.description.toString() }</div>
-                                <div className="details">
-                                    <div className="left">
-                                        <img src={clock} alt=""/>
-                                    </div>
-                                    <div className="right">
-                                        <div className="movie-duration">{film.duration}</div>
-                                    </div>
-                                </div>
-                        </div>: null
-                    }
-                        
-                    </div>
-
-                );
+                return <FilterSearch key={index} index={index} film={film} genre="action" />
+               
             })}
             </div>);
 
         }
-        else if(this.state.values === "FANTASY"){
+        else if(data === "DRAMA"){
             let userMovies = getMovieList.data.response;
-
-            return  <div className="eventTrays">
-            {this.state.values.map(function(film, index){
-                return(
-                        <div className="eventCards" key={index}>
-                            <Link to={{
-                                pathname:"/lifestyle/movie-details",
-                                state:{
-                                    details:film
-                                }
-                            }}>
-                                <div className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
-                                </div>
-                            </Link>
-
-                            <div className="boldHeader">{film.title.toString().length > 15 ? film.title.toString().substring(0, 15)+"...": film.title.toString()}</div>
-                                <div id="disc">{ film.description.toString().length > 30 ? film.description.toString().substring(0, 30)+"...": film.description.toString() }</div>
-                                <div className="details">
-                                    <div className="left">
-                                        <img src={clock} alt=""/>
-                                    </div>
-                                    <div className="right">
-                                        <div className="movie-duration">{film.duration}</div>
-                                    </div>
-                                </div>
-                        </div>
-
-                );
+            console.log(data, "==================", userMovies)   
+            
+            return  (<div className="eventTrays">
+                
+            {userMovies.map(function(film, index){
+                return <FilterSearch key={index} index={index} film={film} genre="drama" />
             })}
-        </div>
+            </div>);
 
         }
-        // else if (this.state.values === "DRAMA"){
-        //     let userMovies = getMovieList.data.response;
+        else if (data === "ADVENTURE"){
+            let userMovies = getMovieList.data.response;
+            console.log(data, "==================", userMovies)   
+            
+            return  (<div className="eventTrays">
+                
+            {userMovies.map(function(film, index){
+                return <FilterSearch key={index} index={index} film={film} genre="adventure" />
+            })}
+            </div>);
+        }
+        else if (data === "FANTASY"){
+            let userMovies = getMovieList.data.response;
+            console.log(data, "==================", userMovies)   
+            
+            return  (<div className="eventTrays">
+                
+            {userMovies.map(function(film, index){
+                return <FilterSearch key={index} index={index} film={film} genre="fantasy" />
+            })}
+            </div>);
+        }
+        else if (data === "ANIMATION"){
 
-        //     return(
-        //         <div className="eventTrays">
-        //             {this.state.genre.map(function(film, index){
-        //                 return(
-        //                         <div className="eventCards" key={index}>
-        //                             <Link to={{
-        //                                 pathname:"/lifestyle/movie-details",
-        //                                 state:{
-        //                                     details:film
-        //                                 }
-        //                             }}>
-        //                                 <div className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
-        //                                 </div>
-        //                             </Link>
+            let userMovies = getMovieList.data.response;
+            console.log(data, "==================", userMovies)   
+            
+            return  (<div className="eventTrays">
+                
+            {userMovies.map(function(film, index){
+                return <FilterSearch key={index} index={index} film={film} genre="animation" />
+            })}
+            </div>);
+        }
+        else if (data === "CRIME"){
+            let userMovies = getMovieList.data.response;
+            console.log(data, "==================", userMovies)   
+            
+            return  (<div className="eventTrays">
+                
+            {userMovies.map(function(film, index){
+                return <FilterSearch key={index} index={index} film={film} genre="crime" />
+            })}
+            </div>);
+        }
+        else if (data === "COMEDY"){
+            let userMovies = getMovieList.data.response;
+            console.log(data, "==================", userMovies)   
+            
+            return  (<div className="eventTrays">
+                
+            {userMovies.map(function(film, index){
+                return <FilterSearch key={index} index={index} film={film} genre="comedy" />
+            })}
+            </div>);
+        }
+        else if (data === "NOLLYWOOD"){
+            let userMovies = getMovieList.data.response;
+            console.log(data, "==================", userMovies)   
+            
+            return  (<div className="eventTrays">
+                
+            {userMovies.map(function(film, index){
+                return <FilterSearch key={index} index={index} film={film} genre="nollywood" />
+            })}
+            </div>);
+        }
+        else if (data === "FAMILY"){
+            let userMovies = getMovieList.data.response;
+            console.log(data, "==================", userMovies)   
+            
+            return  (<div className="eventTrays">
+                
+            {userMovies.map(function(film, index){
+                return <FilterSearch key={index} index={index} film={film} genre="family" />
+            })}
+            </div>);
+        }
+        else if (data === "ROMANCE"){
+            let userMovies = getMovieList.data.response;
+            console.log(data, "==================", userMovies)   
+            
+            return  (<div className="eventTrays">
+                
+            {userMovies.map(function(film, index){
+                return <FilterSearch key={index} index={index} film={film} genre="romance" />
+            })}
+            </div>);
+        }
+        else if (data === "HORROR"){
+            let userMovies = getMovieList.data.response;
+            console.log(data, "==================", userMovies)   
+            
+            return  (<div className="eventTrays">
+                
+            {userMovies.map(function(film, index){
+                return <FilterSearch key={index} index={index} film={film} genre="horror" />
+            })}
+            </div>);
+        }
+        else if (data === "SCI-FI"){
+            let userMovies = getMovieList.data.response;
+            console.log(data, "==================", userMovies)   
+            
+            return  (<div className="eventTrays">
+                
+            {userMovies.map(function(film, index){
+                return <FilterSearch key={index} index={index} film={film} genre="sci-fi" />
+            })}
+            </div>);
+        }
 
-        //                             <div className="boldHeader">{film.title.toString().length > 15 ? film.title.toString().substring(0, 15)+"...": film.title.toString()}</div>
-        //                                 <div id="disc">{ film.description.toString().length > 30 ? film.description.toString().substring(0, 30)+"...": film.description.toString() }</div>
-        //                                 <div className="details">
-        //                                     <div className="left">
-        //                                         <img src={clock} alt=""/>
-        //                                     </div>
-        //                                     <div className="right">
-        //                                         <div className="movie-duration">{film.duration}</div>
-        //                                     </div>
-        //                                 </div>
-        //                         </div>
-
-        //                 );
-        //             })}
-        //         </div>
-        //     );
-        // }
 
     }
     
@@ -342,7 +366,7 @@ class Movie extends Component {
 
         return (
             
-          <span  key={number} className={classes} onClick={() => this.fetchMovieList(number)}>{this.props.getMovieList.message ===listStyleConstants.GET_MOVIE_LIST_SUCCESS ? <p style={{color:"#43063C", fontSize:16, fontFamily:'proxima_novaregular', position:"relative"}}>Load More</p>:null}</span>
+          <span  key={number} className={classes} onClick={() => this.fetchMovieList(number)}>{this.props.getMovieList.message ===listStyleConstants.GET_MOVIE_LIST_SUCCESS ? <p style={{color:"#43063C", fontSize:16, fontFamily:'proxima_novaregular', position:"relative", cursor:'pointer'}}>Load More</p>:null}</span>
         );
       });
       let userMovies = this.props.getMovieList;
@@ -384,7 +408,7 @@ class Movie extends Component {
                    {/* {this.resultu()} */}
                    {/* {this.renderGenre()}  */}
                    {
-                       !this.state.doFilter ? this.renderMovies() : this.renderFilter("")
+                       !this.state.doFilter ? this.renderMovies() : this.renderFilter(this.state.genreType)
                    }
 
                         <span onClick={() => this.fetchMovieList(1)}></span> 

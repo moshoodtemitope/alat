@@ -19,7 +19,6 @@ class CashoutStashGoal extends Component {
             debitAmount:"",
             Amount:"",
             goalId:"",
-            amountSaved:"",
             goal:JSON.parse(localStorage.getItem('goal')) || [],
 
 
@@ -41,11 +40,10 @@ class CashoutStashGoal extends Component {
             console.log('tag', data);
 
             this.setState({
-                Amount:data.amount,
                 goalName:data.goalName,
                 goalId:data.goalId,
                 debitAccount:data.accountNumber,
-                amountSaved:data.amountSaved,
+                Amount:data.amountSaved,
                 partialWithdrawal:true
             });
         }
@@ -79,10 +77,10 @@ class CashoutStashGoal extends Component {
 
         event.preventDefault();
         this.props.dispatch(actions.StashCashout({
-            "goalId":parseInt(this.state.goal.id),
-            "goalTypeId":parseInt(this.state.goal.goalTypeId),
+            "goalId":parseInt(this.state.goalId),
+            // "goalTypeId":parseInt(this.state.goal.goalTypeId),
             "amountNumber":this.state.debitAccount,
-            "amount":parseFloat(this.state.goal.amountSaved),
+            "amount":parseFloat(this.state.Amount),
             "partialWithdrawal":true
 
         }));

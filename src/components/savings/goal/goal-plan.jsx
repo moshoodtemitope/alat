@@ -301,7 +301,7 @@ class GoalPlan extends React.Component {
                         <div className="col-sm-12">
                             <div className="tab-overflow">
                                 <div className="sub-tab-nav">
-                                    <ul>
+                                    <ul style={{cursor:"pointer"}}>
                                         <li><a onClick={() => this.setState({visible: true})} href="#" className="active">Goals</a></li>
                                         {/* <NavLink to='/savings/goal/group-savings-selection'> */}
                                             <li onClick={this.NavigateToGroupSavings}><a className="forGroupLink">Group Savings</a></li>

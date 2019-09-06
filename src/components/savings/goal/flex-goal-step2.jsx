@@ -133,8 +133,8 @@ import React from 'react'
 
          return (
              <Fragment>
-                 
-                     {this.gotoStep3()}
+                        {this.gotoStep3()}
+
                          <div className="row">
                              <div className="col-sm-12">
                                  <p className="page-title">Savings & Goals</p>

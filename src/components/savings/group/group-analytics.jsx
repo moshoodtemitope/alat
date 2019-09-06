@@ -157,7 +157,7 @@ class GroupAnalytics extends React.Component {
     };
 
     EditThisGroup = () => {
-        history.push('/group-savings/edit-group');
+        history.push('/savings/group-savings/edit-group');
     };
 
     GoToContributionPage = () => {

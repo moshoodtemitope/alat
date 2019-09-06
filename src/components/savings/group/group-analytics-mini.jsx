@@ -41,10 +41,10 @@ class GroupAnalyticsMini extends React.Component {
     GetSmallNavs = () => {
         return <div className='miniNav'>
                     <div className='left'>
-                     <p onClick={this.MoveToEditGroupEsusu}>Edit</p>
+                     <p style={{cursor:"pointer"}} onClick={this.MoveToEditGroupEsusu}>Edit</p>
                     </div>
                     <div className='right'>
-                        <p onClick={this.DeleteGroup}>Delete</p>
+                        <p style={{cursor:"pointer"}} onClick={this.DeleteGroup}>Delete</p>
                     </div>
                </div>
     }
@@ -103,7 +103,7 @@ class GroupAnalyticsMini extends React.Component {
     };
 
     MoveToEditGroupEsusu = () => {
-        history.push('/group-savings/edit-rotating');
+        history.push('/savings/group-savings/edit-rotating');
     }
 
 

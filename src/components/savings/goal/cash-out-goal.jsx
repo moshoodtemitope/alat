@@ -93,10 +93,12 @@ class StashCashout extends Component {
             //not valid
         }else {
             this.props.dispatch(actions.StashCashoutStep1( {
-                    // 'goalName':this.state.goal.goalName,
+                    'goalName':this.state.goal.goalName,
                     'goalId':this.state.goal.id,
-                    "amountSaved":this.toCurrency(this.state.goal.amountSaved),
-                    'accountNumber':this.state.accountToDebit
+                    "amountSaved":parseFloat(this.state.goal.amountSaved),
+                    'accountNumber':this.state.accountToDebit,
+                    'partialWithdrawal': true
+
                 }
             ));
 
@@ -114,12 +116,13 @@ class StashCashout extends Component {
         const {AmountInvalid} =this.state;
         return (
             <Fragment>
-               
-                        {this.gotoStep2()}
+
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
                             </div>
+                            {this.gotoStep2()}
+
                             <div className="col-sm-12">
                                 <div className="tab-overflow">
                                     <div className="sub-tab-nav">

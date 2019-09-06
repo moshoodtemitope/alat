@@ -88,11 +88,11 @@ class SavingsContainer extends Component {
                             <Route path={'/savings/group/group-analytics'} component={GroupAnalytics} />
                             <Route path={'/savings/group/group-analytics2'}  component={GroupAnalytics2} />
                             <Route path={"/savings/group/automate-contributions"}  component={GroupAnalytics3} />
-                            <Route path="/savings/group/automate-group-savings" component={AutomateGroupSavings} /> 
-                            <Route path="/savings/group/success-message" component={SuccessMessage} />
-                            <Route path="/savings/group/create-rotating"  component={RotatingGroup} />
-                            <Route path="/savings/rotating-group" component={RotatingGroupCreated} />
-                            <Route path='/savings/group-analytics-mini'  component={GroupAnalyticsMini} />
+                            <Route path={"/savings/group/automate-group-savings"} component={AutomateGroupSavings} /> 
+                            <Route path={"/savings/group/success-message"} component={SuccessMessage} />
+                            <Route path={"/savings/group/create-rotating"}  component={RotatingGroup} />
+                            <Route path={"/savings/rotating-group"} component={RotatingGroupCreated} />
+                            <Route path={'/savings/group-analytics-mini'}  component={GroupAnalyticsMini} />
                             <Route path='/savings/group-mini2'  component={GroupAnalyticsMini2} />
                             <Route path='/savings/group/join-a-group'  component={JoinAGroup} />
                             <Route path="/savings/group/joingroup-success-message"  component={JoinedGroupSuccessfully} />
@@ -105,9 +105,9 @@ class SavingsContainer extends Component {
                             <Route path='/savings/top-up-goal-step1'  component={TopUpGoal} />
                             <Route path='/savings/top-up-goal-summary'  component={TopUpGoalSummary} />
                             <Route path='/savings/top-up-goal-success' component={TopUpGoalSuccess} />
-                            <Route path='/group-savings/edit-members-slots'  component={MemberSlots} />
-                            <Route path='/group-savings/edit-group'  component={EditGroupSavings} />
-                            <Route path='/group-savings/edit-rotating'  component={EditRotatingGroup} />
+                            <Route path='/savings/group-savings/edit-members-slots'  component={MemberSlots} />
+                            <Route path='/savings/group-savings/edit-group'  component={EditGroupSavings} />
+                            <Route path='/savings/group-savings/edit-rotating'  component={EditRotatingGroup} />
                             <Route path='/savings/delete-goal'  component={DeleteGoal} />
                             <Route path='/savings/edit-goal'  component={EditGoal} />
                             <Route path='/savings/flex-goal-step2'  component={FlexGoalStep2} />
