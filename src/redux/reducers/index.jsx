@@ -1,7 +1,19 @@
 import {combineReducers} from "redux";
 import {authentication} from "./authentication.reducer";
 import { alert} from "./alert.reducer";
-import {dashboard, transfer, onboarding, airtime, global, fundAccount, loanOnboarding, loans} from "./export";
+// import {dashboard, transfer, onboarding, airtime, global, fundAccount, loanOnboarding, loans} from "./export";
+import {dashboard, 
+        transfer, 
+        onboarding, 
+        airtime, 
+        global, 
+        fundAccount, 
+        loanOnboarding,
+        loans,
+        receiveMoney,
+        fixedGoal,flexGoal,stashGoal,groupSavings,rotatingSavings, customerGoal,movies,preferences,
+        alatCards} from "./export";
+
 import {bankListRequest, beneficiariesRequest} from "./transfer.reducer";
 import {accountHistoryReducer} from "./dashboard.reducer";
 import { userConstants } from "../constants/onboarding/user.constants";
@@ -15,6 +27,10 @@ import { TRANSFER_REDUCER_CLEAR } from "../constants/transfer.constants";
 import { fundAccountConstants } from "../constants/fund-account/fund-account.constant";
 import { loanOnboardingConstants } from '../constants/onboarding/loan.constants';
 import { loanConstants } from '../constants/loans/loans.constants';
+import { ALATCARD_REDUCER_CLEAR } from '../constants/cards/cards.constants';
+import { WESTERNUNION_REDUCER_CLEAR } from '../constants/remittance/remittance.constants';
+
+import movie from "../../components/lifestyle/lifestyle-movie/movie";
 //import { saveCardReducer } from "./fund-account.reducer";
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
@@ -62,6 +78,27 @@ const loanReducerPile =(state, action)=>{
     }
     return loansReducer(state, action);
 }
+
+const alatCardReducersPile = (state, action)=>{
+    if(action.type ===ALATCARD_REDUCER_CLEAR){
+        state = undefined;
+    }
+    return alatCardsReducer(state, action);
+}  
+
+
+const remittanceReducerPile = (state, action)=>{
+    if(action.type ===WESTERNUNION_REDUCER_CLEAR){
+        state = undefined;
+    }
+    return remittanceReducer(state, action);
+}
+
+const remittanceReducer = combineReducers({
+    getCountries: receiveMoney.getWesternUnionCountries,
+    receiveWUMoney: receiveMoney.receiveWesternUnion
+    
+})
 
 
 const transferReducers = combineReducers({
@@ -134,6 +171,28 @@ const loansReducer = combineReducers({
     kycrequired : loans.KycRequired,
 })
 
+const alatCardsReducer = combineReducers({
+    getVirtualCards: alatCards.geCurrentVirtualCardsRequest ,
+    sendVCNewCardinfo: alatCards.sendVCNewCardinfo ,
+    sendTopVCCardinfo: alatCards.sendTopVCCardinfo,
+    getAVirtualCardinfo: alatCards.getAVirtualCardinfo,
+    liquidateCard: alatCards.liquidateCard,
+    deleteVirtualCard: alatCards.deleteVirtualCard,
+    getCardHistory: alatCards.getVirtualCardHistoryRequest,
+    changeCardStatus: alatCards.changeCardStatus,
+    getAtmCard: alatCards.getAtmCardRequest,
+    getAtmCardHotlistReasons: alatCards.getAtmCardHotlistReasonsRequest,
+    atmCardHotlistRequest: alatCards.atmCardHotlistRequest,
+    randomQuestionRequest: alatCards.randomQuestionRequest,
+    answerRandomQuestionRequest: alatCards.answerRandomQuestionRequest,
+    activateALATCardRequest: alatCards.activateALATCardRequest,
+    loadALATCardSettingsRequest: alatCards.loadALATCardSettingsRequest,
+    updateALATCardSettingsRequest: alatCards.updateALATCardSettingsRequest,
+    infoForATMCardRequest: alatCards.infoForATMCardRequest,
+    otpForATMCardRequest: alatCards.otpForATMCardRequest,
+    postATMCardRequest: alatCards.postATMCardRequest,
+})
+
 const appReducer = combineReducers({
     authentication,
     // registration,
@@ -153,9 +212,11 @@ const appReducer = combineReducers({
     fundAccountReducerPile,
     loanOnboardingReducerPile,
     loanReducerPile,
+    alatCardReducersPile,
     accounts: global.debitableAccountsReducer,
     encrypt_rule: global.getEncryptionRuleReducer,
     verify_pan: global.verifyPANReducer,
+    remittanceReducerPile,
     // storage_reducer
     // storage_reducer
 
@@ -164,7 +225,87 @@ const appReducer = combineReducers({
     cardless_reducer: cardlessReducer,
     bills_reducer: billsReducer,
     accountsM_reducer : accountsReducer,
-    settings_reducer : settingsReducer
+    settings_reducer : settingsReducer,
+
+    //fixed goal reducers
+    fixed_goal_step1:fixedGoal.fixedGoalStep1Reducer,
+    fixed_goal_step2:fixedGoal.fixedGoalStep2Reducer,
+    add_goal_reducer:fixedGoal.addGoalReducer,
+
+    // flex goal reducers
+    flex_goal_step1:flexGoal.flexGoalStep1Reducer,
+    flex_goal_step2:flexGoal.flexGoalStep2Reducer,
+    add_flex_goal:flexGoal.addFlexGoalReducer,
+    create_stash_goal:stashGoal.createStashGoalReducer,
+    create_stash_step1:stashGoal.createStashGoalStep1Reducer,
+
+    //customer Goal reducers
+    customerGoalTransHistory:customerGoal.getCustomerGoalTransHistoryReducer,
+    customerGoalType:customerGoal.GET_GOAL_TYPE,
+    customerGoalFormular:customerGoal.GET_FORMULAR,
+    top_up_goal:customerGoal.TopUPGoal,
+    top_up_goal_step1:customerGoal.TopUPGoalStep1,
+    withdraw_from_goal_step1:customerGoal.WithDrawFromGoalStep1,
+    withdraw_from_goal:customerGoal.WithDrawFromGoal,
+    delete_goal:customerGoal.DeleteCustomerGoal,
+    edit_goal:customerGoal.EditCustomerGoal,
+    pause_goal:customerGoal.PauseCustomerGoal,
+    unpause_goal:customerGoal.unPauseCustomerGoal,
+    stashGoal:customerGoal.StashCashout,
+    stashGoal_step1:customerGoal.StashCashoutStep1,
+
+    //Group Savings Reducers (GROUP SAVINGS)
+    groupSavings: groupSavings.groupSavingsTargetGoal,
+    groupDetails: groupSavings.groupDetails,
+    deleteGroup: groupSavings.deleteGroup,
+    contribute: groupSavings.contribute,
+    editGroup: groupSavings.editGroup,
+    findGroup: groupSavings.findGroup,
+    customerGroup: groupSavings.customerGroup,
+    joinGroup: groupSavings.joinGroup,
+    scheduleContribution: groupSavings.scheduleContribution,
+    deleteMember: groupSavings.deleteMember,
+    cashOut: groupSavings.cashOut,
+    continueScheduleGroupPayment: groupSavings.continueScheduleGroupPayment,
+    pauseGroup: groupSavings.pauseGroup,
+    automateContributionStartDate: groupSavings.setAutomateSavingsStartDate,
+    automateContributionEndDate: groupSavings.setAutomateSavingsEndDate,
+    setFrequency: groupSavings.setFrequency,
+    setAmountToWithDraw: groupSavings.setAmountToWithDraw,
+   
+    /// ESUSU (GROUP SAVINGS)
+    createRotatingGroupSavings: rotatingSavings.createRotatingSavings,
+    rotatingGroupDetails: rotatingSavings.rotatingGroupDetails,
+    joinAGroup: rotatingSavings.joinAGroup,
+    editSlot: rotatingSavings.EditSlots,
+    getGroupSavingsEsusu: rotatingSavings.GetGroupsEsusu,
+    editGroupEsusu: rotatingSavings.editGroupEsusu,
+    deleteGroupEsusu: rotatingSavings.deleteGroupEsusu,
+    joinGroupEsusu: rotatingSavings.joinGroupEsusu,
+    refferalCode: rotatingSavings.refferalCode,
+    // pauseGroupEsusu: rotatingSavings.pauseGroupEsusu
+
+
+     //MOVIES
+     getCinemaList: movies.getCinemaList,
+     getSingleMovie: movies.getSingleMovie,
+     buyMovieTicket: movies.buyMovieTicket,
+     ShowTime:movies.ShowTime,
+     SubmitTicketData:movies.SubmitTicketData,
+     SubmitEventTicketData:movies.SubmitEventTicketData,
+     SearchfetchMovieList:movies.SearchfetchMovieList,
+     SearchfetchEventList:movies.SearchfetchEventList,
+ 
+     //EVENTS
+     getEvents: movies.getEvents,
+     getSingleEvent: movies.getSingleEvent,
+     purchaseEventTicket: movies.purchaseEventTicket,
+     getMovieList:movies.fetchMovieList,
+ 
+     getAllEngagements: preferences.getAllEngagements,
+     getCustomersEngagements: preferences.getCustomersEngagements,
+ 
+     movieDetails: movies.movieDetails
 });
 
 //export defualt appReducer;

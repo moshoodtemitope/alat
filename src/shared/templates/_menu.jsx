@@ -30,15 +30,28 @@ class MenuContainer extends React.Component{
                                     </li>
                                     <li><NavLink to="/bills/airtime" className="clearfix"><i className="demo-icon icon-bills" aria-hidden="true"></i> <span>Airtime & Bills</span></NavLink>
                                     </li>
-                                    <li><a href="#" className="clearfix"><i className="demo-icon icon-target" aria-hidden="true"></i><span> Savings</span></a></li>
-                                    <li><NavLink to={"/loans"} className="clearfix"><i className="demo-icon icon-loans" aria-hidden="true"></i><span> Loans</span></NavLink>
-                                    </li>
-                                    <li><a href="#" className="clearfix"><i className="demo-icon icon-movies" aria-hidden="true"></i> <span>Lifestyle</span></a>
+                                    <li><NavLink to={"/loans"} className="clearfix"><i className="demo-icon icon-loans" aria-hidden="true"></i><span> Loans</span></NavLink></li>
+                                    <li><NavLink to="/savings/choose-goal-plan" className="clearfix"><i className="demo-icon icon-target" aria-hidden="true"></i><span> Savings & Goal</span></NavLink></li>
+                                   
+                                    <li><NavLink to={"/lifestyle"} className="clearfix"><i className="demo-icon icon-movies" aria-hidden="true"></i> <span>Lifestyle</span></NavLink>
                                     </li>
                                     <li><NavLink to="/account" className="clearfix"><i className="fa fa-institution" aria-hidden="true"></i> <span>Accounts</span></NavLink></li>
-                                    <li><a href="#" className="clearfix"><i className="demo-icon icon-card" aria-hidden="true"></i><span> Cards</span></a>
+                                    
+                                    
+                                    <li><NavLink to="/cards" className="clearfix"><i className="demo-icon icon-card" aria-hidden="true"></i>
+                                        <span>Cards</span></NavLink>
+                                        <ul>
+                                            <li>
+                                                <NavLink to="/cards">Request card</NavLink>
+                                            </li>
+                                            <li><NavLink to="/cards-control">Card Control</NavLink></li>
+                                            <li><NavLink to="/setcard-pin">Set Card Pin</NavLink></li>
+                                            <li><NavLink to="/hotlist">Hotlist Card</NavLink></li>
+                                            <li><NavLink to="/virtual-cards"> Alat Dollar Card </NavLink></li>
+                                        </ul>
                                     </li>
-                                    <li><NavLink to="/settings" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i> <span>Settings</span></NavLink></li>
+                                    <li><NavLink to="/receive-money" className="clearfix"><i className="demo-icon icon-western-union" aria-hidden="true"></i><span> Remittance</span></NavLink></li>
+                                    {/* <li><NavLink to="/settings" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i> <span>Settings</span></NavLink></li> */}
                                 </ul>
                             </div>
                         </div>
