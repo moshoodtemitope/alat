@@ -3,12 +3,13 @@ import { Fragment } from 'react';
 import {connect} from 'react-redux';
 import { Link, NavLink, Route } from 'react-router-dom';
 
-import Index from '.';
-import BuyData from './buy-data';
-import ConfirmData from './confirm-data';
-import Success from './success';
-import  VerifyOtp from './verify-otp'
-import Modal from 'react-responsive-modal';
+import Index from './index-active';
+import LiquidateLoan from './liquidate-loan';
+// import BuyData from './buy-data';
+// import ConfirmData from './confirm-data';
+// import Success from './success';
+// import  VerifyOtp from './verify-otp'
+// import Modal from 'react-responsive-modal';
 import * as actions from '../../../redux/actions/dataActions/export';
 
 class Dashboard extends Component{
@@ -39,11 +40,11 @@ class Dashboard extends Component{
            
            <Fragment>
                 {this.props.children}
-                <Route exact path='/bills/data' render={(props) => <Index {...props} beneficiaries={this.props.beneficiaries} isFetching={this.props.fetching} />} />
-                <Route exact path='/bills/data/buy' render={(props) => <BuyData {...props} />} />
-                <Route path='/bills/data/buy/confirm' render={(props) => <ConfirmData {...props} />} />
+                <Route exact path='/loans/alat-loans' render={(props) => <Index {...props} activeLoans={this.props.beneficiaries} fetchingLoans={this.props.fetchingLoans} />} />
+                 <Route exact path='/loans/alat-loans/liquidate' render={(props) => <LiquidateLoan {...props} />} />
+                {/*<Route path='/bills/data/buy/confirm' render={(props) => <ConfirmData {...props} />} />
                 <Route path='/bills/data/buy/success' render={(props) => <Success {...props} />} />
-                <Route path='/bills/data/buy/verify' render={(props) => <VerifyOtp {...props} />} />
+                <Route path='/bills/data/buy/verify' render={(props) => <VerifyOtp {...props} />} /> */}
            </Fragment>
        );
    }
@@ -51,8 +52,9 @@ class Dashboard extends Component{
 
 const mapStateToProps = state => {
     return{
-        beneficiaries : state.data_reducer.beneficiaries,
+        activeLoans: state.alat_loan_reducer.activeLoans,
         fetching: state.data_reducer.isFetching,
+        fetchingLoans: state.alat_loan_reducer.isFetchingLoan,
     }
 }
 

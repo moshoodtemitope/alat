@@ -57,7 +57,7 @@ import TopUpGoalSummary from './savings/goal/Top-up-goal-summary';
 import TopUpGoalSuccess from './savings/goal/top-up-goal-success';
 import FixedGoalSuccess from './savings/goal/Fixed-goal-success';
 import MemberSlots from './savings/group/members-slot';
-import EditGroupSavings from './savings/group/edit-group-savings';
+// import EditGroupSavings from './savings/group/edit-group-savings';
 import EditRotatingGroup from './savings/group/edit-rotating-savings-group';
 import DeleteGoal from './savings/goal/delete-goal';
 import EditGoal from './savings/goal/Edit-Goal';
@@ -210,7 +210,7 @@ class AuthenticatedRoutes extends React.Component {
     }
 
     closeModal = (event) => {
-        event.preventDefault();
+       if (event) event.preventDefault();
         timer = 60;
         this.setState({ openModal: false, countDownTimeOn: false }, clearInterval(this.countDown))
 
@@ -298,7 +298,7 @@ class AuthenticatedRoutes extends React.Component {
                         <PrivateRoute path='/savings/top-up-goal-summary' authed={this.props.user} component={TopUpGoalSummary} />
                         <PrivateRoute path='/savings/top-up-goal-success' authed={this.props.user} component={TopUpGoalSuccess} />
                         <PrivateRoute path='/group-savings/edit-members-slots' authed={this.props.user} component={MemberSlots} />
-                        <PrivateRoute path='/group-savings/edit-group' authed={this.props.user} component={EditGroupSavings} />
+                        {/* <PrivateRoute path='/group-savings/edit-group' authed={this.props.user} component={EditGroupSavings} /> */}
                         <PrivateRoute path='/group-savings/edit-rotating' authed={this.props.user} component={EditRotatingGroup} />
                         <PrivateRoute path='/savings/delete-goal' authed={this.props.user} component={DeleteGoal} />
                         <PrivateRoute path='/savings/edit-goal' authed={this.props.user} component={EditGoal} />
