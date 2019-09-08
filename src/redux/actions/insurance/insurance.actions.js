@@ -12,7 +12,10 @@ import {
    FETCH_NEWINSURANCE_INFOSETS_FAILURE,
    FETCH_COVERSIN_PRODUCTS_SUCCESS,
    FETCH_COVERSIN_PRODUCTS_PENDING,
-   FETCH_COVERSIN_PRODUCTS_FAILURE
+   FETCH_COVERSIN_PRODUCTS_FAILURE,
+   SET_PRODUCT_COVERID,
+   SAVE_CUSTOMER_DETAILS,
+   SAVE_CUSTOMERPOLICY_DATA
 }from "../../constants/insurance/insurance.constants";
 
 
@@ -337,4 +340,25 @@ export const getCoversInProduct =(token, payload)=>{
     function request(request) { return { type:FETCH_COVERSIN_PRODUCTS_PENDING, request} }
     function success(response) { return {type:FETCH_COVERSIN_PRODUCTS_SUCCESS, response} }
     function failure(error) { return {type:FETCH_COVERSIN_PRODUCTS_FAILURE, error} }
+}
+
+export const setProductCoverId = (data) => {
+    return {
+        type: SET_PRODUCT_COVERID,
+        data: data
+    }
+}
+
+export const saveCustomerDetails = (data) => {
+    return {
+        type: SAVE_CUSTOMER_DETAILS,
+        data: data
+    }
+}
+
+export const saveCustomerPolicyData = (data) => {
+    return {
+        type: SAVE_CUSTOMERPOLICY_DATA,
+        data: data
+    }
 }

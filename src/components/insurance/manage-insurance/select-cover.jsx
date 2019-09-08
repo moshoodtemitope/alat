@@ -4,15 +4,9 @@ import {Router} from "react-router";
 
 import {Fragment} from "react";
 import {connect} from "react-redux";
-import {Checkbox} from "react-inputs-validation";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import Select from 'react-select';
-import * as utils from '../../../shared/utils';
 import whitelogo from "../../../assets/img/white-logo.svg"; 
 import  {routes} from '../../../services/urls';
-import successIcon from "../../../assets/img/success-tick.svg";
-import noPolicy from "../../../assets/img/empty-policy.svg";
 
 import {
     FETCH_COVERSIN_PRODUCTS_SUCCESS,
@@ -23,6 +17,7 @@ import {
 
  import {
     // clearCardsStore
+    setProductCoverId
 } from "../../../redux/actions/insurance/insurance.actions";
 
 // const options = [
@@ -35,9 +30,14 @@ class SelectInsuranceCover extends React.Component {
         super(props);
         this.state = {
             user: JSON.parse(localStorage.getItem("user")),
+            showDetailsModal: false
         };
         
-        this.getCoverDetails =  this.getCoverDetails.bind(this);
+        this.getCoverDetails    =  this.getCoverDetails.bind(this);
+        this.renderCoverDetails = this.renderCoverDetails.bind(this);
+        this.updateDetailsModal = this.updateDetailsModal.bind(this);
+        this.collapseDetails    = this.collapseDetails.bind(this);
+        this.choosePolicyTobuy  = this.choosePolicyTobuy.bind(this);
        
         
         
@@ -46,7 +46,18 @@ class SelectInsuranceCover extends React.Component {
     componentDidMount() {
     }
 
+    updateDetailsModal(selectedPackage){
+        this.setState({showDetailsModal: true,selectedPackage})
+    }
     
+    choosePolicyTobuy(e){
+        e.preventDefault();
+        const { dispatch } = this.props;
+        let productCoverId = e.target.getAttribute('data-cover-id');
+        dispatch(setProductCoverId(productCoverId));
+        this.props.history.push("/insurance/buy-insurance/details")
+    }
+
     renderAllCovers(){
         let productCoversRequest = this.props.getProductCovers,
             listOfCovers = productCoversRequest.policycover_data.response.data;
@@ -69,7 +80,9 @@ class SelectInsuranceCover extends React.Component {
                                                     data-cover-id={eachCover.SubClassCoverTypes.Id}  
                                                 className="btn-alat btn-inverse m-t-10 m-b-20 text-center">More Details    
                                             </button>
-                                            <button type="button"  
+                                            <button type="button"
+                                                data-cover-id={eachCover.SubClassCoverTypes.Id}
+                                                onClick ={this.choosePolicyTobuy}
                                                 className="btn-alat m-t-10 m-b-20 text-center">Buy Policy    
                                             </button>
                                         </div>
@@ -83,29 +96,56 @@ class SelectInsuranceCover extends React.Component {
             )
     }
 
+    collapseDetails(){
+        this.setState({showDetailsModal:false})
+    }
+
     getCoverDetails(e){
         e.preventDefault();
         let productCoversRequest    = this.props.getProductCovers,
             listOfCovers            = productCoversRequest.policycover_data.response.data,
             idOfSelectedPackage     =  e.target.getAttribute('data-cover-id'),
-            selectedPackage         = listOfCovers.filter(eachCover=>eachCover.SubClassCoverTypes.Id ===idOfSelectedPackage);
+            selectedPackage         = (listOfCovers.filter(eachCover=>eachCover.SubClassCoverTypes.Id ===idOfSelectedPackage))[0];
 
-            this.state= Object.assign({}, {
-                showDetailsModal:true,
-                selectedPackage
-            }, this.state);
-
+            this.updateDetailsModal(selectedPackage);
+            // this.state= Object.assign({}, {
+            //     showDetailsModal:true,
+            //     selectedPackage
+            // }, this.state);
+            // this.state.showDetailsModal = true;
+            // this.state.selectedPackage = selectedPackage;
            
-        console.log('updated state',this.state);
+        // console.log('updated state',this.state);
     }
     
     renderCoverDetails(){
         let {selectedPackage} = this.state;
+        console.log('in details', this.state);
         return(
             <div className="coverdetails-modal">
-                <div className="coverdetails-wrap al-card">
-                    <h4 class="m-b-10  hd-underline">{selectedPackage.SubClassCoverTypes.CoverTypeName}</h4>
-                    dfdfdfdfdfdfd
+                <div className="collapse-details" onClick={this.collapseDetails} ></div>
+                <div className="coverdetails-wrap al-card no-pad">
+                    <h4 className="m-b-10 covertitle  hd-underline text-center">{selectedPackage.SubClassCoverTypes.CoverTypeName}</h4>
+                    <div className="policyinfo-wrap">
+                        <h4>This policy is designed to cover:</h4>
+                        <div className="allcovers-list">
+                            {
+                             selectedPackage.Benefits.map((eachBenefit,key)=>(
+                                <div className="policy-benefit" key={key}>
+                                    {eachBenefit.Name}{eachBenefit.Description!=='Covered' && <span>:{eachBenefit.Description} </span>}
+                                </div>
+                             ))   
+                            }
+                            <center>
+                                <button type="button"
+                                        className="btn-alat m-t-10 m-b-20 text-center"
+                                        data-cover-id={selectedPackage.SubClassCoverTypes.Id}
+                                        onClick ={this.choosePolicyTobuy}>
+                                    Buy Policy
+                                </button>
+                            </center>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
@@ -140,7 +180,8 @@ class SelectInsuranceCover extends React.Component {
 
 function mapStateToProps(state){
     return {
-        getProductCovers   : state.insurancePile.getCoversInPoductRequest
+        getProductCovers   : state.insurancePile.getCoversInPoductRequest,
+        saveProductCoverId   : state.insurancePile.saveProductCoverId
     };
 }
 

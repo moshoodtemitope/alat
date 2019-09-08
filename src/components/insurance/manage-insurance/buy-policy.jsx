@@ -99,7 +99,9 @@ class BuyPolicy extends React.Component {
 
             
             productList.map(product=>{
-                    productCategories.push({ value:product.ProductCategory, label:product.ProductCategory })
+                    if(product.ProductCategory==='Auto'){
+                        productCategories.push({ value:product.ProductCategory, label:product.ProductCategory })
+                    }
             })
 
             const filteredCategories = productCategories.reduce((acc, current) => {

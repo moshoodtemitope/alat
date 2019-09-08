@@ -7,7 +7,10 @@ import {
     FETCH_NEWINSURANCE_INFOSETS_FAILURE,
     FETCH_COVERSIN_PRODUCTS_SUCCESS,
     FETCH_COVERSIN_PRODUCTS_PENDING,
-    FETCH_COVERSIN_PRODUCTS_FAILURE
+    FETCH_COVERSIN_PRODUCTS_FAILURE,
+    SET_PRODUCT_COVERID,
+    SAVE_CUSTOMER_DETAILS,
+    SAVE_CUSTOMERPOLICY_DATA
  }from "../constants/insurance/insurance.constants";
 
 
@@ -79,6 +82,45 @@ export function getCoversInPoductRequest(state=[], action) {
                 is_processing: false,
                 fetch_status: FETCH_COVERSIN_PRODUCTS_FAILURE,
                 policycover_data: action
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+//Save Product Cover Id
+export function saveProductCoverId(state=[], action){
+    switch (action.type){
+        case SET_PRODUCT_COVERID:
+            return {
+                policycover_data: action
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+//Save Customer details
+export function saveCustomerInfo(state=[], action){
+    switch (action.type){
+        case SAVE_CUSTOMER_DETAILS:
+            return {
+                customer_data: action
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+//Save Customer Policy details
+export function saveCustomerPolicyInfo(state=[], action){
+    switch (action.type){
+        case SAVE_CUSTOMERPOLICY_DATA:
+            return {
+                customerpolicy_data: action
             };
 
         default:
