@@ -1,13 +1,13 @@
 // const URL = 'https://api.alat.ng';
-// const URL = 'https://196.43.215.170';
-const URL = 'https://196.43.215.157';
+const URL = 'https://196.43.215.170';
+// const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
 
 export const routes = {
     BASEURL: BASEURL,
 
-    //registration
+    //registration   
     SIGNUP_IMAGES: BASEURL + '/RegistrationApi',
     SIGNUP_PHONE: BASEURL + '/RegistrationApi/api/registration/SavePhoneNumber',
     BVN_VERIFICATION: BASEURL + '/RegistrationApi/api/registration/CallBvnService',
@@ -133,5 +133,13 @@ export const routes = {
     ADD_NEXT_OF_KIN: BASEURL + '/ProfileManagement.WebApi/api/nextOfKin/AddV2',
     ADD_CONTACT: BASEURL + '/ProfileManagement.WebApi/api/ContactDetails/SaveV2',
     OCCUPA_AND_SECTOR: BASEURL + '/ProfileManagement.WebApi/api/OccupationAndSector',
-    NEXT_OF_KIN_RELATIONSHIP: BASEURL + '/ProfileManagement.WebApi/api/nextOfKin/NextofKinRelationships'
+    NEXT_OF_KIN_RELATIONSHIP: BASEURL + '/ProfileManagement.WebApi/api/nextOfKin/NextofKinRelationships',
+    GET_CONTACT_DETAIL: BASEURL + '/ProfileManagement.WebApi/api/ContactDetails',
+    GET_RESIDENTIAL_ADDRESS: BASEURL + '/ProfileManagement.WebApi/api/ResidentialAddress',
+    GETPERSONALINFO: BASEURL + '/ProfileManagement.WebApi/api/PersonalInfo',
+    GETSTATES: BASEURL + '/AccountMaintenance/api/account/GetStatesAndLgas',
+    ADD_DOCUMENT: BASEURL + '/DocumentUpload/api/upload/document',
+
+    IDENTITY_TYPE: BASEURL + '/DocumentUpload/api/upload/check'
+
 };

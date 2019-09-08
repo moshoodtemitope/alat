@@ -157,14 +157,18 @@ const appReducer = combineReducers({
     settings_reducer : settingsReducer,
     
     //PROFILE
-    linkBVN: profile.linkBVN,
-    profileSuccessMessage: profile.profileSuccessMessage,
-    profileMenu: profile.profileMenu,
+    linkBVN:profile.linkBVN,
+    profileSuccessMessage:profile.profileSuccessMessage,
+    profileMenu:profile.profileMenu,
     capturePersonalInformation: profile.capturePersonalInformation,
-    addNextOfKin: profile.addNextOfKin,
-    addContactDetails: profile.addContactDetails,
-    occupationAndSector: profile.occupationAndSector,
-    addDocuments: profile.addDocuments,
+    addNextOfKin:profile.addNextOfKin,
+    addContactDetails:profile.addContactDetails,
+    occupationAndSector:profile.occupationAndSector,
+    addDocuments:profile.addDocuments,
+    getResidential:profile.getResidential,
+    getContactDetail:profile.getContactDetail,
+    getPersonalInfo:profile.getPersonalInfo,
+    getStates:profile.getStates,
     nextOfKinsRelationship: profile.nextOfKinsRelationship
 });
 

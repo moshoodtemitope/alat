@@ -26,6 +26,10 @@ import PersonalInfoMation from './profile/personal-info';
 import ContactDetails from './profile/contact-details';
 import NextOfKin from './profile/next-of-kin';
 import ProfileDocuments from './profile/profile-documents';
+import PhotographUpload from './profile/photograph-upload';
+import SignatureUpload from './profile/signature-upload';
+import IdentityCardUpload from './profile/upload-identity-card';
+
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
     return (
@@ -79,6 +83,9 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path="/profile-contact-detail" authed={this.props.user} component={ContactDetails} />
                     <PrivateRoute path="/profile-next-of-kin" authed={this.props.user} component={NextOfKin} />
                     <PrivateRoute path="/profile-documents" authed={this.props.user} component={ProfileDocuments} />
+                    <PrivateRoute path="/profile-upload-photograph" authed={this.props.user} component={PhotographUpload} /> 
+                    <PrivateRoute path="/profile-signature-upload" authed={this.props.user} component={SignatureUpload} />
+                    <PrivateRoute path="/profile-identiy-card" authed={this.props.user} component={IdentityCardUpload} />
                 </Switch>
             </Router>
             

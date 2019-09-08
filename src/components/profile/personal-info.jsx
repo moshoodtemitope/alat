@@ -5,7 +5,11 @@ import * as actions from '../../redux/actions/profile/profile-action';
 import {Fragment} from "react";
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import InnerContainer from '../../shared/templates/inner-container';
+import {connect} from 'react-redux'
 import {history} from '../../_helpers/history';
+import {profile} from '../../redux/constants/profile/profile-constants';
+import {occupationAndSector, getResidentialDetails, getContactDetails,getPersonalInfo,getStates} from "../../redux/actions/profile/profile-action"
+
 
 class PersonalInfoMation extends Component {
    constructor(props){
@@ -17,7 +21,6 @@ class PersonalInfoMation extends Component {
         bvnNumber: null,
         dateValue: null,
         birthDate: null,
-        
         Occupation: null,
         AlatPin: null,
         Sector: null,
@@ -37,8 +40,6 @@ class PersonalInfoMation extends Component {
         PlaceOfBirth: null, 
         maritalStatus: null,
         title: null,
-
-
         NationalityValidity: false, 
         OtherNameValidity: false, 
         MothersMaidenNameValidity: false,
@@ -59,14 +60,36 @@ class PersonalInfoMation extends Component {
         TitleValidity: false,
         MaritalStatusValidity: false
        }
+
+       this.fetchOccupation();
+       this.fetchResidentialDetails();
+       this.fetchContactDetails();
+       this.fetchPersonalInfo();
+       this.fetchStates();
    }
+   fetchOccupation(){
+    const { dispatch } = this.props;
+    dispatch(occupationAndSector(this.state.user.token));
+    };
+    fetchResidentialDetails(){
+        const { dispatch } = this.props;
+        dispatch(getResidentialDetails(this.state.user.token));
+    };
+    fetchContactDetails(){
+        const { dispatch } = this.props;
+        dispatch(getContactDetails(this.state.user.token));
+    };
+    fetchPersonalInfo(){
+        const{ dispatch } =this.props;
+        dispatch(getPersonalInfo(this.state.user.token))
+    };
+    fetchStates(){
+        const {dispatch}=this.props;
+        dispatch(getStates(this.state.user.token))
+    }
 
    InitiateNetworkCall = () => {
-        // let data = {
-        //     bvn: this.state.bvnNumber,
-        //     date: this.state.dateValue
-        // }
-
+        
         let data = {
             title: this.state.title,
             maritalStatus: this.state.maritalStatus,
@@ -86,13 +109,12 @@ class PersonalInfoMation extends Component {
             employerName: this.state.EmployerName,
             employerAddress: this.state.EmployersAddress,
             employerPhoneNumber: this.state.EmployerPhoneNumber,
-            addressType: '',
             employmentSectorCode: this.state.Sector,
             employmentStatus: this.state.EmploymentStatus
         }
 
         console.log(data);
-        return;
+    
         this.props.dispatch(actions.capturePersonalInformation(this.state.user.token, data));
    }
    
@@ -124,6 +146,12 @@ class PersonalInfoMation extends Component {
                             console.log(x)
                             result = null;
                             break;
+                        }else{
+                            if(this.state[x].toString().length < 11){
+                                console.log(this.state[x]);
+                                result = null;
+                                break;
+                            }
                         }
                 case 'birthDate':
                         if(this.state[x] == null || this.state[x] == ""){
@@ -244,11 +272,7 @@ class PersonalInfoMation extends Component {
                             result = null;
                             break;
                         }
-                
             }
-
-            console.log(result)
-            return result;
         }
 
        console.log(result);
@@ -274,7 +298,6 @@ class PersonalInfoMation extends Component {
        event.preventDefault();
        this.SetDateValidity();
        this.SetBVNValidityStatus();
-
        this.checkPinValidity(); 
        this.checkOccupationValidity();
        this.checkSectorValidity(); 
@@ -296,7 +319,6 @@ class PersonalInfoMation extends Component {
        this.checkMothersMaidenNameValidity();
        console.log('code got here');
 
-    //    return;
        console.log('was fired');
 
        switch(this.checkValidity()){
@@ -308,12 +330,12 @@ class PersonalInfoMation extends Component {
              this.InitiateNetworkCall();
              break;
        }
-   }
+    }
    
    SetInputValue = (event) => {
        let name = event.target.name;
        this.setState({[name] : event.target.value});
-       console.log("  was just invoked");
+       console.log("was just invoked");
    } 
    
    checkTitleValidity = () => {
@@ -469,6 +491,8 @@ class PersonalInfoMation extends Component {
    render(){
        const {BVNValidity, birthDate, PinValidity, SectorValidity, EmployerPhoneNumberValidity,EmploymentValidity, AddressValidity, EmployersNameValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
         SurnameValidity, EmailAddressValidity, FirstNameValidity, MaritalStatusValidity, TitleValidity, OccupationValidity,GenderValidity, DateOfBirthValidity, OtherNameValidity, MothersMaidenNameValidity} = this.state;
+        const {occupationAndSector, getContactDetail} = this.props
+        console.log('=======',occupationAndSector)
 
     //    if(this.props.capturePersonalInformation.response != undefined){
     //        this.PersonalInfomationHasBeenLinked();
@@ -610,14 +634,35 @@ class PersonalInfoMation extends Component {
 
                                                         <div className={StateOfOriginValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">State of Origin</label>
-                                                            <input type="text" name="StateOfOrigin" className="form-control" onChange={this.SetInputValue} placeholder="state of origin"/>
+                                                            <select onChange={this.SetInputValue} name="StateOfOrigin" >
+                                                                    <option>Select State of Origin</option>
+                                                                    {                                      
+                                                                        getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
+                                                                        getContactDetail.data.response.states.map(state=> {
+                                                                            
+                                                                            return <option key={state} value={state}>
+                                                                            {state.name}</option>
+                                                                        })
+                                                                    } 
+                                                            </select>
                                                         </div>
                                             </div>
 
                                             <div className="form-row">
                                                         <div className={LocalGovValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
                                                             <label className="label-text">Local Government</label>
-                                                            <input type="text" name="LocalGv" className="form-control" onChange={this.SetInputValue} placeholder="Local Government"/>
+                                                            <select onChange={this.SetInputValue} name="LocalGv" >
+                                                                    <option>Select Local Government</option>
+                                                                    {                                      
+                                                                        getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
+                                                                        getContactDetail.data.response.cities.map(city=> {
+                                                                            
+                                                                            return <option key={city.name} value={city.name}>
+                                                                            {city.name}</option>
+                                                                        })
+                                                                    } 
+                                                            </select>
+                                                            {/* <input type="text" name="LocalGv" className="form-control" onChange={this.SetInputValue} placeholder="Local Government"/> */}
                                                         </div>
 
                                                         <div className={PlaceOfBirthValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
@@ -641,10 +686,17 @@ class PersonalInfoMation extends Component {
 
                                                         <div className={EmploymentValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">Employment Status</label>
-                                                            <select onChange={this.SetInputValue} name="EmploymentStatus">
-                                                                <option value="Male"> Employed </option>
-                                                                <option value="Female"> UnEmployed </option>
-                                                            </select>
+                                                            <select onChange={this.SetInputValue} name="EmploymentStatus" >
+                                                                    <option>Select Employment Status</option>
+                                                                    {                                      
+                                                                        occupationAndSector.message === profile.OCCU_AND_SECTOR_SUCCESS && 
+                                                                        occupationAndSector.data.response.result.employmentStatus.map(status=> {
+                                                                            
+                                                                            return <option key={status} value={status}>
+                                                                            {status}</option>
+                                                                        })
+                                                                    } 
+                                                                </select>
                                                         </div>
                                             </div>
                                            
@@ -672,16 +724,37 @@ class PersonalInfoMation extends Component {
                                             <div className="form-row">
                                                         <div className={SectorValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Sector</label>
-                                                            <input type="text" name="Sector" className="form-control" onChange={this.SetInputValue} placeholder="Sector"/>
+                                                                 <select onChange={this.SetInputValue} name="Sector" >
+                                                                    <option>Select Sector</option>
+                                                                    {                                      
+                                                                        occupationAndSector.message === profile.OCCU_AND_SECTOR_SUCCESS && 
+                                                                        occupationAndSector.data.response.result.employmentSectors.map(sector=> {
+                                                                            
+                                                                            return <option key={sector.description} value={sector.code + " " + sector.description}>
+                                                                            {sector.description}</option>
+                                                                        })
+                                                                    } 
+                                                                </select>
                                                         </div>
                                             </div>
 
                                             <div className="form-row">
                                                         <div className={OccupationValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Occupation</label>
-                                                            <input type="text" name="Occupation" className="form-control" onChange={this.SetInputValue} placeholder="Occupation"/>
-                                                        </div>
-                                            </div>
+                                                            
+                                                                <select onChange={this.SetInputValue}  name="Occupation">
+                                                                    <option>Select Occupation</option>
+                                                                    {                                      
+                                                                        occupationAndSector.message === profile.OCCU_AND_SECTOR_SUCCESS && 
+                                                                        occupationAndSector.data.response.result.occupations.map(occupation=> {
+                                                                            
+                                                                            return <option key={occupation.code} value={occupation.description}>
+                                                                            {occupation.description}</option>
+                                                                        })
+                                                                    } 
+                                                                </select>
+                                                            </div>
+                                                         </div>
                                           
                                             <div className="form-row">
                                                         <div className={PinValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
@@ -706,12 +779,15 @@ class PersonalInfoMation extends Component {
    }
 }
 
-const mapStateTopProps = (state) => {
+
+
+function mapStateToProps(state){
     return {
-        profileMenu:state.profileMenu.data,
-        profileSuccessMessage: state.profileSuccessMessage.data,
-        capturePersonalInformation: state.capturePersonalInformation.data
-    }
+        occupationAndSector:state.occupationAndSector,
+        getResidential:state.getResidential,
+        getContactDetail:state.getContactDetail,
+        getStates:state.getStates,
+    };
 }
 
-export default PersonalInfoMation;
+export default connect(mapStateToProps)(PersonalInfoMation);

@@ -7,11 +7,15 @@ import { Link, NavLink, Route } from 'react-router-dom';
 import InnerContainer from '../../shared/templates/inner-container';
 import {history} from '../../_helpers/history';
 import { ToggleButton }  from '../../shared/elements/_toggle';
+import { getContactDetails} from "../../redux/actions/profile/profile-action";
+import {profile} from '../../redux/constants/profile/profile-constants';
+
+
 import {connect} from 'react-redux'
 // import { on } from 'cluster';
 
 
-class NextOfKin extends Component {
+class NextOfKin extends Component {   
     constructor(props){
         super(props);
         this.state = {
@@ -90,7 +94,14 @@ class NextOfKin extends Component {
          isAddressSame: 'on',
          sameAddressAsAbove: "sameAddressAsAbove"
         }
+
+        this.fetchContactDetails();
     }
+
+    fetchContactDetails(){
+        const { dispatch } = this.props;
+        dispatch(actions.getContactDetails(this.state.user.token));
+    };
  
     SetBVNValidityStatus = () => {
        console.log();
@@ -108,7 +119,8 @@ class NextOfKin extends Component {
             this.setState({dateValidity: false});
         }
     }
- 
+
+
  
     checkValidity = () => {
         let result = 'valid';
@@ -689,7 +701,9 @@ class NextOfKin extends Component {
     const { birthDate, PinValidity, streetCompoundValidity, yourAddressValidity, sameAddressAsAbove, SurnameValidity, relationshipValidity, TitleValidity, phoneNumberValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
         EmailAddressValidity, streetValidity, GenderValidity, busstopValidity, DateOfBirthValidity, FirstNameValidity, OtherNameValidity
         } = this.state;
-       
+
+        const {getContactDetail} = this.props;
+
        return(
         <Fragment>
              <InnerContainer>
@@ -841,19 +855,41 @@ class NextOfKin extends Component {
                                             <div className="form-row">
                                                         <div className={NationalityValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
                                                             <label className="label-text">Nationality</label>
-                                                            <input type="text" name="Nationality" className="form-control" onChange={this.SetInputValue} placeholder="Nationality"/>
+                                                            <input type="text" name="Nationality" className="form-control" value="Nigeria" readOnly onChange={this.SetInputValue} placeholder="Nationality"/>
                                                         </div>
                                               
                                                         <div className={StateOfOriginValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">State of Origin</label>
-                                                            <input type="text" name="StateOfOrigin" className="form-control" onChange={this.SetInputValue} placeholder="state of origin"/>
+                                                            <select name="StateOfOrigin" className="form-control" onChange={this.SetInputValue}>
+                                                                    <option>Select State of Origin</option>
+                                                                    {                                      
+                                                                        getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
+                                                                        getContactDetail.data.response.states.map(state=> {
+                                                                    
+                                                                            return <option key={state} value={state}>
+                                                                            {state.name}</option>
+                                                                        })
+                                                                    }     
+                                                            </select>
+                                                            {/* <input type="text" name="StateOfOrigin" className="form-control" onChange={this.SetInputValue} placeholder="state of origin"/> */}
                                                         </div>
                                             </div>
-
+                
                                             <div className="form-row">
                                                         <div className={LocalGovValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Local Government</label>
-                                                            <input type="text" name="LocalGv" className="form-control" onChange={this.SetInputValue} placeholder="Local Government"/>
+                                                            <select name="LocalGv" className="form-control" onChange={this.SetInputValue} >
+                                                                    <option>Select Local Government</option>
+                                                                    {                                      
+                                                                        getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
+                                                                        getContactDetail.data.response.cities.map(city=> {
+                                                                            
+                                                                            return <option key={city.name} value={city.name}>
+                                                                            {city.name}</option>
+                                                                        })
+                                                                    } 
+                                                            </select>
+                                                            {/* <input type="text" name="LocalGv" className="form-control" onChange={this.SetInputValue} placeholder="Local Government"/> */}
                                                         </div>
                                             </div>
                                             
@@ -869,7 +905,7 @@ class NextOfKin extends Component {
                                                    </div>
                                                    <div className="form-group col-md-3">
                                                       <div class="custom-control custom-switch">
-                                                            <input type="checkbox" class="custom-control-input" id="customSwitch1" />
+                                                            <input type="checkbox" class="custom-control-input" id="customSwitch1" onChange={this.HandleCheckBoxInput}/>
                                                             <label class="custom-control-label" for="customSwitch1"></label>
                                                       </div>
                                                    </div>
@@ -919,7 +955,8 @@ class NextOfKin extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        nextOfKinsRelationship: state.nextOfKinsRelationship.data
+        nextOfKinsRelationship: state.nextOfKinsRelationship.data,
+        getContactDetail:state.getContactDetail
     }
 }
 

@@ -167,7 +167,7 @@ export function nextOfKinsRelationship (state=[], action){
            return {
                message: profile.GET_NEXT_OF_KIN_RELATIONSHIP_SUCCESS,
                data: action
-           }
+           } 
         case profile.GET_NEXT_OF_KIN_RELATIONSHIP_FAILURE:
            return {
                message: profile.GET_NEXT_OF_KIN_RELATIONSHIP_FAILURE,
@@ -178,30 +178,105 @@ export function nextOfKinsRelationship (state=[], action){
     }
 }
 
-
-
-export function profileSuccessMessage (state=[], action){
+export function getContactDetail (state=[], action){
     switch(action.type){
-        case 'profile success message': 
+        case profile.GET_CONTACT_DETAILS_PENDING: 
            return {
-               message: 'profile success message',
+               message: profile.GET_CONTACT_DETAILS_PENDING,
                data: action
            }
-      
+        case profile.GET_CONTACT_DETAILS_SUCCESS:
+           return {
+               message: profile.GET_CONTACT_DETAILS_SUCCESS,
+               data: action
+           }
+        case profile.GET_CONTACT_DETAILS_FAILURE:
+           return {
+               message: profile.GET_CONTACT_DETAILS_FAILURE,
+               data: action
+           }
+        default: 
+           return {... state}
+    }
+}
+
+export function getStates (state=[], action){
+    switch(action.type){
+        case profile.GET_STATE_PENDING: 
+           return {
+               message: profile.GET_STATE_PENDING,
+               data: action
+           }
+        case profile.GET_STATE_SUCCESS:
+           return {
+               message: profile.GET_STATE_SUCCESS,
+               data: action
+           }
+        case profile.GET_STATE_FAILURE:
+           return {
+               message: profile.GET_STATE_FAILURE,
+               data: action
+           }
         default: 
            return {... state}
     }
 }
 
 
+export function getResidential (state=[], action){
+    switch(action.type){
+        case profile.GET_RESIDENTIAL_PENDING: 
+           return {
+               message: profile.GET_RESIDENTIAL_PENDING,
+               data: action
+           }
+        case profile.GET_RESIDENTIAL_SUCCESS:
+           return {
+               message: profile.GET_RESIDENTIAL_SUCCESS,
+               data: action
+           }
+        case profile.GET_RESIDENIAL_FAILURE:
+           return {
+               message: profile.GET_RESIDENIAL_FAILURE,
+               data: action
+           }
+        default: 
+           return {... state}
+    }
+}
 
-
-
-
-
-
-
-
-
+export function getPersonalInfo (state=[], action){
+    switch(action.type){
+        case profile.GET_PERSONAL_INFO_PENDING: 
+           return {
+               message: profile.GET_PERSONAL_INFO_PENDING,
+               data: action
+           }
+        case profile.GET_PERSONAL_INFO_SUCCESS:
+           return {
+               message: profile.GET_PERSONAL_INFO_SUCCESS,
+               data: action
+           }
+        case profile.GET_PERSONAL_INFO_FAILURE:
+           return {
+               message: profile.GET_PERSONAL_INFO_FAILURE,
+               data: action
+           }
+        default: 
+           return {... state}
+    }
+}
+    export function profileSuccessMessage (state=[], action){
+        switch(action.type){
+            case 'profile success message': 
+               return {
+                   message: 'profile success message',
+                   data: action
+               }
+          
+            default: 
+               return {... state}
+        }
+    }
 
 

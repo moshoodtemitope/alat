@@ -121,7 +121,7 @@ export const addContactDetails = (token, data) => {
 export const occupationAndSector = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.OCCUPA_AND_SECTOR, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.OCCUPA_AND_SECTOR, "GET", data, SystemConstant.HEADER, true);
         dispatch(request(consume));
         return consume
             .then(response => {
@@ -143,7 +143,29 @@ export const occupationAndSector = (token, data) => {
 export const addDocuments = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.OCCUPA_AND_SECTOR, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.ADD_DOCUMENT, "POST", data, SystemConstant.HEADER, true);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+                // history.push('/');
+            })
+            .catch(error => {
+                // dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // dispatch(failure(error.response.data.message.toString()));
+            });
+    };
+
+    function request(request) { return {type: profile.DOCUMENTS_PENDING, request} }
+    function success(response) { return {type: profile.DOCUMENTS_SUCCESS, response} }
+    function failure(error) { return {type: profile.DOCUMENTS_FAILURE, error} }
+};
+
+export const getContactDetails = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.GET_CONTACT_DETAIL, "GET", data, SystemConstant.HEADER, true);
         dispatch(request(consume));
         return consume
             .then(response => {
@@ -157,10 +179,77 @@ export const addDocuments = (token, data) => {
             });
     };
 
-    function request(request) { return {type: profile.DOCUMENTS_PENDING, request} }
-    function success(response) { return {type: profile.DOCUMENTS_SUCCESS, response} }
-    function failure(error) { return {type: profile.DOCUMENTS_FAILURE, error} }
+    function request(request) { return {type: profile.GET_CONTACT_DETAILS_PENDING, request} }
+    function success(response) { return {type: profile.GET_CONTACT_DETAILS_SUCCESS, response} }
+    function failure(error) { return {type: profile.GET_CONTACT_DETAILS_FAILURE, error} }
 };
+
+export const getResidentialDetails = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.GET_RESIDENTIAL_ADDRESS, "GET", data, SystemConstant.HEADER, true);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+                // history.push('/');
+            })
+            .catch(error => {
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // dispatch(failure(error.response.data.message.toString()));
+            });
+    };
+
+    function request(request) { return {type: profile.GET_RESIDENTIAL_PENDING, request} }
+    function success(response) { return {type: profile.GET_RESIDENTIAL_SUCCESS, response} }
+    function failure(error) { return {type: profile.GET_RESIDENIAL_FAILURE, error} }
+};
+
+export const getPersonalInfo = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.GETPERSONALINFO, "GET", data, SystemConstant.HEADER, true);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+                // history.push('/');
+            })
+            .catch(error => {
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // dispatch(failure(error.response.data.message.toString()));
+            });
+    };
+
+    function request(request) { return {type: profile.GET_PERSONAL_INFO_PENDING, request} }
+    function success(response) { return {type: profile.GET_PERSONAL_INFO_SUCCESS, response} }
+    function failure(error) { return {type: profile.GET_PERSONAL_INFO_FAILURE, error} }
+};
+export const getStates = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.GETSTATES, "GET", data, SystemConstant.HEADER, true);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+                // history.push('/');
+            })
+            .catch(error => {
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // dispatch(failure(error.response.data.message.toString()));
+            });
+    };
+
+    function request(request) { return {type: profile.GET_STATE_PENDING, request} }
+    function success(response) { return {type: profile.GET_STATE_SUCCESS, response} }
+    function failure(error) { return {type: profile.GET_STATE_FAILURE, error} }
+};
+
+
 
 
 export const nextOfKinsRelationship = (token) => {

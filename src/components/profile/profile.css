@@ -25,6 +25,19 @@ form {
    text-align: center;
 }
 
+.profileOtherLabel {
+    width: 80%; 
+    border: none !important;
+    padding-bottom: 3px !important;
+    color: black !important;
+    text-align: left !important;
+    padding-top: 3px !important;
+}
+
+.profileOtherLabel:hover {
+    background-color: white !important;
+}
+
 .docUpLoadFormProfile label:hover {
     color: white;
     background-color: #AB2656;
@@ -229,6 +242,11 @@ form {
 .sameAddressAsAbove {
     display: none !important;
 }
+
+.notSameAddressAsAbove {
+    display: block !important;
+}
+   
 
 
 

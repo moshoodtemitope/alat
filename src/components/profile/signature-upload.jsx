@@ -6,9 +6,9 @@ import {Fragment} from "react";
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import InnerContainer from '../../shared/templates/inner-container';
 import * as actions from '../../redux/actions/profile/profile-action';
-import {history} from '../../_helpers/history';
 
-class ProfileDocuments extends Component {
+
+class SignatureUpload extends Component {
    constructor(props){
        super(props);
        this.state = {
@@ -17,26 +17,38 @@ class ProfileDocuments extends Component {
           file2: null,
           file3: null,
 
-          photoGraphUploadValidity: false, 
-          signatureValidity: false, 
+          idCardType: null,
+          idCardNumber: null,
+
+          idCardNumberValidity: false,
+          idTypeValidity: false, 
+          idFrontFace: false, 
           idCardValidity: false
        }
    }
 
 
-   checkPhotoGraphUploadValidity = () => {
+   checkidTypeValidity = () => {
        if(this.state.file1 == null || this.state.file1 == ""){
-           this.setState({photoGraphUploadValidity: true});
+           this.setState({idTypeValidity: true});
        }else{
-           this.setState({photoGraphUploadValidity: false});
+           this.setState({idTypeValidity: false});
        }
    }
 
-   checkSignatureValidity = () => {
-        if(this.state.file2 == null || this.state.file2 == ""){
-            this.setState({signatureValidity: true});
+   checkIdCardNumberValidity = () => {
+        if(this.state.file1 == null || this.state.file1 == ""){
+            this.setState({idCardNumberValidity: true});
         }else{
-            this.setState({signatureValidity: false});
+            this.setState({idCardNumberValidity: false});
+        }
+   }
+
+   checkidFrontFace = () => {
+        if(this.state.file2 == null || this.state.file2 == ""){
+            this.setState({idFrontFace: true});
+        }else{
+            this.setState({idFrontFace: false});
         }
    }
    
@@ -57,7 +69,13 @@ class ProfileDocuments extends Component {
        let result = 'valid';
        for(let x in this.state){
            switch(x){
-               case 'file1':
+               case 'idCardType':
+                    if(this.state[x] == null || this.state[x] == ""){
+                        console.log(this.state[x]);
+                        result = null;
+                        break;
+                    }
+               case 'idCardNumber':
                     if(this.state[x] == null || this.state[x] == ""){
                         console.log(this.state[x]);
                         result = null;
@@ -82,6 +100,10 @@ class ProfileDocuments extends Component {
        return result;
    }
 
+   HandleSelectedCardType = (event) => {
+       this.setState({idCardType: event.target.value});
+   }
+
    HandleFileUpLoad = (event) => {
        let name = event.target.name;
        console.log(name);
@@ -92,11 +114,10 @@ class ProfileDocuments extends Component {
 
    SubmitDocuments = () => {
        let payload = {
-          file1: this.state.file1,
-          file2: this.state.file2,
-          file2: this.state.file3
+         
        }
-            
+       
+       return;
        this.props.dispatch(addDocuments(payload(this.state.user.token, payload)));
    }
 
@@ -105,8 +126,8 @@ class ProfileDocuments extends Component {
         event.preventDefault();
 
         this.checkIdCardValidity();
-        this.checkSignatureValidity(); 
-        this.checkPhotoGraphUploadValidity();
+        this.checkidFrontFace(); 
+        this.checkidTypeValidity();
         console.log("code Got here");
 
         switch(this.checkValidity()){
@@ -119,20 +140,12 @@ class ProfileDocuments extends Component {
         }
    }
 
-   NavigateToUploadPicture = () => {
-       history.push('/profile-upload-photograph');
-   }
-
-   NavigateToUploadSignature = () => {
-       history.push('/profile-signature-upload');
-   }
-
-   NavigateToDocumentUpload = () => {
-       history.push('/profile-identiy-card');
+   GetIdCardInputs = (event) => {
+       this.setState({idCardNumber: event.target.value});
    }
 
    render(){
-      const {photoGraphUploadValidity, signatureValidity, idCardValidity} = this.state;
+      const {idTypeValidity, idFrontFace, idCardValidity, idCardNumberValidity} = this.state;
        return(
         <Fragment>
              <InnerContainer>
@@ -148,8 +161,8 @@ class ProfileDocuments extends Component {
                                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                                 <ul>
                                                     <li><NavLink to={'/default-page'} className="active">Profile</NavLink></li>
-                                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                                    <li><NavLink to={'/default-page'}>Pin Management</NavLink></li>
+                                                    <li><NavLink to={'/default-page'}>Security Questions</NavLink></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -187,29 +200,15 @@ class ProfileDocuments extends Component {
                                                     <p>Next of Kin</p>
                                                 </div>
                                         </div>
-                                        
                                     </div>
                                     <div className="col-sm-6">
                                     <form onSubmit={this.HandleSubmit} className="parentForm docUpLoadFormProfile">
-                                           <p className="formHeading">Documents</p>
-                                           <div className="form-row">
-                                                <div className={photoGraphUploadValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
-                                                        <label htmlFor="file-upload1" onClick={this.NavigateToUploadPicture}>Photograph</label>
-                                                        {/* <input type="file" name="file1" id="file-upload1" readOnly onClick={this.NavigateToUploadPicture} onChange={this.PreventDefault}/> */}
-                                                </div>
-                                           </div>
-
-                                           <div className="form-row">
-                                                <div className={signatureValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
-                                                            <label htmlFor="file-upload2" onClick={this.NavigateToUploadSignature}>Signature</label>
-                                                            {/* <input name="file2" type="file" id="file-upload2"  onChange={this.HandleFileUpLoad}/> */}
-                                                </div>
-                                           </div>
-
+                                           <p className="formHeading">Signature Upload</p>
+           
                                            <div className="form-row">
                                                 <div className={idCardValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
-                                                            <label htmlFor="file-upload3" onClick={this.NavigateToDocumentUpload}>Identity Card</label>
-                                                            {/* <input name="file3" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/> */}
+                                                            <label htmlFor="file-upload3">Upload  Your  Signature</label>
+                                                            <input name="file3" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/>
                                                 </div>
                                            </div>
                                            
@@ -227,4 +226,4 @@ class ProfileDocuments extends Component {
    }
 }
 
-export default ProfileDocuments;
+export default SignatureUpload;
