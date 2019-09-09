@@ -228,7 +228,7 @@ class IdentityCardUpload extends Component {
                                                 </div>
 
                                                 <div className={birthDateValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                        <label className="label-text">Date of Issuance</label>
+                                                        <p id="dateOfIssuance">Date of Issuance</p>
                                                         <DatePicker className="form-control" selected={birthDate} 
                                                         placeholder="June 31, 2019"
                                                         dateFormat=" MMMM d, yyyy"
@@ -240,26 +240,33 @@ class IdentityCardUpload extends Component {
                                                 </div>
                                            </div>
                                            <div className="form-row">
-                                                <div className={idCardNumberValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
+                                                <div className={idCardNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                         <label className="profileOtherLabel">Identity Card number</label>
                                                         <input type="text" name="idCardNumber" id="file-upload1" onChange={this.GetIdCardInputs}/>
                                                 </div>
                                            </div>
 
                                            <div className="form-row">
-                                                <div className={idFrontFace ? "form-group form-error col-sm-6" : "form-group col-sm-6"}>
-                                                        <label htmlFor="file-upload2">Identity Card Front</label>
-                                                        <input name="file2" type="file" id="file-upload2"  onChange={this.HandleFileUpLoad}/>
+                                                <div className={idFrontFace ? "form-group form-error col-sm-5" : "form-group col-sm-5"}>
+                                                        <p className="hdStyle">Identity Card Back</p>
+                                                        <div className="inlineCardsProfile">
+                                                            
+                                                            <label htmlFor="file-upload2" className="forIdentityCards">Upload</label>
+                                                            <input name="file2" type="file" id="file-upload2"  onChange={this.HandleFileUpLoad}/>
+                                                        </div>
+                                                </div>
+
+                                                <div className={idCardValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
+                                                        <p className="hdStyle">Identity Card Front</p>
+                                                        <div className="inlineCardsProfile">
+                                                             
+                                                            <label htmlFor="file-upload3" className="forIdentityCards">Upload</label>
+                                                            <input name="file3" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/>
+                                                        </div>
                                                 </div>
                                            </div>
 
-                                           <div className="form-row">
-                                                <div className={idCardValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                            <label htmlFor="file-upload3">Identity Card Back</label>
-                                                            <input name="file3" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/>
-                                                </div>
-                                           </div>
-                                           
+                            
                                            <button type="submit" className="twoBut">Submit</button>
                                     </form>
                                     

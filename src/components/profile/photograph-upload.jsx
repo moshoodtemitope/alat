@@ -41,7 +41,7 @@ class PhotographUpload extends Component {
        let result = 'valid';
        for(let x in this.state){
            switch(x){
-               case 'idCardType':
+               case 'file3':
                     if(this.state[x] == null || this.state[x] == ""){
                         console.log(this.state[x]);
                         result = null;
@@ -63,14 +63,16 @@ class PhotographUpload extends Component {
        console.log(name);
        console.log(event.target.files[0]);
     //    return;
-       this.setState({[name]: event.target.value});
+       this.setState({[name]: event.target.files[0]});
    }
 
    SubmitDocuments = () => {
        let payload = {
-           
+           DocumentType: "Passport",
+           File: this.state.file3
        }
-
+       
+       console.log(payload);
        return;
        this.props.dispatch(addDocuments(payload(this.state.user.token, payload)));
    }
@@ -156,12 +158,11 @@ class PhotographUpload extends Component {
                                     <div className="col-sm-6">
                                     <form onSubmit={this.HandleSubmit} className="parentForm docUpLoadFormProfile">
                                            <p className="formHeading">Passport Upload</p>
-           
                                            <div className="form-row">
                                                 <div className={idPhotographValid ? "form-group form-error col-md-10" : "form-group col-md-10"}>
                                                     <p className="upLoadDiscription">take a picture of your face in a well lit place with your ears clearly visible</p>
                                                     <div className="signatureUploadTemp">
-                                                            <label htmlFor="file-upload3">Upload</label>
+                                                            <label htmlFor="file-upload3" className="resizeLabel">Upload</label>
                                                             <input name="file3" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/>
                                                     </div>
                                                </div>
