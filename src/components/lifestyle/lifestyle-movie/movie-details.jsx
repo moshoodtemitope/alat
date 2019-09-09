@@ -75,7 +75,7 @@ class Moviedetails extends React.Component {
    
         
         
-    fetchSingleTicket( data){
+    fetchSingleTicket(data){
         const { dispatch } = this.props;
         dispatch(getSingleMovie(this.state.user.token, ));
         // console.log(this.props.getCinemaList)
@@ -214,7 +214,7 @@ class Moviedetails extends React.Component {
             adultQuantity:this.state.adultNumber,
             childQuantity:this.state.childNumber,
             studentQuantity:this.state.studentNumber,
-            title:this.props.location.state.details.title,  
+            // title:this.props.location.state.details.title,  
             cinemaId:this.state.cinemaId,
             ticketId:this.state.ticketId,
             fee:this.state.fee,

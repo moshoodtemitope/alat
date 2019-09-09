@@ -114,7 +114,7 @@ class BuyTicket extends Component {
                 "fee":this.state.fee,
 
             };
-            console.log(data)
+            // console.log(data)
         
             this.props.dispatch(actions.buyMovieTicket(this.state.user.token, data));
 
