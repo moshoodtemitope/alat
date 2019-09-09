@@ -1,7 +1,5 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import successLogo from '../../../assets/img/success.svg';
 import {NavLink} from "react-router-dom";
 import { connect } from "react-redux";

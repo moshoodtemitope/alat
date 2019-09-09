@@ -67,7 +67,7 @@ class BuyTicket extends Component {
 
     init = () => {
         if (this.props.SubmitEventTicketData.message !== listStyleConstants.SUBMIT_EVENT_TICKET_SUCCESS)
-            this.props.history.push("/lifestyle/movie-details");
+            this.props.history.push("/lifestyle/event-details");
         else {
             let data = {
                 ...this.props.SubmitEventTicketData.data.data
@@ -112,9 +112,9 @@ class BuyTicket extends Component {
 
         }
     };
-    formatAmountNoDecimal = (amount) => {
-        return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
-    };
+    // formatAmountNoDecimal = (amount) => {
+    //     return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+    // };
 
     
     NavigateBack = () => {
@@ -160,8 +160,8 @@ class BuyTicket extends Component {
                                                                 <p style={{fontSize:10, fontFamily:'proxima_novaregular'}}>{this.state.ticketClassses}</p>
                                                            </div>
                                                            <div className="right">
-                                                               <p>N{this.formatAmountNoDecimal(this.state.TicketAmount)}</p>
-                                                               <p style={{fontSize:12, fontFamily:'proxima_novaregular'}}>Quantity {this.state.quantity}</p>
+                                                               <p>N{this.state.TicketAmount}</p>
+                                                               <p style={{fontSize:12, fontFamily:'proxima_novaregular'}}>Quantity {this.state.goal.quantity}</p>
 
                                                            </div>
                                                        </div>

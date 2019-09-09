@@ -14,7 +14,8 @@ import {getCinemaList,
      SubmitEventTicketData,
      SearchfetchEventList,
       movieDetails,
-      FetchMovieGenre
+      FetchMovieGenre,
+      PostMovieContent
     } from './lifestyle/lifestyle-reducer';
 
 
@@ -282,7 +283,8 @@ export const movies = {
     SearchfetchMovieList,
     SearchfetchEventList,
     movieDetails,
-    FetchMovieGenre
+    FetchMovieGenre,
+    PostMovieContent
 }
 
 export const preferences = {

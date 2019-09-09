@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import {Fragment} from 'react';
-import InnerContainer from "../../../shared/templates/inner-container";
-import SavingsContainer from "..";
 import {NavLink, Redirect} from "react-router-dom";
 import Members from '../../savings/group/list-item'
 import SelectDebitableAccounts from "../../../shared/components/selectDebitableAccounts";

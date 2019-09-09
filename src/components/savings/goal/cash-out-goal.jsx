@@ -94,8 +94,8 @@ class StashCashout extends Component {
         }else {
             this.props.dispatch(actions.StashCashoutStep1( {
                     'goalName':this.state.goal.goalName,
-                    'goalId':this.state.goal.id,
-                    "amountSaved":parseFloat(this.state.goal.amountSaved),
+                    'goalId':parseInt(this.state.goal.id),
+                    "amountSaved":parseFloat(this.state.goal.debitAmount),
                     'accountNumber':this.state.accountToDebit,
                     'partialWithdrawal': true
 

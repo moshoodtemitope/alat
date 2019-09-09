@@ -66,8 +66,6 @@ class DeleteGoal extends Component {
     render() {
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
 
                         <div className="row">
                             <div className="col-sm-12">
@@ -142,8 +140,6 @@ class DeleteGoal extends Component {
 
                         </div>
 
-                    </SavingsContainer>
-                </InnerContainer>
             </Fragment>
 
 

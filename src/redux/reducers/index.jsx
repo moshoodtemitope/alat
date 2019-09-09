@@ -302,6 +302,7 @@ const appReducer = combineReducers({
      SearchfetchMovieList:movies.SearchfetchMovieList,
      SearchfetchEventList:movies.SearchfetchEventList,
      FetchMovieGenre:movies.FetchMovieGenre,
+     PostMovieContent:movies.PostMovieContent,
 
  
      //EVENTS

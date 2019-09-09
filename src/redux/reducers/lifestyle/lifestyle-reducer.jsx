@@ -356,6 +356,29 @@ export function movieDetails (state=[], action){
            return {... state}
     }
 }
+export function PostMovieContent(state=[], action){
+    switch(action.type){
+
+        case listStyleConstants.POST_MOVIE_CONTENT_PENDING:
+            return {
+                message: listStyleConstants.POST_MOVIE_CONTENT_PENDING,
+                data: action
+            };
+        case listStyleConstants.POST_MOVIE_CONTENT_SUCCESS:
+            return {
+                message: listStyleConstants.POST_MOVIE_CONTENT_SUCCESS,
+                data: action
+            };
+        case listStyleConstants.POST_MOVIE_CONTENT_FAILURE:
+            return {
+                message: listStyleConstants.POST_MOVIE_CONTENT_FAILURE,
+                data: action
+            };
+        default:
+            return {... state}
+    }
+}
+
 
 
 

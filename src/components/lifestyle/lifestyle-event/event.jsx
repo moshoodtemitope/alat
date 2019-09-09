@@ -110,6 +110,29 @@ class Event extends Component {
         }
 
     }
+    // handleSubmit = (e) => {
+    //     e.preventDefault();
+
+    //                let data={
+    //             "ShowTimeId":this.state.ShowTimeId,	
+    //             "CinemaId":this.state.cinemaId,
+    //             "TicketId":this.state.ticketId,
+    //             'AccountNo':this.state.accountToDebit,
+    //             'Pin':this.state.Pin,
+    //             'TicketAmount':this.state.TicketAmount,
+    //             "Adult":this.state.adult,
+    //             "Student":this.state.student,
+    //             "Children":this.state.child,
+    //             "fee":this.state.fee,
+
+    //         };
+    //         console.log(data)
+        
+    //         this.props.dispatch(actions.postMovieContent(this.state.user.token, data));
+
+
+           
+    //     };
 
 
     renderEvent(){
@@ -206,6 +229,7 @@ class Event extends Component {
             }
         }
     }
+    
     // resultu = () => {
     //     if (this.state.event !== null && this.state.event !== "") {
     //         return this.renderEventSeach();
@@ -234,7 +258,7 @@ class Event extends Component {
         let classes = this.state.current_page === number ? styles.pagination : '';
 
         return (
-          <span  key={number} className={classes} onClick={() => this.fetchEventList(number)}>{this.props.getEvents.message ===listStyleConstants.GET_EVENTS_SUCCESS ? <p style={{color:"#43063C", fontSize:16, fontFamily:'proxima_novaregular', position:"relative"}}>Load More</p>:null }</span>
+          <span  key={number} className={classes} onClick={() => this.fetchEventList(number)}>{this.props.getEvents.message ===listStyleConstants.GET_EVENTS_SUCCESS ? <p style={{color:"#43063C", fontSize:16, fontFamily:'proxima_novaregular', position:"relative", cursor:"pointer"}}>Load More</p>:null }</span>
         );
       });
 

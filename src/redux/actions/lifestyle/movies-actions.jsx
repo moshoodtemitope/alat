@@ -279,5 +279,18 @@ export const movieDetails = (data) =>{
         }
     }
 }
+export const postMovieContent =(data) =>{
+    return(dispatch)=>{
+        dispatch(success(data))
+
+    }
+    function success(data){
+        return{
+            type:listStyleConstants.POST_MOVIE_CONTENT_SUCCESS,
+            data:data
+        }
+    }
+}
+
 
 

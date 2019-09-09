@@ -78,7 +78,7 @@ class EventDetails extends React.Component {
              }
          }
  
-        console.log(result);
+        // console.log(result);
         return result;
     }
  
@@ -133,6 +133,8 @@ class EventDetails extends React.Component {
             eventId:this.state.eventId,
             source:this.props.location.state.details.source
         }
+        console.log("=========",data)
+
         
         this.props.dispatch(actions.SubmitEventTicketData(this.state.user.token, data));
 
@@ -197,27 +199,7 @@ class EventDetails extends React.Component {
     }
 
 
-    LopEventList = () => {
-        // console.log('First -----------------------')
-        let container = [];
-        let title = []; //contains all titles
-        let loopContainer = (eachArrayClass) => {
-            eachArrayClass.map(element => {
-                title.push(element.title);
-                // return <option value={element}>{element}</option>
-            })
-        }
-
-        this.props.getEvents.data.response.eventList.map(event => {
-            console.log(typeof event);
-            if(typeof event == 'object')
-              loopContainer(event.ticketClassses); 
-        });
-
-        return title.map(element => {
-            return <option value={element}>{element}</option>
-        });
-    }
+    
 
     render() {
         const details = this.props.location.state.details;
@@ -353,25 +335,26 @@ class EventDetails extends React.Component {
                                             }
                                         </select>
                                         </div>
-
-                            <label style={{ marginTop: 16 }}>Select Day</label>
-                            <select onChange={this.UseSelectedTime}>
-                                <option key={details.date}>{details.date}</option>
-                                {/* {                                      
-                                    ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
-                                    ShowTime.data.response.map(event=> {
-                                        return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children}>{event.date}</option>
-                                    })
-                                }  */}
-                            </select>
+                                <div className="form-group col-md-6">
+                                        <label style={{ marginTop: 16 }}>Select Day</label>
+                                        <select onChange={this.UseSelectedTime}>
+                                            <option key={details.date}>{details.date}</option>
+                                            {/* {                                      
+                                                ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
+                                                ShowTime.data.response.map(event=> {
+                                                    return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children}>{event.date}</option>
+                                                })
+                                            }  */}
+                                        </select>
+                                </div>
 
                             <div
-                                className="row"
-                                style={{
-                                    marginTop: 23,
-                                    marginLeft: 0,
-                                    justifyContent: "space-between"
-                                }}
+                                // className="row"
+                                // style={{
+                                //     marginTop: 23,
+                                //     marginLeft: 0,
+                                //     justifyContent: "space-between"
+                                // }}
                             >
                                 
                                <div className="col-sm-4" style={{ paddingRight: 30 }}>
@@ -481,7 +464,7 @@ function mapStateToProps(state) {
         getCinemaList: state.getCinemaList,
         ShowTime:state.ShowTime,
         SubmitEventTicketData:state.SubmitEventTicketData,
-        getEvents: state.getEvents
+        getEvents:state.getEvents
     };
 }
 

@@ -329,6 +329,18 @@ class Movie extends Component {
             })}
             </div>);
         }
+        else if (data === "SLIDER"){
+            let userMovies = getMovieList.data.response;
+            console.log(data, "==================", userMovies)   
+            
+            return  (<div className="eventTrays">
+                
+            {userMovies.map(function(film, index){
+                return <FilterSearch key={index} index={index} film={film} genre="slider" />
+            })}
+            </div>);
+        }
+
 
 
     }

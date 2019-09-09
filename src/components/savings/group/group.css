@@ -759,6 +759,9 @@ font-weight: bold;
     font-size: 16px;
     line-height: 19px;
     text-align: center;
+
+
+
     color: #FFFFFF;
     padding-top: 12px;
     padding-bottom: 12px;
@@ -1007,7 +1010,7 @@ color: #4D4D4D;
 }
 
 #autoSummary .right p:first-child { 
-    padding-top: 10px;
+    padding-top: 25px;
     font-family: "proxima_novaregular",sans-serif !important;
 }
 
