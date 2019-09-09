@@ -34,16 +34,16 @@ class IdentityCardUpload extends Component {
         });
    }
  
-   checkBirthDateValidity  = () => {
-        if(this.state.file1 == null || this.state.file1 == ""){
-            this.setState({idTypeValidity: true});
-        }else{
-            this.setState({idTypeValidity: false});
-        }
-   }
+//    checkBirthDateValidity  = () => {
+//         if(this.state.file1 == null || this.state.file1 == ""){
+//             this.setState({idTypeValidity: true});
+//         }else{
+//             this.setState({idTypeValidity: false});
+//         }
+//    }
 
    checkidTypeValidity = () => {
-       if(this.state.file1 == null || this.state.file1 == ""){
+       if(this.state.idCardType == null || this.state.idCardType == ""){
            this.setState({idTypeValidity: true});
        }else{
            this.setState({idTypeValidity: false});
@@ -51,7 +51,7 @@ class IdentityCardUpload extends Component {
    }
 
    checkIdCardNumberValidity = () => {
-        if(this.state.file1 == null || this.state.file1 == ""){
+        if(this.state.idCardNumber == null || this.state.idCardNumber == ""){
             this.setState({idCardNumberValidity: true});
         }else{
             this.setState({idCardNumberValidity: false});
@@ -123,14 +123,19 @@ class IdentityCardUpload extends Component {
        console.log(name);
        console.log(event.target.files[0]);
     //    return;
-       this.setState({[name]: event.target.value});
+       this.setState({[name]: event.target.files[0]});
    }
 
    SubmitDocuments = () => {
        let payload = {
-         
+          DocumentType: 'identity',
+          IdentityType: this.state.idCardType,
+          IdentificationNumber: this.state.idCardNumber,
+          File: this.state.file2,
+          BackFile: this.state.file3
        }
 
+       console.log(payload);
        return;
        this.props.dispatch(addDocuments(payload(this.state.user.token, payload)));
    }
@@ -142,7 +147,8 @@ class IdentityCardUpload extends Component {
         this.checkIdCardValidity();
         this.checkidFrontFace(); 
         this.checkidTypeValidity();
-        this.checkBirthDateValidity();
+        // this.checkBirthDateValidity();
+        this.checkIdCardNumberValidity();
         console.log("code Got here");
 
         switch(this.checkValidity()){
@@ -220,14 +226,20 @@ class IdentityCardUpload extends Component {
                                     <form onSubmit={this.HandleSubmit} className="parentForm docUpLoadFormProfile">
                                            <p className="formHeading">Identity Card Details</p>
                                            <div className="form-row">
-                                                <div className={idTypeValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                <div className={idTypeValidity ? "form-group form-error col-md-11" : "form-group col-md-11"}>
                                                         <label className="profileOtherLabel">Select Id Type</label>
                                                         <select onChange={this.HandleSelectedCardType}>
-                                                             <option></option>  
+                                                             <option value="International Passport">International Passport</option>  
+                                                             <option value="Drivers License">Drivers License</option>
+                                                             <option value="NIMC">NIMC</option>
+                                                             <option value="Permanent Voters Card">Permanent Voters Card</option>
+                                                             <option value="School id">School id</option>
+                                                             <option value="Nysc id">Nysc id</option>
+                                                             <option value="Others">Others</option>
                                                         </select>
                                                 </div>
 
-                                                <div className={birthDateValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                {/* <div className={birthDateValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                         <p id="dateOfIssuance">Date of Issuance</p>
                                                         <DatePicker className="form-control" selected={birthDate} 
                                                         placeholder="June 31, 2019"
@@ -237,7 +249,7 @@ class IdentityCardUpload extends Component {
                                                         onChange={this.SetBirthDay}
                                                         dropdownMode="select"
                                                         />
-                                                </div>
+                                                </div> */}
                                            </div>
                                            <div className="form-row">
                                                 <div className={idCardNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
@@ -248,7 +260,7 @@ class IdentityCardUpload extends Component {
 
                                            <div className="form-row">
                                                 <div className={idFrontFace ? "form-group form-error col-sm-5" : "form-group col-sm-5"}>
-                                                        <p className="hdStyle">Identity Card Back</p>
+                                                        <p className="hdStyle">Identity Card Front</p>
                                                         <div className="inlineCardsProfile">
                                                             
                                                             <label htmlFor="file-upload2" className="forIdentityCards">Upload</label>
@@ -257,7 +269,7 @@ class IdentityCardUpload extends Component {
                                                 </div>
 
                                                 <div className={idCardValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
-                                                        <p className="hdStyle">Identity Card Front</p>
+                                                        <p className="hdStyle">Identity Card Back</p>
                                                         <div className="inlineCardsProfile">
                                                              
                                                             <label htmlFor="file-upload3" className="forIdentityCards">Upload</label>

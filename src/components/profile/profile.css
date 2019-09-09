@@ -74,6 +74,7 @@ form {
     font-size: 14px;
     line-height: 17px;
     color: #4D4D4D;
+    cursor: pointer;
 }
 
 .tickItems img {
