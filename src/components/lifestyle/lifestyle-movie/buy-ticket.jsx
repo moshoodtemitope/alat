@@ -95,7 +95,6 @@ class BuyTicket extends Component {
 
 
     handleSubmit = (e) => {
-        let str = num.toString()
         e.preventDefault();
         this.setState({isSubmit: true});
         if (this.validateAccountNumber( this.state.accountToDebit, "accountToDebitInValid")) {
