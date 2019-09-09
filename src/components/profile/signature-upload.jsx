@@ -28,22 +28,6 @@ class SignatureUpload extends Component {
    }
 
 
-   checkidTypeValidity = () => {
-       if(this.state.file1 == null || this.state.file1 == ""){
-           this.setState({idTypeValidity: true});
-       }else{
-           this.setState({idTypeValidity: false});
-       }
-   }
-
-   checkIdCardNumberValidity = () => {
-        if(this.state.file1 == null || this.state.file1 == ""){
-            this.setState({idCardNumberValidity: true});
-        }else{
-            this.setState({idCardNumberValidity: false});
-        }
-   }
-
    checkidFrontFace = () => {
         if(this.state.file2 == null || this.state.file2 == ""){
             this.setState({idFrontFace: true});
@@ -52,42 +36,12 @@ class SignatureUpload extends Component {
         }
    }
    
-   checkIdCardValidity = () => {
-        if(this.state.file3 == null || this.state.file3 == ""){
-            this.setState({idCardValidity: true});
-            console.log('CODE NEVER RAN2')
-        }else{
-            console.log('CODE NEVER RAN1')
-            this.setState({idCardValidity: false});
-        }
-
-        console.log('CODE NEVER RAN')
-   }
-
 
    checkValidity = () => {
        let result = 'valid';
        for(let x in this.state){
            switch(x){
                case 'idCardType':
-                    if(this.state[x] == null || this.state[x] == ""){
-                        console.log(this.state[x]);
-                        result = null;
-                        break;
-                    }
-               case 'idCardNumber':
-                    if(this.state[x] == null || this.state[x] == ""){
-                        console.log(this.state[x]);
-                        result = null;
-                        break;
-                    }
-               case 'file2':
-                    if(this.state[x] == null || this.state[x] == ""){
-                        console.log(this.state[x]);
-                        result = null;
-                        break;
-                    }
-               case 'file3':
                     if(this.state[x] == null || this.state[x] == ""){
                         console.log(this.state[x]);
                         result = null;
@@ -114,7 +68,7 @@ class SignatureUpload extends Component {
 
    SubmitDocuments = () => {
        let payload = {
-         
+           
        }
        
        return;
@@ -125,9 +79,7 @@ class SignatureUpload extends Component {
    HandleSubmit = (event) => {
         event.preventDefault();
 
-        this.checkIdCardValidity();
-        this.checkidFrontFace(); 
-        this.checkidTypeValidity();
+        
         console.log("code Got here");
 
         switch(this.checkValidity()){
@@ -207,8 +159,11 @@ class SignatureUpload extends Component {
            
                                            <div className="form-row">
                                                 <div className={idCardValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
-                                                            <label htmlFor="file-upload3">Upload  Your  Signature</label>
+                                                    <p className="upLoadDiscription">Upload a picture of your signature on a plain white background</p>
+                                                    <div className="signatureUploadTemp">
+                                                            <label htmlFor="file-upload3">Upload</label>
                                                             <input name="file3" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/>
+                                                    </div>
                                                 </div>
                                            </div>
                                            

@@ -9,11 +9,13 @@ import {history} from '../../_helpers/history';
 import { ToggleButton }  from '../../shared/elements/_toggle';
 import { getContactDetails} from "../../redux/actions/profile/profile-action";
 import {profile} from '../../redux/constants/profile/profile-constants';
-
-
 import {connect} from 'react-redux'
 // import { on } from 'cluster';
 
+// var allStatesInfo = null;
+// var allCityData = null;
+// var localGov2 = null;
+// var localGov1 = null;
 
 class NextOfKin extends Component {   
     constructor(props){
@@ -42,7 +44,7 @@ class NextOfKin extends Component {
          LocalGv: null,
          StateOfOrigin: null,
          Nationality: null,
-         PlaceOfBirth: null, 
+         city: null, 
          maritalStatus: null,
          title: null,
          apartment: null,
@@ -72,7 +74,7 @@ class NextOfKin extends Component {
          EmployersNameValidity: false, 
          EmploymentValidity: false, 
          LocalGovValidity: false, 
-         PlaceOfBirthValidity: false,
+         cityValidity: false,
          PinValidity: false,
          OccupationValidity: false,
          TitleValidity: false,
@@ -83,19 +85,24 @@ class NextOfKin extends Component {
          busstopValidity: false,
          streetValidity: false,
          personalAddressValidity: false,
-         
- 
          personalAddressValidity2: false,
          streetValidity2: false,
          busstopValidity2: false,
          houseNumberValidity2: false,
          apartmentValidity2: false,
          
-         isAddressSame: 'on',
-         sameAddressAsAbove: "sameAddressAsAbove"
-        }
+         sameAddressAsAbove: "sameAddressAsAbove",
 
+         checkBoxStatus: true
+         
+        }
+        this.fetchResidentialAddress();
         this.fetchContactDetails();
+    }
+
+    fetchResidentialAddress = () => {
+        const { dispatch } = this.props;
+        dispatch(actions.getResidentialDetails(this.state.user.token));
     }
 
     fetchContactDetails(){
@@ -240,7 +247,7 @@ class NextOfKin extends Component {
                              result = null;
                              break;
                          }
-                 case 'PlaceOfBirth':
+                 case 'city':
                          if(this.state[x] == null || this.state[x] == ""){
                              console.log(x)
                              result = null;
@@ -296,38 +303,6 @@ class NextOfKin extends Component {
                              result = null;
                              break;
                          }
-                 case 'houseNumber2':
-                         if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
-                             result = null;
-                             break;
-                         }
-                 case 'apartment2': 
-                         if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
-                             result = null;
-                             break;
-                         }
- 
-                 case 'personalAddress2':
-                         if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
-                             result = null;
-                             break;
-                         }
-                 case 'street2':
-                         if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
-                             result = null;
-                             break;
-                         }
-                 case 'busStop2': 
-                         if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
-                             result = null;
-                             break;
-                         }
-            
              }
  
              console.log(result)
@@ -339,18 +314,6 @@ class NextOfKin extends Component {
     }
  
     InitiateNetworkCall = () => {
-        // let data = {
-        //     bvn: this.state.bvnNumber,
-        //     date: this.state.dateValue
-        // }
-        let checkeBoxValue = '';
-        switch(checkeBoxValue){
-            case 'on':      
-               checkeBoxValue = true;
-            case 'off':  
-               checkeBoxValue = false;
-        }
-
         let data = {
             gender: this.state.Gender,
             dateOfBirth: this.state.birthDate,
@@ -367,7 +330,7 @@ class NextOfKin extends Component {
             country: this.state.Nationality,
             state: this.state.StateOfOrigin,
             town: this.state.LocalGv,
-            isAddressSame: checkeBoxValue,
+            isAddressSame: false,
             pin: this.state.AlatPin,
             address: this.state.address
         }
@@ -403,7 +366,6 @@ class NextOfKin extends Component {
         this.checkEmailAddressValidity(); 
         this.checkEmployersNameValidity(); 
         this.checkLocalGovValidity(); 
-        this.checkPlaceOfBirthValidity();
         this.checkTitleValidity();
         this.checkrelationshipValidity();
         this.checkNationalityValidity(); 
@@ -433,6 +395,8 @@ class NextOfKin extends Component {
         // return;
         console.log('was fired');
         this.InitiateNetworkCall();
+        return;
+
         switch(this.checkValidity()){
             case null:
               console.log('Empty value was found');
@@ -449,7 +413,8 @@ class NextOfKin extends Component {
         this.setState({[name] : event.target.value});
         console.log("  was just invoked");
     } 
-    
+
+
     checkTitleValidity = () => {
          if(this.state.title == null || this.state.title == ""){
              this.setState({TitleValidity: true});
@@ -527,13 +492,13 @@ class NextOfKin extends Component {
              this.setState({LocalGovValidity: false});
          }
      }
-     checkPlaceOfBirthValidity = () => {
-         if(this.state.PlaceOfBirth == null || this.state.PlaceOfBirth == ""){
-             this.setState({PlaceOfBirthValidity: true});
-         }else{
-             this.setState({PlaceOfBirthValidity: false});
-         }
-     } 
+    //  checkcityValidity = () => {
+    //      if(this.state.city == null || this.state.city == ""){
+    //          this.setState({cityValidity: true});
+    //      }else{
+    //          this.setState({cityValidity: false});
+    //      }
+    //  } 
      checkNationalityValidity = () => {
          if(this.state.Nationality == null || this.state.Nationality == ""){
              this.setState({NationalityValidity: true});
@@ -622,6 +587,14 @@ class NextOfKin extends Component {
              this.setState({busstopValidity: false});
          }
      }
+
+     checkCityValidity = () => {
+        if(this.state.busStop == null || this.state.busStop == ""){
+            this.setState({busstopValidity: true});
+        }else{
+            this.setState({busstopValidity: false});
+        }
+     }
  
      checkPersonalAddressValidity = () => {
          if(this.state.personalAddress == null || this.state.personalAddress == ""){
@@ -687,23 +660,46 @@ class NextOfKin extends Component {
         }
     }
 
-    HandleCheckBoxInput = (event) => {
-        console.log(event.target.value);
-        this.setState({isAddressSame: event.target.value});
+    HandleCheckBoxInput = () => {
+        this.setState({checkBoxStatus: !this.state.checkBoxStatus}, () => {
+            if (this.state.checkBoxStatus) {
+                   this.setState({sameAddressAsAbove: "sameAddressAsAbove"})  
+            }
+            else {
+                   this.setState({sameAddressAsAbove: "notSameAddressAsAbove"})
+            }  
+        })
     }
 
  
     NavigateToSuccessPage = () => {
         history.push('/profile-success-message');
     }
+
+    // UseGottenStateInfo = () => { 
+    //     let cityData = this.props.getContactDetail.data.response.cities;
+    //     let stateData = this.props.getContactDetail.data.response.states;
+  
+    //     allStatesInfo = stateData;
+    //     allCityData = cityData;
+ 
+    //     console.log(stateData);
+    //     console.log(cityData);
+    // }
     
    render(){
-    const { birthDate, PinValidity, streetCompoundValidity, yourAddressValidity, sameAddressAsAbove, SurnameValidity, relationshipValidity, TitleValidity, phoneNumberValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
-        EmailAddressValidity, streetValidity, GenderValidity, busstopValidity, DateOfBirthValidity, FirstNameValidity, OtherNameValidity
+    const { birthDate, PinValidity, streetCompoundValidity, yourAddressValidity, sameAddressAsAbove, SurnameValidity, relationshipValidity, TitleValidity, phoneNumberValidity, LocalGovValidity, NationalityValidity, StateOfOriginValidity,
+        EmailAddressValidity, cityValidity, streetValidity, GenderValidity, busstopValidity, DateOfBirthValidity, FirstNameValidity, OtherNameValidity
         } = this.state;
 
         const {getContactDetail} = this.props;
+        if(this.props.getResidentialDetails.response == undefined){
 
+        }
+
+        if(this.props.getResidentialDetails.response != undefined){
+
+        }
        return(
         <Fragment>
              <InnerContainer>
@@ -852,66 +848,15 @@ class NextOfKin extends Component {
                                                         </div> 
                                             </div>
 
-                                            <div className="form-row">
-                                                        <div className={NationalityValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
-                                                            <label className="label-text">Nationality</label>
-                                                            <input type="text" name="Nationality" className="form-control" value="Nigeria" readOnly onChange={this.SetInputValue} placeholder="Nationality"/>
-                                                        </div>
-                                              
-                                                        <div className={StateOfOriginValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                            <label className="label-text">State of Origin</label>
-                                                            <select name="StateOfOrigin" className="form-control" onChange={this.SetInputValue}>
-                                                                    <option>Select State of Origin</option>
-                                                                    {                                      
-                                                                        getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
-                                                                        getContactDetail.data.response.states.map(state=> {
-                                                                    
-                                                                            return <option key={state} value={state}>
-                                                                            {state.name}</option>
-                                                                        })
-                                                                    }     
-                                                            </select>
-                                                            {/* <input type="text" name="StateOfOrigin" className="form-control" onChange={this.SetInputValue} placeholder="state of origin"/> */}
-                                                        </div>
-                                            </div>
-                
-                                            <div className="form-row">
-                                                        <div className={LocalGovValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Local Government</label>
-                                                            <select name="LocalGv" className="form-control" onChange={this.SetInputValue} >
-                                                                    <option>Select Local Government</option>
-                                                                    {                                      
-                                                                        getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
-                                                                        getContactDetail.data.response.cities.map(city=> {
-                                                                            
-                                                                            return <option key={city.name} value={city.name}>
-                                                                            {city.name}</option>
-                                                                        })
-                                                                    } 
-                                                            </select>
-                                                            {/* <input type="text" name="LocalGv" className="form-control" onChange={this.SetInputValue} placeholder="Local Government"/> */}
-                                                        </div>
-                                            </div>
                                             
                                             <div className="form-row">
                                                    <div className="form-group col-md-12">
                                                       <p>Full Address</p>
                                                    </div>
                                             </div>
-
-                                            <div className="form-row">
-                                                   <div className="form-group col-md-9">
-                                                         <p>Same as mine</p>
-                                                   </div>
-                                                   <div className="form-group col-md-3">
-                                                      <div class="custom-control custom-switch">
-                                                            <input type="checkbox" class="custom-control-input" id="customSwitch1" onChange={this.HandleCheckBoxInput}/>
-                                                            <label class="custom-control-label" for="customSwitch1"></label>
-                                                      </div>
-                                                   </div>
-                                            </div>
                                             
-                                            <div className={yourAddressValidity + " " + "form-row"}>
+                                            
+                                            <div className={"form-row"}>
                                                         <div className={streetValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text"> Address </label>
                                                             <input type="text" name="address" className="form-control" onChange={this.SetInputValue} placeholder="Address"/>
@@ -931,6 +876,49 @@ class NextOfKin extends Component {
                                                             <input type="text" name="busStop" className="form-control" onChange={this.SetInputValue} placeholder="Nearest Bus - stop"/>
                                                         </div>
                                             </div>
+
+
+                                            <div className={"form-row"}>
+                                                        <div className={NationalityValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
+                                                            <label className="label-text">Nationality</label>
+                                                            <input type="text" name="Nationality" className="form-control" value="Nigeria" readOnly onChange={this.SetInputValue} placeholder="Nationality"/>
+                                                        </div>
+                                              
+                                                        <div className={StateOfOriginValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                            <label className="label-text">State of Origin</label>
+                                                            <select name="StateOfOrigin" className="form-control" onChange={this.SetInputValue}>
+                                                                    <option>Select State of Origin</option>
+                                                                    {                                      
+                                                                        getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
+                                                                        getContactDetail.data.response.states.map(state=> {
+                                                                    
+                                                                            return <option value={state}>
+                                                                            {state.name}</option>
+                                                                        })
+                                                                    }     
+                                                            </select>
+                                                           
+                                                        </div>
+                                            </div>
+                
+                                            <div className={"form-row"}>
+                                                        <div className={LocalGovValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                            <label className="label-text">Local Government</label>
+                                                            <select name="LocalGv" className="form-control" onChange={this.SetInputValue} >
+                                                                    <option>Select Local Government</option>
+                                                                    {                                      
+                                                                        getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
+                                                                        getContactDetail.data.response.cities.map(city=> {
+                                                                            
+                                                                            return <option value={city.name}>
+                                                                            {city.name}</option>
+                                                                        })
+                                                                    } 
+                                                            </select>
+                                                        </div>
+                                            </div>
+
+                                            
                                                    
                                             <div className="form-row">
                                                         <div className={PinValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>

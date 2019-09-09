@@ -141,5 +141,7 @@ export const routes = {
     ADD_DOCUMENT: BASEURL + '/DocumentUpload/api/upload/document',
 
     IDENTITY_TYPE: BASEURL + '/DocumentUpload/api/upload/check'
+    
+
 
 };

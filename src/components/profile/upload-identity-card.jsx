@@ -19,6 +19,7 @@ class IdentityCardUpload extends Component {
 
           idCardType: null,
           idCardNumber: null,
+          birthDate: null, 
 
           idCardNumberValidity: false,
           idTypeValidity: false, 
@@ -27,6 +28,19 @@ class IdentityCardUpload extends Component {
        }
    }
 
+   SetBirthDay = (birthDate) => {
+        this.setState({
+            birthDate: birthDate
+        });
+   }
+ 
+   checkBirthDateValidity  = () => {
+        if(this.state.file1 == null || this.state.file1 == ""){
+            this.setState({idTypeValidity: true});
+        }else{
+            this.setState({idTypeValidity: false});
+        }
+   }
 
    checkidTypeValidity = () => {
        if(this.state.file1 == null || this.state.file1 == ""){
@@ -128,6 +142,7 @@ class IdentityCardUpload extends Component {
         this.checkIdCardValidity();
         this.checkidFrontFace(); 
         this.checkidTypeValidity();
+        this.checkBirthDateValidity();
         console.log("code Got here");
 
         switch(this.checkValidity()){
@@ -145,7 +160,7 @@ class IdentityCardUpload extends Component {
    }
 
    render(){
-      const {idTypeValidity, idFrontFace, idCardValidity, idCardNumberValidity} = this.state;
+      const {birthDate, birthDateValidity, idTypeValidity, idFrontFace, idCardValidity, idCardNumberValidity} = this.state;
        return(
         <Fragment>
              <InnerContainer>
@@ -203,32 +218,44 @@ class IdentityCardUpload extends Component {
                                     </div>
                                     <div className="col-sm-6">
                                     <form onSubmit={this.HandleSubmit} className="parentForm docUpLoadFormProfile">
-                                           <p className="formHeading">Documents</p>
+                                           <p className="formHeading">Identity Card Details</p>
                                            <div className="form-row">
-                                                <div className={idTypeValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
+                                                <div className={idTypeValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                         <label className="profileOtherLabel">Select Id Type</label>
                                                         <select onChange={this.HandleSelectedCardType}>
                                                              <option></option>  
                                                         </select>
                                                 </div>
+
+                                                <div className={birthDateValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                        <label className="label-text">Date of Issuance</label>
+                                                        <DatePicker className="form-control" selected={birthDate} 
+                                                        placeholder="June 31, 2019"
+                                                        dateFormat=" MMMM d, yyyy"
+                                                        showMonthDropdown
+                                                        showYearDropdown
+                                                        onChange={this.SetBirthDay}
+                                                        dropdownMode="select"
+                                                        />
+                                                </div>
                                            </div>
                                            <div className="form-row">
                                                 <div className={idCardNumberValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
-                                                        <label className="profileOtherLabel">Please Enter an ID Card number</label>
+                                                        <label className="profileOtherLabel">Identity Card number</label>
                                                         <input type="text" name="idCardNumber" id="file-upload1" onChange={this.GetIdCardInputs}/>
                                                 </div>
                                            </div>
 
                                            <div className="form-row">
-                                                <div className={idFrontFace ? "form-group form-error col-md-10" : "form-group col-md-10"}>
-                                                        <label htmlFor="file-upload2">Upload ID Card Image (front)</label>
+                                                <div className={idFrontFace ? "form-group form-error col-sm-6" : "form-group col-sm-6"}>
+                                                        <label htmlFor="file-upload2">Identity Card Front</label>
                                                         <input name="file2" type="file" id="file-upload2"  onChange={this.HandleFileUpLoad}/>
                                                 </div>
                                            </div>
 
                                            <div className="form-row">
-                                                <div className={idCardValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
-                                                            <label htmlFor="file-upload3">Upload ID Card Image (back)</label>
+                                                <div className={idCardValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                            <label htmlFor="file-upload3">Identity Card Back</label>
                                                             <input name="file3" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/>
                                                 </div>
                                            </div>

@@ -70,7 +70,7 @@ class PhotographUpload extends Component {
        let payload = {
            
        }
-       
+
        return;
        this.props.dispatch(addDocuments(payload(this.state.user.token, payload)));
    }
@@ -155,13 +155,16 @@ class PhotographUpload extends Component {
                                     </div>
                                     <div className="col-sm-6">
                                     <form onSubmit={this.HandleSubmit} className="parentForm docUpLoadFormProfile">
-                                           <p className="formHeading">Photograph Upload</p>
+                                           <p className="formHeading">Passport Upload</p>
            
                                            <div className="form-row">
                                                 <div className={idPhotographValid ? "form-group form-error col-md-10" : "form-group col-md-10"}>
-                                                            <label htmlFor="file-upload3">Photograph Upload</label>
+                                                    <p className="upLoadDiscription">take a picture of your face in a well lit place with your ears clearly visible</p>
+                                                    <div className="signatureUploadTemp">
+                                                            <label htmlFor="file-upload3">Upload</label>
                                                             <input name="file3" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/>
-                                                </div>
+                                                    </div>
+                                               </div>
                                            </div>
                                            
                                            <button type="submit" className="twoBut">Submit</button>
