@@ -43,7 +43,7 @@ class NextOfKin extends Component {
          Gender: null,
          LocalGv: null,
          StateOfOrigin: null,
-         Nationality: null,
+         Nationality: "Nigeria",
          city: null, 
          maritalStatus: null,
          title: null,
@@ -693,13 +693,7 @@ class NextOfKin extends Component {
         } = this.state;
 
         const {getContactDetail} = this.props;
-        if(this.props.getResidentialDetails.response == undefined){
-
-        }
-
-        if(this.props.getResidentialDetails.response != undefined){
-
-        }
+        
        return(
         <Fragment>
              <InnerContainer>

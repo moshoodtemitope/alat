@@ -72,10 +72,10 @@ class PersonalDefault extends Component {
    }
 
    NavigateToNextOfKin = () => {
-        if(this.props.profileMenu.response.nextOfKinComplete == true){
-            this.DispatchSuccessMessage('Next of kin has been Created');
-            return
-        }
+        // if(this.props.profileMenu.response.nextOfKinComplete == true){
+        //     this.DispatchSuccessMessage('Next of kin has been Created');
+        //     return
+        // }
 
        history.push('/profile-next-of-kin');
    }
