@@ -23,10 +23,10 @@ class LoanTermsComponent extends React.Component {
     }
 
     init = () => {
-        if (this.props.standing_order){
+        if (this.props.standing_order) {
             if (this.props.standing_order.loan_standOrder_status == loanConstants.LOAN_STAND_ORDER_SUCCESS) {
             } else {
-               // this.props.NavigateToPreviousPage();
+                // this.props.NavigateToPreviousPage();
             }
         }
         // else
@@ -39,6 +39,12 @@ class LoanTermsComponent extends React.Component {
         else {
             // this.props.NavigateToPreviousPage(); 
         }
+
+        this.LoadTerms();
+    }
+
+    LoadTerms = () => {
+        this.props.dispatch(actions.getTerms(this.state.user.token));
     }
 
     onAccept = () => {
@@ -77,7 +83,7 @@ class LoanTermsComponent extends React.Component {
     }
 
     render() {
-        {this.declineAction()}
+        { this.declineAction() }
         return (
             <Fragment>
                 {this.onNextPage()}
@@ -85,12 +91,12 @@ class LoanTermsComponent extends React.Component {
                     <div className="col-sm-12">
                         <div className="max-460">
                             <div className="loan-header-text text-center">
-                                <h4 className="text-black">Terms and Conditions</h4>
+                                {/* <h4 className="text-black">Terms and Conditions</h4> */}
 
                             </div>
                             <div className="al-card no-pad">
                                 <div className="transfer-ctn">
-                                    <span>
+                                    {/* <span>
                                         Loan terms can also be the characteristics of your loan, which are described
                                         in your
                                         loan agreement. When you borrow money, you and your lender agree to certain
@@ -101,26 +107,44 @@ class LoanTermsComponent extends React.Component {
                                         you has
                                         rights and responsibilities that are listed in the loan
 											agreement.<br /><br />Some common
-                                        terms that are worth paying attention to are listed below.
+                                    terms that are worth paying attention to are listed below.
 											<br /><br /><b>Interest Rate:</b> How much interest is charged on your loan
-                                        balance
-                                        every period. The higher the rate, the more expensive your loan. It\'s also
-                                        important
-                                        to find out if your loan has a fixed interest rate or a variable rate that
-                                        can change
-                                        at some point in the future. Rates are often quoted in terms of an annual
-                                        percentage
-                                        rate (APR), which might account for additional costs besides interest costs.
+                                    balance
+                                    every period. The higher the rate, the more expensive your loan. It\'s also
+                                    important
+                                    to find out if your loan has a fixed interest rate or a variable rate that
+                                    can change
+                                    at some point in the future. Rates are often quoted in terms of an annual
+                                    percentage
+                                    rate (APR), which might account for additional costs besides interest costs.
 											<br /><br /><b>Monthly Payment:</b> Your monthly payment is often calculated
-                                        with the
-                                        length of your loan and the
-										</span>
+                                    with the
+                                    length of your loan and the
+										</span> */}
+                                    {this.props.loan_terms && this.props.loan_terms.terms_status == loanConstants.LOAN_TERMS_SUCCESS &&
+                                        <Fragment>
+                                            <div dangerouslySetInnerHTML={{ __html: this.props.loan_terms.terms_data.response.Response }} />
+                                        </Fragment>
+                                    }
+
+                                    {this.props.loan_terms && this.props.loan_terms.terms_status == loanConstants.LOAN_TERMS_PENDING &&
+                                        <Fragment>
+                                            <span> Fetching terms and conditions...</span>
+                                        </Fragment>
+                                     }
+
+                                     {this.props.loan_terms && this.props.loan_terms.terms_status == loanConstants.LOAN_TERMS_FAILURE &&
+                                        <Fragment>
+                                            <span>{this.props.alert.message}</span><br/>
+                                            <a onClick={this.LoadTerms}>Click to try again</a>
+                                        </Fragment>
+                                     }
                                 </div>
                                 <div className="term-ctn">
-                                    <center>
-                                        <a onClick={this.onAccept} className="term-acpt-link" style={{cursor : "pointer", color: "red"}}>Accept</a>
-                                        <a href onClick={this.onDecline} className="grey-text" style={{cursor : "pointer"}}>Decline</a>
-                                    </center>
+                                {this.props.loan_terms && this.props.loan_terms.terms_status == loanConstants.LOAN_TERMS_SUCCESS && <center>
+                                        <a onClick={this.onAccept} className="term-acpt-link" style={{ cursor: "pointer", color: "red" }}>Accept</a>
+                                        <a href onClick={this.onDecline} className="grey-text" style={{ cursor: "pointer" }}>Decline</a>
+                                    </center>}
                                 </div>
                             </div>
                         </div>
@@ -138,6 +162,7 @@ function mapStateToProps(state) {
         standing_order: state.loanReducerPile.loanStandingOrder,
         loan_reject: state.loanReducerPile.loanReject,
         loan_status: state.loanReducerPile.loanAppStatus,
+        loan_terms: state.loanReducerPile.terms
     }
 }
 

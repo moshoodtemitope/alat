@@ -148,7 +148,8 @@ const loanOnboardingReducer = combineReducers({
     loanSalaryEntryReducer : loanOnboarding.salaryEntryReducer,
     loanGetScoreCardQuestion: loanOnboarding.getScoreCardQuestionReducer,
     loanPostScoreCardAnswer : loanOnboarding.postScoreCardAnswerReducer,
-    loanUserDetails: loanOnboarding.saveUserDetailsReducer
+    loanUserDetails: loanOnboarding.saveUserDetailsReducer,
+    loanResendOTP: loanOnboarding.resendOTPReducer,
 })
 
 const loansReducer = combineReducers({
@@ -168,6 +169,8 @@ const loansReducer = combineReducers({
     loanAppStatus: loans.continueApplication,
     passport: loans.PassportReducer,
     signature: loans.SignatureReducer,
+    kycrequired : loans.KycRequired,
+    terms: loans.termsReducer,
 })
 
 const alatCardsReducer = combineReducers({

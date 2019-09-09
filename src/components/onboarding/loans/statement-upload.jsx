@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 import * as actions from '../../../redux/actions/onboarding/loan.actions';
 import { loanOnboardingConstants } from '../../../redux/constants/onboarding/loan.constants';
 import LoanOnboardingContainer from './loanOnboarding-container';
+import StatementUpload from '../../../shared/components/loans/_statement-upload';
 
 class LoanOnboardingStatementUpload extends React.Component {
     constructor(props) {
@@ -13,11 +14,11 @@ class LoanOnboardingStatementUpload extends React.Component {
     }
 
     goBack = () => {
-        this.props.history.push("/loans/salary-detail");
+        this.props.history.push("/loan/salary-detail");
     }
 
-    goFoward = () => {
-        this.props.history.push('/loans/salary/dashboard');
+    goForward = () => {
+        this.props.history.push('/loans/salary/upload-done');
     }
 
     render() {
