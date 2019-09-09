@@ -51,7 +51,8 @@ class RemitaOtpSetupComponent extends React.Component {
             ...this.props.standing_order.standing_order_data.response.Response
             //...test
         };
-        let _formsFieldModel = { ...this.state.formFieldsModel }
+        console.log(data);
+        let _formsFieldModel = data;//{ ...this.state.formFieldsModel }
         data.MandateValidationDetails.map((value, index) => {
             _formsFieldModel[value.ParamId] = {
                 Param: value.Param,
@@ -63,8 +64,12 @@ class RemitaOtpSetupComponent extends React.Component {
         })
         this.setState({ formFieldsModel: _formsFieldModel, StatusMandateModel: data });
            }
-         else {this.props.NavigateToPreviousPage();}
-         else {this.props.NavigateToPreviousPage();}
+         else {
+             //this.props.NavigateToPreviousPage();
+            }
+         else {
+             //this.props.NavigateToPreviousPage();
+            }
     }
 
     onSubmit = (e) => {
@@ -100,6 +105,7 @@ class RemitaOtpSetupComponent extends React.Component {
     render() {
         var form = <h1>loading</h1>;
         if (this.state.formFieldsModel) {
+            console.log(this.state.formFieldsModel);
             const formElementArray = [];
             for (let key in this.state.formFieldsModel) {
                 formElementArray.push(this.state.formFieldsModel[key])
@@ -156,9 +162,9 @@ class RemitaOtpSetupComponent extends React.Component {
 function mapStateToProps(state) {
     return {
         alert: state.alert,
-        standing_order: state.loanOnboardingReducerPile.loanStandingOrder,
-        loan_validateOtp: state.loanOnboardingReducerPile.loanValRemOtp
+        standing_order: state.loanReducerPile.loanStandingOrder,
+        loan_validateOtp: state.loanReducerPile.loanValRemOtp
     }
-}
+}   
 
 export default connect(mapStateToProps)(RemitaOtpSetupComponent);

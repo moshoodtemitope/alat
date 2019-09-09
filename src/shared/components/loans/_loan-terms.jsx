@@ -84,9 +84,10 @@ class LoanTermsComponent extends React.Component {
 
     render() {
         { this.declineAction() }
+        {this.onNextPage()}
         return (
             <Fragment>
-                {this.onNextPage()}
+               
                 <div className="row">
                     <div className="col-sm-12">
                         <div className="max-460">
