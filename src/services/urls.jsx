@@ -139,6 +139,7 @@ export const routes = {
     LOANS_STEP_3 :BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/CustomerProfile',
     LOAN_VERIFY_BVN : BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/CallBvnService',
     LOAN_VALIDATE_OTP: BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/VerifyOtpForBvn',
+    LOAN_RESEND_OTP: BASEURL + 'DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/ResendOtp',
     LOAN_REQUEST_STATEMENT: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/RequestBankStatement', // request param
     LOAN_GENERATE_STATEMENT: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GenerateBankStatement', //request params
     LOAN_SELECTED_ENTRIES : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/SelectedSalaryEntries',
@@ -158,6 +159,8 @@ export const routes = {
     LOAN_REJECT : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/RejectLoan',
     LOAN_MANDATE_STATUS : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/MandateStatus',
     LOAN_OTP_MANDATE : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/ValidateOtpMandate',
+    LOAN_KYC_REQIURED : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/KycRequired',
+    LOAN_TERMS: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/TermsAndConditions',
 
     //ALat-Loans
     GET_ACTIVE_LOANS : BASEURL + '/Lending.API/api/loan/GetCustomerStatus',

@@ -69,6 +69,7 @@ class LoanOnbaordingSalaryDetails extends React.Component {
                 token={this.returnToken()}
                 ticketUrl={"/loan/ticket"}
                 salaryEntryUrl={"/loan/salary-entry"}
+                statementUploadUrl={"/loan/statement-upload"}
                 backwardUrl={""}
                 />
             </LoanOnboardingContainer>

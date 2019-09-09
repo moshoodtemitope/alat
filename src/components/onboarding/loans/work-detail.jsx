@@ -25,7 +25,7 @@ class LoanOnboardingWorkDetail extends React.Component {
             <LoanOnboardingContainer UserName={this.state.user.firstname}>
                 <EmployerDetails
                     token={this.state.user.token}
-                    forwardUrl={'/loans/salary-detail'}
+                    forwardUrl={'/loan/salary-detail'}
                     // backwardUrl={'/loans/salary/calc'}
                 />
             </LoanOnboardingContainer>
