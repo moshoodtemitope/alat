@@ -42,7 +42,8 @@ class History extends Component {
             currentShowedBox: "0",
             showDropOptions: false,
             currentTransactions: "All",
-            currency: ""
+            currency: "",
+            searchText: ""
         };
     }
 
@@ -205,6 +206,7 @@ class History extends Component {
     searchTransactions = (e) => {
         this.checkInfoState();
         let searchText = e.target.value;
+        this.setState({ searchText : searchText})
         document.querySelectorAll('.history-ctn').forEach((historyctn) => {
             let searchData = historyctn.querySelector('.narr-text').textContent.toLowerCase() + historyctn.querySelector('.amount-s').textContent.toLowerCase();
             if (searchData.indexOf(searchText.toLowerCase()) > -1) {

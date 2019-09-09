@@ -19,6 +19,7 @@ import LoanStatementUploadDone from './salary/a-statement-done';
 
 
 import InnerContainer from '../../shared/templates/inner-container';
+import AlatLoansDashboard from './alat-loan-container';
 
 class LoansIndex extends React.Component {
     constructor(props) {
@@ -64,6 +65,11 @@ class LoansIndex extends React.Component {
                                     <Route path={'/loans/salary/kyc'} component={LoansKYC} />
                                     <Route path={'/loans/salary/statement-upload'} component={LoanStatementUpload} />
                                     <Route path={'/loans/salary/upload-done'} component={LoanStatementUploadDone} />
+
+
+                                    {/* Alat loans */}
+
+                                    <Route path={'/loans/alat-loans'} component={AlatLoansDashboard} />
                                 </div>
 
                             </div>

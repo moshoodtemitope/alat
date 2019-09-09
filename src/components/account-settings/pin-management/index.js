@@ -50,8 +50,8 @@ class Index extends Component {
                                     <div className="transfer-ctn" style={{margin: "0 100px 0 100px"}}>
                                             <div className="col-sm-12 m-b-20" style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }} >
                                                 {/* <center> */}
-                                                <button disabled={this.props.fetching} style={{minWidth:190}} onClick={this.onChangePin} className="btn-alat mx-2 ">{this.props.fetching ? "Processing..." : "Change ALAT PIN"}</button>
-                                                <button disabled={this.props.fetching} style={{minWidth:190}} onClick={this.onForgotPin} className="btn-alat mx-2 ">{this.props.fetching ? "Processing..." : "Forgot ALAT PIN"}</button>
+                                                <button disabled={this.props.fetching} style={{minWidth:190}} onClick={this.onChangePin} className="btn-alat mx-2 ">{this.props.fetching && this.state.clicked == "change" ? "Processing..." : "Change ALAT PIN"}</button>
+                                                <button disabled={this.props.fetching} style={{minWidth:190}} onClick={this.onForgotPin} className="btn-alat mx-2 ">{this.props.fetching && this.state.clicked == "forgot" ? "Processing..." : "Forgot ALAT PIN"}</button>
                                                 {/* </center> */}
                                             </div>
                                         </div>
