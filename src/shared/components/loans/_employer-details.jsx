@@ -453,7 +453,9 @@ class EmployerDetails extends React.Component {
                                     <div className="row">
                                         <div className="col-sm-12">
                                             <center>
-                                                <button type="submit" disabled={this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_PENDING} className="btn-alat m-t-10 m-b-20 text-center">
+                                                <button type="submit" disabled={this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_PENDING
+                                                || this.props.workid_front.loan_frontId_status == loanConstants.LOAN_WORkID_FRONT_PENDING
+                                                || this.props.workid_back.loan_backId_status == loanConstants.LOAN_WORkID_BACK_PENDING } className="btn-alat m-t-10 m-b-20 text-center">
                                                     {this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_PENDING ?
                                                         "Proceesing..." : "Proceed"}
                                                 </button>

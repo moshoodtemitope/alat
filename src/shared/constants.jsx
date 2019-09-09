@@ -73,5 +73,6 @@ export const LoanApplicationProgress = {
     LoanRepaidAndClosed	:    16,
     LoanWrittenOffAndClosed	:    17,
     ApplicationAborted	:    18,
-    DisburseFunds	:    19
+    DisburseFunds	:    19,
+    Inprogress_UploadStatement : 20
 }

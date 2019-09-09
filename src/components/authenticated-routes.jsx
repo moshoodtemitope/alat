@@ -160,7 +160,7 @@ class AuthenticatedRoutes extends React.Component {
     }
 
     closeModal = (event) => {
-        event.preventDefault();
+       if (event) event.preventDefault();
         timer = 60;
         this.setState({ openModal: false, countDownTimeOn: false }, clearInterval(this.countDown))
 
