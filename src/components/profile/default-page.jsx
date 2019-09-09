@@ -9,7 +9,7 @@ import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import {history} from '../../_helpers/history';
 import { profile } from '../../redux/constants/profile/profile-constants'
 // import { nextOfKinsRelationship } from '../../redux/reducers/profile-reducer';
- // import * as actions from '../redux/actions/profile/profile-action';
+// import * as actions from '../redux/actions/profile/profile-action';
 
 class PersonalDefault extends Component {
    constructor(props){
@@ -72,10 +72,10 @@ class PersonalDefault extends Component {
    }
 
    NavigateToNextOfKin = () => {
-        // if(this.props.profileMenu.response.nextOfKinComplete == true){
-        //     this.DispatchSuccessMessage('Next of kin has been Created');
-        //     return
-        // }
+        if(this.props.profileMenu.response.nextOfKinComplete == true){
+            this.DispatchSuccessMessage('Next of kin has been Created');
+            return
+        }
 
        history.push('/profile-next-of-kin');
    }
