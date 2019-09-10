@@ -72,6 +72,10 @@ export const listStyleConstants = {
     POST_MOVIE_CONTENT_FAILURE:"POST_MOVIE_CONTENT_FAILURE",
 
 
+    MOVIE_REDUCER_CLEAR: "MOVIE_REDUCER_CLEAR"
+
+
+
     
 
 
