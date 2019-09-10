@@ -9,7 +9,7 @@ import {connect} from 'react-redux'
 import {history} from '../../_helpers/history';
 import {profile} from '../../redux/constants/profile/profile-constants';
 import {occupationAndSector, getResidentialDetails, getContactDetails,getPersonalInfo,getStates} from "../../redux/actions/profile/profile-action"
-
+import moment from 'moment';
 
 class PersonalInfoMation extends Component {
    constructor(props){
@@ -58,7 +58,13 @@ class PersonalInfoMation extends Component {
         PinValidity: false,
         OccupationValidity: false,
         TitleValidity: false,
-        MaritalStatusValidity: false
+        MaritalStatusValidity: false,
+
+        isBvNLinked: false,
+        isProfileInformation: false,
+        isContactDetails: false,
+        isDocument: false,
+        navToNextOfKin: false
        }
 
        this.fetchOccupation();
@@ -67,6 +73,23 @@ class PersonalInfoMation extends Component {
        this.fetchPersonalInfo();
        this.fetchStates();
    }
+
+   componentDidMount = () => {
+       this.CheckIfStoreInformationIsSet();
+   }
+
+CheckIfStoreInformationIsSet = () => {
+    
+ if(this.props.profileMenu.message == profile.GET_PROFILE_MENU_SUCCESS){
+  //    console.log(this.props.profileMenu.response.personalInfoComplete);
+     this.setState({isProfileInformation: this.props.profileMenu.data.response.personalInfoComplete});
+     this.setState({isContactDetails: this.props.profileMenu.data.response.contactDetailsComplete});
+     this.setState({isDocument: this.props.profileMenu.data.response.documentUploaded});
+     this.setState({navToNextOfKin: this.props.profileMenu.data.response.nextOfKinComplete});
+     this.setState({isBvNLinked: this.props.profileMenu.data.response.bvnLinked});
+ }
+}
+
    fetchOccupation(){
     const { dispatch } = this.props;
     dispatch(occupationAndSector(this.state.user.token));
@@ -291,7 +314,7 @@ class PersonalInfoMation extends Component {
    }
 
    NavigateToSuccessPage = () => {
-       history.push('/profile-success-message');
+       history.push('/profile/profile-success-message');
    }
 
    HandleSubmit = () => {
@@ -477,7 +500,7 @@ class PersonalInfoMation extends Component {
     }
 
    NavigateToSuccessPage = () => {
-       history.push('/profile-success-message');
+       history.push('/profile/profile-success-message');
    }
 
    PersonalInfomationHasBeenLinked = () => {
@@ -489,7 +512,7 @@ class PersonalInfoMation extends Component {
    }
 
    render(){
-       const {BVNValidity, birthDate, PinValidity, SectorValidity, EmployerPhoneNumberValidity,EmploymentValidity, AddressValidity, EmployersNameValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
+       const {isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin, BVNValidity, birthDate, PinValidity, SectorValidity, EmployerPhoneNumberValidity,EmploymentValidity, AddressValidity, EmployersNameValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
         SurnameValidity, EmailAddressValidity, FirstNameValidity, MaritalStatusValidity, TitleValidity, OccupationValidity,GenderValidity, DateOfBirthValidity, OtherNameValidity, MothersMaidenNameValidity} = this.state;
         const {occupationAndSector, getContactDetail} = this.props
         console.log('=======',occupationAndSector)
@@ -526,30 +549,30 @@ class PersonalInfoMation extends Component {
                                                 <div className="profilePixCircle">
 
                                                 </div>
-                                                <p className="personsName">Laketu Adeleke</p>
-                                                <p className="details">subrigana@gmail.com</p>
-                                                <p className="details">Last Login: 8th January 2019, 11:00am</p>
+                                                <p className="personsName">{this.props.profileMenu.data.response.fullName}</p>
+                                                <p className="details">{this.props.profileMenu.data.response.username}</p>
+                                                <p className="details">{moment(this.props.profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>
                                                 <hr />
 
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Link BVN</p>
+                                                <div className="tickItems" onClick={this.NavigateToBVN}>
+                                                    {isBvNLinked === true ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                    <p className="pSubs">Link BVN</p>
                                                 </div>
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Personal Information</p>
+                                                <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
+                                                    {isProfileInformation ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                    <p className="pSubs">Personal Information</p>
                                                 </div>
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Contact Details</p>
+                                                <div className="tickItems" onClick={this.NavigateToContact}>
+                                                    {isContactDetails ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                    <p className="pSubs">Contact Details</p>
                                                 </div>
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Document Upload</p>
+                                                <div className="tickItems" onClick={this.NavigateToDocuments}>
+                                                    {isDocument ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt=""  className="largeVectorI" />}
+                                                    <p className="pSubs">Document Upload</p>
                                                 </div>
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Next of Kin</p>
+                                                <div className="tickItems" onClick={this.NavigateToNextOfKin}>
+                                                    {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                    <p className="pSubs">Next of Kin</p>
                                                 </div>
                                         </div>
                                         
@@ -561,7 +584,7 @@ class PersonalInfoMation extends Component {
                                             <div className="form-row">
                                                         <div className={TitleValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
                                                             <label className="label-text">Title</label>
-                                                            <select onChange={this.SetInputValue} name="title" placeholder="title">
+                                                            <select className="select-size" onChange={this.SetInputValue} name="title" placeholder="title">
                                                                 <option value="Mr">Mr</option>
                                                                 <option value="Mrs">Mrs</option>
                                                                 <option value="Dr">Dr</option>
@@ -572,7 +595,7 @@ class PersonalInfoMation extends Component {
 
                                                         <div className={MaritalStatusValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">Marital Status</label>
-                                                            <select onChange={this.SetInputValue} name="maritalStatus" placeholder="marital status">
+                                                            <select className="select-size select-married" onChange={this.SetInputValue} name="maritalStatus" placeholder="marital status">
                                                                 
                                                                 <option value="Mr">Married</option>
                                                                 <option value="Mrs">Single</option>
@@ -605,7 +628,7 @@ class PersonalInfoMation extends Component {
                                             <div className="form-row">
                                                         <div className={GenderValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
                                                             <label className="label-text">Gender</label>
-                                                            <select onChange={this.SetInputValue} name="Gender" placeholder="Gender">
+                                                            <select className="select-size" onChange={this.SetInputValue} name="Gender" placeholder="Gender">
                                                                 <option value=""> </option>
                                                                 <option value="Male"> Male </option>
                                                                 <option value="Female"> Female</option>
@@ -614,7 +637,7 @@ class PersonalInfoMation extends Component {
 
                                                         <div className={DateOfBirthValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                 <label className="label-text">Date of Birth</label>
-                                                                <DatePicker className="form-control" selected={birthDate} 
+                                                                <DatePicker className="form-control date-picker-size" selected={birthDate} 
                                                                 placeholder="June 31, 2019"
                                                                 dateFormat=" MMMM d, yyyy"
                                                                 showMonthDropdown
@@ -629,12 +652,12 @@ class PersonalInfoMation extends Component {
                                             <div className="form-row">
                                                         <div className={NationalityValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
                                                             <label className="label-text">Nationality</label>
-                                                            <input type="text" name="Nationality" className="form-control" onChange={this.SetInputValue} placeholder="Nationality"/>
+                                                            <input type="text" name="Nationality" className="form-control enter-national" onChange={this.SetInputValue} placeholder="Nationality"/>
                                                         </div>
 
                                                         <div className={StateOfOriginValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">State of Origin</label>
-                                                            <select onChange={this.SetInputValue} name="StateOfOrigin" >
+                                                            <select className="select-size state-origin" onChange={this.SetInputValue} name="StateOfOrigin" >
                                                                     <option>Select State of Origin</option>
                                                                     {                                      
                                                                         getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
@@ -651,7 +674,7 @@ class PersonalInfoMation extends Component {
                                             <div className="form-row">
                                                         <div className={LocalGovValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
                                                             <label className="label-text">Local Government</label>
-                                                            <select onChange={this.SetInputValue} name="LocalGv" >
+                                                            <select className="select-size" onChange={this.SetInputValue} name="StateOfOrigin" >
                                                                     <option>Select Local Government</option>
                                                                     {                                      
                                                                         getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
@@ -667,7 +690,7 @@ class PersonalInfoMation extends Component {
 
                                                         <div className={PlaceOfBirthValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">Place of Birth (State of Origin)</label>
-                                                            <input type="text" name="PlaceOfBirth" className="form-control" onChange={this.SetInputValue} placeholder="Place of Birth"/>
+                                                            <input type="text" name="PlaceOfBirth" className="birth-place form-control " onChange={this.SetInputValue} placeholder="Place of Birth"/>
                                                         </div>
                                             </div>
                                             
@@ -681,12 +704,12 @@ class PersonalInfoMation extends Component {
                                             <div className="form-row">
                                             <div className={BVNValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
                                                             <label className="label-text">BVN</label>
-                                                            <input type="Number" name= "BVNnumber" className="form-control" onChange={this.SetBvNNumber} placeholder="0000 0000 0000"/>
+                                                            <input type="Number" name= "BVNnumber" className="form-control enter-bvn" onChange={this.SetBvNNumber} placeholder="0000 0000 0000"/>
                                                         </div>
 
                                                         <div className={EmploymentValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">Employment Status</label>
-                                                            <select onChange={this.SetInputValue} name="EmploymentStatus" >
+                                                            <select className="select-size" onChange={this.SetInputValue} name="EmploymentStatus" >
                                                                     <option>Select Employment Status</option>
                                                                     {                                      
                                                                         occupationAndSector.message === profile.OCCU_AND_SECTOR_SUCCESS && 
@@ -724,7 +747,7 @@ class PersonalInfoMation extends Component {
                                             <div className="form-row">
                                                         <div className={SectorValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Sector</label>
-                                                                 <select onChange={this.SetInputValue} name="Sector" >
+                                                                 <select className="select-size select-sector-occupation" onChange={this.SetInputValue} name="Sector" >
                                                                     <option>Select Sector</option>
                                                                     {                                      
                                                                         occupationAndSector.message === profile.OCCU_AND_SECTOR_SUCCESS && 
@@ -742,7 +765,7 @@ class PersonalInfoMation extends Component {
                                                         <div className={OccupationValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Occupation</label>
                                                             
-                                                                <select onChange={this.SetInputValue}  name="Occupation">
+                                                                <select className="select-size select-sector-occupation" onChange={this.SetInputValue}  name="Occupation">
                                                                     <option>Select Occupation</option>
                                                                     {                                      
                                                                         occupationAndSector.message === profile.OCCU_AND_SECTOR_SUCCESS && 
@@ -762,9 +785,11 @@ class PersonalInfoMation extends Component {
                                                             <input type="text" name="AlatPin" className="form-control" onChange={this.SetInputValue} placeholder="Alat Pin"/>
                                                         </div>
                                             </div>
-
+                                            <div className="align-button">
+                                                <button type="submit" className="twoBut no-border">Submit</button>
+                                            </div>
                                            
-                                            <button type="submit" className="twoBut">Submit</button>
+                                            
                                         </form>
                                     
                                     </div>
@@ -783,6 +808,7 @@ class PersonalInfoMation extends Component {
 
 function mapStateToProps(state){
     return {
+        profileMenu:state.profileMenu,
         occupationAndSector:state.occupationAndSector,
         getResidential:state.getResidential,
         getContactDetail:state.getContactDetail,

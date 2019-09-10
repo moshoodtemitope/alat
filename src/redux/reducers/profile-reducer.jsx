@@ -134,12 +134,13 @@ export function occupationAndSector (state=[], action){
     }
 }
 
+
 export function addDocuments (state=[], action){
     switch(action.type){
-        case profile.DOCUMENTS_PENDING: 
-           return {
-               message: profile.DOCUMENTS_PENDING,
-               data: action
+        case profile.DOCUMENTS_PENDING:  
+           return { 
+               message: profile.DOCUMENTS_PENDING, 
+               data: action           
            }
         case profile.DOCUMENTS_SUCCESS:
            return {

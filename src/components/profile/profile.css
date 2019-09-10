@@ -3,13 +3,17 @@ form {
     
 } */
 
+* {
+    font-family: sans-serif;
+}
+
 .coverPropertiesofComponent {
     width: 100%;
 }
 
 .packageContent input {
-    width: 84%;
-    font-family: "Proxima Novasemibold" sans-serif;
+    width: 86.5%;
+    font-family: sans-serif;
     font-size: 14px;
     line-height: 17px;
     color: #666666;
@@ -51,7 +55,7 @@ form {
     float: left;
     width: 100%;
     margin-left: 0% !important;
-    font-family: "Proxima Novasemibold", sans-serif;
+    font-family: sans-serif;
 }
 
 .packageContent select {
@@ -62,6 +66,85 @@ form {
     margin-left: 20%;
 }
 
+.select-size {
+    height: 38px
+}
+
+.date-picker-size {
+    width: 89% !important
+}
+.no-border {
+    border: none !important
+}
+
+.state-origin {
+    width: 90% !important
+}
+
+.birth-place {
+    width: 90.5% !important
+}
+
+.select-married {
+    width: 89.5% !important;
+}
+
+.align-button {
+    text-align: center;
+    margin-right: 9%
+}
+
+.align-buttons {
+    text-align: center;
+    margin-right: 13%
+}
+
+.enter-city {
+    width: 90% !important;
+}
+
+.dob {
+    width: 89% !important;
+}
+
+.select-lga {
+    width: 87% !important;
+}
+
+.select-identity {
+    width: 95% !important;
+    height: 43px !important;
+}
+
+.upload-identity {
+    margin-left: 10px !important
+}
+
+.state-mailing {
+    width: 95% !important;
+}
+
+.select-gender {
+    height: 38px !important;
+}
+
+.local-mailing {
+    width: 95% !important;
+    height: 38px;
+}
+
+.enter-national {
+    width: 90% !important;
+}
+
+.enter-bvn {
+    width: 90% !important;
+}
+
+.select-sector-occupation {
+    width: 86.5% !important;
+}
+
 .tickItems {
     display: flex;
     flex-wrap: nowrap;
@@ -70,7 +153,7 @@ form {
 .tickItems p {
     margin-left: 15px;
     padding-bottom: 10px;
-    font-family: 'proxima_novasemibold', sans-serif !important;
+    font-family: sans-serif;
     font-size: 14px;
     line-height: 17px;
     color: #4D4D4D;
@@ -88,7 +171,7 @@ form {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
     border-radius: 6px;
     background-color: white;
-    padding-left: 15%;
+    padding-left: 11%;
 }
 
 .parentForm .twoBut{
@@ -97,6 +180,7 @@ form {
     width: 185px;
     height: 45px;
     color: white;
+    margin-left: 0px;
 }
 
 .forProfilePicture {
@@ -108,7 +192,7 @@ form {
 }
 
 .forProfilePicture .detials {
-    font-family: 'proxima_novasemibold' sans-serif;
+    font-family: sans-serif;
     font-size: 14px;
     line-height: 17px;
     text-align: center;
@@ -116,7 +200,7 @@ form {
 }
 
 .forProfilePicture .personsName {
-    font-family: 'proxima_novasemibold' sans-serif;
+    font-family: sans-serif;
     font-size: 18px;
     line-height: 22px;
     color: #4D4D4D;
@@ -127,7 +211,7 @@ form {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background-color: black;
+    background-color: #eeeeee;
     margin-left: 37%;
     margin-bottom: 10px;
 }
@@ -181,21 +265,21 @@ form {
   .text-format {
     color: #4d4d4d;
     font-size: 18px;
-    font-family: "Proxima Nova";
+    font-family: sans-serif;
   }
   
   .text-format-2 {
     color: #666666;
     font-size: 14px;
     margin-top: 5px;
-    font-family: "Proxima Nova";
+    font-family: sans-serif;
   }
   
   .text-format-3 {
     color: #666666;
     font-size: 18px;
     margin-top: 6px;
-    font-family: "Proxima Nova";
+    font-family: sans-serif;
   }
   
   .imag-size {
@@ -224,7 +308,7 @@ form {
   }
   
   .list-item-action {
-    font-family: "Proxima Nova";
+    font-family: sans-serif;
     font-size: 17px;
     line-height: 17px;
     color: #4d4d4d;
@@ -240,7 +324,7 @@ form {
   } 
 
  .parentForm button {
-    margin-left: 22% !important;
+    /* margin-left: 22% !important; */
 }
 
 .sameAddressAsAbove {
@@ -309,11 +393,56 @@ form {
 .hdStyle {
     padding-bottom: 0px;
     margin-bottom: 0px;
-    font-family: Proxima Nova;
+    font-family: sans-serif;
     font-size: 14px;
     line-height: 17px;  
     color: #7C7C7C;
 }
+
+#profMenuHead {
+    color: #AB2656;
+}
+
+.pSubs {
+    padding-top: 25px;
+}
+
+.improveImgSize {
+    width: 30px;
+    height: 30px;
+    margin-top: 20px;
+}
+
+.largeVectorI {
+    height: 30px;
+    /* padding-top: 30px; */
+    margin-top: 20px;
+}
+
+
+.imgShape {
+    margin-left: 30%;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.sucMssgOfProfile {
+    padding-left: 20%;
+    font-family: sans-serif;
+    font-size: 18px;
+    line-height: 21px;
+   /* identical to box height */
+
+   /* text-align: center; */
+
+    color: #666666;
+    /* position: absolute; */
+}
+
+.parentForm .sucMsg {
+   padding-left: 0px !important;
+}
+
 
 
 

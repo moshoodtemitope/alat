@@ -29,7 +29,11 @@ import ProfileDocuments from './profile/profile-documents';
 import PhotographUpload from './profile/photograph-upload';
 import SignatureUpload from './profile/signature-upload';
 import IdentityCardUpload from './profile/upload-identity-card';
-
+import ContactSuccessPage from './profile/success-message-contact';
+import LinkBVNSuccessPage from './profile/success-message-linkBVN';
+import NextOfKinUpLoadedSuccessfully from './profile/success-message-nextOfKinSuc';
+import DocumentUpload from './profile/success-page-documentUpload';
+import PersonalInfoSuccessPage from './profile/success-message-personalInfo';
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
     return (
@@ -76,16 +80,8 @@ class AuthenticatedRoutes extends React.Component{
                     <PrivateRoute path='/loans' authed={this.props.user} component={LoansIndex}/>
                     <PrivateRoute path='/account' authed={this.props.user} component={Accounts}/>
                     <PrivateRoute path='/settings' authed={this.props.user} component={AccountSettings}/>
-                    <PrivateRoute path='/default-page' authed={this.props.user} component={ProfileIndex} />
-                    <PrivateRoute path="/linkBVN" authed={this.props.user} component={LinkBvN} />
-                    <PrivateRoute path="/profile-success-message" authed={this.props.user} component={ProfileSuccessMessage} />
-                    <PrivateRoute path="/profile-personalInfo" authed={this.props.user} component={PersonalInfoMation} />
-                    <PrivateRoute path="/profile-contact-detail" authed={this.props.user} component={ContactDetails} />
-                    <PrivateRoute path="/profile-next-of-kin" authed={this.props.user} component={NextOfKin} />
-                    <PrivateRoute path="/profile-documents" authed={this.props.user} component={ProfileDocuments} />
-                    <PrivateRoute path="/profile-upload-photograph" authed={this.props.user} component={PhotographUpload} /> 
-                    <PrivateRoute path="/profile-signature-upload" authed={this.props.user} component={SignatureUpload} />
-                    <PrivateRoute path="/profile-identiy-card" authed={this.props.user} component={IdentityCardUpload} />
+                    <PrivateRoute path='/profile' authed={this.props.user} component={ProfileIndex} />
+                    
                 </Switch>
             </Router>
             

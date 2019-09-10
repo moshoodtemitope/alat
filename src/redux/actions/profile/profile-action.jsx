@@ -15,6 +15,7 @@ export const linkBVN = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                history.push('/profile/profile-succ-linked');
             })
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
@@ -58,7 +59,7 @@ export const capturePersonalInformation = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
-                // history.push('/');
+                history.push('/profile/profile-success-personalInfo');
             })
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
@@ -81,7 +82,7 @@ export const addNextOfKin = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
-                // history.push('/');
+                 history.push('/profile/profile-success-nextofkin');
             })
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
@@ -104,7 +105,7 @@ export const addContactDetails = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
-                // history.push('/');
+                history.push('/profile/profile-succ-message');
             })
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
@@ -148,7 +149,7 @@ export const addDocuments = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
-                // history.push('/');
+                history.push('/profile/profile-success-document');
             })
             .catch(error => {
                 // dispatch(failure(modelStateErrorHandler(error)));
@@ -299,7 +300,7 @@ export const nextOfKinsRelationship = (token) => {
 export const profileSuccessMessage = (data) =>{
     return (dispatch) => {
         dispatch(success(data));
-        history.push('/profile-success-message');
+        history.push('/profile/profile-success-message');
     }
 
     function success(data){

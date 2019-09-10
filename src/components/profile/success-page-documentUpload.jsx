@@ -7,45 +7,40 @@ import {Fragment} from "react";
 import {history} from '../../_helpers/history';
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import InnerContainer from '../../shared/templates/inner-container';
-// import {connect} from 'react-redux';
 import {profile} from '../../redux/constants/profile/profile-constants';
 import moment from 'moment';
 
 
-class ProfileSuccessMessage extends Component {
+
+class DocumentUploadedSuccessfully extends Component {
    constructor(props){
        super(props);
        this.state = {
           user: JSON.parse(localStorage.getItem("user")),
        }
    }
-//    componentDidMount = () => {
-    
-//    }
 
-CheckIfStoreInformationIsSet = () => {
+   CheckIfStoreInformationIsSet = () => {
     
- if(this.props.profileMenu.message == profile.GET_PROFILE_MENU_SUCCESS){
-  //    console.log(this.props.profileMenu.response.personalInfoComplete);
-     this.setState({isProfileInformation: this.props.profileMenu.data.response.personalInfoComplete});
-     this.setState({isContactDetails: this.props.profileMenu.data.response.contactDetailsComplete});
-     this.setState({isDocument: this.props.profileMenu.data.response.documentUploaded});
-     this.setState({navToNextOfKin: this.props.profileMenu.data.response.nextOfKinComplete});
-     this.setState({isBvNLinked: this.props.profileMenu.data.response.bvnLinked});
- }
-}
+    if(this.props.profileMenu.message == profile.GET_PROFILE_MENU_SUCCESS){
+     //    console.log(this.props.profileMenu.response.personalInfoComplete);
+        this.setState({isProfileInformation: this.props.profileMenu.data.response.personalInfoComplete});
+        this.setState({isContactDetails: this.props.profileMenu.data.response.contactDetailsComplete});
+        this.setState({isDocument: this.props.profileMenu.data.response.documentUploaded});
+        this.setState({navToNextOfKin: this.props.profileMenu.data.response.nextOfKinComplete});
+        this.setState({isBvNLinked: this.props.profileMenu.data.response.bvnLinked});
+    }
+   }
+
    componentDidMount = () => {
-      this.CheckIfStoreInformationIsSet();
+       this.CheckIfStoreInformationIsSet();
        setTimeout(function(){
           history.push('/profile');
        }, 5000);
-
-       console.log(this.props.profileSuccessMessage.data);
    }
 
-
    render(){
-      const {isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument} = this.state;
+       const {isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument } = this.state;
        return(
         <Fragment>
              <InnerContainer>
@@ -61,8 +56,8 @@ CheckIfStoreInformationIsSet = () => {
                                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                                 <ul>
                                                     <li><NavLink to={'/default-page'} className="active">Profile</NavLink></li>
-                                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                                    <li><NavLink to={'/default-page'}>Pin Management</NavLink></li>
+                                                    <li><NavLink to={'/default-page'}>Security Questions</NavLink></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -104,8 +99,7 @@ CheckIfStoreInformationIsSet = () => {
                                     <div className="col-sm-6">
                                     <form onSubmit={this.HandleSubmit} className="parentForm sucMsg">
                                            <img src="/src/assets/img/check.svg" alt="" className="imgShape" />
-                                           <p className="sucMssgOfProfile">{this.props.profileSuccessMessage.data}</p>
-                                           
+                                           <p className="sucMssgOfProfile">BVN has Been Linked</p>
                                     </form>
                                     
                                     </div>
@@ -119,11 +113,34 @@ CheckIfStoreInformationIsSet = () => {
    }
 }
 
-function mapStateToProps(state){
-   return {
-       profileMenu: state.profileMenu,
-       profileSuccessMessage: state.profileSuccessMessage.data
-   }
+const mapStateToProps = (state) => {
+    return {
+        profileMenu: state.profileMenu
+    }
 }
 
-export default connect(mapStateToProps)(ProfileSuccessMessage);
+
+export default connect(mapStateToProps)(DocumentUploadedSuccessfully);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

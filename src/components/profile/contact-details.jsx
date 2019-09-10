@@ -9,6 +9,8 @@ import {history} from '../../_helpers/history';
 import {profile} from '../../redux/constants/profile/profile-constants';
 import { connect } from 'react-redux';
 import { getContactDetails } from "../../redux/actions/profile/profile-action";
+import moment from 'moment';
+
 
 var allStatesInfo = null;
 var allCityData = null;
@@ -98,11 +100,33 @@ class ContactDetails extends Component {
         localGvId: null,
         localGvId2: null,
         stateGvId2: null,
-        stateGvId: null
+        stateGvId: null,
+
+        isBvNLinked: false,
+        isProfileInformation: false,
+        isContactDetails: false,
+        isDocument: false,
+        navToNextOfKin: false
        }
 
        this.fetchContactDetails();
    }
+
+   componentDidMount = () => {
+    this.CheckIfStoreInformationIsSet();
+   }
+
+CheckIfStoreInformationIsSet = () => {
+    
+ if(this.props.profileMenu.message == profile.GET_PROFILE_MENU_SUCCESS){
+  //    console.log(this.props.profileMenu.response.personalInfoComplete);
+     this.setState({isProfileInformation: this.props.profileMenu.data.response.personalInfoComplete});
+     this.setState({isContactDetails: this.props.profileMenu.data.response.contactDetailsComplete});
+     this.setState({isDocument: this.props.profileMenu.data.response.documentUploaded});
+     this.setState({navToNextOfKin: this.props.profileMenu.data.response.nextOfKinComplete});
+     this.setState({isBvNLinked: this.props.profileMenu.data.response.bvnLinked});
+ }
+}
 
    fetchContactDetails(){
         const { dispatch } = this.props;
@@ -412,8 +436,8 @@ class ContactDetails extends Component {
             }
       }
       console.log(data);
-      return;
-      this.props.dispatch(actions.linkBVN(this.state.user.token, data));
+    //   return;
+      this.props.dispatch(actions.addContactDetails(this.state.user.token, data));
    }
 
    SetBvNNumber = (event) => {
@@ -742,7 +766,7 @@ class ContactDetails extends Component {
    render(){
         const { PinValidity, AlternateEmailValidity, sameAddressAsAbove,SectorValidity, phoneNumberValidity, LocalGovValidity2, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity2, NationalityValidity, StateOfOriginValidity,
         EmailAddressValidity, streetValidity, busstopValidity, apartmentValidity, personalAddressValidity, StateOfOriginValidity2,
-        personalAddressValidity2, alternatePhoneNumberValidity, houseNumberValidity, } = this.state;
+        personalAddressValidity2, alternatePhoneNumberValidity, houseNumberValidity,   isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin} = this.state;
         const { getContactDetail } = this.props;
         
         if(getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS)
@@ -775,30 +799,30 @@ class ContactDetails extends Component {
                                                 <div className="profilePixCircle">
 
                                                 </div>
-                                                <p className="personsName">Laketu Adeleke</p>
-                                                <p className="details">subrigana@gmail.com</p>
-                                                <p className="details">Last Login: 8th January 2019, 11:00am</p>
+                                                <p className="personsName">{this.props.profileMenu.data.response.fullName}</p>
+                                                <p className="details">{this.props.profileMenu.data.response.username}</p>
+                                                <p className="details">{moment(this.props.profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>
                                                 <hr />
 
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Link BVN</p>
+                                                <div className="tickItems" onClick={this.NavigateToBVN}>
+                                                    {isBvNLinked === true ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                    <p className="pSubs">Link BVN</p>
                                                 </div>
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Personal Information</p>
+                                                <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
+                                                    {isProfileInformation ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                    <p className="pSubs">Personal Information</p>
                                                 </div>
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Contact Details</p>
+                                                <div className="tickItems" onClick={this.NavigateToContact}>
+                                                    {isContactDetails ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                    <p className="pSubs">Contact Details</p>
                                                 </div>
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Document Upload</p>
+                                                <div className="tickItems" onClick={this.NavigateToDocuments}>
+                                                    {isDocument ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt=""  className="largeVectorI" />}
+                                                    <p className="pSubs">Document Upload</p>
                                                 </div>
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Next of Kin</p>
+                                                <div className="tickItems" onClick={this.NavigateToNextOfKin}>
+                                                    {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                    <p className="pSubs">Next of Kin</p>
                                                 </div>
                                         </div>
                                     </div>
@@ -877,7 +901,7 @@ class ContactDetails extends Component {
 
                                                         <div className={"form-group col-md-6"}>
                                                             <label className="label-text">City</label>
-                                                            <input type="text" name="PlaceOfBirth" className="form-control" onChange={this.SetInputValue} placeholder="City"/>
+                                                            <input type="text" name="PlaceOfBirth" className="form-control enter-city" onChange={this.SetInputValue} placeholder="City"/>
                                                         </div>
                                             </div>
 
@@ -918,7 +942,7 @@ class ContactDetails extends Component {
                                             <div className={sameAddressAsAbove + " " + "form-row"}>
                                                         <div className={StateOfOriginValidity2 ? "form-group form-error col-md-11" : "form-group col-md-11"}>
                                                             <label className="label-text">Mailing State</label>
-                                                            <select name="StateOfOrigin2" className="form-control" onChange={this.SetInputValue3}>
+                                                            <select name="StateOfOrigin2" className="form-control state-mailing" onChange={this.SetInputValue3}>
                                                                     <option>Select State</option>
                                                                     {                                      
                                                                         getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
@@ -934,7 +958,7 @@ class ContactDetails extends Component {
                                             <div className={sameAddressAsAbove + " " + "form-row"}>
                                                         <div className={LocalGovValidity2 ? "form-group form-error col-md-11" : "form-group col-md-11"}>
                                                             <label className="label-text">Mailing Local Government</label>
-                                                            <select onChange={this.SetInputValue2} name="LocalGv2" >
+                                                            <select onChange={this.SetInputValue2} name="LocalGv2" className="local-mailing">
                                                                     <option>Select Local Government</option>
                                                                     {                                      
                                                                         getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
@@ -981,7 +1005,11 @@ class ContactDetails extends Component {
                                                         </div>
                                             </div>
 
-                                            <button type="submit" className="twoBut">Submit</button>   
+                                            <div className="align-button">
+                                                <button type="submit" className="twoBut no-border">Submit</button>
+                                            </div>
+
+                                            {/* <button type="submit" className="twoBut">Submit</button>    */}
                                         </form>
                                     </div>
                                 </div>
@@ -997,6 +1025,7 @@ class ContactDetails extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        profileMenu:state.profileMenu,
         getContactDetail:state.getContactDetail
     }
 }

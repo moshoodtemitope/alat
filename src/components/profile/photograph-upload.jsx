@@ -6,6 +6,9 @@ import {Fragment} from "react";
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import InnerContainer from '../../shared/templates/inner-container';
 import * as actions from '../../redux/actions/profile/profile-action';
+import { connect } from 'react-redux';
+import {profile} from '../../redux/constants/profile/profile-constants';
+import moment from 'moment';
 
 
 class PhotographUpload extends Component {
@@ -23,9 +26,31 @@ class PhotographUpload extends Component {
           idCardNumberValidity: false,
           idTypeValidity: false, 
           idFrontFace: false, 
-          idPhotographValid: false
+          idPhotographValid: false,
+
+          isBvNLinked: false,
+          isProfileInformation: false,
+          isContactDetails: false,
+          isDocument: false,
+          navToNextOfKin: false
        }
    }
+
+   componentDidMount = () => {
+    this.CheckIfStoreInformationIsSet();
+   }
+
+CheckIfStoreInformationIsSet = () => {
+    
+ if(this.props.profileMenu.message == profile.GET_PROFILE_MENU_SUCCESS){
+  //    console.log(this.props.profileMenu.response.personalInfoComplete);
+     this.setState({isProfileInformation: this.props.profileMenu.data.response.personalInfoComplete});
+     this.setState({isContactDetails: this.props.profileMenu.data.response.contactDetailsComplete});
+     this.setState({isDocument: this.props.profileMenu.data.response.documentUploaded});
+     this.setState({navToNextOfKin: this.props.profileMenu.data.response.nextOfKinComplete});
+     this.setState({isBvNLinked: this.props.profileMenu.data.response.bvnLinked});
+ }
+}
 
 
    checkidFrontFace = () => {
@@ -73,7 +98,7 @@ class PhotographUpload extends Component {
        }
        
        console.log(payload);
-       return;
+    //    return;
        this.props.dispatch(addDocuments(payload(this.state.user.token, payload)));
    }
 
@@ -99,10 +124,9 @@ class PhotographUpload extends Component {
    }
 
    render(){
-      const {idTypeValidity, idFrontFace, idPhotographValid, idCardNumberValidity} = this.state;
+      const {isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, idTypeValidity, idFrontFace, idPhotographValid, idCardNumberValidity} = this.state;
        return(
         <Fragment>
-             <InnerContainer>
                     <div className="dashboard-wrapper">
                          <div className="container">
                                 <div className="coverPropertiesofComponent">
@@ -128,30 +152,30 @@ class PhotographUpload extends Component {
                                                 <div className="profilePixCircle">
 
                                                 </div>
-                                                <p className="personsName">Laketu Adeleke</p>
-                                                <p className="details">subrigana@gmail.com</p>
-                                                <p className="details">Last Login: 8th January 2019, 11:00am</p>
+                                                <p className="personsName">{this.props.profileMenu.data.response.fullName}</p>
+                                                <p className="details">{this.props.profileMenu.data.response.username}</p>
+                                                <p className="details">{moment(this.props.profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>
                                                 <hr />
 
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Link BVN</p>
+                                                <div className="tickItems" onClick={this.NavigateToBVN}>
+                                                    {isBvNLinked === true ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                    <p className="pSubs">Link BVN</p>
                                                 </div>
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Personal Information</p>
+                                                <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
+                                                    {isProfileInformation ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                    <p className="pSubs">Personal Information</p>
                                                 </div>
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Contact Details</p>
+                                                <div className="tickItems" onClick={this.NavigateToContact}>
+                                                    {isContactDetails ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                    <p className="pSubs">Contact Details</p>
                                                 </div>
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Document Upload</p>
+                                                <div className="tickItems" onClick={this.NavigateToDocuments}>
+                                                    {isDocument ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt=""  className="largeVectorI" />}
+                                                    <p className="pSubs">Document Upload</p>
                                                 </div>
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Next of Kin</p>
+                                                <div className="tickItems" onClick={this.NavigateToNextOfKin}>
+                                                    {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                    <p className="pSubs">Next of Kin</p>
                                                 </div>
                                         </div>
                                     </div>
@@ -167,8 +191,11 @@ class PhotographUpload extends Component {
                                                     </div>
                                                </div>
                                            </div>
+
+                                           <div className="align-buttons">
+                                                <button type="submit" className="twoBut no-border">Submit</button>
+                                            </div>
                                            
-                                           <button type="submit" className="twoBut">Submit</button>
                                     </form>
                                     
                                     </div>
@@ -176,10 +203,42 @@ class PhotographUpload extends Component {
                                 </div>
                             </div>
                         </div>
-                 </InnerContainer>
         </Fragment>
        )
    }
 }
 
-export default PhotographUpload;
+const mapStateToProps = (state) => {
+    return{
+        profileMenu: state.profileMenu
+    }
+}
+
+export default connect(mapStateToProps)(PhotographUpload);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
