@@ -13,6 +13,21 @@ import {
    FETCH_COVERSIN_PRODUCTS_SUCCESS,
    FETCH_COVERSIN_PRODUCTS_PENDING,
    FETCH_COVERSIN_PRODUCTS_FAILURE,
+   FETCH_CARMAKES_INYEAR_SUCCESS,
+   FETCH_CARMAKES_INYEAR_PENDING,
+   FETCH_CARMAKES_INYEAR_FAILURE,
+   FETCH_CARMAKES_MODELS_SUCCESS,
+   FETCH_CARMAKES_MODELS_PENDING,
+   FETCH_CARMAKES_MODELS_FAILURE,
+   POST_MOTORSCHEDULEDATA_SUCCESS,
+   POST_MOTORSCHEDULEDATA_PENDING,
+   POST_MOTORSCHEDULEDATA_FAILURE,
+   POST_AUTOINSURANCE_PAYMENTDATA_SUCCESS,
+   POST_AUTOINSURANCE_PAYMENTDATA_PENDING,
+   POST_AUTOINSURANCE_PAYMENTDATA_FAILURE,
+   GET_VEHICLEDETAILS_SUCCESS,
+   GET_VEHICLEDETAILS_PENDING,
+   GET_VEHICLEDETAILS_FAILURE,
    SET_PRODUCT_COVERID,
    SAVE_CUSTOMER_DETAILS,
    SAVE_CUSTOMERPOLICY_DATA
@@ -338,7 +353,7 @@ export const getCoversInProduct =(token, payload)=>{
 
 
     function request(request) { return { type:FETCH_COVERSIN_PRODUCTS_PENDING, request} }
-    function success(response) { return {type:FETCH_COVERSIN_PRODUCTS_SUCCESS, response} }
+    function success(response) { return {type:FETCH_COVERSIN_PRODUCTS_SUCCESS, response, productId:payload.productId} }
     function failure(error) { return {type:FETCH_COVERSIN_PRODUCTS_FAILURE, error} }
 }
 
@@ -347,6 +362,201 @@ export const setProductCoverId = (data) => {
         type: SET_PRODUCT_COVERID,
         data: data
     }
+}
+
+//Get cars made in select year
+export const getCarMakesInYear = (year, token)=>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch)=>{ 
+
+        
+        let consume =  ApiService.request(routes.FETCH_CARS_MADEINYEAR+year, "GET", null, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{ 
+                if(response.data.length>=1){
+                    dispatch(success(response));
+                }else{
+                    dispatch(failure('No cars in the selected year'));
+                }
+                
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+
+
+    function request(request) { return { type:FETCH_CARMAKES_INYEAR_PENDING, request} }
+    function success(response) { return {type:FETCH_CARMAKES_INYEAR_SUCCESS, response} }
+    function failure(error) { return {type:FETCH_CARMAKES_INYEAR_FAILURE, error} }
+}
+
+// Get car models
+export const getCarModels = (payload, token)=>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch)=>{ 
+
+       //load car models
+        let consume =  ApiService.request(routes.FETCH_CAR_MODELS, "POST", payload, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{ 
+                dispatch(success(response));
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+
+
+    function request(request) { return { type:FETCH_CARMAKES_MODELS_PENDING, request} }
+    function success(response) { return {type:FETCH_CARMAKES_MODELS_SUCCESS, response} }
+    function failure(error) { return {type:FETCH_CARMAKES_MODELS_FAILURE, error} }
+}
+
+// Get car details
+export const getCarDetails = (payload, token)=>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch)=>{ 
+
+       //load car models
+        let consume =  ApiService.request(routes.FETCH_VEHICLE_DETAILS, "POST", payload, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{ 
+                if(response.data.VehicleDetails.RegistrationNo !==null){
+                     dispatch(success(response));
+                }else{
+                    dispatch(failure('Car Registration number notfound'));
+                }
+               
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+
+
+    function request(request) { return { type:GET_VEHICLEDETAILS_PENDING, request} }
+    function success(response) { return {type:GET_VEHICLEDETAILS_SUCCESS, response} }
+    function failure(error) { return {type:GET_VEHICLEDETAILS_FAILURE, error} }
+}
+
+// Post motor schedule data
+export const postMotorSchedule = (payload, token)=>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch)=>{ 
+
+        //Send motor schedule data
+        let consume =  ApiService.request(routes.SEND_MOTOR_SCHEDULE, "POST", payload, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{ 
+                dispatch(success(response));
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+
+
+    function request(request) { return { type:POST_MOTORSCHEDULEDATA_PENDING, request} }
+    function success(response) { return {type:POST_MOTORSCHEDULEDATA_SUCCESS, response} }
+    function failure(error) { return {type:POST_MOTORSCHEDULEDATA_FAILURE, error} }
+}
+
+// Send motor insurance payment
+export const postAutoInsurancePayment = (payload, token)=>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch)=>{ 
+
+        //Send motor schedule data
+        let consume =  ApiService.request(routes.FINALPAYMENT_FORAUTO_INSURANCE, "POST", payload, SystemConstant.HEADER); 
+        dispatch(request(consume));
+        return consume
+            .then(response=>{ 
+                dispatch(success(response));
+            })
+            .catch(error=>{
+                if(error.response && typeof(error.response.message) !=="undefined"){
+                    dispatch(failure(error.response.message.toString()));
+                }
+                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                    if(error.response.data.Message){
+                        dispatch(failure(error.response.data.Message.toString()));
+                    }
+
+                    if(error.response!==undefined && error.response.data.message){
+                        dispatch(failure(error.response.data.message.toString()));
+                    }
+                }
+                else{
+                    dispatch(failure('An error occured. Please try again '));
+                }
+            })
+    };
+
+
+    function request(request) { return { type:POST_AUTOINSURANCE_PAYMENTDATA_PENDING, request} }
+    function success(response) { return {type:POST_AUTOINSURANCE_PAYMENTDATA_SUCCESS, response} }
+    function failure(error) { return {type:POST_AUTOINSURANCE_PAYMENTDATA_FAILURE, error} }
 }
 
 export const saveCustomerDetails = (data) => {

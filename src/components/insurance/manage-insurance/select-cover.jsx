@@ -53,8 +53,13 @@ class SelectInsuranceCover extends React.Component {
     choosePolicyTobuy(e){
         e.preventDefault();
         const { dispatch } = this.props;
-        let productCoverId = e.target.getAttribute('data-cover-id');
-        dispatch(setProductCoverId(productCoverId));
+        let productCoverId = e.target.getAttribute('data-cover-id'),
+            productCoverName = e.target.getAttribute('data-cover-name'),
+
+            coverData = {
+                productCoverId,productCoverName
+            }
+        dispatch(setProductCoverId(coverData));
         this.props.history.push("/insurance/buy-insurance/details")
     }
 
@@ -78,10 +83,12 @@ class SelectInsuranceCover extends React.Component {
                                             <button type="button"
                                                         onClick={this.getCoverDetails}
                                                     data-cover-id={eachCover.SubClassCoverTypes.Id}  
+                                                    data-cover-name={eachCover.SubClassCoverTypes.CoverTypeName}
                                                 className="btn-alat btn-inverse m-t-10 m-b-20 text-center">More Details    
                                             </button>
                                             <button type="button"
                                                 data-cover-id={eachCover.SubClassCoverTypes.Id}
+                                                data-cover-name={eachCover.SubClassCoverTypes.CoverTypeName}
                                                 onClick ={this.choosePolicyTobuy}
                                                 className="btn-alat m-t-10 m-b-20 text-center">Buy Policy    
                                             </button>
@@ -139,6 +146,7 @@ class SelectInsuranceCover extends React.Component {
                             <center>
                                 <button type="button"
                                         className="btn-alat m-t-10 m-b-20 text-center"
+                                        data-cover-name={selectedPackage.SubClassCoverTypes.CoverTypeName}
                                         data-cover-id={selectedPackage.SubClassCoverTypes.Id}
                                         onClick ={this.choosePolicyTobuy}>
                                     Buy Policy

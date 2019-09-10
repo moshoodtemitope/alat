@@ -75,6 +75,9 @@
 .brand-title{
     color: #AB2656;
 }
+.getinfo{
+    min-height: 52px;
+}
 .twosided-inputs {
     display: flex;
     &>div {
@@ -87,6 +90,20 @@
         }
     }
 }
+.detailsform{
+    .input-ctn.textwrap{
+        input[type=number], input[type=password], input[type=phone], input[type=text]{
+            border-radius: 4px!important;
+            min-height: 52px;
+        }
+        .css-1g6gooi {
+            input[type=number], input[type=password], input[type=phone], input[type=text]{
+                min-height: 38px;
+            }
+        }
+    }
+}
+
 .collapse-details{
     position: absolute;
     top: 0;

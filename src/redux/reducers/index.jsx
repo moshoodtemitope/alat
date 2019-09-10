@@ -93,7 +93,12 @@ const alatInsuranceReducer = combineReducers({
     getCoversInPoductRequest: insurance.getCoversInPoductRequest,
     saveProductCoverId: insurance.saveProductCoverId,
     saveCustomerInfo: insurance.saveCustomerInfo,
-    saveCustomerPolicyInfo: insurance.saveCustomerPolicyInfo
+    saveCustomerPolicyInfo: insurance.saveCustomerPolicyInfo,
+    getCarInYearRequest: insurance.getCarInYearRequest,
+    getCarModelRequest: insurance.getCarModelRequest,
+    postMotorScheduleRequest: insurance.postMotorScheduleRequest,
+    postAutoInsurancePaymentRequest: insurance.postAutoInsurancePaymentRequest,
+    getCarDetailsRequest: insurance.getCarDetailsRequest
 })
 const alatCardReducersPile = (state, action)=>{
     if(action.type ===ALATCARD_REDUCER_CLEAR){

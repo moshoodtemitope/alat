@@ -78,7 +78,12 @@ import{
     getCoversInPoductRequest,
     saveProductCoverId,
     saveCustomerInfo,
-    saveCustomerPolicyInfo 
+    saveCustomerPolicyInfo,
+    getCarInYearRequest,
+    getCarModelRequest,
+    postMotorScheduleRequest,
+    postAutoInsurancePaymentRequest,
+    getCarDetailsRequest 
 } from './insurance.reducer'
 
 export const onboarding = {
@@ -175,7 +180,12 @@ export const insurance = {
     getCoversInPoductRequest,
     saveProductCoverId,
     saveCustomerInfo,
-    saveCustomerPolicyInfo
+    saveCustomerPolicyInfo,
+    getCarInYearRequest,
+    getCarModelRequest,
+    postMotorScheduleRequest,
+    postAutoInsurancePaymentRequest,
+    getCarDetailsRequest
 }
 export const alatCards={
     geCurrentVirtualCardsRequest,

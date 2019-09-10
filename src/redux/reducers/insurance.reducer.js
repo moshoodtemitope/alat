@@ -10,7 +10,22 @@ import {
     FETCH_COVERSIN_PRODUCTS_FAILURE,
     SET_PRODUCT_COVERID,
     SAVE_CUSTOMER_DETAILS,
-    SAVE_CUSTOMERPOLICY_DATA
+    SAVE_CUSTOMERPOLICY_DATA,
+    FETCH_CARMAKES_INYEAR_SUCCESS,
+    FETCH_CARMAKES_INYEAR_PENDING,
+    FETCH_CARMAKES_INYEAR_FAILURE,
+    FETCH_CARMAKES_MODELS_SUCCESS,
+    FETCH_CARMAKES_MODELS_PENDING,
+    FETCH_CARMAKES_MODELS_FAILURE,
+    POST_MOTORSCHEDULEDATA_SUCCESS,
+    POST_MOTORSCHEDULEDATA_PENDING,
+    POST_MOTORSCHEDULEDATA_FAILURE,
+    POST_AUTOINSURANCE_PAYMENTDATA_SUCCESS,
+    POST_AUTOINSURANCE_PAYMENTDATA_PENDING,
+    POST_AUTOINSURANCE_PAYMENTDATA_FAILURE,
+    GET_VEHICLEDETAILS_SUCCESS,
+    GET_VEHICLEDETAILS_PENDING,
+    GET_VEHICLEDETAILS_FAILURE,
  }from "../constants/insurance/insurance.constants";
 
 
@@ -89,7 +104,142 @@ export function getCoversInPoductRequest(state=[], action) {
     }
 }
 
-//Save Product Cover Id
+//Get Cars made in Year
+export function getCarInYearRequest(state=[], action) {
+    switch (action.type) {
+        case FETCH_CARMAKES_INYEAR_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: FETCH_CARMAKES_INYEAR_PENDING,
+                carsinyear_data: action
+            };
+        case FETCH_CARMAKES_INYEAR_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: FETCH_CARMAKES_INYEAR_SUCCESS,
+                carsinyear_data: action
+            };
+        case FETCH_CARMAKES_INYEAR_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: FETCH_CARMAKES_INYEAR_FAILURE,
+                carsinyear_data: action
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+//Get Car models
+export function getCarModelRequest(state=[], action) {
+    switch (action.type) {
+        case FETCH_CARMAKES_MODELS_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: FETCH_CARMAKES_MODELS_PENDING,
+                carmodels_data: action
+            };
+        case FETCH_CARMAKES_MODELS_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: FETCH_CARMAKES_MODELS_SUCCESS,
+                carmodels_data: action
+            };
+        case FETCH_CARMAKES_MODELS_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: FETCH_CARMAKES_MODELS_FAILURE,
+                carmodels_data: action
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+//Get Car Details
+export function getCarDetailsRequest(state=[], action) {
+    switch (action.type) {
+        case GET_VEHICLEDETAILS_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: GET_VEHICLEDETAILS_PENDING,
+                vehicledetails_data: action
+            };
+        case GET_VEHICLEDETAILS_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: GET_VEHICLEDETAILS_SUCCESS,
+                vehicledetails_data: action
+            };
+        case GET_VEHICLEDETAILS_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: GET_VEHICLEDETAILS_FAILURE,
+                vehicledetails_data: action
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+//Post motor schedule
+export function postMotorScheduleRequest(state=[], action) {
+    switch (action.type) {
+        case POST_MOTORSCHEDULEDATA_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: POST_MOTORSCHEDULEDATA_PENDING,
+                motorschedule_data: action
+            };
+        case POST_MOTORSCHEDULEDATA_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: POST_MOTORSCHEDULEDATA_SUCCESS,
+                motorschedule_data: action
+            };
+        case POST_MOTORSCHEDULEDATA_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: POST_MOTORSCHEDULEDATA_FAILURE,
+                motorschedule_data: action
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+//Post motor insurance payment
+export function postAutoInsurancePaymentRequest(state=[], action) {
+    switch (action.type) {
+        case POST_AUTOINSURANCE_PAYMENTDATA_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: POST_AUTOINSURANCE_PAYMENTDATA_PENDING,
+                motorinsurancepayment_data: action
+            };
+        case POST_AUTOINSURANCE_PAYMENTDATA_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: POST_AUTOINSURANCE_PAYMENTDATA_SUCCESS,
+                motorinsurancepayment_data: action
+            };
+        case POST_AUTOINSURANCE_PAYMENTDATA_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: POST_AUTOINSURANCE_PAYMENTDATA_FAILURE,
+                motorinsurancepayment_data: action
+            };
+
+        default:
+            return { ...state }
+    }
+}
+
+//Save Product Cover details
 export function saveProductCoverId(state=[], action){
     switch (action.type){
         case SET_PRODUCT_COVERID:

@@ -94,14 +94,13 @@ class ProvideDetails extends React.Component {
                 GenderId:this.state.selectedGender
             };
 
-            console.log('details', customerData);
+            
 
             const { dispatch } = this.props;
             dispatch(saveCustomerDetails(customerData));
 
             return true;
         }else{
-            console.log('error here', this.state)
             return false;
         }
     }
@@ -207,27 +206,13 @@ class ProvideDetails extends React.Component {
                 allTitles.push({value:title.Id, label:title.Name})
             })
 
-            // newPolicyData.Lga.map(state=>{
-            //     statesTemp.push({value:state.Name.split('-')[0], label:state.Name.split('-')[0]});
-            //     lgasTemp.push({state:state.Name.split('-')[0], lga:state.Name.split('-')[1]})
-            // })
-
-            // this.getLgas('save', lgasTemp);
-
-            // const allStates = statesTemp.reduce((acc, current) => {
-            //     const x = acc.find(item => item.value === current.value);
-            //     if (!x) {
-            //       return acc.concat([current]);
-            //     } else {
-            //       return acc;
-            //     }
-            // }, []);
+            
 
         return(
             <div>
                 <h4 className="m-b-10 center-text hd-underline brand-title">Personal Information</h4>
                 <div className="transfer-ctn">
-                    <form onSubmit={this.handleCustomerDetails}>
+                    <form className="detailsform"  onSubmit={this.handleCustomerDetails}>
                         <div className="twosided-inputs">
                             <div className="input-ctn">
                                 <label>Title</label>
@@ -246,7 +231,7 @@ class ProvideDetails extends React.Component {
                                 />
                             </div>
                         </div>
-                        <div className="input-ctn">
+                        <div className="input-ctn textwrap">
                             <label>First Name</label>
                             <Textbox
                                 id={'firstName'}
@@ -260,7 +245,7 @@ class ProvideDetails extends React.Component {
                                 }}
                             />
                         </div>
-                        <div className="input-ctn">
+                        <div className="input-ctn textwrap">
                             <label> Surname</label>
                             <Textbox
                                 id={'surname'}
@@ -292,7 +277,7 @@ class ProvideDetails extends React.Component {
                                 />
                             </div>
                         </div>
-                        <div className="input-ctn">
+                        <div className="input-ctn textwrap">
                             <label> Email</label>
                             <Textbox
                                 id={'customerInsuranceEmail'}
@@ -306,7 +291,7 @@ class ProvideDetails extends React.Component {
                                 }}
                             />
                         </div>
-                        <div className="input-ctn">
+                        <div className="input-ctn textwrap">
                             <label> Phone Number</label>
                             <Textbox
                                 id={'customerInsurancePhoneNo'}
@@ -334,7 +319,7 @@ class ProvideDetails extends React.Component {
                                 maxDate={new Date()}
                             />
                         </div>
-                        <div className="input-ctn">
+                        <div className="input-ctn textwrap">
                             <label> Address</label>
                             <Textbox
                                 id={'customerAddress'}

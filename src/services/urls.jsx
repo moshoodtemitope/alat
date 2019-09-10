@@ -1,6 +1,6 @@
-// const URL = 'https://api.alat.ng';
+const URL = 'https://api.alat.ng';
 // const URL = 'https://196.43.215.170';
-const URL = 'https://196.43.215.157';
+// const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
 
@@ -186,6 +186,11 @@ export const routes = {
      FETCH_INSURANCE_GENDERS: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceGenders',
      FETCH_INSURANCE_NONSCHENGENCOUNTRIES: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceNonSchengenCountries',
      FETCH_COVERS_IN_PRODCUTS: BASEURL + '/PaymentApi/api/Insurance/GetProductSubClassCoverTypes',
+     FETCH_CARS_MADEINYEAR: BASEURL + '/PaymentApi/api/Insurance/GetVehicleMake?makeYear=',
+     FETCH_CAR_MODELS: BASEURL + '/PaymentApi/api/Insurance/GetVehicleMakeModel',
+     FETCH_VEHICLE_DETAILS: BASEURL + '/PaymentApi/api/Insurance/GetVehiclesDetails',
+     SEND_MOTOR_SCHEDULE: BASEURL + '/PaymentApi/api/Insurance/MotorSchedule',
+     FINALPAYMENT_FORAUTO_INSURANCE: BASEURL + '/PaymentApi/api/Insurance/FinalizePartnerPayment',
 
     //savings&goals
     ADDGOAL: BASEURL + '/Savings.WebApi/api/Savings/AddGoal',
