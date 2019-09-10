@@ -44,7 +44,6 @@ export const groupDetails = (token, data) => {
                 dispatch(failure(modelStateErrorHandler(error)));
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
 
-                // dispatch(failure(error.response.data.message.toString()));
             });
     };
 
@@ -62,13 +61,12 @@ export const deleteGroup = (token, data) => {
             .then(response => {
                 dispatch(success(response.data));
                 if(data.deleteGroup != undefined)
-                     history.push('/savings/group/success-message');
+                     history.push('/savings/delete-group-savings-mod');
             })
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
                  dispatch(alertActions.error(modelStateErrorHandler(error)));
 
-                // dispatch(failure(error.response.data.message.toString()));
             });
     };
 
@@ -85,12 +83,12 @@ export const contribute = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                history.push('/');
             })
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
                  dispatch(alertActions.error(modelStateErrorHandler(error)));
 
-                // dispatch(failure(error.response.data.message.toString()));
             });
     };
 
@@ -113,7 +111,6 @@ export const editGroup = (token, data) => {
                 dispatch(failure(modelStateErrorHandler(error)));
                  dispatch(alertActions.error(modelStateErrorHandler(error)));
 
-                // dispatch(failure(error.response.data.message.toString()));
             });
     };
 
@@ -135,8 +132,6 @@ export const pauseGroup = (token, data) => {
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
                  dispatch(alertActions.error(modelStateErrorHandler(error)));
-
-                // dispatch(failure(error.response.data.message.toString()));
             });
     };
 
@@ -160,7 +155,6 @@ export const findGroup = (token, data) => {
                 dispatch(failure(modelStateErrorHandler(error)));
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
 
-                // dispatch(failure(error.response.data.message.toString()));
             });
     };
 
@@ -177,14 +171,12 @@ export const customerGroup = (token, data = null) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
-                // if(data.parent != undefined)
-                //     history.push('/savings/group/group-analytics');
+            
             })
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
-                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
 
-                // dispatch(failure(error.response.data.message.toString()));
             });
     };
 
@@ -201,13 +193,12 @@ export const joinGroup = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
-                this.history.push('/savings/group/joingroup-success-message');
+                this.history.push('/savings/joined-group-successfully');
             })
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
 
-                // dispatch(failure(error.response.data.message.toString()));
             });
     };
 
@@ -253,7 +244,6 @@ export const deleteMember = (token, data) => {
                 dispatch(failure(modelStateErrorHandler(error)));
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
 
-                // dispatch(failure(error.response.data.message.toString()));
             });
     };
      
@@ -275,7 +265,6 @@ export const cashOut = (token, data) => {
                 dispatch(failure(modelStateErrorHandler(error)));
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
 
-                // dispatch(failure(error.response.data.message.toString()));
             });
     };
       

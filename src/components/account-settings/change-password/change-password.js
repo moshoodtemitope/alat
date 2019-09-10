@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Input } from '../../airtime-bills/data/input';
-import Success from '../success';
+import Success from '../shared/success';
 import { alertActions } from "../../../redux/actions/alert.actions";
 import * as settingsActions from "../../../redux/actions/account-settings/export"
 
@@ -122,7 +122,7 @@ class ChangePassword extends Component {
                 } else format.invalidCurrent = false;
             } else if (inputIdentifier == "newPassword") {
                 validation.required.newEmpty = false
-                if(updatedChangeForm.verifyNewPassword.touched){
+                if (updatedChangeForm.verifyNewPassword.touched) {
                     if (updatedFormElement.value != this.state.changeForm.verifyNewPassword.value) {
                         validation.notSame = true;
                     } else validation.notSame = false;
@@ -142,6 +142,65 @@ class ChangePassword extends Component {
         validation.format = format;
         updatedChangeForm[inputIdentifier] = updatedFormElement;
         this.setState({ changeForm: updatedChangeForm, validation });
+    }
+
+    resetState = () => {
+        const defaultFormState = {
+            currentPassword: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'password',
+                    placeholder: 'xxxxxxxx'
+                },
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                label: 'Enter Current Password'
+            },
+            newPassword: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'password',
+                    placeholder: 'xxxxxxxx'
+                },
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                label: 'Enter New Password'
+            },
+            verifyNewPassword: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'password',
+                    placeholder: 'xxxxxxxx'
+                },
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false,
+                label: 'Verify New Password'
+            },
+            pin: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'password',
+                    placeholder: 'xxxx'
+                },
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                label: 'ALAT Pin'
+            }
+        }
+        this.setState({ changeForm: defaultFormState })
     }
 
     onSubmitForm = (event) => {
@@ -174,7 +233,7 @@ class ChangePassword extends Component {
             Pin: this.state.changeForm.pin.value
         }
         console.log("submited", payload)
-        this.props.onChangePassword(this.state.user.token, payload);
+        this.props.onChangePassword(this.state.user.token, payload, this.resetState);
     }
 
     goHome = (event) => {
@@ -185,6 +244,7 @@ class ChangePassword extends Component {
     render() {
         const formElementArray = [];
         const { validation } = this.state;
+
         for (let key in this.state.changeForm) {
             formElementArray.push({
                 id: key,
@@ -203,7 +263,7 @@ class ChangePassword extends Component {
                                     <div className="transfer-ctn">
                                         <form>
                                             <div className="no-pad text-center" style={{ padding: "0 10px 10px 10px" }}>
-                                                <p className="s-info" style={{color : "#A6A6A6"}}>To make your password secure, make sure you use <b>at least 8 characters</b> which <b>must include letters, numbers & special characters.</b></p>
+                                                <p className="s-info" style={{ color: "#A6A6A6" }}>To make your password secure, make sure you use <b>at least 8 characters</b> which <b>must include letters, numbers & special characters.</b></p>
                                             </div>
                                             {(this.props.alert.message) ?
                                                 <div className="info-label error">{this.props.alert.message}</div> : null
@@ -232,18 +292,16 @@ class ChangePassword extends Component {
                                                         {formElement.id == "verifyNewPassword" && validation.notSame ? <span className="text-danger">Password doesn't match</span> : formElement.id == "verifyNewPassword" && validation.required.verifyEmpty ? <span className="text-danger">Field is required</span> : null}
                                                     </div>
                                                 )
-
                                             })}
 
                                             <div className="row">
                                                 <div className="col-sm-12">
                                                     <center>
                                                         {validation.isSamePassword ? <p className="text-danger">Old and new password cannot be the same</p> : null}
-                                                        <button disabled={this.props.fetching} onClick={this.onSubmitForm} className="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Change PIN"}</button>
+                                                        <button disabled={this.props.fetching} onClick={this.onSubmitForm} className="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Change Password"}</button>
                                                     </center>
                                                 </div>
                                             </div>
-
                                         </form>
                                     </div>
 
@@ -257,7 +315,7 @@ class ChangePassword extends Component {
         );
         if (this.props.pageState == 0) {
             form = <Success
-                message="PIN changed Successfully"
+                message="Password changed Successfully"
                 homeUrl="/settings/change-password"
                 isActionButton={true}
                 clicked={this.goHome}
@@ -279,7 +337,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onChangePassword: (token, payload) => dispatch(settingsActions.changePassword(token, payload)),
+        onChangePassword: (token, payload, callback) => dispatch(settingsActions.changePassword(token, payload, callback)),
         resetPageState: () => dispatch(settingsActions.resetPageState()),
         clearError: () => dispatch(alertActions.clear()),
     };

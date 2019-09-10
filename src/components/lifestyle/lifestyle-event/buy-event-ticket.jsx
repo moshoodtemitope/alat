@@ -23,7 +23,10 @@ class BuyTicket extends Component {
             cinemaId:"",
             title:"",
             Pin:"",
+            source:"",
             isPinInvalid: false,
+            goal: JSON.parse(localStorage.getItem("goal")),
+
 
 
         };
@@ -64,7 +67,7 @@ class BuyTicket extends Component {
 
     init = () => {
         if (this.props.SubmitEventTicketData.message !== listStyleConstants.SUBMIT_EVENT_TICKET_SUCCESS)
-            this.props.history.push("/lifestyle/movie-details");
+            this.props.history.push("/lifestyle/event-details");
         else {
             let data = {
                 ...this.props.SubmitEventTicketData.data.data
@@ -78,6 +81,8 @@ class BuyTicket extends Component {
                 ShowTimeId:data.ShowTimeId,
                 ticketClassses:data.ticketClassses,
                 quantity:data.quantity,
+                source:data.source,
+                eventId:data.eventId
                 
             });
         }
@@ -92,11 +97,13 @@ class BuyTicket extends Component {
             //not valid
         }else {
             let data={
-                'ticketAmount':parseFloat(this.state.TicketAmount),
+                'Email':this.state.user.email,
                 'accountNo':this.state.accountToDebit,
-                'pin':parseInt(this.state.Pin),
-                "showTimeId":this.state.ShowTimeId,	
-                "cinemaId":this.state.cinemaId
+                "ClassId":this.state.ShowTimeId,	
+                "EventId":this.state.cinemaId,
+                "Source":this.state.source,
+                "TicketAmount":this.state.TicketAmount,
+                "TicketNo":this.state.TicketNo,
             };
             console.log(data)
         
@@ -105,9 +112,9 @@ class BuyTicket extends Component {
 
         }
     };
-    formatAmountNoDecimal = (amount) => {
-        return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
-    };
+    // formatAmountNoDecimal = (amount) => {
+    //     return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+    // };
 
     
     NavigateBack = () => {
@@ -149,12 +156,12 @@ class BuyTicket extends Component {
                                                 <div className="form-group">
                                                        <div className="puchaseSumTickets">
                                                            <div className="left">
-                                                                <p style={{fontSize:12,fontFamily:"proxima_novasemibold"}}>{this.state.title}</p>
+                                                                <p style={{fontSize:12,fontFamily:"proxima_novasemibold"}}>{this.state.goal.title}</p>
                                                                 <p style={{fontSize:10, fontFamily:'proxima_novaregular'}}>{this.state.ticketClassses}</p>
                                                            </div>
                                                            <div className="right">
-                                                               <p>N{this.formatAmountNoDecimal(this.state.TicketAmount)}</p>
-                                                               <p style={{fontSize:12, fontFamily:'proxima_novaregular'}}>Quantity {this.state.quantity}</p>
+                                                               <p>N{this.state.TicketAmount}</p>
+                                                               <p style={{fontSize:12, fontFamily:'proxima_novaregular'}}>Quantity {this.state.goal.quantity}</p>
 
                                                            </div>
                                                        </div>

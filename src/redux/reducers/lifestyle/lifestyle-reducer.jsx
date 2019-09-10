@@ -321,6 +321,28 @@ export function SubmitEventTicketData(state=[], action){
            return {... state}
     }
 }
+export function FetchMovieGenre(state=[], action){
+    switch(action.type){
+        case listStyleConstants.FETCH_MOVIE_GENRE_PENDING: 
+           return {
+               message: listStyleConstants.FETCH_MOVIE_GENRE_PENDING,
+               data: action
+           }
+        case listStyleConstants.FETCH_MOVIE_GENRE_SUCCESS:
+           return {
+               message: listStyleConstants.FETCH_MOVIE_GENRE_SUCCESS,
+               data: action
+           }
+        case listStyleConstants.FETCH_MOVIE_GENRE_FAILURE:
+           return {
+               message: listStyleConstants.FETCH_MOVIE_GENRE_FAILURE,
+               data: action
+           }
+        default: 
+           return {... state}
+    }
+}
+
 
 export function movieDetails (state=[], action){
     switch(action.type){
@@ -334,6 +356,29 @@ export function movieDetails (state=[], action){
            return {... state}
     }
 }
+export function PostMovieContent(state=[], action){
+    switch(action.type){
+
+        case listStyleConstants.POST_MOVIE_CONTENT_PENDING:
+            return {
+                message: listStyleConstants.POST_MOVIE_CONTENT_PENDING,
+                data: action
+            };
+        case listStyleConstants.POST_MOVIE_CONTENT_SUCCESS:
+            return {
+                message: listStyleConstants.POST_MOVIE_CONTENT_SUCCESS,
+                data: action
+            };
+        case listStyleConstants.POST_MOVIE_CONTENT_FAILURE:
+            return {
+                message: listStyleConstants.POST_MOVIE_CONTENT_FAILURE,
+                data: action
+            };
+        default:
+            return {... state}
+    }
+}
+
 
 
 

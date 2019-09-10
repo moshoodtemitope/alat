@@ -4,6 +4,8 @@ import {listStyleConstants} from "../../../redux/constants/lifestyle/lifestyle-c
 import {Redirect} from 'react-router-dom'
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
 import {getCinemaList,} from '../../../redux/actions/lifestyle/movies-actions';
+import clock from '../../../assets/img/clock-circular-outline.svg'
+
 
 
 
@@ -13,45 +15,75 @@ class EventDetails extends React.Component {
         this.state = {
             ShowTimeId:"",
             TicketAmount:"",
-            movieLocation: "",
+            movieLocation:"",
             StudentId:"",
             ChildrenId:"",
             AdultId:"",
-            movieDay: "",
-            childNumber: 0,
-            childAmount: 0,
-            initialChildAmount: 0,
+            movieDay:"",
+            childNumber:0,
+            childAmount:0,
+            initialChildAmount:0,
             ticketClassses:null,
             user: JSON.parse(localStorage.getItem("user")),
             dataContainer: null,
+            eventId:"",
+            ticketClass: null,
+            TicketClassValidity:false,
+            goal: JSON.parse(localStorage.getItem("goal")),
+
+
         };
+        this.fetchCinemaList();
+
     }
-    // fetchEventList(){
-    //     const { dispatch } = this.props;
-    //     dispatch(getEvents(this.state.user.token));
-    // };
+
+    componentDidMount(){
+        const details = this.props.location.state.details;
+        this.setState({
+            getCinemaList: details,
+
+        },()=>{  localStorage.setItem('goal', JSON.stringify(details))
+        });
+
+    }
+    
+    
     fetchCinemaList(){
         const { dispatch } = this.props;
         dispatch(getCinemaList(this.state.user.token));
         // console.log(this.props.getCinemaList)
 
     };
-    // fetchShowTime(){
-    //     const { dispatch } = this.props;
-    //     dispatch(buyMovieTicket(this.state.user.token));
-    //     // console.log(this.props.getCinemaList)
-
-    // };
-    componentDidMount(){
-        this.fetchCinemaList();
-        const details = this.props.location.state.name;
-        this.setState({
-            SubmitTicketData: details
-
-        })
-
-
+    
+    checkTicketClassValidity = () => {
+        if(this.state.ticketClass == null || this.state.ticketClass == ""){
+            this.setState({TicketClassValidity: true});
+        }else{
+            this.setState({TicketClassValidity: false});
+        }
     }
+    checkValidity = () => {
+        let result = 'valid';
+        for(let x in this.state){
+             switch(x){
+                 
+                 case 'ticketClass':
+                         if(this.state[x] == null || this.state[x] == ""){
+                             console.log(x)
+                             result = null;
+                             break;
+                         }
+ 
+                 
+             }
+         }
+ 
+        // console.log(result);
+        return result;
+    }
+ 
+
+   
 
 
     handleSelectLocation = item => {
@@ -89,40 +121,53 @@ class EventDetails extends React.Component {
                 })
             );
     };
-    ShowBuyTicketData = () => {
+    InitiateNetworkCall=()=>{
         const data = {
             ShowTimeId:this.state.itemId,
-            TicketAmount:parseFloat(this.state.childAmount),
+            TicketAmount:this.state.childAmount,
             title:this.props.location.state.details.title,
             quantity:this.state.childNumber,
-            ticketClassses:this.state.ticketClassses
+            adultquatity:this.state.adultNumber,
+            studentQuantity:this.state.studentNumber,
+            ticketClassses:this.state.ticketClassses,
+            eventId:this.state.eventId,
+            source:this.props.location.state.details.source
         }
-        console.log(data)
+        console.log("=========",data)
+
+        
+        this.props.dispatch(actions.SubmitEventTicketData(this.state.user.token, data));
+
+
+    }
+
+    ShowBuyTicketData = (event) => {
+        event.preventDefault();
+
+
+        this.checkTicketClassValidity();
+        
+        switch(this.checkValidity()){
+            case null:
+              console.log('Empty value was found');
+              break;
+            case 'valid': 
+              console.log("No Empty Value Found");
+              this.InitiateNetworkCall();
+              break;
+        }
         // return;
-        this.props.dispatch(actions.SubmitEventTicketData(data));
     }
     formatAmountNoDecimal = (amount) => {
         return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
     };
     
-    // value={event.date + "8888" + event.student + " " + event.adult + " " + event.children}>{event.date}</option>
-    // UseSelectedTime = (event) => {
-    //     let amounts = event.target.value.split("8888")[1];
-    //     let adultAmount = amounts.split(" ")[1];
-    //     let childrenAmount = amounts.split(" ")[2];
-    //     let studentAmount = amounts.split(" ")[0];
-       
-    //     console.log(adultAmount);
-    //     console.log(childrenAmount);
-    //     console.log(studentAmount);
-    //     console.log('oooooooooooooooooooooooooooooooooooo');
-    //     this.setState({initialStudentAmount: studentAmount});
-    //     this.setState({initialAdultAmount: adultAmount});
-    //     this.setState({initialChildAmount: childrenAmount});
-    // }
+    
 
     UseSelectedItem = (event) => {
         let gottenValue = event.target.value.split("000");
+        let name = event.target.name;
+
 
        
         console.log(gottenValue);
@@ -130,13 +175,17 @@ class EventDetails extends React.Component {
         let data = {
             item: gottenValue[0],
             id: gottenValue[1],
-            ticketClassses:gottenValue[2]
+            ticketClassses:gottenValue[2],
+            eventId:gottenValue[3],
 
         }
   
         this.setState({initialChildAmount:gottenValue[0]});
         this.setState({childAmount:gottenValue[0]});
-        this.setState({ticketClassses:gottenValue[2]})
+        this.setState({ticketClassses:gottenValue[2]});
+        this.setState({eventId:gottenValue[3]});
+        this.setState({[name] : event.target.value});
+
         console.log(data);
         this.props.dispatch(actions.ShowTime(this.state.user.token, data))
     }
@@ -150,39 +199,17 @@ class EventDetails extends React.Component {
     }
 
 
-    LopEventList = () => {
-        // console.log('First -----------------------')
-        let container = [];
-        let title = []; //contains all titles
-        let loopContainer = (eachArrayClass) => {
-            eachArrayClass.map(element => {
-                title.push(element.title);
-                // return <option value={element}>{element}</option>
-            })
-        }
-
-        this.props.getEvents.data.response.eventList.map(event => {
-            console.log(typeof event);
-            if(typeof event == 'object')
-              loopContainer(event.ticketClassses); 
-        });
-
-        return title.map(element => {
-            return <option value={element}>{element}</option>
-        });
-    }
+    
 
     render() {
+        const details = this.props.location.state.details;
+
        let {
-            movieLocation,
-            movieDay,
-            adultNumber,
-            studentNumber,
-            childNumber
+            
+            childNumber,
+            TicketClassValidity
         } = this.state;
          const {getCinemaList,getEvents,ShowTime,buyMovieTicket}=this.props
-         const details = this.props.location.state.details;
-         console.log(details)
 
         return (
             <div>
@@ -261,7 +288,7 @@ class EventDetails extends React.Component {
                             <div>
                                 <i className="toshow">
                                     <img
-                                        // src={salaryLoan}
+                                        src={clock}
                                         style={{
                                             width: 20,
                                             height: 20,
@@ -293,41 +320,44 @@ class EventDetails extends React.Component {
                             marginTop: 37
                         }}>
                       <form onSubmit={this.ShowBuyTicketData  } style={{ width: "100%" }}>
-                            <label>Select Ticket Class</label>
-                           
-                            <select onChange={this.UseSelectedItem}>
-                             <option>Select Ticket Type</option>
+                           <div  className={TicketClassValidity ? "form-group form-error col-md-12" : "form-group col-md-12"} style={{paddingLeft: 0}}>
+                                    <label>Select Ticket Class</label>
 
-                                {
-                                    // getEvents.message == listStyleConstants.GET_EVENTS_SUCCESS && 
-                                    //  this.LopEventList()
-                                    details.ticketClassses.map(event=> {
-                                        return <option key={event.title} value={event.ticketId + " " + "000" + event.price + " " + event.title}>{event.title}</option>
-                                    })
-                                }
-                            </select>
+                                        <select onChange={this.UseSelectedItem } name="ticketClass">
+                                        <option>Select Ticket Type</option>
 
-                            <label style={{ marginTop: 16 }}>Select Day</label>
-                            <select onChange={this.UseSelectedTime}>
-                                <option key={details.date}>{details.date}</option>
-                                {/* {                                      
-                                    ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
-                                    ShowTime.data.response.map(event=> {
-                                        return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children}>{event.date}</option>
-                                    })
-                                }  */}
-                            </select>
-
-                            <div
-                                className="row"
+                                            {
+                                                // getEvents.message == listStyleConstants.GET_EVENTS_SUCCESS && 
+                                                //  this.LopEventList()
+                                                details.ticketClassses.map(event=> {
+                                                    return <option key={event.title} value={event.ticketId + " " + "000" + event.price + " " + event.title + " " + event.eventId}>{event.title}</option>
+                                                })
+                                            }
+                                        </select>
+                                        </div>
+                                        <div className="row">
+                                            <div className="form-group col-md-6">
+                                                <label style={{ marginTop: 16 }}>Select Day</label>
+                                                <select onChange={this.UseSelectedTime}>
+                                                    <option key={details.date}>{details.date}</option>
+                                                    {/* {                                      
+                                                        ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
+                                                        ShowTime.data.response.map(event=> {
+                                                            return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children}>{event.date}</option>
+                                                        })
+                                                    }  */}
+                                                </select>
+                                            </div>
+                                            <div
+                                className="col-md-6"
                                 style={{
                                     marginTop: 23,
-                                    marginLeft: 0,
-                                    justifyContent: "space-between"
+                                    // marginLeft: 0,
+                                    // justifyContent: "space-between"
                                 }}
                             >
                                 
-                               <div className="col-sm-4" style={{ paddingRight: 30 }}>
+                               <div style={{ paddingRight: 30 }}>
                                     <div style={{ marginLeft: -13 }}>Quantity</div>
                                     <div
                                         className="row"
@@ -393,10 +423,14 @@ class EventDetails extends React.Component {
                                             fontSize: 14
                                         }}
                                     >
-                                        N{this.formatAmountNoDecimal(this.state.childAmount)}
+                                        ₦{this.formatAmountNoDecimal(this.state.childAmount)}
                                     </div> 
                                 </div>
                             </div>
+                                        </div>
+                                
+
+                            
                             <div
                                 className="row"
                                 style={{
@@ -405,7 +439,7 @@ class EventDetails extends React.Component {
                                     marginBottom: 39
                                 }}
                             >
-                                <button disabled={this.props.SubmitEventTicketData.message == listStyleConstants.SUBMIT_EVENT_TICKET_PENDING}
+                                <button
                                     style={{
                                         border: "0px solid #AB2656",
                                         height: 45,
@@ -416,8 +450,8 @@ class EventDetails extends React.Component {
                                         cursor: "pointer"
                                     }}
                                 >
+                                    Next
                                 
-                                    {this.props.SubmitEventTicketData.message ==listStyleConstants.SUBMIT_EVENT_TICKET_PENDING ? "Processing..." :"Buy Ticket"}
                                 </button>
                             </div>
                         </form>
@@ -434,7 +468,7 @@ function mapStateToProps(state) {
         getCinemaList: state.getCinemaList,
         ShowTime:state.ShowTime,
         SubmitEventTicketData:state.SubmitEventTicketData,
-        getEvents: state.getEvents
+        getEvents:state.getEvents
     };
 }
 

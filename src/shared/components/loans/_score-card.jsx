@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import * as actions from '../../../redux/actions/onboarding/loan.actions';
 import { loanOnboardingConstants } from '../../../redux/constants/onboarding/loan.constants';
+import { LoanApplicationProgress } from '../../../shared/constants';
 
 class ScoreCard extends React.Component {
     constructor(props) {
@@ -29,13 +30,22 @@ class ScoreCard extends React.Component {
     }
 
     init = () => {
-        if (this.props.salary_entry)
+        if (this.props.salary_entry){
             if (this.props.salary_entry.loan_salEnt_status == loanOnboardingConstants.LOAN_SALARYENTRY_SUCCESS) {
                 this.props.dispatch(actions.getScoreCard(this.state.user.token));
             } else {
                 // return (<Redirect to={this.props.backwardUrl}/>);  //this.props.history.push());
                 this.props.gotoPreviosuPageMethod();
             }
+        }else
+            if (this.props.loan_status) {
+                if (this.props.loan_status.loan_app_data.data == LoanApplicationProgress.Inprogress_ScoreCard) { 
+                    this.props.dispatch(actions.getScoreCard(this.state.user.token));
+                }
+                else { this.props.gotoPreviosuPageMethod(); }
+            }
+            else { this.props.gotoPreviosuPageMethod();  }
+
     }
 
 
@@ -195,6 +205,7 @@ function mapStateToProps(state) {
         salary_entry: state.loanOnboardingReducerPile.loanSalaryEntryReducer,
         score_card_Q: state.loanOnboardingReducerPile.loanGetScoreCardQuestion,
         score_card_A: state.loanOnboardingReducerPile.loanPostScoreCardAnswer,
+        loan_status: state.loanReducerPile.loanAppStatus,
     }
 }
 

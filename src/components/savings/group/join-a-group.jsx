@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Fragment} from "react";
 import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '../container';
+import SavingsContainer from '..';
 import {NavLink, Route} from "react-router-dom";
 import {Switch} from "react-router";
 import Select from 'react-select';
@@ -11,7 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import * as action from '../../../redux/actions/savings/group-savings/group-savings-actions';
 import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
-import { history } from '../../../_helpers/history';
+import {history} from '../../../_helpers/history';
 
 class JoinAGroup extends React.Component {
     constructor(props){
@@ -108,8 +108,6 @@ class JoinAGroup extends React.Component {
         const {selectedAccount} = this.state;
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -167,8 +165,6 @@ class JoinAGroup extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    </SavingsContainer>
-                </InnerContainer>
             </Fragment>
         );
     }

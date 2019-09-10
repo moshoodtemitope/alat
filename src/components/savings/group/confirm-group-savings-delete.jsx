@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Fragment} from "react";
 import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from './../container';
+import SavingsContainer from '..';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import {Switch} from "react-router";
 import Select from 'react-select';
@@ -59,8 +59,6 @@ class GroupDelete extends React.Component {
         const { confirmDelete } = this.state;
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -105,7 +103,8 @@ class GroupDelete extends React.Component {
                                                         <center>
 
                                                         <button type="submit" onClick={this.GoBackToGroupAnalytics} className="btn-alat m-t-10 m-b-20 text-center goBackButMini">Go Back</button>
-                                                        <button type="submit" onClick={this.SubmitForm} className="btn-alat m-t-10 m-b-20 text-center">Proceed</button>  
+                                                            <button type="submit" onClick={this.SubmitForm} className="btn-alat m-t-10 m-b-20 text-center">Proceed</button>
+                                                            
                                                         </center>
                                                     </div>
                                                 </div>
@@ -117,8 +116,6 @@ class GroupDelete extends React.Component {
                             </div>
                         </div>
 
-                    </SavingsContainer>
-                </InnerContainer>
             </Fragment>
         );
     }

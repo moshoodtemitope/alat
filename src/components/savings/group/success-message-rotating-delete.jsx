@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Fragment} from "react";
 import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from './../container';
+import SavingsContainer from '..';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import {Switch} from "react-router";
 import Members from './list-item';
@@ -52,8 +52,6 @@ class RotatingSavingsEditedSuccessfullyDeleted extends React.Component {
 
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -87,7 +85,7 @@ class RotatingSavingsEditedSuccessfullyDeleted extends React.Component {
                                                 <div className="form-group">
                                                     <label id="sucMessage" className="sucMg">Group Deleted Successfully!</label>
                                                 </div>
-                                                {/* <div className="form-row"> */}
+                                                <div className="form-row">
                                                 {/* <Members 
                                                    userType="admin"
                                                    name="Group Savings"
@@ -95,7 +93,7 @@ class RotatingSavingsEditedSuccessfullyDeleted extends React.Component {
                                                    amount={this.props.setAmountToWithDraw}
                                                    intent={this.props.setFrequency}
                                                    id="autoSummary"/> */}
-                                                {/* </div> */}
+                                                </div>
                                             </form>
 
                                         </div>
@@ -111,8 +109,6 @@ class RotatingSavingsEditedSuccessfullyDeleted extends React.Component {
 
                         </div>
 
-                    </SavingsContainer>
-                </InnerContainer>
             </Fragment>
         );
     }

@@ -49,8 +49,7 @@ class JoinGroupSuccessMessage extends React.Component {
     render() {
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
+               
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -80,18 +79,18 @@ class JoinGroupSuccessMessage extends React.Component {
                                       <div className="max-600">
                                        <div className="al-card no-pad">
                                             <form>
-                                                <img src="/src/assets/img/success.svg" className="succefullMessage" alt=""/>
                                                 <div className="form-group">
-                                                    <label id="sucMessage" className="sucMg">Group Deleted Successfully!</label>
+                                                    <label id="sucMessage">Joined Successfully</label>
                                                 </div>
-                                                {/* <Members 
+                                                <div className="form-row">
+                                                <Members 
                                                    userType="admin"
                                                    name={this.props.joinAGroup.CurrentSlot}
                                                    position="Current Slot"
                                                    amount={this.props.joinAGroup.response.MemberCount}
                                                    intent="Member Count"
-                                                   id="autoSummary"/> */}
-                                                
+                                                   id="autoSummary"/>
+                                                </div>
                                             </form>
                                         </div>
                                        </div>
@@ -100,8 +99,7 @@ class JoinGroupSuccessMessage extends React.Component {
                             </div>
                         </div>
 
-                    </SavingsContainer>
-                </InnerContainer>
+                  
             </Fragment>
         );
     }

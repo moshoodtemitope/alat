@@ -1,0 +1,19 @@
+a:not([href]):not([tabindex]).cta-link{
+    &.tobottom{
+        display: block;
+        text-align: center;
+        text-decoration: underline!important;
+    }
+}
+
+.return-text {
+    text-align: center;
+    a{
+        color: #AB2656!important;
+        font-weight: 600;
+        &:hover{
+            cursor: pointer;
+            text-decoration: underline!important;
+        }
+    }
+}

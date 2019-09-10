@@ -16,19 +16,19 @@ class LoanOnboardingTerms extends React.Component {
         }
     }
 
-    gotoPreviousPage = () => {
+    PgotoPreviousPage = () => {
         this.props.history.push('/loans')
     }
 
-    NavigateToWema = () => {
+    PNavigateToWema = () => {
         this.props.history.push('/loans/wema-setup');
     }
 
-    NavigateToRemitaOtpSetup = () => {
+    PNavigateToRemitaOtpSetup = () => {
         this.props.history.push("/loans/remita-otp")
     }
 
-    NavigateToRemitaBankSetup = () => {
+    PNavigateToRemitaBankSetup = () => {
         this.props.history.push('/loans/remita-mandate');
     }
 
@@ -37,10 +37,10 @@ class LoanOnboardingTerms extends React.Component {
         return (
             <LoanOnboardingContainer UserName={this.state.user.fullName}>
                 <LoanTermsComponent
-                    NavigateToWema={this.NavigateToWema}
-                    NavigateToRemitaOtpSetup={this.NavigateToRemitaOtpSetup}
-                    NavigateToRemitaBankSetup={this.NavigateToRemitaBankSetup}
-                    NavigateToPreviousPage={this.gotoPreviousPage}
+                    NavigateToWema={this.PNavigateToWema}
+                    NavigateToRemitaOtpSetup={this.PNavigateToRemitaOtpSetup}
+                    NavigateToRemitaBankSetup={this.PNavigateToRemitaBankSetup}
+                    NavigateToPreviousPage={this.PgotoPreviousPage}
                 />
             </LoanOnboardingContainer>);
     }
