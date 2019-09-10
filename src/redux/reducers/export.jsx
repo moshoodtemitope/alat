@@ -1,5 +1,22 @@
 import {userRegistrationRequest, bvnDetailsReducer,bvnSkipReducer, bvnCustomerDetailsReducer} from "./onboarding.reducer";
-import {getCinemaList, getSingleMovie, buyMovieTicket, getEvents, getSingleEvent, SearchfetchMovieList, purchaseEventTicket, getAllEngagements, getCustomersEngagements, fetchMovieList,ShowTime,SubmitTicketData,SubmitEventTicketData,SearchfetchEventList, movieDetails} from './lifestyle/lifestyle-reducer';
+import {getCinemaList, 
+    getSingleMovie, 
+    buyMovieTicket,
+     getEvents, 
+     getSingleEvent, 
+     SearchfetchMovieList, 
+     purchaseEventTicket, 
+     getAllEngagements, 
+     getCustomersEngagements, 
+     fetchMovieList,
+     ShowTime,
+     SubmitTicketData,
+     SubmitEventTicketData,
+     SearchfetchEventList,
+      movieDetails,
+      FetchMovieGenre,
+      PostMovieContent
+    } from './lifestyle/lifestyle-reducer';
 
 
 import {
@@ -35,7 +52,7 @@ import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingV
       postScoreCardAnswerReducer, resendOTPReducer} from './loan-onboarding.reducer';
 
 import { loanCalcDataReducer, loanApplyReducer, GetIndustriesReducer, GetEmployerReducer, CurrentLoanReducer, 
-    LoanHistoryReducer, WorkIdFrontReducer, WorkIdBackReducer, loanRejectReducer, loanStandingOrderReducer,
+        LoanHistoryReducer, WorkIdFrontReducer, WorkIdBackReducer, loanRejectReducer, loanStandingOrderReducer,
      loanMandateStatusReducer, loanValidateRemitaOtpReducer, loanStatementUpload, continueApplication, 
      SignatureReducer , PassportReducer, KycRequired, termsReducer } from './loan.reducer';
 
@@ -268,7 +285,9 @@ export const movies = {
     SubmitEventTicketData,
     SearchfetchMovieList,
     SearchfetchEventList,
-    movieDetails
+    movieDetails,
+    FetchMovieGenre,
+    PostMovieContent
 }
 
 export const preferences = {

@@ -1,7 +1,5 @@
 import React from 'react';
 import {Fragment} from "react";
-import SavingsContainer from '../container';
-import InnerContainer from '../../../shared/templates/inner-container';
 import calender from '../../../assets/img/calender.svg' ;
 import graph from '../../../assets/img/graph.svg';
 import stash from '../../../assets/img/stash.svg';
@@ -94,7 +92,7 @@ class GoalPlan extends React.Component {
                     <NavLink to="/savings/flex-goal">
                         <div className="flex-goal">
                             <img className="goal-icon" src={graph} alt=''/>
-                            <p className="plan-text">Flex Goal</p>
+                            <p className="plan-text">Flexi Goal</p>
                             <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days
                                 but you will lose your interest if you don't meet your</p>
                         </div>
@@ -122,7 +120,7 @@ class GoalPlan extends React.Component {
                 if(goals.length === 0 && !this.state.visible){
                     return(
                         <div className="row">
-                            <NavLink to="/savings/fixed-goal">
+                            <NavLink to={"/savings/fixed-goal"}>
                                 <div className="fixed-goal">
                                     <img className="goal-icon" src={calender} alt=''/>
                                     <p className="flex-text">Fixed Goal</p>
@@ -131,15 +129,15 @@ class GoalPlan extends React.Component {
                                     </p>
                                 </div>
                             </NavLink>
-                            <NavLink to="/savings/flex-goal">
+                            <NavLink to={"/savings/flex-goal"}>
                                 <div className="flex-goal">
                                     <img className="goal-icon" src={graph} alt=''/>
-                                    <p className="plan-text">Flex Goal</p>
+                                    <p className="plan-text">Flexi Goal</p>
                                     <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days
                                         but you will lose your interest if you don't meet your</p>
                                 </div>
                             </NavLink>
-                            <NavLink to="/savings/create-stash_step1">
+                            <NavLink to={"/savings/create-stash_step1"}>
                                 <div className="stash-goal">
                                     <img className="goal-icon" src={stash} alt=''/>
                                     <p className="plan-text">Stash</p>
@@ -267,7 +265,7 @@ class GoalPlan extends React.Component {
                         <NavLink to="/savings/flex-goal">
                             <div className="flex-goal">
                                 <img className="goal-icon" src={graph} alt=''/>
-                                <p className="plan-text">Flex Goal</p>
+                                <p className="plan-text">Flexi Goal</p>
                                 <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days
                                     but you will lose your interest if you don't meet your</p>
                             </div>
@@ -295,8 +293,7 @@ class GoalPlan extends React.Component {
 
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
+               
                     <div className="row checkSome">
                         <div className="col-sm-12">
                             <p className="page-title">Savings & Goals</p>
@@ -304,7 +301,7 @@ class GoalPlan extends React.Component {
                         <div className="col-sm-12">
                             <div className="tab-overflow">
                                 <div className="sub-tab-nav">
-                                    <ul>
+                                    <ul style={{cursor:"pointer"}}>
                                         <li><a onClick={() => this.setState({visible: true})} href="#" className="active">Goals</a></li>
                                         {/* <NavLink to='/savings/goal/group-savings-selection'> */}
                                             <li onClick={this.NavigateToGroupSavings}><a className="forGroupLink">Group Savings</a></li>
@@ -324,8 +321,7 @@ class GoalPlan extends React.Component {
                             {this.renderGoalsElement(GoalTransHistory)}
                         </div>
                     </div>
-                    </SavingsContainer>
-                </InnerContainer>
+                   
             </Fragment>
         );
     }

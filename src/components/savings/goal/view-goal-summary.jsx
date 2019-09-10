@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Fragment} from "react";
 import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from './../container';
+import SavingsContainer from '..';
 import {NavLink, Link, Route, Redirect} from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
@@ -10,6 +10,7 @@ import ProgressBar from '../../savings/group/progress-bar';
 import moment from 'moment'
 import { NavButtons } from '../../savings/group/component';
 import MoreDetails from '../../savings/group/details';
+import {customerGoalConstants} from '../../../redux/constants/goal/get-customer-trans-history.constant'
 import * as actions from "../../../redux/actions/savings/goal/get-customer-transaction-history.actions";
 
 class ViewGroupSummary extends React.Component {
@@ -58,7 +59,16 @@ class ViewGroupSummary extends React.Component {
             debitAccount:this.state.goal.debitAccount
         };
         this.props.dispatch(actions.PauseCustomerGoal(this.state.user.token, data));
+
+        if(this.props.pause_goal.pause_customer_goal_status === customerGoalConstants.PAUSE_CUSTOMER_GOAL_SUCCESS){
+
+            return this.unpauseCustomerGoal()
+        }
+
+        
     };
+
+    
     DeleteCustomerGoal = () => {
         return this.props.history.push('/savings/delete-goal')
     };
@@ -124,8 +134,6 @@ class ViewGroupSummary extends React.Component {
 
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -275,15 +283,16 @@ class ViewGroupSummary extends React.Component {
 
                                                     <NavButtons
                                                        navType={this.state.navType}
-                                                        leftName='Pause'
+                                                        leftName={this.props.pause_goal.pause_customer_goal_status === customerGoalConstants.PAUSE_CUSTOMER_GOAL_SUCCESS?'Continue':'Pause'}
                                                         // middleName='Pause'
                                                         rightName='Delete'
                                                        edit={details.id}
                                                        delete={details.id}
                                                        unpause={details.id}
                                                        DeleteGroup={this.DeleteCustomerGoal}
-                                                       PauseGroup={this.PauseCustomerGoal}
+                                                        PauseGroup={this.UnpauseCustomerGoal}
                                                        EditGroup={this.PauseCustomerGoal}
+                                                       
 
                                                     />
                                                 </div>
@@ -303,8 +312,6 @@ class ViewGroupSummary extends React.Component {
 
                         </div>
 
-                    </SavingsContainer>
-                </InnerContainer>
             </Fragment>
         );
     }
@@ -314,7 +321,8 @@ class ViewGroupSummary extends React.Component {
 function mapStateToProps(state) {
     return {
         customerGoalTransHistory:state.customerGoalTransHistory,
-        alert:state.alert
+        alert:state.alert,
+        pause_goal:state.pause_goal
 
     }
 }

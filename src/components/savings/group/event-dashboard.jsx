@@ -16,8 +16,6 @@ class EventDashBoard extends React.Component {
     render() {
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -66,8 +64,6 @@ class EventDashBoard extends React.Component {
 
                         </div>
 
-                    </SavingsContainer>
-                </InnerContainer>
             </Fragment>
         );
     }

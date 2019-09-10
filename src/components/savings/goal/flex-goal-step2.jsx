@@ -1,12 +1,12 @@
 import React from 'react'
  import {Fragment} from "react";
- import InnerContainer from '../../shared/templates/inner-container';
- import SavingsContainer from './container';
+ import InnerContainer from '../../../shared/templates/inner-container';
+ import SavingsContainer from '..';
  import Select from 'react-select';
  import { connect } from 'react-redux';
- import {flexGoalConstants} from '../../redux/constants/goal/flex-goal.constant'
- import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
- import SelectDebitableAccounts from '../../shared/components/selectDebitableAccounts';
+ import {flexGoalConstants} from '../../../redux/constants/goal/flex-goal.constant'
+ import * as actions from '../../../redux/actions/savings/goal/flex-goal.actions'
+ import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
  import moment from 'moment';
  import {NavLink, Redirect} from "react-router-dom";
  import "react-datepicker/dist/react-datepicker.css";
@@ -23,6 +23,8 @@ import React from 'react'
          super(props)
          this.state={
              targetAmount:"",
+             user: JSON.parse(localStorage.getItem("user")),
+
              startDate:"",
              endDate:"",
              goalName:"",
@@ -131,9 +133,8 @@ import React from 'react'
 
          return (
              <Fragment>
-                 <InnerContainer>
-                     <SavingsContainer>
-                     {this.gotoStep3()}
+                        {this.gotoStep3()}
+
                          <div className="row">
                              <div className="col-sm-12">
                                  <p className="page-title">Savings & Goals</p>
@@ -158,7 +159,7 @@ import React from 'react'
                                        <div className="max-600">
                                         <div className="al-card no-pad">
                                         <h4 className="m-b-10 center-text hd-underline">Create a Flexi Goal</h4>
-                                        <p className="header-info">To achieve your target of <span style={{color:'#AB2656'}}>N{this.state.targetAmount} <span style={{color:'#444444'}}>by </span>{moment(this.state.endDate).format("L")}</span></p>
+                                        <p className="header-info">To achieve your target of <span style={{color:'#AB2656'}}>N{this.state.targetAmount} <span style={{color:'#444444'}}>by </span>{moment(this.state.goalFrequencyValue).format("L")}</span></p>
 
                                              <form onSubmit={this.onSubmit}>
 
@@ -202,9 +203,7 @@ import React from 'react'
                          </div>
 
 
-                     </SavingsContainer>
-
-                 </InnerContainer>
+                     
 
 
              </Fragment>

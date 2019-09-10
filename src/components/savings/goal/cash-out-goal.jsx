@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Fragment} from 'react';
 import InnerContainer from "../../../shared/templates/inner-container";
-import SavingsContainer from "../container";
+import SavingsContainer from "..";
 import {NavLink, Redirect} from "react-router-dom";
 import SelectDebitableAccounts from "../../../shared/components/selectDebitableAccounts";
 import {customerGoalConstants} from "../../../redux/constants/goal/get-customer-trans-history.constant";
@@ -93,10 +93,12 @@ class StashCashout extends Component {
             //not valid
         }else {
             this.props.dispatch(actions.StashCashoutStep1( {
-                    // 'goalName':this.state.goal.goalName,
-                    'goalId':this.state.goal.id,
-                    "amountSaved":this.toCurrency(this.state.goal.amountSaved),
-                    'accountNumber':this.state.accountToDebit
+                    'goalName':this.state.goal.goalName,
+                    'goalId':parseInt(this.state.goal.id),
+                    "amountSaved":parseFloat(this.state.goal.debitAmount),
+                    'accountNumber':this.state.accountToDebit,
+                    'partialWithdrawal': true
+
                 }
             ));
 
@@ -114,13 +116,13 @@ class StashCashout extends Component {
         const {AmountInvalid} =this.state;
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
-                        {this.gotoStep2()}
+
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
                             </div>
+                            {this.gotoStep2()}
+
                             <div className="col-sm-12">
                                 <div className="tab-overflow">
                                     <div className="sub-tab-nav">
@@ -173,7 +175,7 @@ class StashCashout extends Component {
                                                     <div className="col-sm-12">
                                                         <center>
                                                             <button type="submit" value="Fund Account" className="btn-alat m-t-10 m-b-20 text-center">
-                                                                {this.props.stashGoal_step1.stashout_goal_status_step1 === customerGoalConstants.STASH_CASHOUT_STEP1_PENDING ? "Processing..." : "Proceed and Checkout"}
+                                                                {this.props.stashGoal_step1.stashout_goal_status_step1 === customerGoalConstants.STASH_CASHOUT_STEP1_PENDING ? "Processing..." : "Proceed and Cashout"}
                                                             </button>
                                                         </center>
                                                     </div>
@@ -189,9 +191,6 @@ class StashCashout extends Component {
                             </div>
 
                         </div>
-
-                    </SavingsContainer>
-                </InnerContainer>
 
             </Fragment>
 

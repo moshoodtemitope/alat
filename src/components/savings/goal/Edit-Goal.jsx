@@ -1,7 +1,5 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '../container';
 import {NavLink, Redirect} from "react-router-dom";
 import Select from 'react-select';
 import { connect } from 'react-redux';
@@ -267,8 +265,6 @@ class EditGoal extends React.Component {
 
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -439,9 +435,7 @@ class EditGoal extends React.Component {
                         </div>
 
 
-                    </SavingsContainer>
 
-                </InnerContainer>
 
 
             </Fragment>
