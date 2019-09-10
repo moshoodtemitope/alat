@@ -44,6 +44,14 @@ class SelectInsuranceCover extends React.Component {
     }
 
     componentDidMount() {
+        this.verifyStage();
+    }
+
+    
+    verifyStage(){
+        if(Object.keys(this.props.getProductCovers).length===0){
+            this.props.history.push("/insurance")
+        }
     }
 
     updateDetailsModal(selectedPackage){

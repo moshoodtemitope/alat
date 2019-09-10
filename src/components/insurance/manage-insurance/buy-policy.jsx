@@ -61,6 +61,13 @@ class BuyPolicy extends React.Component {
     componentDidMount() {
         // this.getCustomerPolicies();
         // this.getNewPolicyData();
+        this.verifyStage();
+    }
+
+    verifyStage(){
+        if(Object.keys(this.props.newPolicyDataChunk).length===0){
+            this.props.history.push("/insurance")
+        }
     }
 
     handleSelectedProvider(){

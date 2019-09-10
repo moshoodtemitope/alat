@@ -60,9 +60,15 @@ class ProvideDetails extends React.Component {
     }
 
     componentDidMount() {
+        this.verifyStage();
         this.getStates()
     }
 
+    verifyStage(){
+        if(Object.keys(this.props.saveProductCoverId).length===0){
+            this.props.history.push("/insurance")
+        }
+    }
     
 
     handleCustomerDetails(e){
@@ -85,7 +91,7 @@ class ProvideDetails extends React.Component {
             let customerData = {
                 FirstName: this.state.firstName,
                 LastName:this.state.surname,
-                DateOfBirth:this.state.dob,
+                DateOfBirth:this.state.dobConverted,
                 EmailAddress:this.state.customerInsuranceEmail,
                 PhysicalAddrs:this.state.customerAddress,
                 SmsTel:this.state.customerInsurancePhoneNo,
@@ -115,16 +121,28 @@ class ProvideDetails extends React.Component {
     
 
     handleDoB = (dob) => {
-        this.setState({ dob });
+        // this.setState({ dob });
         if(typeof dob ==='object'){
             dob.setHours(dob.getHours() + 1);
+            let month = new Date(dob).getUTCMonth()+1, 
+                day   = new Date(dob).getUTCDate();
 
-            // let dobInNumbers = new Date(dob).getUTCFullYear()+'-'+(new Date(dob).getUTCMonth()+1)+'-'+(new Date(dob).getUTCDate());
+            let dobConverted;
+
+                if(month.toString().length===1){
+                    month = '0'+month;
+                }
+
+                if(day.toString().length===1){
+                    day = '0'+day;
+                }
+
+             dobConverted = new Date(dob).getUTCFullYear()+'-'+month+'-'+day+'T00:00:00';
             
-            this.setState({ dob});
+            this.setState({ dob, dobConverted});
         }else{
             
-            this.setState({ dob:'' });
+            this.setState({ dob:'', dobConverted:'' });
         }
     }
 
@@ -180,7 +198,10 @@ class ProvideDetails extends React.Component {
     }
 
     renderCustomerDetailsForm(){
-        let newPolicyData    = this.props.newPolicyDataChunk.newpolicy_data.response,
+        if(this.props.newPolicyDataChunk.newpolicy_data===undefined){
+            this.props.history.push("/insurance")
+        }
+        let newPolicyData    = this.props.newPolicyDataChunk,
             allTitles        = [],
             allGenders       = [],
             statesTemp       = [],
@@ -188,6 +209,9 @@ class ProvideDetails extends React.Component {
             lgasTemp         = [],
             allLgas          = [];
        
+        if(Object.keys(this.props.newPolicyDataChunk).length!==0){
+            newPolicyData = newPolicyData.newpolicy_data.response;
+        }
         let{firstName,
             surname,
             customerInsuranceEmail,
@@ -384,6 +408,7 @@ class ProvideDetails extends React.Component {
 function mapStateToProps(state){
     return {
         newPolicyDataChunk   : state.insurancePile.getNewPolicyDataChunk,
+        saveProductCoverId   : state.insurancePile.saveProductCoverId,
         getProductCovers   : state.insurancePile.getCoversInPoductRequest
     };
 }

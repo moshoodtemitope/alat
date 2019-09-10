@@ -86,10 +86,18 @@ class PolicyDetails extends React.Component {
         this.getCarData = this.getCarData.bind(this);
         this.updateCarInfo = this.updateCarInfo.bind(this);
         this.validateCustomerPolicyData = this.validateCustomerPolicyData.bind(this);
+        this.validateDateRange = this.validateDateRange.bind(this);
         
     }
 
     componentDidMount() {
+        this.verifyStage();
+    }
+
+    verifyStage(){
+        if(Object.keys(this.props.savedCustomerInfo).length===0){
+            this.props.history.push("/insurance")
+        }
     }
 
     handleCustomerPolicyDetails(e){
@@ -108,14 +116,14 @@ class PolicyDetails extends React.Component {
                 // EngineNo: this.state.autoEngineNo,
                 // ChasisNo:this.state.autoChasisNo,
                 Color: this.state.selectedAutoColor,
-                VehicleAmount:this.state.autoEstimatedvalue,
+                VehicleAmount:parseFloat(this.state.autoEstimatedvalue),
                 FirstName: customerData.FirstName,
                 LastName: customerData.LastName,
                 DateOfBirth: customerData.DateOfBirth,
                 EmailAddress: customerData.EmailAddress,
                 DlNo:this.state.driverLicenceNo,
-                DlIssueDate: this.state.licenceIssueDate,
-                YearsOfDrvExperience: this.state.yrsOfDriving,
+                DlIssueDate: this.state.licenceIssueDateConverted,
+                YearsOfDrvExperience: parseInt(this.state.yrsOfDriving),
                 PhysicalAddrs: customerData.PhysicalAddrs,
                 SmsTel: customerData.SmsTel,
                 ProductId: this.props.getProductCovers.policycover_data.productId,
@@ -123,8 +131,8 @@ class PolicyDetails extends React.Component {
                 TownId:customerData.TownId,
                 GenderId: customerData.GenderId,
                 SubclassSectCovtypeId:this.props.saveProductCoverId.policycover_data.data.productCoverId,
-                WefDt:this.state.policyStartDate,
-                WetDt:this.state.policyEndDate
+                WefDt:this.state.policyStartDateConverted,
+                WetDt:this.state.policyEndDateConverted
             }
             if((this.state.autoEngineNo!=='' && this.state.autoEngineNoFetched ==undefined)){
                 payload.EngineNo = this.state.autoEngineNo;
@@ -142,9 +150,12 @@ class PolicyDetails extends React.Component {
                 payload.ChasisNo = this.state.autoChasisNoFetched;
             }
 
-            console.log('schedule payload', payload);
+            // console.log('schedule payload', payload);
+            this.setState({isCompleted: true})
 
-            // this.postAutoSchedule(payload);
+            this.postAutoSchedule(payload);
+        }else{
+            this.setState({isCompleted: false})
         }
     }
 
@@ -158,6 +169,8 @@ class PolicyDetails extends React.Component {
             ((this.state.autoChasisNo!=='' && this.state.autoChasisNoFetched ==undefined)
             ||(this.state.autoChasisNo==='' && this.state.autoChasisNoFetched !==undefined))
 
+            && this.validateDateRange(this.state.policyStartDate, this.state.policyEndDate, 'policyDate')
+           
             && this.state.autoEstimatedvalue!=='' &&
             this.state.selectedAutoMakeYear!==''&& this.state.selectedAutoMake!=='' &&
             this.state.selectedAutoModel!==''&& this.state.selectedAutoColor!=='' &&
@@ -516,7 +529,7 @@ class PolicyDetails extends React.Component {
 
     postAutoSchedule(payload){
         const { dispatch } = this.props;
-        dispatch(postMotorSchedule(payload, this.state.token));
+        dispatch(postMotorSchedule(payload, this.state.user.token));
     }
 
     handleSelectedAutoMakeYear(selectedAutoMakeYear){
@@ -544,45 +557,107 @@ class PolicyDetails extends React.Component {
     }
 
     handleDriverLicenceDate(licenceIssueDate){
-        this.setState({ licenceIssueDate });
+        // this.setState({ licenceIssueDate });
         if(typeof licenceIssueDate ==='object'){
             licenceIssueDate.setHours(licenceIssueDate.getHours() + 1);
 
-            // let dobInNumbers = new Date(licenceIssueDate).getUTCFullYear()+'-'+(new Date(licenceIssueDate).getUTCMonth()+1)+'-'+(new Date(licenceIssueDate).getUTCDate());
+            let month = new Date(licenceIssueDate).getUTCMonth()+1, 
+                day   = new Date(licenceIssueDate).getUTCDate();
+
+                if(month.toString().length===1){
+                    month = '0'+month;
+                }
+
+                if(day.toString().length===1){
+                    day = '0'+day;
+                }
+
+            let licenceIssueDateConverted = new Date(licenceIssueDate).getUTCFullYear()+'-'+month+'-'+day+'T00:00:00';
             
-            this.setState({ licenceIssueDate});
+            this.setState({ licenceIssueDate, licenceIssueDateConverted });
         }else{
             
-            this.setState({ licenceIssueDate:'' });
+            this.setState({ licenceIssueDate:'', licenceIssueDateConverted:'' });
         }
+
+        
     }
 
     handlePolicyStartDate(policyStartDate){
-        this.setState({ policyStartDate });
+        // this.setState({ policyStartDate });
         if(typeof policyStartDate ==='object'){
             policyStartDate.setHours(policyStartDate.getHours() + 1);
 
-            // let dobInNumbers = new Date(policyStartDate).getUTCFullYear()+'-'+(new Date(policyStartDate).getUTCMonth()+1)+'-'+(new Date(policyStartDate).getUTCDate());
+            let month = new Date(policyStartDate).getUTCMonth()+1, 
+                day   = new Date(policyStartDate).getUTCDate();
+
+                if(month.toString().length===1){
+                    month = '0'+month;
+                }
+
+                if(day.toString().length===1){
+                    day = '0'+day;
+                }
+
+            let policyStartDateConverted = new Date(policyStartDate).getUTCFullYear()+'-'+month+'-'+day+'T00:00:00';
             
-            this.setState({ policyStartDate});
+            this.setState({ policyStartDate, policyStartDateConverted},()=>{
+                if(this.state.policyEndDate!==''){
+                    this.validateDateRange(this.state.policyStartDate, this.state.policyEndDate, 'policyDate');
+                }
+            });
         }else{
             
-            this.setState({ policyStartDate:'' });
+            this.setState({ policyStartDate:'', policyStartDateConverted:'' });
+        }
+
+        
+    }
+
+    validateDateRange(startDate, endDate, whichDate){
+        if((Date.parse(startDate) > Date.parse(endDate)) ||(Date.parse(startDate) == Date.parse(endDate))){
+            if(whichDate==='policyDate'){
+                this.setState({invalidPolicyDateRange: true})
+            }
+            return false;
+        }else{
+            if(whichDate==='policyDate'){
+                this.setState({invalidPolicyDateRange: false})
+            }
+            return true;
         }
     }
 
     handlePolicyEndDate(policyEndDate){
-        this.setState({ policyEndDate });
+        // this.setState({ policyEndDate });
         if(typeof policyEndDate ==='object'){
             policyEndDate.setHours(policyEndDate.getHours() + 1);
 
-            // let dobInNumbers = new Date(policyEndDate).getUTCFullYear()+'-'+(new Date(policyEndDate).getUTCMonth()+1)+'-'+(new Date(policyEndDate).getUTCDate());
+
+            let month = new Date(policyEndDate).getUTCMonth()+1, 
+                day   = new Date(policyEndDate).getUTCDate();
+
+                if(month.toString().length===1){
+                    month = '0'+month;
+                }
+
+                if(day.toString().length===1){
+                    day = '0'+day;
+                }
+
+            let policyEndDateConverted = new Date(policyEndDate).getUTCFullYear()+'-'+month+'-'+day+'T00:00:00';
             
-            this.setState({ policyEndDate});
+            this.setState({ policyEndDate, policyEndDateConverted},()=>{
+                if(this.state.policyStartDate!==''){
+                    this.validateDateRange(this.state.policyStartDate, this.state.policyEndDate, 'policyDate');
+                }
+            });
         }else{
             
-            this.setState({ policyEndDate:'' });
+            this.setState({ policyEndDate:'', policyEndDateConverted:'' });
         }
+
+        
     }
 
     renderCarMake(isFetched, fetchValue){
@@ -804,7 +879,7 @@ class PolicyDetails extends React.Component {
                             <Textbox
                                 id={'autoEstimatedvalue'}
                                 name="autoEstimatedvalue"
-                                type="text"
+                                type="number"
                                 autoComplete ="off"
                                 value={autoEstimatedvalue}
                                 placeholder= "Enter car estimated value"
@@ -898,7 +973,7 @@ class PolicyDetails extends React.Component {
                                 <Textbox
                                     id={'yrsOfDriving'}
                                     name="yrsOfDriving"
-                                    type="text"
+                                    type="number"
                                     autoComplete ="off"
                                     value={yrsOfDriving}
                                     onChange= {(yrsOfDriving, e)=>{
@@ -957,6 +1032,8 @@ class PolicyDetails extends React.Component {
                                     className="btn-alat m-t-10 m-b-20 text-center"
                                     > {postSchedule.is_processing==true?'Submitting':'Submit'}</button>
                         </center>
+                        {this.state.invalidPolicyDateRange && <div className="error-msg text-center">Policy ending date must be later that starting date</div>}
+                        {this.state.isCompleted===false && <div className="error-msg text-center">Please provide all details</div>}
                     </form>
                 </div>
             </div>
