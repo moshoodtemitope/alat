@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
-import ImageUploader from 'react-images-upload';
 import '../../../assets/css/docupload/doc-upload.scss';
-import deleteIcn from '../../../assets/img/delete.svg';
+import deleteIcn from '../../../assets/img/delete-bin.svg';
 
 import { SystemConstant } from "../../../shared/constants";
+import { loanConstants } from '../../../redux/constants/loans/loans.constants';
 
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -15,7 +15,23 @@ class StatementUpload extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            pdf: { name: "" }
+            user: JSON.parse(localStorage.getItem("user")),
+            pdf: { name: "" },
+            file: {},
+            actions: {
+                pending: loanConstants.LOAN_STATEMENT_UPLOAD_PENDING,
+                success: loanConstants.LOAN_STATEMENT_UPLOAD_SUCCESS,
+                failure: loanConstants.LOAN_STATEMENT_UPLOAD_FAILURE
+            }
+        }
+    }
+
+    componentDidMount=()=>{
+        if (this.props.loan_reqStat)
+        if (this.props.loan_reqStat.loan_reqStat_status == loanConstants.LOAN_REQUEST_STATEMENT_SUCCESS) {
+            
+        } else{
+            this.props.gotoPreviousPageMethod();
         }
     }
 
@@ -23,49 +39,53 @@ class StatementUpload extends React.Component {
         this.props.dispatch(userActions.uploadDocument(this.state.user.token, data, this.state.actions))
     }
 
-    getImageToUpload = (uploadType, imageToUpload) => {
+    getImageToUpload = (imageToUpload) => {
         var imageFile = new FormData();
 
-        imageFile.set('DocumentType', SystemConstant.DOCUMENT_TYPE.workid);
+        imageFile.set('DocumentType', SystemConstant.DOCUMENT_TYPE.statement);
 
         imageFile.append('File', util.canvasToFile(imageToUpload.file), imageToUpload.name)
 
         return imageFile;
     }
 
-    onIDUpload = (picture, e) => {
-        if (picture.length >= 1) {
-            util.getBase64(picture[picture.length - 1], (result) => {
-                this.setState({ [e]: { file: result, name: picture[picture.length - 1].name } }, () => {
-                    console.log(this.state[e]);
-                    this.uploadImage(this.getImageToUpload(e, this.state[e]));
-                });
+    uploadStatement = (pdf) => {
+        //console.log(this.state.pdf);
+        util.getBase64(pdf, (result) => {
+            this.setState({ file: { file: result, name: pdf.name } }, () => {
+               // console.log(this.state.file);
+                this.uploadImage(this.getImageToUpload(this.state.file));
             });
-        }
+        });
         // else {
         //     this.setState({ [e]: { file: '', name: '' } });
         //     this.props.dispatch(alertActions.error("You need to upload a work id"));
         // }
     }
 
-    handleChange = (e) => {
-        console.log(e);
+    proceedClick = () => {
+        this.uploadStatement(this.state.pdf);
     }
 
-    pdfInputChange = (pdf, e) => {
-        console.log(pdf);
-        console.log(e);
-        this.setState({ pdf: pdf },()=>{
-            console.log(this.state.pdf);
+    pdfInputChange = (pdf) => {
+        this.setState({ pdf: pdf[0] }, () => {
         });
     }
 
-    deletePdf =(pdf)=>{
-        this.setState({pdf: {name: ""}});
+    deletePdf = (pdf) => {
+        this.setState({ pdf: { name: "" } });
+    }
+
+    goToNextPage=()=>{
+      if(this.props.statement_upload)
+      if(this.props.statement_upload.loan_statement_status == loanConstants.LOAN_STATEMENT_UPLOAD_SUCCESS){
+          this.props.ParentGoToNextPage();
+      }
     }
 
 
     render() {
+        this.goToNextPage();
         return (
             <div className="col-sm-12">
                 <div className="max-500">
@@ -79,16 +99,22 @@ class StatementUpload extends React.Component {
                                 <div className="row">
                                     {/* <input type="file" id="input-file-now" className="dropify" data-height="150"/> */}
 
-
-                                    <label className="text-center" style={{ color: "red"}}>Account label <img src={deleteIcn}></img></label>
                                     <div className="col-sm-12">
+                                        <div>
+                                            {this.state.pdf.name != "" &&
+                                                <label className="text-center" style={{ color: "red", display: "block" }}>{this.state.pdf.name}
+                                                    <img onClick={this.deletePdf} src={deleteIcn} style={{ height: "20px", cursor: "pointer", marginLeft: "10px" }}></img>
+                                                </label>
+                                            }
+                                        </div>
                                         <center>
-                                            <label className="btn-alat m-t-20 m-b-20 text-center" >
+                                            {this.state.pdf.name == "" && <label className="btn-alat m-t-20 m-b-20 text-center">
                                                 <input type="file" name="upload" accept="application/pdf"
-                                                    onChange={(e) => this.handleChange(e.target.files)} />
+                                                    onChange={(e) => this.pdfInputChange(e.target.files)} />
                                                 Upload
-                                             </label>
-                                            {/* <input type="button" value="Upload" className="btn-alat m-t-20 m-b-20 text-center" /> */}
+                                             </label>}
+                                            {this.state.pdf.name != "" && <input onClick={this.proceedClick} type="button" disabled={this.props.statement_upload.loan_statement_status == loanConstants.LOAN_STATEMENT_UPLOAD_PENDING} 
+                                            value={ this.props.statement_upload.loan_statement_status == loanConstants.LOAN_STATEMENT_UPLOAD_PENDING ? "Processing..." : "Proceed" } className="btn-alat m-t-20 m-b-20 text-center" />}
                                         </center>
                                     </div>
                                 </div>
@@ -103,7 +129,9 @@ class StatementUpload extends React.Component {
 
 function mapStateToProps(state) {
     return {
-
+      alert : state.alert,
+      loan_reqStat: state.loanOnboardingReducerPile.loanOnboardingRequestStatement,
+      statement_upload: state.loanReducerPile.loanStament
     }
 }
 

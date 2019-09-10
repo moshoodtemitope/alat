@@ -9,5 +9,7 @@ export {
     clearChangePinData,
     storeInfo,
     verifyOtpForForgotPassword,
-    resetPin
+    resetPin,
+    getAllSecurityQuestions,saveSecurityQuestion,
+    clearQuestionData
 } from './settings.action'

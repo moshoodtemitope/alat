@@ -5,8 +5,10 @@ import LifeStyle from '../lifestyle/lifestyle-movie/movie';
 import LifestylePreference from "../lifestyle/lifestyle-preference/preference";
 import LifeStyleEvent from "../lifestyle/lifestyle-event/event";
 import MovieDetail from '../lifestyle/lifestyle-movie/movie-details';
-import EventDetails from '../lifestyle/lifestyle-event/event-details'
-import BuyTicketData from '../lifestyle/lifestyle-movie/buy-ticket'
+import EventDetails from '../lifestyle/lifestyle-event/event-details';
+import BuyTicketData from '../lifestyle/lifestyle-movie/buy-ticket';
+import BuyEventTicket from '../lifestyle/lifestyle-event/buy-event-ticket';
+import MovieSuccess from '../lifestyle/lifestyle-movie/movie-success'
 
 
 class LifestyleIndex extends Component {
@@ -22,8 +24,8 @@ class LifestyleIndex extends Component {
             <Fragment>
                 <InnerContainer>
                     <div className="dashboard-wrapper">
-                        <div className="container">
-                            <div className="row">
+                        <div className="container" >
+
                                 {this.props.children}
                                 <Route path={'/lifestyle'} exact component={LifeStyle} />
                                 <Route path={'/lifestyle/movie'} exact component={LifeStyle} />
@@ -32,7 +34,8 @@ class LifestyleIndex extends Component {
                                 <Route path={'/lifestyle/movie-details'} component={MovieDetail} />
                                 <Route path={'/lifestyle/buy-ticket-details'} component={BuyTicketData}/>
                                 <Route path={'/lifestyle/event-details'} component={EventDetails}/>
-                            </div>
+                                <Route path={'/lifestyle/buy-event-ticket'} component={BuyEventTicket}/>
+                                <Route path={'/lifestyle/movie-success'} component={MovieSuccess}/>
                         </div>
                     </div>
                 </InnerContainer>

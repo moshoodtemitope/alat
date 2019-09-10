@@ -138,8 +138,8 @@ class ChangePin extends Component {
             NewPinNumber: this.state.changeForm.newPin.value,
             PinNumber: this.state.changeForm.currentPin.value
         }
-        console.log("submited", payload)
-        // this.props.onChangeAlatPin(this.state.user.token, payload);
+        // console.log("submited", payload)
+        this.props.onChangeAlatPin(this.state.user.token, payload);
     }
 
     goHome = (event) => {
