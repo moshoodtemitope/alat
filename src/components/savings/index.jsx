@@ -50,6 +50,8 @@ import RotatingDelete from './group/confirm-rotating-delete';
 import GroupDelete from './group/confirm-group-savings-delete';
 import SavingsGroupDeleted from './group/success-deleted-group-savings';
 import ContributeToGroup from './group/contribute-to-group';
+import CashOutGoal2 from './goal/cash-out-goal2';
+import cashOutGoalSummary2 from "./goal/cash-out-goal-summary2";
 
 
 
@@ -123,6 +125,8 @@ class SavingsContainer extends Component {
                             <Route path="/savings/delete-group-savings" component={GroupDelete} />
                             <Route path="/savings/delete-group-savings-mod" component={SavingsGroupDeleted} />
                             <Route path="/savings/contribute-to-group" component={ContributeToGroup} />
+                            <Route path="/savings/cash-out" component={CashOutGoal2}/>
+                            <Route path="/savings/cash-out-summary" component={cashOutGoalSummary2}/>
 
                             
                         </div>

@@ -206,7 +206,7 @@ class GoalPlan extends React.Component {
 
 
                                                             <Link to={{
-                                                                pathname:'/savings/stash-cashout',
+                                                                pathname:'/savings/cash-out',
                                                                 state:{
                                                                     name:hist
                                                                 }
