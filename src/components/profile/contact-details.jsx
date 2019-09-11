@@ -26,7 +26,6 @@ class ContactDetails extends Component {
         bvnNumber: null,
         dateValue: null,
         birthDate: null,
-        
         Occupation: null,
         AlatPin: null,
         Sector: null,
