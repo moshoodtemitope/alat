@@ -479,7 +479,12 @@ export const getCurrentATMCard = (token)=>{
         dispatch(request(consume));
         return consume
             .then(response=>{
-                dispatch(success(response));
+                if(response.data.length>=1){
+                    dispatch(success(response));
+                }else{
+                    history.push("/cards");
+                }
+                
             })
             .catch(error=>{
                 if(error.response && typeof(error.response.message) !=="undefined"){
