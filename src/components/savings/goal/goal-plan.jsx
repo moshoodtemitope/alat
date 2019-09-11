@@ -75,6 +75,8 @@ class GoalPlan extends React.Component {
         this.setState({visible: false})
     };
 
+    
+
 
     renderGoalsElement(customerGoalTransHistory){
         if(!customerGoalTransHistory){
