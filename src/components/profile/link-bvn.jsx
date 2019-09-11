@@ -197,114 +197,185 @@ DispatchSuccessMessage = (data) => {
     this.props.dispatch(actions.profileSuccessMessage(data));
 }
 
+GetUserProfileMenu = () => {
+    this.props.dispatch(actions.profileMenu(this.state.user.token));
+ }
+
  
    render(){
        const {dateValidity, BVNValidity, birthDate,  isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin} = this.state;
     //    if(this.props.linkBvn == "LINK_BVN_SUCCESS"){
     //          this.NavigateToSuccessPage();
     //    }
-       return(
-        <Fragment>
-                    <div className="dashboard-wrapper">
-                         <div className="container"> 
-                                 <div className="coverPropertiesofComponent"> 
-                                    <div className="col-sm-12">
-                                        <p className="page-title">Account Setting</p>
-                                    </div>
 
-                                    <div className="col-sm-12">
-                                        <div>
-                                            <div className="sub-tab-nav" style={{marginBottom: 10}}>
-                                                <ul>
-                                                    <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                                    <li>Pin Management</li>
-                                                    <li>Security Questions</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                
-                                <div className="row packageContent">
-                                    <div className="col-sm-4">
-                                        <div className="forProfilePicture">
-                                                <div className="profilePixCircle">
-
+            if(this.props.profileMenu.message === profile.LINK_BVN_SUCCESS){
+                return(
+                    <Fragment>
+                                <div className="dashboard-wrapper">
+                                     <div className="container"> 
+                                             <div className="coverPropertiesofComponent"> 
+                                                <div className="col-sm-12">
+                                                    <p className="page-title">Account Setting</p>
                                                 </div>
-                                                <p className="personsName">{this.props.profileMenu.data.response.fullName}</p>
-                                                <p className="details">{this.props.profileMenu.data.response.username}</p>
-                                                <p className="details">{moment(this.props.profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>
-                                                <hr />
-
-                                                <div className="tickItems" onClick={this.NavigateToBVN}>
-                                                    {isBvNLinked === true ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
-                                                    <p className="pSubs">Link BVN</p>
-                                                </div>
-                                                <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
-                                                    {isProfileInformation ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
-                                                    <p className="pSubs">Personal Information</p>
-                                                </div>
-                                                <div className="tickItems" onClick={this.NavigateToContact}>
-                                                    {isContactDetails ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
-                                                    <p className="pSubs">Contact Details</p>
-                                                </div>
-                                                <div className="tickItems" onClick={this.NavigateToDocuments}>
-                                                    {isDocument ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt=""  className="largeVectorI" />}
-                                                    <p className="pSubs">Document Upload</p>
-                                                </div>
-                                                <div className="tickItems" onClick={this.NavigateToNextOfKin}>
-                                                    {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
-                                                    <p className="pSubs">Next of Kin</p>
-                                                </div>
-                                        </div>
-                                        
-                                    </div>
-                                    <div className="col-sm-6">
-                                    <form onSubmit={this.HandleSubmit} className="parentForm">
-                                            <p className="formHeading">Link BVN</p>
-                                            <div className="form-row">
-                                                        <div className={BVNValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
-                                                            <label className="label-text">BVN</label>
-                                                            <input type="Number" className="form-control linkBVN" onChange={this.SetBvNNumber} placeholder="0000 0000 0000"/>
+            
+                                                <div className="col-sm-12">
+                                                    <div>
+                                                        <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                                            <ul>
+                                                                <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                                                <li>Pin Management</li>
+                                                                <li>Security Questions</li>
+                                                            </ul>
                                                         </div>
-                                            </div>
-                                            
-                                            <div className="form-row">
-                                                    <div className={dateValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
-                                                            <label className="label-text">Date of Birth</label>
-                                                            <DatePicker className="form-control linkBVN" selected={birthDate} 
-                                                            placeholder="June 31, 2019"
-                                                            dateFormat="MMMM d, yyyy"
-                                                            showMonthDropdown
-                                                            showYearDropdown
-                                                            onChange={this.SetBirthDay}
-                                                            dropdownMode="select"
-                                                            // minDate={new Date()}
-                                                            />
-                                                            
                                                     </div>
-                                            </div>
-                                            <div>
+                                                </div>
+                                            
+                                            <div className="row packageContent">
+                                                <div className="col-sm-4">
+                                                    <div className="forProfilePicture">
+                                                            <div className="profilePixCircle">
+            
+                                                            </div>
+                                                            <p className="personsName">{this.props.profileMenu.data.response.fullName}</p>
+                                                            <p className="details">{this.props.profileMenu.data.response.username}</p>
+                                                            <p className="details">{moment(this.props.profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>
+                                                            <hr />
+            
+                                                            <div className="tickItems" onClick={this.NavigateToBVN}>
+                                                                {isBvNLinked === true ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                                <p className="pSubs">Link BVN</p>
+                                                            </div>
+                                                            <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
+                                                                {isProfileInformation ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                                <p className="pSubs">Personal Information</p>
+                                                            </div>
+                                                            <div className="tickItems" onClick={this.NavigateToContact}>
+                                                                {isContactDetails ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                                <p className="pSubs">Contact Details</p>
+                                                            </div>
+                                                            <div className="tickItems" onClick={this.NavigateToDocuments}>
+                                                                {isDocument ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt=""  className="largeVectorI" />}
+                                                                <p className="pSubs">Document Upload</p>
+                                                            </div>
+                                                            <div className="tickItems" onClick={this.NavigateToNextOfKin}>
+                                                                {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                                <p className="pSubs">Next of Kin</p>
+                                                            </div>
+                                                    </div>
                                                     
-                                                <button type="submit" className="twoBut no-border">Back</button>
-                                        
-                                        
-                                                <button type="submit" className="twoBut1">Submit</button>       
+                                                </div>
+                                                <div className="col-sm-6">
+                                                <form onSubmit={this.HandleSubmit} className="parentForm">
+                                                        <p className="formHeading">Link BVN</p>
+                                                        <div className="form-row">
+                                                                    <div className={BVNValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
+                                                                        <label className="label-text">BVN</label>
+                                                                        <input type="Number" className="form-control linkBVN" onChange={this.SetBvNNumber} placeholder="0000 0000 0000"/>
+                                                                    </div>
+                                                        </div>
+                                                        
+                                                        <div className="form-row">
+                                                                <div className={dateValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
+                                                                        <label className="label-text">Date of Birth</label>
+                                                                        <DatePicker className="form-control linkBVN" selected={birthDate} 
+                                                                        placeholder="June 31, 2019"
+                                                                        dateFormat="MMMM d, yyyy"
+                                                                        showMonthDropdown
+                                                                        showYearDropdown
+                                                                        onChange={this.SetBirthDay}
+                                                                        dropdownMode="select"
+                                                                        // minDate={new Date()}
+                                                                        />
+                                                                        
+                                                                </div>
+                                                        </div>
+                                                        <div>
+                                                                
+                                                            <button type="submit" className="twoBut no-border">Back</button>
                                                     
+                                                    
+                                                            <button type="submit" className="twoBut1">Submit</button>       
+                                                                
+                                                        </div>
+                                                    </form>
+                                                
+                                                </div>
                                             </div>
-                                        </form>
-                                    
-                                    </div>
-                                </div>
-
+            
+                                            
+                                                
                                 
-                                    
-                    
+                                            </div>
+                                        </div>
+                                        </div>
+            
+                     </Fragment>
+                   )
+            }
+
+            if(this.props.profileMenu.message === profile.LINK_BVN_PENDING){
+                return(
+                    <Fragment>
+                        <InnerContainer>
+                                <div className="dashboard-wrapper">
+                                    <div className="container">
+                            <div className="coverPropertiesofComponent">
+                                <div className="col-sm-12">
+                                <p className="page-title">Account Setting</p>
+                                </div>
+    
+                        <div className="col-sm-12">
+                            <div>
+                                <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                    <ul>
+                                        <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                        <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+                                        <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                    </ul>
                                 </div>
                             </div>
+                        </div>
+                        <p>loading data ...</p>
+                        </div>
+                        </div>
+                        </div>
+                        </InnerContainer>
+                    </Fragment>      
+                )
+            }
+
+            if(this.props.profileMenu.data == undefined){
+            console.log('NOTHING EVER HAPPENED HERE')
+            this.GetUserProfileMenu();
+            return(
+                <Fragment>
+                    <InnerContainer> 
+                            <div className="dashboard-wrapper">
+                                <div className="container">
+                        <div className="coverPropertiesofComponent">
+                            <div className="col-sm-12">
+                            <p className="page-title">Account Setting</p>
                             </div>
 
-         </Fragment>
-       )
+                    <div className="col-sm-12">
+                        <div>
+                            <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                <ul>
+                                    <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <p>loading data ...</p>
+                    </div>
+                    </div>
+                    </div>
+                    </InnerContainer> 
+                </Fragment>      
+            )
+            }
    }
 }
 

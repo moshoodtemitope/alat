@@ -240,7 +240,7 @@ DispatchSuccessMessage = (data) => {
        return(
         <Fragment>
              <InnerContainer>
-                    <div className="dashboard-wrapper">
+                    <div className="dashboard-wrapper profileWrapper">
                          <div className="container">
                                 <div className="coverPropertiesofComponent">
                                     <div className="col-sm-12">

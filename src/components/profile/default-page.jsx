@@ -51,19 +51,19 @@ class PersonalDefault extends Component {
    }
 
    NavigateToBVN = () => {
-       if(this.props.profileMenu.data.response.bvnLinked == true){
-             this.DispatchSuccessMessage('BVN has Been Linked');
-             return;
-       }
+    //    if(this.props.profileMenu.data.response.bvnLinked == true){
+    //          this.DispatchSuccessMessage('BVN has Been Linked');
+    //          return;
+    //    }
 
        history.push('/profile/linkBVN');
    }
 
    NavigateToPersonalInfo = () => {
-        if(this.props.profileMenu.data.response.personalInfoComplete == true){
-            this.DispatchSuccessMessage('Personal Information Created');
-            return;
-        }
+        // if(this.props.profileMenu.data.response.personalInfoComplete == true){
+        //     this.DispatchSuccessMessage('Personal Information Created');
+        //     return;
+        // }
 
         history.push('/profile/profile-personalInfo');
    }
@@ -106,7 +106,6 @@ class PersonalDefault extends Component {
    }
 
    CheckIfStoreInformationIsSet = () => {
-       
        if(this.props.profileMenu.message == profile.GET_PROFILE_MENU_SUCCESS){
            this.setState({isProfileInformation: this.props.profileMenu.data.response.personalInfoComplete});
            this.setState({isContactDetails: this.props.profileMenu.data.response.contactDetailsComplete});
@@ -231,6 +230,38 @@ class PersonalDefault extends Component {
                         </div>
                     </div>
                     </div>
+                </Fragment>      
+            )
+       }
+
+       if(this.props.profileMenu.data == undefined){
+            this.GetUserProfileMenu();
+            return(
+                <Fragment>
+                      <InnerContainer>
+                           <div className="dashboard-wrapper">
+                                 <div className="container">
+                         <div className="coverPropertiesofComponent">
+                             <div className="col-sm-12">
+                              <p className="page-title">Account Setting</p>
+                            </div>
+    
+                    <div className="col-sm-12">
+                        <div>
+                            <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                <ul>
+                                    <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <p>loading data ...</p>
+                    </div>
+                    </div>
+                    </div>
+                    </InnerContainer>
                 </Fragment>      
             )
        }

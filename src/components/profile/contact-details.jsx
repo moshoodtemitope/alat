@@ -814,263 +814,333 @@ DispatchSuccessMessage = (data) => {
     this.props.dispatch(actions.profileSuccessMessage(data));
 }
 
+GetUserProfileMenu = () => {
+    this.props.dispatch(actions.profileMenu(this.state.user.token));
+ }
+
    render(){
         const { PinValidity, AlternateEmailValidity, sameAddressAsAbove,SectorValidity, phoneNumberValidity, LocalGovValidity2, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity2, NationalityValidity, StateOfOriginValidity,
         EmailAddressValidity, streetValidity, busstopValidity, apartmentValidity, personalAddressValidity, StateOfOriginValidity2,
         personalAddressValidity2, alternatePhoneNumberValidity, houseNumberValidity,   isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin} = this.state;
-        const { getContactDetail } = this.props;
+        const {profileMenu, getContactDetail } = this.props;
         
-        if(getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS)
-             this.UseGottenStateInfo();
-       return(
-        <Fragment>
-             <InnerContainer>
-                    <div className="dashboard-wrapper">
-                         <div className="container">
-                                <div className="coverPropertiesofComponent">
-                                    <div className="col-sm-12">
-                                        <p className="page-title">Account Setting</p>
-                                    </div>
-
-                                    <div className="col-sm-12">
-                                        <div>
-                                            <div className="sub-tab-nav" style={{marginBottom: 10}}>
-                                                <ul>
-                                                      <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                                      <li>Pin Management</li>
-                                                      <li>Security Questions</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                
-                                <div className="row packageContent">
-                                    <div className="col-sm-4">
-                                        <div className="forProfilePicture">
-                                                <div className="profilePixCircle">
-
-                                                </div>
-                                                <p className="personsName">{this.props.profileMenu.data.response.fullName}</p>
-                                                <p className="details">{this.props.profileMenu.data.response.username}</p>
-                                                <p className="details">{moment(this.props.profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>
-                                                <hr />
-
-                                                <div className="tickItems" onClick={this.NavigateToBVN}>
-                                                    {isBvNLinked === true ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
-                                                    <p className="pSubs">Link BVN</p>
-                                                </div>
-                                                <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
-                                                    {isProfileInformation ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
-                                                    <p className="pSubs">Personal Information</p>
-                                                </div>
-                                                <div className="tickItems" onClick={this.NavigateToContact}>
-                                                    {isContactDetails ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
-                                                    <p className="pSubs">Contact Details</p>
-                                                </div>
-                                                <div className="tickItems" onClick={this.NavigateToDocuments}>
-                                                    {isDocument ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt=""  className="largeVectorI" />}
-                                                    <p className="pSubs">Document Upload</p>
-                                                </div>
-                                                <div className="tickItems" onClick={this.NavigateToNextOfKin}>
-                                                    {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
-                                                    <p className="pSubs">Next of Kin</p>
-                                                </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-7">
-                                    <form onSubmit={this.HandleSubmit} className="parentForm">
-                                            <p className="formHeading">Contact Details</p>
-                                            <div className="form-row">
-                                                    <div className={houseNumberValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                                    <label className="label-text">House Number</label>
-                                                                    <input type="number" name="houseNumber" className="form-control" onChange={this.SetInputValue} placeholder="1"/>
-                                                               
-                                                    </div>
-
-                                                    <div className={apartmentValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
-                                                                    <label className="label-text">Apartment</label>
-                                                                    <input type="text" name="apartment" className="form-control" onChange={this.SetInputValue} placeholder=""/>
-                                                    </div>
-                                                
-                                            </div>
-                                            <div className="form-row">
-                                                        <div className={streetValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Streat / Compound Name</label>
-                                                            <input type="text" name="street" className="form-control" onChange={this.SetInputValue} placeholder=""/>
-                                                        </div>
-                                            </div>
-                                            <div className="form-row">
-                                                        <div className={busstopValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Nearest Bustop</label>
-                                                            <input type="text" name="busStop" className="form-control" onChange={this.SetInputValue} placeholder=""/>
-                                                        </div>
-                                            </div>
-
-                                            <div className="form-row">
-                                                        <div className={personalAddressValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Address</label>
-                                                            <input type="text" name="personalAddress" className="form-control" onChange={this.SetInputValue} placeholder="Address"/>
-                                                        </div>
-                                            </div>
-
-                                            <div className="form-row">
-                                                        <div className={NationalityValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
-                                                            <label className="label-text">Country</label>
-                                                            <input type="text" name="Nationality" className="form-control" onChange={this.SetInputValue} placeholder="Nationality"/>
-                                                        </div>
-
-                                                        <div className={StateOfOriginValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                            <label className="label-text">State</label>
-                                                            <select name="StateOfOrigin" className="form-control" onChange={this.SetInputValue5}>
-                                                                    <option>Select State of Origin</option>
-                                                                    {                                      
-                                                                        getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
-                                                                        getContactDetail.data.response.states.map(state=> {
-                                                                    
-                                                                            return <option  value={state}>
-                                                                            {state.name}</option>
-                                                                        })
-                                                                    }     
-                                                            </select>
-                                                        </div>
-                                            </div>
-
-                                            <div className="form-row">
-                                                        <div className={LocalGovValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
-                                                            <label className="label-text">Local Government</label>
-                                                            <select onChange={this.SetInputValue4} name="LocalGv" >
-                                                                    <option>Select Local Government</option>
-                                                                    {                                      
-                                                                        getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
-                                                                        getContactDetail.data.response.cities.map(city=> {
-                                                                            return <option  value={city.name}>
-                                                                            {city.name}</option>
-                                                                        })
-                                                                    } 
-                                                            </select>
-                                                        </div>
-
-                                                        <div className={"form-group col-md-6"}>
-                                                            <label className="label-text">City</label>
-                                                            <input type="text" name="PlaceOfBirth" className="form-control enter-city" onChange={this.SetInputValue} placeholder="City"/>
-                                                        </div>
-                                            </div>
-
-                                            <div className="form-row">
-                                                        <div className="form-group col-md-12">
-                                                            <label className="label-text">Mailing Address</label>
-                                                        </div>
-                                            </div>
-                                            <div className="form-row">
-                                                        <div className="form-group col-md-9">
-                                                            <label className="label-text">Same as address above</label>
-                                                        </div>
-                                                        <div className="form-group col-md-3">                                 
-                                                             <div class="custom-control custom-switch">
-                                                                    <input type="checkbox" checked={this.state.checkBoxStatus} class="custom-control-input" id="customSwitch1" 
-                                                                              onChange={ this.HandleCheckBoxInput }/>
-                                                                    <label class="custom-control-label" for="customSwitch1"></label>
-                                                             </div>
-                                                        </div>
-                                            </div>
-                                            
-                   
-
-                                            <div className={sameAddressAsAbove + " " + "form-row"}>
-                                                        <div className={personalAddressValidity2 ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Mailing Address</label>
-                                                            <input type="text" name="personalAddress2" className="form-control" onChange={this.SetInputValue} placeholder="Address"/>
-                                                        </div>
-                                            </div>
-                                            
-                                            <div className={sameAddressAsAbove + " " + "form-row"}>
-                                                        <div className={NationalityValidity2 ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Mailing Country</label>
-                                                            <input type="text" name="Nationality2" className="form-control" onChange={this.SetInputValue} placeholder="Country"/>
-                                                        </div>
-                                            </div>
-
-                                            <div className={sameAddressAsAbove + " " + "form-row"}>
-                                                        <div className={StateOfOriginValidity2 ? "form-group form-error col-md-11" : "form-group col-md-11"}>
-                                                            <label className="label-text">Mailing State</label>
-                                                            <select name="StateOfOrigin2" className="form-control state-mailing" onChange={this.SetInputValue3}>
-                                                                    <option>Select State</option>
-                                                                    {                                      
-                                                                        getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
-                                                                        getContactDetail.data.response.states.map(state=> {
-                                                                            return <option value={state}>
-                                                                            {state.name}</option>
-                                                                        })
-                                                                    }     
-                                                            </select>
-                                                        </div>
-                                            </div>
-
-                                            <div className={sameAddressAsAbove + " " + "form-row"}>
-                                                        <div className={LocalGovValidity2 ? "form-group form-error col-md-11" : "form-group col-md-11"}>
-                                                            <label className="label-text">Mailing Local Government</label>
-                                                            <select onChange={this.SetInputValue2} name="LocalGv2" className="local-mailing">
-                                                                    <option>Select Local Government</option>
-                                                                    {                                      
-                                                                        getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
-                                                                        getContactDetail.data.response.cities.map(city => {
-                                                                            return <option value={city.name}>
-                                                                            {city.name}</option>
-                                                                        })
-                                                                    } 
-                                                            </select>
-                                                        </div>
-                                            </div>
-
-                                            <div className="form-row">
-                                                        <div className={EmailAddressValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Email Address</label>
-                                                            <input type="email" name="EmailAddress" className="form-control" onChange={this.SetInputValue} placeholder="Email Address"/>
-                                                        </div>
-                                            </div>
-                                            
-                                            <div className="form-row">
-                                                        <div className={AlternateEmailValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Alternate Email</label>
-                                                            <input type="email" name="alternateEmail" className="form-control" onChange={this.SetInputValue} placeholder="Alternate Email"/>
-                                                        </div>
-                                            </div>
-
-                                            <div className="form-row">
-                                                        <div className={phoneNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Phone Number</label>
-                                                            <input type="number" name="phoneNumber" className="form-control" onChange={this.SetInputValue} placeholder="Phone Number"/>
-                                                        </div>
-                                            </div>
-                                            <div className="form-row">
-                                                        <div className={alternatePhoneNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Alternate Phone Number</label>
-                                                            <input type="number" name="alternatePhoneNumber" className="form-control" onChange={this.SetInputValue} placeholder="Alternate Phone Number"/>
-                                                        </div>
-                                            </div>
-                                            
-                                            <div className="form-row">
-                                                        <div className={PinValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Alat Pin</label>
-                                                            <input type="number" name="AlatPin" className="form-control" onChange={this.SetInputValue} placeholder="Alat Pin"/>
-                                                        </div>
-                                            </div>
-
-                                            <div className="align-button">
-                                                <button type="submit" className="twoBut no-border">Submit</button>
-                                            </div>
-
-                                            {/* <button type="submit" className="twoBut">Submit</button>    */}
-                                        </form>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
+        if(getContactDetail.message === profile.GET_CONTACT_DETAILS_PENDING){
+            console.log('NOTHING EVER HAPPENED HERE')
+        
+         return(
+             <Fragment>
+                   <InnerContainer>
+                        <div className="dashboard-wrapper">
+                              <div className="container">
+                      <div className="coverPropertiesofComponent">
+                          <div className="col-sm-12">
+                           <p className="page-title">Account Setting</p>
+                         </div>
+ 
+                 <div className="col-sm-12">
+                     <div>
+                         <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                             <ul>
+                                 <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                 <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+                                 <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                             </ul>
+                         </div>
+                     </div>
+                 </div>
+                 <p>loading data ...</p>
+                 </div>
+                 </div>
+                 </div>
                  </InnerContainer>
-        </Fragment>
-            
-       )
+             </Fragment>      
+         )
+        }
+ 
+        if(getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS){
+            this.UseGottenStateInfo();
+            return(
+                <Fragment>
+                    <InnerContainer>
+                            <div className="dashboard-wrapper">
+                                <div className="container">
+                                        <div className="coverPropertiesofComponent">
+                                            <div className="col-sm-12">
+                                                <p className="page-title">Account Setting</p>
+                                            </div>
+
+                                            <div className="col-sm-12">
+                                                <div>
+                                                    <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                                        <ul>
+                                                            <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                                            <li>Pin Management</li>
+                                                            <li>Security Questions</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                        <div className="row packageContent">
+                                            <div className="col-sm-4">
+                                                <div className="forProfilePicture">
+                                                        <div className="profilePixCircle">
+
+                                                        </div>
+                                                        <p className="personsName">{this.props.profileMenu.data.response.fullName}</p>
+                                                        <p className="details">{this.props.profileMenu.data.response.username}</p>
+                                                        <p className="details">{moment(this.props.profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>
+                                                        <hr />
+
+                                                        <div className="tickItems" onClick={this.NavigateToBVN}>
+                                                            {isBvNLinked === true ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                            <p className="pSubs">Link BVN</p>
+                                                        </div>
+                                                        <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
+                                                            {isProfileInformation ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                            <p className="pSubs">Personal Information</p>
+                                                        </div>
+                                                        <div className="tickItems" onClick={this.NavigateToContact}>
+                                                            {isContactDetails ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                            <p className="pSubs">Contact Details</p>
+                                                        </div>
+                                                        <div className="tickItems" onClick={this.NavigateToDocuments}>
+                                                            {isDocument ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt=""  className="largeVectorI" />}
+                                                            <p className="pSubs">Document Upload</p>
+                                                        </div>
+                                                        <div className="tickItems" onClick={this.NavigateToNextOfKin}>
+                                                            {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                            <p className="pSubs">Next of Kin</p>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-sm-7">
+                                            <form onSubmit={this.HandleSubmit} className="parentForm">
+                                                    <p className="formHeading">Contact Details</p>
+                                                    <div className="form-row">
+                                                            <div className={houseNumberValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                            <label className="label-text">House Number</label>
+                                                                            <input type="number" name="houseNumber" className="form-control" onChange={this.SetInputValue} placeholder="1"/>
+                                                                    
+                                                            </div>
+
+                                                            <div className={apartmentValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
+                                                                            <label className="label-text">Apartment</label>
+                                                                            <input type="text" name="apartment" className="form-control" onChange={this.SetInputValue} placeholder=""/>
+                                                            </div>
+                                                        
+                                                    </div>
+                                                    <div className="form-row">
+                                                                <div className={streetValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Streat / Compound Name</label>
+                                                                    <input type="text" name="street" className="form-control" onChange={this.SetInputValue} placeholder=""/>
+                                                                </div>
+                                                    </div>
+                                                    <div className="form-row">
+                                                                <div className={busstopValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Nearest Bustop</label>
+                                                                    <input type="text" name="busStop" className="form-control" onChange={this.SetInputValue} placeholder=""/>
+                                                                </div>
+                                                    </div>
+
+                                                    <div className="form-row">
+                                                                <div className={personalAddressValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Address</label>
+                                                                    <input type="text" name="personalAddress" className="form-control" onChange={this.SetInputValue} placeholder="Address"/>
+                                                                </div>
+                                                    </div>
+
+                                                    <div className="form-row">
+                                                                <div className={NationalityValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
+                                                                    <label className="label-text">Country</label>
+                                                                    <input type="text" name="Nationality" className="form-control" onChange={this.SetInputValue} placeholder="Nationality"/>
+                                                                </div>
+
+                                                                <div className={StateOfOriginValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                    <label className="label-text">State</label>
+                                                                    <select name="StateOfOrigin" className="form-control" onChange={this.SetInputValue5}>
+                                                                            <option>Select State of Origin</option>
+                                                                            {                                      
+                                                                                getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
+                                                                                getContactDetail.data.response.states.map(state=> {
+                                                                            
+                                                                                    return <option  value={state}>
+                                                                                    {state.name}</option>
+                                                                                })
+                                                                            }     
+                                                                    </select>
+                                                                </div>
+                                                    </div>
+
+                                                    <div className="form-row">
+                                                                <div className={LocalGovValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
+                                                                    <label className="label-text">Local Government</label>
+                                                                    <select onChange={this.SetInputValue4} name="LocalGv" >
+                                                                            <option>Select Local Government</option>
+                                                                            {                                      
+                                                                                getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
+                                                                                getContactDetail.data.response.cities.map(city=> {
+                                                                                    return <option  value={city.name}>
+                                                                                    {city.name}</option>
+                                                                                })
+                                                                            } 
+                                                                    </select>
+                                                                </div>
+
+                                                                <div className={"form-group col-md-6"}>
+                                                                    <label className="label-text">City</label>
+                                                                    <input type="text" name="PlaceOfBirth" className="form-control enter-city" onChange={this.SetInputValue} placeholder="City"/>
+                                                                </div>
+                                                    </div>
+
+                                                    <div className="form-row">
+                                                                <div className="form-group col-md-12">
+                                                                    <label className="label-text">Mailing Address</label>
+                                                                </div>
+                                                    </div>
+                                                    <div className="form-row">
+                                                                <div className="form-group col-md-9">
+                                                                    <label className="label-text">Same as address above</label>
+                                                                </div>
+                                                                <div className="form-group col-md-3">                                 
+                                                                    <div class="custom-control custom-switch">
+                                                                            <input type="checkbox" checked={this.state.checkBoxStatus} class="custom-control-input" id="customSwitch1" 
+                                                                                    onChange={ this.HandleCheckBoxInput }/>
+                                                                            <label class="custom-control-label" for="customSwitch1"></label>
+                                                                    </div>
+                                                                </div>
+                                                    </div>
+                                                    
+                        
+
+                                                    <div className={sameAddressAsAbove + " " + "form-row"}>
+                                                                <div className={personalAddressValidity2 ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Mailing Address</label>
+                                                                    <input type="text" name="personalAddress2" className="form-control" onChange={this.SetInputValue} placeholder="Address"/>
+                                                                </div>
+                                                    </div>
+                                                    
+                                                    <div className={sameAddressAsAbove + " " + "form-row"}>
+                                                                <div className={NationalityValidity2 ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Mailing Country</label>
+                                                                    <input type="text" name="Nationality2" className="form-control" onChange={this.SetInputValue} placeholder="Country"/>
+                                                                </div>
+                                                    </div>
+
+                                                    <div className={sameAddressAsAbove + " " + "form-row"}>
+                                                                <div className={StateOfOriginValidity2 ? "form-group form-error col-md-11" : "form-group col-md-11"}>
+                                                                    <label className="label-text">Mailing State</label>
+                                                                    <select name="StateOfOrigin2" className="form-control state-mailing" onChange={this.SetInputValue3}>
+                                                                            <option>Select State</option>
+                                                                            {                                      
+                                                                                getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
+                                                                                getContactDetail.data.response.states.map(state=> {
+                                                                                    return <option value={state}>
+                                                                                    {state.name}</option>
+                                                                                })
+                                                                            }     
+                                                                    </select>
+                                                                </div>
+                                                    </div>
+
+                                                    <div className={sameAddressAsAbove + " " + "form-row"}>
+                                                                <div className={LocalGovValidity2 ? "form-group form-error col-md-11" : "form-group col-md-11"}>
+                                                                    <label className="label-text">Mailing Local Government</label>
+                                                                    <select onChange={this.SetInputValue2} name="LocalGv2" className="local-mailing">
+                                                                            <option>Select Local Government</option>
+                                                                            {                                      
+                                                                                getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
+                                                                                getContactDetail.data.response.cities.map(city => {
+                                                                                    return <option value={city.name}>
+                                                                                    {city.name}</option>
+                                                                                })
+                                                                            } 
+                                                                    </select>
+                                                                </div>
+                                                    </div>
+
+                                                    <div className="form-row">
+                                                                <div className={EmailAddressValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Email Address</label>
+                                                                    <input type="email" name="EmailAddress" className="form-control" onChange={this.SetInputValue} placeholder="Email Address"/>
+                                                                </div>
+                                                    </div>
+                                                    
+                                                    <div className="form-row">
+                                                                <div className={AlternateEmailValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Alternate Email</label>
+                                                                    <input type="email" name="alternateEmail" className="form-control" onChange={this.SetInputValue} placeholder="Alternate Email"/>
+                                                                </div>
+                                                    </div>
+
+                                                    <div className="form-row">
+                                                                <div className={phoneNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Phone Number</label>
+                                                                    <input type="number" name="phoneNumber" className="form-control" onChange={this.SetInputValue} placeholder="Phone Number"/>
+                                                                </div>
+                                                    </div>
+                                                    <div className="form-row">
+                                                                <div className={alternatePhoneNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Alternate Phone Number</label>
+                                                                    <input type="number" name="alternatePhoneNumber" className="form-control" onChange={this.SetInputValue} placeholder="Alternate Phone Number"/>
+                                                                </div>
+                                                    </div>
+                                                    
+                                                    <div className="form-row">
+                                                                <div className={PinValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Alat Pin</label>
+                                                                    <input type="number" name="AlatPin" className="form-control" onChange={this.SetInputValue} placeholder="Alat Pin"/>
+                                                                </div>
+                                                    </div>
+
+                                                    <div className="align-button">
+                                                        <button type="submit" className="twoBut no-border">Submit</button>
+                                                    </div>
+
+                                                    {/* <button type="submit" className="twoBut">Submit</button>    */}
+                                                </form>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </InnerContainer>
+                </Fragment>         
+            );
+        }
+       if(profileMenu.data == undefined){
+           console.log('NOTHING EVER HAPPENED HERE')
+        this.GetUserProfileMenu();
+        return(
+            <Fragment>
+                  <InnerContainer>
+                       <div className="dashboard-wrapper">
+                             <div className="container">
+                     <div className="coverPropertiesofComponent">
+                         <div className="col-sm-12">
+                          <p className="page-title">Account Setting</p>
+                        </div>
+
+                <div className="col-sm-12">
+                    <div>
+                        <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                            <ul>
+                                <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+                                <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <p>loading data ...</p>
+                </div>
+                </div>
+                </div>
+                </InnerContainer>
+            </Fragment>      
+        )
+       }
+
    }
 }
 

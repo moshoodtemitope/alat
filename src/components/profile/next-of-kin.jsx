@@ -10,13 +10,7 @@ import { ToggleButton }  from '../../shared/elements/_toggle';
 import { getContactDetails} from "../../redux/actions/profile/profile-action";
 import {profile} from '../../redux/constants/profile/profile-constants';
 import {connect} from 'react-redux'
-import moment from 'moment';
-// import { on } from 'cluster';
 
-// var allStatesInfo = null;
-// var allCityData = null;
-// var localGov2 = null;
-// var localGov1 = null;
 
 class NextOfKin extends Component {   
     constructor(props){
