@@ -1,0 +1,340 @@
+import * as React from "react";
+import {Fragment} from "react";
+import InnerContainer from '../../../shared/templates/inner-container';
+import SavingsContainer from '..';
+import {NavLink, Link, Route, Redirect} from "react-router-dom";
+import "react-datepicker/dist/react-datepicker.css";
+import { connect } from "react-redux";
+import SubHead from '../../savings/group/sub-head';
+import ProgressBar from '../../savings/group/progress-bar';
+import moment from 'moment'
+import { NavButtons } from '../../savings/group/component';
+import MoreDetails from '../../savings/group/details';
+import {customerGoalConstants} from '../../../redux/constants/goal/get-customer-trans-history.constant'
+import * as actions from "../../../redux/actions/savings/goal/get-customer-transaction-history.actions";
+
+class ViewGroupSummary extends React.Component {
+    constructor(props){
+        super(props);
+        this.state={
+            user: JSON.parse(localStorage.getItem("user")),
+            type: 3,
+            userType: 'members',
+            navType: 3,
+            buttonType: "smallButton",
+            discTopSpan: 'something',
+            customerGoalTransHistory: null,
+            goal:JSON.parse(localStorage.getItem('goal')) || [],
+
+
+
+        };
+
+
+
+    }
+    toCurrency =(currency) =>{
+        if (currency) {
+            currency = typeof currency !== 'string' ? currency.toString() : currency;
+            let numberValueArray = currency.split('.');
+            let numberValue = this.removeComma(numberValueArray[0]);
+            currency = numberValueArray.length > 1 ? numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+                + '.' + numberValueArray[1] : numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+        }
+        return currency;
+    };
+    removeComma(currencyValue) {
+        return currencyValue.replace(/,/g, '');
+    }
+    PauseCustomerGoal= () => {
+        let data = {
+            goalName:this.state.goal.goalName,
+            targetDate:this.state.goal.targetDate,
+            startDate:this.state.goal.startDate,
+            targetAmount:parseFloat(this.state.goal.targetAmount),
+            goalTypeId:parseInt(this.state.goal.goalTypeId),
+            id:parseInt(this.state.goal.id),
+            debitAmount:parseFloat(this.state.goal.debitAmount),
+            frequencyId:parseInt(this.state.goal.frequencyId),
+            debitAccount:this.state.goal.debitAccount
+        };
+        this.props.dispatch(actions.PauseCustomerGoal(this.state.user.token, data));
+
+        if(this.props.pause_goal.pause_customer_goal_status === customerGoalConstants.PAUSE_CUSTOMER_GOAL_SUCCESS){
+
+            return this.unpauseCustomerGoal()
+        }
+
+        
+    };
+
+    
+    DeleteCustomerGoal = () => {
+        return this.props.history.push('/savings/delete-goal')
+    };
+    UnpauseCustomerGoal = (event) => {
+        let data = {
+            goalId: parseInt(event.target.id),
+        };
+        this.props.dispatch(actions.unpauseCustomerGoal(this.state.user.token,data));
+    };
+    EditCustomerGoal = () => {
+        return this.props.history.push("/savings/edit-goal");
+    };
+
+
+    componentDidMount(){
+        const details = this.props.location.state.name;
+        this.setState({
+            customerGoalTransHistory: details,
+
+        },()=>{  localStorage.setItem('goal', JSON.stringify(details))
+        });
+
+    }
+
+
+
+        GetMonth = (param) => {
+        switch(param){
+            case '01':
+                return 'January';
+            case '02':
+                return 'February';
+            case '03':
+                return 'March';
+            case '04':
+                return 'April';
+            case '05':
+                return 'May';
+            case '06':
+                return 'June';
+            case '07':
+                return 'July';
+            case '08':
+                return 'August';
+            case '09':
+                return 'September';
+            case '10':
+                return 'October';
+            case '11':
+                return 'November';
+            case '12':
+                return 'December';
+        }
+    };
+
+
+
+
+    render() {
+
+        const details = this.props.location.state.name;
+        console.log(details);
+
+        return (
+            <Fragment>
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <p className="page-title">Savings & Goals</p>
+                            </div>
+                            <div className="col-sm-12">
+                                <div className="tab-overflow">
+                                    <div className="sub-tab-nav">
+                                        <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li><a  href="#" className="active">Goals</a></li>
+                                            </NavLink>
+                                            <NavLink to="/savings/activityDashBoard">
+                                                <li><a href="#" >Group Savings</a></li>
+                                            </NavLink>
+                                            <li><a href="#">Investments</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            {this.props.alert && this.props.alert.message &&
+                            <div style={{width: "100%", marginRight:"120px",marginLeft:"120px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                            }
+                            {details.goalTypeName === "Stash" ? (
+                                <div className="col-sm-12">
+                                    <div className="row">
+                                        <div className="col-sm-12">
+                                            <div className="max-600">
+                                                <div className="al-card no-pad">
+
+                                                    <div className='firstSubHead'>
+                                                        <p>{details.goalTypeName}</p>
+                                                        <p>{details.goalName}</p>
+                                                    </div>
+                                                    <SubHead
+                                                        type={this.state.type}
+                                                        middlename="Stash Summary"
+                                                        memberClicked={this.HandleNavigation}
+                                                        automatedwasclicked={this.Automated}
+                                                    />
+
+                                                    <div className='statContainer'>
+                                                        <p className="information">You have saved <span style={{color:"#AB2656"}}> N{details.amountSaved}</span> and have earned <span style={{color:"#AB2656"}}>N{details.interestEarned}</span> in Interest</p>
+
+                                                        <ProgressBar
+                                                            discTopSpan="Goal Progress"
+                                                            discTopRight={details.percentageCompleted.toFixed(1) + "%" + " Completed"}
+                                                            percentage={details.percentageCompleted}
+                                                            discBottom={"₦" + details.amountSaved + " "}
+                                                            discSpan={"  " + "of" + "  " + "₦" + details.targetAmount}
+                                                            discBottomSib="Amount Saved"
+                                                        /><br /><br/>
+                                                        <div className="btn-position" style={{paddingBottom:"50px"}} >
+                                                            {
+                                                                details.percentageCompleted ===100 ?
+                                                                    <NavLink to="/savings/stash-cashout">
+                                                                        <span href="#"
+                                                                              className="btn-withdraw-goal btn-sm border-btn">Cash Out</span>
+                                                                    </NavLink> :null
+
+                                                            }
+
+                                                            <Link to={{
+                                                                pathname: "/savings/top-up-goal-step1",
+                                                                state: {
+                                                                    name: details,
+
+                                                                }
+                                                            }}>
+                                                                <span href="#"
+                                                                      className="btn-top-up-goal btn-sm border-btn">Top Up Stash</span>
+                                                            </Link>
+
+                                                        </div>
+
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>                            ): (
+                            <div className="col-sm-12">
+                                <div className="row">
+                                    <div className="col-sm-12">
+                                        <div className="max-600">
+                                            <div className="al-card no-pad">
+
+                                                <div class='firstSubHead'>
+                                                    <p>{details.goalTypeName}</p>
+                                                    <p>{details.goalName}</p>
+                                                </div>
+                                                <SubHead
+                                                    type={this.state.type}
+                                                    middlename="Goal Summary"
+                                                    memberClicked={this.HandleNavigation}
+                                                    automatedwasclicked={this.Automated}
+                                                />
+
+                                                <div className='statContainer'>
+                                                    <p className="information">You have saved <span style={{color:"#AB2656"}}> N{details.amountSaved}</span> of your <span style={{color:"#AB2656"}}>N{details.targetAmount}</span> goal saving <span style={{color:"#AB2656"}}>N{details.amountSaved}</span> monthly </p>
+
+                                                    <ProgressBar
+                                                        discTopSpan="Goal Progress"
+                                                        discTopRight={details.percentageCompleted.toFixed(1) +"%"+" Completed"}
+                                                        percentage={details.percentageCompleted}
+                                                        discBottom={"₦"+details.amountSaved}
+                                                        discSpan={"  " + "of" + "  " +  "₦"+details.targetAmount}
+                                                        discBottomSib="Amount Saved"
+                                                    />
+                                                    <MoreDetails
+                                                        lefthead={"₦"+details.interestAccrued}
+                                                        leftBottom="Interest Accrued"
+                                                        middleTop={"₦"+ details.interestEarned}
+                                                        middleBottom="Interest Earned"
+                                                         rightContent={moment(details.nextstandingDate).format("L")}
+                                                         rightContentBottom="Next Payment"/>
+                                                    <div className="btn-position">
+                                                        {
+                                                            details.percentageCompleted ===100 ?
+                                                                <NavLink to="/savings/withdraw-from-goal_step1">
+                                                                    <span href="#" className="btn-withdraw-goal btn-sm border-btn">Withdraw</span>
+                                                                </NavLink>:null
+
+                                                        }
+                                                        { details.percentageCompleted === 100 ? null :
+                                                            <Link to={{
+                                                                pathname:"/savings/top-up-goal-step1",
+                                                                state:{
+                                                                    name:details,
+
+                                                                }
+                                                            }}>
+                                                                <span href="#"  className="btn-top-up-goal btn-sm border-btn">Top Up Goal</span>
+                                                            </Link>
+
+
+                                                        }
+
+
+                                                     </div>
+
+
+                                                    <NavButtons
+                                                       navType={this.state.navType}
+                                                        leftName={this.props.pause_goal.pause_customer_goal_status === customerGoalConstants.PAUSE_CUSTOMER_GOAL_SUCCESS?'Continue':'Pause'}
+                                                        // middleName='Pause'
+                                                        rightName='Delete'
+                                                       edit={details.id}
+                                                       delete={details.id}
+                                                       unpause={details.id}
+                                                       DeleteGroup={this.DeleteCustomerGoal}
+                                                        PauseGroup={this.UnpauseCustomerGoal}
+                                                       EditGroup={this.PauseCustomerGoal}
+                                                       
+
+                                                    />
+                                                </div>
+
+
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                                )}
+
+                        </div>
+
+            </Fragment>
+        );
+    }
+}
+
+
+function mapStateToProps(state) {
+    return {
+        customerGoalTransHistory:state.customerGoalTransHistory,
+        alert:state.alert,
+        pause_goal:state.pause_goal
+
+    }
+}
+
+export default connect(mapStateToProps)(ViewGroupSummary);
+
+
+
+
+
+
+
+
+
+

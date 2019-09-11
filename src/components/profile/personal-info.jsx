@@ -5,7 +5,11 @@ import * as actions from '../../redux/actions/profile/profile-action';
 import {Fragment} from "react";
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import InnerContainer from '../../shared/templates/inner-container';
+import {connect} from 'react-redux'
 import {history} from '../../_helpers/history';
+import {profile} from '../../redux/constants/profile/profile-constants';
+import {occupationAndSector, getResidentialDetails, getContactDetails,getPersonalInfo,getStates} from "../../redux/actions/profile/profile-action"
+import moment from 'moment';
 
 class PersonalInfoMation extends Component {
    constructor(props){
@@ -17,7 +21,6 @@ class PersonalInfoMation extends Component {
         bvnNumber: null,
         dateValue: null,
         birthDate: null,
-        
         Occupation: null,
         AlatPin: null,
         Sector: null,
@@ -37,8 +40,6 @@ class PersonalInfoMation extends Component {
         PlaceOfBirth: null, 
         maritalStatus: null,
         title: null,
-
-
         NationalityValidity: false, 
         OtherNameValidity: false, 
         MothersMaidenNameValidity: false,
@@ -57,16 +58,61 @@ class PersonalInfoMation extends Component {
         PinValidity: false,
         OccupationValidity: false,
         TitleValidity: false,
-        MaritalStatusValidity: false
+        MaritalStatusValidity: false,
+
+        isBvNLinked: false,
+        isProfileInformation: false,
+        isContactDetails: false,
+        isDocument: false,
+        navToNextOfKin: false
        }
+
+       this.fetchOccupation();
+       this.fetchResidentialDetails();
+       this.fetchContactDetails();
+       this.fetchPersonalInfo();
+       this.fetchStates();
    }
 
-   InitiateNetworkCall = () => {
-        // let data = {
-        //     bvn: this.state.bvnNumber,
-        //     date: this.state.dateValue
-        // }
+   componentDidMount = () => {
+       this.CheckIfStoreInformationIsSet();
+   }
 
+CheckIfStoreInformationIsSet = () => {
+    
+ if(this.props.profileMenu.message == profile.GET_PROFILE_MENU_SUCCESS){
+  //    console.log(this.props.profileMenu.response.personalInfoComplete);
+     this.setState({isProfileInformation: this.props.profileMenu.data.response.personalInfoComplete});
+     this.setState({isContactDetails: this.props.profileMenu.data.response.contactDetailsComplete});
+     this.setState({isDocument: this.props.profileMenu.data.response.documentUploaded});
+     this.setState({navToNextOfKin: this.props.profileMenu.data.response.nextOfKinComplete});
+     this.setState({isBvNLinked: this.props.profileMenu.data.response.bvnLinked});
+ }
+}
+
+   fetchOccupation(){
+    const { dispatch } = this.props;
+    dispatch(occupationAndSector(this.state.user.token));
+    };
+    fetchResidentialDetails(){
+        const { dispatch } = this.props;
+        dispatch(getResidentialDetails(this.state.user.token));
+    };
+    fetchContactDetails(){
+        const { dispatch } = this.props;
+        dispatch(getContactDetails(this.state.user.token));
+    };
+    fetchPersonalInfo(){
+        const{ dispatch } =this.props;
+        dispatch(getPersonalInfo(this.state.user.token))
+    };
+    fetchStates(){
+        const {dispatch}=this.props;
+        dispatch(getStates(this.state.user.token))
+    }
+
+   InitiateNetworkCall = () => {
+        
         let data = {
             title: this.state.title,
             maritalStatus: this.state.maritalStatus,
@@ -86,13 +132,12 @@ class PersonalInfoMation extends Component {
             employerName: this.state.EmployerName,
             employerAddress: this.state.EmployersAddress,
             employerPhoneNumber: this.state.EmployerPhoneNumber,
-            addressType: '',
             employmentSectorCode: this.state.Sector,
             employmentStatus: this.state.EmploymentStatus
         }
 
         console.log(data);
-        return;
+    
         this.props.dispatch(actions.capturePersonalInformation(this.state.user.token, data));
    }
    
@@ -124,8 +169,13 @@ class PersonalInfoMation extends Component {
                             console.log(x)
                             result = null;
                             break;
+                        }else{
+                            if(this.state[x].toString().length < 11){
+                                console.log(this.state[x]);
+                                result = null;
+                                break;
+                            }
                         }
-
                 case 'birthDate':
                         if(this.state[x] == null || this.state[x] == ""){
                             console.log(x)
@@ -245,11 +295,7 @@ class PersonalInfoMation extends Component {
                             result = null;
                             break;
                         }
-                
             }
-
-            console.log(result)
-            return result;
         }
 
        console.log(result);
@@ -268,14 +314,13 @@ class PersonalInfoMation extends Component {
    }
 
    NavigateToSuccessPage = () => {
-       history.push('/profile-success-message');
+       history.push('/profile/profile-success-message');
    }
 
    HandleSubmit = () => {
        event.preventDefault();
        this.SetDateValidity();
        this.SetBVNValidityStatus();
-
        this.checkPinValidity(); 
        this.checkOccupationValidity();
        this.checkSectorValidity(); 
@@ -297,7 +342,6 @@ class PersonalInfoMation extends Component {
        this.checkMothersMaidenNameValidity();
        console.log('code got here');
 
-       return;
        console.log('was fired');
 
        switch(this.checkValidity()){
@@ -309,12 +353,12 @@ class PersonalInfoMation extends Component {
              this.InitiateNetworkCall();
              break;
        }
-   }
+    }
    
    SetInputValue = (event) => {
        let name = event.target.name;
        this.setState({[name] : event.target.value});
-       console.log("  was just invoked");
+       console.log("was just invoked");
    } 
    
    checkTitleValidity = () => {
@@ -456,7 +500,7 @@ class PersonalInfoMation extends Component {
     }
 
    NavigateToSuccessPage = () => {
-       history.push('/profile-success-message');
+       history.push('/profile/profile-success-message');
    }
 
    PersonalInfomationHasBeenLinked = () => {
@@ -467,252 +511,428 @@ class PersonalInfoMation extends Component {
         this.props.dispatch(actions.profileSuccessMessage(data));
    }
 
+   NavigateToBVN = () => {
+    if(this.props.profileMenu.data.response.bvnLinked == true){
+          this.DispatchSuccessMessage('BVN has Been Linked');
+          return;
+    }
+
+    history.push('/profile/linkBVN');
+}
+
+NavigateToPersonalInfo = () => {
+     if(this.props.profileMenu.data.response.personalInfoComplete == true){
+         this.DispatchSuccessMessage('Personal Information Created');
+         return;
+     }
+
+     history.push('/profile/profile-personalInfo');
+}
+
+NavigateToContact = () => {
+     if(this.props.profileMenu.data.response.contactDetailsComplete == true){
+             this.DispatchSuccessMessage('Contact Created Successfully');
+             return;
+     }
+
+     history.push('/profile/profile-contact-detail');
+}
+
+
+NavigateToDocuments = () => {
+     if(this.props.profileMenu.data.response.documentUploaded == true){
+         this.DispatchSuccessMessage('Document uploaded successfully');
+         return;
+     }
+
+     history.push('/profile/profile-documents');
+}
+
+NavigateToNextOfKin = () => {
+     if(this.props.profileMenu.data.response.nextOfKinComplete == true){
+         this.DispatchSuccessMessage('Next of kin has been Created');
+         return
+     }
+
+    history.push('/profile/profile-next-of-kin');
+}
+
+DispatchSuccessMessage = (data) => {
+    this.props.dispatch(actions.profileSuccessMessage(data));
+}
+
+GetUserProfileMenu = () => {
+    this.props.dispatch(actions.profileMenu(this.state.user.token));
+ }
+
    render(){
-       const {BVNValidity, birthDate, PinValidity, SectorValidity, EmployerPhoneNumberValidity,EmploymentValidity, AddressValidity, EmployersNameValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
+       const {isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin, BVNValidity, birthDate, PinValidity, SectorValidity, EmployerPhoneNumberValidity,EmploymentValidity, AddressValidity, EmployersNameValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
         SurnameValidity, EmailAddressValidity, FirstNameValidity, MaritalStatusValidity, TitleValidity, OccupationValidity,GenderValidity, DateOfBirthValidity, OtherNameValidity, MothersMaidenNameValidity} = this.state;
+        const {profileMenu, occupationAndSector, getContactDetail} = this.props
+        console.log('=======',occupationAndSector)
 
     //    if(this.props.capturePersonalInformation.response != undefined){
     //        this.PersonalInfomationHasBeenLinked();
     //    }
+       
+    //    if(profileMenu.message === profile.GET_PERSONAL_INFO_PENDING){
+    //     return(
+    //         <Fragment>
+    //               <InnerContainer>
+    //                    <div className="dashboard-wrapper">
+    //                          <div className="container">
+    //                  <div className="coverPropertiesofComponent">
+    //                      <div className="col-sm-12">
+    //                       <p className="page-title">Account Setting</p>
+    //                     </div>
 
-       return(
-        <Fragment>
-             <InnerContainer>
-                    <div className="dashboard-wrapper">
-                         <div className="container">
-                                <div className="coverPropertiesofComponent">
-                                    <div className="col-sm-12">
-                                        <p className="page-title">Account Setting</p>
-                                    </div>
+    //             <div className="col-sm-12">
+    //                 <div>
+    //                     <div className="sub-tab-nav" style={{marginBottom: 10}}>
+    //                         <ul>
+    //                             <li><NavLink to={'/profile'} >Profile</NavLink></li>
+    //                             <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+    //                             <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+    //                         </ul>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             <p>loading data ...</p>
+    //             </div>
+    //             </div>
+    //             </div>
+    //             </InnerContainer>
+    //         </Fragment>      
+    //     )
+    //    }
 
-                                    <div className="col-sm-12">
-                                        <div>
-                                            <div className="sub-tab-nav" style={{marginBottom: 10}}>
-                                                <ul>
-                                                    <li><NavLink to={'/default-page'} className="active">Profile</NavLink></li>
-                                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
-                                                </ul>
+    //    if(profileMenu.message === profile.GET_PERSONAL_INFO_SUCCESS){
+        return(
+            <Fragment>
+                 {/* <InnerContainer> */}
+                        <div className="dashboard-wrapper">
+                             <div className="container">
+                                    <div className="coverPropertiesofComponent">
+                                        <div className="col-sm-12">
+                                            <p className="page-title">Account Setting</p>
+                                        </div>
+    
+                                        <div className="col-sm-12">
+                                            <div>
+                                                <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                                    <ul>
+                                                            <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                                            <li>Pin Management</li>
+                                                            <li>Security Questions</li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                
-                                <div className="row packageContent">
-                                    <div className="col-sm-4">
-                                        <div className="forProfilePicture">
-                                                <div className="profilePixCircle">
-
-                                                </div>
-                                                <p className="personsName">Laketu Adeleke</p>
-                                                <p className="details">subrigana@gmail.com</p>
-                                                <p className="details">Last Login: 8th January 2019, 11:00am</p>
-                                                <hr />
-
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Link BVN</p>
-                                                </div>
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Personal Information</p>
-                                                </div>
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Contact Details</p>
-                                                </div>
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Document Upload</p>
-                                                </div>
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Next of Kin</p>
-                                                </div>
-                                        </div>
-                                        
-                                    </div>
-                                    <div className="col-sm-7">
-                                    <form onSubmit={this.HandleSubmit} className="parentForm">
-                                            <p className="formHeading">Personal Information</p>
-                                        
-                                            <div className="form-row">
-                                                        <div className={TitleValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
-                                                            <label className="label-text">Title</label>
-                                                            <select onChange={this.SetInputValue} name="title" placeholder="title">
-                                                                <option value="Mr">Mr</option>
-                                                                <option value="Mrs">Mrs</option>
-                                                                <option value="Dr">Dr</option>
-                                                                <option value="Prof">Prof</option>
-                                                                <option value="master">Master</option>
-                                                            </select>
-                                                        </div>
-
-                                                        <div className={MaritalStatusValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                            <label className="label-text">Marital Status</label>
-                                                            <select onChange={this.SetInputValue} name="maritalStatus" placeholder="marital status">
-                                                                
-                                                                <option value="Mr">Married</option>
-                                                                <option value="Mrs">Single</option>
-                                                            </select>
-                                                        </div>
-                                            </div>
-
-                                            <div className="form-row">
-                                                        <div className={SurnameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Surname Name</label>
-                                                            <input type="text" name="SurName" className="form-control" onChange={this.SetInputValue} placeholder="Surname"/>
-                                                        </div>
-                                            </div>
-
-                                            <div className="form-row">
-                                                        <div className={FirstNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">First Name</label>
-                                                            <input type="text" name="FirstName" className="form-control" onChange={this.SetInputValue} placeholder="First Name"/>
-                                                        </div>
-                                            </div>
-                                            
-                                            
-                                            <div className="form-row">
-                                                        <div className={OtherNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Other Name</label>
-                                                            <input type="text" name="OtherName" className="form-control" onChange={this.SetInputValue} placeholder="Other Name"/>
-                                                        </div>
-                                            </div>
-                                           
-                                            <div className="form-row">
-                                                        <div className={GenderValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
-                                                            <label className="label-text">Gender</label>
-                                                            <select onChange={this.SetInputValue} name="Gender" placeholder="Gender">
-                                                                <option value=""> </option>
-                                                                <option value="Male"> Male </option>
-                                                                <option value="Female"> Female</option>
-                                                            </select>
-                                                        </div>
-
-                                                        <div className={DateOfBirthValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                                <label className="label-text">Date of Birth</label>
-                                                                <DatePicker className="form-control" selected={birthDate} 
-                                                                placeholder="June 31, 2019"
-                                                                dateFormat=" MMMM d, yyyy"
-                                                                showMonthDropdown
-                                                                showYearDropdown
-                                                                onChange={this.SetBirthDay}
-                                                                dropdownMode="select"
-                                                                // minDate={new Date()}
-                                                                />
-                                                        </div> 
-                                            </div>
-
-                                            <div className="form-row">
-                                                        <div className={NationalityValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
-                                                            <label className="label-text">Nationality</label>
-                                                            <input type="text" name="Nationality" className="form-control" onChange={this.SetInputValue} placeholder="Nationality"/>
-                                                        </div>
-
-                                                        <div className={StateOfOriginValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                            <label className="label-text">State of Origin</label>
-                                                            <input type="text" name="StateOfOrigin" className="form-control" onChange={this.SetInputValue} placeholder="state of origin"/>
-                                                        </div>
-                                            </div>
-
-                                            <div className="form-row">
-                                                        <div className={LocalGovValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
-                                                            <label className="label-text">Local Government</label>
-                                                            <input type="text" name="LocalGv" className="form-control" onChange={this.SetInputValue} placeholder="Local Government"/>
-                                                        </div>
-
-                                                        <div className={PlaceOfBirthValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                            <label className="label-text">Place of Birth (State of Origin)</label>
-                                                            <input type="text" name="PlaceOfBirth" className="form-control" onChange={this.SetInputValue} placeholder="Place of Birth"/>
-                                                        </div>
-                                            </div>
-                                            
-                                            <div className="form-row">
-                                                        <div className={MothersMaidenNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Mothers Maiden Name</label>
-                                                            <input type="text" name="mothersMaidenName" className="form-control" onChange={this.SetInputValue} placeholder="First Name"/>
-                                                        </div>
-                                            </div>
-                                           
-                                            <div className="form-row">
-                                            <div className={BVNValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
-                                                            <label className="label-text">BVN</label>
-                                                            <input type="Number" name= "BVNnumber" className="form-control" onChange={this.SetBvNNumber} placeholder="0000 0000 0000"/>
-                                                        </div>
-
-                                                        <div className={EmploymentValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                            <label className="label-text">Employment Status</label>
-                                                            <select onChange={this.SetInputValue} name="EmploymentStatus">
-                                                                <option value="Male"> Employed </option>
-                                                                <option value="Female"> UnEmployed </option>
-                                                            </select>
-                                                        </div>
-                                            </div>
-                                           
-                                            <div className="form-row">
-                                                        <div className={EmployersNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Employer's Name</label>
-                                                            <input type="text" name="EmployerName" className="form-control" onChange={this.SetInputValue} placeholder="Employers Name"/>
-                                                        </div>
-                                            </div>
-                                          
-                                            <div className="form-row">
-                                                        <div className={EmailAddressValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Employer's Address</label>
-                                                            <input type="text" name="EmployersAddress" className="form-control" onChange={this.SetInputValue} placeholder="Employers Address"/>
-                                                        </div>
-                                            </div>
-
-                                            <div className="form-row">
-                                                        <div className={EmployerPhoneNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Employer's Phone Number</label>
-                                                            <input type="number" name="EmployerPhoneNumber" className="form-control" onChange={this.SetInputValue} placeholder="Employers Phone Number"/>
-                                                        </div>
-                                            </div>
-                                            
-                                            <div className="form-row">
-                                                        <div className={SectorValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Sector</label>
-                                                            <input type="text" name="Sector" className="form-control" onChange={this.SetInputValue} placeholder="Sector"/>
-                                                        </div>
-                                            </div>
-
-                                            <div className="form-row">
-                                                        <div className={OccupationValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Occupation</label>
-                                                            <input type="text" name="Occupation" className="form-control" onChange={this.SetInputValue} placeholder="Occupation"/>
-                                                        </div>
-                                            </div>
-                                          
-                                            <div className="form-row">
-                                                        <div className={PinValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Alat Pin</label>
-                                                            <input type="text" name="AlatPin" className="form-control" onChange={this.SetInputValue} placeholder="Alat Pin"/>
-                                                        </div>
-                                            </div>
-
-                                           
-                                            <button type="submit" className="twoBut">Submit</button>
-                                        </form>
                                     
+                                    <div className="row packageContent">
+                                        <div className="col-sm-4">
+                                            <div className="forProfilePicture">
+                                                    <div className="profilePixCircle">
+    
+                                                    </div>
+                                                    <p className="personsName">{this.props.profileMenu.data.response.fullName}</p>
+                                                    <p className="details">{this.props.profileMenu.data.response.username}</p>
+                                                    <p className="details">{moment(this.props.profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>
+                                                    <hr />
+    
+                                                    <div className="tickItems" onClick={this.NavigateToBVN}>
+                                                        {isBvNLinked === true ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                        <p className="pSubs">Link BVN</p>
+                                                    </div>
+                                                    <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
+                                                        {isProfileInformation ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                        <p className="pSubs">Personal Information</p>
+                                                    </div>
+                                                    <div className="tickItems" onClick={this.NavigateToContact}>
+                                                        {isContactDetails ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                        <p className="pSubs">Contact Details</p>
+                                                    </div>
+                                                    <div className="tickItems" onClick={this.NavigateToDocuments}>
+                                                        {isDocument ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt=""  className="largeVectorI" />}
+                                                        <p className="pSubs">Document Upload</p>
+                                                    </div>
+                                                    <div className="tickItems" onClick={this.NavigateToNextOfKin}>
+                                                        {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                        <p className="pSubs">Next of Kin</p>
+                                                    </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div className="col-sm-7">
+                                        <form onSubmit={this.HandleSubmit} className="parentForm">
+                                                <p className="formHeading">Personal Information</p>
+                                            
+                                                <div className="form-row center-alignment">
+                                                            <div className={TitleValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                <label className="label-text">Title</label>
+                                                                <select className="select-size" onChange={this.SetInputValue} name="title" placeholder="title">
+                                                                    <option value="Mr">Mr</option>
+                                                                    <option value="Mrs">Mrs</option>
+                                                                    <option value="Dr">Dr</option>
+                                                                    <option value="Prof">Prof</option>
+                                                                    <option value="master">Master</option>
+                                                                </select>
+                                                            </div>
+    
+                                                            <div className={MaritalStatusValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                <label className="label-text">Marital Status</label>
+                                                                <select className="select-size select-married" onChange={this.SetInputValue} name="maritalStatus" placeholder="marital status">
+                                                                    
+                                                                    <option value="Mr">Married</option>
+                                                                    <option value="Mrs">Single</option>
+                                                                </select>
+                                                            </div>
+                                                </div>
+    
+                                                <div className="form-row">
+                                                            <div className={SurnameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                <label className="label-text">Surname Name</label>
+                                                                <input type="text" name="SurName" className="form-control" onChange={this.SetInputValue} placeholder="Surname"/>
+                                                            </div>
+                                                </div>
+    
+                                                <div className="form-row">
+                                                            <div className={FirstNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                <label className="label-text">First Name</label>
+                                                                <input type="text" name="FirstName" className="form-control" onChange={this.SetInputValue} placeholder="First Name"/>
+                                                            </div>
+                                                </div>
+                                                
+                                                
+                                                <div className="form-row">
+                                                            <div className={OtherNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                <label className="label-text">Other Name</label>
+                                                                <input type="text" name="OtherName" className="form-control" onChange={this.SetInputValue} placeholder="Other Name"/>
+                                                            </div>
+                                                </div>
+                                               
+                                                <div className="form-row">
+                                                            <div className={GenderValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                <label className="label-text">Gender</label>
+                                                                <select className="select-size" onChange={this.SetInputValue} name="Gender" placeholder="Gender">
+                                                                    <option value=""> </option>
+                                                                    <option value="Male"> Male </option>
+                                                                    <option value="Female"> Female</option>
+                                                                </select>
+                                                            </div>
+    
+                                                            <div className={DateOfBirthValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                    <label className="label-text">Date of Birth</label>
+                                                                    <DatePicker className="form-control date-picker-size" selected={birthDate} 
+                                                                    placeholder="June 31, 2019"
+                                                                    dateFormat=" MMMM d, yyyy"
+                                                                    showMonthDropdown
+                                                                    showYearDropdown
+                                                                    onChange={this.SetBirthDay}
+                                                                    dropdownMode="select"
+                                                                    // minDate={new Date()}
+                                                                    />
+                                                            </div> 
+                                                </div>
+    
+                                                <div className="form-row">
+                                                            <div className={NationalityValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                <label className="label-text">Nationality</label>
+                                                                <input type="text" name="Nationality" className="form-control enter-national" onChange={this.SetInputValue} placeholder="Nationality"/>
+                                                            </div>
+    
+                                                            <div className={StateOfOriginValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                <label className="label-text">State of Origin</label>
+                                                                <select className="select-size state-origin" onChange={this.SetInputValue} name="StateOfOrigin" >
+                                                                        <option>Select State of Origin</option>
+                                                                        {                                      
+                                                                            getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
+                                                                            getContactDetail.data.response.states.map(state=> {
+                                                                                
+                                                                                return <option key={state} value={state}>
+                                                                                {state.name}</option>
+                                                                            })
+                                                                        } 
+                                                                </select>
+                                                            </div>
+                                                </div>
+    
+                                                <div className="form-row">
+                                                            <div className={LocalGovValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                <label className="label-text">Local Government</label>
+                                                                <select className="select-size" onChange={this.SetInputValue} name="StateOfOrigin" >
+                                                                        <option>Select Local Government</option>
+                                                                        {                                      
+                                                                            getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
+                                                                            getContactDetail.data.response.cities.map(city=> {
+                                                                                
+                                                                                return <option key={city.name} value={city.name}>
+                                                                                {city.name}</option>
+                                                                            })
+                                                                        } 
+                                                                </select>
+                                                                {/* <input type="text" name="LocalGv" className="form-control" onChange={this.SetInputValue} placeholder="Local Government"/> */}
+                                                            </div>
+    
+                                                            <div className={PlaceOfBirthValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                <label className="label-text">Place of Birth (State of Origin)</label>
+                                                                <input type="text" name="PlaceOfBirth" className="birth-place form-control " onChange={this.SetInputValue} placeholder="Place of Birth"/>
+                                                            </div>
+                                                </div>
+                                                
+                                                <div className="form-row">
+                                                            <div className={MothersMaidenNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                <label className="label-text">Mothers Maiden Name</label>
+                                                                <input type="text" name="mothersMaidenName" className="form-control" onChange={this.SetInputValue} placeholder="First Name"/>
+                                                            </div>
+                                                </div>
+                                               
+                                                <div className="form-row">
+                                                <div className={BVNValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                <label className="label-text">BVN</label>
+                                                                <input type="Number" name= "BVNnumber" className="form-control enter-bvn" onChange={this.SetBvNNumber} placeholder="0000 0000 0000"/>
+                                                            </div>
+    
+                                                            <div className={EmploymentValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                <label className="label-text">Employment Status</label>
+                                                                <select className="select-size" onChange={this.SetInputValue} name="EmploymentStatus" >
+                                                                        <option>Select Employment Status</option>
+                                                                        {                                      
+                                                                            occupationAndSector.message === profile.OCCU_AND_SECTOR_SUCCESS && 
+                                                                            occupationAndSector.data.response.result.employmentStatus.map(status=> {
+                                                                                
+                                                                                return <option key={status} value={status}>
+                                                                                {status}</option>
+                                                                            })
+                                                                        } 
+                                                                    </select>
+                                                            </div>
+                                                </div>
+                                               
+                                                <div className="form-row">
+                                                            <div className={EmployersNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                <label className="label-text">Employer's Name</label>
+                                                                <input type="text" name="EmployerName" className="form-control" onChange={this.SetInputValue} placeholder="Employers Name"/>
+                                                            </div>
+                                                </div>
+                                              
+                                                <div className="form-row">
+                                                            <div className={EmailAddressValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                <label className="label-text">Employer's Address</label>
+                                                                <input type="text" name="EmployersAddress" className="form-control" onChange={this.SetInputValue} placeholder="Employers Address"/>
+                                                            </div>
+                                                </div>
+    
+                                                <div className="form-row">
+                                                            <div className={EmployerPhoneNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                <label className="label-text">Employer's Phone Number</label>
+                                                                <input type="number" name="EmployerPhoneNumber" className="form-control" onChange={this.SetInputValue} placeholder="Employers Phone Number"/>
+                                                            </div>
+                                                </div>
+                                                
+                                                <div className="form-row">
+                                                            <div className={SectorValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                <label className="label-text">Sector</label>
+                                                                     <select className="select-size select-sector-occupation" onChange={this.SetInputValue} name="Sector" >
+                                                                        <option>Select Sector</option>
+                                                                        {                                      
+                                                                            occupationAndSector.message === profile.OCCU_AND_SECTOR_SUCCESS && 
+                                                                            occupationAndSector.data.response.result.employmentSectors.map(sector=> {
+                                                                                
+                                                                                return <option key={sector.description} value={sector.code + " " + sector.description}>
+                                                                                {sector.description}</option>
+                                                                            })
+                                                                        } 
+                                                                    </select>
+                                                            </div>
+                                                </div>
+    
+                                                <div className="form-row">
+                                                            <div className={OccupationValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                <label className="label-text">Occupation</label>
+                                                                
+                                                                    <select className="select-size select-sector-occupation" onChange={this.SetInputValue}  name="Occupation">
+                                                                        <option>Select Occupation</option>
+                                                                        {                                      
+                                                                            occupationAndSector.message === profile.OCCU_AND_SECTOR_SUCCESS && 
+                                                                            occupationAndSector.data.response.result.occupations.map(occupation=> {
+                                                                                
+                                                                                return <option key={occupation.code} value={occupation.description}>
+                                                                                {occupation.description}</option>
+                                                                            })
+                                                                        } 
+                                                                    </select>
+                                                                </div>
+                                                             </div>
+                                              
+                                                <div className="form-row">
+                                                            <div className={PinValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                <label className="label-text">Alat Pin</label>
+                                                                <input type="text" name="AlatPin" className="form-control" onChange={this.SetInputValue} placeholder="Alat Pin"/>
+                                                            </div>
+                                                </div>
+                                                <div className="align-button">
+                                                    <button type="submit" className="twoBut no-border">Submit</button>
+                                                </div>
+                                               
+                                                
+                                            </form>
+                                        
+                                        </div>
                                     </div>
-                                </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                 </InnerContainer>
-        </Fragment>
-            
-       )
+                     {/* </InnerContainer> */}
+            </Fragment>
+                
+           )
+    //    }
+
+    //    if(profileMenu.data == undefined){
+    //     this.GetUserProfileMenu();
+    //     return(
+    //         <Fragment>
+    //               <InnerContainer>
+    //                    <div className="dashboard-wrapper">
+    //                          <div className="container">
+    //                  <div className="coverPropertiesofComponent">
+    //                      <div className="col-sm-12">
+    //                       <p className="page-title">Account Setting</p>
+    //                     </div>
+
+    //             <div className="col-sm-12">
+    //                 <div>
+    //                     <div className="sub-tab-nav" style={{marginBottom: 10}}>
+    //                         <ul>
+    //                             <li><NavLink to={'/profile'} >Profile</NavLink></li>
+    //                             <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+    //                             <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+    //                         </ul>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             <p>loading data ...</p>
+    //             </div>
+    //             </div>
+    //             </div>
+    //             </InnerContainer>
+    //         </Fragment>      
+    //     )
+    //    }
    }
 }
 
-const mapStateTopProps = (state) => {
+
+
+function mapStateToProps(state){
     return {
-        profileMenu:state.profileMenu.data,
-        profileSuccessMessage: state.profileSuccessMessage.data,
-        capturePersonalInformation: state.capturePersonalInformation.data
-    }
+        profileMenu:state.profileMenu,
+        occupationAndSector:state.occupationAndSector,
+        getResidential:state.getResidential,
+        getContactDetail:state.getContactDetail,
+        getStates:state.getStates,
+    };
 }
 
-export default PersonalInfoMation;
+export default connect(mapStateToProps)(PersonalInfoMation);
