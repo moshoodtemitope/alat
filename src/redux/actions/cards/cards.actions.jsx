@@ -739,10 +739,11 @@ export const getALATCardSettings = (token)=>{
                         })
                 }
                 else{
-                    let bulkResponse={
-                        panDetails : null
-                    }
-                    dispatch(success(bulkResponse));
+                    // let bulkResponse={
+                    //     panDetails : null
+                    // }
+                    // dispatch(success(bulkResponse));
+                    history.push("/cards");
                 }
             })
             .catch(error=>{
