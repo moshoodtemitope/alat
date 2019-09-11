@@ -6,8 +6,6 @@ import { SystemConstant } from "../../../shared/constants";
 import { ApiService } from "../../../services/apiService";
 import { routes } from "../../../services/urls";
 
-
-
 export const isFetchingTrue = () => {
     return {
         type: actionTypes.IS_FETCHING_TRUE
@@ -38,15 +36,25 @@ export const storeInfo = (data) => {
     };
 };
 
-export const changePassword = (token, payload) => {
+export const clearQuestionData = () => {
+    return {
+        type: actionTypes.CLEAR_QUESTION_DATA,
+    };
+};
+
+
+
+export const changePassword = (token, payload, callback) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
         let consume = ApiService.request(routes.CHANGE_PASSWORD, "POST", payload, SystemConstant.HEADER);
         dispatch(isFetchingTrue());
         return consume
             .then(response => {
-               console.log(response.data);
+                console.log(response.data);
+                callback();
                 dispatch(success(response.data));
+
             })
             .catch(error => {
                 dispatch(isFetchingFalse());
@@ -69,7 +77,7 @@ export const changeAlatPin = (token, payload) => {
         dispatch(isFetchingTrue());
         return consume
             .then(response => {
-            //  console.log(response.data);
+                //  console.log(response.data);
                 dispatch(success());
             })
             .catch(error => {
@@ -93,7 +101,7 @@ export const getSecurityQuestion = (token, payload) => {
         dispatch(isFetchingTrue());
         return consume
             .then(response => {
-               console.log(response.data);
+                console.log(response.data);
                 dispatch(success(response.data));
             })
             .catch(error => {
@@ -117,7 +125,7 @@ export const getSecurityQuestionForgot = (token, payload) => {
         dispatch(isFetchingTrue());
         return consume
             .then(response => {
-               console.log(response.data);
+                console.log(response.data);
                 dispatch(success(response.data));
             })
             .catch(error => {
@@ -163,9 +171,9 @@ export const checkSecurityQuestionAnswer = (token, payload, isResending = false)
         dispatch(isFetchingTrue());
         return consume
             .then(response => {
-                if(isResending == false){
+                if (isResending == false) {
                     dispatch(success(response.data));
-                }else{
+                } else {
                     dispatch(isFetchingFalse());
                 }
             })
@@ -190,7 +198,7 @@ export const verifyOtpForForgotPassword = (token, payload) => {
         dispatch(isFetchingTrue());
         return consume
             .then(response => {
-                    dispatch(success());
+                dispatch(success());
             })
             .catch(error => {
                 dispatch(isFetchingFalse());
@@ -212,7 +220,7 @@ export const resetPin = (token, payload) => {
         dispatch(isFetchingTrue());
         return consume
             .then(response => {
-                    dispatch(success());
+                dispatch(success());
             })
             .catch(error => {
                 dispatch(isFetchingFalse());
@@ -223,6 +231,61 @@ export const resetPin = (token, payload) => {
     function success() {
         return {
             type: actionTypes.RESET_PIN_SUCCESS,
+        }
+    }
+};
+
+
+export const getAllSecurityQuestions = (token, payload) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.GET_ALL_SECURITY_QUESTIONS, "POST", payload, SystemConstant.HEADER);
+        dispatch(isFetchingTrue());
+        return consume
+            .then(response => {
+                console.log(response.data);
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                dispatch(isFetchingFalse());
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function success(data) {
+        return {
+            type: actionTypes.GET_SECURITY_QUESTIONS_SUCCESS,
+            data: data
+        }
+    }
+};
+
+export const saveSecurityQuestion = (token, payload, callback) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.SAVE_SECURITY_QUESTION, "POST", payload, SystemConstant.HEADER);
+        dispatch(isFetchingTrue());
+        return consume
+            .then(response => {
+                dispatch(success());
+                dispatchClearQuestion();
+            })
+            .catch(error => {
+                dispatch(isFetchingFalse());
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function dispatchClearQuestion() {
+        setTimeout(() => {
+            callback();
+        }, 5000);
+    };
+
+    function success(data) {
+        return {
+            type: actionTypes.SAVE_SECURITY_QUESTION_SUCCESS,
+            data: data
         }
     }
 };

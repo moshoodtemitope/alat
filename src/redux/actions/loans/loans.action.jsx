@@ -247,3 +247,60 @@ export const loanValidateRemitaOtp =(token, data) =>{
     function success(response) { return { type: loanConstants.LOAN_VALIDATEOTP_SUCCESS, response }}
     function failure(error) { return { type: loanConstants.LOAN_VALIDATEOTP_FAILURE, error } }
 }
+
+
+export const checkKycRequired =(token) =>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.LOAN_KYC_REQIURED,
+             "GET", null, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                 dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function request(request) { return { type: loanConstants.LOAN_KYCREQUIRED_PENDING, request } }
+    function success(response) { return { type: loanConstants.LOAN_KYCREQUIRED_SUCCESS, response }}
+    function failure(error) { return { type: loanConstants.LOAN_KYCREQUIRED_FAILURE, error } }
+}
+
+export const getTerms =(token) =>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.LOAN_TERMS,
+             "GET", null, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                 dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function request(request) { return { type: loanConstants.LOAN_TERMS_PENDING, request } }
+    function success(response) { return { type: loanConstants.LOAN_TERMS_SUCCESS, response }}
+    function failure(error) { return { type: loanConstants.LOAN_TERMS_FAILURE, error } }
+}
+
+export const continueApplication =(data)=>{
+    return (dispatch) =>{
+        dispatch(success(data));
+    }
+    function success(data){ return { type: loanConstants.LOAN_CONTINUE_APPLICATION, data: data } }
+}
+
+export const clearLoanOnboardingStore =()=>{
+    return (dispatch) => { 
+        dispatch(clear());
+    }
+    function clear(){return {type: loanConstants.LOAN_ONBOARDING_CLEAR, clear_data: "" }}
+}
