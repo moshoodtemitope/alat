@@ -6,6 +6,7 @@ import * as actions from '../../../redux/actions/onboarding/loan.actions';
 import { loanOnboardingConstants } from '../../../redux/constants/onboarding/loan.constants';
 import LoanOnboardingContainer from './loanOnboarding-container';
 import { alertActions } from '../../../redux/actions/alert.actions';
+import SalaryEntry from '../../../shared/components/loans/_salary-entry';
 
 class LoanOnboardingSalaryEntry extends React.Component {
     constructor(props) {
@@ -36,9 +37,9 @@ class LoanOnboardingSalaryEntry extends React.Component {
     }
 
     init = () => {
-        if (this.props.loan_reqStat)
-        if (this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS)
-        this.props.dispatch(actions.salaryTransaction(this.state.user.token));
+        // if (this.props.loan_reqStat)
+        //     if (this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS)
+        //         this.props.dispatch(actions.salaryTransaction(this.state.user.token));
         // if(this.props.user_detail.loan_userdetails_data)
         // this.setState({ FirstName :this.props.user_detail.loan_userdetails_data.data.FirstName }); 
     }
@@ -59,20 +60,19 @@ class LoanOnboardingSalaryEntry extends React.Component {
 
     postSalarEntries = () => {
         console.log(this.state.selectedEntryList.length);
-        if (this.state.selectedEntryList.length > 0)
-            {this.props.dispatch(actions.salaryEntry(this.state.user.token,this.state.selectedEntryList));}
+        if (this.state.selectedEntryList.length > 0) { this.props.dispatch(actions.salaryEntry(this.state.user.token, this.state.selectedEntryList)); }
         else {
             this.props.dispatch(alertActions.error("you need to select atleast an entry"));
         }
     }
 
-    returnEntriesPendingStatus=()=>{
+    returnEntriesPendingStatus = () => {
         if (this.props.salary_entry.loan_salEnt_status == loanOnboardingConstants.LOAN_SALARYENTRY_PENDING)
-        return true;
+            return true;
         else return false;
     }
 
-    gotoNextPage = () => {
+    gotoNextPagee = () => {
         if (this.props.salary_entry.loan_salEnt_status) {
             if (this.props.salary_entry.loan_salEnt_status == loanOnboardingConstants.LOAN_SALARYENTRY_SUCCESS) {
                 this.props.history.push("/loan/score-card");
@@ -80,9 +80,17 @@ class LoanOnboardingSalaryEntry extends React.Component {
         }
     }
 
+    gotoNextPage=()=>{
+        this.props.history.push("/loan/score-card");
+    }
+
+    PreviousPageMethod =()=>{
+
+    }
+
     renderSalaryEntries = () => {
         if (this.props.salary_trans)
-           if (this.props.salary_trans.loan_salTran_status == loanOnboardingConstants.LOAN_SALARYTRANSACTION_SUCCESS) {
+            if (this.props.salary_trans.loan_salTran_status == loanOnboardingConstants.LOAN_SALARYTRANSACTION_SUCCESS) {
                 var salary_transactions = [
                     ...this.props.salary_trans.loan_salTran_data.data.response.Response
                     //...this.state.enytrList
@@ -122,14 +130,20 @@ class LoanOnboardingSalaryEntry extends React.Component {
                     </Fragment>)
                 }
 
-           }
-        }
+            }
+    }
 
-        render = () => {
-            this.gotoNextPage();
-            return (
-                <LoanOnboardingContainer UserName={this.state.user.firstname}>
-                    <div className="row">
+    render = () => {
+        //this.gotoNextPage();
+        return (
+            <LoanOnboardingContainer UserName={this.state.user.firstname}>
+                <SalaryEntry
+                    forwardUrl={'/loan/score-card'}
+                    backwardUrl={'/loan/salary/detail'}
+                    NextPageMethod={this.gotoNextPage}
+                    PreviousPageMethod={this.PreviousPageMethod}
+                />
+                {/* <div className="row">
                         <div className="col-sm-12">
                             <div className="max-650">
                                 <div className="loan-header-text text-center">
@@ -155,11 +169,11 @@ class LoanOnboardingSalaryEntry extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </LoanOnboardingContainer>
-            );
-        }
+                    </div> */}
+            </LoanOnboardingContainer>
+        );
     }
+}
 
 function mapStateToProps(state) {
     return {

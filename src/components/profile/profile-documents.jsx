@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import "./profile.css"; 
 import DatePicker from "react-datepicker";
-import * as actions from '../../redux/actions/profile/profile-action';
+// import * as actions from '../../redux/actions/profile/profile-action';
 import {Fragment} from "react";
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import InnerContainer from '../../shared/templates/inner-container';
+import * as actions from '../../redux/actions/profile/profile-action';
+import {history} from '../../_helpers/history';
+import {connect} from 'react-redux';
+import {profile} from '../../redux/constants/profile/profile-constants';
+import moment from 'moment';
+
 
 class ProfileDocuments extends Component {
    constructor(props){
@@ -17,38 +23,32 @@ class ProfileDocuments extends Component {
 
           photoGraphUploadValidity: false, 
           signatureValidity: false, 
-          idCardValidity: false
+          idCardValidity: false,
+
+          isBvNLinked: false,
+          isProfileInformation: false,
+          isContactDetails: false,
+          isDocument: false,
+          navToNextOfKin: false
        }
    }
 
-   checkValidity = () => {
-       let result = 'valid';
-       for(let x in this.state){
-           switch(x){
-               case 'file1': 
-                  if(this.state[x] == null || this.state[x] == ""){
-                       console.log(x);
-                       result = null
-                       break;
-                  }
-               case 'file2': 
-                  if(this.state[x] == null || this.state[x] == ""){
-                       console.log(x);
-                       result = null
-                       break;
-                  }
-               case 'file3': 
-                  if(this.state[x] == null || this.state[x] == ""){
-                       console.log(x);
-                       result = null
-                       break;
-                  }
-           }
-       }
-
-       console.log(result);
-       return result;
+   componentDidMount = () => {
+    this.CheckIfStoreInformationIsSet();
    }
+
+CheckIfStoreInformationIsSet = () => {
+    
+ if(this.props.profileMenu.message == profile.GET_PROFILE_MENU_SUCCESS){
+  //    console.log(this.props.profileMenu.response.personalInfoComplete);
+     this.setState({isProfileInformation: this.props.profileMenu.data.response.personalInfoComplete});
+     this.setState({isContactDetails: this.props.profileMenu.data.response.contactDetailsComplete});
+     this.setState({isDocument: this.props.profileMenu.data.response.documentUploaded});
+     this.setState({navToNextOfKin: this.props.profileMenu.data.response.nextOfKinComplete});
+     this.setState({isBvNLinked: this.props.profileMenu.data.response.bvnLinked});
+ }
+}
+
 
    checkPhotoGraphUploadValidity = () => {
        if(this.state.file1 == null || this.state.file1 == ""){
@@ -78,19 +78,54 @@ class ProfileDocuments extends Component {
         console.log('CODE NEVER RAN')
    }
 
+
+   checkValidity = () => {
+       let result = 'valid';
+       for(let x in this.state){
+           switch(x){
+               case 'file1':
+                    if(this.state[x] == null || this.state[x] == ""){
+                        console.log(this.state[x]);
+                        result = null;
+                        break;
+                    }
+               case 'file2':
+                    if(this.state[x] == null || this.state[x] == ""){
+                        console.log(this.state[x]);
+                        result = null;
+                        break;
+                    }
+               case 'file3':
+                    if(this.state[x] == null || this.state[x] == ""){
+                        console.log(this.state[x]);
+                        result = null;
+                        break;
+                    }
+           }
+       }
+
+       console.log(result);
+       return result;
+   }
+
    HandleFileUpLoad = (event) => {
        let name = event.target.name;
        console.log(name);
-       console.log(event.target.value);
-       return;
+       console.log(event.target.files[0]);
+    //    return;
        this.setState({[name]: event.target.value});
    }
 
    SubmitDocuments = () => {
        let payload = {
-
+          file1: this.state.file1,
+          file2: this.state.file2,
+          file2: this.state.file3
        }
+            
+       this.props.dispatch(addDocuments(payload(this.state.user.token, payload)));
    }
+
 
    HandleSubmit = (event) => {
         event.preventDefault();
@@ -100,7 +135,6 @@ class ProfileDocuments extends Component {
         this.checkPhotoGraphUploadValidity();
         console.log("code Got here");
 
-        return;
         switch(this.checkValidity()){
             case null: 
                 console.log('Empty Field Found');
@@ -111,13 +145,73 @@ class ProfileDocuments extends Component {
         }
    }
 
+   NavigateToUploadPicture = () => {
+       history.push("/profile/profile-upload-photograph");
+   }
+
+   NavigateToUploadSignature = () => {
+       history.push("/profile/profile-signature-upload");
+   }
+
+   NavigateToDocumentUpload = () => {
+       history.push("/profile/profile-identiy-card");
+   }
+
+   NavigateToBVN = () => {
+    if(this.props.profileMenu.data.response.bvnLinked == true){
+          this.DispatchSuccessMessage('BVN has Been Linked');
+          return;
+    }
+
+    history.push('/profile/linkBVN');
+}
+
+NavigateToPersonalInfo = () => {
+     if(this.props.profileMenu.data.response.personalInfoComplete == true){
+         this.DispatchSuccessMessage('Personal Information Created');
+         return;
+     }
+
+     history.push('/profile/profile-personalInfo');
+}
+
+NavigateToContact = () => {
+     if(this.props.profileMenu.data.response.contactDetailsComplete == true){
+             this.DispatchSuccessMessage('Contact Created Successfully');
+             return;
+     }
+
+     history.push('/profile/profile-contact-detail');
+}
+
+
+NavigateToDocuments = () => {
+     if(this.props.profileMenu.data.response.documentUploaded == true){
+         this.DispatchSuccessMessage('Document uploaded successfully');
+         return;
+     }
+
+     history.push('/profile/profile-documents');
+}
+
+NavigateToNextOfKin = () => {
+     if(this.props.profileMenu.data.response.nextOfKinComplete == true){
+         this.DispatchSuccessMessage('Next of kin has been Created');
+         return
+     }
+
+    history.push('/profile/profile-next-of-kin');
+}
+
+DispatchSuccessMessage = (data) => {
+    this.props.dispatch(actions.profileSuccessMessage(data));
+}
 
    render(){
-      const {photoGraphUploadValidity, signatureValidity, idCardValidity} = this.state;
+      const { isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, photoGraphUploadValidity, signatureValidity, idCardValidity} = this.state;
        return(
         <Fragment>
-             <InnerContainer>
-                    <div className="dashboard-wrapper">
+                    <div className=" board-wrapper">
                          <div className="container">
                                 <div className="coverPropertiesofComponent">
                                     <div className="col-sm-12">
@@ -128,9 +222,8 @@ class ProfileDocuments extends Component {
                                         <div>
                                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                                 <ul>
-                                                    <li><NavLink to={'/default-page'} className="active">Profile</NavLink></li>
-                                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                                        <li><NavLink to={'/profile'}>Profile</NavLink></li>
+                                                       
                                                 </ul>
                                             </div>
                                         </div>
@@ -142,30 +235,31 @@ class ProfileDocuments extends Component {
                                                 <div className="profilePixCircle">
 
                                                 </div>
-                                                <p className="personsName">Laketu Adeleke</p>
-                                                <p className="details">subrigana@gmail.com</p>
-                                                <p className="details">Last Login: 8th January 2019, 11:00am</p>
+                                                <p className="personsName">{this.props.profileMenu.data.response.fullName}</p>
+                                                <p className="details">{this.props.profileMenu.data.response.username}</p>
+                                                <p className="details">{moment(this.props.profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>
                                                 <hr />
 
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Link BVN</p>
+                                               
+                                                <div className="tickItems" onClick={this.NavigateToBVN}>
+                                                    {isBvNLinked === true ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                    <p className="pSubs">Link BVN</p>
                                                 </div>
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Personal Information</p>
+                                                <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
+                                                    {isProfileInformation ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                    <p className="pSubs">Personal Information</p>
                                                 </div>
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Contact Details</p>
+                                                <div className="tickItems" onClick={this.NavigateToContact}>
+                                                    {isContactDetails ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                    <p className="pSubs">Contact Details</p>
                                                 </div>
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Document Upload</p>
+                                                <div className="tickItems" onClick={this.NavigateToDocuments}>
+                                                    {isDocument ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt=""  className="largeVectorI" />}
+                                                    <p className="pSubs">Document Upload</p>
                                                 </div>
-                                                <div className="tickItems">
-                                                    <img src="" alt="" />
-                                                    <p>Next of Kin</p>
+                                                <div className="tickItems" onClick={this.NavigateToNextOfKin}>
+                                                    {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                    <p className="pSubs">Next of Kin</p>
                                                 </div>
                                         </div>
                                         
@@ -173,29 +267,30 @@ class ProfileDocuments extends Component {
                                     <div className="col-sm-6">
                                     <form onSubmit={this.HandleSubmit} className="parentForm docUpLoadFormProfile">
                                            <p className="formHeading">Documents</p>
-
                                            <div className="form-row">
                                                 <div className={photoGraphUploadValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
-                                                        <label htmlFor="file-upload1">Photograph</label>
-                                                        <input type="file" name="file1" id="file-upload1" onChange={this.HandleFileUpLoad}/>
+                                                        <label htmlFor="file-upload1" onClick={this.NavigateToUploadPicture}>Photograph</label>
+                                                        {/* <input type="file" name="file1" id="file-upload1" readOnly onClick={this.NavigateToUploadPicture} onChange={this.PreventDefault}/> */}
                                                 </div>
                                            </div>
 
                                            <div className="form-row">
                                                 <div className={signatureValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
-                                                            <label htmlFor="file-upload2">Signature</label>
-                                                            <input name="file2" type="file" id="file-upload2"  onChange={this.HandleFileUpLoad}/>
+                                                            <label htmlFor="file-upload2" onClick={this.NavigateToUploadSignature}>Signature</label>
+                                                            {/* <input name="file2" type="file" id="file-upload2"  onChange={this.HandleFileUpLoad}/> */}
                                                 </div>
                                            </div>
 
                                            <div className="form-row">
                                                 <div className={idCardValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
-                                                            <label htmlFor="file-upload3">Identity Card</label>
-                                                            <input name="file3" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/>
+                                                            <label htmlFor="file-upload3" onClick={this.NavigateToDocumentUpload}>Identity Card</label>
+                                                            {/* <input name="file3" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/> */}
                                                 </div>
                                            </div>
                                            
-                                           <button type="submit" className="twoBut">Submit</button>
+                                           <div className="align-buttons">
+                                                <button type="submit" className="twoBut no-border">Submit</button>
+                                            </div>
                                     </form>
                                     
                                     </div>
@@ -203,10 +298,15 @@ class ProfileDocuments extends Component {
                                 </div>
                             </div>
                         </div>
-                 </InnerContainer>
         </Fragment>
        )
    }
 }
 
-export default ProfileDocuments;
+const mapStateToProps = (state) => {
+    return {
+        profileMenu: state.profileMenu
+    }
+}
+
+export default connect(mapStateToProps)(ProfileDocuments);

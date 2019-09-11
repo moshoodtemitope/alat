@@ -49,12 +49,14 @@ import { fundAccountReducer, getTokenizedCardsReducer,
 import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingVerifyBVNReducer,
      loanOnboardingStep3Reducer, loanOnboardingValidateOTPReducer, generateStatementReducer,
       requestStatementReducer,salaryTransactionReducer, salaryEntryReducer, saveUserDetailsReducer, getScoreCardQuestionReducer,
-      postScoreCardAnswerReducer} from './loan-onboarding.reducer';
+      postScoreCardAnswerReducer, resendOTPReducer} from './loan-onboarding.reducer';
 
 import { loanCalcDataReducer, loanApplyReducer, GetIndustriesReducer, GetEmployerReducer, CurrentLoanReducer, 
         LoanHistoryReducer, WorkIdFrontReducer, WorkIdBackReducer, loanRejectReducer, loanStandingOrderReducer,
      loanMandateStatusReducer, loanValidateRemitaOtpReducer, loanStatementUpload, continueApplication, 
-     SignatureReducer , PassportReducer } from './loan.reducer';
+     SignatureReducer , PassportReducer, KycRequired, termsReducer } from './loan.reducer';
+import { linkBVN, profileSuccessMessage, profileMenu, capturePersonalInformation,getContactDetail,
+        getResidential, addNextOfKin, addContactDetails, occupationAndSector, addDocuments,getPersonalInfo, getStates, nextOfKinsRelationship } from './profile-reducer';
 
 import { geCurrentVirtualCardsRequest,
          sendVCNewCardinfo,
@@ -113,7 +115,9 @@ export const loans = {
     loanStatementUpload,
     continueApplication,
     SignatureReducer,
-     PassportReducer
+    PassportReducer,
+    KycRequired,
+    termsReducer
 }
 
 export const loanOnboarding = {
@@ -128,7 +132,8 @@ export const loanOnboarding = {
     salaryEntryReducer,
     getScoreCardQuestionReducer,
     postScoreCardAnswerReducer,
-    saveUserDetailsReducer
+    saveUserDetailsReducer,
+    resendOTPReducer
 }
 
 export const dashboard = {
@@ -291,27 +296,19 @@ export const preferences = {
     getAllEngagements,
     getCustomersEngagements
 }
+export const profile = {
+    linkBVN,
+    profileSuccessMessage,
+    profileMenu,
+    capturePersonalInformation,
+    addNextOfKin,
+    addContactDetails,
+    occupationAndSector,
+    addDocuments,
+    getContactDetail,
+    getResidential,
+    getPersonalInfo,
+    getStates,
+    nextOfKinsRelationship
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}

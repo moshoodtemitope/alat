@@ -1,5 +1,5 @@
 const URL = 'https://api.alat.ng';
-//const URL = 'https://196.43.215.170';
+// const URL = 'https://196.43.215.170';
 //const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
@@ -7,7 +7,7 @@ const BASEURL = URL;
 export const routes = {
     BASEURL: BASEURL,
 
-    //registration
+    //registration   
     SIGNUP_IMAGES: BASEURL + '/RegistrationApi',
     SIGNUP_PHONE: BASEURL + '/RegistrationApi/api/registration/SavePhoneNumber',
     BVN_VERIFICATION: BASEURL + '/RegistrationApi/api/registration/CallBvnService',
@@ -139,6 +139,7 @@ export const routes = {
     LOANS_STEP_3 :BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/CustomerProfile',
     LOAN_VERIFY_BVN : BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/CallBvnService',
     LOAN_VALIDATE_OTP: BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/VerifyOtpForBvn',
+    LOAN_RESEND_OTP: BASEURL + 'DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/ResendOtp',
     LOAN_REQUEST_STATEMENT: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/RequestBankStatement', // request param
     LOAN_GENERATE_STATEMENT: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GenerateBankStatement', //request params
     LOAN_SELECTED_ENTRIES : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/SelectedSalaryEntries',
@@ -158,6 +159,11 @@ export const routes = {
     LOAN_REJECT : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/RejectLoan',
     LOAN_MANDATE_STATUS : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/MandateStatus',
     LOAN_OTP_MANDATE : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/ValidateOtpMandate',
+    LOAN_KYC_REQIURED : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/KycRequired',
+    LOAN_TERMS: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/TermsAndConditions',
+
+    //ALat-Loans
+    GET_ACTIVE_LOANS : BASEURL + '/Lending.API/api/loan/GetCustomerStatus',
 
     //WesternUnion
     WESTERNUNION_COUNTRIES: BASEURL + '/PaymentApi/api/WesternunionCountries',
@@ -170,6 +176,22 @@ export const routes = {
     CHECK_ANSWER: BASEURL + '/AccountSetting/api/securityquestion/validate',
     CHANGE_PIN: BASEURL + '/AccountSetting/api/pin/change',
     RESET_PIN :BASEURL + '/AccountSetting/api/pin/CreateOrReset',
+    //profiles
+    GET_PROFILE_MENU: BASEURL + '/ProfileManagement.WebApi/api/ProfileMenu',
+    POST_PROFILE_INFO: BASEURL + '/ProfileManagement.WebApi/api/PersonalInfo/Add',
+    ADD_NEXT_OF_KIN: BASEURL + '/ProfileManagement.WebApi/api/nextOfKin/AddV2',
+    ADD_CONTACT: BASEURL + '/ProfileManagement.WebApi/api/ContactDetails/SaveV2',
+    OCCUPA_AND_SECTOR: BASEURL + '/ProfileManagement.WebApi/api/OccupationAndSector',
+    NEXT_OF_KIN_RELATIONSHIP: BASEURL + '/ProfileManagement.WebApi/api/nextOfKin/NextofKinRelationships',
+    GET_CONTACT_DETAIL: BASEURL + '/ProfileManagement.WebApi/api/ContactDetails',
+    GET_RESIDENTIAL_ADDRESS: BASEURL + '/ProfileManagement.WebApi/api/ResidentialAddress',
+    GETPERSONALINFO: BASEURL + '/ProfileManagement.WebApi/api/PersonalInfo',
+    GETSTATES: BASEURL + '/AccountMaintenance/api/account/GetStatesAndLgas',
+    ADD_DOCUMENT: BASEURL + '/DocumentUpload/api/upload/document',
+
+    IDENTITY_TYPE: BASEURL + '/DocumentUpload/api/upload/check',
+    
+
 
 
     //savings&goals

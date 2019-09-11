@@ -7,8 +7,8 @@ import LifeStyleEvent from "../lifestyle/lifestyle-event/event";
 import MovieDetail from '../lifestyle/lifestyle-movie/movie-details';
 import EventDetails from '../lifestyle/lifestyle-event/event-details';
 import BuyTicketData from '../lifestyle/lifestyle-movie/buy-ticket';
-import BuyEventTicket from '../lifestyle/lifestyle-event/buy-event-ticket';
 import MovieSuccess from '../lifestyle/lifestyle-movie/movie-success'
+import BuyEventTicket from '../lifestyle/lifestyle-event/buy-event-ticket'
 
 
 class LifestyleIndex extends Component {

@@ -9,13 +9,13 @@ import { profile } from "../../constants/profile/profile-constants";
 
 export const linkBVN = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
-    return (dispatch) => {
-        let consume = ApiService.request(routes.DELETE_GROUP, "POST", data, SystemConstant.HEADER, true);
+    return (dispatch) => {  
+        let consume = ApiService.request(routes.BVN_VERIFICATION, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
                 dispatch(success(response.data));
-                history.push('/');
+                history.push('/profile/profile-succ-linked');
             })
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
@@ -59,7 +59,7 @@ export const capturePersonalInformation = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
-                // history.push('/');
+                history.push('/profile/profile-success-personalInfo');
             })
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
@@ -82,7 +82,7 @@ export const addNextOfKin = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
-                // history.push('/');
+                 history.push('/profile/profile-success-nextofkin');
             })
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
@@ -105,7 +105,7 @@ export const addContactDetails = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
-                // history.push('/');
+                history.push('/profile/profile-succ-message');
             })
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
@@ -144,15 +144,15 @@ export const occupationAndSector = (token, data) => {
 export const addDocuments = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.OCCUPA_AND_SECTOR, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.ADD_DOCUMENT, "POST", data, SystemConstant.HEADER, true);
         dispatch(request(consume));
         return consume
             .then(response => {
                 dispatch(success(response.data));
-                // history.push('/');
+                history.push('/profile/profile-success-document');
             })
             .catch(error => {
-                dispatch(failure(modelStateErrorHandler(error)));
+                // dispatch(failure(modelStateErrorHandler(error)));
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
                 // dispatch(failure(error.response.data.message.toString()));
             });
@@ -185,10 +185,10 @@ export const getContactDetails = (token, data) => {
     function failure(error) { return {type: profile.GET_CONTACT_DETAILS_FAILURE, error} }
 };
 
-export const getResidentialDetails = (token, data) => {
+export const getResidentialDetails = (token) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.GET_RESIDENTIAL_ADDRESS, "GET", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.GET_RESIDENTIAL_ADDRESS, "GET", null, SystemConstant.HEADER, true);
         dispatch(request(consume));
         return consume
             .then(response => {
@@ -253,10 +253,54 @@ export const getStates = (token, data) => {
 
 
 
+export const nextOfKinsRelationship = (token) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.NEXT_OF_KIN_RELATIONSHIP, "GET", null, SystemConstant.HEADER, true);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+                // history.push('/');
+            })
+            .catch(error => {
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // dispatch(failure(error.response.data.message.toString()));
+            });
+    };
+
+    function request(request) { return {type: profile.GET_NEXT_OF_KIN_RELATIONSHIP_PENDING, request} }
+    function success(response) { return {type: profile.GET_NEXT_OF_KIN_RELATIONSHIP_SUCCESS, response} }
+    function failure(error) { return {type: profile.GET_NEXT_OF_KIN_RELATIONSHIP_FAILURE, error} }
+};
+
+// export const residentialAddress = (token) => {
+//     SystemConstant.HEADER['alat-token'] = token;
+//     return (dispatch) => {
+//         let consume = ApiService.request(routes.GET_RESIDENTIAL_ADDRESS, "GET", null, SystemConstant.HEADER, true);
+//         dispatch(request(consume));
+//         return consume
+//             .then(response => {
+//                 dispatch(success(response.data));
+//                 // history.push('/');
+//             })
+//             .catch(error => {
+//                 // dispatch(failure(modelStateErrorHandler(error)));
+//                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+//                 // dispatch(failure(error.response.data.message.toString()));
+//             });
+//     };
+
+//     function request(request) { return {type: profile.GET_RESIDENTIAL_ADDRESS_PENDING, request} }
+//     function success(response) { return {type: profile.GET_RESIDENTIAL_ADDRESS_SUCCESS, response} }
+//     function failure(error) { return {type: profile.GET_RESIDENTIAL_ADDRESS_FAILURE, error} }
+// };
+
 export const profileSuccessMessage = (data) =>{
-    return(dispatch)=>{
+    return (dispatch) => {
         dispatch(success(data));
-        history.push('/profile-success-message');
+        history.push('/profile/profile-success-message');
     }
 
     function success(data){
@@ -266,4 +310,29 @@ export const profileSuccessMessage = (data) =>{
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -17,19 +17,19 @@ class LoanOnboardingTerms extends React.Component {
     }
 
     PgotoPreviousPage = () => {
-        this.props.history.push('/loans')
+        this.props.history.push('/loan')
     }
 
     PNavigateToWema = () => {
-        this.props.history.push('/loans/wema-setup');
+        this.props.history.push('/loan/wema-setup');
     }
 
     PNavigateToRemitaOtpSetup = () => {
-        this.props.history.push("/loans/remita-otp")
+        this.props.history.push("/loan/remita-otp")
     }
 
     PNavigateToRemitaBankSetup = () => {
-        this.props.history.push('/loans/remita-mandate');
+        this.props.history.push('/loan/remita-mandate');
     }
 
 

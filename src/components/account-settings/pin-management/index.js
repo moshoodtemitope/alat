@@ -15,6 +15,12 @@ class Index extends Component {
         this.props.clearPinManagementData();
     }
 
+    onCreatePin = (event) => {
+        event.preventDefault();
+        this.props.clearError();
+        this.setState({ clicked: "create" }, () => this.props.onClickPinOptionForgot(this.state.user.token));
+    }
+
     onChangePin = (event) => {
         event.preventDefault();
         this.props.clearError();
@@ -29,45 +35,87 @@ class Index extends Component {
 
 
     render() {
-        let view = (
-            <Fragment>
-                <div className="col-sm-12">
-                    <div className="row">
-                        <div className="col-sm-12">
-                            <div className="max-600">
-                                <div className="al-card no-pad">
-                                    <h4 className="m-b-10 center-text hd-underline">ALAT Pin Management</h4>
-                                    <div className="transfer-ctn" style={{padding: "30px 100px 0 100px"}}>
-                                        {(this.props.alert.message) ?
-                                            <div className="info-label error">{this.props.alert.message}</div> : null
-                                        }
-                                        <div className="no-pad text-center" style={{ padding: "0" }}>
-                                            <p className="s-info" style={{ fontSize: 18, color: "#A6A6A6" }}>Keep your PIN safe and confidential at all times. Do not use easily guessable PINs like 0000 or 1234 etc.</p>
-                                        </div>
+        let view;
+        if (this.props.isPinSet) {
+            view = (
+                <Fragment>
+                    <div className="col-sm-12">
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <div className="max-600">
+                                    <div className="al-card no-pad">
+                                        <h4 className="m-b-10 center-text hd-underline">ALAT Pin Management</h4>
+                                        <div className="transfer-ctn" style={{ padding: "30px 100px 0 100px" }}>
+                                            {(this.props.alert.message) ?
+                                                <div className="info-label error">{this.props.alert.message}</div> : null
+                                            }
+                                            <div className="no-pad text-center" style={{ padding: "0" }}>
+                                                <p className="s-info" style={{ fontSize: 18, color: "#A6A6A6" }}>Keep your PIN safe and confidential at all times. Do not use easily guessable PINs like 0000 or 1234 etc.</p>
+                                            </div>
 
-                                        
-                                    </div>
-                                    <div className="transfer-ctn" style={{margin: "0 100px 0 100px"}}>
+
+                                        </div>
+                                        <div className="transfer-ctn" style={{ margin: "0 100px 0 100px" }}>
                                             <div className="col-sm-12 m-b-20" style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }} >
                                                 {/* <center> */}
-                                                <button disabled={this.props.fetching} style={{minWidth:190}} onClick={this.onChangePin} className="btn-alat mx-2 ">{this.props.fetching ? "Processing..." : "Change ALAT PIN"}</button>
-                                                <button disabled={this.props.fetching} style={{minWidth:190}} onClick={this.onForgotPin} className="btn-alat mx-2 ">{this.props.fetching ? "Processing..." : "Forgot ALAT PIN"}</button>
+                                                <button disabled={this.props.fetching} style={{ minWidth: 190 }} onClick={this.onChangePin} className="btn-alat mx-2 ">{this.props.fetching && this.state.clicked == "change" ? "Processing..." : "Change ALAT PIN"}</button>
+                                                <button disabled={this.props.fetching} style={{ minWidth: 190 }} onClick={this.onForgotPin} className="btn-alat mx-2 ">{this.props.fetching && this.state.clicked == "forgot" ? "Processing..." : "Forgot ALAT PIN"}</button>
                                                 {/* </center> */}
                                             </div>
                                         </div>
-                                </div>
+                                    </div>
 
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </Fragment>
-        )
+                </Fragment>
+            )
+            
+        } else {
+            view = (
+                <Fragment>
+                    <div className="col-sm-12">
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <div className="max-600">
+                                    <div className="al-card no-pad">
+                                        <h4 className="m-b-10 center-text hd-underline">Alat PIN Management</h4>
+                                        <div className="transfer-ctn" style={{ padding: "30px 100px 0 100px" }}>
+                                            {(this.props.alert.message) ?
+                                                <div className="info-label error">{this.props.alert.message}</div> : null
+                                            }
+                                            <div className="no-pad text-center" style={{ padding: "0" }}>
+                                                <p className="s-info" style={{ fontSize: 18, color: "#A6A6A6" }}>Keep your PIN safe and confidential at all times. Do not use easily guessable PINs like 0000 or 1234 etc.</p>
+                                            </div>
+
+
+                                        </div>
+                                        <div className="transfer-ctn" style={{ margin: "0 100px 0 100px" }}>
+                                            <div className="col-sm-12 m-b-20" >
+                                                {/* <center> */}
+                                                <button disabled={this.props.fetching} style={{ minWidth: 190 }} onClick={this.onCreatePin} className="btn-alat mx-2 text center">{this.props.fetching ? "Processing..." : "Create ALAT PIN"}</button>
+                                                {/* </center> */}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Fragment>
+            )  
+        }
+
         if (this.props.pageState == 0) {
+            console.log("reached")
             if (this.state.clicked == "change") {
                 view = <Redirect to="/settings/pin-management/change/security-question" />
-            } else {
+            } else if(this.state.clicked == "forgot") {
                 view = <Redirect to="/settings/pin-management/forgot/security-question" />
+            }else{
+                view = <Redirect to="/settings/pin-management/create/security-question" />
             }
             this.props.resetPageState();
         }
@@ -78,6 +126,7 @@ class Index extends Component {
 const mapStateToProps = state => {
     return {
         alert: state.alert,
+        isPinSet: state.authentication.user.isAlatPinSet,
         fetching: state.settings_reducer.isFetching,
         pageState: state.settings_reducer.pageState,
     }

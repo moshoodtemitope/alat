@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
 import successLogo from '../../../assets/img/success.svg';
 
  class MovieSuccess extends Component{

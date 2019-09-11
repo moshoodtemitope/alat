@@ -134,12 +134,13 @@ export function occupationAndSector (state=[], action){
     }
 }
 
+
 export function addDocuments (state=[], action){
     switch(action.type){
-        case profile.DOCUMENTS_PENDING: 
-           return {
-               message: profile.DOCUMENTS_PENDING,
-               data: action
+        case profile.DOCUMENTS_PENDING:  
+           return { 
+               message: profile.DOCUMENTS_PENDING, 
+               data: action           
            }
         case profile.DOCUMENTS_SUCCESS:
            return {
@@ -149,6 +150,28 @@ export function addDocuments (state=[], action){
         case profile.DOCUMENTS_FAILURE:
            return {
                message: profile.DOCUMENTS_FAILURE,
+               data: action
+           }
+        default: 
+           return {... state}
+    }
+}
+
+export function nextOfKinsRelationship (state=[], action){
+    switch(action.type){
+        case profile.GET_NEXT_OF_KIN_RELATIONSHIP_PENDING: 
+           return {
+               message: profile.GET_NEXT_OF_KIN_RELATIONSHIP_PENDING,
+               data: action
+           }
+        case profile.GET_NEXT_OF_KIN_RELATIONSHIP_SUCCESS:
+           return {
+               message: profile.GET_NEXT_OF_KIN_RELATIONSHIP_SUCCESS,
+               data: action
+           } 
+        case profile.GET_NEXT_OF_KIN_RELATIONSHIP_FAILURE:
+           return {
+               message: profile.GET_NEXT_OF_KIN_RELATIONSHIP_FAILURE,
                data: action
            }
         default: 
@@ -244,35 +267,17 @@ export function getPersonalInfo (state=[], action){
            return {... state}
     }
 }
-
-
-
-
-
-
-
-export function profileSuccessMessage (state=[], action){
-    switch(action.type){
-        case 'profile success message': 
-           return {
-               message: 'profile success message',
-               data: action
-           }
-      
-        default: 
-           return {... state}
+    export function profileSuccessMessage (state=[], action){
+        switch(action.type){
+            case 'profile success message': 
+               return {
+                   message: 'profile success message',
+                   data: action
+               }
+          
+            default: 
+               return {... state}
+        }
     }
-}
-
-
-
-
-
-
-
-
-
-
-
 
 

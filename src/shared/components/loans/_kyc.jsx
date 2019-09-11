@@ -19,6 +19,7 @@ class LoanKycComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            user: JSON.parse(localStorage.getItem("user")),
             Passport: { name: "" },
             Signature: { name: "" }
         }
@@ -87,7 +88,7 @@ class LoanKycComponent extends React.Component {
         }
         else {
             this.setState({ [e]: { file: '', name: '' } });
-            this.props.dispatch(alertActions.error("You need to upload a "+e+""));
+            this.props.dispatch(alertActions.error("You need to upload a " + e + ""));
         }
     }
 
@@ -111,15 +112,17 @@ class LoanKycComponent extends React.Component {
         this.props.dispatch(userActions.uploadDocument(this.state.user.token, data, action))
     }
 
-    gotoNextPage=()=>{
-        if(this.props.passport && this.props.signature)
-        if(this.props.passport.passport_status == userConstants.PASSPORT_UPLOAD_SUCCESS && this.props.signature.signature_status == userConstants.SIGNATURE_UPLOAD_SUCCESS){
-            this.props.goForward();
-        }
+    gotoNextPage = () => {
+    
+        if (this.props.passport && this.props.signature)
+            if (this.props.passport.passport_status == userConstants.PASSPORT_UPLOAD_SUCCESS && this.props.signature.sign_status == userConstants.SIGNATURE_UPLOAD_SUCCESS) {
+                this.props.goForward();
+            }
     }
 
 
     render() {
+        this.gotoNextPage();
         return (
             <div className="row">
                 <div className="col-sm-12">
@@ -134,7 +137,7 @@ class LoanKycComponent extends React.Component {
                                     {this.props.alert && this.props.alert.message &&
                                         <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                                     }
-                                     {this.props.passport && this.props.passport.passport_status == userConstants.PASSPORT_UPLOAD_FAILURE &&
+                                    {this.props.passport && this.props.passport.passport_status == userConstants.PASSPORT_UPLOAD_FAILURE &&
                                         <div className={`info-label failure`}>{this.props.passport.passport_data.error.Respone}</div>
                                     }
                                     {this.props.signature && this.props.signature.signature_status == userConstants.SIGNATURE_UPLOAD_FAILURE &&
@@ -182,8 +185,10 @@ class LoanKycComponent extends React.Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <input type="submit" value={this.props.passport.paspport_status == userConstants.PASSPORT_UPLOAD_PENDING || this.props.signature.signature_status == userConstants.SIGNATURE_UPLOAD_PENDING ? "Processing..." : "Upload Documents"}
-                                        disabled={this.props.passport.paspport_status == userConstants.PASSPORT_UPLOAD_PENDING || this.props.signature.signature_status == userConstants.SIGNATURE_UPLOAD_PENDING}
+                                    {/* (this.props.passport.paspport_status == userConstants.PASSPORT_UPLOAD_PENDING || */}
+                                    {/* ( */}
+                                    <input type="submit" value={ this.props.passport.paspport_status == userConstants.PASSPORT_UPLOAD_PENDING || this.props.signature.sign_status == userConstants.SIGNATURE_UPLOAD_PENDING ? "Processing..." : "Upload Documents"}
+                                        disabled={ this.props.passport.paspport_status == userConstants.PASSPORT_UPLOAD_PENDING || this.props.signature.sign_status == userConstants.SIGNATURE_UPLOAD_PENDING}
                                         className="btn-alat btn-block" />
                                 </form>
                             </div>
@@ -200,7 +205,7 @@ function mapStateToProps(state) {
         alert: state.alert,
         passport: state.loanReducerPile.passport,
         signature: state.loanReducerPile.signature,
-    }
+    };
 }
 
 export default connect(mapStateToProps)(LoanKycComponent);

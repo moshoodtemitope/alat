@@ -25,6 +25,8 @@ import RemittanceContainer from './remittance/remittance-container';
 import LifestyleIndex from './lifestyle/index'
 import SavingsContainer from './savings/index'
 import { userActions } from "../redux/actions/onboarding/user.actions";
+import ProfileIndex from './profile';
+
 
 
 
@@ -160,7 +162,7 @@ class AuthenticatedRoutes extends React.Component {
     }
 
     closeModal = (event) => {
-        event.preventDefault();
+       if (event) event.preventDefault();
         timer = 60;
         this.setState({ openModal: false, countDownTimeOn: false }, clearInterval(this.countDown))
 
@@ -197,6 +199,7 @@ class AuthenticatedRoutes extends React.Component {
                     <PrivateRoute path='/loans' authed={this.props.user} component={LoansIndex}/>
                     <PrivateRoute path='/account' authed={this.props.user} component={Accounts}/>
                     <PrivateRoute path='/settings' authed={this.props.user} component={AccountSettings}/>
+                    <PrivateRoute path='/profile' authed={this.props.user} component={ProfileIndex} />
                     <PrivateRoute path='/cards' authed={this.props.user} component={CardsContainer}/>
                     <PrivateRoute path='/hotlist' authed={this.props.user} component={CardsContainer}/>
                     <PrivateRoute path='/setcard-pin' authed={this.props.user} component={CardsContainer}/>
