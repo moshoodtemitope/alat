@@ -22,6 +22,7 @@ import cardlessReducer from './cardless.reducer';
 import billsReducer from './bills.reducer';
 import accountsReducer from './accounts.reducer';
 import settingsReducer from './settings.reducer';
+import alatLoanReducer from './alat-loan.reducer';
 import { airtimeConstants } from "../constants/airtime/airtime.constants";
 import { TRANSFER_REDUCER_CLEAR } from "../constants/transfer.constants";
 import { fundAccountConstants } from "../constants/fund-account/fund-account.constant";
@@ -169,7 +170,8 @@ const loanOnboardingReducer = combineReducers({
     loanSalaryEntryReducer : loanOnboarding.salaryEntryReducer,
     loanGetScoreCardQuestion: loanOnboarding.getScoreCardQuestionReducer,
     loanPostScoreCardAnswer : loanOnboarding.postScoreCardAnswerReducer,
-    loanUserDetails: loanOnboarding.saveUserDetailsReducer
+    loanUserDetails: loanOnboarding.saveUserDetailsReducer,
+    loanResendOTP: loanOnboarding.resendOTPReducer,
 })
 
 const loansReducer = combineReducers({
@@ -189,6 +191,8 @@ const loansReducer = combineReducers({
     loanAppStatus: loans.continueApplication,
     passport: loans.PassportReducer,
     signature: loans.SignatureReducer,
+    kycrequired : loans.KycRequired,
+    terms: loans.termsReducer,
 })
 
 const alatCardsReducer = combineReducers({
@@ -247,6 +251,7 @@ const appReducer = combineReducers({
     bills_reducer: billsReducer,
     accountsM_reducer : accountsReducer,
     settings_reducer : settingsReducer,
+    alat_loan_reducer: alatLoanReducer,
 
     //fixed goal reducers
     fixed_goal_step1:fixedGoal.fixedGoalStep1Reducer,
@@ -308,14 +313,17 @@ const appReducer = combineReducers({
 
 
      //MOVIES
-     getCinemaList: movies.getCinemaList,
-     getSingleMovie: movies.getSingleMovie,
-     buyMovieTicket: movies.buyMovieTicket,
+     getCinemaList:movies.getCinemaList,
+     getSingleMovie:movies.getSingleMovie,
+     buyMovieTicket:movies.buyMovieTicket,
      ShowTime:movies.ShowTime,
      SubmitTicketData:movies.SubmitTicketData,
      SubmitEventTicketData:movies.SubmitEventTicketData,
      SearchfetchMovieList:movies.SearchfetchMovieList,
      SearchfetchEventList:movies.SearchfetchEventList,
+     FetchMovieGenre:movies.FetchMovieGenre,
+     PostMovieContent:movies.PostMovieContent,
+
  
      //EVENTS
      getEvents: movies.getEvents,

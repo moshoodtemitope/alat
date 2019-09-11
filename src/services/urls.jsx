@@ -139,6 +139,7 @@ export const routes = {
     LOANS_STEP_3 :BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/CustomerProfile',
     LOAN_VERIFY_BVN : BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/CallBvnService',
     LOAN_VALIDATE_OTP: BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/VerifyOtpForBvn',
+    LOAN_RESEND_OTP: BASEURL + 'DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/ResendOtp',
     LOAN_REQUEST_STATEMENT: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/RequestBankStatement', // request param
     LOAN_GENERATE_STATEMENT: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GenerateBankStatement', //request params
     LOAN_SELECTED_ENTRIES : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/SelectedSalaryEntries',
@@ -158,6 +159,11 @@ export const routes = {
     LOAN_REJECT : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/RejectLoan',
     LOAN_MANDATE_STATUS : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/MandateStatus',
     LOAN_OTP_MANDATE : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/ValidateOtpMandate',
+    LOAN_KYC_REQIURED : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/KycRequired',
+    LOAN_TERMS: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/TermsAndConditions',
+
+    //ALat-Loans
+    GET_ACTIVE_LOANS : BASEURL + '/Lending.API/api/loan/GetCustomerStatus',
 
     //WesternUnion
     WESTERNUNION_COUNTRIES: BASEURL + '/PaymentApi/api/WesternunionCountries',
@@ -235,16 +241,16 @@ export const routes = {
     SAVE_SECURITY_QUESTION : BASEURL + '/AccountSetting/api/securityquestion/saveorupdate',
 
     //EVENTS
-    GET_EVENTS: BASEURL + '/LifeStylePaymentMoviesApi/api/events/getevents?pageNum=1',
-    GET_SINGLE_EVENT: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Events/GetSingleEvent',
-    BUY_EVENT_TICKET: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Events/BuyEventTicketV2',
+    GET_EVENTS: BASEURL + '/LifeStylePaymentMoviesApi/api/events/getevents?pageNum=',
+    GET_SINGLE_EVENT: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetSingleEvent',
+    BUY_EVENT_TICKET: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/BuyEventTicket',
 
     //PREFERENCES
     GET_PREFENCE: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Account/GetAllEngagements',
     GET_CUSTOMER_ENGAGEMENTS: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Account/GetCustomerEngagements',
 
     //movies
-    FETCH_MOVIES_LIST : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetMovies?page=1',
+    FETCH_MOVIES_LIST : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetMovies?page=',
     FETCH_MOVIE_SHOWTIME : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetShowTimes?cinemaUid=',
     BUY_MOVIE_TICKET : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/BuyMovieTicket',
     FETCH_MOVIE_GENRE : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetGenreList',

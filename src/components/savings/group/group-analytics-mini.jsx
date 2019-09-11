@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Fragment} from "react";
 import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from './../container';
+import SavingsContainer from '..';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import {Switch} from "react-router";
 import "react-datepicker/dist/react-datepicker.css";
@@ -41,10 +41,10 @@ class GroupAnalyticsMini extends React.Component {
     GetSmallNavs = () => {
         return <div className='miniNav'>
                     <div className='left'>
-                     <p onClick={this.MoveToEditGroupEsusu}>Edit</p>
+                     <p style={{cursor:"pointer"}} onClick={this.MoveToEditGroupEsusu}>Edit</p>
                     </div>
                     <div className='right'>
-                        <p onClick={this.DeleteGroup}>Delete</p>
+                        <p style={{cursor:"pointer"}} onClick={this.DeleteGroup}>Delete</p>
                     </div>
                </div>
     }
@@ -103,7 +103,7 @@ class GroupAnalyticsMini extends React.Component {
     };
 
     MoveToEditGroupEsusu = () => {
-        history.push('/group-savings/edit-rotating');
+        history.push('/savings/group-savings/edit-rotating');
     }
 
 
@@ -123,8 +123,6 @@ class GroupAnalyticsMini extends React.Component {
         
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -207,8 +205,6 @@ class GroupAnalyticsMini extends React.Component {
 
                         </div>
 
-                    </SavingsContainer>
-                </InnerContainer>
             </Fragment>
         );
     }

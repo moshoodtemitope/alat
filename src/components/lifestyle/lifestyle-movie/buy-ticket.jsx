@@ -23,7 +23,12 @@ class BuyTicket extends Component {
             cinemaId:"",
             title:"",
             Pin:"",
+            adult:"",
+            child:"",
+            student:"",
             isPinInvalid: false,
+            goal: JSON.parse(localStorage.getItem("goal")),
+
 
 
         };
@@ -76,11 +81,12 @@ class BuyTicket extends Component {
                 title:data.title,
                 cinemaId:data.cinemaId,
                 ShowTimeId:data.ShowTimeId,
-                initialAdultAmount:data.initialAdultAmount,
-                initialStudentAmount:data.initialStudentAmount,
-                initialChildAmount:data.initialChildAmount,
+                adult:data.adultQuantity,
+                child:data.childQuantity,
+                student:data.studentQuantity,
                 ticketId:data.ticketId,
-                fee:data.fee
+                fee:data.fee,
+                ticketType:data.ticketType
                 
             });
         }
@@ -95,19 +101,19 @@ class BuyTicket extends Component {
             //not valid
         }else {
             let data={
-                'TicketAmount':parseFloat(this.state.TicketAmount),
-                'AccountNo':this.state.accountToDebit,
-                'Pin':this.state.Pin,
                 "ShowTimeId":this.state.ShowTimeId,	
                 "CinemaId":this.state.cinemaId,
-                "Children":parseInt(this.state.initialChildAmount),
-                "Student":parseInt(this.state.initialStudentAmount),
-                "Adult":parseInt(this.state.initialAdultAmount),
                 "TicketId":this.state.ticketId,
+                'AccountNo':this.state.accountToDebit,
+                'Pin':this.state.Pin,
+                'TicketAmount':this.state.TicketAmount,
+                "Adult":this.state.adult,
+                "Student":this.state.student,
+                "Children":this.state.child,
                 "fee":this.state.fee,
 
             };
-            console.log(data)
+            // console.log(data)
         
             this.props.dispatch(actions.buyMovieTicket(this.state.user.token, data));
 
@@ -143,7 +149,7 @@ class BuyTicket extends Component {
                         </div>
                     </div>
                         {this.props.alert && this.props.alert.message &&
-                        <div style={{width: "100%", marginRight:"120px",marginLeft:"120px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                        <div style={{width: "50%", marginRight:"120px",marginLeft:"25%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                         }
                         <div className="col-sm-12">
                             <div className="row">
@@ -158,8 +164,8 @@ class BuyTicket extends Component {
                                                 <div className="form-group">
                                                        <div className="puchaseSumTickets">
                                                            <div className="left">
-                                                                <p style={{fontSize:12,fontFamily:"proxima_novasemibold"}}>{this.state.title}</p>
-                                                                <p style={{fontSize:12, fontFamily:'proxima_novaregular'}}>Movie ticket</p>
+                                                                <p style={{fontSize:12,fontFamily:"proxima_novasemibold"}}>{this.state.goal.title}</p>
+                                                                <p style={{fontSize:12, fontFamily:'proxima_novaregular'}}>{this.state.ticketType}</p>
                                                            </div>
                                                            <div className="right">
                                                                <p>N{this.formatAmountNoDecimal(this.state.TicketAmount)}</p>
@@ -200,6 +206,8 @@ class BuyTicket extends Component {
                                             </form>
                                            
                                         </div>
+                                        
+
                                     </div>
                                 </div>
                                 </div>

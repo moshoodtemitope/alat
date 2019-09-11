@@ -89,7 +89,7 @@ class SalaryEntry extends React.Component {
                     //...this.state.enytrList
 
                 ]
-                console.log(salary_transactions);
+                //console.log(salary_transactions);
                 if (salary_transactions.length >= 1) {
                     return (
                         <table className="table table-striped salary-table">

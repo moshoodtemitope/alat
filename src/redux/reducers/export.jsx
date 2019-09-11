@@ -1,5 +1,22 @@
 import {userRegistrationRequest, bvnDetailsReducer,bvnSkipReducer, bvnCustomerDetailsReducer} from "./onboarding.reducer";
-import {getCinemaList, getSingleMovie, buyMovieTicket, getEvents, getSingleEvent, SearchfetchMovieList, purchaseEventTicket, getAllEngagements, getCustomersEngagements, fetchMovieList,ShowTime,SubmitTicketData,SubmitEventTicketData,SearchfetchEventList, movieDetails} from './lifestyle/lifestyle-reducer';
+import {getCinemaList, 
+    getSingleMovie, 
+    buyMovieTicket,
+     getEvents, 
+     getSingleEvent, 
+     SearchfetchMovieList, 
+     purchaseEventTicket, 
+     getAllEngagements, 
+     getCustomersEngagements, 
+     fetchMovieList,
+     ShowTime,
+     SubmitTicketData,
+     SubmitEventTicketData,
+     SearchfetchEventList,
+      movieDetails,
+      FetchMovieGenre,
+      PostMovieContent
+    } from './lifestyle/lifestyle-reducer';
 
 
 import {
@@ -32,12 +49,12 @@ import { fundAccountReducer, getTokenizedCardsReducer,
 import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingVerifyBVNReducer,
      loanOnboardingStep3Reducer, loanOnboardingValidateOTPReducer, generateStatementReducer,
       requestStatementReducer,salaryTransactionReducer, salaryEntryReducer, saveUserDetailsReducer, getScoreCardQuestionReducer,
-      postScoreCardAnswerReducer} from './loan-onboarding.reducer';
+      postScoreCardAnswerReducer, resendOTPReducer} from './loan-onboarding.reducer';
 
 import { loanCalcDataReducer, loanApplyReducer, GetIndustriesReducer, GetEmployerReducer, CurrentLoanReducer, 
-    LoanHistoryReducer, WorkIdFrontReducer, WorkIdBackReducer, loanRejectReducer, loanStandingOrderReducer,
+        LoanHistoryReducer, WorkIdFrontReducer, WorkIdBackReducer, loanRejectReducer, loanStandingOrderReducer,
      loanMandateStatusReducer, loanValidateRemitaOtpReducer, loanStatementUpload, continueApplication, 
-     SignatureReducer , PassportReducer } from './loan.reducer';
+     SignatureReducer , PassportReducer, KycRequired, termsReducer } from './loan.reducer';
 
 import { geCurrentVirtualCardsRequest,
          sendVCNewCardinfo,
@@ -109,7 +126,9 @@ export const loans = {
     loanStatementUpload,
     continueApplication,
     SignatureReducer,
-     PassportReducer
+    PassportReducer,
+    KycRequired,
+    termsReducer
 }
 
 export const loanOnboarding = {
@@ -124,7 +143,8 @@ export const loanOnboarding = {
     salaryEntryReducer,
     getScoreCardQuestionReducer,
     postScoreCardAnswerReducer,
-    saveUserDetailsReducer
+    saveUserDetailsReducer,
+    resendOTPReducer
 }
 
 export const dashboard = {
@@ -291,7 +311,9 @@ export const movies = {
     SubmitEventTicketData,
     SearchfetchMovieList,
     SearchfetchEventList,
-    movieDetails
+    movieDetails,
+    FetchMovieGenre,
+    PostMovieContent
 }
 
 export const preferences = {

@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Fragment} from "react";
 import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from './../container';
+import SavingsContainer from '..';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import {Switch} from "react-router";
 import Select from 'react-select';
@@ -14,6 +14,7 @@ import ProgressBar from './progress-bar';
 // import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
 import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import {history} from '../../../_helpers/history';
+import {GROUPSAVINGSCONSTANT} from '../../../redux/constants/savings/group/index'
 
 class ParentDashBoard extends React.Component {
     constructor(props){
@@ -51,7 +52,7 @@ class ParentDashBoard extends React.Component {
                                     <p>Members</p>
                                 </div>
                                 <div className='right'>
-                                    <p id={element.id} onClick={this.GoToGroup}>View Details</p>
+                                    <p style={{cursor:"pointer"}} id={element.id} onClick={this.GoToGroup}>View Details</p>
                                 </div>
                             </div>
                    </div>
@@ -88,7 +89,7 @@ class ParentDashBoard extends React.Component {
                                 <p>Up Next</p>
                             </div>
                             <div className='right'>
-                                <p id={element.id} onClick={this.GoToRotatingGroup}>View Details</p>
+                                <p style={{cursor:"pointer"}} id={element.id} onClick={this.GoToRotatingGroup}>View Details</p>
                             </div>
                         </div>
                    </div>
@@ -126,8 +127,7 @@ class ParentDashBoard extends React.Component {
         if(this.props.groupSavingsEsusu.response == undefined && this.props.groups.response == undefined){
             return(
                 <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
+                
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -152,16 +152,15 @@ class ParentDashBoard extends React.Component {
                                 <div className="row">
                                     <div className="bodyDetails">
                                           
-                                          <h4 className="m-b-10 center-text hd-underline">Automate Group Savings</h4>
+                                          <h4 className="m-b-10 text-center hd-underline">Automate Group Savings</h4>
                                             <div className="loadingData">
-                                                <p>loading data ...</p>
+                                                <p style={{textAlign:"center",}}>Loading group savings ...</p>
                                             </div>
                                     </div>
                                </div>
                         </div>
 
-                    </SavingsContainer>
-                </InnerContainer>
+                   
             </Fragment>
             );
         }
@@ -172,8 +171,7 @@ class ParentDashBoard extends React.Component {
            }
             return(
                 <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
+                
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -214,9 +212,6 @@ class ParentDashBoard extends React.Component {
                                     </div>
                                </div>
                         </div>
-
-                    </SavingsContainer>
-                </InnerContainer>
             </Fragment>
             )
         }
@@ -227,8 +222,7 @@ class ParentDashBoard extends React.Component {
             }
             return(
                 <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
+               
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -270,8 +264,7 @@ class ParentDashBoard extends React.Component {
                                </div>
                         </div>
 
-                    </SavingsContainer>
-                </InnerContainer>
+                   
             </Fragment>
             )
         }
@@ -283,8 +276,7 @@ class ParentDashBoard extends React.Component {
 
             return(
                 <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
+                
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -327,8 +319,7 @@ class ParentDashBoard extends React.Component {
                                </div>
                         </div>
 
-                    </SavingsContainer>
-                </InnerContainer>
+                    
             </Fragment>
             );
         }

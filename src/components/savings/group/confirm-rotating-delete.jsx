@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Fragment} from "react";
 import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from './../container';
+import SavingsContainer from '..';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import {Switch} from "react-router";
 import Select from 'react-select';
@@ -57,8 +57,6 @@ class RotatingDelete extends React.Component {
         const { confirmDelete } = this.state;
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -116,8 +114,6 @@ class RotatingDelete extends React.Component {
                             </div>
                         </div>
 
-                    </SavingsContainer>
-                </InnerContainer>
             </Fragment>
         );
     }

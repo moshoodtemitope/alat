@@ -123,6 +123,8 @@ class LoansDashboard extends React.Component {
             break;
             case LoanApplicationProgress.Inprogress_CollectionRemitaBankSetup: return "/loans/salary/remita-mandate"
             break;
+            case LoanApplicationProgress.Inprogress_UploadStatement: return "/loans/salary/statement-upload"
+            break;
         }
     }
 

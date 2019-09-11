@@ -78,6 +78,8 @@
     width: 100%;
     padding-top: 10px;
     padding-bottom: 10px;
+    cursor: pointer;
+    border: none
 }
 
 .joinGroup h6 {
@@ -97,6 +99,7 @@
     background-color: transparent;
     display: flex !important;
     flex-wrap: wrap !important;
+    justify-content: center;
 }
 
 .compContainer2 {
@@ -104,6 +107,7 @@
     background-color: transparent;
     display: flex !important;
     flex-wrap: wrap !important;
+    justify-content: center;
 }
 
 
@@ -149,16 +153,18 @@
 }
 
 .smallnavtop {
-    width: 86% !important;
+    width: 50% !important;
     position: absolute;
     top: 238px;
     z-index: 0;
-    left: 50%;
+    /* right: 0px; */
+    left: 50%;  
 }
 
 .smallnavtop  ul {
-    float: right !important;
+    /* float: right !important; */
     margin-left: 145px !important;
+    /* padding-left: 20%; */
 }
 
 .smallnavtop ul li {
@@ -433,12 +439,12 @@
   width: 100%;
   margin-bottom: 0px;
   font-family:'proxima_novasemibold',sans-serif !important;
-font-size: 8px;
-line-height: 10px;
-padding-bottom: 5px;
-padding-top: 20px;
-font-weight: bold;
-text-transform: uppercase !important;
+    font-size: 8px;
+    line-height: 10px;
+    padding-bottom: 5px;
+    padding-top: 20px;
+    font-weight: bold;
+/* text-transform: uppercase !important; */
 }
 
 .topCard .left .bottom {
@@ -490,6 +496,7 @@ font-weight: bold;
 
 .bottomDiscriptionDashBoard .right {
     width: 30%;
+
 }
 
 .bottomDiscriptionDashBoard .left p {
@@ -737,7 +744,7 @@ font-weight: bold;
 
 .bottomDiscription span, .topDiscription span {
     color: #A90836;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 }
 
 .bottomDiscription p {
@@ -751,16 +758,20 @@ font-weight: bold;
     font-family:"proxima_novasemibold",sans-serif !important;
     font-size: 16px;
     line-height: 19px;
-
     text-align: center;
+
+
 
     color: #FFFFFF;
     padding-top: 12px;
     padding-bottom: 12px;
+    cursor: pointer;
+    border: none
 }
 
 .navLeft, .navMiddle, .navRight {
     width: 33.3%;
+
 }
 
 .butNav {
@@ -769,17 +780,27 @@ font-weight: bold;
     font-size: 12px;
     color: #444444;
     font-family:"proxima_novasemibold",sans-serif !important;
+    margin-left: 0 !important;
+    margin-right:0 !important;
+    
 }
 
 .navRight p {
     text-align: right;
+    cursor: pointer;
+
 }
 
 .navMiddle p {
     text-align: center;
+    cursor: pointer;
+
 }
 
 .moreDetails {
+    margin-left: 0 !important;
+    margin-right:0 !important
+    
 
 }
 
@@ -989,7 +1010,7 @@ color: #4D4D4D;
 }
 
 #autoSummary .right p:first-child { 
-    padding-top: 10px;
+    padding-top: 25px;
     font-family: "proxima_novaregular",sans-serif !important;
 }
 

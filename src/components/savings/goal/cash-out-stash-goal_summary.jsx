@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '../container';
+import SavingsContainer from '..';
 import {Fragment} from "react";
 import { connect } from 'react-redux';
 import * as actions from "../../../redux/actions/savings/goal/get-customer-transaction-history.actions";
@@ -19,7 +19,6 @@ class CashoutStashGoal extends Component {
             debitAmount:"",
             Amount:"",
             goalId:"",
-            amountSaved:"",
             goal:JSON.parse(localStorage.getItem('goal')) || [],
 
 
@@ -41,11 +40,10 @@ class CashoutStashGoal extends Component {
             console.log('tag', data);
 
             this.setState({
-                Amount:data.amount,
                 goalName:data.goalName,
                 goalId:data.goalId,
                 debitAccount:data.accountNumber,
-                amountSaved:data.amountSaved,
+                Amount:data.amountSaved,
                 partialWithdrawal:true
             });
         }
@@ -79,11 +77,10 @@ class CashoutStashGoal extends Component {
 
         event.preventDefault();
         this.props.dispatch(actions.StashCashout({
-            "goalId":parseInt(this.state.goal.id),
-            "goalTypeId":parseInt(this.state.goal.goalTypeId),
-            "amountNumber":this.state.debitAccount,
-            "amount":parseFloat(this.state.goal.amountSaved),
-            "partialWithdrawal":true
+            "GoalId":parseInt(this.state.goalId),
+            "DebitAccount":this.state.debitAccount,
+            "Amount":parseFloat(this.state.Amount),
+            "PartWithdrawal":true
 
         }));
 
@@ -94,8 +91,6 @@ class CashoutStashGoal extends Component {
 
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -193,8 +188,6 @@ class CashoutStashGoal extends Component {
 
 
 
-                    </SavingsContainer>
-                </InnerContainer>
 
             </Fragment>
         )

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Fragment} from "react";
-import SavingsContainer from '../container';
+import SavingsContainer from '..';
 import InnerContainer from '../../../shared/templates/inner-container';
 import calender from '../../../assets/img/calender.svg' ;
 import graph from '../../../assets/img/graph.svg';
@@ -16,8 +16,7 @@ class GroupSavingsSelection extends React.Component {
     render() {
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
+                
                     <div className="row">
                         <div className="col-sm-12">
                             <p className="page-title">Savings & Goals</p>
@@ -68,8 +67,7 @@ class GroupSavingsSelection extends React.Component {
                             </div>
                         </div>
                     </div>
-                    </SavingsContainer>
-                </InnerContainer>
+                   
             </Fragment>
         );
     }

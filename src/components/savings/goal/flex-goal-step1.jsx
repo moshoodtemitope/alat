@@ -1,13 +1,12 @@
 import React from 'react'
 import {Fragment} from "react";
-import InnerContainer from '../../shared/templates/inner-container';
-import SavingsContainer from './container';
+import InnerContainer from '../../../shared/templates/inner-container';
 import {NavLink, Redirect} from "react-router-dom";
 import Select from 'react-select';
 import { connect } from 'react-redux';
 import DatePicker from "react-datepicker";
-import {flexGoalConstants} from '../../redux/constants/goal/flex-goal.constant'
-import * as actions from '../../redux/actions/savings/goal/flex-goal.actions'
+import {flexGoalConstants} from '../../../redux/constants/goal/flex-goal.constant'
+import * as actions from '../../../redux/actions/savings/goal/flex-goal.actions'
 import "react-datepicker/dist/react-datepicker.css";
 
 
@@ -23,6 +22,7 @@ class FlexGoal extends React.Component {
         super(props);
         this.state={
             goalName:"",
+            user: JSON.parse(localStorage.getItem("user")),
             startDate:null,
             endDate:null,
             targetAmount:"",
@@ -220,7 +220,8 @@ class FlexGoal extends React.Component {
         var days = null;
         var res;
         let amount= parseFloat(this.removeComma(this.state.targetAmount));
-        // console.log('chika',amount);
+        let selectedFrequency = this.state.goalFrequencyValue.split(" ",1);
+
         console.log("monthly", this.state.goalFrequencyName);
         if (this.state.targetAmount ==="") {
             this.setState({interest: 0});
@@ -235,8 +236,10 @@ class FlexGoal extends React.Component {
                 this.setState({interest: this.interest});
             }else if(this.state.goalFrequencyName === "Weekly"){
                 res = this.state.goalFrequencyValue.split(" ",1) * 7;
-                this.interest = this.GetWeeklyFutureValue(amount, 0.10, res) - (amount * res);
+                this.interest = this.GetWeeklyFutureValue(amount, 0.10, res) - (amount * selectedFrequency);
                 this.interest = this.toCurrency(this.interest.toFixed(2));
+                this.setState({interest: this.interest});
+
 
             }else{
                 res = this.state.goalFrequencyValue.split(" ",1) * 1;
@@ -330,6 +333,7 @@ class FlexGoal extends React.Component {
                 })}>
                     <option>2 Weeks</option>
                     <option>4 Weeks</option>
+                    <option>6 Weeks</option>
                     <option>8 Weeks</option>
                     <option>12 Weeks</option>
                     <option>24 Weeks</option>
@@ -367,9 +371,8 @@ class FlexGoal extends React.Component {
 
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
-                        {this.gotoStep2()}
+                
+                    {this.gotoStep2()}
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -549,9 +552,7 @@ class FlexGoal extends React.Component {
                         </div>
 
 
-                    </SavingsContainer>
-
-                </InnerContainer>
+                 
 
 
             </Fragment>

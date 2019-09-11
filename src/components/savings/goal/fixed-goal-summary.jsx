@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import InnerContainer from '../../shared/templates/inner-container';
-import SavingsContainer from './container';
+import InnerContainer from '../../../shared/templates/inner-container';
 import {Fragment} from "react";
 import { connect } from 'react-redux';
 import moment from 'moment';
-import {fixedGoalConstants} from '../../redux/constants/goal/fixed-goal.constant';
-import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions';
+import {fixedGoalConstants} from '../../../redux/constants/goal/fixed-goal.constant';
+import * as actions from '../../../redux/actions/savings/goal/fixed-goal.actions';
 
  
 
@@ -81,8 +80,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions';
 
         return (
            <Fragment>
-           <InnerContainer>
-                <SavingsContainer>
+          
                 <div className="row">
                     <div className="col-sm-12">
                         <p className="page-title">Savings & Goals</p>
@@ -183,8 +181,7 @@ import * as actions from '../../redux/actions/savings/goal/fixed-goal.actions';
                 
                 
                 
-                </SavingsContainer>
-            </InnerContainer>
+               
            
            </Fragment>
         )

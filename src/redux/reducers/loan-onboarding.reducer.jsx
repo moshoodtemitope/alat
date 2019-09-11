@@ -282,6 +282,30 @@ export function postScoreCardAnswerReducer(state = {}, action) {
     }
 }
 
+export function resendOTPReducer(state = {}, action) {
+    switch (action.type) {
+        case loanOnboardingConstants.LOAN_RESENTOTP_SUCCESS:
+            return {
+                resendotp_status: loanOnboardingConstants.LOAN_RESENTOTP_SUCCESS,
+                resendotp_data: action,
+            };
+        case loanOnboardingConstants.LOAN_RESENTOTP_PENDING:
+            return {
+                resendotp_status: loanOnboardingConstants.LOAN_RESENTOTP_PENDING,
+                resendotp_data: action,
+            };
+        case loanOnboardingConstants.LOAN_RESENTOTP_FAILURE:
+            return {
+                resendotp_status: loanOnboardingConstants.LOAN_RESENTOTP_FAILURE,
+                resendotp_data: action,
+            };
+        default:
+            return {
+                ...state,
+            };
+    }
+}
+
 export function saveUserDetailsReducer(state = {}, action) {
     switch (action.type) {
         case loanOnboardingConstants.LOAN_USERNAME_SUCCESS:

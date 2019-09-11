@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import InnerContainer from '../../shared/templates/inner-container';
-import SavingsContainer from './container';
+import InnerContainer from '../../../shared/templates/inner-container';
+import SavingsContainer from '..';
 import {Fragment} from "react";
 import { connect } from 'react-redux';
 import moment from 'moment';
 import {NavLink} from "react-router-dom";
-import * as util from '../../shared/utils'
-import {createGoalConstants} from '../../redux/constants/goal/create-stash.constant';
-import * as actions from '../../redux/actions/savings/goal/create-stash-goal.actions'
+import * as util from '../../../shared/utils'
+import {createGoalConstants} from '../../../redux/constants/goal/create-stash.constant';
+import * as actions from '../../../redux/actions/savings/goal/create-stash-goal.actions'
  
 
 
@@ -76,8 +76,7 @@ import * as actions from '../../redux/actions/savings/goal/create-stash-goal.act
     render() {
         return (
            <Fragment>
-           <InnerContainer>
-                <SavingsContainer>
+          
                 <div className="row">
                     <div className="col-sm-12">
                         <p className="page-title">Savings & Goals</p>
@@ -168,13 +167,6 @@ import * as actions from '../../redux/actions/savings/goal/create-stash-goal.act
                         </div>
                         </div>
                     </div>
-                    
-                    
-                
-                
-                
-                </SavingsContainer>
-            </InnerContainer>
            
            </Fragment>
         )

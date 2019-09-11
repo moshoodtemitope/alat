@@ -23,7 +23,7 @@ class LifestyleIndex extends Component {
             <Fragment>
                 <InnerContainer>
                     <div className="dashboard-wrapper">
-                        <div className="container" style={{marginTop: -62}}>
+                        <div className="container" >
 
                                 {this.props.children}
                                 <Route path={'/lifestyle'} exact component={LifeStyle} />
