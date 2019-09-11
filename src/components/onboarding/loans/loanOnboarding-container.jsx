@@ -26,7 +26,7 @@ class LoanOnboardingContainer extends React.Component {
                                 <div className="circle-image">
                                     <img src="img/10.jpg" />
                                 </div>
-                                <p className="name">Hi, Ademola</p>
+                                {this.props.UserName && <p className="name">Hi, {this.props.UserName}</p>}
                             </div>
 
                             <span className="notification-top"><i className="demo-icon icon-alert-active"></i></span>

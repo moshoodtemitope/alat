@@ -1,4 +1,24 @@
 import {userRegistrationRequest, bvnDetailsReducer,bvnSkipReducer, bvnCustomerDetailsReducer} from "./onboarding.reducer";
+import {getCinemaList, 
+    getSingleMovie, 
+    buyMovieTicket,
+     getEvents, 
+     getSingleEvent, 
+     SearchfetchMovieList, 
+     purchaseEventTicket, 
+     getAllEngagements, 
+     getCustomersEngagements, 
+     fetchMovieList,
+     ShowTime,
+     SubmitTicketData,
+     SubmitEventTicketData,
+     SearchfetchEventList,
+      movieDetails,
+      FetchMovieGenre,
+      PostMovieContent
+    } from './lifestyle/lifestyle-reducer';
+
+
 import {
     accountFetch,
     accountHistoryReducer,
@@ -27,7 +47,14 @@ import { fundAccountReducer, getTokenizedCardsReducer,
       getEncryptionRuleReducer, verifyPANReducer, fundWemaAccountReducer } from './fund-account.reducer';
 
 import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingVerifyBVNReducer,
-     loanOnboardingStep3Reducer, loanOnboardingValidateOTPReducer} from './loan-onboarding.reducer';
+     loanOnboardingStep3Reducer, loanOnboardingValidateOTPReducer, generateStatementReducer,
+      requestStatementReducer,salaryTransactionReducer, salaryEntryReducer, saveUserDetailsReducer, getScoreCardQuestionReducer,
+      postScoreCardAnswerReducer, resendOTPReducer} from './loan-onboarding.reducer';
+
+import { loanCalcDataReducer, loanApplyReducer, GetIndustriesReducer, GetEmployerReducer, CurrentLoanReducer, 
+        LoanHistoryReducer, WorkIdFrontReducer, WorkIdBackReducer, loanRejectReducer, loanStandingOrderReducer,
+     loanMandateStatusReducer, loanValidateRemitaOtpReducer, loanStatementUpload, continueApplication, 
+     SignatureReducer , PassportReducer, KycRequired, termsReducer } from './loan.reducer';
 
 import { geCurrentVirtualCardsRequest,
          sendVCNewCardinfo,
@@ -48,6 +75,33 @@ import { geCurrentVirtualCardsRequest,
          infoForATMCardRequest,
          otpForATMCardRequest,
          postATMCardRequest} from './alatcards.reducer'
+import {getWesternUnionCountries,receiveWesternUnion } from './remittance.reducer';
+
+     import {fixedGoalStep1Reducer,fixedGoalStep2Reducer,addGoalReducer} from './goal/fixed-goal.reducers';
+     import {flexGoalStep1Reducer,flexGoalStep2Reducer,addFlexGoalReducer} from './goal/flex-goal.reducer';
+     import {createStashGoalReducer,createStashGoalStep1Reducer} from './goal/create-stash.reducer'
+    import {groupSavingsTargetGoal, groupDetails, deleteGroup, contribute, editGroup, pauseGroup, findGroup, customerGroup, joinGroup, scheduleContribution, deleteMember, cashOut,
+    continueScheduleGroupPayment, setAutomateSavingsEndDate, setAutomateSavingsStartDate, setAmountToWithDraw, setFrequency} from './group-savings/group-savings-reducers';
+     import {getCustomerGoalTransHistoryReducer,GET_FORMULAR,GET_GOAL_TYPE,TopUPGoalStep1,TopUPGoal,WithDrawFromGoalStep1,
+         WithDrawFromGoal,PauseCustomerGoal,unPauseCustomerGoal,EditCustomerGoal,DeleteCustomerGoal,StashCashout,StashCashoutStep1} from './goal/get-customer-goal-trans-history-reducers';
+     import {createRotatingSavings, rotatingGroupDetails, joinAGroup, EditSlots, 
+        editGroupEsusu, deleteGroupEsusu, GetGroupsEsusu, joinGroupEsusu, refferalCode} from './group-savings/rotating-group-reducers';
+
+
+
+import{
+    getExistingPolicy,
+    getNewPolicyDataChunk,
+    getCoversInPoductRequest,
+    saveProductCoverId,
+    saveCustomerInfo,
+    saveCustomerPolicyInfo,
+    getCarInYearRequest,
+    getCarModelRequest,
+    postMotorScheduleRequest,
+    postAutoInsurancePaymentRequest,
+    getCarDetailsRequest 
+} from './insurance.reducer'
 
 export const onboarding = {
     userRegistrationRequest,
@@ -56,12 +110,41 @@ export const onboarding = {
     bvnCustomerDetailsReducer
 };
 
+export const loans = {
+    loanCalcDataReducer,
+    loanApplyReducer,
+    GetIndustriesReducer,
+    GetEmployerReducer,
+    CurrentLoanReducer,
+    LoanHistoryReducer,
+    WorkIdFrontReducer,
+    WorkIdBackReducer,
+    loanRejectReducer,
+    loanStandingOrderReducer,
+    loanMandateStatusReducer,
+    loanValidateRemitaOtpReducer,
+    loanStatementUpload,
+    continueApplication,
+    SignatureReducer,
+    PassportReducer,
+    KycRequired,
+    termsReducer
+}
+
 export const loanOnboarding = {
     loanOnboardingStep1Reducer,
     loanOnboardingStep2Reducer,
     loanOnboardingVerifyBVNReducer,
     loanOnboardingStep3Reducer,
-    loanOnboardingValidateOTPReducer
+    loanOnboardingValidateOTPReducer,
+    generateStatementReducer,
+    requestStatementReducer,
+    salaryTransactionReducer,
+    salaryEntryReducer,
+    getScoreCardQuestionReducer,
+    postScoreCardAnswerReducer,
+    saveUserDetailsReducer,
+    resendOTPReducer
 }
 
 export const dashboard = {
@@ -93,14 +176,13 @@ export const airtime ={
     buyAirtimeWebPinReducer,
     buyAirtimeWebPinOTPReducer,
     airtimeSaveBeneficiaryReducer
-    
 }
 
 export const global ={
     debitableAccountsReducer,
     getEncryptionRuleReducer,
     verifyPANReducer
-}
+};
 
 export const fundAccount={
     fundAccountReducer,
@@ -109,11 +191,22 @@ export const fundAccount={
     tranCardDetailsReducer,
     deleteCardReducer,
     fundWemaAccountReducer,
-    //fundFromTokenisedCardReducer,
-    //fundFromCardWithPinReducer
     saveCardAfterTranReducer
 }
 
+export const insurance = {
+    getExistingPolicy,
+    getNewPolicyDataChunk,
+    getCoversInPoductRequest,
+    saveProductCoverId,
+    saveCustomerInfo,
+    saveCustomerPolicyInfo,
+    getCarInYearRequest,
+    getCarModelRequest,
+    postMotorScheduleRequest,
+    postAutoInsurancePaymentRequest,
+    getCarDetailsRequest
+}
 export const alatCards={
     geCurrentVirtualCardsRequest,
     sendVCNewCardinfo,
@@ -135,3 +228,119 @@ export const alatCards={
     otpForATMCardRequest,
     postATMCardRequest
 }
+export const receiveMoney={
+    getWesternUnionCountries,
+    receiveWesternUnion
+}
+export const fixedGoal ={
+    fixedGoalStep1Reducer,
+    fixedGoalStep2Reducer,
+    addGoalReducer
+ };
+ export const flexGoal={
+    flexGoalStep1Reducer,
+    flexGoalStep2Reducer,
+    addFlexGoalReducer
+
+ }
+ export const groupSavings = {
+    groupSavingsTargetGoal,
+    groupDetails,
+    deleteGroup, 
+    contribute, 
+    editGroup, 
+    pauseGroup, 
+    findGroup, 
+    customerGroup, 
+    joinGroup, 
+    scheduleContribution, 
+    deleteMember, 
+    cashOut,
+    continueScheduleGroupPayment,
+    setAutomateSavingsEndDate,
+    setAutomateSavingsStartDate,
+    setAmountToWithDraw,
+    setFrequency,
+}
+ 
+export const rotatingSavings = {
+    createRotatingSavings,
+    rotatingGroupDetails,
+    joinAGroup,
+    EditSlots,
+    GetGroupsEsusu,
+    editGroupEsusu,
+    deleteGroupEsusu,
+    joinGroupEsusu,
+    refferalCode
+}
+export const stashGoal={
+    createStashGoalStep1Reducer,
+    createStashGoalReducer,
+};
+
+export const customerGoal={
+    getCustomerGoalTransHistoryReducer,
+    GET_FORMULAR,
+    GET_GOAL_TYPE,
+    TopUPGoalStep1,
+    TopUPGoal,
+    WithDrawFromGoalStep1,
+    WithDrawFromGoal,
+    PauseCustomerGoal,
+    unPauseCustomerGoal,
+    EditCustomerGoal,
+    DeleteCustomerGoal,
+    StashCashout,
+    StashCashoutStep1
+
+
+};
+ 
+ 
+export const movies = {
+    getCinemaList,
+    getSingleMovie,
+    buyMovieTicket,
+    getEvents,
+    getSingleEvent,
+    purchaseEventTicket,
+    fetchMovieList,
+    ShowTime,
+    SubmitTicketData,
+    SubmitEventTicketData,
+    SearchfetchMovieList,
+    SearchfetchEventList,
+    movieDetails,
+    FetchMovieGenre,
+    PostMovieContent
+}
+
+export const preferences = {
+    getAllEngagements,
+    getCustomersEngagements
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

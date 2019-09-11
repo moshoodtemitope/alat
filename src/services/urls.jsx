@@ -19,7 +19,7 @@ export const routes = {
     GETALLQUESTIONS: BASEURL + '/UserSecurityApi/api/v1/Account/AllQuestions',
     REGISTRATIONURLV2: BASEURL + '/UserSecurityApi/api/v1/Account/RegistrationV2',
     DOCUMENT_UPLOAD: BASEURL + '/DocumentUpload/api/upload/document',
-   
+
     //user security
     ONBOARDING_PRIORITY: BASEURL + '/UserSecurityApi/api/v1/Account/GetOnboardingPriority',
     ANNOUNCEMENT: BASEURL + '/UserSecurityapi/api/v1/Account/GetNewsFeeds',
@@ -29,6 +29,13 @@ export const routes = {
     //account maintanance
     CUSTOMERACCOUNTS_ACCOUNT_MAINTANANCE: BASEURL + '/AccountMaintenance/api/account/customeraccounts',
     GETACCOUNTHISTORY: BASEURL + '/AccountMaintenance/api/transactions',
+    SEND_TRANSACTION_RECEIPT: BASEURL + '/AccountMaintenance/api/transactions/sendreciept',
+    GET_RECEIPT_TRANSACTIONS : function (accountNumber, take, skip, startDate =null, endDate=null){
+        return `${BASEURL}/AccountMaintenance/api/transactions/getreciepts?accountNumber=${accountNumber}&take=${take}&skip=${skip}&startDate=${startDate}&endDate=${endDate}`;    
+    },
+    SEND_STATEMENT: BASEURL + '/AccountMaintenance/api/transactions/statementsV2',
+    GET_TRANSACTION_LIMIT: BASEURL + '/AccountMaintenance/api/transactions/getTransactionlimit',
+    SET_TRANSACTION_LIMIT: BASEURL + '/AccountMaintenance/api/transactions/setTransactionlimit',
     GETSTATES: BASEURL + '/AccountMaintenance/api/account/GetStatesAndLgas',
     
 
@@ -51,7 +58,7 @@ export const routes = {
 
     //Payment
 
-    //FundAccount 
+    //FundAccount
     WEMA_TO_ALAT_TRANSFER_WITHOUT_OTP: BASEURL + '/PaymentApi/api/WemaAccountToAlatAccountWithoutOTP',
     GET_TOKENIZED_CARDS: BASEURL + '/PaymentCardServicesApi/api/v1/TokenizationApi/GetTokenizedCards',
     SAVE_CARD: BASEURL +  '/PaymentCardServicesApi/api/v1/TokenizationApi/TokenizedCardsBeforeTrans',
@@ -66,7 +73,6 @@ export const routes = {
     FETCH_TRANSFER_BENEFICIARIES: BASEURL + '/PaymentApi/api/Beneficiary/All',
     SAVE_TRANSFER_BENEFICIARY: BASEURL + '/PaymentApi/api/Beneficiary/Save',
     FETCH_ACCOUNT_DETAILS: BASEURL + '/PaymentApi/api/Accounts/VerifyAccountName',
-    DELETE_TRANSFER_BENEFICIARIES: BASEURL + '/PaymentApi/api/Beneficiary/Delete',
     DELETE_TRANSFER_BENEFICIARIES: BASEURL + '/PaymentApi/api/Beneficiary/Delete',
     BANK_TRANSFER_WITHPIN: BASEURL + '/PaymentApi/api/BankTransferRequestWebWithPin',
     BANK_TRANSFER_WITHPIN_ANDOTP: BASEURL + '/PaymentApi/api/BankTransferRequestWebWithPinAndOTP',
@@ -96,6 +102,9 @@ export const routes = {
     GETRANDOMSECURITYQUESTION: BASEURL + '/AccountSetting/api/securityquestion/Random',
     VERIFY_SECURITY_QUESTION: BASEURL + '/AccountSetting/api/securityquestion/validatewithoutotp',
     
+    GETLIMIT: BASEURL + '/AccountMaintenance/api/transactions/getTransactionlimit',
+    GetAllCustomerAccountsWithLimitsV2: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2',
+
     //PaymentApi/api/Accounts/VerifyAccountName
 
     //Airtime
@@ -129,5 +138,123 @@ export const routes = {
     LOANS_STEP_1 :BASEURL +'/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/SignUp',
     LOANS_STEP_3 :BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/CustomerProfile',
     LOAN_VERIFY_BVN : BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/CallBvnService',
-    LOAN_VALIDATE_OTP: BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/VerifyOtpForBvn'
+    LOAN_VALIDATE_OTP: BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/VerifyOtpForBvn',
+    LOAN_RESEND_OTP: BASEURL + 'DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/ResendOtp',
+    LOAN_REQUEST_STATEMENT: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/RequestBankStatement', // request param
+    LOAN_GENERATE_STATEMENT: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GenerateBankStatement', //request params
+    LOAN_SELECTED_ENTRIES : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/SelectedSalaryEntries',
+    LOAN_SALARY_TRANSACTION: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GetSalaryTransactions',
+    LOAN_GET_SCORECARD_QUESTIONS : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GetScoreCardQuestions',
+    LOAN_POST_SCORECARD_ANSWER: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/PostScoreCardResponse',
+    LOAN_BANK_LIST: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GetBankList',
+
+    //Loan InApp
+    LOAN_APPLICATION_HISTORY : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/DashboardLoanApplicationHistory',
+    LOAN_CALCULATOR_DATA :BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GetLoanCalculatorData',
+    LOAN_CURRENT: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/DashBoardCurrentLoanFinacle',
+    LOAN_EMPLOYMENT_INDUSTRIES: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GetEmploymentIndustries',
+    LOAN_EMPLOYER: BASEURL +  '/DL_LoanRequest.WebApi/api/AccountDetails/GetEmployers',
+    LOAN_APPLY : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/RequestLoan',
+    LOAN_STANDING_ORDER : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/SetupStandingOrder',
+    LOAN_REJECT : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/RejectLoan',
+    LOAN_MANDATE_STATUS : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/MandateStatus',
+    LOAN_OTP_MANDATE : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/ValidateOtpMandate',
+    LOAN_KYC_REQIURED : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/KycRequired',
+    LOAN_TERMS: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/TermsAndConditions',
+
+    //ALat-Loans
+    GET_ACTIVE_LOANS : BASEURL + '/Lending.API/api/loan/GetCustomerStatus',
+
+    //WesternUnion
+    WESTERNUNION_COUNTRIES: BASEURL + '/PaymentApi/api/WesternunionCountries',
+    RECEIVE_WESTERNUNION: BASEURL + '/PaymentApi/api/WesternUnionMoneyTransfer',
+
+    //Settings
+    CHANGE_PASSWORD : BASEURL + '/AccountSetting/api/password/change',
+    GET_RANDOM_SECURITY_QUESTION: BASEURL + '/AccountSetting/api/securityquestion/Random',
+    CHECK_ANSWER_WITHOUT_OTP: BASEURL + '/AccountSetting/api/securityquestion/validatewithoutotp',
+    CHECK_ANSWER: BASEURL + '/AccountSetting/api/securityquestion/validate',
+    CHANGE_PIN: BASEURL + '/AccountSetting/api/pin/change',
+    RESET_PIN :BASEURL + '/AccountSetting/api/pin/CreateOrReset',
+
+
+    //Insurance
+     FETCH_EXISTING_POLICIES: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceTransactionHistory',
+     FETCH_ACCIDENT_SCHEDULE: BASEURL + '/PaymentApi/api/Insurance/PersonalAccidentSchedule',
+     FETCH_BILLS_BENEFICIARIES: BASEURL + '/PaymentApi/api/Insurance/TravelSchedule',
+     FETCH_INSURANCE_PRODUCTS: BASEURL + '/PaymentApi/api/Insurance/GetProduct',
+     FETCH_INSURANCE_COUNTRIES: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceCountries',
+     FETCH_INSURANCE_COLORLIST: BASEURL + '/PaymentApi/api/Insurance/GetColorList',
+     FETCH_INSURANCE_LGA: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceAllLga',
+     FETCH_INSURANCE_BODYTYPES: BASEURL + '/PaymentApi/api/Insurance/GetBodyTypes',
+     FETCH_INSURANCE_MANUFACTUREYEAR: BASEURL + '/PaymentApi/api/Insurance/GetManufactureYear',
+     FETCH_INSURANCE_TITLES: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceTitles',
+     FETCH_INSURANCE_GENDERS: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceGenders',
+     FETCH_INSURANCE_NONSCHENGENCOUNTRIES: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceNonSchengenCountries',
+     FETCH_COVERS_IN_PRODCUTS: BASEURL + '/PaymentApi/api/Insurance/GetProductSubClassCoverTypes',
+     FETCH_CARS_MADEINYEAR: BASEURL + '/PaymentApi/api/Insurance/GetVehicleMake?makeYear=',
+     FETCH_CAR_MODELS: BASEURL + '/PaymentApi/api/Insurance/GetVehicleMakeModel',
+     FETCH_VEHICLE_DETAILS: BASEURL + '/PaymentApi/api/Insurance/GetVehiclesDetails',
+     SEND_MOTOR_SCHEDULE: BASEURL + '/PaymentApi/api/Insurance/MotorSchedule',
+     FINALPAYMENT_FORAUTO_INSURANCE: BASEURL + '/PaymentApi/api/Insurance/FinalizePartnerPayment',
+
+    //savings&goals
+    ADDGOAL: BASEURL + '/Savings.WebApi/api/Savings/AddGoal',
+    ADDFLEXIGOAL: BASEURL + '/Savings.WebApi/api/Savings/AddFlexiGoal',
+    ADDSTACHGOAL: BASEURL + '/Savings.WebApi/api/Savings/AddStashGoal',
+    FETCH_DEBITABLE_ACCOUNTS_WITH_LIMITS: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2',
+    GOALTYPE: BASEURL + '/Savings.WebApi/api/Savings/GoalType',
+    GOAL_FORMULAR: BASEURL + '/Savings.WebApi/api/savings/GetValues',
+    GOALTRANSACTIONHISTORY: BASEURL + '/Savings.WebApi/api/Savings/GetCustomerGoalTransHistory',
+    CUSTOMERGOALDASHBOARD: BASEURL + '/Savings.WebApi/api/Savings/CustomergoalDashBoard',
+    TOPUPGOAL: BASEURL + '/Savings.WebApi/api/Savings/TopUpGoal',
+    UNPAUSEGOAL: BASEURL + '/Savings.WebApi/api/Savings/ContinueGoal',
+    WITHDRAWFROMGOAL: BASEURL + '/Savings.WebApi/api/Savings/WithDrawal',
+    DELETEGOAL: BASEURL + '/Savings.WebApi/api/Savings/DeleteGoal',
+    EDITGOAL: BASEURL + '/Savings.WebApi/api/Savings/EditGoal',
+    EDITFLEXIGOAL: BASEURL + '/Savings.WebApi/api/Savings/EditFlexiGoal',
+    PAUSEGOAL: BASEURL + '/Savings.WebApi/api/Savings/PauseGoal',
+    CASHOUTSTASH:BASEURL + '/Savings.WebApi/api/Savings/CashoutStashGoal',
+
+    // Group Savings
+    CREATEGOAL: BASEURL + '/Savings.WebApi/api/GroupSaving/CreateGroup',
+    GROUPCUSTOMERS: BASEURL + '/Savings.WebApi/api/GroupSaving/GetCustomerGroups',
+    DELETE_GROUP: BASEURL + '/Savings.WebApi/api/GroupSaving/DeleteGroup',
+    GETGROUPDETAILS: BASEURL + '/Savings.WebApi/api/GroupSaving/GetGroupDetails',
+    SCHEDULE_CONTRIBUTION: BASEURL + '/Savings.WebApi/api/GroupSaving/ScheduleContribution',
+    EDIT_GROUP_SAVINGS: BASEURL + '/Savings.WebApi/api/GroupSaving/EditGroup',
+    PAUSE_GROUP: BASEURL + '/Savings.WebApi/api/GroupSaving/PauseScheduledGroupPayemnt',
+    FIND_GROUP: BASEURL + '/Savings.WebApi/api/GroupSaving/FindGroup',
+    JOIN_GROUP: BASEURL + '/Savings.WebApi/api/GroupSaving/JoinGroup',
+    CONTRIBUTE: BASEURL + '/Savings.WebApi/api/GroupSaving/Contribute',
+    
+    // ROTATING SAVINGS (ESUSU)
+    CREATE_ROTATING_SAVINGS: BASEURL + '/Savings.WebApi/api/EsusuSaving/CreateGroup',
+    ROTATING_GROUP_DETAILS: BASEURL +  '/Savings.WebApi/api/EsusuSaving/GetGroupDetails',
+    JOIN_A_GROUP: BASEURL + '/Savings.WebApi/api/EsusuSaving/JoinGroup',
+    EDIT_SLOTS: BASEURL + '/Savings.WebApi/api/EsusuSaving/EditSlots',
+    GET_GROUPS: BASEURL + '/Savings.WebApi/api/EsusuSaving/GetGroups',
+    EDIT_GROUP_ESUSU: BASEURL + '/Savings.WebApi/api/EsusuSaving/EditGroup',
+    DELETE_GROUP_ESUSU: BASEURL + '/Savings.WebApi/api/EsusuSaving/DeleteGroup',
+    JOIN_GROUP_ESUSU: BASEURL + '/Savings.WebApi/api/EsusuSaving/JoinGroup',
+    GET_ALL_SECURITY_QUESTIONS : BASEURL + '/AccountSetting/api/securityquestion',
+    SAVE_SECURITY_QUESTION : BASEURL + '/AccountSetting/api/securityquestion/saveorupdate',
+
+    //EVENTS
+    GET_EVENTS: BASEURL + '/LifeStylePaymentMoviesApi/api/events/getevents?pageNum=',
+    GET_SINGLE_EVENT: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetSingleEvent',
+    BUY_EVENT_TICKET: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/BuyEventTicket',
+
+    //PREFERENCES
+    GET_PREFENCE: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Account/GetAllEngagements',
+    GET_CUSTOMER_ENGAGEMENTS: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Account/GetCustomerEngagements',
+
+    //movies
+    FETCH_MOVIES_LIST : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetMovies?page=',
+    FETCH_MOVIE_SHOWTIME : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetShowTimes?cinemaUid=',
+    BUY_MOVIE_TICKET : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/BuyMovieTicket',
+    FETCH_MOVIE_GENRE : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetGenreList',
+    FETCH_MOVIE_CINEMAS : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetCinemaList',
+    GET_CONVENIENCE_FEE : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetCinemaListAndFee',
+
 };

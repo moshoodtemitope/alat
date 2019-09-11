@@ -63,10 +63,10 @@ export const getBanks = (token) => {
     function failure(error) { return {type:FETCH_BANK_FAILURE, error} }
 };
 
-export const deleteTransferBeneficiary = (token, beneficiaryToDelete, callback) =>{
+export const deleteTransferBeneficiary = (token, beneficiaryToDelete, callback) => {
     SystemConstant.HEADER['alat-token'] = token;
     
-    return (dispatch) =>{
+    return (dispatch) => {
         let consume = ApiService.request(routes.DELETE_TRANSFER_BENEFICIARIES, "POST", beneficiaryToDelete, SystemConstant.HEADER);
         dispatch(request(consume));
         return consume
