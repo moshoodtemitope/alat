@@ -765,7 +765,7 @@ class NextOfKin extends Component {
         
        return(
         <Fragment>
-             <InnerContainer>
+             {/* <InnerContainer> */}
                     <div className="dashboard-wrapper">
                          <div className="container">
                                 <div className="coverPropertiesofComponent">
@@ -824,7 +824,7 @@ class NextOfKin extends Component {
                                             <p className="formHeading">Next Of Kin</p>
                                         
                                             <div className="form-row">
-                                                        <div className={TitleValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
+                                                        <div className={TitleValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">Title</label>
                                                             <select onChange={this.SetInputValue} name="title" placeholder="title">
                                                                 <option value="Mr">Mr</option>
@@ -888,7 +888,7 @@ class NextOfKin extends Component {
                                             </div>
                                            
                                             <div className="form-row">
-                                                        <div className={GenderValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
+                                                        <div className={GenderValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">Gender</label>
                                                             <select className="select-gender" onChange={this.SetInputValue} name="Gender" placeholder="Gender">
                                                                 <option value=""> </option>
@@ -899,7 +899,7 @@ class NextOfKin extends Component {
 
                                                         <div className={DateOfBirthValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                 <label className="label-text">Date of Birth</label>
-                                                                <DatePicker className="form-control dob" selected={birthDate} 
+                                                                <DatePicker className="form-control" selected={birthDate} 
                                                                 placeholder="June 31, 2019"
                                                                 dateFormat=" MMMM d, yyyy"
                                                                 showMonthDropdown
@@ -914,7 +914,7 @@ class NextOfKin extends Component {
                                             
                                             <div className="form-row">
                                                    <div className="form-group col-md-12">
-                                                      <p>Full Address</p>
+                                                      <div>Next of Kin Full Address</div>
                                                    </div>
                                             </div>
                                             
@@ -942,7 +942,7 @@ class NextOfKin extends Component {
 
 
                                             <div className={"form-row"}>
-                                                        <div className={NationalityValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
+                                                        <div className={NationalityValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">Nationality</label>
                                                             <input type="text" name="Nationality" className="form-control" value="Nigeria" readOnly onChange={this.SetInputValue} placeholder="Nationality"/>
                                                         </div>
@@ -967,7 +967,7 @@ class NextOfKin extends Component {
                                             <div className={"form-row"}>
                                                         <div className={LocalGovValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Local Government</label>
-                                                            <select name="LocalGv" className="form-control select-lga" onChange={this.SetInputValue} >
+                                                            <select name="LocalGv" className="form-control" onChange={this.SetInputValue} >
                                                                     <option>Select Local Government</option>
                                                                     {                                      
                                                                         getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
@@ -1000,7 +1000,7 @@ class NextOfKin extends Component {
                                 </div>
                             </div>
                         </div>
-                 </InnerContainer>
+                 {/* </InnerContainer> */}
         </Fragment>
        )
    }

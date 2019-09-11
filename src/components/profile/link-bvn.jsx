@@ -208,7 +208,7 @@ GetUserProfileMenu = () => {
     //          this.NavigateToSuccessPage();
     //    }
 
-            if(this.props.profileMenu.message === profile.LINK_BVN_SUCCESS){
+            // if(this.props.profileMenu.message === profile.LINK_BVN_SUCCESS){
                 return(
                     <Fragment>
                                 <div className="dashboard-wrapper">
@@ -289,12 +289,12 @@ GetUserProfileMenu = () => {
                                                                         
                                                                 </div>
                                                         </div>
-                                                        <div>
+                                                        <div className="button-alignment">
                                                                 
-                                                            <button type="submit" className="twoBut no-border">Back</button>
+                                                            <button type="submit" className="twoBut button-size no-border">Back</button>
                                                     
                                                     
-                                                            <button type="submit" className="twoBut1">Submit</button>       
+                                                            <button type="submit" className="twoBut1 button-size">Submit</button>       
                                                                 
                                                         </div>
                                                     </form>
@@ -311,71 +311,71 @@ GetUserProfileMenu = () => {
             
                      </Fragment>
                    )
-            }
+            // }
 
-            if(this.props.profileMenu.message === profile.LINK_BVN_PENDING){
-                return(
-                    <Fragment>
-                        <InnerContainer>
-                                <div className="dashboard-wrapper">
-                                    <div className="container">
-                            <div className="coverPropertiesofComponent">
-                                <div className="col-sm-12">
-                                <p className="page-title">Account Setting</p>
-                                </div>
+            // if(this.props.profileMenu.message === profile.LINK_BVN_PENDING){
+            //     return(
+            //         <Fragment>
+            //             <InnerContainer>
+            //                     <div className="dashboard-wrapper">
+            //                         <div className="container">
+            //                 <div className="coverPropertiesofComponent">
+            //                     <div className="col-sm-12">
+            //                     <p className="page-title">Account Setting</p>
+            //                     </div>
     
-                        <div className="col-sm-12">
-                            <div>
-                                <div className="sub-tab-nav" style={{marginBottom: 10}}>
-                                    <ul>
-                                        <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                        <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                        <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <p>loading data ...</p>
-                        </div>
-                        </div>
-                        </div>
-                        </InnerContainer>
-                    </Fragment>      
-                )
-            }
+            //             <div className="col-sm-12">
+            //                 <div>
+            //                     <div className="sub-tab-nav" style={{marginBottom: 10}}>
+            //                         <ul>
+            //                             <li><NavLink to={'/profile'} >Profile</NavLink></li>
+            //                             <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+            //                             <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+            //                         </ul>
+            //                     </div>
+            //                 </div>
+            //             </div>
+            //             <p>loading data ...</p>
+            //             </div>
+            //             </div>
+            //             </div>
+            //             </InnerContainer>
+            //         </Fragment>      
+            //     )
+            // }
 
-            if(this.props.profileMenu.data == undefined){
-            console.log('NOTHING EVER HAPPENED HERE')
-            this.GetUserProfileMenu();
-            return(
-                <Fragment>
-                    <InnerContainer> 
-                            <div className="dashboard-wrapper">
-                                <div className="container">
-                        <div className="coverPropertiesofComponent">
-                            <div className="col-sm-12">
-                            <p className="page-title">Account Setting</p>
-                            </div>
+            // if(this.props.profileMenu.data == undefined){
+            // console.log('NOTHING EVER HAPPENED HERE')
+            // this.GetUserProfileMenu();
+            // return(
+            //     <Fragment>
+            //         <InnerContainer> 
+            //                 <div className="dashboard-wrapper">
+            //                     <div className="container">
+            //             <div className="coverPropertiesofComponent">
+            //                 <div className="col-sm-12">
+            //                 <p className="page-title">Account Setting</p>
+            //                 </div>
 
-                    <div className="col-sm-12">
-                        <div>
-                            <div className="sub-tab-nav" style={{marginBottom: 10}}>
-                                <ul>
-                                    <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <p>loading data ...</p>
-                    </div>
-                    </div>
-                    </div>
-                    </InnerContainer> 
-                </Fragment>      
-            )
-            }
+            //         <div className="col-sm-12">
+            //             <div>
+            //                 <div className="sub-tab-nav" style={{marginBottom: 10}}>
+            //                     <ul>
+            //                         <li><NavLink to={'/profile'} >Profile</NavLink></li>
+            //                         <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+            //                         <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+            //                     </ul>
+            //                 </div>
+            //             </div>
+            //         </div>
+            //         <p>loading data ...</p>
+            //         </div>
+            //         </div>
+            //         </div>
+            //         </InnerContainer> 
+            //     </Fragment>      
+            // )
+            // }
    }
 }
 

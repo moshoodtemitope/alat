@@ -51,47 +51,47 @@ class PersonalDefault extends Component {
    }
 
    NavigateToBVN = () => {
-       if(this.props.profileMenu.data.response.bvnLinked == true){
-             this.DispatchSuccessMessage('BVN has Been Linked');
-             return;
-       }
+    //    if(this.props.profileMenu.data.response.bvnLinked == true){
+    //          this.DispatchSuccessMessage('BVN has Been Linked');
+    //          return;
+    //    }
 
        history.push('/profile/linkBVN');
    }
 
    NavigateToPersonalInfo = () => {
-        if(this.props.profileMenu.data.response.personalInfoComplete == true){
-            this.DispatchSuccessMessage('Personal Information Created');
-            return;
-        }
+        // if(this.props.profileMenu.data.response.personalInfoComplete == true){
+        //     this.DispatchSuccessMessage('Personal Information Created');
+        //     return;
+        // }
 
         history.push('/profile/profile-personalInfo');
    }
 
    NavigateToContact = () => {
-        if(this.props.profileMenu.data.response.contactDetailsComplete == true){
-                this.DispatchSuccessMessage('Contact Created Successfully');
-                return;
-        }
+        // if(this.props.profileMenu.data.response.contactDetailsComplete == true){
+        //         this.DispatchSuccessMessage('Contact Created Successfully');
+        //         return;
+        // }
 
         history.push('/profile/profile-contact-detail');
    }
 
 
    NavigateToDocuments = () => {
-        if(this.props.profileMenu.data.response.documentUploaded == true){
-            this.DispatchSuccessMessage('Document uploaded successfully');
-            return;
-        }
+        // if(this.props.profileMenu.data.response.documentUploaded == true){
+        //     this.DispatchSuccessMessage('Document uploaded successfully');
+        //     return;
+        // }
    
         history.push('/profile/profile-documents');
    }
 
    NavigateToNextOfKin = () => {
-        if(this.props.profileMenu.data.response.nextOfKinComplete == true){
-            this.DispatchSuccessMessage('Next of kin has been Created');
-            return
-        }
+        // if(this.props.profileMenu.data.response.nextOfKinComplete == true){
+        //     this.DispatchSuccessMessage('Next of kin has been Created');
+        //     return
+        // }
 
        history.push('/profile/profile-next-of-kin');
    }
@@ -238,7 +238,7 @@ class PersonalDefault extends Component {
             this.GetUserProfileMenu();
             return(
                 <Fragment>
-                      <InnerContainer>
+                      {/* <InnerContainer> */}
                            <div className="dashboard-wrapper">
                                  <div className="container">
                          <div className="coverPropertiesofComponent">
@@ -261,7 +261,7 @@ class PersonalDefault extends Component {
                     </div>
                     </div>
                     </div>
-                    </InnerContainer>
+                    {/* </InnerContainer> */}
                 </Fragment>      
             )
        }

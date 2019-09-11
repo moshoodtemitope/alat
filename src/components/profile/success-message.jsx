@@ -38,7 +38,7 @@ CheckIfStoreInformationIsSet = () => {
       this.CheckIfStoreInformationIsSet();
        setTimeout(function(){
           history.push('/profile');
-       }, 5000);
+       }, 50000000);
 
        console.log(this.props.profileSuccessMessage.data);
    }
@@ -98,7 +98,7 @@ DispatchSuccessMessage = (data) => {
       const {isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument} = this.state;
        return(
         <Fragment>
-             <InnerContainer>
+             {/* <InnerContainer> */}
                     <div className="dashboard-wrapper">
                          <div className="container">
                                 <div className="coverPropertiesofComponent">
@@ -152,18 +152,18 @@ DispatchSuccessMessage = (data) => {
                                         </div>
                                     </div>
                                     <div className="col-sm-6">
-                                    <form onSubmit={this.HandleSubmit} className="parentForm sucMsg">
+                                    <div className="parentForm sucMsg">
                                            <img src="/src/assets/img/check.svg" alt="" className="imgShape" />
                                            <p className="sucMssgOfProfile">{this.props.profileSuccessMessage.data}</p>
                                            
-                                    </form>
+                                    </div>
                                     
                                     </div>
                                 </div>
                                 </div>
                             </div>
                         </div>
-                 </InnerContainer>
+                 {/* </InnerContainer> */}
         </Fragment>
        )
    }

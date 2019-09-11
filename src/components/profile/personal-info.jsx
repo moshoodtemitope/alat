@@ -575,41 +575,41 @@ GetUserProfileMenu = () => {
     //        this.PersonalInfomationHasBeenLinked();
     //    }
        
-       if(profileMenu.message === profile.GET_PERSONAL_INFO_PENDING){
+    //    if(profileMenu.message === profile.GET_PERSONAL_INFO_PENDING){
+    //     return(
+    //         <Fragment>
+    //               <InnerContainer>
+    //                    <div className="dashboard-wrapper">
+    //                          <div className="container">
+    //                  <div className="coverPropertiesofComponent">
+    //                      <div className="col-sm-12">
+    //                       <p className="page-title">Account Setting</p>
+    //                     </div>
+
+    //             <div className="col-sm-12">
+    //                 <div>
+    //                     <div className="sub-tab-nav" style={{marginBottom: 10}}>
+    //                         <ul>
+    //                             <li><NavLink to={'/profile'} >Profile</NavLink></li>
+    //                             <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+    //                             <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+    //                         </ul>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             <p>loading data ...</p>
+    //             </div>
+    //             </div>
+    //             </div>
+    //             </InnerContainer>
+    //         </Fragment>      
+    //     )
+    //    }
+
+    //    if(profileMenu.message === profile.GET_PERSONAL_INFO_SUCCESS){
         return(
             <Fragment>
-                  <InnerContainer>
-                       <div className="dashboard-wrapper">
-                             <div className="container">
-                     <div className="coverPropertiesofComponent">
-                         <div className="col-sm-12">
-                          <p className="page-title">Account Setting</p>
-                        </div>
-
-                <div className="col-sm-12">
-                    <div>
-                        <div className="sub-tab-nav" style={{marginBottom: 10}}>
-                            <ul>
-                                <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <p>loading data ...</p>
-                </div>
-                </div>
-                </div>
-                </InnerContainer>
-            </Fragment>      
-        )
-       }
-
-       if(profileMenu.message === profile.GET_PERSONAL_INFO_SUCCESS){
-        return(
-            <Fragment>
-                 <InnerContainer>
+                 {/* <InnerContainer> */}
                         <div className="dashboard-wrapper">
                              <div className="container">
                                     <div className="coverPropertiesofComponent">
@@ -667,8 +667,8 @@ GetUserProfileMenu = () => {
                                         <form onSubmit={this.HandleSubmit} className="parentForm">
                                                 <p className="formHeading">Personal Information</p>
                                             
-                                                <div className="form-row">
-                                                            <div className={TitleValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
+                                                <div className="form-row center-alignment">
+                                                            <div className={TitleValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                 <label className="label-text">Title</label>
                                                                 <select className="select-size" onChange={this.SetInputValue} name="title" placeholder="title">
                                                                     <option value="Mr">Mr</option>
@@ -712,7 +712,7 @@ GetUserProfileMenu = () => {
                                                 </div>
                                                
                                                 <div className="form-row">
-                                                            <div className={GenderValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
+                                                            <div className={GenderValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                 <label className="label-text">Gender</label>
                                                                 <select className="select-size" onChange={this.SetInputValue} name="Gender" placeholder="Gender">
                                                                     <option value=""> </option>
@@ -736,7 +736,7 @@ GetUserProfileMenu = () => {
                                                 </div>
     
                                                 <div className="form-row">
-                                                            <div className={NationalityValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
+                                                            <div className={NationalityValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                 <label className="label-text">Nationality</label>
                                                                 <input type="text" name="Nationality" className="form-control enter-national" onChange={this.SetInputValue} placeholder="Nationality"/>
                                                             </div>
@@ -758,7 +758,7 @@ GetUserProfileMenu = () => {
                                                 </div>
     
                                                 <div className="form-row">
-                                                            <div className={LocalGovValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
+                                                            <div className={LocalGovValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                 <label className="label-text">Local Government</label>
                                                                 <select className="select-size" onChange={this.SetInputValue} name="StateOfOrigin" >
                                                                         <option>Select Local Government</option>
@@ -788,7 +788,7 @@ GetUserProfileMenu = () => {
                                                 </div>
                                                
                                                 <div className="form-row">
-                                                <div className={BVNValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
+                                                <div className={BVNValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                 <label className="label-text">BVN</label>
                                                                 <input type="Number" name= "BVNnumber" className="form-control enter-bvn" onChange={this.SetBvNNumber} placeholder="0000 0000 0000"/>
                                                             </div>
@@ -883,43 +883,43 @@ GetUserProfileMenu = () => {
                                     </div>
                                 </div>
                             </div>
-                     </InnerContainer>
+                     {/* </InnerContainer> */}
             </Fragment>
                 
            )
-       }
+    //    }
 
-       if(profileMenu.data == undefined){
-        this.GetUserProfileMenu();
-        return(
-            <Fragment>
-                  <InnerContainer>
-                       <div className="dashboard-wrapper">
-                             <div className="container">
-                     <div className="coverPropertiesofComponent">
-                         <div className="col-sm-12">
-                          <p className="page-title">Account Setting</p>
-                        </div>
+    //    if(profileMenu.data == undefined){
+    //     this.GetUserProfileMenu();
+    //     return(
+    //         <Fragment>
+    //               <InnerContainer>
+    //                    <div className="dashboard-wrapper">
+    //                          <div className="container">
+    //                  <div className="coverPropertiesofComponent">
+    //                      <div className="col-sm-12">
+    //                       <p className="page-title">Account Setting</p>
+    //                     </div>
 
-                <div className="col-sm-12">
-                    <div>
-                        <div className="sub-tab-nav" style={{marginBottom: 10}}>
-                            <ul>
-                                <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <p>loading data ...</p>
-                </div>
-                </div>
-                </div>
-                </InnerContainer>
-            </Fragment>      
-        )
-       }
+    //             <div className="col-sm-12">
+    //                 <div>
+    //                     <div className="sub-tab-nav" style={{marginBottom: 10}}>
+    //                         <ul>
+    //                             <li><NavLink to={'/profile'} >Profile</NavLink></li>
+    //                             <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+    //                             <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+    //                         </ul>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             <p>loading data ...</p>
+    //             </div>
+    //             </div>
+    //             </div>
+    //             </InnerContainer>
+    //         </Fragment>      
+    //     )
+    //    }
    }
 }
 

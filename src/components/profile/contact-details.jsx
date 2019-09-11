@@ -829,7 +829,7 @@ GetUserProfileMenu = () => {
         
          return(
              <Fragment>
-                   <InnerContainer>
+                   {/* <InnerContainer> */}
                         <div className="dashboard-wrapper">
                               <div className="container">
                       <div className="coverPropertiesofComponent">
@@ -852,7 +852,7 @@ GetUserProfileMenu = () => {
                  </div>
                  </div>
                  </div>
-                 </InnerContainer>
+                 {/* </InnerContainer> */}
              </Fragment>      
          )
         }
@@ -861,7 +861,7 @@ GetUserProfileMenu = () => {
             this.UseGottenStateInfo();
             return(
                 <Fragment>
-                    <InnerContainer>
+                    {/* <InnerContainer> */}
                             <div className="dashboard-wrapper">
                                 <div className="container">
                                         <div className="coverPropertiesofComponent">
@@ -924,7 +924,7 @@ GetUserProfileMenu = () => {
                                                                     
                                                             </div>
 
-                                                            <div className={apartmentValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
+                                                            <div className={apartmentValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                             <label className="label-text">Apartment</label>
                                                                             <input type="text" name="apartment" className="form-control" onChange={this.SetInputValue} placeholder=""/>
                                                             </div>
@@ -951,7 +951,7 @@ GetUserProfileMenu = () => {
                                                     </div>
 
                                                     <div className="form-row">
-                                                                <div className={NationalityValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
+                                                                <div className={NationalityValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                     <label className="label-text">Country</label>
                                                                     <input type="text" name="Nationality" className="form-control" onChange={this.SetInputValue} placeholder="Nationality"/>
                                                                 </div>
@@ -973,7 +973,7 @@ GetUserProfileMenu = () => {
                                                     </div>
 
                                                     <div className="form-row">
-                                                                <div className={LocalGovValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
+                                                                <div className={LocalGovValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                     <label className="label-text">Local Government</label>
                                                                     <select onChange={this.SetInputValue4} name="LocalGv" >
                                                                             <option>Select Local Government</option>
@@ -1003,7 +1003,7 @@ GetUserProfileMenu = () => {
                                                                     <label className="label-text">Same as address above</label>
                                                                 </div>
                                                                 <div className="form-group col-md-3">                                 
-                                                                    <div class="custom-control custom-switch">
+                                                                    <div class="custom-control custom-switch float-right">
                                                                             <input type="checkbox" checked={this.state.checkBoxStatus} class="custom-control-input" id="customSwitch1" 
                                                                                     onChange={ this.HandleCheckBoxInput }/>
                                                                             <label class="custom-control-label" for="customSwitch1"></label>
@@ -1028,7 +1028,7 @@ GetUserProfileMenu = () => {
                                                     </div>
 
                                                     <div className={sameAddressAsAbove + " " + "form-row"}>
-                                                                <div className={StateOfOriginValidity2 ? "form-group form-error col-md-11" : "form-group col-md-11"}>
+                                                                <div className={StateOfOriginValidity2 ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text">Mailing State</label>
                                                                     <select name="StateOfOrigin2" className="form-control state-mailing" onChange={this.SetInputValue3}>
                                                                             <option>Select State</option>
@@ -1044,9 +1044,9 @@ GetUserProfileMenu = () => {
                                                     </div>
 
                                                     <div className={sameAddressAsAbove + " " + "form-row"}>
-                                                                <div className={LocalGovValidity2 ? "form-group form-error col-md-11" : "form-group col-md-11"}>
+                                                                <div className={LocalGovValidity2 ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text">Mailing Local Government</label>
-                                                                    <select onChange={this.SetInputValue2} name="LocalGv2" className="local-mailing">
+                                                                    <select onChange={this.SetInputValue2} name="LocalGv2">
                                                                             <option>Select Local Government</option>
                                                                             {                                      
                                                                                 getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
@@ -1104,7 +1104,7 @@ GetUserProfileMenu = () => {
                                         </div>
                                     </div>
                                 </div>
-                        </InnerContainer>
+                        {/* </InnerContainer> */}
                 </Fragment>         
             );
         }
@@ -1113,7 +1113,7 @@ GetUserProfileMenu = () => {
         this.GetUserProfileMenu();
         return(
             <Fragment>
-                  <InnerContainer>
+                  {/* <InnerContainer> */}
                        <div className="dashboard-wrapper">
                              <div className="container">
                      <div className="coverPropertiesofComponent">
@@ -1136,7 +1136,7 @@ GetUserProfileMenu = () => {
                 </div>
                 </div>
                 </div>
-                </InnerContainer>
+                {/* </InnerContainer> */}
             </Fragment>      
         )
        }

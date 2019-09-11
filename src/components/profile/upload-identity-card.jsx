@@ -239,7 +239,7 @@ DispatchSuccessMessage = (data) => {
       const { isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, birthDate, birthDateValidity, idTypeValidity, idFrontFace, idCardValidity, idCardNumberValidity} = this.state;
        return(
         <Fragment>
-             <InnerContainer>
+             {/* <InnerContainer> */}
                     <div className="dashboard-wrapper profileWrapper">
                          <div className="container">
                                 <div className="coverPropertiesofComponent">
@@ -296,7 +296,7 @@ DispatchSuccessMessage = (data) => {
                                     <form onSubmit={this.HandleSubmit} className="parentForm docUpLoadFormProfile">
                                            <p className="formHeading">Identity Card Details</p>
                                            <div className="form-row">
-                                                <div className={idTypeValidity ? "form-group form-error col-md-11" : "form-group col-md-11"}>
+                                                <div className={idTypeValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                         <label className="profileOtherLabel">Select Id Type</label>
                                                         <select onChange={this.HandleSelectedCardType} className="select-identity">
                                                              <option value="International Passport">International Passport</option>  
@@ -359,7 +359,7 @@ DispatchSuccessMessage = (data) => {
                                 </div>
                             </div>
                         </div>
-                 </InnerContainer>
+                 {/* </InnerContainer> */}
         </Fragment>
        )
    }

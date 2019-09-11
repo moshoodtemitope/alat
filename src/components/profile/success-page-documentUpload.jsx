@@ -93,7 +93,7 @@ DispatchSuccessMessage = (data) => {
        const {isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument } = this.state;
        return(
         <Fragment>
-             <InnerContainer>
+             {/* <InnerContainer> */}
                     <div className="dashboard-wrapper">
                          <div className="container">
                                 <div className="coverPropertiesofComponent">
@@ -157,7 +157,7 @@ DispatchSuccessMessage = (data) => {
                                 </div>
                             </div>
                         </div>
-                 </InnerContainer>
+                 {/* </InnerContainer> */}
         </Fragment>
        )
    }
