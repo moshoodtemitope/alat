@@ -22,10 +22,7 @@ import {
     FETCH_BANK_SUCCESS,
     FETCH_BANK_FAILURE,
 } from "../../../redux/constants/transfer.constants";
-const industriesOptions = [
-];
-const _employerList = [];
-const options = [];
+
 const frontSide = "FrontSide";
 const backSide = "BackSide";
 
@@ -259,7 +256,7 @@ class EmployerDetails extends React.Component {
         switch (industStatus) {
             case loanConstants.LOAN_GETINDUSTRIES_SUCCESS:
                 let industriesList = this.props.industries.loan_industries_data.response.Response;
-                // var  = [];
+                 var industriesOptions = [];
                 for (var industry in industriesList) {
                     // console.log(industry);
                     industriesOptions.push({ value: industriesList[industry].Id, label: industriesList[industry].Name });
@@ -456,7 +453,9 @@ class EmployerDetails extends React.Component {
                                     <div className="row">
                                         <div className="col-sm-12">
                                             <center>
-                                                <button type="submit" disabled={this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_PENDING} className="btn-alat m-t-10 m-b-20 text-center">
+                                                <button type="submit" disabled={this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_PENDING
+                                                || this.props.workid_front.loan_frontId_status == loanConstants.LOAN_WORkID_FRONT_PENDING
+                                                || this.props.workid_back.loan_backId_status == loanConstants.LOAN_WORkID_BACK_PENDING } className="btn-alat m-t-10 m-b-20 text-center">
                                                     {this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_PENDING ?
                                                         "Proceesing..." : "Proceed"}
                                                 </button>

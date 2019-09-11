@@ -14,9 +14,14 @@ class LoanCardResult extends React.Component{
         this.props.history.push('/loans/salary/terms');
      }
 
-     doneClick=()=>{
+     finishClick=()=>{
         this.props.dispatch(OnbaordingActions.clearLoanOnboardingStore());
-        this.props.history.push('/loans');
+        this.props.history.push('/loans/salary/dashboard');
+     }
+
+     abortClick=()=>{
+        this.props.dispatch(OnbaordingActions.clearLoanOnboardingStore());
+        this.props.history.push('/loans/salary/dashboard');
      }
 
      goBackWard=()=>{
@@ -27,6 +32,7 @@ class LoanCardResult extends React.Component{
             gotoPreviousPageMethod={this.goBackWard}
             gotoNextPageMethod={this.goForward}
             doneClick={this.doneClick}
+            abortClick = {this.abortClick}
         />);
     }
 }

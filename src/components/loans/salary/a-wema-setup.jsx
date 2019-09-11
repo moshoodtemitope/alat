@@ -4,36 +4,60 @@ import * as LoanActions from '../../../redux/actions/loans/loans.action';
 import * as OnbaordingActions from '../../../redux/actions/onboarding/loan.actions';
 import { loanConstants } from '../../../redux/constants/loans/loans.constants';
 import { Route, Switch } from "react-router-dom";
-import  WemaCollectionComponent  from '../../../shared/components/loans/_wema-setup';
+import WemaCollectionComponent from '../../../shared/components/loans/_wema-setup';
 
 class WemaCollectionSetup extends React.Component {
     constructor(props) {
         super(props);
+        this.state ={
+            user: JSON.parse(localStorage.getItem("user")),
+        }
     }
 
     onDoneClick = () => {
-        if (this.props.standing_order)
-            if (this.props.standing_order.standing_order_status == loanConstants.LOAN_STAND_ORDER_SUCCESS) {
-                let data = {
-                    ...this.props.standing_order.standing_order_data.response.Response
-                }
-                if(data.kycRequired == true)
-                this.props.history.push('/loans/salary/kyc');
-                else this.props.history.push('/loans')  //url to be completed.
-            }
-            else { 
-                this.props.goToPreviousPage()
-            }
+        // this.props.history.push('/loans/salary/dashboard')
+        // if (this.props.standing_order){
+        //     if (this.props.standing_order.loan_standOrder_status == loanConstants.LOAN_STAND_ORDER_SUCCESS) {
+        //         var data = {
+        //             ...this.props.standing_order.loan_standOrder_data.response.Response
+        //         }
+        //         if (data.kycRequired == true) {
+        //             this.props.history.push('/loans/salary/kyc');
+        //         }
+                this.props.dispatch(LoanActions.clearLoanOnboardingStore());
+                this.props.history.push('/loans/salary/dashboard')
+            // }
+            // else {
+            //     this.props.goToPreviousPage()
+            // }
+        // }
+
+        // if(this.props.mandate){
+        //     if(this.props.mandate.loan_mandate_status == loanConstants.LOAN_MANDATE_STATUS_SUCCESS){
+        //         var data = {
+        //             ...this.props.mandate.loan_mandate_data.response
+        //         }
+        //     }
+        // }
+    }
+
+    checkKycStatus=()=>{
+        this.props.dispatch(LoanActions.checkKycRequired(this.state.user.token))
+    }
+
+    NavigateToKycPage =()=>{
         this.props.history.push('/loans/salary/kyc');
     }
 
-    goBack= ()=>{
+    goBack = () => {
         this.props.history.push('/loans/salary/terms');
     }
 
     render() {
         return (<WemaCollectionComponent
             doneClick={this.onDoneClick}
+            KycStatus={this.checkKycStatus}
+            NavigateToKyc={this.NavigateToKycPage}
             goToPreviousPage={this.goBack}
         />)
     }
@@ -41,7 +65,8 @@ class WemaCollectionSetup extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        standing_order: state.loanOnboardingReducerPile.loanStandingOrder,
+        standing_order: state.loanReducerPile.loanStandingOrder,
+        mandate: state.loanReducerPile.loanMandate,
     }
 }
 
