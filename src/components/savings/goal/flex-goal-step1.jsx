@@ -399,7 +399,7 @@ class FlexGoal extends React.Component {
                                         <div className="max-600">
                                             <div className="al-card no-pad">
                                                 <h4 className="m-b-10 center-text hd-underline">Create a Flexi Goal</h4>
-                                                <p className="header-info">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days
+                                                <p className="header-info">Save daily, weekly or monthly towards a target amount, earn <span style={{color:'#AB2656'}}> 10% interest.</span> Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days
                                                         but you will lose your interest if you don't meet your target</p>
 
                                                 <form onSubmit={this.onSubmit}>
