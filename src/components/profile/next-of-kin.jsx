@@ -100,6 +100,7 @@ class NextOfKin extends Component {
         }
         this.fetchResidentialAddress();
         this.fetchContactDetails();
+        this.GetUserProfileMenu();
     }
 
     componentDidMount = () => {
@@ -755,254 +756,628 @@ class NextOfKin extends Component {
     //     console.log(stateData);
     //     console.log(cityData);
     // }
+
+    GetUserProfileMenu = () => {
+        this.props.dispatch(actions.profileMenu(this.state.user.token));
+    }
     
    render(){
     const { isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin, birthDate, PinValidity, streetCompoundValidity, yourAddressValidity, sameAddressAsAbove, SurnameValidity, relationshipValidity, TitleValidity, phoneNumberValidity, LocalGovValidity, NationalityValidity, StateOfOriginValidity,
         EmailAddressValidity, cityValidity, streetValidity, GenderValidity, busstopValidity, DateOfBirthValidity, FirstNameValidity, OtherNameValidity
         } = this.state;
 
-        const {getContactDetail} = this.props;
+        const {profileMenu, getContactDetail} = this.props;
         
-       return(
-        <Fragment>
-             {/* <InnerContainer> */}
-                    <div className="dashboard-wrapper">
-                         <div className="container">
-                                <div className="coverPropertiesofComponent">
-                                    <div className="col-sm-12">
-                                        <p className="page-title">Account Setting</p>
-                                    </div>
-
-                                    <div className="col-sm-12">
-                                        <div>
-                                            <div className="sub-tab-nav" style={{marginBottom: 10}}>
-                                                <ul> 
-                                                    <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                                    <li>Pin Management</li>
-                                                    <li>Security Questions</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                
-                                <div className="row packageContent">
-                                    <div className="col-sm-4">
-                                        <div className="forProfilePicture">
-                                                <div className="profilePixCircle">
-
-                                                </div>
-                                                <p className="personsName">{this.props.profileMenu.data.response.fullName}</p>
-                                                <p className="details">{this.props.profileMenu.data.response.username}</p>
-                                                <p className="details">{moment(this.props.profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>
-                                                <hr />
-
-                                                <div className="tickItems" onClick={this.NavigateToBVN}>
-                                                    {isBvNLinked === true ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
-                                                    <p className="pSubs">Link BVN</p>
-                                                </div>
-                                                <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
-                                                    {isProfileInformation ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
-                                                    <p className="pSubs">Personal Information</p>
-                                                </div>
-                                                <div className="tickItems" onClick={this.NavigateToContact}>
-                                                    {isContactDetails ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
-                                                    <p className="pSubs">Contact Details</p>
-                                                </div>
-                                                <div className="tickItems" onClick={this.NavigateToDocuments}>
-                                                    {isDocument ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt=""  className="largeVectorI" />}
-                                                    <p className="pSubs">Document Upload</p>
-                                                </div>
-                                                <div className="tickItems" onClick={this.NavigateToNextOfKin}>
-                                                    {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
-                                                    <p className="pSubs">Next of Kin</p>
-                                                </div>
-                                        </div>
-                                        
-                                    </div>
-                                    <div className="col-sm-7">
-                                    <form onSubmit={this.HandleSubmit} className="parentForm">
-                                            <p className="formHeading">Next Of Kin</p>
-                                        
-                                            <div className="form-row">
-                                                        <div className={TitleValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                            <label className="label-text">Title</label>
-                                                            <select onChange={this.SetInputValue} name="title" placeholder="title">
-                                                                <option value="Mr">Mr</option>
-                                                                <option value="Mrs">Mrs</option>
-                                                                <option value="Dr">Dr</option>
-                                                                <option value="Prof">Prof</option>
-                                                                <option value="master">Master</option>
-                                                            </select>
-                                                        </div>
-
-                                                        <div className={relationshipValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                            <label className="label-text">Relationship</label>
-                                                            <select onChange={this.SetInputValue} name="relationship" placeholder="marital status">
-                                                                <option value="Sister">Sister</option>
-                                                                <option value="Brother">Brother</option>
-                                                            </select>
-                                                        </div>
-                                            </div>
-
-                                            <div className="form-row">
-                                                        <div className={SurnameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Surname</label>
-                                                            <input type="text" name="SurName" className="form-control" onChange={this.SetInputValue} placeholder="Surname"/>
-                                                        </div>
-                                            </div>
-
-                                            <div className="form-row">
-                                                        <div className={FirstNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">First Name</label>
-                                                            <input type="text" name="FirstName" className="form-control" onChange={this.SetInputValue} placeholder="First Name"/>
-                                                        </div>
-                                            </div>
-                                            
-                                            
-                                            <div className="form-row">
-                                                        <div className={OtherNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Other Name</label>
-                                                            <input type="text" name="OtherName" className="form-control" onChange={this.SetInputValue} placeholder="Other Name"/>
-                                                        </div>
-                                            </div>
-                   
-                                            <div className="form-row">
-                                                        <div className={phoneNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Phone Number</label>
-                                                            <input type="number" name="phoneNumber" className="form-control" onChange={this.SetInputValue} placeholder="Telephone"/>
-                                                        </div>
-                                            </div>       
-
-                                            <div className="form-row">
-                                                        <div className={EmailAddressValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Email</label>
-                                                            <input type="email" name="EmailAddress" className="form-control" onChange={this.SetInputValue} placeholder="Email"/>
-                                                        </div>
-                                            </div>
-
-                                            <div className="form-row">
-                                                        <div className="form-group col-md-12">
-                                                            <label className="label-text">Next of Kin BVN (Optional)</label>
-                                                            <input type="number" name="nextOfKinBVN" className="form-control" onChange={this.SetInputValue} placeholder="BVN"/>
-                                                        </div>
-                                            </div>
-                                           
-                                            <div className="form-row">
-                                                        <div className={GenderValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                            <label className="label-text">Gender</label>
-                                                            <select className="select-gender" onChange={this.SetInputValue} name="Gender" placeholder="Gender">
-                                                                <option value=""> </option>
-                                                                <option value="Male"> Male </option>
-                                                                <option value="Female"> Female</option>
-                                                            </select>
-                                                        </div>
-
-                                                        <div className={DateOfBirthValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                                <label className="label-text">Date of Birth</label>
-                                                                <DatePicker className="form-control" selected={birthDate} 
-                                                                placeholder="June 31, 2019"
-                                                                dateFormat=" MMMM d, yyyy"
-                                                                showMonthDropdown
-                                                                showYearDropdown
-                                                                onChange={this.SetBirthDay}
-                                                                dropdownMode="select"
-                                                                // minDate={new Date()}
-                                                                />
-                                                        </div> 
-                                            </div>
-
-                                            
-                                            <div className="form-row">
-                                                   <div className="form-group col-md-12">
-                                                      <div>Next of Kin Full Address</div>
-                                                   </div>
-                                            </div>
-                                            
-                                            
-                                            <div className={"form-row"}>
-                                                        <div className={streetValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text"> Address </label>
-                                                            <input type="text" name="address" className="form-control" onChange={this.SetInputValue} placeholder="Address"/>
-                                                        </div>
-                                            </div>
-
-                                            <div className={"form-row"}>
-                                                        <div className={streetCompoundValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Streat / Compound Name</label>
-                                                            <input type="text" name="street" className="form-control" onChange={this.SetInputValue} placeholder="Streat / Compound Name"/>
-                                                        </div>
-                                            </div>
-
-                                            <div className={"form-row"}>
-                                                        <div className={busstopValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Nearest Bustop</label>
-                                                            <input type="text" name="busStop" className="form-control" onChange={this.SetInputValue} placeholder="Nearest Bus - stop"/>
-                                                        </div>
-                                            </div>
-
-
-                                            <div className={"form-row"}>
-                                                        <div className={NationalityValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                            <label className="label-text">Nationality</label>
-                                                            <input type="text" name="Nationality" className="form-control" value="Nigeria" readOnly onChange={this.SetInputValue} placeholder="Nationality"/>
-                                                        </div>
-                                              
-                                                        <div className={StateOfOriginValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                            <label className="label-text">State of Origin</label>
-                                                            <select name="StateOfOrigin" className="form-control" onChange={this.SetInputValue}>
-                                                                    <option>Select State of Origin</option>
-                                                                    {                                      
-                                                                        getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
-                                                                        getContactDetail.data.response.states.map(state=> {
-                                                                    
-                                                                            return <option value={state}>
-                                                                            {state.name}</option>
-                                                                        })
-                                                                    }     
-                                                            </select>
-                                                           
-                                                        </div>
-                                            </div>
-                
-                                            <div className={"form-row"}>
-                                                        <div className={LocalGovValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Local Government</label>
-                                                            <select name="LocalGv" className="form-control" onChange={this.SetInputValue} >
-                                                                    <option>Select Local Government</option>
-                                                                    {                                      
-                                                                        getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
-                                                                        getContactDetail.data.response.cities.map(city=> {
-                                                                            
-                                                                            return <option value={city.name}>
-                                                                            {city.name}</option>
-                                                                        })
-                                                                    } 
-                                                            </select>
-                                                        </div>
-                                            </div>
-
-                                            
-                                                   
-                                            <div className="form-row">
-                                                        <div className={PinValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">Alat Pin</label>
-                                                            <input type="number" name="AlatPin" className="form-control" onChange={this.SetInputValue} placeholder="Alat Pin"/>
-                                                        </div>
-                                            </div>
-                                            <div className="align-button">
-                                                <button type="submit" className="twoBut no-border">Submit</button>
-                                            </div>
-                                           
-                                            {/* <button type="submit" className="twoBut">Submit</button> */}
-                                        </form>
-                                    </div>
-                                </div>
-                                </div>
+        if(profileMenu.message === profile.GET_PROFILE_MENU_PENDING){
+            return(
+                <Fragment>
+                      {/* <InnerContainer> */}
+                           <div className="dashboard-wrapper">
+                                 <div className="container">
+                         <div className="coverPropertiesofComponent">
+                             <div className="col-sm-12">
+                              <p className="page-title">Account Setting</p>
+                            </div>
+    
+                    <div className="col-sm-12">
+                        <div>
+                            <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                <ul>
+                                    <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                </ul>
                             </div>
                         </div>
-                 {/* </InnerContainer> */}
-        </Fragment>
-       )
+                    </div>
+                    <p className="loading-info">Loading Profile Information...</p>
+                    </div>
+                    </div>
+                    </div>
+                    {/* </InnerContainer> */}
+                </Fragment>      
+            )
+        }
+
+        if(profileMenu.message === profile.GET_PROFILE_MENU_SUCCESS){
+            return(
+                <Fragment>
+                     {/* <InnerContainer> */}
+                            <div className="dashboard-wrapper">
+                                 <div className="container">
+                                        <div className="coverPropertiesofComponent">
+                                            <div className="col-sm-12">
+                                                <p className="page-title">Account Setting</p>
+                                            </div>
+        
+                                            <div className="col-sm-12">
+                                                <div>
+                                                    <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                                        <ul> 
+                                                            <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                                            <li>Pin Management</li>
+                                                            <li>Security Questions</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                        <div className="row packageContent">
+                                            <div className="col-sm-4">
+                                                <div className="forProfilePicture">
+                                                        <div className="profilePixCircle">
+        
+                                                        </div>
+                                                        <p className="personsName">{this.props.profileMenu.data.response.fullName}</p>
+                                                        <p className="details">{this.props.profileMenu.data.response.username}</p>
+                                                        <p className="details">{moment(this.props.profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>
+                                                        <hr />
+        
+                                                        <div className="tickItems" onClick={this.NavigateToBVN}>
+                                                            {isBvNLinked === true ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                            <p className="pSubs">Link BVN</p>
+                                                        </div>
+                                                        <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
+                                                            {isProfileInformation ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                            <p className="pSubs">Personal Information</p>
+                                                        </div>
+                                                        <div className="tickItems" onClick={this.NavigateToContact}>
+                                                            {isContactDetails ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                            <p className="pSubs">Contact Details</p>
+                                                        </div>
+                                                        <div className="tickItems" onClick={this.NavigateToDocuments}>
+                                                            {isDocument ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt=""  className="largeVectorI" />}
+                                                            <p className="pSubs">Document Upload</p>
+                                                        </div>
+                                                        <div className="tickItems" onClick={this.NavigateToNextOfKin}>
+                                                            {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                            <p className="pSubs">Next of Kin</p>
+                                                        </div>
+                                                </div>
+                                                
+                                            </div>
+                                            <div className="col-sm-7">
+                                            <form onSubmit={this.HandleSubmit} className="parentForm">
+                                                    <p className="formHeading">Next Of Kin</p>
+                                                
+                                                    <div className="form-row">
+                                                                <div className={TitleValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                    <label className="label-text">Title</label>
+                                                                    <select onChange={this.SetInputValue} name="title" placeholder="title">
+                                                                        <option value="Mr">Mr</option>
+                                                                        <option value="Mrs">Mrs</option>
+                                                                        <option value="Dr">Dr</option>
+                                                                        <option value="Prof">Prof</option>
+                                                                        <option value="master">Master</option>
+                                                                    </select>
+                                                                </div>
+        
+                                                                <div className={relationshipValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                    <label className="label-text">Relationship</label>
+                                                                    <select onChange={this.SetInputValue} name="relationship" placeholder="marital status">
+                                                                        <option value="Sister">Sister</option>
+                                                                        <option value="Brother">Brother</option>
+                                                                    </select>
+                                                                </div>
+                                                    </div>
+        
+                                                    <div className="form-row">
+                                                                <div className={SurnameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Surname</label>
+                                                                    <input type="text" name="SurName" className="form-control" onChange={this.SetInputValue} placeholder="Surname"/>
+                                                                </div>
+                                                    </div>
+        
+                                                    <div className="form-row">
+                                                                <div className={FirstNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">First Name</label>
+                                                                    <input type="text" name="FirstName" className="form-control" onChange={this.SetInputValue} placeholder="First Name"/>
+                                                                </div>
+                                                    </div>
+                                                    
+                                                    
+                                                    <div className="form-row">
+                                                                <div className={OtherNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Other Name</label>
+                                                                    <input type="text" name="OtherName" className="form-control" onChange={this.SetInputValue} placeholder="Other Name"/>
+                                                                </div>
+                                                    </div>
+                           
+                                                    <div className="form-row">
+                                                                <div className={phoneNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Phone Number</label>
+                                                                    <input type="number" name="phoneNumber" className="form-control" onChange={this.SetInputValue} placeholder="Telephone"/>
+                                                                </div>
+                                                    </div>       
+        
+                                                    <div className="form-row">
+                                                                <div className={EmailAddressValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Email</label>
+                                                                    <input type="email" name="EmailAddress" className="form-control" onChange={this.SetInputValue} placeholder="Email"/>
+                                                                </div>
+                                                    </div>
+        
+                                                    <div className="form-row">
+                                                                <div className="form-group col-md-12">
+                                                                    <label className="label-text">Next of Kin BVN (Optional)</label>
+                                                                    <input type="number" name="nextOfKinBVN" className="form-control" onChange={this.SetInputValue} placeholder="BVN"/>
+                                                                </div>
+                                                    </div>
+                                                   
+                                                    <div className="form-row">
+                                                                <div className={GenderValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                    <label className="label-text">Gender</label>
+                                                                    <select className="select-gender" onChange={this.SetInputValue} name="Gender" placeholder="Gender">
+                                                                        <option value=""> </option>
+                                                                        <option value="Male"> Male </option>
+                                                                        <option value="Female"> Female</option>
+                                                                    </select>
+                                                                </div>
+        
+                                                                <div className={DateOfBirthValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                        <label className="label-text">Date of Birth</label>
+                                                                        <DatePicker className="form-control" selected={birthDate} 
+                                                                        placeholder="June 31, 2019"
+                                                                        dateFormat=" MMMM d, yyyy"
+                                                                        showMonthDropdown
+                                                                        showYearDropdown
+                                                                        onChange={this.SetBirthDay}
+                                                                        dropdownMode="select"
+                                                                        // minDate={new Date()}
+                                                                        />
+                                                                </div> 
+                                                    </div>
+        
+                                                    
+                                                    <div className="form-row">
+                                                           <div className="form-group col-md-12">
+                                                              <div>Next of Kin Full Address</div>
+                                                           </div>
+                                                    </div>
+                                                    
+                                                    
+                                                    <div className={"form-row"}>
+                                                                <div className={streetValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text"> Address </label>
+                                                                    <input type="text" name="address" className="form-control" onChange={this.SetInputValue} placeholder="Address"/>
+                                                                </div>
+                                                    </div>
+        
+                                                    <div className={"form-row"}>
+                                                                <div className={streetCompoundValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Streat / Compound Name</label>
+                                                                    <input type="text" name="street" className="form-control" onChange={this.SetInputValue} placeholder="Streat / Compound Name"/>
+                                                                </div>
+                                                    </div>
+        
+                                                    <div className={"form-row"}>
+                                                                <div className={busstopValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Nearest Bustop</label>
+                                                                    <input type="text" name="busStop" className="form-control" onChange={this.SetInputValue} placeholder="Nearest Bus - stop"/>
+                                                                </div>
+                                                    </div>
+        
+        
+                                                    <div className={"form-row"}>
+                                                                <div className={NationalityValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                    <label className="label-text">Nationality</label>
+                                                                    <input type="text" name="Nationality" className="form-control" value="Nigeria" readOnly onChange={this.SetInputValue} placeholder="Nationality"/>
+                                                                </div>
+                                                      
+                                                                <div className={StateOfOriginValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                    <label className="label-text">State of Origin</label>
+                                                                    <select name="StateOfOrigin" className="form-control" onChange={this.SetInputValue}>
+                                                                            <option>Select State of Origin</option>
+                                                                            {                                      
+                                                                                getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
+                                                                                getContactDetail.data.response.states.map(state=> {
+                                                                            
+                                                                                    return <option value={state}>
+                                                                                    {state.name}</option>
+                                                                                })
+                                                                            }     
+                                                                    </select>
+                                                                   
+                                                                </div>
+                                                    </div>
+                        
+                                                    <div className={"form-row"}>
+                                                                <div className={LocalGovValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Local Government</label>
+                                                                    <select name="LocalGv" className="form-control" onChange={this.SetInputValue} >
+                                                                            <option>Select Local Government</option>
+                                                                            {                                      
+                                                                                getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
+                                                                                getContactDetail.data.response.cities.map(city=> {
+                                                                                    
+                                                                                    return <option value={city.name}>
+                                                                                    {city.name}</option>
+                                                                                })
+                                                                            } 
+                                                                    </select>
+                                                                </div>
+                                                    </div>
+        
+                                                    
+                                                           
+                                                    <div className="form-row">
+                                                                <div className={PinValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Alat Pin</label>
+                                                                    <input type="number" name="AlatPin" className="form-control" onChange={this.SetInputValue} placeholder="Alat Pin"/>
+                                                                </div>
+                                                    </div>
+                                                    <div className="align-button">
+                                                        <button type="submit" className="twoBut no-border">Submit</button>
+                                                    </div>
+                                                   
+                                                    {/* <button type="submit" className="twoBut">Submit</button> */}
+                                                </form>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                         {/* </InnerContainer> */}
+                </Fragment>
+               )
+        }
+
+        if(profileMenu.message === profile.GET_PROFILE_MENU_FAILURE){
+            this.GetUserProfileMenu();
+            return(
+                <Fragment>
+                      {/* <InnerContainer> */}
+                           <div className="dashboard-wrapper">
+                                 <div className="container">
+                         <div className="coverPropertiesofComponent">
+                             <div className="col-sm-12">
+                              <p className="page-title">Account Setting</p>
+                            </div>
+    
+                    <div className="col-sm-12">
+                        <div>
+                            <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                <ul>
+                                    <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <p className="loading-info">Please Check Your Internet Connection ...</p>
+                    </div>
+                    </div>
+                    </div>
+                    {/* </InnerContainer> */}
+                </Fragment>      
+            );
+        }
+
+        if(profileMenu.data == undefined){
+            // console.log('this was fired');
+            this.GetUserProfileMenu();
+            return(
+                <Fragment>
+                      {/* <InnerContainer> */}
+                           <div className="dashboard-wrapper">
+                                 <div className="container">
+                         <div className="coverPropertiesofComponent">
+                             <div className="col-sm-12">
+                              <p className="page-title">Account Setting</p>
+                            </div>
+    
+                    <div className="col-sm-12">
+                        <div>
+                            <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                <ul>
+                                    <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <p className="loading-info">Loading Profile Information...</p>
+                    </div>
+                    </div>
+                    </div>
+                    {/* </InnerContainer> */}
+                </Fragment>      
+            )
+        }
+
+        if(profileMenu.data != undefined && profileMenu.data.response != undefined){
+            return(
+                <Fragment>
+                     {/* <InnerContainer> */}
+                            <div className="dashboard-wrapper">
+                                 <div className="container">
+                                        <div className="coverPropertiesofComponent">
+                                            <div className="col-sm-12">
+                                                <p className="page-title">Account Setting</p>
+                                            </div>
+        
+                                            <div className="col-sm-12">
+                                                <div>
+                                                    <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                                        <ul> 
+                                                            <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                                            <li>Pin Management</li>
+                                                            <li>Security Questions</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                        <div className="row packageContent">
+                                            <div className="col-sm-4">
+                                                <div className="forProfilePicture">
+                                                        <div className="profilePixCircle">
+        
+                                                        </div>
+                                                        <p className="personsName">{profileMenu.data.response.fullName}</p>
+                                                        <p className="details">{profileMenu.data.response.username}</p>
+                                                        <p className="details">{moment(profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>
+                                                        <hr />
+        
+                                                        <div className="tickItems" onClick={this.NavigateToBVN}>
+                                                            {isBvNLinked === true ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                            <p className="pSubs">Link BVN</p>
+                                                        </div>
+                                                        <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
+                                                            {isProfileInformation ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                            <p className="pSubs">Personal Information</p>
+                                                        </div>
+                                                        <div className="tickItems" onClick={this.NavigateToContact}>
+                                                            {isContactDetails ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                            <p className="pSubs">Contact Details</p>
+                                                        </div>
+                                                        <div className="tickItems" onClick={this.NavigateToDocuments}>
+                                                            {isDocument ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt=""  className="largeVectorI" />}
+                                                            <p className="pSubs">Document Upload</p>
+                                                        </div>
+                                                        <div className="tickItems" onClick={this.NavigateToNextOfKin}>
+                                                            {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                            <p className="pSubs">Next of Kin</p>
+                                                        </div>
+                                                </div>
+                                                
+                                            </div>
+                                            <div className="col-sm-7">
+                                            <form onSubmit={this.HandleSubmit} className="parentForm">
+                                                    <p className="formHeading">Next Of Kin</p>
+                                                
+                                                    <div className="form-row">
+                                                                <div className={TitleValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                    <label className="label-text">Title</label>
+                                                                    <select onChange={this.SetInputValue} name="title" placeholder="title">
+                                                                        <option value="Mr">Mr</option>
+                                                                        <option value="Mrs">Mrs</option>
+                                                                        <option value="Dr">Dr</option>
+                                                                        <option value="Prof">Prof</option>
+                                                                        <option value="master">Master</option>
+                                                                    </select>
+                                                                </div>
+        
+                                                                <div className={relationshipValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                    <label className="label-text">Relationship</label>
+                                                                    <select onChange={this.SetInputValue} name="relationship" placeholder="marital status">
+                                                                        <option value="Sister">Sister</option>
+                                                                        <option value="Brother">Brother</option>
+                                                                    </select>
+                                                                </div>
+                                                    </div>
+        
+                                                    <div className="form-row">
+                                                                <div className={SurnameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Surname</label>
+                                                                    <input type="text" name="SurName" className="form-control" onChange={this.SetInputValue} placeholder="Surname"/>
+                                                                </div>
+                                                    </div>
+        
+                                                    <div className="form-row">
+                                                                <div className={FirstNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">First Name</label>
+                                                                    <input type="text" name="FirstName" className="form-control" onChange={this.SetInputValue} placeholder="First Name"/>
+                                                                </div>
+                                                    </div>
+                                                    
+                                                    
+                                                    <div className="form-row">
+                                                                <div className={OtherNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Other Name</label>
+                                                                    <input type="text" name="OtherName" className="form-control" onChange={this.SetInputValue} placeholder="Other Name"/>
+                                                                </div>
+                                                    </div>
+                           
+                                                    <div className="form-row">
+                                                                <div className={phoneNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Phone Number</label>
+                                                                    <input type="number" name="phoneNumber" className="form-control" onChange={this.SetInputValue} placeholder="Telephone"/>
+                                                                </div>
+                                                    </div>       
+        
+                                                    <div className="form-row">
+                                                                <div className={EmailAddressValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Email</label>
+                                                                    <input type="email" name="EmailAddress" className="form-control" onChange={this.SetInputValue} placeholder="Email"/>
+                                                                </div>
+                                                    </div>
+        
+                                                    <div className="form-row">
+                                                                <div className="form-group col-md-12">
+                                                                    <label className="label-text">Next of Kin BVN (Optional)</label>
+                                                                    <input type="number" name="nextOfKinBVN" className="form-control" onChange={this.SetInputValue} placeholder="BVN"/>
+                                                                </div>
+                                                    </div>
+                                                   
+                                                    <div className="form-row">
+                                                                <div className={GenderValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                    <label className="label-text">Gender</label>
+                                                                    <select className="select-gender" onChange={this.SetInputValue} name="Gender" placeholder="Gender">
+                                                                        <option value=""> </option>
+                                                                        <option value="Male"> Male </option>
+                                                                        <option value="Female"> Female</option>
+                                                                    </select>
+                                                                </div>
+        
+                                                                <div className={DateOfBirthValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                        <label className="label-text">Date of Birth</label>
+                                                                        <DatePicker className="form-control" selected={birthDate} 
+                                                                        placeholder="June 31, 2019"
+                                                                        dateFormat=" MMMM d, yyyy"
+                                                                        showMonthDropdown
+                                                                        showYearDropdown
+                                                                        onChange={this.SetBirthDay}
+                                                                        dropdownMode="select"
+                                                                        // minDate={new Date()}
+                                                                        />
+                                                                </div> 
+                                                    </div>
+        
+                                                    
+                                                    <div className="form-row">
+                                                           <div className="form-group col-md-12">
+                                                              <div>Next of Kin Full Address</div>
+                                                           </div>
+                                                    </div>
+                                                    
+                                                    
+                                                    <div className={"form-row"}>
+                                                                <div className={streetValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text"> Address </label>
+                                                                    <input type="text" name="address" className="form-control" onChange={this.SetInputValue} placeholder="Address"/>
+                                                                </div>
+                                                    </div>
+        
+                                                    <div className={"form-row"}>
+                                                                <div className={streetCompoundValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Streat / Compound Name</label>
+                                                                    <input type="text" name="street" className="form-control" onChange={this.SetInputValue} placeholder="Streat / Compound Name"/>
+                                                                </div>
+                                                    </div>
+        
+                                                    <div className={"form-row"}>
+                                                                <div className={busstopValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Nearest Bustop</label>
+                                                                    <input type="text" name="busStop" className="form-control" onChange={this.SetInputValue} placeholder="Nearest Bus - stop"/>
+                                                                </div>
+                                                    </div>
+        
+        
+                                                    <div className={"form-row"}>
+                                                                <div className={NationalityValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                    <label className="label-text">Nationality</label>
+                                                                    <input type="text" name="Nationality" className="form-control" value="Nigeria" readOnly onChange={this.SetInputValue} placeholder="Nationality"/>
+                                                                </div>
+                                                      
+                                                                <div className={StateOfOriginValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                    <label className="label-text">State of Origin</label>
+                                                                    <select name="StateOfOrigin" className="form-control" onChange={this.SetInputValue}>
+                                                                            <option>Select State of Origin</option>
+                                                                            {                                      
+                                                                                getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
+                                                                                getContactDetail.data.response.states.map(state=> {
+                                                                            
+                                                                                    return <option value={state}>
+                                                                                    {state.name}</option>
+                                                                                })
+                                                                            }     
+                                                                    </select>
+                                                                   
+                                                                </div>
+                                                    </div>
+                        
+                                                    <div className={"form-row"}>
+                                                                <div className={LocalGovValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Local Government</label>
+                                                                    <select name="LocalGv" className="form-control" onChange={this.SetInputValue} >
+                                                                            <option>Select Local Government</option>
+                                                                            {                                      
+                                                                                getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
+                                                                                getContactDetail.data.response.cities.map(city=> {
+                                                                                    
+                                                                                    return <option value={city.name}>
+                                                                                    {city.name}</option>
+                                                                                })
+                                                                            } 
+                                                                    </select>
+                                                                </div>
+                                                    </div>
+        
+                                                    
+                                                           
+                                                    <div className="form-row">
+                                                                <div className={PinValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                                    <label className="label-text">Alat Pin</label>
+                                                                    <input type="number" name="AlatPin" className="form-control" onChange={this.SetInputValue} placeholder="Alat Pin"/>
+                                                                </div>
+                                                    </div>
+                                                    <div className="align-button">
+                                                        <button type="submit" className="twoBut no-border">Submit</button>
+                                                    </div>
+                                                   
+                                                    {/* <button type="submit" className="twoBut">Submit</button> */}
+                                                </form>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                         {/* </InnerContainer> */}
+                </Fragment>
+               );
+        }
+
+        return(
+            <Fragment>
+                  {/* <InnerContainer> */}
+                       <div className="dashboard-wrapper">
+                             <div className="container">
+                     <div className="coverPropertiesofComponent">
+                         <div className="col-sm-12">
+                          <p className="page-title">Account Setting</p>
+                        </div>
+
+                <div className="col-sm-12">
+                    <div>
+                        <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                            <ul>
+                                <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+                                <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <p className="loading-info">Loading Profile Information...</p>
+                </div>
+                </div>
+                </div>
+                {/* </InnerContainer> */}
+            </Fragment>      
+        );
    }
 }
 

@@ -575,38 +575,69 @@ GetUserProfileMenu = () => {
     //        this.PersonalInfomationHasBeenLinked();
     //    }
        
-    //    if(profileMenu.message === profile.GET_PERSONAL_INFO_PENDING){
-    //     return(
-    //         <Fragment>
-    //               <InnerContainer>
-    //                    <div className="dashboard-wrapper">
-    //                          <div className="container">
-    //                  <div className="coverPropertiesofComponent">
-    //                      <div className="col-sm-12">
-    //                       <p className="page-title">Account Setting</p>
-    //                     </div>
+       if(profileMenu.message === profile.GET_PROFILE_MENU_PENDING){
+        return(
+            <Fragment>
+                  {/* <InnerContainer> */}
+                       <div className="dashboard-wrapper">
+                             <div className="container">
+                     <div className="coverPropertiesofComponent">
+                         <div className="col-sm-12">
+                          <p className="page-title">Account Setting</p>
+                        </div>
 
-    //             <div className="col-sm-12">
-    //                 <div>
-    //                     <div className="sub-tab-nav" style={{marginBottom: 10}}>
-    //                         <ul>
-    //                             <li><NavLink to={'/profile'} >Profile</NavLink></li>
-    //                             <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-    //                             <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
-    //                         </ul>
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //             <p>loading data ...</p>
-    //             </div>
-    //             </div>
-    //             </div>
-    //             </InnerContainer>
-    //         </Fragment>      
-    //     )
-    //    }
+                <div className="col-sm-12">
+                    <div>
+                        <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                            <ul>
+                                <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+                                <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <p>Loading Profile Information ...</p>
+                </div>
+                </div>
+                </div>
+                {/* </InnerContainer> */}
+            </Fragment>      
+        )
+       }
 
-    //    if(profileMenu.message === profile.GET_PERSONAL_INFO_SUCCESS){
+       if(profileMenu.message === profile.GET_PROFILE_MENU_FAILURE){
+        return(
+            <Fragment>
+                  {/* <InnerContainer> */}
+                       <div className="dashboard-wrapper">
+                             <div className="container">
+                     <div className="coverPropertiesofComponent">
+                         <div className="col-sm-12">
+                          <p className="page-title">Account Setting</p>
+                        </div>
+
+                <div className="col-sm-12">
+                    <div>
+                        <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                            <ul>
+                                <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+                                <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <p>Please Check Your Internet Connection ...</p>
+                </div>
+                </div>
+                </div>
+                {/* </InnerContainer> */}
+            </Fragment>      
+        )
+       }
+
+       if(profileMenu.message === profile.GET_PROFILE_MENU_SUCCESS){
         return(
             <Fragment>
                  {/* <InnerContainer> */}
@@ -885,41 +916,41 @@ GetUserProfileMenu = () => {
                             </div>
                      {/* </InnerContainer> */}
             </Fragment>
-                
+                 
            )
-    //    }
+       }
 
-    //    if(profileMenu.data == undefined){
-    //     this.GetUserProfileMenu();
-    //     return(
-    //         <Fragment>
-    //               <InnerContainer>
-    //                    <div className="dashboard-wrapper">
-    //                          <div className="container">
-    //                  <div className="coverPropertiesofComponent">
-    //                      <div className="col-sm-12">
-    //                       <p className="page-title">Account Setting</p>
-    //                     </div>
+       if(profileMenu.data == undefined){
+        this.GetUserProfileMenu();
+        return(
+            <Fragment>
+                  {/* <InnerContainer> */}
+                       <div className="dashboard-wrapper">
+                             <div className="container">
+                     <div className="coverPropertiesofComponent">
+                         <div className="col-sm-12">
+                          <p className="page-title">Account Setting</p>
+                        </div>
 
-    //             <div className="col-sm-12">
-    //                 <div>
-    //                     <div className="sub-tab-nav" style={{marginBottom: 10}}>
-    //                         <ul>
-    //                             <li><NavLink to={'/profile'} >Profile</NavLink></li>
-    //                             <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-    //                             <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
-    //                         </ul>
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //             <p>loading data ...</p>
-    //             </div>
-    //             </div>
-    //             </div>
-    //             </InnerContainer>
-    //         </Fragment>      
-    //     )
-    //    }
+                <div className="col-sm-12">
+                    <div>
+                        <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                            <ul>
+                                <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+                                <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <p className="loading-info">Loading Profile Information...</p>
+                </div>
+                </div>
+                </div>
+                {/* </InnerContainer> */}
+            </Fragment>      
+        )
+       }
    }
 }
 

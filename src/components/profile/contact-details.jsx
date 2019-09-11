@@ -12,7 +12,6 @@ import { getContactDetails } from "../../redux/actions/profile/profile-action";
 import moment from 'moment';
 
 
-
 var allStatesInfo = null;
 var allCityData = null;
 var localGov2 = null;
@@ -114,7 +113,7 @@ class ContactDetails extends Component {
    }
 
    componentDidMount = () => {
-    this.CheckIfStoreInformationIsSet();
+       this.CheckIfStoreInformationIsSet();
    }
 
 CheckIfStoreInformationIsSet = () => {
@@ -857,7 +856,7 @@ GetUserProfileMenu = () => {
          )
         }
  
-        if(getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS){
+        if(getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && profileMenu.message === profile.GET_PROFILE_MENU_SUCCESS){
             this.UseGottenStateInfo();
             return(
                 <Fragment>
@@ -1108,38 +1107,166 @@ GetUserProfileMenu = () => {
                 </Fragment>         
             );
         }
-       if(profileMenu.data == undefined){
-           console.log('NOTHING EVER HAPPENED HERE')
-        this.GetUserProfileMenu();
-        return(
-            <Fragment>
-                  {/* <InnerContainer> */}
-                       <div className="dashboard-wrapper">
-                             <div className="container">
-                     <div className="coverPropertiesofComponent">
-                         <div className="col-sm-12">
-                          <p className="page-title">Account Setting</p>
-                        </div>
 
-                <div className="col-sm-12">
-                    <div>
-                        <div className="sub-tab-nav" style={{marginBottom: 10}}>
-                            <ul>
-                                <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
-                            </ul>
+        if(getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && profileMenu.message === profile.GET_PROFILE_MENU_PENDING){
+            return(
+                <Fragment>
+                       
+                            <div className="dashboard-wrapper">
+                                    <div className="container">
+                            <div className="coverPropertiesofComponent">
+                                <div className="col-sm-12">
+                                <p className="page-title">Account Setting</p>
+                            </div>
+    
+                    <div className="col-sm-12">
+                        <div>
+                            <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                <ul>
+                                    <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <p>loading data ...</p>
-                </div>
-                </div>
-                </div>
-                {/* </InnerContainer> */}
-            </Fragment>      
-        )
-       }
+                    <p>Loading data Contact Details...</p>
+                    </div>
+                    </div>
+                    </div>
+                 
+                </Fragment>  
+            );    
+        }
+
+        if(getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && profileMenu.message === profile.GET_PROFILE_MENU_FAILURE){
+            return(
+                <Fragment>
+                       
+                            <div className="dashboard-wrapper">
+                                    <div className="container">
+                            <div className="coverPropertiesofComponent">
+                                <div className="col-sm-12">
+                                <p className="page-title">Account Setting</p>
+                            </div>
+    
+                    <div className="col-sm-12">
+                        <div>
+                            <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                <ul>
+                                    <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <p>Please Check Your Internet Connection...</p>
+                    </div>
+                    </div>
+                    </div>
+                 
+                </Fragment>  
+            );    
+        }
+
+
+
+        if(getContactDetail.message === profile.GET_CONTACT_DETAILS_FAILURE){
+            return(
+                <Fragment>
+                       
+                            <div className="dashboard-wrapper">
+                                    <div className="container">
+                            <div className="coverPropertiesofComponent">
+                                <div className="col-sm-12">
+                                <p className="page-title">Account Setting</p>
+                            </div>
+    
+                    <div className="col-sm-12">
+                        <div>
+                            <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                <ul>
+                                    <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <p>Please Check Your Network ...</p>
+                    </div>
+                    </div>
+                    </div>
+                 
+                </Fragment>  
+            );    
+        }
+
+
+        if(getContactDetail.message === undefined){
+            return(
+                <Fragment>
+                       
+                            <div className="dashboard-wrapper">
+                                    <div className="container">
+                            <div className="coverPropertiesofComponent">
+                                <div className="col-sm-12">
+                                <p className="page-title">Account Setting</p>
+                            </div>
+    
+                    <div className="col-sm-12">
+                        <div>
+                            <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                <ul>
+                                    <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <p>Loading data Contact Details...</p>
+                    </div>
+                    </div>
+                    </div>
+                 
+                </Fragment>  
+            );    
+        }
+
+        if(profileMenu.data == undefined){
+            console.log('NOTHING EVER HAPPENED HERE')
+            this.GetUserProfileMenu();
+            return(
+                <Fragment>
+                        {/* <InnerContainer> */}
+                            <div className="dashboard-wrapper">
+                                    <div className="container">
+                            <div className="coverPropertiesofComponent">
+                                <div className="col-sm-12">
+                                <p className="page-title">Account Setting</p>
+                            </div>
+
+                    <div className="col-sm-12">
+                        <div>
+                            <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                <ul>
+                                    <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <p>loading data ...</p>
+                    </div>
+                    </div>
+                    </div>
+                    {/* </InnerContainer> */}
+                </Fragment>      
+            )
+        }
 
    }
 }
