@@ -51,19 +51,19 @@ class PersonalDefault extends Component {
    }
 
    NavigateToBVN = () => {
-    //    if(this.props.profileMenu.data.response.bvnLinked == true){
-    //          this.DispatchSuccessMessage('BVN has Been Linked');
-    //          return;
-    //    }
+       if(this.props.profileMenu.data.response.bvnLinked == true){
+             this.DispatchSuccessMessage('BVN has Been Linked');
+             return;
+       }
 
        history.push('/profile/linkBVN');
    }
 
    NavigateToPersonalInfo = () => {
-        // if(this.props.profileMenu.data.response.personalInfoComplete == true){
-        //     this.DispatchSuccessMessage('Personal Information Created');
-        //     return;
-        // }
+        if(this.props.profileMenu.data.response.personalInfoComplete == true){
+            this.DispatchSuccessMessage('Personal Information Created');
+            return;
+        }
 
         history.push('/profile/profile-personalInfo');
    }

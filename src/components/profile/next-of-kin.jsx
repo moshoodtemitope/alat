@@ -9,7 +9,8 @@ import {history} from '../../_helpers/history';
 import { ToggleButton }  from '../../shared/elements/_toggle';
 import { getContactDetails} from "../../redux/actions/profile/profile-action";
 import {profile} from '../../redux/constants/profile/profile-constants';
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
+import moment from 'moment';
 
 
 class NextOfKin extends Component {   
