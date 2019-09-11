@@ -4,7 +4,6 @@ import DatePicker from "react-datepicker";
 import * as actions from '../../redux/actions/profile/profile-action';
 import {Fragment} from "react";
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
-import InnerContainer from '../../shared/templates/inner-container';
 import {history} from '../../_helpers/history';
 import {profile} from '../../redux/constants/profile/profile-constants';
 import { connect } from 'react-redux';
@@ -93,7 +92,6 @@ class ContactDetails extends Component {
         busstopValidity2: false,
         houseNumberValidity2: false,
         apartmentValidity2: false,
-
         sameAddressAsAbove: "sameAddressAsAbove",
         isAddressSame: 'on',
         checkBoxStatus: true,
@@ -830,7 +828,7 @@ GetUserProfileMenu = () => {
          return(
              <Fragment>
                    {/* <InnerContainer> */}
-                        <div className="dashboard-wrapper">
+                        <div className="">
                               <div className="container">
                       <div className="coverPropertiesofComponent">
                           <div className="col-sm-12">
@@ -842,13 +840,12 @@ GetUserProfileMenu = () => {
                          <div className="sub-tab-nav" style={{marginBottom: 10}}>
                              <ul>
                                  <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                 <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                 <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                 
                              </ul>
                          </div>
                      </div>
                  </div>
-                 <p>loading data ...</p>
+                 <p>Loading data ...</p>
                  </div>
                  </div>
                  </div>
@@ -862,7 +859,7 @@ GetUserProfileMenu = () => {
             return(
                 <Fragment>
                     {/* <InnerContainer> */}
-                            <div className="dashboard-wrapper">
+                            <div className="">
                                 <div className="container">
                                         <div className="coverPropertiesofComponent">
                                             <div className="col-sm-12">
@@ -1097,7 +1094,6 @@ GetUserProfileMenu = () => {
                                                         <button type="submit" className="twoBut no-border">Submit</button>
                                                     </div>
 
-                                                    {/* <button type="submit" className="twoBut">Submit</button>    */}
                                                 </form>
                                             </div>
                                         </div>
