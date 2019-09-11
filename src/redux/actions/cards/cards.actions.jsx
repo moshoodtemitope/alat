@@ -495,6 +495,7 @@ export const getCurrentATMCard = (token)=>{
                     }
                 }
                 else{
+                    console.log('error', error.response);
                     dispatch(failure('An error occured. Please try again '));
                 }
             })
@@ -739,10 +740,11 @@ export const getALATCardSettings = (token)=>{
                         })
                 }
                 else{
-                    let bulkResponse={
-                        panDetails : null
-                    }
-                    dispatch(success(bulkResponse));
+                    // let bulkResponse={
+                    //     panDetails : null
+                    // }
+                    // dispatch(success(bulkResponse));
+                    history.push("/cards");
                 }
             })
             .catch(error=>{
