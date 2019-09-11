@@ -27,7 +27,8 @@ class RemitaOtpSetupComponent extends React.Component {
 
     init = () => {
         if (this.props.standing_order)
-         if (this.props.standing_order.standing_order_status == loanConstants.LOAN_STAND_ORDER_SUCCESS) {
+         if (this.props.standing_order.loan_standOrder_status == loanConstants.LOAN_STAND_ORDER_SUCCESS) {
+             console.log("in successful standing order");
         // var test = {
         //     GetCollectionScreenOption: 0,
         //     DebitBankActionRequired: true,
@@ -48,7 +49,7 @@ class RemitaOtpSetupComponent extends React.Component {
         //     ]
         // };
         let data = {
-            ...this.props.standing_order.standing_order_data.response.Response
+            ...this.props.standing_order.loan_standOrder_data.response.Response
             //...test
         };
         console.log(data);
