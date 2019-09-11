@@ -19,9 +19,6 @@ class ProfileSuccessMessage extends Component {
           user: JSON.parse(localStorage.getItem("user")),
        }
    }
-//    componentDidMount = () => {
-    
-//    }
 
 CheckIfStoreInformationIsSet = () => {
     
@@ -38,7 +35,7 @@ CheckIfStoreInformationIsSet = () => {
       this.CheckIfStoreInformationIsSet();
        setTimeout(function(){
           history.push('/profile');
-       }, 50000000);
+       }, 2000);
 
        console.log(this.props.profileSuccessMessage.data);
    }
@@ -98,7 +95,7 @@ DispatchSuccessMessage = (data) => {
       const {isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument} = this.state;
        return(
         <Fragment>
-             {/* <InnerContainer> */}
+           
                     <div className="dashboard-wrapper">
                          <div className="container">
                                 <div className="coverPropertiesofComponent">
@@ -163,7 +160,7 @@ DispatchSuccessMessage = (data) => {
                                 </div>
                             </div>
                         </div>
-                 {/* </InnerContainer> */}
+                
         </Fragment>
        )
    }
