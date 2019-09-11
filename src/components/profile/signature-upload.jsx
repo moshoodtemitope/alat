@@ -33,7 +33,8 @@ class SignatureUpload extends Component {
           isProfileInformation: false,
           isContactDetails: false,
           isDocument: false,
-          navToNextOfKin: false
+          navToNextOfKin: false,
+          isImageUploaded: false
        }
    }
 
@@ -181,7 +182,7 @@ GetUserProfileMenu = () => {
  }
 
    render(){
-      const {isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, idTypeValidity, idFrontFace, idCardValidity, idCardNumberValidity} = this.state;
+      const {isImageUploaded, isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, idTypeValidity, idFrontFace, idCardValidity, idCardNumberValidity} = this.state;
        
        if(this.props.profileMenu.message === profile.GET_PROFILE_MENU_SUCCESS){
         return(
@@ -208,9 +209,8 @@ GetUserProfileMenu = () => {
                                     <div className="row packageContent">
                                         <div className="col-sm-4">
                                             <div className="forProfilePicture">
-                                                    <div className="profilePixCircle">
-    
-                                                    </div>
+                                            {isImageUploaded ? <div className="profilePixCircle" style={{backgroundImage: 'url("'+this.props.profileMenu.data.response.imagePath+'")'}}></div>
+                                                        : <div className="profilePixCircle"></div> }
                                                     <p className="personsName">{this.props.profileMenu.data.response.fullName}</p>
                                                     <p className="details">{this.props.profileMenu.data.response.username}</p>
                                                     <p className="details">{moment(this.props.profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>

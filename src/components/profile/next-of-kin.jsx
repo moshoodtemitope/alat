@@ -95,7 +95,8 @@ class NextOfKin extends Component {
           isProfileInformation: false,
           isContactDetails: false,
           isDocument: false,
-          navToNextOfKin: false
+          navToNextOfKin: false,
+          isImageUploaded: false
          
         }
         this.fetchResidentialAddress();
@@ -762,7 +763,7 @@ class NextOfKin extends Component {
     }
     
    render(){
-    const { isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin, birthDate, PinValidity, streetCompoundValidity, yourAddressValidity, sameAddressAsAbove, SurnameValidity, relationshipValidity, TitleValidity, phoneNumberValidity, LocalGovValidity, NationalityValidity, StateOfOriginValidity,
+    const {isImageUploaded, isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin, birthDate, PinValidity, streetCompoundValidity, yourAddressValidity, sameAddressAsAbove, SurnameValidity, relationshipValidity, TitleValidity, phoneNumberValidity, LocalGovValidity, NationalityValidity, StateOfOriginValidity,
         EmailAddressValidity, cityValidity, streetValidity, GenderValidity, busstopValidity, DateOfBirthValidity, FirstNameValidity, OtherNameValidity
         } = this.state;
 
@@ -825,9 +826,8 @@ class NextOfKin extends Component {
                                         <div className="row packageContent">
                                             <div className="col-sm-4">
                                                 <div className="forProfilePicture">
-                                                        <div className="profilePixCircle">
-        
-                                                        </div>
+                                                {isImageUploaded ? <div className="profilePixCircle" style={{backgroundImage: 'url("'+this.props.profileMenu.data.response.imagePath+'")'}}></div>
+                                                        : <div className="profilePixCircle"></div> }
                                                         <p className="personsName">{this.props.profileMenu.data.response.fullName}</p>
                                                         <p className="details">{this.props.profileMenu.data.response.username}</p>
                                                         <p className="details">{moment(this.props.profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>
