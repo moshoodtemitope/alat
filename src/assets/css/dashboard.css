@@ -1540,8 +1540,9 @@ ul.menu-side {
     .page-title span a {
       min-width: initial; }
 
-.tab-overflow {
-  overflow: scroll; }
+/* .tab-overflow {
+  overflow: scroll;
+ } */
 
 .sub-tab-nav {
   margin-bottom: 50px;
@@ -2547,3 +2548,120 @@ ul.menu-side {
     text-align: right;
     width: 30%;
     font-size: 0.85714em; } }
+
+
+.goback {
+  background: none;
+  border: none;
+  cursor: pointer
+}
+
+.goback:hover {
+  color: #9D0F3E;
+}
+
+.delete-bene {
+  position: absolute;
+  top: 46%;
+  left: 85%;
+  color: #b1b1b1;
+}
+
+.delete-bene:hover {
+  color: #9D0F3E;
+}
+
+.ac-info-div {
+  border-top: 1px solid rgba(0, 0, 0, 0.09);
+  padding: 10px 0 10px 0;
+  margin: 0;
+}
+
+.ac-info-div img {
+  margin-left: 10px;
+}
+
+.ac-b {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.09);
+}
+
+.ac-info-div p {
+  display: inline-block;
+  margin: 0;
+}
+
+.ac-amount {
+  float: right;
+  color: #AB2656;
+  font-weight: 600;
+}
+
+.balance span.receipt {
+  color: #AB2656;
+  cursor: pointer;
+  display: block;
+  font-size: 12px
+}
+
+p.balance.ac-debit {
+  color: #444444 !important
+}
+
+p.acc-view-more {
+  color: #AB2656;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.resend-otp:hover {
+  cursor: pointer !important;
+  text-decoration: underline !important;
+}
+/* //OVERRIDE date picker */
+.react-datepicker__header{
+  background-color: #AB2656 !important;
+}
+
+.react-datepicker__navigation--previous{
+  border-right-color: #ffffff !important;
+}
+
+.react-datepicker__navigation--next{
+  border-left-color: #ffffff !important;
+}
+
+.react-datepicker__current-month{
+  color: #ffffff
+}
+
+.react-datepicker__day-name {
+  color: #ffffff
+}
+
+.react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle, .react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle::before {
+  border-bottom-color: #AB2656;
+}
+
+.react-datepicker__day--keyboard-selected, .react-datepicker__month-text--keyboard-selected {
+  background-color: #AB2656
+}
+
+.react-datepicker__month-dropdown-container select {
+  color: #ffffff;
+}
+
+.react-datepicker__year-dropdown-container select {
+  color: #ffffff;
+}
+
+.react-datepicker__month-dropdown-container select *{
+  color: #000000;
+}
+
+.react-datepicker__year-dropdown-container select *{
+  color: #000000;
+}
+
+/* End react date picker css */

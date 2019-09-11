@@ -52,10 +52,10 @@ class FundWemaIndex extends React.Component {
 
     validateAmount = (amount) => {
         if (amount == "") {
-            this.setState({ AmountInvalid: true })
+            this.setState({ AmountInvalid: true });
             return true;
         }
-    }
+    };
 
     handleAmount = (amount) => {
         this.setState({ "Amount": amount });
@@ -63,7 +63,7 @@ class FundWemaIndex extends React.Component {
             if (amount != "")
                 this.setState({ AmountInvalid: false });
         }
-    }
+    };
 
     validateAccountNumber(account, state) {
         if (account.length != 10) {
@@ -100,7 +100,8 @@ class FundWemaIndex extends React.Component {
     render() {
         if (this.props.fundwema.fund_account_status === fundAccountConstants.FUND_ALAT_WEMA_SUCCESS)
             this.props.history.push("/fund/wema/success")
-        return (<div className="al-card no-pad">
+        return (
+            <div className="al-card no-pad">
             <h4 className="m-b-10 center-text hd-underline">Fund Account</h4>
 
             <div className="transfer-ctn">

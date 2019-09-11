@@ -52,10 +52,8 @@ class LoanOnboardingValidateOTP extends React.Component {
         }));
     }
 
-    onReSubmit() {
-        // var bill = {
-        //     ...this.props.airtime.airtime_buydata_data.obj.request
-        // }
+    onReSubmit=()=> {
+        this.props.dispatch(actions.ReSendOtp(this.state.bvn));
         // this.props.dispatch(airtimeWebPinpayment(this.state.user.token, bill));
     }
 
@@ -86,42 +84,16 @@ class LoanOnboardingValidateOTP extends React.Component {
                     <OtpValidation
                         backLink={"/bills/airtime/select-account"}
                         forwardLink={"bills/airtime/done"}
+                        ActionText={"Validate"}
                         submitAction={this.onSubmit}
                         maxLength={6}
                         busyAction={this.props.loan_val_otp.loan_valOtp_status == loanOnboardingConstants.LOAN_VALIDATEOTP_PENDING}
-                        retryAction={null}
-                        onResubmitBusyAction={null}
+                        retryAction={this.onReSubmit}
+                        onResubmitBusyAction={this.props.resend_otp.resendotp_status == loanOnboardingConstants.LOAN_RESENTOTP_PENDING}
+                        // retryAction={this.onReSubmit}
+                        // onResubmitBusyAction={this.props.airtime.airtime_buydata == airtimeConstants.AIRTIME_WEBPIN_PENDING}
                         displayMessage={this.returnOtpValidationMsg()}
                     />
-                    {/* <div className="al-card no-pad">
-                        <div className="transfer-ctn">
-                            {this.props.alert && this.props.alert.message &&
-                                <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
-                            }
-                            <form>
-                                <div class="input-ctn">
-                                    <label>OTP</label>
-                                    <input type="tel" />
-                                </div>
-                                <label>OTP</label>
-                                <OTPInput
-                                    //OTP is returned as { TransactionPIN }, so do something like OTP = otp.TransactionPIN
-                                    OTPInvalid={this.state.OtpInvalid}
-                                    value={this.state.Otp}
-                                    onChange={this.handleOnChange}
-                                    maxLength={6}
-                                />
-
-                                <div className="row">
-                                    <div className="col-sm-12">
-                                        <center>
-                                            <input onClick={this.onSubmit} type="button" value="Validate" className="btn-alat m-t-10 m-b-20 text-center" />
-                                        </center>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div> */}
                 </div>
             </div>
         </LoanOnboardingContainer>);
@@ -133,7 +105,8 @@ function mapStateToProps(state) {
         alert: state.alert,
         loan_step2: state.loanOnboardingReducerPile.loanOnboardingStep2,
         loan_val_otp: state.loanOnboardingReducerPile.loanOnboardingValidateOTP,
-        loan_bvn: state.loanOnboardingReducerPile.loanOnboardingBVN
+        loan_bvn: state.loanOnboardingReducerPile.loanOnboardingBVN,
+        resend_otp: state.loanOnboardingReducerPile.loanResendOTP
     };
 }
 export default connect(mapStateToProps)(LoanOnboardingValidateOTP);

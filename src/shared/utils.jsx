@@ -6,81 +6,106 @@ export const formatAmount = (amount) => {
 export const formatAmountNoDecimal = (amount) => {
     return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
 };
-
-export const toCurrency = (currency)=>{
-    if (currency) {
-      currency = typeof currency !== 'string' ? currency.toString() : currency;
-      let numberValueArray = currency.split('.');
-      let numberValue = removeComma(numberValueArray[0]);
-      currency = numberValueArray.length > 1 ? numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,')
-        + '.' + numberValueArray[1] : numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+export const formatDate =(dateData, seperator) =>{
+    seperator = seperator ? seperator : '/';
+    let monthList = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
+    let splitedDate = dateData.split(' ');
+    if (splitedDate.length > 1) {
+      splitedDate[1] = splitedDate[1].replace(',', '');
+      return this.startWithZero((+monthList.indexOf(splitedDate[1]) + 1))
+        + seperator + this.startWithZero(splitedDate[0])
+        + seperator + splitedDate[2];
     }
-    return currency;
+    return dateData;
   }
+
+// export const toCurrency = (currency)=>{
+//     if (currency) {
+//       currency = typeof currency !== 'string' ? currency.toString() : currency;
+//       let numberValueArray = currency.split('.');
+//       let numberValue = removeComma(numberValueArray[0]);
+//       currency = numberValueArray.length > 1 ? numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+//         + '.' + numberValueArray[1] : numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+//     }
+//     return currency;
+//   }
 
 export const removeComma= (currencyValue)=> {
     return currencyValue.replace(/,/g, '');
   }
 
 export const cc_format = (value) => {
-    
-        var v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
-        var matches = v.match(/\d{4,16}/g);
-        var match = matches && matches[0] || ''
-        var parts = []
 
-        for (let i = 0, len = match.length; i < len; i += 4) {
-            parts.push(match.substring(i, i + 4))
-        }
+    var v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
+    var matches = v.match(/\d{4,16}/g);
+    var match = matches && matches[0] || ''
+    var parts = []
 
-        if (parts.length) {
-            return parts.join(' ')
-        } else {
-            return value
-        }
-    
+    for (let i = 0, len = match.length; i < len; i += 4) {
+        parts.push(match.substring(i, i + 4))
+    }
+
+    if (parts.length) {
+        return parts.join(' ')
+    } else {
+        return value
+    }
+
 }
 
-export const encryptTransactionData=(data, rules)=> {
+export const encryptTransactionData = (data, rules) => {
     let encryptedData = '';
     for (let i = 0; i < data.length - 1; i++) {
-      encryptedData += rules[data[i]].EncryptedValue + '||||';
+        encryptedData += rules[data[i]].EncryptedValue + '||||';
     }
     return encryptedData + rules[data[data.length - 1]].EncryptedValue;
-  }
+}
 
-export const formartCardNumber=(number)=>{
-    let str="";
-    str += number.substr(0,4 ) + " ";
-    str += number.substr(4,4 ) + " ";
-    str += number.substr(8,4 ) + " ";
-    str += number.substr(12,4 );
+export const formartCardNumber = (number) => {
+    let str = "";
+    str += number.substr(0, 4) + " ";
+    str += number.substr(4, 4) + " ";
+    str += number.substr(8, 4) + " ";
+    str += number.substr(12, 4);
     return str;
 }
 
-export const checkValue=(event, dataLength = null)=> {
-    
+export const checkValue = (event, dataLength = null) => {
+
     //number input only
     const { value } = event.target;
     let key = event.keyCode > 0 ? event.keyCode : event.charCode;
 
     if (key === 8 || key === 44 || key === 46 || key >= 37 && key <= 40 || key >= 48 && key <= 57) {
-      // Prevent characters %, &, (, and ' on Chrome, Firefox & Opera browsers
-      if (key >= 37 && key <= 40 && (event.key === '%' || event.key === '&' || event.key === '(' || event.key === '\'')) {
-        return false;
-      }
-      // Prevent characters %, &, (, and ' on Safari browser
-      if (key >= 37 && key <= 40 && event.keyIdentifier === '') {
-        return false;
-      }
-      // *** Firefox Bug fix *** This allows the user to still be able to use arrow keys and backspace when the maxlength is reached
-      if (key === 8 || key >= 37 && key <= 40) {
-        return true;
-      }
-      return dataLength ? !(value.length > (dataLength - 1)) : true;
+        // Prevent characters %, &, (, and ' on Chrome, Firefox & Opera browsers
+        if (key >= 37 && key <= 40 && (event.key === '%' || event.key === '&' || event.key === '(' || event.key === '\'')) {
+            return false;
+        }
+        // Prevent characters %, &, (, and ' on Safari browser
+        if (key >= 37 && key <= 40 && event.keyIdentifier === '') {
+            return false;
+        }
+        // *** Firefox Bug fix *** This allows the user to still be able to use arrow keys and backspace when the maxlength is reached
+        if (key === 8 || key >= 37 && key <= 40) {
+            return true;
+        }
+        return dataLength ? !(value.length > (dataLength - 1)) : true;
     }
     return false;
-  }
+}
 
 export const formatCardExpiryDate = (value) => {
     if (value[0] > 1) {
@@ -172,3 +197,134 @@ export const maskString = (string, replacerString, startIndex, endIndex) => {
     string = string.replace(toMask, replacerString);
     return string;
 }
+
+export const mapCurrency = (currency) => {
+    let unicode;
+    switch (currency) {
+        case "NGN":
+            unicode = "\u20A6";
+            break;
+        case "USD":
+            unicode = "\u0024";
+            break;
+        case "GBP":
+            unicode = "\u00A3";
+            break;
+        case "EUR":
+            unicode = "\u20AC";
+            break;
+        case "YEN":
+            unicode = "\u00A5";
+            break;
+        case "CNY":
+            unicode = "元";
+            break;
+        case "RMB":
+            unicode = "元";
+            break;
+        case "GHC":
+            unicode = "₵";
+            break;
+        default:
+            unicode = "\u20A6"
+            break;
+    }
+    return unicode;
+}
+
+export const getOnlyNumericPhoneNumber = (phoneString) => {
+    phoneString = phoneString.replace(/\D/g,'');
+    phoneString = phoneString.replace("234", "0");
+    return phoneString;
+}
+
+export const getBase64=(file, cb)=> {
+    let reader = new FileReader();
+    // reader.readAsDataURL(file);
+    reader.onload = function () {
+        cb(reader.result)
+    };
+    reader.readAsDataURL(file);
+    reader.onerror = function (error) {
+       
+    };
+}
+
+export const toCurrency=(currency) =>{
+    if (currency) {
+      currency = typeof currency !== 'string' ? currency.toString() : currency;
+      let numberValueArray = currency.split('.');
+      let numberValue = this.removeComma(numberValueArray[0]);
+      currency = numberValueArray.length > 1 ? numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+        + '.' + numberValueArray[1] : numberValue.replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+    }
+    return currency;
+}
+export const GetGoalFutureValue = (debitAmount, annualInterestRate, month) =>{
+      let months = Math.round(month);
+      let futureValue = 0;
+      let rate = ((annualInterestRate - 0.01) / 12);
+      for (let n = 1; n <= months; n++)
+      {
+          var multiplier = (1 + rate);
+          futureValue += debitAmount * (Math.pow(multiplier, n));     
+      }
+      let amount = futureValue - (debitAmount * months);
+      return this.toCurrency( parseFloat(amount).toFixed(2));
+}
+export const GetDailyFutureValue =(debitAmount, annualInterestRate, days) =>{
+    let futureValue = debitAmount;
+    let dailyRate = (annualInterestRate * 100) / 36500;
+    let interestAccrued = 0;
+    for (let i = 1; i <= days; i++)
+    {
+        if (i < days)
+        {
+            futureValue += debitAmount;
+        }
+        interestAccrued += dailyRate * futureValue;
+        //Monthly compounding
+        if (i % 30 == 0)
+        {
+            futureValue += interestAccrued;
+            interestAccrued = 0;
+        }
+    }
+    return futureValue += interestAccrued;
+};
+export const  GetWeeklyFutureValue =(debitAmount, annualInterestRate, days)=>{
+    let futureValue = debitAmount;  
+    let dailyRate = (annualInterestRate * 100) / 36500;
+    let interestAccrued = 0;
+    for (let i = 1; i <= days; i++)
+    {
+        //weekly addition
+        if (i < days && i % 7 == 0)
+        {
+            futureValue += debitAmount;
+        }
+        interestAccrued = interestAccrued + (dailyRate * futureValue);
+        //Monthly compounding
+        if (i % 30 == 0)
+        {
+            futureValue += interestAccrued;
+            interestAccrued = 0;
+        }
+    }
+    let result = futureValue += interestAccrued;
+    return result;
+    
+};
+export const GetMonthlyGoalFutureValue =(debitAmount, annualInterestRate, months, goalType)=>{
+    let futureValue = 0;
+    var result;
+    let rate = (annualInterestRate - 0.01) / 12;
+    for (let n = 1; n <= months; n++)
+    {
+        var multiplier = (1 + rate);
+        futureValue += debitAmount * (Math.pow(multiplier, n));
+    }
+    return (futureValue - (debitAmount * months)).toFixed(2);
+}
+
+ 

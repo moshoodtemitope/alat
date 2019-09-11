@@ -20,7 +20,11 @@ export const SystemConstant = {
         identity: 'Identity',
         passport: 'Passport',
         utility: 'Utility',
-        residentPermit: 'ResidentPermit'
+        residentPermit: 'ResidentPermit',
+        workid: 'WorkId',
+        workidBack: 'WorkIdBack',
+        statement: 'Statement',
+        otherIdentityType: 'Others'
     },
     RELATIONS: [{
         'Name': 'Father'},
@@ -43,3 +47,32 @@ export const NetworkName = {
     '3': 'airtel',
     '4': 'etisalat'
 };
+
+export const CollectionScreenOption = {
+    WemaAccountSetup : 0,
+    RemitaOtpSetup : 1,
+    RemitaBankSetup: 2
+}
+
+export const LoanApplicationProgress = {
+    InProgress_AccountDetails : 1,
+    Inprogress_SalaryEntries  :2,
+    Inprogress_ScoreCard	: 3,
+    Approved: 4,
+    Rejected : 5,
+    CustomerRejectedOffer	: 6,
+    Inprogress_Collection	: 7,
+    Inprogress_CollectionWemaAccountSetup :8,
+    Inprogress_CollectionRemitaOtpSetup	: 9,
+    Inprogress_CollectionRemitaBankSetup : 10,
+    KycVerificationInprogress	:    11,
+    KycVerificationSuccessful	:    12,
+    KycVerificationFailed	:    13,
+    GeneratingAccounts	:    14,
+    LoanActive	:    15,
+    LoanRepaidAndClosed	:    16,
+    LoanWrittenOffAndClosed	:    17,
+    ApplicationAborted	:    18,
+    DisburseFunds	:    19,
+    Inprogress_UploadStatement : 20
+}
