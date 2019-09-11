@@ -232,9 +232,7 @@ class ProvideDetails extends React.Component{
                 transferLimit =selectedDebitableAccount[0].MaxInterBankTransferLimit;
             }
             
-        this.setState({ selectedAccount: account, selectedDebitableAccount, isSelectChanged:true, transferLimit}, ()=>{
-            console.log("selected account is", selectedDebitableAccount);
-        });
+        this.setState({ selectedAccount: account, selectedDebitableAccount, isSelectChanged:true, transferLimit});
 
         const {dispatch} = this.props;
         dispatch(getTransactionLimit(this.state.user.token, account))

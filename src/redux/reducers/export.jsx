@@ -89,7 +89,20 @@ import {getWesternUnionCountries,receiveWesternUnion } from './remittance.reduce
 
 
 
-    
+import{
+    getExistingPolicy,
+    getNewPolicyDataChunk,
+    getCoversInPoductRequest,
+    saveProductCoverId,
+    saveCustomerInfo,
+    saveCustomerPolicyInfo,
+    getCarInYearRequest,
+    getCarModelRequest,
+    postMotorScheduleRequest,
+    postAutoInsurancePaymentRequest,
+    getCarDetailsRequest 
+} from './insurance.reducer'
+
 export const onboarding = {
     userRegistrationRequest,
     bvnDetailsReducer,
@@ -181,6 +194,19 @@ export const fundAccount={
     saveCardAfterTranReducer
 }
 
+export const insurance = {
+    getExistingPolicy,
+    getNewPolicyDataChunk,
+    getCoversInPoductRequest,
+    saveProductCoverId,
+    saveCustomerInfo,
+    saveCustomerPolicyInfo,
+    getCarInYearRequest,
+    getCarModelRequest,
+    postMotorScheduleRequest,
+    postAutoInsurancePaymentRequest,
+    getCarDetailsRequest
+}
 export const alatCards={
     geCurrentVirtualCardsRequest,
     sendVCNewCardinfo,

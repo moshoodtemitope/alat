@@ -35,7 +35,7 @@ class MenuContainer extends React.Component{
                                    
                                     <li><NavLink to={"/lifestyle"} className="clearfix"><i className="demo-icon icon-movies" aria-hidden="true"></i> <span>Lifestyle</span></NavLink>
                                     </li>
-                                    <li><NavLink to="/account" className="clearfix"><i className="fa fa-institution" aria-hidden="true"></i> <span>Accounts</span></NavLink></li>
+                                    {/* <li><NavLink to="/account" className="clearfix"><i className="fa fa-institution" aria-hidden="true"></i> <span>Accounts</span></NavLink></li> */}
                                     
                                     
                                     <li><NavLink to="/cards" className="clearfix"><i className="demo-icon icon-card" aria-hidden="true"></i>
@@ -50,6 +50,8 @@ class MenuContainer extends React.Component{
                                             <li><NavLink to="/virtual-cards"> Alat Dollar Card </NavLink></li>
                                         </ul>
                                     </li>
+                                    {/* <li><NavLink to="/settings" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i> <span>Settings</span></NavLink></li> */}
+                                    <li><NavLink to="/insurance" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i> <span>Insurance</span></NavLink></li>
                                     <li><NavLink to="/receive-money" className="clearfix"><i className="demo-icon icon-western-union" aria-hidden="true"></i><span> Remittance</span></NavLink></li>
                                     {/* <li><NavLink to="/settings" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i> <span>Settings</span></NavLink></li> */}
                                 </ul>
