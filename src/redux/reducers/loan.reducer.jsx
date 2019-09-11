@@ -1,7 +1,8 @@
 //
-// in app loan specific reducer
+// in-app loan specific reducer
 //
 import { loanConstants } from '../constants/loans/loans.constants';
+import { userConstants} from '../constants/onboarding/user.constants';
 
 export function loanCalcDataReducer(state = {}, action) {
     switch (action.type) {
@@ -290,3 +291,138 @@ export function loanValidateRemitaOtpReducer(state = {}, action) {
             };
     }
 }
+
+export function loanStatementUpload(state = {}, action) {
+    switch (action.type) {
+        case loanConstants.LOAN_STATEMENT_UPLOAD_SUCCESS:
+            return {
+                loan_statement_status: loanConstants.LOAN_STATEMENT_UPLOAD_SUCCESS,
+                loan_statement_data: action
+            };
+        case loanConstants.LOAN_STATEMENT_UPLOAD_PENDING:
+            return {
+                loan_statement_status: loanConstants.LOAN_STATEMENT_UPLOAD_PENDING,
+                loan_statement_data: action
+            };
+        case loanConstants.LOAN_STATEMENT_UPLOAD_FAILURE:
+            return {
+                loan_statement_status: loanConstants.LOAN_STATEMENT_UPLOAD_FAILURE,
+                loan_statement_data: action
+            };
+        default:
+            return{
+                ...state,
+            };
+    }
+}
+
+export function continueApplication(state = {}, action) {
+    switch (action.type) {
+        case loanConstants.LOAN_CONTINUE_APPLICATION:
+            return {
+                loan_app_status: loanConstants.LOAN_CONTINUE_APPLICATION,
+                loan_app_data: action
+            };
+        default:
+            return{
+                ...state,
+            };
+    }
+}
+
+export function PassportReducer(state = {}, action) {
+    switch (action.type) {
+        case userConstants.PASSPORT_UPLOAD_SUCCESS:
+            return {
+                passport_status: userConstants.PASSPORT_UPLOAD_SUCCESS,
+                passport_data: action
+            };
+        case userConstants.PASSPORT_UPLOAD_PENDING:
+            return {
+                passport_status: userConstants.PASSPORT_UPLOAD_PENDING,
+                passport_data: action
+            };
+        case userConstants.PASSPORT_UPLOAD_FAILURE:
+            return {
+                passport_status: userConstants.PASSPORT_UPLOAD_FAILURE,
+                passport_data: action
+            };
+        default:
+            return{
+                ...state,
+            };
+    }
+}
+
+export function SignatureReducer(state = {}, action) {
+    switch (action.type) {
+        case userConstants.SIGNATURE_UPLOAD_SUCCESS:
+            return {
+                sign_status: userConstants.SIGNATURE_UPLOAD_SUCCESS,
+                sign_data: action
+            };
+        case userConstants.SIGNATURE_UPLOAD_PENDING:
+            return {
+                sign_status: userConstants.SIGNATURE_UPLOAD_PENDING,
+                sign_data: action
+            };
+        case userConstants.SIGNATURE_UPLOAD_FAILURE:
+            return {
+                sign_status: userConstants.SIGNATURE_UPLOAD_FAILURE,
+                sign_data: action
+            };
+        default:
+            return{
+                ...state,
+            };
+    }
+}
+
+export function KycRequired(state = {}, action) {
+    switch (action.type) {
+        case loanConstants.LOAN_KYCREQUIRED_SUCCESS:
+            return {
+                kyc_required_status: loanConstants.LOAN_KYCREQUIRED_SUCCESS,
+                kyc_required_data: action
+            };
+        case loanConstants.LOAN_KYCREQUIRED_PENDING:
+            return {
+                kyc_required_status: loanConstants.LOAN_KYCREQUIRED_PENDING,
+                kyc_required_data: action
+            };
+        case loanConstants.LOAN_KYCREQUIRED_FAILURE:
+            return {
+                kyc_required_status: loanConstants.LOAN_KYCREQUIRED_FAILURE,
+                kyc_required_data: action
+            };
+        default:
+            return{
+                ...state,
+            };
+    }
+}
+
+export function termsReducer(state = {}, action) {
+    switch (action.type) {
+        case loanConstants.LOAN_TERMS_SUCCESS:
+            return {
+                terms_status: loanConstants.LOAN_TERMS_SUCCESS,
+                terms_data: action
+            };
+        case loanConstants.LOAN_TERMS_PENDING:
+            return {
+                terms_status: loanConstants.LOAN_TERMS_PENDING,
+                terms_data: action
+            };
+        case loanConstants.LOAN_TERMS_FAILURE:
+            return {
+                terms_status: loanConstants.LOAN_TERMS_FAILURE,
+                terms_data: action
+            };
+        default:
+            return{
+                ...state,
+            };
+    }
+}
+

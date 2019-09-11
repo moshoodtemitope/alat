@@ -6,38 +6,48 @@ import * as OnbaordingActions from '../../../redux/actions/onboarding/loan.actio
 import { loanConstants } from '../../../redux/constants/loans/loans.constants';
 import EmployerDetails from '../../../shared/components/loans/_employer-details';
 import { Route, Switch } from "react-router-dom";
+import { LoanApplicationProgress } from '../../../shared/constants';
 
-class LoanEmployerDetail extends React.Component{
-    constructor(props){
+class LoanEmployerDetail extends React.Component {
+    constructor(props) {
         super(props);
-        this.state={
-            user : JSON.parse(localStorage.getItem("user")),
+        this.state = {
+            user: JSON.parse(localStorage.getItem("user")),
         }
     }
 
-    componentDidMount=()=>{
+    componentDidMount = () => {
         this.init();
     }
 
-    OnSubmit =()=>{
+    OnSubmit = () => {
         //this.props.dispatch(OnbaordingActions.requestStatement(this.state.user.token));
     }
 
-    init=()=>{
-        if(this.props.loan_apply)
-        if(this.props.loan_apply.loan_apply_status == loanConstants.LOAN_APPLY_SUCCESS){
-         
-        }else {
-           // this.props.history.push('/loans/salary/calc');
-        }
+    init = () => {
+        if (this.props.loan_apply) {
+            if (this.props.loan_apply.loan_apply_status == loanConstants.LOAN_APPLY_SUCCESS) {
+            }
+            else { 
+                 //this.props.history.push('/loans/salary/calc'); 
+            }
+        } else //{ this.props.history.push('/loans/salary/calc');}
+            if (this.props.loan_status) {
+                if (this.props.loan_status.loan_app_data.data == LoanApplicationProgress.InProgress_AccountDetails) {
+                }
+                 else { 
+                      this.props.history.push('/loans/salary/calc'); 
+                    }
+            }
+            else { this.props.history.push('/loans/salary/calc'); }
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <EmployerDetails
-             token={this.state.user.token}
-            forwardUrl={'/loans/salary/detail'}
-            backwardUrl={'/loans/salary/calc'}
+                token={this.state.user.token}
+                forwardUrl={'/loans/salary/detail'}
+                backwardUrl={'/loans/salary/calc'}
             />
         );
     }
@@ -48,6 +58,7 @@ function mapStateToProps(state) {
         alert: state.alert,
         loan_apply: state.loanReducerPile.loanApply,
         industries: state.loanReducerPile.loanIndustries,
+        loan_status: state.loanReducerPile.loanAppStatus
     }
 }
 

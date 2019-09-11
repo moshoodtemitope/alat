@@ -19,11 +19,15 @@ class OtpValidation extends React.Component {
     }
     
     componentDidMount=()=>{
-        if(this.props.retryAction != null){
-           this.setState({buttonText: "Complete Transfer"});
-        }else {  
+        // if(this.props.retryAction != null){
+        //    this.setState({buttonText: "Complete Transfer"});
+        // }else {  
+        //     this.setState({buttonText: "Validate"});
+        // }
+        if(this.props.ActionText){
             this.setState({buttonText: "Validate"});
         }
+        else { this.setState({buttonText: "Complete Transfer"});  }
     }
     // handleChange=(e)=>{
     //     this.props.
