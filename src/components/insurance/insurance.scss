@@ -10,6 +10,14 @@
     }
     
 }
+.middle-justified{
+    justify-content: center;
+}
+.insurance-cta{
+    margin-right: 50px;
+    padding-top: 20px;
+
+}
 .providerslist, .productcategory-list {
     display: flex;
     justify-content: center;
@@ -18,6 +26,13 @@
     max-width: 100px;
     img{
         width: 100%;
+    }
+}
+.back-cta{
+    color: #AB2656!important;
+    text-decoration: underline!important;
+    &:hover{
+        cursor: pointer;
     }
 }
 .each-provider, .eachproduct-category{

@@ -30,7 +30,8 @@ import {
    GET_VEHICLEDETAILS_FAILURE,
    SET_PRODUCT_COVERID,
    SAVE_CUSTOMER_DETAILS,
-   SAVE_CUSTOMERPOLICY_DATA
+   SAVE_CUSTOMERPOLICY_DATA,
+   ALATINSURANCE_REDUCER_CLEAR
 }from "../../constants/insurance/insurance.constants";
 
 
@@ -320,7 +321,7 @@ export const getNewPolicyDataChunk = (token) => {
 
 }
 
-export const getCoversInProduct =(token, payload)=>{
+export const getCoversInProduct =(token, payload, provider)=>{
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch)=>{ 
 
@@ -329,8 +330,13 @@ export const getCoversInProduct =(token, payload)=>{
         dispatch(request(consume));
         return consume
             .then(response=>{ 
-                dispatch(success(response));
-                history.push("/insurance/buy-insurance/choose-cover");
+                if(response.data.length>=1){
+                    dispatch(success(response));
+                    history.push("/insurance/buy-insurance/choose-cover");
+                }else{
+                    dispatch(failure('No policy covers found '));
+                }
+                
             })
             .catch(error=>{
                 if(error.response && typeof(error.response.message) !=="undefined"){
@@ -353,7 +359,7 @@ export const getCoversInProduct =(token, payload)=>{
 
 
     function request(request) { return { type:FETCH_COVERSIN_PRODUCTS_PENDING, request} }
-    function success(response) { return {type:FETCH_COVERSIN_PRODUCTS_SUCCESS, response, productId:payload.productId} }
+    function success(response) { return {type:FETCH_COVERSIN_PRODUCTS_SUCCESS, response, productId:payload.productId, provider} }
     function failure(error) { return {type:FETCH_COVERSIN_PRODUCTS_FAILURE, error} }
 }
 
@@ -496,6 +502,7 @@ export const postMotorSchedule = (payload, token)=>{
         return consume
             .then(response=>{ 
                 dispatch(success(response));
+                history.push("/insurance/buy-insurance/makepayment");
             })
             .catch(error=>{
                 if(error.response && typeof(error.response.message) !=="undefined"){
@@ -533,6 +540,7 @@ export const postAutoInsurancePayment = (payload, token)=>{
         return consume
             .then(response=>{ 
                 dispatch(success(response));
+                history.push("/insurance/payment-success");
             })
             .catch(error=>{
                 if(error.response && typeof(error.response.message) !=="undefined"){
@@ -571,4 +579,11 @@ export const saveCustomerPolicyData = (data) => {
         type: SAVE_CUSTOMERPOLICY_DATA,
         data: data
     }
+}
+
+export const clearInsuranceStore =()=>{
+    return (dispatch) => { 
+        dispatch(clear());
+    }
+    function clear(){return {type: ALATINSURANCE_REDUCER_CLEAR, clear_data: "" }}
 }

@@ -50,7 +50,8 @@ class SelectInsuranceCover extends React.Component {
     
     verifyStage(){
         if(Object.keys(this.props.getProductCovers).length===0){
-            this.props.history.push("/insurance")
+            this.props.history.push("/insurance");
+            return false;
         }
     }
 
@@ -134,8 +135,11 @@ class SelectInsuranceCover extends React.Component {
     }
     
     renderCoverDetails(){
+        if(Object.keys(this.props.getProductCovers).length===0){
+            this.props.history.push("/insurance");
+            return false;
+        }
         let {selectedPackage} = this.state;
-        console.log('in details', this.state);
         return(
             <div className="coverdetails-modal">
                 <div className="collapse-details" onClick={this.collapseDetails} ></div>
@@ -168,6 +172,10 @@ class SelectInsuranceCover extends React.Component {
     }
 
     renderAllCoversContainer(){
+        if(Object.keys(this.props.getProductCovers).length===0){
+            this.props.history.push("/insurance");
+            return false;
+        }
         let productCoversRequest = this.props.getProductCovers;
             return(
                 <div className="col-sm-12">
@@ -184,6 +192,10 @@ class SelectInsuranceCover extends React.Component {
 
     
     render() {
+        if(Object.keys(this.props.getProductCovers).length===0){
+            this.props.history.push("/insurance");
+            return false;
+        }
         return (
             <Fragment>
                {this.renderAllCoversContainer()}

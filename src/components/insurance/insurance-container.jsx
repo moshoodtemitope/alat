@@ -22,7 +22,7 @@ class InsuranceContainer extends React.Component {
                                     <p className="page-title">Insurance</p>
                                 </div>
 
-                                <div className="col-sm-12">
+                                {/* <div className="col-sm-12">
                                     <div>
                                         <div className="sub-tab-nav">
                                             <ul>
@@ -30,7 +30,7 @@ class InsuranceContainer extends React.Component {
                                             </ul>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                                 {this.props.children}
                                 {/* <Route exact to={'/insurance'} component={ManageInsuranceContainer} /> */}
                                 <Route exact to={'/insurance'} component={ManageInsuranceContainer} />

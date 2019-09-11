@@ -8,6 +8,8 @@ import BuyPolicy from "./buy-policy";
 import SelectInsuranceCover from "./select-cover";
 import ProvideDetails from "./provide-details";
 import PolicyDetails from "./policy-details";
+import MakePaymentForInsurance from "./makepayment";
+import PaymentSuccess from "./payment-success";
 
 class ManageInsuranceContainer extends Component {
     constructor(props) {
@@ -28,6 +30,8 @@ class ManageInsuranceContainer extends Component {
                 <Route exact path='/insurance/buy-insurance/choose-cover' render={(props) => <SelectInsuranceCover {...props} />} />
                 <Route exact path='/insurance/buy-insurance/details' render={(props) => <ProvideDetails {...props} />} />
                 <Route exact path='/insurance/buy-insurance/policydetails' render={(props) => <PolicyDetails {...props} />} />
+                <Route exact path='/insurance/buy-insurance/makepayment' render={(props) => <MakePaymentForInsurance {...props} />} />
+                <Route exact path='/insurance/payment-success' render={(props) => <PaymentSuccess {...props} />} />
            </Fragment>
        );
    }

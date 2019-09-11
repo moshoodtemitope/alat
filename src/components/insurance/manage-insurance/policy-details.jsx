@@ -6,6 +6,7 @@ import {Fragment} from "react";
 import {connect} from "react-redux";
 import {Checkbox} from "react-inputs-validation";
 import DatePicker from "react-datepicker";
+import { Link } from 'react-router-dom';
 import "react-datepicker/dist/react-datepicker.css";
 import Select from 'react-select';
 import * as utils from '../../../shared/utils';
@@ -96,7 +97,8 @@ class PolicyDetails extends React.Component {
 
     verifyStage(){
         if(Object.keys(this.props.savedCustomerInfo).length===0){
-            this.props.history.push("/insurance")
+            this.props.history.push("/insurance");
+            return false;
         }
     }
 
@@ -104,7 +106,7 @@ class PolicyDetails extends React.Component {
         e.preventDefault()
 
         let customerData = this.props.savedCustomerInfo.customer_data.data;
-        console.log('state data is', this.state);
+       
         if(this.validateCustomerPolicyData()){
             let payload ={
                 RegNo: this.state.autoRegNo,
@@ -781,6 +783,10 @@ class PolicyDetails extends React.Component {
     }
 
     renderGetCustomerAutoPolicyDetails(){
+        if(Object.keys(this.props.newPolicyDataChunk).length===0 || Object.keys(this.props.savedCustomerInfo).length===0){
+            this.props.history.push("/insurance");
+            return false;
+        }
         let{autoRegNo,
             autoEngineNo,
             autoChasisNo,
@@ -1008,7 +1014,7 @@ class PolicyDetails extends React.Component {
                                     showMonthDropdown
                                     showYearDropdown
                                     dropdownMode="select"
-                                    maxDate={new Date()}
+                                    minDate={new Date()}
                                 />
                             </div>
                         </div>
@@ -1023,7 +1029,7 @@ class PolicyDetails extends React.Component {
                                 showMonthDropdown
                                 showYearDropdown
                                 dropdownMode="select"
-                                maxDate={new Date()}
+                                minDate={new Date()}
                             />
                         </div>
                         <center>
@@ -1031,6 +1037,12 @@ class PolicyDetails extends React.Component {
                             disabled={postSchedule.is_processing}
                                     className="btn-alat m-t-10 m-b-20 text-center"
                                     > {postSchedule.is_processing==true?'Submitting':'Submit'}</button>
+
+                                        {(postSchedule.is_processing===false && postSchedule.fetch_status===POST_MOTORSCHEDULEDATA_FAILURE)&&
+                                            <div className="error-msg">{postSchedule.motorschedule_data.error}</div>
+                                        }        
+                            <div><Link to={'/insurance/buy-insurance/details'}>Back</Link></div>
+                            
                         </center>
                         {this.state.invalidPolicyDateRange && <div className="error-msg text-center">Policy ending date must be later that starting date</div>}
                         {this.state.isCompleted===false && <div className="error-msg text-center">Please provide all details</div>}
@@ -1043,6 +1055,10 @@ class PolicyDetails extends React.Component {
 
 
     renderDetailsContainer(){
+        if(Object.keys(this.props.savedCustomerInfo).length===0){
+            this.props.history.push("/insurance");
+            return false;
+        }
         let {showCustomerForm} = this.state;
         // console.log('customer data', this.props.savedCustomerInfo);
         return(

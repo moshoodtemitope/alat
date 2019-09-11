@@ -6,6 +6,7 @@ import {Fragment} from "react";
 import {connect} from "react-redux";
 import {Checkbox} from "react-inputs-validation";
 import DatePicker from "react-datepicker";
+import { Link } from 'react-router-dom';
 import "react-datepicker/dist/react-datepicker.css";
 import Select from 'react-select';
 import * as utils from '../../../shared/utils';
@@ -45,6 +46,8 @@ class BuyPolicy extends React.Component {
             showAgreementAndProviders: true,
             showAcceptTerms: true,
             showProviders: false,
+            selectedProvider:'',
+            selectedProduct:'',
             isProviderSelected: false,
             isCategorySelected: false,
             disabledBtn: true
@@ -66,7 +69,8 @@ class BuyPolicy extends React.Component {
 
     verifyStage(){
         if(Object.keys(this.props.newPolicyDataChunk).length===0){
-            this.props.history.push("/insurance")
+            this.props.history.push("/insurance");
+            return false;
         }
     }
 
@@ -76,7 +80,7 @@ class BuyPolicy extends React.Component {
 
     handleProviderChange(selectedProvider){
         // this.setState({selectedProvider, showProviders:false, isProviderSelected: true})
-        this.setState({selectedProvider, isProviderSelected: true})
+        this.setState({selectedProvider:selectedProvider.value, isProviderSelected: true})
     }
 
     handleSelectedCategory(selectedCat){
@@ -92,9 +96,11 @@ class BuyPolicy extends React.Component {
         // console.log('select Id',this.state.selectedProduct);
         const {dispatch} = this.props;
 
-        let payload = {productId: this.state.selectedProduct}
+        if(this.state.selectedProduct!=='' && this.state.selectedProvider!==''){
+            let payload = {productId: this.state.selectedProduct}
 
-        dispatch(getCoversInProduct(this.state.user.token, payload))
+            dispatch(getCoversInProduct(this.state.user.token, payload, this.state.selectedProvider ))
+        }
     }
 
 
@@ -218,10 +224,16 @@ class BuyPolicy extends React.Component {
                     <center>
                         <button type="submit"  
                             className="btn-alat m-t-10 m-b-20 text-center"
-                            disabled={disabledBtn}
+                            disabled={productCoversRequest.is_processing}
                             onClick={()=>this.getCoversInProduct()}>
-                            {productCoversRequest.is_processing===true?'Processing...':'Next'}    
+                                {productCoversRequest.is_processing===true?'Processing...':'Next'}    
                             </button>
+                           
+                            {(productCoversRequest.is_processing===false && productCoversRequest.fetch_status===FETCH_COVERSIN_PRODUCTS_FAILURE)&&
+                                <div className="error-msg">{productCoversRequest.policycover_data.error}</div>
+                            } 
+
+                            <div><Link to={'/insurance'}>Back</Link></div>
                     </center>
                     
                 </div>

@@ -6,6 +6,7 @@ import {Fragment} from "react";
 import {connect} from "react-redux";
 import {Checkbox} from "react-inputs-validation";
 import DatePicker from "react-datepicker";
+import { Link } from 'react-router-dom';
 import "react-datepicker/dist/react-datepicker.css";
 import Select from 'react-select';
 import * as utils from '../../../shared/utils';
@@ -66,7 +67,8 @@ class ProvideDetails extends React.Component {
 
     verifyStage(){
         if(Object.keys(this.props.saveProductCoverId).length===0){
-            this.props.history.push("/insurance")
+            this.props.history.push("/insurance");
+            return false;
         }
     }
     
@@ -147,6 +149,10 @@ class ProvideDetails extends React.Component {
     }
 
     getStates(){
+        if(Object.keys(this.props.saveProductCoverId).length===0){
+            this.props.history.push("/insurance");
+            return false;
+        }
         let newPolicyData    = this.props.newPolicyDataChunk.newpolicy_data.response,
             statesTemp       = [],
             lgasTemp         = [],
@@ -199,7 +205,8 @@ class ProvideDetails extends React.Component {
 
     renderCustomerDetailsForm(){
         if(this.props.newPolicyDataChunk.newpolicy_data===undefined){
-            this.props.history.push("/insurance")
+            this.props.history.push("/insurance");
+            return false;
         }
         let newPolicyData    = this.props.newPolicyDataChunk,
             allTitles        = [],
@@ -361,6 +368,8 @@ class ProvideDetails extends React.Component {
                             <button type="submit"  
                                     className="btn-alat m-t-10 m-b-20 text-center"
                                                    > Next</button>
+                                <div><Link to={'/insurance/buy-insurance/choose-cover'}>Back</Link></div>
+                                
                         </center>
 
                         {isInComplete && <div className="error-msg text-center">Please provide all details</div>}
