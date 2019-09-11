@@ -7,6 +7,10 @@ form {
     font-family: sans-serif;
 }
 
+.profileWrapper {
+    padding-top: 50px !important;
+}
+
 .coverPropertiesofComponent {
     width: 100%;
 }
@@ -68,6 +72,10 @@ form {
 
 .select-size {
     height: 38px
+}
+
+.dashboard-wrapper {
+    padding-top: 100px !important;
 }
 
 .date-picker-size {

@@ -511,6 +511,56 @@ CheckIfStoreInformationIsSet = () => {
         this.props.dispatch(actions.profileSuccessMessage(data));
    }
 
+   NavigateToBVN = () => {
+    if(this.props.profileMenu.data.response.bvnLinked == true){
+          this.DispatchSuccessMessage('BVN has Been Linked');
+          return;
+    }
+
+    history.push('/profile/linkBVN');
+}
+
+NavigateToPersonalInfo = () => {
+     if(this.props.profileMenu.data.response.personalInfoComplete == true){
+         this.DispatchSuccessMessage('Personal Information Created');
+         return;
+     }
+
+     history.push('/profile/profile-personalInfo');
+}
+
+NavigateToContact = () => {
+     if(this.props.profileMenu.data.response.contactDetailsComplete == true){
+             this.DispatchSuccessMessage('Contact Created Successfully');
+             return;
+     }
+
+     history.push('/profile/profile-contact-detail');
+}
+
+
+NavigateToDocuments = () => {
+     if(this.props.profileMenu.data.response.documentUploaded == true){
+         this.DispatchSuccessMessage('Document uploaded successfully');
+         return;
+     }
+
+     history.push('/profile/profile-documents');
+}
+
+NavigateToNextOfKin = () => {
+     if(this.props.profileMenu.data.response.nextOfKinComplete == true){
+         this.DispatchSuccessMessage('Next of kin has been Created');
+         return
+     }
+
+    history.push('/profile/profile-next-of-kin');
+}
+
+DispatchSuccessMessage = (data) => {
+    this.props.dispatch(actions.profileSuccessMessage(data));
+}
+
    render(){
        const {isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin, BVNValidity, birthDate, PinValidity, SectorValidity, EmployerPhoneNumberValidity,EmploymentValidity, AddressValidity, EmployersNameValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
         SurnameValidity, EmailAddressValidity, FirstNameValidity, MaritalStatusValidity, TitleValidity, OccupationValidity,GenderValidity, DateOfBirthValidity, OtherNameValidity, MothersMaidenNameValidity} = this.state;
@@ -535,9 +585,9 @@ CheckIfStoreInformationIsSet = () => {
                                         <div>
                                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                                 <ul>
-                                                    <li><NavLink to={'/default-page'} className="active">Profile</NavLink></li>
-                                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                                        <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                                        <li>Pin Management</li>
+                                                        <li>Security Questions</li>
                                                 </ul>
                                             </div>
                                         </div>

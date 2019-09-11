@@ -700,6 +700,56 @@ class NextOfKin extends Component {
         history.push('/profile/profile-success-message');
     }
 
+    NavigateToBVN = () => {
+        if(this.props.profileMenu.data.response.bvnLinked == true){
+              this.DispatchSuccessMessage('BVN has Been Linked');
+              return;
+        }
+ 
+        history.push('/profile/linkBVN');
+    }
+ 
+    NavigateToPersonalInfo = () => {
+         if(this.props.profileMenu.data.response.personalInfoComplete == true){
+             this.DispatchSuccessMessage('Personal Information Created');
+             return;
+         }
+ 
+         history.push('/profile/profile-personalInfo');
+    }
+ 
+    NavigateToContact = () => {
+         if(this.props.profileMenu.data.response.contactDetailsComplete == true){
+                 this.DispatchSuccessMessage('Contact Created Successfully');
+                 return;
+         }
+ 
+         history.push('/profile/profile-contact-detail');
+    }
+ 
+ 
+    NavigateToDocuments = () => {
+         if(this.props.profileMenu.data.response.documentUploaded == true){
+             this.DispatchSuccessMessage('Document uploaded successfully');
+             return;
+         }
+    
+         history.push('/profile/profile-documents');
+    }
+ 
+    NavigateToNextOfKin = () => {
+         if(this.props.profileMenu.data.response.nextOfKinComplete == true){
+             this.DispatchSuccessMessage('Next of kin has been Created');
+             return
+         }
+ 
+        history.push('/profile/profile-next-of-kin');
+    }
+ 
+    DispatchSuccessMessage = (data) => {
+        this.props.dispatch(actions.profileSuccessMessage(data));
+    }
+
     // UseGottenStateInfo = () => { 
     //     let cityData = this.props.getContactDetail.data.response.cities;
     //     let stateData = this.props.getContactDetail.data.response.states;
@@ -731,10 +781,10 @@ class NextOfKin extends Component {
                                     <div className="col-sm-12">
                                         <div>
                                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
-                                                <ul>
-                                                    <li><NavLink to={'/default-page'} className="active">Profile</NavLink></li>
-                                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                                <ul> 
+                                                    <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                                    <li>Pin Management</li>
+                                                    <li>Security Questions</li>
                                                 </ul>
                                             </div>
                                         </div>

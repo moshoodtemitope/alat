@@ -108,7 +108,6 @@ class PersonalDefault extends Component {
    CheckIfStoreInformationIsSet = () => {
        
        if(this.props.profileMenu.message == profile.GET_PROFILE_MENU_SUCCESS){
-        //    console.log(this.props.profileMenu.response.personalInfoComplete);
            this.setState({isProfileInformation: this.props.profileMenu.data.response.personalInfoComplete});
            this.setState({isContactDetails: this.props.profileMenu.data.response.contactDetailsComplete});
            this.setState({isDocument: this.props.profileMenu.data.response.documentUploaded});
@@ -130,13 +129,13 @@ class PersonalDefault extends Component {
 
    
        if(this.props.profileMenu.message == profile.GET_PROFILE_MENU_PENDING ){
-        // this.GetProfileMenu();
+    
         return(
             <Fragment>
-                    <div className="coverPropertiesofComponent">
-                <div className="col-sm-12">
-                    <p className="page-title">Account Setting</p>
-                </div>
+                <div className="coverPropertiesofComponent">
+                    <div className="col-sm-12">
+                        <p className="page-title">Account Setting</p>
+                    </div>
 
                 <div className="col-sm-12">
                     <div>
@@ -165,9 +164,9 @@ class PersonalDefault extends Component {
                         <div>
                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                 <ul>
-                                    <li><NavLink to={'/profile/default-page'} >Profile</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                    <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                    <li>Pin Management</li>
+                                    <li>Security Questions</li>
                                 </ul>
                             </div>
                         </div>

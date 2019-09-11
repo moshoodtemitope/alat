@@ -9,6 +9,7 @@ import * as actions from '../../redux/actions/profile/profile-action';
 import { connect } from 'react-redux';
 import {profile} from '../../redux/constants/profile/profile-constants';
 import moment from 'moment';
+import {history} from '../../_helpers/history';
 
 
 class PhotographUpload extends Component {
@@ -123,6 +124,56 @@ CheckIfStoreInformationIsSet = () => {
        this.setState({idCardNumber: event.target.value});
    }
 
+   NavigateToBVN = () => {
+    if(this.props.profileMenu.data.response.bvnLinked == true){
+          this.DispatchSuccessMessage('BVN has Been Linked');
+          return;
+    }
+
+    history.push('/profile/linkBVN');
+}
+
+NavigateToPersonalInfo = () => {
+     if(this.props.profileMenu.data.response.personalInfoComplete == true){
+         this.DispatchSuccessMessage('Personal Information Created');
+         return;
+     }
+
+     history.push('/profile/profile-personalInfo');
+}
+
+NavigateToContact = () => {
+     if(this.props.profileMenu.data.response.contactDetailsComplete == true){
+             this.DispatchSuccessMessage('Contact Created Successfully');
+             return;
+     }
+
+     history.push('/profile/profile-contact-detail');
+}
+
+
+NavigateToDocuments = () => {
+     if(this.props.profileMenu.data.response.documentUploaded == true){
+         this.DispatchSuccessMessage('Document uploaded successfully');
+         return;
+     }
+
+     history.push('/profile/profile-documents');
+}
+
+NavigateToNextOfKin = () => {
+     if(this.props.profileMenu.data.response.nextOfKinComplete == true){
+         this.DispatchSuccessMessage('Next of kin has been Created');
+         return
+     }
+
+    history.push('/profile/profile-next-of-kin');
+}
+
+DispatchSuccessMessage = (data) => {
+    this.props.dispatch(actions.profileSuccessMessage(data));
+}
+
    render(){
       const {isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, idTypeValidity, idFrontFace, idPhotographValid, idCardNumberValidity} = this.state;
        return(
@@ -138,9 +189,9 @@ CheckIfStoreInformationIsSet = () => {
                                         <div>
                                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                                 <ul>
-                                                    <li><NavLink to={'/default-page'} className="active">Profile</NavLink></li>
-                                                    <li><NavLink to={'/default-page'}>Pin Management</NavLink></li>
-                                                    <li><NavLink to={'/default-page'}>Security Questions</NavLink></li>
+                                                    <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                                    <li>Pin Management</li>
+                                                    <li>Security Questions</li>
                                                 </ul>
                                             </div>
                                         </div>
