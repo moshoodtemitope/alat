@@ -187,7 +187,8 @@ class ManageInsurance extends React.Component {
                                 </div>
                             }
                             {(getExistingPolicyRequest.fetch_status===FETCH_EXISTING_POLICIES_SUCCESS 
-                                && getExistingPolicyRequest.existingpolicy_data.response.data.InsuranceDetails.length>=1
+                                && (getExistingPolicyRequest.existingpolicy_data.response.data.InsuranceDetails!==null 
+                                    && getExistingPolicyRequest.existingpolicy_data.response.data.InsuranceDetails.length>=1)
                                 && newPolicyRequest.fetch_status===FETCH_NEWINSURANCE_INFOSETS_SUCCESS) &&
                                 
                                 <div>  
