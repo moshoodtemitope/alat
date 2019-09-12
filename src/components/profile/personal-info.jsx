@@ -318,7 +318,7 @@ CheckIfStoreInformationIsSet = () => {
        history.push('/profile/profile-success-message');
    }
 
-   HandleSubmit = () => {
+   HandleSubmit = (event) => {
        event.preventDefault();
        this.SetDateValidity();
        this.SetBVNValidityStatus();

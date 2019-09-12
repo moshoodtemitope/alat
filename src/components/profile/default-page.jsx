@@ -3,9 +3,7 @@ import "./profile.css";
 import {connect} from 'react-redux';
 // import DatePicker from "react-datepicker";
 import * as actions from '../../redux/actions/profile/profile-action';
-import InnerContainer from '../../shared/templates/inner-container';
 import {Fragment} from "react";
-import profileMenuIcon from '../../assets/img/profileMenuIcon'
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import {history} from '../../_helpers/history';
 // import { profile } from '../../redux/constants/profile/profile-constants'
