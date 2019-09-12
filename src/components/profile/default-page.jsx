@@ -142,7 +142,6 @@ class PersonalDefault extends Component {
                         <div className="sub-tab-nav" style={{marginBottom: 10}}>
                             <ul>
                                 <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                
                             </ul>
                         </div>
                     </div>
@@ -164,7 +163,8 @@ class PersonalDefault extends Component {
                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                 <ul>
                                     <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                    
+                                    <li>Pin Management</li>
+                                    <li>Security Questions</li>
                                 </ul>
                             </div>
                         </div>
@@ -248,8 +248,6 @@ class PersonalDefault extends Component {
                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                 <ul>
                                     <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
                                 </ul>
                             </div>
                         </div>
@@ -275,3 +273,4 @@ function mapStateToProps(state){
 }
 
 export default connect(mapStateToProps)(PersonalDefault);
+
