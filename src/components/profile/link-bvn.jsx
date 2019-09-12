@@ -122,7 +122,7 @@ class LinkBvN extends Component {
         console.log("fififififif");
    }
 
-   HandleSubmit = () => {
+   HandleSubmit = (event) => {
        event.preventDefault();
        this.SetDateValidity();
        this.SetBVNValidityStatus();

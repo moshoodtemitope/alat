@@ -102,7 +102,7 @@ CheckIfStoreInformationIsSet = () => {
        
        console.log(payload)
     //    return;
-       this.props.dispatch(addDocuments(payload(this.state.user.token, payload)));
+       this.props.dispatch(actions.addDocuments(payload(this.state.user.token, payload)));
    }
 
 

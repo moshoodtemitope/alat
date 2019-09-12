@@ -332,7 +332,7 @@ CheckIfStoreInformationIsSet = () => {
                     case 'StateOfOrigin2': 
                             if(this.state[x] == null || this.state[x] == ""){
                                 console.log(x);
-                                result == null;
+                                result = null;
                                 break;
                             }
                 
@@ -455,7 +455,7 @@ CheckIfStoreInformationIsSet = () => {
        history.push('/profile-success-message');
    }
 
-   HandleSubmit = () => {
+   HandleSubmit = (event) => {
        event.preventDefault();
       
        this.checkPinValidity(); 
