@@ -33,6 +33,12 @@ class StashCashout extends Component {
 
 
     }
+    componentDidMount(){
+        let savedState =  JSON.stringify(this.props.location.state.name)
+        localStorage.setItem('myState', savedState);
+
+    }
+
 
 
     validateAmount = (amount) => {
@@ -94,10 +100,10 @@ class StashCashout extends Component {
         if (this.validateAccountNumber(this.state.accountToDebit, "accountToDebitInValid")) {
             //not valid
         }else {
-            this.props.dispatch(actions.StashCashoutStep1( {
-                    'goalName':this.state.goal.goalName,
-                    'goalId':parseInt(this.state.goal.id),
-                    "amountSaved":parseFloat(this.state.goal.debitAmount),
+            this.props.dispatch(actions.Cashout( {
+                    'goalName':this.props.location.state.name.goalName,
+                    'goalId':parseInt(this.props.location.state.name.id),
+                    "amountSaved":parseFloat(this.props.location.state.name.debitAmount),
                     'accountNumber':this.state.accountToDebit,
                     'partialWithdrawal': true
 
@@ -107,15 +113,20 @@ class StashCashout extends Component {
         }
     };
     gotoStep2 = () => {
-        if (this.props.stashGoal_step1)
-            if (this.props.stashGoal_step1.stashout_goal_status_step1 === customerGoalConstants.STASH_CASHOUT_STEP1_SUCCESS) {
-                return <Redirect to="/savings/cashout-goal-summary"/>
+        if (this.props.Cashout)
+            if (this.props.Cashout.message === customerGoalConstants.CASH_OUT_SUCCESS) {
+                return <Redirect to="/savings/cash-out-summary"/>
             }
     };
 
 
     render() {
         const {AmountInvalid} =this.state;
+
+        const hist = this.props.location.state.name
+        // console.log("========",hist);
+        let retrievedState = JSON.parse(localStorage.getItem('myState'));
+
         
         return (
             <Fragment>
@@ -156,7 +167,7 @@ class StashCashout extends Component {
                                                     <Description
                                                         leftHeader={this.state.user.fullName}
                                                         leftDescription={this.state.user.email}
-                                                        rightHeader={'₦'+this.state.goal.amountSaved}
+                                                        rightHeader={'₦'+hist.amountSaved}
                                                         rightDiscription="Amount Saved"/>
                                                 </div>
 
@@ -178,7 +189,7 @@ class StashCashout extends Component {
                                                     <div className="col-sm-12">
                                                         <center>
                                                             <button type="submit" value="Fund Account" className="btn-alat m-t-10 m-b-20 text-center">
-                                                                {this.props.stashGoal_step1.stashout_goal_status_step1 === customerGoalConstants.STASH_CASHOUT_STEP1_PENDING ? "Processing..." : "Proceed and Cashout"}
+                                                                {this.props.Cashout.message === customerGoalConstants.CASH_OUT_PENDING ? "Processing..." : "Proceed and Cashout"}
                                                             </button>
                                                         </center>
                                                     </div>
@@ -202,7 +213,7 @@ class StashCashout extends Component {
 }
 const mapStateToProps = state => ({
     alert:state.alert,
-    stashGoal_step1:state.stashGoal_step1
+    Cashout:state.Cashout
 });
 
 export default connect (mapStateToProps)(StashCashout);
