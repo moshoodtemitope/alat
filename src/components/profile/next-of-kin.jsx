@@ -1335,10 +1335,11 @@ class NextOfKin extends Component {
                                                                 </div>
                                                     </div>
                                                     <div className="align-button">
-                                                        <button type="submit" className="twoBut no-border">Submit</button>
+                                                    <button disabled={this.props.addNextOfKin.message ===profile.POST_NEXT_OF_KIN_PENDING} type="submit" className="twoBut no-border">
+                                                    {this.props.addNextOfKin.message === profile.POST_NEXT_OF_KIN_PENDING ? "Processing..." :"Submit"}
+                                                    </button>
                                                     </div>
                                                    
-                                                    {/* <button type="submit" className="twoBut">Submit</button> */}
                                                 </form>
                                             </div>
                                         </div>
@@ -1385,6 +1386,8 @@ const mapStateToProps = (state) => {
         nextOfKinsRelationship: state.nextOfKinsRelationship.data,
         getContactDetail:state.getContactDetail,
         alert:state.alert,
+        addNextOfKin:state.addNextOfKin
+
     }
 }
 
