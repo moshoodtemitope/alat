@@ -20,6 +20,7 @@ import {dashboard,
         movies,
         preferences,
         profile,
+        insurance,
         alatCards} from "./export";
 
 import {bankListRequest, beneficiariesRequest} from "./transfer.reducer";
@@ -36,6 +37,7 @@ import { TRANSFER_REDUCER_CLEAR } from "../constants/transfer.constants";
 import { fundAccountConstants } from "../constants/fund-account/fund-account.constant";
 import { loanOnboardingConstants } from '../constants/onboarding/loan.constants';
 import { loanConstants } from '../constants/loans/loans.constants';
+import { ALATINSURANCE_REDUCER_CLEAR } from '../constants/insurance/insurance.constants';
 import { ALATCARD_REDUCER_CLEAR } from '../constants/cards/cards.constants';
 import { WESTERNUNION_REDUCER_CLEAR } from '../constants/remittance/remittance.constants';
 
@@ -88,6 +90,26 @@ const loanReducerPile =(state, action)=>{
     return loansReducer(state, action);
 }
 
+const insurancePile = (state, action)=>{
+    if(action.type ===ALATINSURANCE_REDUCER_CLEAR){
+        state = undefined;
+    }
+    return alatInsuranceReducer(state, action);
+}
+
+const alatInsuranceReducer = combineReducers({
+    getExistingPolicy: insurance.getExistingPolicy,
+    getNewPolicyDataChunk: insurance.getNewPolicyDataChunk,
+    getCoversInPoductRequest: insurance.getCoversInPoductRequest,
+    saveProductCoverId: insurance.saveProductCoverId,
+    saveCustomerInfo: insurance.saveCustomerInfo,
+    saveCustomerPolicyInfo: insurance.saveCustomerPolicyInfo,
+    getCarInYearRequest: insurance.getCarInYearRequest,
+    getCarModelRequest: insurance.getCarModelRequest,
+    postMotorScheduleRequest: insurance.postMotorScheduleRequest,
+    postAutoInsurancePaymentRequest: insurance.postAutoInsurancePaymentRequest,
+    getCarDetailsRequest: insurance.getCarDetailsRequest
+})
 const alatCardReducersPile = (state, action)=>{
     if(action.type ===ALATCARD_REDUCER_CLEAR){
         state = undefined;
@@ -227,6 +249,7 @@ const appReducer = combineReducers({
     accounts: global.debitableAccountsReducer,
     encrypt_rule: global.getEncryptionRuleReducer,
     verify_pan: global.verifyPANReducer,
+    insurancePile,
     remittanceReducerPile,
     // storage_reducer
     // storage_reducer
