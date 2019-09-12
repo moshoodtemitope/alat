@@ -1,7 +1,5 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import Select from 'react-select';
 import { connect } from 'react-redux';
 import { Redirect,Link,NavLink } from 'react-router-dom';
@@ -31,7 +29,6 @@ class FixedGoal extends React.Component {
             endDate:"",
             goalName:"",
             goalFrequency:"",
-            //accountNumber:"",
             debitAccount:"",
             isSubmitted: false,
             isAccountInvalid: false,
@@ -40,9 +37,6 @@ class FixedGoal extends React.Component {
             showInterests:"",
             goalFrequencyType: "",
             goalFrequencyLabel: "",
-
-            // frequencyAmount:"",
-
 
         };
         this.onSubmit = this.onSubmit.bind(this);
@@ -111,13 +105,14 @@ class FixedGoal extends React.Component {
         if (frequency == "daily")
         {
             timeBetween = enddate.diff(startDate,'days') + 1;
-            console.log(timeBetween)
+            console.log("days",timeBetween)
 
         }
 
         else if (frequency == "weekly")
         {
             timeBetween = enddate.diff(startDate, 'week') + 1;
+            console.log("week")
         }
         else
         {

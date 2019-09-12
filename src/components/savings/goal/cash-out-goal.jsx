@@ -24,7 +24,8 @@ class StashCashout extends Component {
             Amount:null,
             showMessage:false,
             goal:JSON.parse(localStorage.getItem('goal')) || [],
-            payOutInterest:""
+            payOutInterest:"",
+            debitAmount:""
 
 
         };
@@ -97,8 +98,8 @@ class StashCashout extends Component {
             this.props.dispatch(actions.StashCashoutStep1( {
                     'goalName':this.state.goal.goalName,
                     'goalId':parseInt(this.state.goal.id),
-                    "amountSaved":parseFloat(this.state.goal.debitAmount),
-                    'accountNumber':this.state.accountToDebit,
+                    "DebitAccount":this.state.accountToDebit,
+                    'Amount':this.state.goal.amountSaved,
                     'partialWithdrawal': true
 
                 }

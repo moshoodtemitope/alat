@@ -93,10 +93,8 @@ class WithdrawFromGoal extends Component {
         }else {
             this.props.dispatch(actions.WithDrawFromGoalStep1( {
                     'goalName':this.state.goal.goalName,
-                    'goalId':this.state.goal.id,
-                    "goalTypeId":this.state.goalTypeId,
-                    'amount': this.toCurrency(this.state.Amount),
-                    "amountSaved":this.toCurrency(this.state.goal.amountSaved),
+                    'goalId':parseInt(this.state.goal.id),
+                    "amount":this.state.goal.amountSaved,
                     'accountNumber':this.state.accountToDebit
                 }
             ));

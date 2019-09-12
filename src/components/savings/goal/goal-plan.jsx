@@ -137,7 +137,7 @@ class GoalPlan extends React.Component {
                                     <img className="goal-icon" src={graph} alt=''/>
                                     <p className="plan-text">Flexi Goal</p>
                                     <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days
-                                        but you will lose your interest if you don't meet your</p>
+                                        but you will lose your interest if you don't meet your target</p>
                                 </div>
                             </NavLink>
                             <NavLink to={"/savings/create-stash_step1"}>
@@ -270,7 +270,7 @@ class GoalPlan extends React.Component {
                                 <img className="goal-icon" src={graph} alt=''/>
                                 <p className="plan-text">Flexi Goal</p>
                                 <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days
-                                    but you will lose your interest if you don't meet your</p>
+                                    but you will lose your interest if you don't meet your target</p>
                             </div>
                         </NavLink>
                         <NavLink to="/savings/create-stash_step1">
@@ -306,9 +306,7 @@ class GoalPlan extends React.Component {
                                 <div className="sub-tab-nav">
                                     <ul style={{cursor:"pointer"}}>
                                         <li><a onClick={() => this.setState({visible: true})} href="#" className="active">Goals</a></li>
-                                        {/* <NavLink to='/savings/goal/group-savings-selection'> */}
                                             <li onClick={this.NavigateToGroupSavings}><a className="forGroupLink">Group Savings</a></li>
-                                        {/* </NavLink> */}
                                         <NavLink to="/savings/fixed-goal">
                                             <li><a href="#">Investments</a></li>
                                         </NavLink>

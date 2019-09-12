@@ -40,10 +40,10 @@ class WithDrawFromGoalSummmary extends Component {
 
             this.setState({
                 Amount:data.amount,
-                 goalName:data.goalName,
+                goalName:data.goalName,
                 goalId:data.goalId,
                 debitAccount:data.accountNumber,
-                amountSaved:data.amountSaved,
+                Amount:data.amount,
                 partialWithdrawal:true
             });
         }
@@ -77,10 +77,9 @@ class WithDrawFromGoalSummmary extends Component {
 
         event.preventDefault();
         this.props.dispatch(actions.WithDrawFromGoal({
-            "goalId":parseInt(this.state.goal.id),
-            // "amount":parseFloat(this.state.Amount),
-            "amountNumber":this.state.debitAccount,
-            "amount":parseFloat(this.state.goal.amountSaved),
+            "goalId":parseInt(this.state.goalId),
+            "accountNumber":this.state.debitAccount,
+            "amount":this.state.Amount,
             "partialWithdrawal":true
 
         }));
