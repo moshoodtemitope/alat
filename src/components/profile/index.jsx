@@ -31,6 +31,7 @@ class ProfileIndex extends Component {
                 <InnerContainer>
                     <div className="dashboard-wrapper"> 
                          <div className="container"> 
+                             {/* <div className="row">  */}
                                 {this.props.children}
                                 <Route exact path='/profile' component={PersonalDefault} />
                                 <Route path="/profile/defaultpage" component={PersonalDefault} />
@@ -51,6 +52,7 @@ class ProfileIndex extends Component {
                                 <Route path="/profile/profile-success-personalInfo" component={PersonalInfoSuccessPage} />
                             </div>
                         </div> 
+                    {/* </div>  */}
                 </InnerContainer>   
             </Fragment>
         );
@@ -58,3 +60,4 @@ class ProfileIndex extends Component {
 }
 
 export default ProfileIndex;
+

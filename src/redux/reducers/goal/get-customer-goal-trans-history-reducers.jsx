@@ -304,6 +304,31 @@ export function StashCashout(state=[], action) {
     }
 }
 
+export function Cashout(state=[], action) {
+    switch (action.type) {
+        case customerGoalConstants.CASH_OUT_PENDING:
+            return {
+                message:customerGoalConstants.CASH_OUT_PENDING,
+                data: action
+            };
+        case customerGoalConstants.CASH_OUT_SUCCESS:
+            return {
+                message: customerGoalConstants.CASH_OUT_SUCCESS,
+                data: action
+            };
+        case customerGoalConstants.CASH_OUT_FAILURE:
+            return {
+                message: customerGoalConstants.CASH_OUT_FAILURE,
+                data: action
+            };
+
+
+        default:
+            return { ...state }
+    }
+}
+
+
 
 
 
