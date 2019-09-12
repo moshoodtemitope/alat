@@ -188,7 +188,7 @@ class LoanOnboardingScoreCard extends React.Component {
                     <div className="max-500">
                         <div className="loan-header-text text-center">
                             <h4 className="text-black">Score Card</h4>
-                            <p>Kindly select the answer that best describes you.</p>
+                            <p>You're almost there, Tell us a bit more about you.</p>
                         </div>
                         <div className="al-card no-pad">
                             {this.props.alert && this.props.alert.message &&

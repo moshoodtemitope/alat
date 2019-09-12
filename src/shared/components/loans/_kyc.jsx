@@ -56,7 +56,9 @@ class LoanKycComponent extends React.Component {
     }
 
     formSubmit = (e) => {
-        e.preventDefault();
+        //this.props.goForward();
+         e.preventDefault();
+       // this.props.goForward();
         if (this.validateImages() != false) {
             console.log("after validate image");
             this.uploadImage(this.getImageToUpload('Signature', this.state.Signature), {
@@ -109,11 +111,12 @@ class LoanKycComponent extends React.Component {
     }
 
     uploadImage = (data, action) => {
-        this.props.dispatch(userActions.uploadDocument(this.state.user.token, data, action))
+        //this.props.goForward();
+         this.props.dispatch(userActions.uploadDocument(this.state.user.token, data, action))
     }
 
     gotoNextPage = () => {
-    
+        //this.props.goForward();
         if (this.props.passport && this.props.signature)
             if (this.props.passport.passport_status == userConstants.PASSPORT_UPLOAD_SUCCESS && this.props.signature.sign_status == userConstants.SIGNATURE_UPLOAD_SUCCESS) {
                 this.props.goForward();

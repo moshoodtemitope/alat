@@ -382,8 +382,8 @@ class EmployerDetails extends React.Component {
                 <div className="col-sm-12">
                     <div className="max-500">
                         <div className="loan-header-text text-center">
-                            <h4 className="text-black">Input your salary account details</h4>
-                            <p>Your loan will be disbursed into this account</p>
+                            <h4 className="text-black">We'd love to know your employment details</h4>
+                            {/* <p>Your loan will be disbursed into this account</p> */}
                         </div>
                         <div className="al-card no-pad">
                             <div className="transfer-ctn">

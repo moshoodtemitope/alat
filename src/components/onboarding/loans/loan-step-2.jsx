@@ -138,11 +138,9 @@ class LoanOboardingStep2 extends React.Component {
             <div className="col-sm-12">
                 <div className="max-750">
                     <div className="loan-header-text">
-                        <h4 className="text-black">Try our loan calculator to see</h4>
-                        <h4 className="text-black">What your payments could be</h4>
-                        <p className="m-t-20 text-black">This gives you an estimate of what your monthly
-                            repayment
-										could be</p>
+                        <h4 className="text-black">Start by calculating your loan.</h4>
+                        {/* <h4 className="text-black">What your payments could be</h4> */}
+                        <p className="m-t-20 text-black">The offer below is an estimate of what your loan could be.</p>
                     </div>
                     <div className="al-card loan-al-card row">
                         <div className="col-7">

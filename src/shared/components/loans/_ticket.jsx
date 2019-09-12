@@ -106,6 +106,10 @@ class Ticket extends React.Component {
                 <div className="row">
                     <div className="col-sm-12">
                         <div className="max-500">
+                        <div className="loan-header-text text-center">
+                            <h4 className="text-black">eStatement verification</h4>
+                            <p>Kindly enter ticket number and password sent to you via sms to confirm that you are the owner of the provided account.</p>
+                        </div>
                             <div className="al-card no-pad">
                                 <div className="transfer-ctn">
                                     {this.props.alert && this.props.alert.message &&

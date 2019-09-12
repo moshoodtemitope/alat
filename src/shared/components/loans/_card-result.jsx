@@ -79,8 +79,8 @@ class ScoreResult extends React.Component {
 							<div className={this.returnScoreCardSuccessStatus() ? "col-sm-12 upper-line-success" : "col-sm-12 upper-line-failure"}></div>
 							<div className="result-msg">
 
-								<p>Dear {this.state.user.fullName}</p>
-								{this.returnScoreCardSuccessStatus() && <Fragment><p>Congratulations!!! your loan have been granted.View Details Below </p>
+								<p>Hi {this.state.user.fullName},</p>
+								{this.returnScoreCardSuccessStatus() && <Fragment><p>Congratulations!!! your loan has been granted. View Details Below </p>
 									<p><b>Loan Amount:{util.mapCurrency("NGN")}{this.state.loanDetails.LoanAmountGranted}</b>
 									<br/>
 										<b>Loan Tenure: {this.state.loanDetails.LoanTenure} Months</b>

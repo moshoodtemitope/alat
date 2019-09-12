@@ -34,6 +34,11 @@ class Login extends React.Component{
           this.handleChange = this.handleChange.bind(this);
           this.handleSubmit = this.handleSubmit.bind(this);
       }
+      
+      componentDidMount=()=>{
+        const { dispatch } = this.props;
+          dispatch(userActions.initStore());
+      }
 
       handleChange(e) {
           const { name, value } = e.target;

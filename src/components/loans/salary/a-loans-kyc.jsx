@@ -11,6 +11,7 @@ class LoansKYC extends React.Component{
     }
     
     goToNextPage=()=>{
+        console.log("it worked!!!!!!!!!!!!!!!!!!!!!!!!!!");
         this.props.dispatch(LoanActions.clearLoanOnboardingStore());
         this.props.history.push('/loans/salary/dashboard');
     }
@@ -22,4 +23,10 @@ class LoansKYC extends React.Component{
     }
 }
 
-export default LoansKYC;
+function mapStateToProps(state) {
+    return {
+
+    };
+}
+
+export default connect(mapStateToProps)(LoansKYC);
