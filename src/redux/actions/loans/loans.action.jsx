@@ -304,3 +304,10 @@ export const clearLoanOnboardingStore =()=>{
     }
     function clear(){return {type: loanConstants.LOAN_ONBOARDING_CLEAR, clear_data: "" }}
 }
+
+export const goBackStoreClear =(type)=>{
+    return (dispatch) => { 
+        dispatch(clear());
+    }
+    function clear(){return {type: type, clear_data: "" }}
+}

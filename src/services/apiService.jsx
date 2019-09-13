@@ -86,8 +86,8 @@ export class ApiService {
                     axios.defaults.headers.common[key] = value;
                 }
             }
-            console.log("after", headers);
-            console.log("after",axios.defaults.headers )
+            //console.log("after", headers);
+            //console.log("after",axios.defaults.headers )
             service = axios.post(url, bodyData);
             return service.then(function (response) {
                 // console.log("successful");
@@ -179,7 +179,7 @@ export class ApiService {
             });
         }
         else {
-            console.log("post method");
+            //console.log("post method");
             // axios.defaults.headers.common['alat-client-apiKey'] = 'ERTojertoijertoijert';
             // axios.defaults.headers.common['Content-Type'] = 'application/json';
             // console.log(headers);
@@ -203,9 +203,9 @@ export class ApiService {
                 }
             }
             return axios.post(url, bodyData).then(function (response) {
-                console.log('dcfv');
-                console.log(response);
-                console.log(service);
+                // console.log('dcfv');
+                // console.log(response);
+                // console.log(service);
                 return service.map((res) => {
                     console.log(response);
                     return response;

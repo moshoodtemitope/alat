@@ -18,7 +18,7 @@ class LoanOnbaordingKyc extends React.Component{
         }
     }
     goToNextPage=()=>{
-        this.props.dispatch(LoanActions.clearLoanOnboardingStore());
+        //this.props.dispatch(LoanActions.clearLoanOnboardingStore());
         this.props.history.push('/loans/salary/dashboard');
     }
 

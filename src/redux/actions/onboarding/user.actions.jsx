@@ -213,8 +213,6 @@ function saveBvnData(otpData, action) {
     function save(otpData) { return { type: SAVE_BVN_INFO, otpData } }
 }
 
-
-
 function register(user, action) {
     switch (action) {
         case USER_REGISTER_FETCH:
@@ -236,8 +234,7 @@ function register(user, action) {
     function save(user) { return { type: USER_REGISTER_SAVE, user } }
 }
 
-
-export const uploadDocument = (token, data, action) => {
+export const uploadDocument = (token, data, action, type) => {
     const requestHeaders = Object.assign({}, SystemConstant.HEADER);
     delete requestHeaders['Content-Type'];
     delete requestHeaders['Accept'];
@@ -252,6 +249,7 @@ export const uploadDocument = (token, data, action) => {
                 //TODO: edit localDB accounts object
                 //   dispatch(success(response.data, data));
                 dispatch(success(response.data));
+                if(type === true) history.push('loans/salary/dashboard');
             })
             .catch(error => {
                 // console.log("error in here");

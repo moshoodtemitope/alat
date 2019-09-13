@@ -9,6 +9,8 @@ import { Route, Switch } from "react-router-dom";
 import loanIcon from '../../../assets/img/loan_icon.svg';
 import loanCalendar from '../../../assets/img/loan_calendar.svg';
 import calendarFull from '../../../assets/img/calendar_full.svg';
+//import ExtendModal from '../../../shared/components/_modal';
+import Modal from 'react-responsive-modal';
 
 import { LoanApplicationProgress } from '../../../shared/constants';
 
@@ -25,6 +27,10 @@ class LoansDashboard extends React.Component {
             LoanHistory: [
             ],
             currentLoanSet: false,
+            ///////////////////Modal prperties
+            openModal: false,
+            IsSuccess: false,
+            modalMessage: "",
         }
     }
 
@@ -44,22 +50,22 @@ class LoansDashboard extends React.Component {
     componentDidMount = () => {
         this.init();
     }
-    
-    discardLoan =()=>{
+
+    discardLoan = () => {
         this.props.dispatch(LoanActions.loanReject(this.state.user.token));
     }
 
-    declineAction =()=>{
-		if(this.props.loan_reject){
-			if(this.props.loan_reject.loan_reject_status == loanConstants.LOAN_REJECT_SUCCESS){
+    declineAction = () => {
+        if (this.props.loan_reject) {
+            if (this.props.loan_reject.loan_reject_status == loanConstants.LOAN_REJECT_SUCCESS) {
                 this.props.dispatch(LoanActions.clearLoanOnboardingStore());
                 this.props.history.push('/loans/salary/calc');
-               //window.location.reload();
-              // this.setState();
-			}
-		}
-	}
-    
+                //window.location.reload();
+                // this.setState();
+            }
+        }
+    }
+
 
     initCurrentLoan = () => {
         if (this.props.loan_current && !this.state.currentLoanSet)
@@ -70,6 +76,15 @@ class LoansDashboard extends React.Component {
 
                 this.setState({ currentLoan: data, currentLoanSet: true });
             }
+    }
+
+    controlModal = () => {
+        this.setState({ openModal: !this.state.openModal, modalMessage: "Are sure you want to discard your current Loan Application?" });
+    }
+
+    SubmitModal = () => {
+        this.controlModal();
+        this.discardLoan();
     }
 
     movetoCalculator = () => {
@@ -114,21 +129,21 @@ class LoansDashboard extends React.Component {
             case LoanApplicationProgress.Inprogress_SalaryEntries: return "/loans/salary/entry"
                 break;
             case LoanApplicationProgress.Inprogress_ScoreCard: return "/loans/salary/score-card"
-            break;
+                break;
             case LoanApplicationProgress.Inprogress_Collection: return "/loans/salary/terms"
-            break;
+                break;
             case LoanApplicationProgress.Inprogress_CollectionWemaAccountSetup: return "/loans/salary/wema-setup"
-            break;
+                break;
             case LoanApplicationProgress.Inprogress_CollectionRemitaOtpSetup: return "/loans/salary/remita-otp"
-            break;
+                break;
             case LoanApplicationProgress.Inprogress_CollectionRemitaBankSetup: return "/loans/salary/remita-mandate"
-            break;
+                break;
             case LoanApplicationProgress.Inprogress_UploadStatement: return "/loans/salary/statement-upload"
-            break;
+                break;
         }
     }
 
-    continueApplication=()=>{
+    continueApplication = () => {
         this.props.dispatch(LoanActions.continueApplication(this.state.pendingLoanApplication.LoanStatus));
         this.props.history.push(this.returnNextPageUrl(this.state.pendingLoanApplication.LoanStatus));
     }
@@ -264,7 +279,7 @@ class LoansDashboard extends React.Component {
                                 {this.returnCurrentLoanPendingStatus() == loanConstants.LOAN_CURRENT_FAILURE && <span className="grey-text big"><a onClick={this.getCurrentLoan} style={{ cursor: "pointer" }}>Click to try again</a></span>}
                             </div>}
                             {this.state.pendingLoanApplication != null && <div className="shd-box seg">
-                                <div class="header">
+                                <div className="header">
                                     <div className="outer-bar">
                                         <div className="inner-bar"></div>
                                     </div>
@@ -278,7 +293,7 @@ class LoansDashboard extends React.Component {
                             }
                             {this.state.pendingLoanApplication != null && <Fragment>
                                 <input type="button" value="Proceed" disabled={!this.state.pendingLoanApplication.ProceedActive} onClick={this.continueApplication} className="btn-alat btn-block" />
-                                <input type="button" value={this.props.loan_reject.loan_reject_status == loanConstants.LOAN_REJECT_PENDING ? "Processing..." : "Discard Loan Application"} onClick={this.discardLoan}
+                                <input type="button" value={this.props.loan_reject.loan_reject_status == loanConstants.LOAN_REJECT_PENDING ? "Processing..." : "Discard Loan Application"} onClick={this.controlModal}
                                     className="btn-alat btn-block btn-alat-outline" />
                             </Fragment>
                             }
@@ -306,6 +321,21 @@ class LoansDashboard extends React.Component {
                     </div>
                 </div>
             </div>
+            <Modal open={this.state.openModal} onClose={this.controlModal} showCloseIcon={false} center>
+                <div className="div-modal">
+                   
+                    <h3><br /><strong><span>{this.state.modalMessage}</span></strong><br /> </h3>
+
+                    <div className="btn-opt">
+                        <button onClick={this.controlModal} className="border-btn">Back</button>
+                        <button onClick={this.discardLoan}
+                            className="btn-alat"> {this.props.loan_reject.loan_reject_status == loanConstants.LOAN_REJECT_PENDING ? "Processing..." : "Continue"}</button>
+                    </div>
+                </div>
+            </Modal>
+            {/* <ExtendModal openModal={this.state.openModal} onCloseModal={this.controlModal} showCloseIcon={false}
+                    IsSuccess={this.state.IsSuccess} message={this.state.modalMessage} SubmitAction={this.SubmitModal}
+                /> */}
         </Fragment>);
     }
 

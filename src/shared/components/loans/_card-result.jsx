@@ -13,7 +13,11 @@ class ScoreResult extends React.Component {
 		super(props);
 		this.state = {
 			user: JSON.parse(localStorage.getItem("user")),
-			loanDetails: {}
+			loanDetails: {
+				MonthlyRepaymentAmount : 0,
+				LoanTenure: 0,
+				LoanAmountGranted: 0
+			}
 		}
 	}
 
@@ -61,7 +65,7 @@ class ScoreResult extends React.Component {
 
 	returnScoreCardSuccessStatus = () => {
 		if (this.props.score_card_A.loan_scoreA_status == loanConstants.LOAN_SCORECARD_ANSWER_SUCCESS)
-			return true;
+			{return true; }
 		else return false;
 	}
 
@@ -81,11 +85,14 @@ class ScoreResult extends React.Component {
 
 								<p>Hi {this.state.user.fullName},</p>
 								{this.returnScoreCardSuccessStatus() && <Fragment><p>Congratulations!!! your loan has been granted. View Details Below </p>
-									<p><b>Loan Amount:{util.mapCurrency("NGN")}{this.state.loanDetails.LoanAmountGranted}</b>
+									<p><b>Loan Offered:{util.mapCurrency("NGN")}{util.formatAmount(this.state.loanDetails.LoanAmountGranted)}</b>
 									<br/>
 										<b>Loan Tenure: {this.state.loanDetails.LoanTenure} Months</b>
 										<br/>
-										<b>Monthly Repayment:  {util.mapCurrency("NGN")}{this.state.loanDetails.MonthlyRepaymentAmount}</b>
+										<b>Monthly Repayment:  {util.mapCurrency("NGN")} 
+										{/* {this.props.score_card_A.loan_scoreA_data.data.response.Response.MonthlyRepaymentAmount} */}
+										{util.formatAmount(this.state.loanDetails.MonthlyRepaymentAmount)}
+										</b>
 									</p>
 									<p>Click Continue to proceed</p></Fragment>}
 

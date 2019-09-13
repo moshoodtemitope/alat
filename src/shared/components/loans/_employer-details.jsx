@@ -361,6 +361,12 @@ class EmployerDetails extends React.Component {
             }
     }
 
+    goBack=(e)=>{
+        e.preventDefault();
+        this.props.dispatch(loanActions.goBackStoreClear(loanConstants.LOAN_APPLY_CLEAR))
+        this.props.previousPage();
+    }
+
     testSelectedEmployer = () => {
         if (this.state.selectedEmployer == null) {
             return false
@@ -465,9 +471,9 @@ class EmployerDetails extends React.Component {
                                 </form>
                             </div>
                         </div>
-                        {/* <center>
-                            <Link to={'/loan/bvn-info'} className="add-bene m-t-50">Go Back</Link>
-                        </center> */}
+                        {this.props.showBackButton && <center>
+                            <a style={{ cursor: "pointer"}} onClick={this.goBack} className="add-bene m-t-50">Go Back</a>
+                        </center>}
                     </div>
                 </div>
             </Fragment>

@@ -112,14 +112,15 @@ class LoanKycComponent extends React.Component {
 
     uploadImage = (data, action) => {
         //this.props.goForward();
-         this.props.dispatch(userActions.uploadDocument(this.state.user.token, data, action))
+         this.props.dispatch(userActions.uploadDocument(this.state.user.token, data, action, true))
     }
 
     gotoNextPage = () => {
         //this.props.goForward();
         if (this.props.passport && this.props.signature)
             if (this.props.passport.passport_status == userConstants.PASSPORT_UPLOAD_SUCCESS && this.props.signature.sign_status == userConstants.SIGNATURE_UPLOAD_SUCCESS) {
-                this.props.goForward();
+                this.props.dispatch(actions.clearLoanOnboardingStore());
+                //this.props.goForward();
             }
     }
 

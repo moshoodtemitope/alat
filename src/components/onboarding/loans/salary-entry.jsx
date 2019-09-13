@@ -83,54 +83,13 @@ class LoanOnboardingSalaryEntry extends React.Component {
     gotoNextPage=()=>{
         this.props.history.push("/loan/score-card");
     }
+    
+     NavigateToLoanDashBoard=()=>{
+        this.props.history.push('/loans/salary/dashboard');
+    }
 
     PreviousPageMethod =()=>{
 
-    }
-
-    renderSalaryEntries = () => {
-        if (this.props.salary_trans)
-            if (this.props.salary_trans.loan_salTran_status == loanOnboardingConstants.LOAN_SALARYTRANSACTION_SUCCESS) {
-                var salary_transactions = [
-                    ...this.props.salary_trans.loan_salTran_data.data.response.Response
-                    //...this.state.enytrList
-
-                ]
-                console.log(salary_transactions);
-                if (salary_transactions.length >= 1) {
-                    return (
-                        <table className="table table-striped salary-table">
-                            <thead>
-                                <tr>
-                                    <th scope="col"></th>
-
-                                    <th scope="col">Description</th>
-                                    <th scope="col">Amount</th>
-                                    <th scope="col">Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {salary_transactions.map((entry, key) => {
-                                    return (
-                                        <tr key={key}>
-                                            <th scope="row"><input type="checkbox" value={key} checked={entry.isChecked} onChange={(e) => this.entryChecked(entry, e)}
-                                                style={{ opacity: "unset", position: "unset" }} /></th>
-                                            <td>{entry.Description}</td>
-                                            <td>{entry.Amount}</td>
-                                            <td>{entry.TransactionDate}</td>
-                                        </tr>
-                                    )
-                                })}
-                            </tbody>
-                        </table>
-                    )
-                } else {
-                    return (<Fragment>
-                        <p>No Salary Entry Found</p>
-                    </Fragment>)
-                }
-
-            }
     }
 
     render = () => {
@@ -142,34 +101,8 @@ class LoanOnboardingSalaryEntry extends React.Component {
                     backwardUrl={'/loan/salary/detail'}
                     NextPageMethod={this.gotoNextPage}
                     PreviousPageMethod={this.PreviousPageMethod}
+                    gotoDashBoard={this.NavigateToLoanDashBoard}
                 />
-                {/* <div className="row">
-                        <div className="col-sm-12">
-                            <div className="max-650">
-                                <div className="loan-header-text text-center">
-                                    <h4 className="text-black">Select Salary</h4>
-                                    <p>Kindly select transaction(s) that represent your salary</p>
-                                </div>
-                                <div className="al-card no-pad">
-                                    {this.props.alert && this.props.alert.message &&
-                                        <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
-                                    }
-                                    <div className="transfer-ctn no-pad unset-pad">
-                                        {this.renderSalaryEntries()}
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-sm-12">
-                                        <center>
-                                            <button type="button" onClick={this.postSalarEntries} 
-                                            disabled={this.returnEntriesPendingStatus()}
-                                            className="btn-alat m-t-10 m-b-20 text-center">{this.returnEntriesPendingStatus() ? "Processing..." : "Proceed"}</button>
-                                        </center>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> */}
             </LoanOnboardingContainer>
         );
     }

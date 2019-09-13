@@ -20,12 +20,18 @@ class LoanOnboardingWorkDetail extends React.Component {
         };
     }
 
+    goBack=()=>{
+        this.props.history.push('/loan/step-2');
+    }
+
     render() {
         return (
             <LoanOnboardingContainer UserName={this.state.user.firstname}>
                 <EmployerDetails
                     token={this.state.user.token}
                     forwardUrl={'/loan/salary-detail'}
+                    previousPage={this.goBack}
+                    showBackButton={false}
                     // backwardUrl={'/loans/salary/calc'}
                 />
             </LoanOnboardingContainer>
