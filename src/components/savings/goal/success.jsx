@@ -4,14 +4,14 @@ import InnerContainer from '../../../shared/templates/inner-container';
 import SavingsContainer from '..';
 import successLogo from '../../../assets/img/success.svg';
 import {NavLink, Route, Redirect} from "react-router-dom";
-import Members from '../../savings/group/list-item';
+import Members from '../group/list-item';
 import { connect } from "react-redux";
 import * as actions from '../../../redux/actions/savings/goal/create-stash-goal.actions'
 
 import {createGoalConstants} from '../../../redux/constants/goal/create-stash.constant'
 
 
-class CreateStashSuccessMessage extends React.Component {
+class SuccessMessage extends React.Component {
     constructor(props){
         super(props);
         this.state={
@@ -103,4 +103,4 @@ const mapStateToProps = state => ({
     create_stash_goal:state.create_stash_goal,
     create_stash_goal_step1:state.create_stash_step1
 });
-export default connect(mapStateToProps)(CreateStashSuccessMessage);
+export default connect(mapStateToProps)(SuccessMessage);

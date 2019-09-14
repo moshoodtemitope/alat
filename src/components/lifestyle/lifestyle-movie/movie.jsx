@@ -7,11 +7,11 @@ import {Fragment} from "react";
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
 import clock from '../../../assets/img/clock-circular-outline.svg';
 import {listStyleConstants} from '../../../redux/constants/lifestyle/lifestyle-constants';
-import { FetchMovie,getCinemaList, fetchMovieGenre } from "../../../redux/actions/lifestyle/movies-actions";
+import { FetchMovie,getCinemaList,fetchMovieGenre,SubmitMoviesData } from "../../../redux/actions/lifestyle/movies-actions";
 
 import FilterSearch from './filter-result';
 
-class Movie extends Component {
+class Movie extends React.Component {
     constructor(props){
         super(props);
         this.state={
@@ -27,9 +27,8 @@ class Movie extends Component {
             doFilter: false
 
         };
-
+        this.handleSubmit =this.handleSubmit.bind(this)
         this.showMovies = true;
-        console.log("state",this.state);
        
     }
 
@@ -82,6 +81,11 @@ class Movie extends Component {
 
         
     };
+    handleSubmit=(event)=>{
+        console.log(JSON.parse(event.target.id));
+        this.props.dispatch(SubmitMoviesData(event.target.id))
+
+    }
    
     renderMovies(){
 
@@ -106,13 +110,14 @@ class Movie extends Component {
                         return(
                                 <div className="eventCards" key={index}>
                                     <Link to={{
-                                        pathname:"/lifestyle/movie-details",
-                                        state:{
-                                            details:film
-                                        }
+                                        // pathname:"/lifestyle/movie-details",
+                                        // state:{
+                                        //     details:film
+                                        // }
                                     }}>
-                                        <div className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
+                                        <div onClick={() => console.log(film)} className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
                                         </div>
+                                        
                                     </Link>
 
                                     <div className="boldHeader">{film.title.toString().length > 15 ? film.title.toString().substring(0, 15)+"...": film.title.toString()}</div>

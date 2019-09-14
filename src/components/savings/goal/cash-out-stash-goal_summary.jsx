@@ -135,7 +135,7 @@ class CashoutStashGoal extends Component {
                                                         </div>
                                                         <div className="right">
                                                             <p className='GoalText'>Amount</p>
-                                                            <p className='boldedText'>₦{this.state.goal.amountSaved}</p>
+                                                            <p className='boldedText'>₦{this.state.Amount}</p>
                                                         </div>
                                                     </div>
                                                     <div className="coverForSummary">

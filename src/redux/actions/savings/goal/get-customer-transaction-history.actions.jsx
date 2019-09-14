@@ -77,6 +77,18 @@ export const TopUPGoalStep1 = (data) =>{
         }
     }
 };
+
+export const SubmitDashBoardGoalData = (data) =>{
+    return(dispatch)=>{
+        dispatch(success(data))
+    };
+    function success(data){
+        return{
+            type:customerGoalConstants.SUBMIT_DASHBOARD_DATA_SUCCESS,
+            data:data
+        }
+    }
+};
 // add ToUpGoal
 export const TopUPGoal =(data)=>{
     return (dispatch) => {

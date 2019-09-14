@@ -40,6 +40,7 @@ import { loanConstants } from '../constants/loans/loans.constants';
 import { ALATINSURANCE_REDUCER_CLEAR } from '../constants/insurance/insurance.constants';
 import { ALATCARD_REDUCER_CLEAR } from '../constants/cards/cards.constants';
 import { WESTERNUNION_REDUCER_CLEAR } from '../constants/remittance/remittance.constants';
+import {FIXED_GOAL_REDUCER_CLEAR} from '../constants/goal/fixed-goal.constant'
 
 import movie from "../../components/lifestyle/lifestyle-movie/movie";
 //import { saveCardReducer } from "./fund-account.reducer";
@@ -124,6 +125,13 @@ const remittanceReducerPile = (state, action)=>{
     }
     return remittanceReducer(state, action);
 }
+const GoalReducerPile=(state, action)=>{
+    if(action.type === FIXED_GOAL_REDUCER_CLEAR ){
+        state = undefined
+    }
+
+    return GoalReducer(state, action)
+}
 
 const remittanceReducer = combineReducers({
     getCountries: receiveMoney.getWesternUnionCountries,
@@ -203,6 +211,14 @@ const loansReducer = combineReducers({
     kycrequired : loans.KycRequired,
     terms: loans.termsReducer,
 })
+ const GoalReducer = combineReducers({
+    fixed_goal_step1:fixedGoal.fixedGoalStep1Reducer,
+    fixed_goal_step2:fixedGoal.fixedGoalStep2Reducer,
+    add_goal_reducer:fixedGoal.addGoalReducer,
+
+
+})
+
 
 const alatCardsReducer = combineReducers({
     getVirtualCards: alatCards.geCurrentVirtualCardsRequest ,
@@ -251,6 +267,7 @@ const appReducer = combineReducers({
     verify_pan: global.verifyPANReducer,
     insurancePile,
     remittanceReducerPile,
+    GoalReducerPile,
     // storage_reducer
     // storage_reducer
 
@@ -264,9 +281,9 @@ const appReducer = combineReducers({
     
 
     //fixed goal reducers
-    fixed_goal_step1:fixedGoal.fixedGoalStep1Reducer,
-    fixed_goal_step2:fixedGoal.fixedGoalStep2Reducer,
-    add_goal_reducer:fixedGoal.addGoalReducer,
+    // fixed_goal_step1:fixedGoal.fixedGoalStep1Reducer,
+    // fixed_goal_step2:fixedGoal.fixedGoalStep2Reducer,
+    // add_goal_reducer:fixedGoal.addGoalReducer,
 
     // flex goal reducers
     flex_goal_step1:flexGoal.flexGoalStep1Reducer,
@@ -290,6 +307,7 @@ const appReducer = combineReducers({
     stashGoal:customerGoal.StashCashout,
     stashGoal_step1:customerGoal.StashCashoutStep1,
     Cashout:customerGoal.Cashout,
+    submitDashboardData:customerGoal.submitDashboardData,
 
     //Group Savings Reducers (GROUP SAVINGS)
     groupSavings: groupSavings.groupSavingsTargetGoal,
@@ -334,6 +352,7 @@ const appReducer = combineReducers({
      SearchfetchEventList:movies.SearchfetchEventList,
      FetchMovieGenre:movies.FetchMovieGenre,
      PostMovieContent:movies.PostMovieContent,
+     SubmitMovieData:movies.SubmitMovieData,
 
  
      //EVENTS

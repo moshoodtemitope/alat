@@ -327,6 +327,30 @@ export function Cashout(state=[], action) {
             return { ...state }
     }
 }
+export function submitDashboardData(state=[], action) {
+    switch (action.type) {
+        case customerGoalConstants.SUBMIT_DASHBOARD_DATA_PENDING:
+            return {
+                message:customerGoalConstants.SUBMIT_DASHBOARD_DATA_PENDING,
+                data: action
+            };
+        case customerGoalConstants.SUBMIT_DASHBOARD_DATA_SUCCESS:
+            return {
+                message: customerGoalConstants.SUBMIT_DASHBOARD_DATA_SUCCESS,
+                data: action
+            };
+        case customerGoalConstants.SUBMIT_DASHBOARD_DATA_FAILURE:
+            return {
+                message: customerGoalConstants.SUBMIT_DASHBOARD_DATA_FAILURE,
+                data: action
+            };
+
+
+        default:
+            return { ...state }
+    }
+}
+
 
 
 

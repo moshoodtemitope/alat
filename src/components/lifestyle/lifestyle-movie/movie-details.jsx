@@ -475,22 +475,26 @@ class Moviedetails extends React.Component {
                                 </div>
 
 
+                                {
+                                    this.props.showTime? null :(
+                                    <div  className={showTimeValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                        <label style={{ marginTop: 16 }}>Select Day</label>
+                                        
+                                        <select onChange={this.UseSelectedTime}  name="showTime">
+                                            <option>Select ShowTime</option>
+                                            {                                      
+                                                ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
+                                                ShowTime.data.response.map(event=> {
+                                                    return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children  + " " + event.id + " " + event.ticketId + " " + event.fee + " " + event.ticketTypes[0].ticketName}>
+                                                    {event.date}</option>
+                                                })
+                                            } 
+                                        </select>
+                                        {showTimeValidity && <div className='text-danger'>Select cinema show time </div>}
+                                    </div>
+                                )}
 
-                            <div  className={showTimeValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                            <label style={{ marginTop: 16 }}>Select Day</label>
-
-                            <select onChange={this.UseSelectedTime}  name="showTime">
-                                <option>Select ShowTime</option>
-                                {                                      
-                                    ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
-                                    ShowTime.data.response.map(event=> {
-                                        return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children  + " " + event.id + " " + event.ticketId + " " + event.fee + " " + event.ticketTypes[0].ticketName}>
-                                        {event.date}</option>
-                                    })
-                                } 
-                            </select>
-                            {showTimeValidity && <div className='text-danger'>Select cinema show time </div>}
-                            </div>
+                            
 
                             <div
                                 className="row"

@@ -23,7 +23,6 @@ class StashCashout extends Component {
             formattedValue: "",
             Amount:null,
             showMessage:false,
-            goal:JSON.parse(localStorage.getItem('goal')) || [],
             payOutInterest:"",
             debitAmount:""
 
@@ -34,6 +33,27 @@ class StashCashout extends Component {
 
 
     }
+    componentDidMount = () => {
+        this.init();
+    };
+
+    init = () => {
+        if (this.props.submitDashboardData.message !== customerGoalConstants.SUBMIT_DASHBOARD_DATA_SUCCESS)
+            this.props.history.push("/savings/choose-goal-plan");
+        else {
+            
+            let data = JSON.parse(this.props.submitDashboardData.data.data);
+            
+          
+            this.setState({
+                goalName:data.goalName,
+                goalId:data.id,
+                debitAccount:data.DebitAccount,
+                Amount:data.amountSaved,
+                partialWithdrawal:true
+            });
+        }
+    };
 
 
     validateAmount = (amount) => {
@@ -96,10 +116,10 @@ class StashCashout extends Component {
             //not valid
         }else {
             this.props.dispatch(actions.StashCashoutStep1( {
-                    'goalName':this.state.goal.goalName,
-                    'goalId':parseInt(this.state.goal.id),
+                    'goalName':this.state.goalName,
+                    'goalId':parseInt(this.state.goalId),
                     "DebitAccount":this.state.accountToDebit,
-                    'Amount':this.state.goal.amountSaved,
+                    'Amount':this.state.Amount,
                     'partialWithdrawal': true
 
                 }
@@ -157,7 +177,7 @@ class StashCashout extends Component {
                                                     <Description
                                                         leftHeader={this.state.user.fullName}
                                                         leftDescription={this.state.user.email}
-                                                        rightHeader={'₦'+this.state.goal.amountSaved}
+                                                        rightHeader={'₦'+this.state.Amount}
                                                         rightDiscription="Amount Saved"/>
                                                 </div>
 
@@ -203,7 +223,8 @@ class StashCashout extends Component {
 }
 const mapStateToProps = state => ({
     alert:state.alert,
-    stashGoal_step1:state.stashGoal_step1
+    stashGoal_step1:state.stashGoal_step1,
+    submitDashboardData:state.submitDashboardData
 });
 
 export default connect (mapStateToProps)(StashCashout);

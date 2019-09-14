@@ -13,10 +13,7 @@ import { NavButtons } from './component';
 import MoreDetails from './details';
 import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import {history} from '../../../_helpers/history';
-import moment from 'moment'
-
-// if(window.performance.navigation.type == 1)
-//     window.location.replace("http://localhost:8080/");
+import moment from 'moment';
 
 class GroupAnalyticsMini extends React.Component {
     constructor(props){

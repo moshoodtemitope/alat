@@ -188,9 +188,9 @@ import * as actions from '../../../redux/actions/savings/goal/fixed-goal.actions
     }
 }
 const mapStateToProps = state => ({
-    fixed_goal_step1: state.fixed_goal_step1,
-    fixed_goal_step2:state.fixed_goal_step2,
-    add_fixed_goal:state.add_goal_reducer,
+    fixed_goal_step1: state.GoalReducerPile.fixed_goal_step1,
+    fixed_goal_step2:state.GoalReducerPile.fixed_goal_step2,
+    add_fixed_goal:state.GoalReducerPile.add_goal_reducer,
     alert: state.alert,
 
 });

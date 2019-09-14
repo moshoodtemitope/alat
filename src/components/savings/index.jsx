@@ -22,7 +22,7 @@ import RotatingGroupCreated from './group/rotating-group-created';
 import GroupAnalyticsMini from './group/group-analytics-mini';
 import JoinAGroup from './group/join-a-group';
 import JoinedGroupSuccessfully from './group/joined-group-successfully';
-import  CreateStashSuccessMessage from './goal/create-stash-success';
+import  GoalSuccessMessage from './goal/success';
 import GroupAnalyticsMini2 from './group/group-analytics-mini2';
 import ParentDashBoard from './group/parent-dashboard';
 import ViewGoalSummary from './goal/view-goal-summary';
@@ -31,7 +31,6 @@ import WithDrawFromGoalSummary from './goal/withdraw-from-goal-summary'
 import TopUpGoal from './goal/Top-up-goal';
 import TopUpGoalSummary from './goal/Top-up-goal-summary';
 import TopUpGoalSuccess from './goal/top-up-goal-success';
-import FixedGoalSuccess from './goal/Fixed-goal-success';
 import MemberSlots from './group/members-slot';
 import EditGroupSavings from './group/edit-group-savings';
 import EditRotatingGroup from './group/edit-rotating-savings-group';
@@ -39,7 +38,6 @@ import DeleteGoal from './goal/delete-goal';
 import EditGoal from './goal/Edit-Goal';
 import FlexGoalStep2 from './goal/flex-goal-step2';
 import StashCashout from './goal/cash-out-goal';
-import FlexSuccessMessage from './goal/flex-goal-success';
 import JoinGroupSummary from './group/join-group-summary';
 import JoinGroupSuccessMessage from './group/joined-group-successfully';
 import CashoutStashGoal from './goal/cash-out-stash-goal_summary';
@@ -50,8 +48,6 @@ import RotatingDelete from './group/confirm-rotating-delete';
 import GroupDelete from './group/confirm-group-savings-delete';
 import SavingsGroupDeleted from './group/success-deleted-group-savings';
 import ContributeToGroup from './group/contribute-to-group';
-import CashOutGoal2 from './goal/cash-out-goal2';
-import cashOutGoalSummary2 from "./goal/cash-out-goal-summary2";
 import CashOutGoalSuccess from "./goal/cash-out-success-message"
 
 
@@ -99,8 +95,7 @@ class SavingsContainer extends Component {
                             <Route path='/savings/group-mini2'  component={GroupAnalyticsMini2} />
                             <Route path='/savings/group/join-a-group'  component={JoinAGroup} />
                             <Route path="/savings/group/joingroup-success-message"  component={JoinedGroupSuccessfully} />
-                            <Route path="/savings/goal/create-stash-success-message"  component={CreateStashSuccessMessage} />
-                            <Route path='/savings/fixed-goal-success' component={FixedGoalSuccess} />
+                            <Route path="/savings/goal/success"  component={GoalSuccessMessage} />
                             <Route path='/savings/activityDashBoard'  component={ParentDashBoard} />
                             <Route path='/savings/view-goal-summary'  component={ViewGoalSummary} />
                             <Route path='/savings/withdraw-from-goal_step1'  component={WithDrawFromGoal} />
@@ -115,7 +110,6 @@ class SavingsContainer extends Component {
                             <Route path='/savings/edit-goal'  component={EditGoal} />
                             <Route path='/savings/flex-goal-step2'  component={FlexGoalStep2} />
                             <Route path='/savings/stash-cashout' component={StashCashout} />
-                            <Route path='/savings/flex-success-message' component={FlexSuccessMessage} />
                             <Route path="/savings/join-group-summary"  component={JoinGroupSummary} />
                             <Route path="/savings/joined-group-successfully"  component={JoinGroupSuccessMessage} />
                             <Route path="/savings/cashout-goal-summary"  component={CashoutStashGoal} />
@@ -126,8 +120,6 @@ class SavingsContainer extends Component {
                             <Route path="/savings/delete-group-savings" component={GroupDelete} />
                             <Route path="/savings/delete-group-savings-mod" component={SavingsGroupDeleted} />
                             <Route path="/savings/contribute-to-group" component={ContributeToGroup} />
-                            <Route path="/savings/cash-out" component={CashOutGoal2}/>
-                            <Route path="/savings/cash-out-summary" component={cashOutGoalSummary2}/>
                             <Route path="/savings/cash-out-success-message" component={CashOutGoalSuccess}/>
 
                             

@@ -22,7 +22,6 @@ class WithdrawFromGoal extends Component {
             formattedValue: "",
             Amount:null,
             showMessage:false,
-            goal:JSON.parse(localStorage.getItem('goal')) || [],
             payOutInterest:""
 
 
@@ -32,6 +31,28 @@ class WithdrawFromGoal extends Component {
 
 
     }
+    componentDidMount = () => {
+        this.init();
+    };
+
+    init = () => {
+        if (this.props.submitDashboardData.message !== customerGoalConstants.SUBMIT_DASHBOARD_DATA_SUCCESS)
+            this.props.history.push("/savings/choose-goal-plan");
+        else {
+            
+            let data = JSON.parse(this.props.submitDashboardData.data.data);
+            
+          
+            this.setState({
+                goalName:data.goalName,
+                goalId:data.id,
+                debitAccount:data.DebitAccount,
+                amountSaved:data.amountSaved,
+                goalTypeName:data.goalTypeName,
+                partialWithdrawal:true
+            });
+        }
+    };
 
 
     validateAmount = (amount) => {
@@ -92,9 +113,9 @@ class WithdrawFromGoal extends Component {
             //not valid
         }else {
             this.props.dispatch(actions.WithDrawFromGoalStep1( {
-                    'goalName':this.state.goal.goalName,
-                    'goalId':parseInt(this.state.goal.id),
-                    "amount":this.state.goal.amountSaved,
+                    'goalName':this.state.goalName,
+                    'goalId':parseInt(this.state.goalId),
+                    "amount":this.state.amountSaved,
                     'accountNumber':this.state.accountToDebit
                 }
             ));
@@ -149,7 +170,7 @@ class WithdrawFromGoal extends Component {
                                                         <Description 
                                                             leftHeader={this.state.user.fullName}
                                                             leftDescription={this.state.user.email}
-                                                            rightHeader={'₦'+this.state.goal.amountSaved}
+                                                            rightHeader={'₦'+this.state.amountSaved}
                                                             rightDiscription="Amount Saved"/>
                                                 </div>
 
@@ -211,7 +232,8 @@ class WithdrawFromGoal extends Component {
 }
 const mapStateToProps = state => ({
     alert:state.alert,
-    withdraw_from_goal_step1:state.withdraw_from_goal_step1
+    withdraw_from_goal_step1:state.withdraw_from_goal_step1,
+    submitDashboardData:state.submitDashboardData
 });
 
 export default connect (mapStateToProps)(WithdrawFromGoal);

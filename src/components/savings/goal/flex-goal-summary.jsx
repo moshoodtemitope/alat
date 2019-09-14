@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import {Fragment} from "react";
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -48,7 +46,7 @@ import * as actions from '../../../redux/actions/savings/goal/flex-goal.actions'
 
             this.setState({
                 targetAmount:data.targetAmount,
-                startDate: data.startDate,
+                startDate:data.startDate,
                 goalName:data.goalName,
                 goalFrequency:data.goalFrequency,
                 debitAccount:data.debitAccount,

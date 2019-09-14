@@ -44,7 +44,7 @@ export const addFixedGoal =(data)=>{
                 //TODO: edit localDB accounts object
                 dispatch(success(response.data, data));
                 history.push({
-                    pathname:"/savings/fixed-goal-success",
+                    pathname:"/savings/goal/success",
                     state:{details:response.data}
                 })
             })
