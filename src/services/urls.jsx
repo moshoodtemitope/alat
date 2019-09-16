@@ -1,6 +1,6 @@
 const URL = 'https://api.alat.ng';
 // const URL = 'https://196.43.215.170';
- //const URL = 'https://196.43.215.157';
+//  const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
 
@@ -19,6 +19,7 @@ export const routes = {
     GETALLQUESTIONS: BASEURL + '/UserSecurityApi/api/v1/Account/AllQuestions',
     REGISTRATIONURLV2: BASEURL + '/UserSecurityApi/api/v1/Account/RegistrationV2',
     DOCUMENT_UPLOAD: BASEURL + '/DocumentUpload/api/upload/document',
+    GET_USERPROFILE_IMAGE: BASEURL + '/DocumentUpload/api/upload/dp2/',
 
     //user security
     ONBOARDING_PRIORITY: BASEURL + '/UserSecurityApi/api/v1/Account/GetOnboardingPriority',
