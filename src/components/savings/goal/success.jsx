@@ -27,7 +27,7 @@ class SuccessMessage extends React.Component {
         });
 
     }
-
+   
 
     render() {
         const details =this.props.location.state.details;
@@ -66,7 +66,7 @@ class SuccessMessage extends React.Component {
                                                     <center>
                                                     <img className="successIcon"    alt="" src={successLogo}/>
                                                     </center>
-                                                    <label id="sucMessage">Stash creation was successful</label>
+                                                    <label id="sucMessage">{details.goalTypeName} goal created successfully</label>
                                                 </div>
                                                 <div className="form-row">
                                                 <Members 

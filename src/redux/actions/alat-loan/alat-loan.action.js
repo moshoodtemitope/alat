@@ -1,5 +1,4 @@
 import * as actionTypes from '../../constants/alat-loan/alat-token.constant';
-
 import { alertActions } from "../alert.actions";
 import { handleError, modelStateErrorHandler } from './../../../shared/utils';
 import { SystemConstant } from "../../../shared/constants";

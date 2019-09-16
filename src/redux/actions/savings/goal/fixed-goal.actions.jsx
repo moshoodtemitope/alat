@@ -63,5 +63,5 @@ export const ClearAction=(type)=>{
     return (dispatch) =>{
         dispatch(clear(type))
     };
-    function clear(type){return {type : type}}
+    function clear(type){return {type :fixedGoalConstants.FIXED_GOAL_REDUCER_CLEAR}}
 };

@@ -27,7 +27,7 @@ class Movie extends React.Component {
             doFilter: false
 
         };
-        this.handleSubmit =this.handleSubmit.bind(this)
+        // this.handleSubmit =this.handleSubmit.bind(this)
         this.showMovies = true;
        
     }
@@ -81,7 +81,7 @@ class Movie extends React.Component {
 
         
     };
-    handleSubmit=(event)=>{
+    MoviesDetails(event){
         console.log(JSON.parse(event.target.id));
         this.props.dispatch(SubmitMoviesData(event.target.id))
 
@@ -110,12 +110,12 @@ class Movie extends React.Component {
                         return(
                                 <div className="eventCards" key={index}>
                                     <Link to={{
-                                        // pathname:"/lifestyle/movie-details",
-                                        // state:{
-                                        //     details:film
-                                        // }
+                                        pathname:"/lifestyle/movie-details",
+                                        state:{
+                                            details:film
+                                        }
                                     }}>
-                                        <div onClick={() => console.log(film)} className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
+                                        <div onClick={this.MoviesDetails(film)} className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
                                         </div>
                                         
                                     </Link>
