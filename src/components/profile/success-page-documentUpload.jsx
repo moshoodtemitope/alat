@@ -129,7 +129,7 @@ GetUserProfileMenu = () => {
                                                     <p className="details">{this.props.profileMenu.data.response.username}</p>
                                                     <p className="details">{moment(this.props.profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>
                                                     <hr />
-    
+
                                                     <div className="tickItems" onClick={this.NavigateToBVN}>
                                                         {isBvNLinked === true ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
                                                         <p className="pSubs">Link BVN</p>
