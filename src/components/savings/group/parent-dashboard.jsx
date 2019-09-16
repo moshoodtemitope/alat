@@ -22,6 +22,17 @@ class ParentDashBoard extends React.Component {
             user: JSON.parse(localStorage.getItem("user")),
             clicked: false
         }
+
+        this.CheckRotatingSavingsAvailability();
+        this.CheckGroupSavingsAvailability();
+    }
+
+    CheckRotatingSavingsAvailability = () => {
+        this.props.dispatch(actions1.GetGroupsEsusu(this.state.user.token, null));
+    }
+
+    CheckGroupSavingsAvailability = () => {
+        this.props.dispatch(actions.customerGroup(this.state.user.token, null));
     }
 
     GetGroups = () => {
@@ -122,7 +133,54 @@ class ParentDashBoard extends React.Component {
         history.push('/savings/goal/group-savings-selection');
     }
 
+    
     render() {
+        if(this.props.groupSavingsEsusu == undefined && this.props.groups == undefined){
+            this.CheckRotatingSavingsAvailability();
+            this.CheckGroupSavingsAvailability();
+
+            return(
+                <Fragment>
+                <InnerContainer>
+                    <SavingsContainer>
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <p className="page-title">Savings & Goals</p>
+                            </div>
+                            <div className="col-sm-12">
+                                <div className="tab-overflow">
+                                    <div className="sub-tab-nav">
+                                        <ul>
+                                        <NavLink to='/savings/choose-goal-plan'>
+                                            <li><a id='parentGoal'>Goals</a></li>
+                                        </NavLink>
+                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
+                                            <li><a className="active">Group Savings</a></li>
+                                        {/* </NavLink> */}
+                                        <li><a>Investments</a></li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                                <div className="row">
+                                    <div className="bodyDetails">
+                                          
+                                          <h4 className="m-b-10 center-text hd-underline">Automate Group Savings</h4>
+                                            <div className="loadingData">
+                                                <p>Loading data ...</p>
+                                            </div>
+                                    </div>
+                               </div>
+                        </div>
+
+                    </SavingsContainer>
+                </InnerContainer>
+            </Fragment>
+            );
+        }
+
         if(this.props.groupSavingsEsusu.response == undefined && this.props.groups.response == undefined){
             return(
                 <Fragment>
@@ -334,6 +392,8 @@ class ParentDashBoard extends React.Component {
         }
     }
 }
+
+
 
 function mapStateToProps(state){
     return {
