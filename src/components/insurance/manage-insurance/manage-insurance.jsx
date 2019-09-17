@@ -45,15 +45,19 @@ class ManageInsurance extends React.Component {
         
        
         this.viewPolicyDetails =  this.viewPolicyDetails.bind(this);
+        this.loadRequiredData =  this.loadRequiredData.bind(this);
         
     }
 
     componentDidMount() {
         this.props.dispatch(clearInsuranceStore()); 
+        this.loadRequiredData()
+    }
+
+    loadRequiredData(){
         this.getCustomerPolicies();
         this.getNewPolicyData();
     }
-
     getCustomerPolicies(){
         const { dispatch } = this.props;
         dispatch(getExistingPolicies(this.state.user.token));
@@ -103,6 +107,7 @@ class ManageInsurance extends React.Component {
                                         <div className="product-name">{eachPolicy.ProductName}</div> 
                                         <div className="help-info">
                                             <div>Price: ₦{eachPolicy.Premium}</div>
+                                            <div className="help-detail">Transaction REF: {eachPolicy.TransactionReference}</div>
                                         </div>
                                         <div className="product-ctas">
                                             
@@ -170,6 +175,39 @@ class ManageInsurance extends React.Component {
                                     <div className="al-card no-pad">
                                         <div className="transfer-ctn text-center">
                                             <div>Loading your existing policies...</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            {(getExistingPolicyRequest.fetch_status===FETCH_EXISTING_POLICIES_FAILURE
+                             && newPolicyRequest.fetch_status===FETCH_NEWINSURANCE_INFOSETS_SUCCESS) &&
+                                <div className="max-600">  
+                                    <div className="al-card no-pad">
+                                        <div className="transfer-ctn text-center error-msg">
+                                            <div>{getExistingPolicyRequest.existingpolicy_data.error} <span className="retry-link" onClick={this.loadRequiredData}> Retry</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            {(getExistingPolicyRequest.fetch_status===FETCH_EXISTING_POLICIES_FAILURE
+                             && newPolicyRequest.fetch_status===FETCH_NEWINSURANCE_INFOSETS_FAILURE) &&
+                                <div className="max-600">  
+                                    <div className="al-card no-pad">
+                                        <div className="transfer-ctn text-center error-msg">
+                                            <div>An error occured. Please try again ... <span className="retry-link" onClick={this.loadRequiredData}> Retry</span> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            {(getExistingPolicyRequest.fetch_status===FETCH_EXISTING_POLICIES_SUCCESS
+                             && newPolicyRequest.fetch_status===FETCH_NEWINSURANCE_INFOSETS_FAILURE) &&
+                                <div className="max-600">  
+                                    <div className="al-card no-pad">
+                                        <div className="transfer-ctn text-center error-msg">
+                                            <div>{newPolicyRequest.newpolicy_data.error} <span className="retry-link" onClick={this.loadRequiredData}> Retry</span></div>
                                         </div>
                                     </div>
                                 </div>

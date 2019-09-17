@@ -232,6 +232,7 @@ class PolicyDetails extends React.Component {
                         id={'autoChasisNo'}
                         name="autoChasisNo"
                         type="text"
+                        maxLength="30"
                         autoComplete ="off"
                         value={this.state.autoChasisNo}
                         placeholder= "Enter car chasis number"
@@ -255,6 +256,7 @@ class PolicyDetails extends React.Component {
                         name="autoChasisNo"
                         disabled={true}
                         type="text"
+                        maxLength="30"
                         autoComplete ="off"
                         value="Fetching Chasis"
                         placeholder= "Enter car chasis number"
@@ -276,6 +278,7 @@ class PolicyDetails extends React.Component {
                         id={'autoChasisNo'}
                         name="autoChasisNo"
                         type="text"
+                        maxLength="30"
                         autoComplete ="off"
                         value={this.state.autoChasisNo}
                         placeholder= "Enter car chasis number"
@@ -303,6 +306,7 @@ class PolicyDetails extends React.Component {
                         id={'autoChasisNoFetched'}
                         name="autoChasisNoFetched"
                         type="text"
+                        maxLength="30"
                         autoComplete ="off"
                         value={this.state.autoChasisNoFetched}
                         placeholder= "Enter car chasis number"
@@ -321,6 +325,7 @@ class PolicyDetails extends React.Component {
                         id={'autoEngineNo'}
                         name="autoEngineNo"
                         type="text"
+                        maxLength="30"
                         autoComplete ="off"
                         value={this.state.autoEngineNo}
                         placeholder= "Enter car engine number"
@@ -344,6 +349,7 @@ class PolicyDetails extends React.Component {
                         name="autoEngineNo"
                         disabled={true}
                         type="text"
+                        maxLength="30"
                         autoComplete ="off"
                         value="Fetching engine number"
                         placeholder= "Enter car engine number"
@@ -366,6 +372,7 @@ class PolicyDetails extends React.Component {
                         id={'autoEngineNo'}
                         name="autoEngineNo"
                         type="text"
+                        maxLength="30"
                         autoComplete ="off"
                         value={this.state.autoEngineNo}
                         placeholder= "Enter car engine number"
@@ -395,6 +402,7 @@ class PolicyDetails extends React.Component {
                         name="autoEngineNo"
                         // disabled={true}
                         type="text"
+                        maxLength="30"
                         autoComplete ="off"
                         value={this.state.autoEngineNoFetched}
                         placeholder= "Enter car chasis number"
@@ -835,6 +843,7 @@ class PolicyDetails extends React.Component {
                                     id={'autoRegNo'}
                                     name="autoRegNo"
                                     type="text"
+                                    maxLength="30"
                                     autoComplete ="off"
                                     value={autoRegNo}
                                     placeholder= ""
@@ -886,6 +895,7 @@ class PolicyDetails extends React.Component {
                                 id={'autoEstimatedvalue'}
                                 name="autoEstimatedvalue"
                                 type="number"
+                                maxLength="30"
                                 autoComplete ="off"
                                 value={autoEstimatedvalue}
                                 placeholder= "Enter car estimated value"
@@ -950,6 +960,7 @@ class PolicyDetails extends React.Component {
                                     id={'cubicCap'}
                                     name="cubicCap"
                                     type="text"
+                                    maxLength="30"
                                     autoComplete ="off"
                                     value={cubicCap}
                                     placeholder= "Enter cubic cap"
@@ -966,6 +977,7 @@ class PolicyDetails extends React.Component {
                                     id={'driverLicenceNo'}
                                     name="driverLicenceNo"
                                     type="text"
+                                    maxLength="30"
                                     autoComplete ="off"
                                     value={driverLicenceNo}
                                     placeholder= "Enter driver licence number"
@@ -980,6 +992,7 @@ class PolicyDetails extends React.Component {
                                     id={'yrsOfDriving'}
                                     name="yrsOfDriving"
                                     type="number"
+                                    maxLength="2"
                                     autoComplete ="off"
                                     value={yrsOfDriving}
                                     onChange= {(yrsOfDriving, e)=>{
