@@ -18,6 +18,16 @@
     padding-top: 20px;
 
 }
+.help-detail{
+    font-size: 12px;
+    margin-top: 13px;
+}
+.retry-link{
+    text-decoration: underline;
+    &:hover{
+        cursor: pointer;
+    }
+}
 .providerslist, .productcategory-list {
     display: flex;
     justify-content: center;
