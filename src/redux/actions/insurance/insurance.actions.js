@@ -33,6 +33,7 @@ import {
    SAVE_CUSTOMERPOLICY_DATA,
    ALATINSURANCE_REDUCER_CLEAR
 }from "../../constants/insurance/insurance.constants";
+import { compose } from "redux";
 
 
 //Get existing Policies
@@ -82,24 +83,43 @@ export const getNewPolicyDataChunk = (token) => {
         dispatch(request(consume));
         return consume
             .then(response=>{ 
-
+                if(response.data.Result===null){
+                    // console.log('data from is', response.data.Result);
+                    dispatch(failure('An error occured. Please try again '));
+                    return false;
+                }
                 // Get Insurance Countries
                 let consume2 =  ApiService.request(routes.FETCH_INSURANCE_COUNTRIES, "POST", null, SystemConstant.HEADER); 
                 dispatch(request(consume2));
                 return consume2
                     .then(response2=>{
 
+                        if(response2.data.length===0){
+                            // console.log('data from is', response.data.Result);
+                            dispatch(failure('An error occured. Please try again '));
+                            return false;
+                        }
+
                          // Get Insurance Colors
                         let consume3 =  ApiService.request(routes.FETCH_INSURANCE_COLORLIST, "POST", null, SystemConstant.HEADER); 
                         dispatch(request(consume3));
                         return consume3
                             .then(response3=>{
-                                
+                                if(response3.data.length===0){
+                                    // console.log('data from is', response.data.Result);
+                                    dispatch(failure('An error occured. Please try again '));
+                                    return false;
+                                }
                                 // Get Insurance LGAs
                                 let consume4 =  ApiService.request(routes.FETCH_INSURANCE_LGA, "POST", null, SystemConstant.HEADER); 
                                 dispatch(request(consume4));
                                 return consume4
                                     .then(response4=>{
+                                        if(response4.data.length===0){
+                                            // console.log('data from is', response.data.Result);
+                                            dispatch(failure('An error occured. Please try again '));
+                                            return false;
+                                        }
 
                                     // Get Insurance Body Types
                                     let consume5 =  ApiService.request(routes.FETCH_INSURANCE_BODYTYPES, "POST", null, SystemConstant.HEADER); 
@@ -107,12 +127,23 @@ export const getNewPolicyDataChunk = (token) => {
                                     return consume5
                                         .then(response5=>{
 
+                                            if(response5.data.length===0){
+                                                // console.log('data from is', response.data.Result);
+                                                dispatch(failure('An error occured. Please try again '));
+                                                return false;
+                                            }
+
                                             // Get Insurance Manufacture Year
                                             let consume6 =  ApiService.request(routes.FETCH_INSURANCE_MANUFACTUREYEAR, "POST", null, SystemConstant.HEADER); 
                                             dispatch(request(consume6));
                                             return consume6
                                                 .then(response6=>{
 
+                                                    if(response6.data.length===0){
+                                                        // console.log('data from is', response.data.Result);
+                                                        dispatch(failure('An error occured. Please try again '));
+                                                        return false;
+                                                    }
 
                                                     // Get Insurance Titles
                                                     let consume7 =  ApiService.request(routes.FETCH_INSURANCE_TITLES, "POST", null, SystemConstant.HEADER); 
@@ -120,6 +151,11 @@ export const getNewPolicyDataChunk = (token) => {
                                                     return consume7
                                                         .then(response7=>{
 
+                                                            if(response7.data.length===0){
+                                                                // console.log('data from is', response.data.Result);
+                                                                dispatch(failure('An error occured. Please try again '));
+                                                                return false;
+                                                            }
 
                                                             // Get Insurance Gender
                                                             let consume8 =  ApiService.request(routes.FETCH_INSURANCE_GENDERS, "POST", null, SystemConstant.HEADER); 
@@ -127,11 +163,25 @@ export const getNewPolicyDataChunk = (token) => {
                                                             return consume8
                                                                 .then(response8=>{
 
+                                                                    if(response8.data.length===0){
+                                                                        // console.log('data from is', response.data.Result);
+                                                                        dispatch(failure('An error occured. Please try again '));
+                                                                        return false;
+                                                                    }
+
                                                                     // Get Insurance non-schengen countries
                                                                     let consume9 =  ApiService.request(routes.FETCH_INSURANCE_NONSCHENGENCOUNTRIES, "POST", null, SystemConstant.HEADER); 
                                                                     dispatch(request(consume9));
                                                                     return consume9
+                                                                    
                                                                         .then(response9=>{
+
+                                                                            if(response9.data.length===0){
+                                                                                // console.log('data from is', response.data.Result);
+                                                                                dispatch(failure('An error occured. Please try again '));
+                                                                                return false;
+                                                                            }
+                                                                            
                                                                             let newPolicyChunk = {
                                                                                     ProductsList          : response.data,
                                                                                     Countries             : response2.data,
@@ -143,6 +193,8 @@ export const getNewPolicyDataChunk = (token) => {
                                                                                     Genders               : response8.data,
                                                                                     NonSchengenCountries  : response9.data     
                                                                             }
+
+                                                                            
                                                                             dispatch(success(newPolicyChunk));
                                                                         })
                                                                         .catch(error=>{

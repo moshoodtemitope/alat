@@ -198,7 +198,7 @@ class BuyPolicy extends React.Component {
 
 
     renderInitialScreen(){
-        let providers = [{ value:"Aiico", label:"Aiico"}],
+        let providers = [{ value:"Aiico", label:"Aiico Insurance"}],
             {isProviderSelected,
             isCategorySelected, 
             isProductSelected,
