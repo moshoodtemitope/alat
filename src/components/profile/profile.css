@@ -1,0 +1,432 @@
+/* 
+form {
+    
+} */
+
+
+
+.profileWrapper {
+    padding-top: 50px !important;
+}
+
+.coverPropertiesofComponent {
+    width: 100%;
+}
+
+.packageContent input {
+    /* width: 86.5%; */
+    font-family: sans-serif;
+    font-size: 14px;
+    line-height: 17px;
+    color: #666666;
+    font-weight: bold;
+}
+
+.docUpLoadFormProfile label {
+   width: 80%;
+   border: 1px solid rgb(179, 151, 161);
+   padding-top: 10px;
+   padding-bottom: 10px;
+   color: #AB2656;
+   text-align: center;
+}
+
+.profileOtherLabel {
+    width: 80%; 
+    border: none !important;
+    padding-bottom: 3px !important;
+    color: black !important;
+    text-align: left !important;
+    padding-top: 3px !important;
+    font-size: 14px !important;
+    line-height: 17px !important;
+    color: #7C7C7C !important;
+}
+
+.profileOtherLabel:hover {
+    background-color: white !important;
+}
+
+.docUpLoadFormProfile label:hover {
+    color: white;
+    background-color: #AB2656;
+    text-align: center;
+}
+
+.packageContent label {
+    float: left;
+    width: 100%;
+    margin-left: 0% !important;
+    font-family: sans-serif;
+}
+
+.packageContent select {
+    /* width: 90%; */
+}
+
+.center-alignment {
+    margin-left: 12px;
+}
+
+.packageContent label {
+    margin-left: 20%;
+}
+
+.select-size {
+    height: 38px
+}
+
+/* .dashboard-wrapper {
+    padding-top: 100px !important;
+} */
+
+.float-right {
+    float: right
+}
+
+.no-border {
+    border: none !important
+}
+
+.align-button {
+    text-align: center;
+    /* margin-right: 9% */
+}
+
+.align-buttons {
+    text-align: center;
+    /* margin-right: 13% */
+}
+
+.select-identity {
+    height: 43px !important;
+}
+
+.select-gender {
+    height: 38px !important;
+}
+
+.local-mailing {
+    width: 95% !important;
+    height: 38px;
+}
+
+.enter-national {
+    /* width: 90% !important; */
+}
+
+.enter-bvn {
+    /* width: 90% !important; */
+}
+
+.select-sector-occupation {
+    /* width: 86.5% !important; */
+}
+
+.tickItems {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.tickItems p {
+    margin-left: 15px;
+    padding-bottom: 10px;
+    font-family: sans-serif;
+    font-size: 14px;
+    line-height: 17px;
+    color: #4D4D4D;
+    cursor: pointer;
+}
+
+.tickItems img {
+    margin-left: 20px;
+}
+
+.packageContent .parentForm {
+    padding-bottom: 50px;
+    padding-top: 20px;
+    border: 1px solid #EDEDED;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
+    border-radius: 6px;
+    background-color: white;
+    /* padding-left: 11%; */
+}
+
+.parentForm .twoBut{
+    background-color: #AB2656;
+    border-radius: 3px;
+    width: 185px;
+    height: 45px;
+    color: white;
+    margin-left: 0px;
+}
+
+.forProfilePicture {
+    background-color:white;
+    padding-top: 40px;
+    padding-bottom: 50px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
+    border-radius: 6px;
+}
+
+.forProfilePicture .detials {
+    font-family: sans-serif;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #666666; 
+}
+
+.forProfilePicture .personsName {
+    font-family: sans-serif;
+    font-size: 18px;
+    line-height: 22px;
+    color: #4D4D4D;
+    font-weight: bold;
+}
+
+.profilePixCircle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #eeeeee;
+    margin-left: 37%;
+    margin-bottom: 10px;
+}
+
+.forProfilePicture p {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.parentForm .twoBut1{
+    background-color: transparent;
+    border-radius: 3px;
+    width: 185px;
+    height: 45px;
+    color: #AB2656;
+    border: 1px solid #AB2656;
+    margin-left: 1%; 
+} 
+
+.parentForm .forTwoButtons {
+    margin-left: 17%;
+}
+
+
+
+.parentForm .linkBVN {
+    width: 100%;
+}
+
+.parentForm .formHeading{
+    padding: 10px;
+    /* padding-left: 35%; */
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 1px solid #eeeeee;
+    color: #AB2656;
+}
+
+.button-alignment {
+    text-align: center
+}
+
+.button-size {
+    width: 173px !important
+}
+
+.person-card {
+    border: 1px solid #ededed;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
+    border-radius: 6px;
+    margin-left: 44px;
+    padding-top: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .get-width {
+    padding-top: 50px;
+  }
+  
+  .text-format {
+    color: #4d4d4d;
+    font-size: 18px;
+    font-family: sans-serif;
+  }
+  
+  .text-format-2 {
+    color: #666666;
+    font-size: 14px;
+    margin-top: 5px;
+    font-family: sans-serif;
+  }
+  
+  .text-format-3 {
+    color: #666666;
+    font-size: 18px;
+    margin-top: 6px;
+    font-family: sans-serif;
+  }
+  
+  .imag-size {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+  }
+  
+  .get-center {
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .bg-color {
+    background-color: white;
+  }
+  
+  .hr {
+    margin-top: 29px;
+    margin-bottom: 29px;
+  }
+  
+  .wrapper {
+    margin-left: 30px;
+  }
+  
+  .list-item-action {
+    font-family: sans-serif;
+    font-size: 17px;
+    line-height: 17px;
+    color: #4d4d4d;
+    margin-bottom: 17px;
+  }
+  
+  .margin-right {
+    margin-right: 10px;
+  }
+  
+  .img-style {
+    margin-bottom: 4px;
+  } 
+
+ .parentForm button {
+    /* margin-left: 22% !important; */
+}
+
+.sameAddressAsAbove {
+    display: none !important;
+}
+
+.notSameAddressAsAbove {
+    display: block !important;
+}
+
+.signatureUploadTemp {
+    padding-top: 70px;
+    padding-bottom: 50px !important;
+    height: 180px;
+    background-color: #F5F5F5;
+    padding-left: 30% !important;
+}
+
+.resizeLabel {
+    width: 150px !important;
+    /* border-radius: 25%; */
+    border: 1px solid #DADADA !important;
+    height: 40px;
+    color:  #7C7C7C !important;
+    /* margin-left: 40% !important; */
+}
+
+.upLoadDiscription {
+    text-align: center;
+    color: #787878;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.resizeLabel:hover {
+    color: white !important;
+}
+
+#dateOfIssuance {
+    color: black;
+}
+
+.inlineCardsProfile {
+    padding-top: 70px;
+    padding-bottom: 50px !important;
+    height: 180px;
+    background-color: #F5F5F5;
+    padding-left: 20% !important;
+    padding-right: 20% !important;
+}
+
+
+.forIdentityCards {
+    margin-left: 0px;
+    /* width: 150px !important; */
+    /* border-radius: 25%; */
+    border: 1px solid #DADADA !important;
+    height: 40px;
+    color:  #7C7C7C !important;
+}
+
+.forIdentityCards:hover {
+    color: white !important;
+}
+
+.hdStyle {
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    font-family: sans-serif;
+    font-size: 14px;
+    line-height: 17px;  
+    color: #7C7C7C;
+}
+
+#profMenuHead {
+    color: #AB2656;
+}
+
+.pSubs {
+    padding-top: 25px;
+}
+
+.improveImgSize {
+    width: 30px;
+    height: 30px;
+    margin-top: 20px;
+}
+
+.largeVectorI {
+    height: 30px;
+    /* padding-top: 30px; */
+    margin-top: 20px;
+}
+
+
+.imgShape {
+    /* margin-left: 30%; */
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.sucMssgOfProfile {
+    /* padding-left: 20%; */
+    font-family: sans-serif;
+    font-size: 18px;
+    line-height: 21px;
+   /* identical to box height */
+
+   /* text-align: center; */
+
+    color: #666666;
+    /* position: absolute; */
+}
+
+.parentForm.sucMsg {
+   padding-left: 0px !important;
+   text-align: center !important;
+}

@@ -47,7 +47,7 @@ class HeaderContainer extends React.Component{
             return(
                 <div className="mini-nav" style={{display: 'block'}}>
                     <ul>
-                        <li><a href="#">Profile</a></li>
+                        <li><NavLink to="/profile">Profile</NavLink></li>
                         <li><NavLink to="/settings">Settings</NavLink></li>
                         <li>
                             {/*<NavLink to="/logout">Logout</NavLink>*/}

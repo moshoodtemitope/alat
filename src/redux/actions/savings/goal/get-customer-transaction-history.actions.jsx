@@ -127,6 +127,18 @@ export const StashCashoutStep1 = (data) =>{
         }
     }
 };
+export const Cashout = (data) =>{
+    return(dispatch)=>{
+        dispatch(success(data))
+    };
+    function success(data){
+        return{
+            type:customerGoalConstants.CASH_OUT_SUCCESS,
+            data:data
+        }
+    }
+};
+
 export const StashCashout =(data)=>{
     return (dispatch) => {
         let consume = ApiService.request(routes.WITHDRAWFROMGOAL,

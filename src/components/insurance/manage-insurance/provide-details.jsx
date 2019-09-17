@@ -268,6 +268,7 @@ class ProvideDetails extends React.Component {
                                 id={'firstName'}
                                 name="firstName"
                                 type="text"
+                                maxLength="30"
                                 autoComplete ="off"
                                 value={firstName}
                                 placeholder= "Enter first name"
@@ -282,6 +283,7 @@ class ProvideDetails extends React.Component {
                                 id={'surname'}
                                 name="surname"
                                 type="text"
+                                maxLength="30"
                                 autoComplete ="off"
                                 value={surname}
                                 placeholder= "Enter surname"
@@ -314,6 +316,7 @@ class ProvideDetails extends React.Component {
                                 id={'customerInsuranceEmail'}
                                 name="customerInsuranceEmail"
                                 type="email"
+                                maxLength="60"
                                 autoComplete ="off"
                                 value={customerInsuranceEmail}
                                 placeholder= "Enter email"
@@ -328,6 +331,7 @@ class ProvideDetails extends React.Component {
                                 id={'customerInsurancePhoneNo'}
                                 name="customerInsurancePhoneNo"
                                 type="text"
+                                maxLength="25"
                                 autoComplete ="off"
                                 value={customerInsurancePhoneNo}
                                 placeholder= "Enter phone no"
@@ -356,6 +360,7 @@ class ProvideDetails extends React.Component {
                                 id={'customerAddress'}
                                 name="customerAddress"
                                 type="text"
+                                maxLength="100"
                                 autoComplete ="off"
                                 value={customerAddress}
                                 placeholder= "Enter address"

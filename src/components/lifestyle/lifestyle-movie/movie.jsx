@@ -394,15 +394,16 @@ class Movie extends Component {
                     </div>
 
                     <div className="col-sm-12">
-                        <div>
+                        <div className="">
                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                 <ul>
                                     <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
                                     <li><NavLink to={'/lifestyle/event'}>Event</NavLink></li>
                                     <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li>
-                                    <li style={{float:"right" ,borderRadius:3,}}><input style={{width:"100%",height:"40px", marginTop:4, float:'right'}} type="text" placeholder="search ..." value={this.state.value} onChange={ e => this.onChangeHandler(e)}/></li>
-                                    <li style={{float:"right"}} >
-                                        <select style={{width:"100%",height:"40px", marginTop:8, margin:4, float:'right', borderRadius:3}} onChange={e=>this.filterGenreOnchangeHandler(e)}>
+                                    <li style={{float:"right", marginTop: -31, width: 181}}><label style={{ marginBottom: 0, color: "#666666", fontSize: 14}}>Search by keyword</label><input style={{width:"100%",height:"40px", marginTop:4, float:'right',}} type="text" placeholder="search ..." value={this.state.value} onChange={ e => this.onChangeHandler(e)}/></li>
+                                    <li style={{float:"right", marginTop: -31}} >
+                                        <label style={{ marginBottom: 0, color: "#666666", fontSize: 14}}>Filter</label>
+                                        <select style={{width:"100%",height:"40px", marginTop:8, margin:4, float:'right', borderRadius:"3px !important", border: "1px solid lightgray"}} onChange={e=>this.filterGenreOnchangeHandler(e)}>
                                             <option>Show Result By</option>
                                             {                                      
                                                 this.props.FetchMovieGenre.message == listStyleConstants.FETCH_MOVIE_GENRE_SUCCESS && 
@@ -414,13 +415,16 @@ class Movie extends Component {
                                     </li>
 
                                 </ul>
+                               
+                                
                             </div>
+                            
                         </div>
                     </div>
                    {/* {this.resultu()} */}
                    {/* {this.renderGenre()}  */}
                    {
-                       !this.state.doFilter ? this.renderMovies() : this.renderFilter(this.state.genreType)
+                       !this.state.doFilter ? this.resultu() : this.renderFilter(this.state.genreType)
                    }
 
                         <span onClick={() => this.fetchMovieList(1)}></span> 

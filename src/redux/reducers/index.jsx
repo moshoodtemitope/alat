@@ -11,7 +11,16 @@ import {dashboard,
         loanOnboarding,
         loans,
         receiveMoney,
-        fixedGoal,flexGoal,stashGoal,groupSavings,rotatingSavings, customerGoal,movies,preferences,insurance,
+        fixedGoal,
+        flexGoal,
+        stashGoal,
+        groupSavings,
+        rotatingSavings, 
+        customerGoal,
+        movies,
+        preferences,
+        profile,
+        insurance,
         alatCards} from "./export";
 
 import {bankListRequest, beneficiariesRequest} from "./transfer.reducer";
@@ -252,6 +261,7 @@ const appReducer = combineReducers({
     accountsM_reducer : accountsReducer,
     settings_reducer : settingsReducer,
     alat_loan_reducer: alatLoanReducer,
+    
 
     //fixed goal reducers
     fixed_goal_step1:fixedGoal.fixedGoalStep1Reducer,
@@ -279,6 +289,7 @@ const appReducer = combineReducers({
     unpause_goal:customerGoal.unPauseCustomerGoal,
     stashGoal:customerGoal.StashCashout,
     stashGoal_step1:customerGoal.StashCashoutStep1,
+    Cashout:customerGoal.Cashout,
 
     //Group Savings Reducers (GROUP SAVINGS)
     groupSavings: groupSavings.groupSavingsTargetGoal,
@@ -334,8 +345,40 @@ const appReducer = combineReducers({
      getAllEngagements: preferences.getAllEngagements,
      getCustomersEngagements: preferences.getCustomersEngagements,
  
-     movieDetails: movies.movieDetails
+     movieDetails: movies.movieDetails,
+
+    //profile reducer
+    linkBVN:profile.linkBVN,
+    profileSuccessMessage:profile.profileSuccessMessage,
+    profileMenu:profile.profileMenu,
+    capturePersonalInformation: profile.capturePersonalInformation,
+    addNextOfKin:profile.addNextOfKin,
+    addContactDetails:profile.addContactDetails,
+    occupationAndSector:profile.occupationAndSector,
+    addDocuments:profile.addDocuments,
+    getResidential:profile.getResidential,
+    getContactDetail:profile.getContactDetail,
+    getPersonalInfo: profile.getPersonalInfo,
+    getStates: profile.getStates,
+    nextOfKinsRelationship: profile.nextOfKinsRelationship
+
 });
 
 //export defualt appReducer;
 export default rootReducer;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
