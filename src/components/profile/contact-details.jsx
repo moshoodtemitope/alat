@@ -368,12 +368,6 @@ CheckIfStoreInformationIsSet = () => {
                                 result = null;
                                 break;
                             }
-                    // case 'street2':
-                    //         if(this.state[x] == null || this.state[x] == ""){
-                    //             console.log(x)
-                    //             result = null;
-                    //             break;
-                    //         }
                 }
             }
             
@@ -393,6 +387,7 @@ CheckIfStoreInformationIsSet = () => {
        }
    }
 
+   
    InitiateNetworkCall = () => {
       let data = null;
       console.log(this.state.checkBoxStatus);
@@ -405,7 +400,7 @@ CheckIfStoreInformationIsSet = () => {
                     phoneNumber: parseInt(this.state.phoneNumber),
                     alternatePhoneNumber: parseInt(this.state.alternatePhoneNumber),
                     country: "Nigeria", 
-                    mailingCountry: 'Nigeria',
+                    mailingCountry: 'Nigeria', 
                     mailingStateId: parseInt(this.state.stateGvId),
                     mailingCityId: parseInt(this.state.localGvId),
                     pin: parseInt(this.state.Pin),
@@ -454,17 +449,17 @@ CheckIfStoreInformationIsSet = () => {
     //   return;
       this.props.dispatch(actions.addContactDetails(this.state.user.token, data));
    }
-
+   
    SetBvNNumber = (event) => {
        this.setState({bvnNumber: event.target.value});
    }
-
+   
    SetBirthDay = (birthDate) => {
         this.setState({  
             birthDate: birthDate
         });
    }  
-
+   
    NavigateToSuccessPage = () => {
        history.push('/profile-success-message');
    }
@@ -498,7 +493,7 @@ CheckIfStoreInformationIsSet = () => {
        this.checkApartmentValidity2();
        this.checkSectorValidity();
        console.log('code got here');
- 
+    
        switch(this.checkValidity()){
            case null:
              console.log('Empty value was found');
@@ -560,7 +555,7 @@ CheckIfStoreInformationIsSet = () => {
      } 
 
     checkAlternatePhoneNumberValidity = () => {
-       if(this.state.alternateEmail == null || this.state.alternateEmail == ""){
+       if(this.state.alternatePhoneNumber == null || this.state.alternatePhoneNumber == ""){
            this.setState({alternatePhoneNumberValidity: true});
        }else{
            this.setState({alternatePhoneNumberValidity: false});
@@ -1291,17 +1286,15 @@ GetUserProfileMenu = () => {
                 </Fragment>      
             )
         }
-
    }
 }
 
 const mapStateToProps = (state) => {
-    return {
+    return { 
         profileMenu:state.profileMenu,
         getContactDetail:state.getContactDetail,
         alert:state.alert,
         addContactDetails:state.addContactDetails
-
     }
 }
 
