@@ -10,6 +10,8 @@ import {history} from '../../_helpers/history';
 import {profile} from '../../redux/constants/profile/profile-constants';
 import {occupationAndSector, getResidentialDetails, getContactDetails,getPersonalInfo,getStates} from "../../redux/actions/profile/profile-action"
 import moment from 'moment';
+import AlatPinInput from '../../shared/components/alatPinInput';
+
 
 class PersonalInfoMation extends Component {
    constructor(props){
@@ -65,8 +67,12 @@ class PersonalInfoMation extends Component {
         isContactDetails: false,
         isDocument: false,
         navToNextOfKin: false,
-        isImageUploaded: false
+        isImageUploaded: false,
+        Pin:"",
+        isPinInvalid: false,
+
        }
+       this.handleAlatPinChange = this.handleAlatPinChange.bind(this)
 
        this.fetchOccupation();
        this.fetchResidentialDetails();
@@ -598,7 +604,7 @@ GetUserProfileMenu = () => {
                         </div>
                     </div>
                 </div>
-                <p>Loading Profile Information ...</p>
+                <p className="loading-info">Loading Profile Information ...</p>
                 </div>
                 </div>
                 </div>
@@ -702,7 +708,7 @@ GetUserProfileMenu = () => {
                                                 <div className="form-row center-alignment">
                                                             <div className={TitleValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                 <label className="label-text">Title</label>
-                                                                <select className="select-size" onChange={this.SetInputValue} name="title" placeholder="title">
+                                                                <select className="select-size" onChange={this.SetInputValue} name="title" className="input-border-radius" placeholder="title">
                                                                     <option value="Mr">Mr</option>
                                                                     <option value="Mrs">Mrs</option>
                                                                     <option value="Dr">Dr</option>
@@ -713,7 +719,7 @@ GetUserProfileMenu = () => {
     
                                                             <div className={MaritalStatusValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                 <label className="label-text">Marital Status</label>
-                                                                <select className="select-size select-married" onChange={this.SetInputValue} name="maritalStatus" placeholder="marital status">
+                                                                <select className="select-size select-married input-border-radius" onChange={this.SetInputValue} name="maritalStatus" placeholder="marital status">
                                                                     
                                                                     <option value="Mr">Married</option>
                                                                     <option value="Mrs">Single</option>
@@ -724,14 +730,14 @@ GetUserProfileMenu = () => {
                                                 <div className="form-row">
                                                             <div className={SurnameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                 <label className="label-text">Surname Name</label>
-                                                                <input type="text" name="SurName" className="form-control" onChange={this.SetInputValue} placeholder="Surname"/>
+                                                                <input type="text" name="SurName" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="Surname"/>
                                                             </div>
                                                 </div>
     
                                                 <div className="form-row">
                                                             <div className={FirstNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                 <label className="label-text">First Name</label>
-                                                                <input type="text" name="FirstName" className="form-control" onChange={this.SetInputValue} placeholder="First Name"/>
+                                                                <input type="text" name="FirstName" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="First Name"/>
                                                             </div>
                                                 </div>
                                                 
@@ -739,14 +745,14 @@ GetUserProfileMenu = () => {
                                                 <div className="form-row">
                                                             <div className={OtherNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                 <label className="label-text">Other Name</label>
-                                                                <input type="text" name="OtherName" className="form-control" onChange={this.SetInputValue} placeholder="Other Name"/>
+                                                                <input type="text" name="OtherName" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="Other Name"/>
                                                             </div>
                                                 </div>
                                                
                                                 <div className="form-row">
                                                             <div className={GenderValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                 <label className="label-text">Gender</label>
-                                                                <select className="select-size" onChange={this.SetInputValue} name="Gender" placeholder="Gender">
+                                                                <select className="select-size input-border-radius" onChange={this.SetInputValue} name="Gender" placeholder="Gender">
                                                                     <option value=""> </option>
                                                                     <option value="Male"> Male </option>
                                                                     <option value="Female"> Female</option>
@@ -755,7 +761,7 @@ GetUserProfileMenu = () => {
     
                                                             <div className={DateOfBirthValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                     <label className="label-text">Date of Birth</label>
-                                                                    <DatePicker className="form-control date-picker-size" selected={birthDate} 
+                                                                    <DatePicker className="form-control date-picker-size input-border-radius" selected={birthDate} 
                                                                     placeholder="June 31, 2019"
                                                                     dateFormat=" MMMM d, yyyy"
                                                                     showMonthDropdown
@@ -770,12 +776,12 @@ GetUserProfileMenu = () => {
                                                 <div className="form-row">
                                                             <div className={NationalityValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                 <label className="label-text">Nationality</label>
-                                                                <input type="text" name="Nationality" className="form-control enter-national" onChange={this.SetInputValue} placeholder="Nationality"/>
+                                                                <input type="text" name="Nationality" className="form-control input-border-radius enter-national" onChange={this.SetInputValue} placeholder="Nationality"/>
                                                             </div>
     
                                                             <div className={StateOfOriginValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                 <label className="label-text">State of Origin</label>
-                                                                <select className="select-size state-origin" onChange={this.SetInputValue} name="StateOfOrigin" >
+                                                                <select className="select-size state-origin input-border-radius" onChange={this.SetInputValue} name="StateOfOrigin" >
                                                                         <option>Select State of Origin</option>
                                                                         {                                      
                                                                             getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
@@ -792,7 +798,7 @@ GetUserProfileMenu = () => {
                                                 <div className="form-row">
                                                             <div className={LocalGovValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                 <label className="label-text">Local Government</label>
-                                                                <select className="select-size" onChange={this.SetInputValue} name="StateOfOrigin" >
+                                                                <select className="select-size input-border-radius" onChange={this.SetInputValue} name="StateOfOrigin" >
                                                                         <option>Select Local Government</option>
                                                                         {                                      
                                                                             getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
@@ -808,26 +814,26 @@ GetUserProfileMenu = () => {
     
                                                             <div className={PlaceOfBirthValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                 <label className="label-text">Place of Birth (State of Origin)</label>
-                                                                <input type="text" name="PlaceOfBirth" className="birth-place form-control " onChange={this.SetInputValue} placeholder="Place of Birth"/>
+                                                                <input type="text" name="PlaceOfBirth" className="birth-place form-control input-border-radius" onChange={this.SetInputValue} placeholder="Place of Birth"/>
                                                             </div>
                                                 </div>
                                                 
                                                 <div className="form-row">
                                                             <div className={MothersMaidenNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                 <label className="label-text">Mothers Maiden Name</label>
-                                                                <input type="text" name="mothersMaidenName" className="form-control" onChange={this.SetInputValue} placeholder="First Name"/>
+                                                                <input type="text" name="mothersMaidenName" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="First Name"/>
                                                             </div>
                                                 </div>
                                                
                                                 <div className="form-row">
                                                 <div className={BVNValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                 <label className="label-text">BVN</label>
-                                                                <input type="Number" name= "BVNnumber" className="form-control enter-bvn" onChange={this.SetBvNNumber} placeholder="0000 0000 0000"/>
+                                                                <input type="Number" name= "BVNnumber" className="form-control enter-bvn input-border-radius" onChange={this.SetBvNNumber} placeholder="0000 0000 0000"/>
                                                             </div>
     
                                                             <div className={EmploymentValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                 <label className="label-text">Employment Status</label>
-                                                                <select className="select-size" onChange={this.SetInputValue} name="EmploymentStatus" >
+                                                                <select className="select-size input-border-radius" onChange={this.SetInputValue} name="EmploymentStatus" >
                                                                         <option>Select Employment Status</option>
                                                                         {                                      
                                                                             occupationAndSector.message === profile.OCCU_AND_SECTOR_SUCCESS && 
@@ -844,28 +850,28 @@ GetUserProfileMenu = () => {
                                                 <div className="form-row">
                                                             <div className={EmployersNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                 <label className="label-text">Employer's Name</label>
-                                                                <input type="text" name="EmployerName" className="form-control" onChange={this.SetInputValue} placeholder="Employers Name"/>
+                                                                <input type="text" name="EmployerName" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="Employers Name"/>
                                                             </div>
                                                 </div>
                                               
                                                 <div className="form-row">
                                                             <div className={EmailAddressValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                 <label className="label-text">Employer's Address</label>
-                                                                <input type="text" name="EmployersAddress" className="form-control" onChange={this.SetInputValue} placeholder="Employers Address"/>
+                                                                <input type="text" name="EmployersAddress" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="Employers Address"/>
                                                             </div>
                                                 </div>
     
                                                 <div className="form-row">
                                                             <div className={EmployerPhoneNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                 <label className="label-text">Employer's Phone Number</label>
-                                                                <input type="number" name="EmployerPhoneNumber" className="form-control" onChange={this.SetInputValue} placeholder="Employers Phone Number"/>
+                                                                <input type="number" name="EmployerPhoneNumber" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="Employers Phone Number"/>
                                                             </div>
                                                 </div>
                                                 
                                                 <div className="form-row">
                                                             <div className={SectorValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                 <label className="label-text">Sector</label>
-                                                                     <select className="select-size select-sector-occupation" onChange={this.SetInputValue} name="Sector" >
+                                                                     <select className="select-size select-sector-occupation input-border-radius" onChange={this.SetInputValue} name="Sector" >
                                                                         <option>Select Sector</option>
                                                                         {                                      
                                                                             occupationAndSector.message === profile.OCCU_AND_SECTOR_SUCCESS && 
@@ -883,7 +889,7 @@ GetUserProfileMenu = () => {
                                                             <div className={OccupationValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                 <label className="label-text">Occupation</label>
                                                                 
-                                                                    <select className="select-size select-sector-occupation" onChange={this.SetInputValue}  name="Occupation">
+                                                                    <select className="select-size select-sector-occupation input-border-radius" onChange={this.SetInputValue}  name="Occupation">
                                                                         <option>Select Occupation</option>
                                                                         {                                      
                                                                             occupationAndSector.message === profile.OCCU_AND_SECTOR_SUCCESS && 
@@ -900,7 +906,12 @@ GetUserProfileMenu = () => {
                                                 <div className="form-row">
                                                             <div className={PinValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                 <label className="label-text">Alat Pin</label>
-                                                                <input type="text" name="AlatPin" className="form-control" onChange={this.SetInputValue} placeholder="Alat Pin"/>
+                                                                <AlatPinInput
+                                                                    value={this.state.Pin}
+                                                                    onChange={this.handleAlatPinChange}
+                                                                    PinInvalid={this.state.isPinInvalid}
+                                                                    maxLength={4} />
+                                                                {/* <input type="text" name="AlatPin" className="form-control" onChange={this.SetInputValue} placeholder="Alat Pin"/> */}
                                                             </div>
                                                 </div>
                                                 <div className="align-button">

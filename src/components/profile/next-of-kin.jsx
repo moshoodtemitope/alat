@@ -7,12 +7,17 @@ import { Link, NavLink, Route } from 'react-router-dom';
 import InnerContainer from '../../shared/templates/inner-container';
 import {history} from '../../_helpers/history';
 import { ToggleButton }  from '../../shared/elements/_toggle';
-import { getContactDetails} from "../../redux/actions/profile/profile-action";
+import { getContactDetails,getResidentialDetails,nextOfKinsRelationship} from "../../redux/actions/profile/profile-action";
 import {profile} from '../../redux/constants/profile/profile-constants';
 import {connect} from 'react-redux';
 import moment from 'moment';
+import AlatPinInput from '../../shared/components/alatPinInput';
+import { Switch } from '../../shared/elements/_toggle';
 
 
+var residentialAddress = null;
+var theState = null;
+var theCity = null;
 class NextOfKin extends Component {   
     constructor(props){
         super(props);
@@ -96,12 +101,15 @@ class NextOfKin extends Component {
           isContactDetails: false,
           isDocument: false,
           navToNextOfKin: false,
-          isImageUploaded: false
-         
+          isImageUploaded: false,
+          Pin: "",
+          isPinInvalid: false
         }
+        this.handleAlatPinChange=this.handleAlatPinChange.bind(this)
         this.fetchResidentialAddress();
         this.fetchContactDetails();
         this.GetUserProfileMenu();
+        this.fetchNextOfKin();
     }
 
     componentDidMount = () => {
@@ -130,6 +138,10 @@ class NextOfKin extends Component {
         const { dispatch } = this.props;
         dispatch(actions.getContactDetails(this.state.user.token));
     };
+    fetchNextOfKin(){
+        const {dispatch}=this.props;
+        dispatch(actions.nextOfKinsRelationship(this.state.user.token))
+    }
  
     SetBVNValidityStatus = () => {
        console.log();
@@ -139,7 +151,7 @@ class NextOfKin extends Component {
            this.setState({BVNValidity: false});
        }
     }
-    
+
     SetDateValidity = () => {
         if(this.state.birthDate == null || this.state.birthDate == ""){
             this.setState({dateValidity: true});
@@ -148,8 +160,6 @@ class NextOfKin extends Component {
         }
     }
 
-
- 
     checkValidity = () => {
         let result = 'valid';
         for(let x in this.state){
@@ -174,7 +184,7 @@ class NextOfKin extends Component {
                              break;
                          }
  
-                 case 'AlatPin':
+                 case 'Pin':
                          if(this.state[x] == null || this.state[x] == ""){
                              console.log(x)
                              result = null;
@@ -333,33 +343,98 @@ class NextOfKin extends Component {
         console.log(result);
         return result;
     }
+
+    checkValidity2 = () => {
+        let result = 'valid';
+        for(let x in this.state){
+             switch(x){
+                 case 'bvnNumber':
+                         if(this.state[x] == null || this.state[x] == ""){
+                             console.log(x)
+                             result = null;
+                             break;
+                         }
  
-    InitiateNetworkCall = () => {
-        let data = {
-            gender: this.state.Gender,
-            dateOfBirth: this.state.birthDate,
-            title: this.state.title,
-            relationship: this.state.relationship,
-            firstName: this.state.FirstName,
-            surname: this.state.SurName,
-            otherNames: this.state.OtherName,
-            phoneNumber: this.state.phoneNumber,
-            email: this.state.EmailAddress,
-            bvNumber: this.state.nextOfKinBVN,
-            streetAddress: this.state.street,
-            landMark: this.state.busStop,
-            country: this.state.Nationality,
-            state: this.state.StateOfOrigin,
-            town: this.state.LocalGv,
-            isAddressSame: false,
-            pin: this.state.AlatPin,
-            address: this.state.address
-        }
-          
-          console.log(data);
-          return;
-        this.props.dispatch(actions.linkBVN(this.state.user.token, data));
+                 case 'birthDate':
+                         if(this.state[x] == null || this.state[x] == ""){
+                             console.log(x)
+                             result = null;
+                             break;
+                         }
+
+                 case 'Pin':
+                         if(this.state[x] == null || this.state[x] == ""){
+                             console.log(x)
+                             result = null;
+                             break;
+                         }
+ 
+                 case 'phoneNumber':
+                         if(this.state[x] == null || this.state[x] == ""){
+                             console.log(x)
+                             result = null;
+                             break;
+                         }
+
+                case 'relationship':
+                         if(this.state[x] == null || this.state[x] == ""){
+                             console.log(x)
+                             result = null;
+                             break;
+                         }
+
+                 case 'SurName':
+                         if(this.state[x] == null || this.state[x] == ""){
+                             console.log(x)
+                             result = null;
+                             break;
+                         }
+
+                 case 'EmailAddress':
+                         if(this.state[x] == null || this.state[x] == ""){
+                             console.log(x)
+                             result = null;
+                             break;
+                         }
+
+                 case 'FirstName':
+                         if(this.state[x] == null || this.state[x] == ""){
+                             console.log(x)
+                             result = null;
+                             break;
+                         }
+ 
+                 case 'OtherName':
+                         if(this.state[x] == null || this.state[x] == ""){
+                             console.log(x)
+                             result = null;
+                             break;
+                         }
+
+                 case 'Gender':
+                         if(this.state[x] == null || this.state[x] == ""){
+                             console.log(x)
+                             result = null;
+                             break;
+                         }
+            
+                 case 'title':
+                         if(this.state[x] == null || this.state[x] == ""){
+                             console.log(x)
+                             result = null;
+                             break;
+                         }
+             
+             }
+
+             console.log(result)
+             return result;
+         }
+ 
+        console.log(result);
+        return result;
     }
+ 
  
     SetBvNNumber = (event) => {
         this.setState({bvnNumber: event.target.value});
@@ -412,20 +487,86 @@ class NextOfKin extends Component {
  
 
         console.log('code got here');
- 
-        // return;
+        // const checkStatus = this.state.checkBoxStatus;
+        // return; 
         console.log('was fired');
-        this.InitiateNetworkCall();
-        return;
+        // this.InitiateNetworkCall();
+        // return;
 
-        switch(this.checkValidity()){
+        const checkStatus = this.state.checkBoxStatus;
+        
+        switch(checkStatus){
+            case true:
+               this.sameMailingAddress();
+               break;
+            case false:
+               this.NotSameAddress();
+        }
+    }
+
+    NotSameAddress = () => {
+        switch(this.checkValidity2()){
+            case 'valid':
+                let data = {
+                    gender: this.state.Gender,
+                    dateOfBirth: this.state.birthDate,
+                    title: this.state.title,
+                    relationship: this.state.relationship,
+                    firstName: this.state.FirstName,
+                    surname: this.state.SurName,
+                    otherNames: this.state.OtherName,
+                    phoneNumber: this.state.phoneNumber,
+                    email: this.state.EmailAddress,
+                    bvNumber: this.state.nextOfKinBVN,
+                    streetAddress: this.state.street,
+                    landMark: this.state.busStop,
+                    country: this.state.Nationality,
+                    state: this.state.StateOfOrigin,
+                    town: this.state.LocalGv,
+                    isAddressSame: false,
+                    pin: this.state.Pin,
+                    address: this.state.address
+                }
+          
+                console.log(data);
+                // return;
+                this.props.dispatch(actions.addNextOfKin(this.state.user.token, data));
+                break;
             case null:
-              console.log('Empty value was found');
-              break;
-            case 'valid': 
-              console.log("No Empty Value Found");
-            //   this.InitiateNetworkCall();
-              break;
+                console.log('Network was not called');
+        }
+    }
+
+    sameMailingAddress = () => {
+        switch(this.checkValidity()){
+            case 'valid':
+                let data = {
+                    Gender: this.state.Gender,
+                    dateOfBirth: this.state.birthDate,
+                    title: this.state.title,
+                    relationship: this.state.relationship,
+                    firstName: this.state.FirstName,
+                    surname: this.state.SurName,
+                    otherNames: this.state.OtherName,
+                    phoneNumber: this.state.phoneNumber,
+                    email: this.state.EmailAddress,
+                    bvNumber: this.state.nextOfKinBVN,
+                    streetAddress: residentialAddress.street,
+                    landMark: residentialAddress.landmark,
+                    country: 'Nigeria',
+                    state: theState,
+                    town: theCity,
+                    isAddressSame: true,
+                    pin: this.state.Pin,
+                    address: residentialAddress.address
+                }
+
+                console.log(data);
+                // return;
+                this.props.dispatch(actions.addNextOfKin(this.state.user.token, data));
+                break;
+            case null:
+                console.log('network was not called');
         }
     }
     
@@ -434,7 +575,13 @@ class NextOfKin extends Component {
         this.setState({[name] : event.target.value});
         console.log("  was just invoked");
     } 
-
+    handleAlatPinChange(pin) {
+        this.setState({ Pin: pin })
+        if (this.state.isSubmitted) {
+            if (pin.length != 4)
+           this.setState({isPinInvalid : false})
+        }
+    }
 
     checkTitleValidity = () => {
          if(this.state.title == null || this.state.title == ""){
@@ -445,7 +592,7 @@ class NextOfKin extends Component {
     }
  
      checkrelationshipValidity = () => {
-         if(this.state.relationship == null || this.state.relationship == ""){
+         if(this.state.relationship == null || this.state.relationship == "" || this.state.relationship == "Select Relationship"){
              this.setState({relationshipValidity: true});
          }else{
              this.setState({relationshipValidity: false});
@@ -453,7 +600,7 @@ class NextOfKin extends Component {
      }
  
      checkPinValidity = () => {
-         if(this.state.AlatPin == null || this.state.AlatPin == ""){
+         if(this.state.Pin == null || this.state.Pin == ""){
              this.setState({PinValidity: true});
          }else{
              this.setState({PinValidity: false});
@@ -513,13 +660,7 @@ class NextOfKin extends Component {
              this.setState({LocalGovValidity: false});
          }
      }
-    //  checkcityValidity = () => {
-    //      if(this.state.city == null || this.state.city == ""){
-    //          this.setState({cityValidity: true});
-    //      }else{
-    //          this.setState({cityValidity: false});
-    //      }
-    //  } 
+    
      checkNationalityValidity = () => {
          if(this.state.Nationality == null || this.state.Nationality == ""){
              this.setState({NationalityValidity: true});
@@ -680,18 +821,6 @@ class NextOfKin extends Component {
             this.setState({streetCompoundValidity: false});
         }
     }
-
-    HandleCheckBoxInput = () => {
-        this.setState({checkBoxStatus: !this.state.checkBoxStatus}, () => {
-            if (this.state.checkBoxStatus) {
-                   this.setState({sameAddressAsAbove: "sameAddressAsAbove"})  
-            }
-            else {
-                   this.setState({sameAddressAsAbove: "notSameAddressAsAbove"})
-            }  
-        })
-    }
-
  
     NavigateToSuccessPage = () => {
         history.push('/profile/profile-success-message');
@@ -747,19 +876,49 @@ class NextOfKin extends Component {
         this.props.dispatch(actions.profileSuccessMessage(data));
     }
 
-    // UseGottenStateInfo = () => { 
-    //     let cityData = this.props.getContactDetail.data.response.cities;
-    //     let stateData = this.props.getContactDetail.data.response.states;
-  
-    //     allStatesInfo = stateData;
-    //     allCityData = cityData;
+    HandleCheckBoxInput = () => {
+        this.setState({checkBoxStatus: !this.state.checkBoxStatus}, () => {
+            if (this.state.checkBoxStatus) {
+                   this.setState({sameAddressAsAbove: "sameAddressAsAbove"})  
+            }
+            else {
+                   this.setState({sameAddressAsAbove: "notSameAddressAsAbove"})
+            }  
+        })
+    }
  
-    //     console.log(stateData);
-    //     console.log(cityData);
-    // }
 
     GetUserProfileMenu = () => {
         this.props.dispatch(actions.profileMenu(this.state.user.token));
+    }
+
+    handleAlatPinChange(pin) {
+        this.setState({ Pin: pin })
+        if (this.state.isSubmitted) {
+            if (pin.length != 4)
+           this.setState({isPinInvalid : false})
+        }
+    }
+
+    StoreResidentialDetails = () => {
+        residentialAddress = this.props.getResidential.data.response.residentialAddress;
+        console.log(residentialAddress);
+        console.log('Residential Address');
+    }
+
+    StoreLocationInformation = () => {
+        let states = this.props.getContactDetail.data.response.states;
+        states.map(element => {
+            if(element.cityId == residentialAddress.stateId)
+                   theState = element.name;
+        });
+
+        let cities = this.props.getContactDetail.data.response.cities;
+        cities.map(element => {
+            // console.log(element.cityId);
+            if(element.cityId == residentialAddress.town)
+                 theCity = element.name;
+        });
     }
     
    render(){
@@ -767,8 +926,17 @@ class NextOfKin extends Component {
         EmailAddressValidity, cityValidity, streetValidity, GenderValidity, busstopValidity, DateOfBirthValidity, FirstNameValidity, OtherNameValidity
         } = this.state;
 
-        const {profileMenu, getContactDetail} = this.props;
+        const {profileMenu, getContactDetail, nextOfKinsRelationship,getResidential} = this.props;
         
+        if(getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS 
+            && getResidential.message === profile.GET_RESIDENTIAL_SUCCESS){
+            this.StoreLocationInformation();
+        }
+
+        if(getResidential.message === profile.GET_RESIDENTIAL_SUCCESS){
+             this.StoreResidentialDetails();
+        }
+
         if(profileMenu.message === profile.GET_PROFILE_MENU_PENDING){
             return(
                 <Fragment>
@@ -863,7 +1031,7 @@ class NextOfKin extends Component {
                                                     <div className="form-row">
                                                                 <div className={TitleValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                     <label className="label-text">Title</label>
-                                                                    <select onChange={this.SetInputValue} name="title" placeholder="title">
+                                                                    <select onChange={this.SetInputValue} name="title" placeholder="title" className="input-border-radius height-39">
                                                                         <option value="Mr">Mr</option>
                                                                         <option value="Mrs">Mrs</option>
                                                                         <option value="Dr">Dr</option>
@@ -874,9 +1042,17 @@ class NextOfKin extends Component {
         
                                                                 <div className={relationshipValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                     <label className="label-text">Relationship</label>
-                                                                    <select onChange={this.SetInputValue} name="relationship" placeholder="marital status">
-                                                                        <option value="Sister">Sister</option>
-                                                                        <option value="Brother">Brother</option>
+                                                                    <select onChange={this.SetInputValue} name="relationship" className="input-border-radius height-39" placeholder="marital status">
+                                                                    <option  value="Select Relationship">Select Relationship</option>
+                                                                    {
+                                                                        nextOfKinsRelationship.message === profile.GET_NEXT_OF_KIN_RELATIONSHIP_SUCCESS && 
+                                                                        nextOfKinsRelationship.data.response.map(relationship=> {
+                                                                    
+                                                                            return <option value={relationship}>{relationship}</option>
+                                                                        })
+
+                                                                    }
+                                                                    
                                                                     </select>
                                                                 </div>
                                                     </div>
@@ -927,7 +1103,7 @@ class NextOfKin extends Component {
                                                     <div className="form-row">
                                                                 <div className={GenderValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                     <label className="label-text">Gender</label>
-                                                                    <select className="select-gender" onChange={this.SetInputValue} name="Gender" placeholder="Gender">
+                                                                    <select className="select-gender input-border-radius" onChange={this.SetInputValue} name="Gender" placeholder="Gender">
                                                                         <option value=""> </option>
                                                                         <option value="Male"> Male </option>
                                                                         <option value="Female"> Female</option>
@@ -954,45 +1130,59 @@ class NextOfKin extends Component {
                                                               <div>Next of Kin Full Address</div>
                                                            </div>
                                                     </div>
+
+                                                    <div className="form-row space-between">
+                                                           <div className="form-group col-md-6">
+                                                                <p className="text-size-14">Same As Mine</p>
+                                                           </div>
+
+                                                           <div class="custom-control custom-switch float-right">
+                                                                 <Switch isChecked={this.state.checkBoxStatus} handleToggle={this.HandleCheckBoxInput} />  
+                                                           </div>
+                                                    </div>
                                                     
                                                     
-                                                    <div className={"form-row"}>
+                                                    <div className={sameAddressAsAbove + " " + "form-row"}>
                                                                 <div className={streetValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text"> Address </label>
-                                                                    <input type="text" name="address" className="form-control" onChange={this.SetInputValue} placeholder="Address"/>
+                                                                    <input type="text" name="address" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="Address" />
                                                                 </div>
                                                     </div>
-        
-                                                    <div className={"form-row"}>
+                                         
+                                                    <div className={sameAddressAsAbove + " " + "form-row"}>
                                                                 <div className={streetCompoundValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                                    <label className="label-text">Streat / Compound Name</label>
-                                                                    <input type="text" name="street" className="form-control" onChange={this.SetInputValue} placeholder="Streat / Compound Name"/>
+                                                                    <label className="label-text">Street / Compound Name</label>
+                                                                    <input type="text" name="street" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="Streat / Compound Name" />
                                                                 </div>
                                                     </div>
         
-                                                    <div className={"form-row"}>
+                                                    <div className={sameAddressAsAbove + " " + "form-row"}>
                                                                 <div className={busstopValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text">Nearest Bustop</label>
-                                                                    <input type="text" name="busStop" className="form-control" onChange={this.SetInputValue} placeholder="Nearest Bus - stop"/>
+                                                                    <input type="text" name="busStop" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="Nearest Bus - stop"/>
                                                                 </div>
                                                     </div>
         
         
-                                                    <div className={"form-row"}>
+                                                    <div className={sameAddressAsAbove + " " + "form-row"}>
                                                                 <div className={NationalityValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                     <label className="label-text">Nationality</label>
-                                                                    <input type="text" name="Nationality" className="form-control" value="Nigeria" readOnly onChange={this.SetInputValue} placeholder="Nationality"/>
+                                                                    <select name="Nationality" value="Nigeria" className="form-control input-border-radius" onChange={this.SetInputValue}>
+                                                                         <option value="Nigeria">Nigeria</option>
+                                                                    </select>
+
+                                                                    {/* <input type="text" name="Nationality" className="form-control" value="Nigeria" readOnly onChange={this.SetInputValue} placeholder="Nationality"/> */}
                                                                 </div>
                                                       
                                                                 <div className={StateOfOriginValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                     <label className="label-text">State of Origin</label>
-                                                                    <select name="StateOfOrigin" className="form-control" onChange={this.SetInputValue}>
+                                                                    <select name="StateOfOrigin"  className="form-control input-border-radius" onChange={this.SetInputValue}>
                                                                             <option>Select State of Origin</option>
                                                                             {                                      
                                                                                 getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
-                                                                                getContactDetail.data.response.states.map(state=> {
+                                                                                getContactDetail.data.response.states.map(state => {
                                                                             
-                                                                                    return <option value={state}>
+                                                                                    return <option value={state.name}>
                                                                                     {state.name}</option>
                                                                                 })
                                                                             }     
@@ -1001,10 +1191,10 @@ class NextOfKin extends Component {
                                                                 </div>
                                                     </div>
                         
-                                                    <div className={"form-row"}>
+                                                    <div className={sameAddressAsAbove + " " + "form-row"}>
                                                                 <div className={LocalGovValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text">Local Government</label>
-                                                                    <select name="LocalGv" className="form-control" onChange={this.SetInputValue} >
+                                                                    <select name="LocalGv" className="form-control input-border-radius" onChange={this.SetInputValue} >
                                                                             <option>Select Local Government</option>
                                                                             {                                      
                                                                                 getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
@@ -1022,8 +1212,13 @@ class NextOfKin extends Component {
                                                            
                                                     <div className="form-row">
                                                                 <div className={PinValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                                    <label className="label-text">Alat Pin</label>
-                                                                    <input type="number" name="AlatPin" className="form-control" onChange={this.SetInputValue} placeholder="Alat Pin"/>
+                                                                    {/* <label className="label-text">Alat Pin</label> */}
+                                                                    <AlatPinInput
+                                                                    value={this.state.Pin}
+                                                                    onChange={this.handleAlatPinChange}
+                                                                    PinInvalid={this.state.isPinInvalid}
+                                                                    maxLength={4} />
+                                                                    {/* <input type="number" name="AlatPin" className="form-control" onChange={this.SetInputValue} placeholder="Alat Pin"/> */}
                                                                 </div>
                                                     </div>
                                                     <div className="align-button">
@@ -1075,7 +1270,6 @@ class NextOfKin extends Component {
         }
 
         if(profileMenu.data == undefined){
-            // console.log('this was fired');
             this.GetUserProfileMenu();
             return(
                 <Fragment>
@@ -1171,7 +1365,7 @@ class NextOfKin extends Component {
                                                     <div className="form-row">
                                                                 <div className={TitleValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                     <label className="label-text">Title</label>
-                                                                    <select onChange={this.SetInputValue} name="title" placeholder="title">
+                                                                    <select onChange={this.SetInputValue} name="title" placeholder="title" className="input-border-radius height-39">
                                                                         <option value="Mr">Mr</option>
                                                                         <option value="Mrs">Mrs</option>
                                                                         <option value="Dr">Dr</option>
@@ -1181,8 +1375,8 @@ class NextOfKin extends Component {
                                                                 </div>
         
                                                                 <div className={relationshipValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                                    <label className="label-text">Relationship</label>
-                                                                    <select onChange={this.SetInputValue} name="relationship" placeholder="marital status">
+                                                                    <label className="label-text">Relationship </label>
+                                                                    <select onChange={this.SetInputValue} name="relationship" placeholder="marital status" className="input-border-radius height-39">
                                                                         <option value="Sister">Sister</option>
                                                                         <option value="Brother">Brother</option>
                                                                     </select>
@@ -1192,14 +1386,14 @@ class NextOfKin extends Component {
                                                     <div className="form-row">
                                                                 <div className={SurnameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text">Surname</label>
-                                                                    <input type="text" name="SurName" className="form-control" onChange={this.SetInputValue} placeholder="Surname"/>
+                                                                    <input type="text" name="SurName" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="Surname"/>
                                                                 </div>
                                                     </div>
         
                                                     <div className="form-row">
                                                                 <div className={FirstNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text">First Name</label>
-                                                                    <input type="text" name="FirstName" className="form-control" onChange={this.SetInputValue} placeholder="First Name"/>
+                                                                    <input type="text" name="FirstName" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="First Name"/>
                                                                 </div>
                                                     </div>
                                                     
@@ -1207,35 +1401,35 @@ class NextOfKin extends Component {
                                                     <div className="form-row">
                                                                 <div className={OtherNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text">Other Name</label>
-                                                                    <input type="text" name="OtherName" className="form-control" onChange={this.SetInputValue} placeholder="Other Name"/>
+                                                                    <input type="text" name="OtherName" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="Other Name"/>
                                                                 </div>
                                                     </div>
                            
                                                     <div className="form-row">
                                                                 <div className={phoneNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text">Phone Number</label>
-                                                                    <input type="number" name="phoneNumber" className="form-control" onChange={this.SetInputValue} placeholder="Telephone"/>
+                                                                    <input type="number" name="phoneNumber" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="Telephone"/>
                                                                 </div>
                                                     </div>       
         
                                                     <div className="form-row">
                                                                 <div className={EmailAddressValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text">Email</label>
-                                                                    <input type="email" name="EmailAddress" className="form-control" onChange={this.SetInputValue} placeholder="Email"/>
+                                                                    <input type="email" name="EmailAddress" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="Email"/>
                                                                 </div>
                                                     </div>
         
                                                     <div className="form-row">
                                                                 <div className="form-group col-md-12">
                                                                     <label className="label-text">Next of Kin BVN (Optional)</label>
-                                                                    <input type="number" name="nextOfKinBVN" className="form-control" onChange={this.SetInputValue} placeholder="BVN"/>
+                                                                    <input type="number" name="nextOfKinBVN" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="BVN"/>
                                                                 </div>
                                                     </div>
                                                    
                                                     <div className="form-row">
                                                                 <div className={GenderValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                     <label className="label-text">Gender</label>
-                                                                    <select className="select-gender" onChange={this.SetInputValue} name="Gender" placeholder="Gender">
+                                                                    <select className="select-gender input-border-radius" onChange={this.SetInputValue} name="Gender" placeholder="Gender">
                                                                         <option value=""> </option>
                                                                         <option value="Male"> Male </option>
                                                                         <option value="Female"> Female</option>
@@ -1244,7 +1438,7 @@ class NextOfKin extends Component {
         
                                                                 <div className={DateOfBirthValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                         <label className="label-text">Date of Birth</label>
-                                                                        <DatePicker className="form-control" selected={birthDate} 
+                                                                        <DatePicker className="form-control input-border-radius" selected={birthDate} 
                                                                         placeholder="June 31, 2019"
                                                                         dateFormat=" MMMM d, yyyy"
                                                                         showMonthDropdown
@@ -1267,21 +1461,21 @@ class NextOfKin extends Component {
                                                     <div className={"form-row"}>
                                                                 <div className={streetValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text"> Address </label>
-                                                                    <input type="text" name="address" className="form-control" onChange={this.SetInputValue} placeholder="Address"/>
+                                                                    <input type="text" name="address" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="Address"/>
                                                                 </div>
                                                     </div>
         
                                                     <div className={"form-row"}>
                                                                 <div className={streetCompoundValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text">Streat / Compound Name</label>
-                                                                    <input type="text" name="street" className="form-control" onChange={this.SetInputValue} placeholder="Streat / Compound Name"/>
+                                                                    <input type="text" name="street" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="Streat / Compound Name"/>
                                                                 </div>
                                                     </div>
         
                                                     <div className={"form-row"}>
                                                                 <div className={busstopValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text">Nearest Bustop</label>
-                                                                    <input type="text" name="busStop" className="form-control" onChange={this.SetInputValue} placeholder="Nearest Bus - stop"/>
+                                                                    <input type="text" name="busStop" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="Nearest Bus - stop"/>
                                                                 </div>
                                                     </div>
         
@@ -1289,12 +1483,12 @@ class NextOfKin extends Component {
                                                     <div className={"form-row"}>
                                                                 <div className={NationalityValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                     <label className="label-text">Nationality</label>
-                                                                    <input type="text" name="Nationality" className="form-control" value="Nigeria" readOnly onChange={this.SetInputValue} placeholder="Nationality"/>
+                                                                    <input type="text" name="Nationality" className="form-control input-border-radius" value="Nigeria" readOnly onChange={this.SetInputValue} placeholder="Nationality"/>
                                                                 </div>
                                                       
                                                                 <div className={StateOfOriginValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                     <label className="label-text">State of Origin</label>
-                                                                    <select name="StateOfOrigin" className="form-control" onChange={this.SetInputValue}>
+                                                                    <select name="StateOfOrigin" className="form-control input-border-radius" onChange={this.SetInputValue}>
                                                                             <option>Select State of Origin</option>
                                                                             {                                      
                                                                                 getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
@@ -1312,7 +1506,7 @@ class NextOfKin extends Component {
                                                     <div className={"form-row"}>
                                                                 <div className={LocalGovValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text">Local Government</label>
-                                                                    <select name="LocalGv" className="form-control" onChange={this.SetInputValue} >
+                                                                    <select name="LocalGv" className="form-control input-border-radius" onChange={this.SetInputValue} >
                                                                             <option>Select Local Government</option>
                                                                             {                                      
                                                                                 getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
@@ -1329,10 +1523,7 @@ class NextOfKin extends Component {
                                                     
                                                            
                                                     <div className="form-row">
-                                                                <div className={PinValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                                    <label className="label-text">Alat Pin</label>
-                                                                    <input type="number" name="AlatPin" className="form-control" onChange={this.SetInputValue} placeholder="Alat Pin"/>
-                                                                </div>
+                                                                
                                                     </div>
                                                     <div className="align-button">
                                                     <button disabled={this.props.addNextOfKin.message ===profile.POST_NEXT_OF_KIN_PENDING} type="submit" className="twoBut no-border">
@@ -1386,7 +1577,9 @@ const mapStateToProps = (state) => {
         nextOfKinsRelationship: state.nextOfKinsRelationship.data,
         getContactDetail:state.getContactDetail,
         alert:state.alert,
-        addNextOfKin:state.addNextOfKin
+        getResidential:state.getResidential,
+        addNextOfKin:state.addNextOfKin,
+        nextOfKinsRelationship:state.nextOfKinsRelationship
 
     }
 }
