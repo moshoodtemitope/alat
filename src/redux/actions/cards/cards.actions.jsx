@@ -479,7 +479,12 @@ export const getCurrentATMCard = (token)=>{
         dispatch(request(consume));
         return consume
             .then(response=>{
-                dispatch(success(response));
+                if(response.data.length>=1){
+                    dispatch(success(response));
+                }else{
+                    history.push("/cards");
+                }
+                
             })
             .catch(error=>{
                 if(error.response && typeof(error.response.message) !=="undefined"){
@@ -495,6 +500,7 @@ export const getCurrentATMCard = (token)=>{
                     }
                 }
                 else{
+                    console.log('error', error.response);
                     dispatch(failure('An error occured. Please try again '));
                 }
             })
@@ -739,10 +745,11 @@ export const getALATCardSettings = (token)=>{
                         })
                 }
                 else{
-                    let bulkResponse={
-                        panDetails : null
-                    }
-                    dispatch(success(bulkResponse));
+                    // let bulkResponse={
+                    //     panDetails : null
+                    // }
+                    // dispatch(success(bulkResponse));
+                    history.push("/cards");
                 }
             })
             .catch(error=>{

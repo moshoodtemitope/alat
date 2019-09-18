@@ -55,6 +55,8 @@ class StashCashout extends Component {
             return true;
         }
     }
+    
+
     handleAmount = (event) => {
         // console.log
         let intVal = event.target.value.replace(/,/g, '');
@@ -114,6 +116,7 @@ class StashCashout extends Component {
 
     render() {
         const {AmountInvalid} =this.state;
+        
         return (
             <Fragment>
 

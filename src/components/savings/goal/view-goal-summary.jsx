@@ -195,7 +195,7 @@ class ViewGroupSummary extends React.Component {
 
                                                             }
 
-                                                            <Link to={{
+                                                            <NavLink to={{
                                                                 pathname: "/savings/top-up-goal-step1",
                                                                 state: {
                                                                     name: details,
@@ -204,7 +204,7 @@ class ViewGroupSummary extends React.Component {
                                                             }}>
                                                                 <span href="#"
                                                                       className="btn-top-up-goal btn-sm border-btn">Top Up Stash</span>
-                                                            </Link>
+                                                            </NavLink>
 
                                                         </div>
 

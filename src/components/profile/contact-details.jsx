@@ -3,13 +3,15 @@ import "./profile.css";
 import DatePicker from "react-datepicker";
 import * as actions from '../../redux/actions/profile/profile-action';
 import {Fragment} from "react";
-import { Link, NavLink, Route, Switch } from 'react-router-dom';
+import { Link, NavLink} from 'react-router-dom';
 import InnerContainer from '../../shared/templates/inner-container';
 import {history} from '../../_helpers/history';
 import {profile} from '../../redux/constants/profile/profile-constants';
 import { connect } from 'react-redux';
 import { getContactDetails } from "../../redux/actions/profile/profile-action";
 import moment from 'moment';
+import { Switch } from '../../shared/elements/_toggle';
+import AlatPinInput from '../../shared/components/alatPinInput';
 
 
 var allStatesInfo = null;
@@ -28,7 +30,7 @@ class ContactDetails extends Component {
         birthDate: null,
         
         Occupation: null,
-        AlatPin: null,
+        // AlatPin: null,
         Sector: null,
         phoneNumber: null,
         BVNnumber: null,
@@ -107,8 +109,13 @@ class ContactDetails extends Component {
         isContactDetails: false,
         isDocument: false,
         navToNextOfKin: false,
-        isImageUploaded: false
+        isImageUploaded: false,
+        Pin:"",
+        isPinInvalid: false,
+
        }
+       this.handleAlatPinChange = this.handleAlatPinChange.bind(this)
+
 
        this.fetchContactDetails();
    }
@@ -150,12 +157,19 @@ CheckIfStoreInformationIsSet = () => {
            this.setState({dateValidity: false});
        }
    }
+    handleAlatPinChange(pin) {
+        this.setState({ Pin: pin })
+        if (this.state.isSubmitted) {
+            if (pin.length != 4)
+           this.setState({isPinInvalid : false})
+        }
+    }
 
    sameMailingAddress = () => {
         let result = 'valid';
             for(let x in this.state){
                 switch(x){
-                    case 'AlatPin':
+                    case 'Pin':
                             if(this.state[x] == null || this.state[x] == ""){
                                 console.log(x);
                                 result = null;
@@ -248,7 +262,7 @@ CheckIfStoreInformationIsSet = () => {
        let result = 'valid';
             for(let x in this.state){
                 switch(x){
-                    case 'AlatPin':
+                    case 'Pin':
                             if(this.state[x] == null || this.state[x] == ""){
                                 console.log(x);
                                 result = null;
@@ -332,7 +346,7 @@ CheckIfStoreInformationIsSet = () => {
                     case 'StateOfOrigin2': 
                             if(this.state[x] == null || this.state[x] == ""){
                                 console.log(x);
-                                result == null;
+                                result = null;
                                 break;
                             }
                 
@@ -394,7 +408,7 @@ CheckIfStoreInformationIsSet = () => {
                     mailingCountry: 'Nigeria',
                     mailingStateId: parseInt(this.state.stateGvId),
                     mailingCityId: parseInt(this.state.localGvId),
-                    pin: parseInt(this.state.AlatPin),
+                    pin: parseInt(this.state.Pin),
                     residentialAddress: {
                         street: this.state.street,
                         town: parseInt(this.state.localGvId),
@@ -421,7 +435,7 @@ CheckIfStoreInformationIsSet = () => {
                         mailingCountry: 'Nigeria',
                         mailingStateId: parseInt(this.state.stateGvId2),
                         mailingCityId: parseInt(this.state.localGvId2),
-                        pin: parseInt(this.state.AlatPin),
+                        pin: parseInt(this.state.Pin),
                         residentialAddress: {
                             street: this.state.street,
                             town: parseInt(this.state.localGvId),
@@ -455,7 +469,7 @@ CheckIfStoreInformationIsSet = () => {
        history.push('/profile-success-message');
    }
 
-   HandleSubmit = () => {
+   HandleSubmit = (event) => {
        event.preventDefault();
       
        this.checkPinValidity(); 
@@ -484,10 +498,7 @@ CheckIfStoreInformationIsSet = () => {
        this.checkApartmentValidity2();
        this.checkSectorValidity();
        console.log('code got here');
-    //    this.InitiateNetworkCall();
-    //    return;
-    //    console.log('was fired');
-
+ 
        switch(this.checkValidity()){
            case null:
              console.log('Empty value was found');
@@ -498,12 +509,21 @@ CheckIfStoreInformationIsSet = () => {
              break;
        }
     }
-   
-    SetInputValue = (event) => {
-        let name = event.target.name;
-        this.setState({[name] : event.target.value});
-        console.log("was just invoked");
+
+    // SetInputValue = (event) => {
+    //     let name = event.target.name;
+    //     this.setState({[name] : event.target.value}, () => console.log("Emmanuel", ));
+    //     console.log("was just invoked");
+    // }
+
+    SetInputValue = (e) => {
+        let {name, value} = e.target;
+        this.setState({
+            [name]: value
+        });
     }
+
+   
 
     SetInputValue4 = (event) => {
         let name = event.target.name;
@@ -548,7 +568,7 @@ CheckIfStoreInformationIsSet = () => {
     }
 
     checkPinValidity = () => {
-        if(this.state.AlatPin == null || this.state.AlatPin == ""){
+        if(this.state.Pin == null || this.state.Pin == ""){
             this.setState({PinValidity: true});
         }else{
             this.setState({PinValidity: false});
@@ -612,7 +632,7 @@ CheckIfStoreInformationIsSet = () => {
     } 
 
     checkNationalityValidity = () => {
-        if(this.state.Nationality == null || this.state.Nationality == ""){
+        if(this.state.Nationality == null || this.state.Nationality == "" || this.state.Nationality == "Select Country"){
             this.setState({NationalityValidity: true});
         }else{
             this.setState({NationalityValidity: false});
@@ -620,7 +640,7 @@ CheckIfStoreInformationIsSet = () => {
     }
 
     checkNationalityValidity2 = () => {
-        if(this.state.Nationality2 == null || this.state.Nationality == ""){
+        if(this.state.Nationality2 == null || this.state.Nationality2 == "" || this.state.Nationality2 == "Select Country"){
             this.setState({NationalityValidity2: true});
         }else{
             this.setState({NationalityValidity2: false});
@@ -826,35 +846,34 @@ GetUserProfileMenu = () => {
         
         if(getContactDetail.message === profile.GET_CONTACT_DETAILS_PENDING){
             console.log('NOTHING EVER HAPPENED HERE')
-        
-         return(
-             <Fragment>
-                   {/* <InnerContainer> */}
-                        <div className="dashboard-wrapper">
-                              <div className="container">
-                      <div className="coverPropertiesofComponent">
-                          <div className="col-sm-12">
-                           <p className="page-title">Account Setting</p>
-                         </div>
- 
-                 <div className="col-sm-12">
-                     <div>
-                         <div className="sub-tab-nav" style={{marginBottom: 10}}>
-                             <ul>
-                                 <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                 <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                 <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
-                             </ul>
-                         </div>
-                     </div>
-                 </div>
-                 <p>loading data ...</p>
-                 </div>
-                 </div>
-                 </div>
-                 {/* </InnerContainer> */}
-             </Fragment>      
-         )
+            return(
+                <Fragment>
+                    {/* <InnerContainer> */}
+                            <div className="">
+                                <div className="container">
+                        <div className="coverPropertiesofComponent">
+                            <div className="col-sm-12">
+                            <p className="page-title">Account Setting</p>
+                            </div>
+    
+                    <div className="col-sm-12">
+                        <div>
+                            <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                <ul>
+                                    <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
+                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <p className="loading-info">Loading data ...</p>
+                    </div>
+                    </div>
+                    </div>
+                    {/* </InnerContainer> */}
+                </Fragment>      
+            )
         }
  
         if(getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && profileMenu.message === profile.GET_PROFILE_MENU_SUCCESS){
@@ -862,7 +881,7 @@ GetUserProfileMenu = () => {
             return(
                 <Fragment>
                     {/* <InnerContainer> */}
-                            <div className="dashboard-wrapper">
+                            <div className="">
                                 <div className="container">
                                         <div className="coverPropertiesofComponent">
                                             <div className="col-sm-12">
@@ -874,12 +893,14 @@ GetUserProfileMenu = () => {
                                                     <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                                         <ul>
                                                             <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                                            <li>Pin Management</li>
-                                                            <li>Security Questions</li>
+                                                            
                                                         </ul>
                                                     </div>
                                                 </div>
                                             </div>
+                                            {this.props.alert && this.props.alert.message &&
+                                               <div style={{width: "100%", marginRight:"120px",marginLeft:"120px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>                                             
+                                            }
                                         
                                         <div className="row packageContent">
                                             <div className="col-sm-4">
@@ -919,45 +940,51 @@ GetUserProfileMenu = () => {
                                                     <div className="form-row">
                                                             <div className={houseNumberValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                             <label className="label-text">House Number</label>
-                                                                            <input type="number" name="houseNumber" className="form-control" onChange={this.SetInputValue} placeholder="1"/>
+                                                                            <input type="text" name="houseNumber" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="house number"/>
                                                                     
                                                             </div>
 
                                                             <div className={apartmentValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                             <label className="label-text">Apartment</label>
-                                                                            <input type="text" name="apartment" className="form-control" onChange={this.SetInputValue} placeholder=""/>
+                                                                            <input type="text" name="apartment" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder=""/>
                                                             </div>
                                                         
                                                     </div>
                                                     <div className="form-row">
                                                                 <div className={streetValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text">Streat / Compound Name</label>
-                                                                    <input type="text" name="street" className="form-control" onChange={this.SetInputValue} placeholder=""/>
+                                                                    <input type="text" name="street" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder=""/>
                                                                 </div>
                                                     </div>
                                                     <div className="form-row">
                                                                 <div className={busstopValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text">Nearest Bustop</label>
-                                                                    <input type="text" name="busStop" className="form-control" onChange={this.SetInputValue} placeholder=""/>
+                                                                    <input type="text" name="busStop" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder=""/>
                                                                 </div>
                                                     </div>
 
                                                     <div className="form-row">
                                                                 <div className={personalAddressValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text">Address</label>
-                                                                    <input type="text" name="personalAddress" className="form-control" onChange={this.SetInputValue} placeholder="Address"/>
+                                                                    <input type="text" name="personalAddress" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="Address"/>
                                                                 </div>
                                                     </div>
 
                                                     <div className="form-row">
                                                                 <div className={NationalityValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                     <label className="label-text">Country</label>
-                                                                    <input type="text" name="Nationality" className="form-control" onChange={this.SetInputValue} placeholder="Nationality"/>
+
+                                                                    <select name="Nationality" onChange={this.SetInputValue} className="form-control input-border-radius">
+                                                                            <option value="Select Country">Select Country</option>
+
+                                                                       <option value="Nigeria" >Nigeria</option>
+                                                                    </select>
+                                                                    {/* <input type="text" name="Nationality" className="form-control" onChange={this.SetInputValue} placeholder="Nationality"/> */}
                                                                 </div>
 
                                                                 <div className={StateOfOriginValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                     <label className="label-text">State</label>
-                                                                    <select name="StateOfOrigin" className="form-control" onChange={this.SetInputValue5}>
+                                                                    <select name="StateOfOrigin" className="form-control input-border-radius" onChange={this.SetInputValue5}>
                                                                             <option>Select State of Origin</option>
                                                                             {                                      
                                                                                 getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
@@ -974,7 +1001,7 @@ GetUserProfileMenu = () => {
                                                     <div className="form-row">
                                                                 <div className={LocalGovValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                     <label className="label-text">Local Government</label>
-                                                                    <select onChange={this.SetInputValue4} name="LocalGv" >
+                                                                    <select onChange={this.SetInputValue4} name="LocalGv" className="height-39 input-border-radius" >
                                                                             <option>Select Local Government</option>
                                                                             {                                      
                                                                                 getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
@@ -988,7 +1015,7 @@ GetUserProfileMenu = () => {
 
                                                                 <div className={"form-group col-md-6"}>
                                                                     <label className="label-text">City</label>
-                                                                    <input type="text" name="PlaceOfBirth" className="form-control enter-city" onChange={this.SetInputValue} placeholder="City"/>
+                                                                    <input type="text" name="PlaceOfBirth" className="form-control enter-city " onChange={this.SetInputValue} placeholder="City"/>
                                                                 </div>
                                                     </div>
 
@@ -1003,9 +1030,9 @@ GetUserProfileMenu = () => {
                                                                 </div>
                                                                 <div className="form-group col-md-3">                                 
                                                                     <div class="custom-control custom-switch float-right">
-                                                                            <input type="checkbox" checked={this.state.checkBoxStatus} class="custom-control-input" id="customSwitch1" 
-                                                                                    onChange={ this.HandleCheckBoxInput }/>
-                                                                            <label class="custom-control-label" for="customSwitch1"></label>
+                                                                         <Switch isChecked={this.state.checkBoxStatus} handleToggle={this.HandleCheckBoxInput} />
+
+                
                                                                     </div>
                                                                 </div>
                                                     </div>
@@ -1015,21 +1042,25 @@ GetUserProfileMenu = () => {
                                                     <div className={sameAddressAsAbove + " " + "form-row"}>
                                                                 <div className={personalAddressValidity2 ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text">Mailing Address</label>
-                                                                    <input type="text" name="personalAddress2" className="form-control" onChange={this.SetInputValue} placeholder="Address"/>
+                                                                    <input type="text" name="personalAddress2" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="Address"/>
                                                                 </div>
                                                     </div>
                                                     
                                                     <div className={sameAddressAsAbove + " " + "form-row"}>
                                                                 <div className={NationalityValidity2 ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text">Mailing Country</label>
-                                                                    <input type="text" name="Nationality2" className="form-control" onChange={this.SetInputValue} placeholder="Country"/>
+                                                                    {/* <input type="text" name="Nationality2" className="form-control" onChange={this.SetInputValue} placeholder="Country"/> */}
+                                                                    <select name="Nationality2" id="" onChange={this.SetInputValue} className="form-control input-border-radius">
+                                                                         <option value="Select Country">Select Country</option>
+                                                                         <option  value="Nigeria">Nigeria</option>
+                                                                    </select>
                                                                 </div>
                                                     </div>
 
                                                     <div className={sameAddressAsAbove + " " + "form-row"}>
                                                                 <div className={StateOfOriginValidity2 ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text">Mailing State</label>
-                                                                    <select name="StateOfOrigin2" className="form-control state-mailing" onChange={this.SetInputValue3}>
+                                                                    <select name="StateOfOrigin2" className="form-control state-mailing input-border-radius" onChange={this.SetInputValue3}>
                                                                             <option>Select State</option>
                                                                             {                                      
                                                                                 getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
@@ -1045,7 +1076,7 @@ GetUserProfileMenu = () => {
                                                     <div className={sameAddressAsAbove + " " + "form-row"}>
                                                                 <div className={LocalGovValidity2 ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text">Mailing Local Government</label>
-                                                                    <select onChange={this.SetInputValue2} name="LocalGv2">
+                                                                    <select onChange={this.SetInputValue2} name="LocalGv2" className="input-border-radius">
                                                                             <option>Select Local Government</option>
                                                                             {                                      
                                                                                 getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && 
@@ -1061,42 +1092,48 @@ GetUserProfileMenu = () => {
                                                     <div className="form-row">
                                                                 <div className={EmailAddressValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text">Email Address</label>
-                                                                    <input type="email" name="EmailAddress" className="form-control" onChange={this.SetInputValue} placeholder="Email Address"/>
+                                                                    <input type="email" name="EmailAddress" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="Email Address"/>
                                                                 </div>
                                                     </div>
                                                     
                                                     <div className="form-row">
                                                                 <div className={AlternateEmailValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text">Alternate Email</label>
-                                                                    <input type="email" name="alternateEmail" className="form-control" onChange={this.SetInputValue} placeholder="Alternate Email"/>
+                                                                    <input type="email" name="alternateEmail" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="Alternate Email"/>
                                                                 </div>
                                                     </div>
 
                                                     <div className="form-row">
                                                                 <div className={phoneNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text">Phone Number</label>
-                                                                    <input type="number" name="phoneNumber" className="form-control" onChange={this.SetInputValue} placeholder="Phone Number"/>
+                                                                    <input type="number" name="phoneNumber" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="Phone Number"/>
                                                                 </div>
                                                     </div>
                                                     <div className="form-row">
                                                                 <div className={alternatePhoneNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                                     <label className="label-text">Alternate Phone Number</label>
-                                                                    <input type="number" name="alternatePhoneNumber" className="form-control" onChange={this.SetInputValue} placeholder="Alternate Phone Number"/>
+                                                                    <input type="number" name="alternatePhoneNumber" className="form-control input-border-radius" onChange={this.SetInputValue} placeholder="Alternate Phone Number"/>
                                                                 </div>
                                                     </div>
                                                     
                                                     <div className="form-row">
                                                                 <div className={PinValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                                    <label className="label-text">Alat Pin</label>
-                                                                    <input type="number" name="AlatPin" className="form-control" onChange={this.SetInputValue} placeholder="Alat Pin"/>
+                                                                   <AlatPinInput
+                                                                   name=""
+                                                                    value={this.state.Pin}
+                                                                    onChange={this.handleAlatPinChange}
+                                                                    PinInvalid={this.state.isPinInvalid}
+                                                                    maxLength={4} />
                                                                 </div>
                                                     </div>
 
                                                     <div className="align-button">
-                                                        <button type="submit" className="twoBut no-border">Submit</button>
+                                                    <button disabled={this.props.addContactDetails.message === profile.POST_CONTACT_DETAILS_PENDING} type="submit" className="twoBut no-border">
+                                                    {this.props.addContactDetails.message === profile.POST_CONTACT_DETAILS_PENDING ? "Processing..." :"Submit"}
+                                                    </button>    
+
                                                     </div>
 
-                                                    {/* <button type="submit" className="twoBut">Submit</button>    */}
                                                 </form>
                                             </div>
                                         </div>
@@ -1112,7 +1149,7 @@ GetUserProfileMenu = () => {
             return(
                 <Fragment>
                        
-                            <div className="dashboard-wrapper">
+                            <div className="">
                                     <div className="container">
                             <div className="coverPropertiesofComponent">
                                 <div className="col-sm-12">
@@ -1124,13 +1161,11 @@ GetUserProfileMenu = () => {
                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                 <ul>
                                     <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <p>Loading data Contact Details...</p>
+                    <p className="loading-info">Loading data Contact Details...</p>
                     </div>
                     </div>
                     </div>
@@ -1143,7 +1178,7 @@ GetUserProfileMenu = () => {
             return(
                 <Fragment>
                        
-                            <div className="dashboard-wrapper">
+                            <div className="">
                                     <div className="container">
                             <div className="coverPropertiesofComponent">
                                 <div className="col-sm-12">
@@ -1155,8 +1190,6 @@ GetUserProfileMenu = () => {
                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                 <ul>
                                     <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
                                 </ul>
                             </div>
                         </div>
@@ -1170,13 +1203,11 @@ GetUserProfileMenu = () => {
             );    
         }
 
-
-
         if(getContactDetail.message === profile.GET_CONTACT_DETAILS_FAILURE){
             return(
                 <Fragment>
                        
-                            <div className="dashboard-wrapper">
+                            <div className="">
                                     <div className="container">
                             <div className="coverPropertiesofComponent">
                                 <div className="col-sm-12">
@@ -1188,8 +1219,6 @@ GetUserProfileMenu = () => {
                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                 <ul>
                                     <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
                                 </ul>
                             </div>
                         </div>
@@ -1203,12 +1232,11 @@ GetUserProfileMenu = () => {
             );    
         }
 
-
-        if(getContactDetail.message === undefined){
+        if(getContactDetail.message == undefined){
             return(
                 <Fragment>
                        
-                            <div className="dashboard-wrapper">
+                            <div className="">
                                     <div className="container">
                             <div className="coverPropertiesofComponent">
                                 <div className="col-sm-12">
@@ -1220,13 +1248,11 @@ GetUserProfileMenu = () => {
                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                 <ul>
                                     <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <p>Loading data Contact Details...</p>
+                    <p className="loading-info">Loading data Contact Details...</p>
                     </div>
                     </div>
                     </div>
@@ -1241,7 +1267,7 @@ GetUserProfileMenu = () => {
             return(
                 <Fragment>
                         {/* <InnerContainer> */}
-                            <div className="dashboard-wrapper">
+                            <div className="">
                                     <div className="container">
                             <div className="coverPropertiesofComponent">
                                 <div className="col-sm-12">
@@ -1253,13 +1279,11 @@ GetUserProfileMenu = () => {
                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                 <ul>
                                     <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <p>loading data ...</p>
+                    <p className="loading-info">Loading Profile data...</p>
                     </div>
                     </div>
                     </div>
@@ -1274,13 +1298,14 @@ GetUserProfileMenu = () => {
 const mapStateToProps = (state) => {
     return {
         profileMenu:state.profileMenu,
-        getContactDetail:state.getContactDetail
+        getContactDetail:state.getContactDetail,
+        alert:state.alert,
+        addContactDetails:state.addContactDetails
+
     }
 }
 
 export default connect(mapStateToProps)(ContactDetails);
-
-
 
 
 

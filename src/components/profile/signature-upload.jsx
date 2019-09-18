@@ -33,8 +33,7 @@ class SignatureUpload extends Component {
           isProfileInformation: false,
           isContactDetails: false,
           isDocument: false,
-          navToNextOfKin: false,
-          isImageUploaded: false
+          navToNextOfKin: false
        }
    }
 
@@ -89,27 +88,24 @@ CheckIfStoreInformationIsSet = () => {
 
    HandleFileUpLoad = (event) => {
        let name = event.target.name;
-       console.log(name);
+    //    console.log(name);
        console.log(event.target.files[0]);
 
-       this.setState({[name]: event.target.files[0]});
+       this.setState({file3: event.target.files[0]});
    }
 
    SubmitDocuments = () => {
-       let payload = {
-           DocumentType: 'signature',
-           File: this.state.file3
-       }
-       
-       console.log(payload)
-    //    return;
-       this.props.dispatch(addDocuments(payload(this.state.user.token, payload)));
-   }
 
+    const formData = new FormData()
+        formData.append('DocumentType', "Signature")
+        formData.append('File', this.state.file3, this.state.file3.name)
+        console.log(formData);
+        // return;
+        this.props.dispatch(actions.addDocuments(this.state.user.token, formData));
+   }
 
    HandleSubmit = (event) => {
         event.preventDefault();
-
         
         console.log("code Got here");
 
@@ -179,15 +175,44 @@ DispatchSuccessMessage = (data) => {
 
 GetUserProfileMenu = () => {
     this.props.dispatch(actions.profileMenu(this.state.user.token));
- }
+}
 
    render(){
-      const {isImageUploaded, isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, idTypeValidity, idFrontFace, idCardValidity, idCardNumberValidity} = this.state;
+      const {isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, idTypeValidity, idFrontFace, idCardValidity, idCardNumberValidity} = this.state;
        
-       if(this.props.profileMenu.message === profile.GET_PROFILE_MENU_SUCCESS){
-        return(
+       if(this.props.profileMenu.message === profile.GET_PROFILE_MENU_PENDING){
+          return(
             <Fragment>
-                        <div className="dashboard-wrapper">
+                       <div className="">
+                            <div className="container">
+                                   <div className="coverPropertiesofComponent">
+                                       <div className="col-sm-12">
+                                           <p className="page-title">Account Setting</p>
+                                       </div>
+   
+                                       <div className="col-sm-12">
+                                           <div>
+                                               <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                                   <ul>
+                                                       <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                                       
+                                                   </ul>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   
+                                      <p className="loading-info">Loading page ...</p>
+                                   </div>
+                               </div>
+                           </div>
+           </Fragment>
+          )
+       }
+
+       if(this.props.profileMenu.message === profile.GET_PROFILE_MENU_SUCCESS){
+           return(
+             <Fragment>
+                        <div className="">
                              <div className="container">
                                     <div className="coverPropertiesofComponent">
                                         <div className="col-sm-12">
@@ -199,8 +224,7 @@ GetUserProfileMenu = () => {
                                                 <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                                     <ul>
                                                         <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                                        <li>Pin Management</li>
-                                                        <li>Security Questions</li>
+                                                        
                                                     </ul>
                                                 </div>
                                             </div>
@@ -209,8 +233,9 @@ GetUserProfileMenu = () => {
                                     <div className="row packageContent">
                                         <div className="col-sm-4">
                                             <div className="forProfilePicture">
-                                            {isImageUploaded ? <div className="profilePixCircle" style={{backgroundImage: 'url("'+this.props.profileMenu.data.response.imagePath+'")'}}></div>
-                                                        : <div className="profilePixCircle"></div> }
+                                                    <div className="profilePixCircle">
+    
+                                                    </div>
                                                     <p className="personsName">{this.props.profileMenu.data.response.fullName}</p>
                                                     <p className="details">{this.props.profileMenu.data.response.username}</p>
                                                     <p className="details">{moment(this.props.profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>
@@ -247,7 +272,7 @@ GetUserProfileMenu = () => {
                                                         <p className="upLoadDiscription">Upload a picture of your signature on a plain white background</p>
                                                         <div className="signatureUploadTemp">
                                                                 <label htmlFor="file-upload3" className="resizeLabel">Upload</label>
-                                                                <input name="file3" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/>
+                                                                <input name="file3" accept="image/*" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/>
                                                         </div>
                                                     </div>
                                                </div>
@@ -265,100 +290,65 @@ GetUserProfileMenu = () => {
             </Fragment>
            )
        }
+
        if(this.props.profileMenu.message === profile.GET_PROFILE_MENU_FAILURE){
-        return(
-            <Fragment>
-                  {/* <InnerContainer> */}
-                       <div className="dashboard-wrapper">
-                             <div className="container">
-                     <div className="coverPropertiesofComponent">
-                         <div className="col-sm-12">
-                          <p className="page-title">Account Setting</p>
-                        </div>
-
-                <div className="col-sm-12">
-                    <div>
-                        <div className="sub-tab-nav" style={{marginBottom: 10}}>
-                            <ul>
-                                <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <p className="loading-info">Please Check Your Internet Connection ...</p>
-                </div>
-                </div>
-                </div>
-                {/* </InnerContainer> */}
-            </Fragment>   
-          );
-      }
-
-       if(this.props.profileMenu.message === profile.GET_PROFILE_MENU_PENDING){
-        return(
-            <Fragment>
-                  {/* <InnerContainer> */}
-                       <div className="dashboard-wrapper">
-                             <div className="container">
-                     <div className="coverPropertiesofComponent">
-                         <div className="col-sm-12">
-                          <p className="page-title">Account Setting</p>
-                        </div>
-
-                <div className="col-sm-12">
-                    <div>
-                        <div className="sub-tab-nav" style={{marginBottom: 10}}>
-                            <ul>
-                                <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <p className="loading-info">Loading Profile Information ...</p>
-                </div>
-                </div>
-                </div>
-                {/* </InnerContainer> */}
-            </Fragment>   
-          );
-      }
-
-      if(this.props.profileMenu.data == undefined){
-          this.GetUserProfileMenu();
           return(
             <Fragment>
-                  {/* <InnerContainer> */}
-                       <div className="dashboard-wrapper">
-                             <div className="container">
-                     <div className="coverPropertiesofComponent">
-                         <div className="col-sm-12">
-                          <p className="page-title">Account Setting</p>
-                        </div>
+                       <div className="">
+                            <div className="container">
+                                   <div className="coverPropertiesofComponent">
+                                       <div className="col-sm-12">
+                                           <p className="page-title">Account Setting</p>
+                                       </div>
+   
+                                       <div className="col-sm-12">
+                                           <div>
+                                               <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                                   <ul>
+                                                       <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                                       
+                                                   </ul>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   
+                                      <p>Something went wrong ...</p>
+                                   </div>
+                               </div>
+                           </div>
+           </Fragment>
+          )
+       }
 
-                <div className="col-sm-12">
-                    <div>
-                        <div className="sub-tab-nav" style={{marginBottom: 10}}>
-                            <ul>
-                                <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <p className="loading-info">Loading Profile Information ...</p>
-                </div>
-                </div>
-                </div>
-                {/* </InnerContainer> */}
-            </Fragment>   
-          );
-      }
+       if(this.props.profileMenu.data == undefined){
+            this.GetUserProfileMenu();
+            return(
+                <Fragment>
+                        <div className="">
+                                <div className="container">
+                                    <div className="coverPropertiesofComponent">
+                                        <div className="col-sm-12">
+                                            <p className="page-title">Account Setting</p>
+                                        </div>
     
+                                        <div className="col-sm-12">
+                                            <div>
+                                                <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                                    <ul>
+                                                        <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                                        
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+                                        <p className="loading-info">Loading Data ...</p>
+                                    </div>
+                                </div>
+                            </div>
+            </Fragment>
+            )
+       }
    }
 }
 

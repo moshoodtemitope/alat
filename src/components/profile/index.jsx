@@ -60,3 +60,4 @@ class ProfileIndex extends Component {
 }
 
 export default ProfileIndex;
+

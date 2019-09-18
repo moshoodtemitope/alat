@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import "./profile.css"; 
 import DatePicker from "react-datepicker";
-// import * as actions from '../../redux/actions/profile/profile-action';
 import {Fragment} from "react";
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import InnerContainer from '../../shared/templates/inner-container';
@@ -124,7 +123,7 @@ CheckIfStoreInformationIsSet = () => {
           file2: this.state.file3
        }
             
-       this.props.dispatch(addDocuments(payload(this.state.user.token, payload)));
+       this.props.dispatch(actions.addDocuments(payload(this.state.user.token, payload)));
    }
 
 
@@ -220,7 +219,7 @@ GetUserProfileMenu = () => {
         return(
             <Fragment>
                   {/* <InnerContainer> */}
-                       <div className="dashboard-wrapper">
+                       <div className="">
                              <div className="container">
                      <div className="coverPropertiesofComponent">
                          <div className="col-sm-12">
@@ -250,7 +249,7 @@ GetUserProfileMenu = () => {
       if(this.props.profileMenu.message === profile.GET_PROFILE_MENU_SUCCESS){
         return(
             <Fragment>
-                        <div className="dashboard-wrapper">
+                        <div className="">
                              <div className="container">
                                     <div className="coverPropertiesofComponent">
                                         <div className="col-sm-12">
@@ -262,12 +261,13 @@ GetUserProfileMenu = () => {
                                                 <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                                     <ul>
                                                             <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                                            <li>Pin Management</li>
-                                                            <li>Security Questions</li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
+                                        {this.props.alert && this.props.alert.message &&
+                                                 <div style={{width: "100%", marginRight:"120px",marginLeft:"120px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                                        }
                                     
                                     <div className="row packageContent">
                                         <div className="col-sm-4">
@@ -328,7 +328,10 @@ GetUserProfileMenu = () => {
                                                </div>
                                                
                                                <div className="align-buttons">
-                                                    <button type="submit" className="twoBut no-border">Submit</button>
+                                                    <button disabled={this.props.addDocuments.message ===profile.DOCUMENTS_PENDING} type="submit" className="twoBut no-border">
+                                                    {this.props.addDocuments.message === profile.DOCUMENTS_PENDING ? "Processing..." :"Submit"}
+
+                                                    </button>
                                                 </div>
                                         </form>
                                         
@@ -345,7 +348,7 @@ GetUserProfileMenu = () => {
         return(
             <Fragment>
                   {/* <InnerContainer> */}
-                       <div className="dashboard-wrapper">
+                       <div className="">
                              <div className="container">
                      <div className="coverPropertiesofComponent">
                          <div className="col-sm-12">
@@ -357,8 +360,6 @@ GetUserProfileMenu = () => {
                         <div className="sub-tab-nav" style={{marginBottom: 10}}>
                             <ul>
                                 <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
                             </ul>
                         </div>
                     </div>
@@ -376,7 +377,7 @@ GetUserProfileMenu = () => {
         return(
             <Fragment>
                   {/* <InnerContainer> */}
-                       <div className="dashboard-wrapper">
+                       <div className="">
                              <div className="container">
                      <div className="coverPropertiesofComponent">
                          <div className="col-sm-12">
@@ -388,8 +389,6 @@ GetUserProfileMenu = () => {
                         <div className="sub-tab-nav" style={{marginBottom: 10}}>
                             <ul>
                                 <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
                             </ul>
                         </div>
                     </div>
@@ -408,8 +407,14 @@ GetUserProfileMenu = () => {
 
 const mapStateToProps = (state) => {
     return {
-        profileMenu: state.profileMenu
+        profileMenu: state.profileMenu,
+        alert:state.alert,
+         addDocuments:state.addDocuments
+
     }
 }
 
 export default connect(mapStateToProps)(ProfileDocuments);
+
+
+

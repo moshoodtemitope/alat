@@ -1,3 +1,9 @@
+/* 
+form {
+    
+} */
+
+
 
 .profileWrapper {
     padding-top: 50px !important;
@@ -14,6 +20,7 @@
     line-height: 17px;
     color: #666666;
     font-weight: bold;
+    border-radius: 3px !important;
 }
 
 .docUpLoadFormProfile label {
@@ -62,6 +69,10 @@
     margin-left: 12px;
 }
 
+.height-39 {
+    height: 39px !important
+}
+
 .packageContent label {
     margin-left: 20%;
 }
@@ -69,6 +80,10 @@
 .select-size {
     height: 38px
 }
+
+/* .dashboard-wrapper {
+    padding-top: 100px !important;
+} */
 
 .float-right {
     float: right
@@ -396,6 +411,20 @@
     margin-top: 20px;
 }
 
+.input-border-radius {
+    background: #FFFFFF;
+    border: 1px solid #EDEDED;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
+    border-radius: 3px !important;
+}
+
+.text-size-14 {
+    font-size: 14px;
+}
+
+.space-between {
+    justify-content: space-between;
+}
 
 .imgShape {
     /* margin-left: 30%; */

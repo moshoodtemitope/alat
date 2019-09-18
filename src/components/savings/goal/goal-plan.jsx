@@ -75,6 +75,8 @@ class GoalPlan extends React.Component {
         this.setState({visible: false})
     };
 
+    
+
 
     renderGoalsElement(customerGoalTransHistory){
         if(!customerGoalTransHistory){
@@ -94,7 +96,7 @@ class GoalPlan extends React.Component {
                             <img className="goal-icon" src={graph} alt=''/>
                             <p className="plan-text">Flexi Goal</p>
                             <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days
-                                but you will lose your interest if you don't meet your</p>
+                                but you will lose your interest if you don't meet your target</p>
                         </div>
                     </NavLink>
                     <NavLink to="/savings/create-stash_step1">
@@ -117,7 +119,8 @@ class GoalPlan extends React.Component {
                 let goals = customerGoalTransHistory.customer_goal_data.response.data;
 
 
-                if(goals.length === 0 && !this.state.visible){
+                if(goals.length === 0 ){
+                    this.setState({visible: false})
                     return(
                         <div className="row">
                             <NavLink to={"/savings/fixed-goal"}>
@@ -203,7 +206,7 @@ class GoalPlan extends React.Component {
 
 
                                                             <Link to={{
-                                                                pathname:'/savings/stash-cashout',
+                                                                pathname:'/savings/cash-out',
                                                                 state:{
                                                                     name:hist
                                                                 }

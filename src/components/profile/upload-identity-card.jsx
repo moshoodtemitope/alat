@@ -148,19 +148,26 @@ CheckIfStoreInformationIsSet = () => {
    }
 
    SubmitDocuments = () => {
-       let payload = {
-          DocumentType: 'identity',
-          IdentityType: this.state.idCardType,
-          IdentificationNumber: this.state.idCardNumber,
-          File: this.state.file2,
-          BackFile: this.state.file3
-       }
+    //    let payload = {
+    //       DocumentType: 'Identity',
+    //       IdentityType: this.state.idCardType,
+    //       IdentificationNumber: this.state.idCardNumber,
+    //       File: this.state.file2,
+    //       BackFile: this.state.file3
+    //    }
 
-       console.log(payload);
-       return;
-       this.props.dispatch(addDocuments(payload(this.state.user.token, payload)));
+       let formData = new FormData();
+       formData.append('DocumentType', 'Identity');
+       formData.append('BackFile', this.state.file3, this.state.file3.name);
+       formData.append('File', this.state.file2, this.state.file2.name);
+       formData.append('IdentificationNumber', this.state.idCardNumber);
+       formData.append('IdentityType', this.state.idCardType);
+
+       console.log(formData);
+
+    //    return; 
+       this.props.dispatch(actions.addDocuments(this.state.user.token, formData));
    }
-
 
    HandleSubmit = (event) => {
         event.preventDefault();
@@ -474,3 +481,4 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps)(IdentityCardUpload);
+

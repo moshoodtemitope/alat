@@ -84,14 +84,27 @@ import {getWesternUnionCountries,receiveWesternUnion } from './remittance.reduce
      import {createStashGoalReducer,createStashGoalStep1Reducer} from './goal/create-stash.reducer'
     import {groupSavingsTargetGoal, groupDetails, deleteGroup, contribute, editGroup, pauseGroup, findGroup, customerGroup, joinGroup, scheduleContribution, deleteMember, cashOut,
     continueScheduleGroupPayment, setAutomateSavingsEndDate, setAutomateSavingsStartDate, setAmountToWithDraw, setFrequency} from './group-savings/group-savings-reducers';
-     import {getCustomerGoalTransHistoryReducer,GET_FORMULAR,GET_GOAL_TYPE,TopUPGoalStep1,TopUPGoal,WithDrawFromGoalStep1,
+     import {getCustomerGoalTransHistoryReducer,GET_FORMULAR,GET_GOAL_TYPE,TopUPGoalStep1,TopUPGoal,WithDrawFromGoalStep1,Cashout,
          WithDrawFromGoal,PauseCustomerGoal,unPauseCustomerGoal,EditCustomerGoal,DeleteCustomerGoal,StashCashout,StashCashoutStep1} from './goal/get-customer-goal-trans-history-reducers';
      import {createRotatingSavings, rotatingGroupDetails, joinAGroup, EditSlots, 
         editGroupEsusu, deleteGroupEsusu, GetGroupsEsusu, joinGroupEsusu, refferalCode} from './group-savings/rotating-group-reducers';
 
 
 
-    
+import{
+    getExistingPolicy,
+    getNewPolicyDataChunk,
+    getCoversInPoductRequest,
+    saveProductCoverId,
+    saveCustomerInfo,
+    saveCustomerPolicyInfo,
+    getCarInYearRequest,
+    getCarModelRequest,
+    postMotorScheduleRequest,
+    postAutoInsurancePaymentRequest,
+    getCarDetailsRequest 
+} from './insurance.reducer'
+
 export const onboarding = {
     userRegistrationRequest,
     bvnDetailsReducer,
@@ -183,6 +196,19 @@ export const fundAccount={
     saveCardAfterTranReducer
 }
 
+export const insurance = {
+    getExistingPolicy,
+    getNewPolicyDataChunk,
+    getCoversInPoductRequest,
+    saveProductCoverId,
+    saveCustomerInfo,
+    saveCustomerPolicyInfo,
+    getCarInYearRequest,
+    getCarModelRequest,
+    postMotorScheduleRequest,
+    postAutoInsurancePaymentRequest,
+    getCarDetailsRequest
+}
 export const alatCards={
     geCurrentVirtualCardsRequest,
     sendVCNewCardinfo,
@@ -268,7 +294,8 @@ export const customerGoal={
     EditCustomerGoal,
     DeleteCustomerGoal,
     StashCashout,
-    StashCashoutStep1
+    StashCashoutStep1,
+    Cashout
 
 
 };

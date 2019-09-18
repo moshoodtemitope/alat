@@ -20,7 +20,6 @@ class PhotographUpload extends Component {
           file1: null,
           file2: null,
           file3: null,
-
           idCardType: null,
           idCardNumber: null,
 
@@ -90,18 +89,15 @@ CheckIfStoreInformationIsSet = () => {
        console.log(name);
        console.log(event.target.files[0]);
     //    return;
-       this.setState({[name]: event.target.files[0]});
+       this.setState({file3: event.target.files[0]});
    }
 
    SubmitDocuments = () => {
-       let payload = {
-           DocumentType: "Passport",
-           File: this.state.file3
-       }
-       
-       console.log(payload);
-    //    return;
-       this.props.dispatch(addDocuments(payload(this.state.user.token, payload)));
+        const formData = new FormData()
+        formData.append('DocumentType', "Passport")
+        formData.append('File', this.state.file3,this.state.file3.name)
+        console.log(formData);
+       this.props.dispatch(actions.addDocuments(this.state.user.token, formData));
    }
 
 
@@ -185,7 +181,7 @@ GetUserProfileMenu = () => {
       if(this.props.profileMenu.message === profile.GET_PROFILE_MENU_SUCCESS){
         return(
             <Fragment>
-                        <div className="dashboard-wrapper">
+                        <div className="">
                              <div className="container">
                                     <div className="coverPropertiesofComponent">
                                         <div className="col-sm-12">
@@ -197,12 +193,13 @@ GetUserProfileMenu = () => {
                                                 <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                                     <ul>
                                                         <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                                        <li>Pin Management</li>
-                                                        <li>Security Questions</li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
+                                        {this.props.alert && this.props.alert.message &&
+                                                 <div style={{width: "100%", marginRight:"120px",marginLeft:"120px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                                           }
                                     
                                     <div className="row packageContent">
                                         <div className="col-sm-4">
@@ -244,7 +241,7 @@ GetUserProfileMenu = () => {
                                                         <p className="upLoadDiscription">take a picture of your face in a well lit place with your ears clearly visible</p>
                                                         <div className="signatureUploadTemp">
                                                                 <label htmlFor="file-upload3" className="resizeLabel">Upload</label>
-                                                                <input name="file3" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/>
+                                                                <input name="file3" accept="image/*" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/>
                                                         </div>
                                                    </div>
                                                </div>
@@ -268,7 +265,7 @@ GetUserProfileMenu = () => {
         return(
             <Fragment>
                   {/* <InnerContainer> */}
-                       <div className="dashboard-wrapper">
+                       <div className="">
                              <div className="container">
                      <div className="coverPropertiesofComponent">
                          <div className="col-sm-12">
@@ -280,8 +277,6 @@ GetUserProfileMenu = () => {
                         <div className="sub-tab-nav" style={{marginBottom: 10}}>
                             <ul>
                                 <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
                             </ul>
                         </div>
                     </div>
@@ -299,7 +294,7 @@ GetUserProfileMenu = () => {
         return(
             <Fragment>
                   {/* <InnerContainer> */}
-                       <div className="dashboard-wrapper">
+                       <div className="">
                              <div className="container">
                      <div className="coverPropertiesofComponent">
                          <div className="col-sm-12">
@@ -311,8 +306,6 @@ GetUserProfileMenu = () => {
                         <div className="sub-tab-nav" style={{marginBottom: 10}}>
                             <ul>
                                 <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
                             </ul>
                         </div>
                     </div>
@@ -331,7 +324,7 @@ GetUserProfileMenu = () => {
           return(
             <Fragment>
                   {/* <InnerContainer> */}
-                       <div className="dashboard-wrapper">
+                       <div className="">
                              <div className="container">
                      <div className="coverPropertiesofComponent">
                          <div className="col-sm-12">
@@ -343,8 +336,6 @@ GetUserProfileMenu = () => {
                         <div className="sub-tab-nav" style={{marginBottom: 10}}>
                             <ul>
                                 <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
                             </ul>
                         </div>
                     </div>
@@ -363,11 +354,41 @@ GetUserProfileMenu = () => {
 
 const mapStateToProps = (state) => {
     return{
-        profileMenu: state.profileMenu
+        profileMenu: state.profileMenu,
+        alert:state.alert
     }
 }
 
 export default connect(mapStateToProps)(PhotographUpload);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

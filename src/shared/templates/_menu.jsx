@@ -48,7 +48,7 @@ class MenuContainer extends React.Component{
                 <div className="hr-nav-header">
                     <div className="container">
                         <div className="row">
-                            <div className="col-sm-12">
+                            <div className="col-sm-12 remove-padding">
                                 <ul>
                                     <li>
                                         <NavLink to="/dashboard" className="clearfix"><i className="demo-icon icon-home" aria-hidden="true"></i><span>Dashboard</span></NavLink>
@@ -64,18 +64,17 @@ class MenuContainer extends React.Component{
                                             <li><a href="#">To Email / Phone No</a></li>
                                         </ul>
                                     </li>
-                                    <li><NavLink to="/profile" className="clearfix"><i className="demo-icon icon-bills" aria-hidden="true"></i> <span>Profile</span></NavLink>
-                                    </li>
-                                    {/* <li onClick={this.checkIfAlatIsSet}><i className="demo-icon icon-bills" aria-hidden="true"></i> <span>Profile</span></li> */}
+                                   
                                    
                                     <li><NavLink to="/bills/airtime" className="clearfix"><i className="demo-icon icon-bills" aria-hidden="true"></i> <span>Airtime & Bills</span></NavLink>
                                     </li>
                                     <li><NavLink to={"/loans"} className="clearfix"><i className="demo-icon icon-loans" aria-hidden="true"></i><span> Loans</span></NavLink></li>
-                                    <li><NavLink to={"/savings"} className="clearfix"><i className="demo-icon icon-target" aria-hidden="true"></i><span> Savings & Goal</span></NavLink></li>
+                                    <li><NavLink to={"/savings"} className="clearfix"><i className="demo-icon icon-target" aria-hidden="true"></i><span> Savings & Investment</span></NavLink></li>
+                                    {/* <li><NavLink to={"/loans"} className="clearfix"><i className="demo-icon icon-loans" aria-hidden="true"></i><span> Loans</span></NavLink></li> */}
                                    
                                     <li><NavLink to={"/lifestyle"} className="clearfix"><i className="demo-icon icon-movies" aria-hidden="true"></i> <span>Lifestyle</span></NavLink>
                                     </li>
-                                    <li><NavLink to="/account" className="clearfix"><i className="fa fa-institution" aria-hidden="true"></i> <span>Accounts</span></NavLink></li>
+                                    {/* <li><NavLink to="/account" className="clearfix"><i className="fa fa-institution" aria-hidden="true"></i> <span>Accounts</span></NavLink></li> */}
                                     
                                     
                                     <li><NavLink to="/cards" className="clearfix"><i className="demo-icon icon-card" aria-hidden="true"></i>
@@ -90,6 +89,8 @@ class MenuContainer extends React.Component{
                                             <li><NavLink to="/virtual-cards"> Alat Dollar Card </NavLink></li>
                                         </ul>
                                     </li>
+                                    {/* <li><NavLink to="/settings" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i> <span>Settings</span></NavLink></li> */}
+                                    <li><NavLink to="/insurance" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i> <span>Insurance</span></NavLink></li>
                                     <li><NavLink to="/receive-money" className="clearfix"><i className="demo-icon icon-western-union" aria-hidden="true"></i><span> Remittance</span></NavLink></li>
                                     {/* <li><NavLink to="/settings" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i> <span>Settings</span></NavLink></li> */}
                                 </ul>
