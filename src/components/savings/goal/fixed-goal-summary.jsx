@@ -60,12 +60,14 @@ import * as actions from '../../../redux/actions/savings/goal/fixed-goal.actions
             "goalName":this.state.goalName,
             "startDate":this.state.startDate,
             "targetDate":this.state.endDate,
-            "targetAmount":parseFloat(this.state.targetAmount),
+            "targetAmount":this.state.targetAmount,
             "debitAccount":this.state.debitAccount,
             "debitAmount":parseFloat(this.state.showInterests),
             "goalTypeId":parseInt(this.state.GoalTypeId),
             "frequencyId":parseInt(this.state.goalFrequency)
         }));
+       
+
 
     };
 

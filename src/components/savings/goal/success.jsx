@@ -31,7 +31,7 @@ class SuccessMessage extends React.Component {
 
     render() {
         const details =this.props.location.state.details;
-        console.log(details);
+        console.log("===================",details);
 
         return (
             <Fragment>

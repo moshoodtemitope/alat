@@ -24,7 +24,8 @@ class Movie extends React.Component {
             per_page: 4,
             current_page: 1,
             genreType: "",
-            doFilter: false
+            doFilter: false,
+            display: "block"
 
         };
         // this.handleSubmit =this.handleSubmit.bind(this)
@@ -68,7 +69,10 @@ class Movie extends React.Component {
     filterGenreOnchangeHandler(e){
         let {value} = e.target
         // this.filterGenre(e.target.value);
-        this.setState({doFilter: true, genreType: value }, () => this.renderFilter(this.state.genreType))
+        this.setState({doFilter: true, genreType: value }, () =>{ 
+            this.renderFilter(this.state.genreType);
+            this.setState({display: "none"})
+        })
         // return 
         // console.log("values",e.target.value)
 
@@ -81,9 +85,13 @@ class Movie extends React.Component {
 
         
     };
-    MoviesDetails(event){
-        console.log(JSON.parse(event.target.id));
+
+    moviesDetails=(event)=>{
+        let movies = event.target.id
+        console.log(movies)
         this.props.dispatch(SubmitMoviesData(event.target.id))
+
+        
 
     }
    
@@ -108,14 +116,15 @@ class Movie extends React.Component {
                 <div className="eventTrays">
                     {userMovies.map(function(film, index){
                         return(
-                                <div className="eventCards" key={index}>
+                                <div  className="eventCards" key={index}>
                                     <Link to={{
                                         pathname:"/lifestyle/movie-details",
                                         state:{
                                             details:film
                                         }
+                                    
                                     }}>
-                                        <div onClick={this.MoviesDetails(film)} className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
+                                        <div   className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
                                         </div>
                                         
                                     </Link>
@@ -383,7 +392,7 @@ class Movie extends React.Component {
 
         return (
             
-          <span  key={number} className={classes} onClick={() => this.fetchMovieList(number)}>{this.props.getMovieList.message ===listStyleConstants.GET_MOVIE_LIST_SUCCESS ? <p style={{color:"#43063C", fontSize:16, fontFamily:'proxima_novaregular', position:"relative", cursor:'pointer'}}>Load More</p>:null}</span>
+          <span  key={number} className={classes} onClick={() => this.fetchMovieList(number)}>{this.props.getMovieList.message ===listStyleConstants.GET_MOVIE_LIST_SUCCESS ? <p style={{color:"#43063C", fontSize:16, fontFamily:'proxima_novaregular', position:"relative", cursor:'pointer', display: this.state.display}}>Load More</p>:null}</span>
         );
       });
       let userMovies = this.props.getMovieList;
@@ -402,7 +411,7 @@ class Movie extends React.Component {
                         <div className="">
                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                 <ul>
-                                    <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
+                                    <li onClick={()=> this.setState({display: "block"})}><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
                                     <li><NavLink to={'/lifestyle/event'}>Event</NavLink></li>
                                     <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li>
                                     <li style={{float:"right", marginTop: -31, width: 181}}><label style={{ marginBottom: 0, color: "#666666", fontSize: 14}}>Search by keyword</label><input style={{width:"100%",height:"40px", marginTop:4, float:'right',}} type="text" placeholder="search ..." value={this.state.value} onChange={ e => this.onChangeHandler(e)}/></li>

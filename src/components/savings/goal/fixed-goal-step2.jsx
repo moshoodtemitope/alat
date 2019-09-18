@@ -84,7 +84,7 @@ class FixedGoal extends React.Component {
             console.log('tag', data);
 
             this.setState({
-                targetAmount:util.formatAmount(data.targetAmount),
+                targetAmount:data.targetAmount,
                 startDate:data.startDate,
                 endDate:data.endDate,
                 goalName:data.goalName,
