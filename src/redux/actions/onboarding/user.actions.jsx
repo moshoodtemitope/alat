@@ -249,7 +249,7 @@ export const uploadDocument = (token, data, action, type) => {
                 //TODO: edit localDB accounts object
                 //   dispatch(success(response.data, data));
                 dispatch(success(response.data));
-                if(type === true) history.push('loans/salary/dashboard');
+                if(type === true) history.push('/loans/salary/dashboard');
             })
             .catch(error => {
                 // console.log("error in here");
@@ -265,6 +265,4 @@ export const uploadDocument = (token, data, action, type) => {
     function success(response) { return { type: action.success, data: { response: response } } }
     function failure(error) { return { type: action.failure, error } }
 }
-
-
 

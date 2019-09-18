@@ -344,7 +344,7 @@ class LoansDashboard extends React.Component {
 function mapStateToProps(state) {
     return {
         alert: state.alert,
-        user: state.authentication.user.response,
+        //user: state.authentication.user.response,
         loan_current: state.loanReducerPile.loanCurrent,
         loan_history: state.loanReducerPile.loanHistory,
         loan_reject: state.loanReducerPile.loanReject,

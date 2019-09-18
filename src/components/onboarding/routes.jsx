@@ -31,6 +31,8 @@ import LoanOnboardingRemitaOtpSetUp from './loans/remita-otp';
 import LoanOnbaordingKyc from './loans/kyc'; 
 import LoanOnboardingStatementUpload from './loans/statement-upload'; 
 import LoanOnboardingRemitaMandateSetup from './loans/remita-mandate';
+import LoansIndex from  '../loans/index';//  './loans';
+import LoansDashboard from '../loans/salary/salaryDashboard';
 
 export const fakeAuth = {
     isAuthenticated: false,
@@ -102,6 +104,9 @@ class OnboardingRoute extends React.Component {
                 <Route path="/loan/remita-mandate" component={LoanOnboardingRemitaMandateSetup}/>
                 <Route path="/loan/remita-otp" component={LoanOnboardingRemitaOtpSetUp} /> 
                 <Route path="/loan/kyc" component={LoanOnbaordingKyc} /> 
+
+                {/* <PrivateRoute path='/loans' authed={this.props.user} component={LoansIndex}/> */}
+                <Route path={'/loans/salary/dashboard'} component={LoansDashboard} />
 
             </div>
         )
