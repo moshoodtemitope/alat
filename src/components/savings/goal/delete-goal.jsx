@@ -158,7 +158,7 @@ class DeleteGoal extends Component {
                                         <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
                                                 this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
                                                 Go back
-                                    </a>
+                                        </a>
                                     </div>
 
                                 </div>
