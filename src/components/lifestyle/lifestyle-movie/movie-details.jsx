@@ -4,7 +4,8 @@ import {listStyleConstants} from "../../../redux/constants/lifestyle/lifestyle-c
 import {Redirect} from 'react-router-dom'
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
 import {getCinemaList, getSingleMovie} from '../../../redux/actions/lifestyle/movies-actions';
-import clock from '../../../assets/img/clock-circular-outline.svg'
+import clock from '../../../assets/img/clock-circular-outline.svg';
+import moment from 'moment';
 
 
 
@@ -322,34 +323,42 @@ class Moviedetails extends React.Component {
     rendershowTime = () => {
     if (this.props.ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_PENDING) {
 
-        // <select name="showTime">
-        <p>Loading Movie Showtime...</p>
-        // </select>
+        return <select name="showTime">
+        <option>Loading Movie Showtime...</option>;
+        </select>
        
     }
 
-    else if (this.props.ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && this.props.ShowTime.data.response){
+    
+
+    else if (this.props.ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && this.props.ShowTime.data.response.length > 0){
         // console.log("=0000000000", this.props.showTime.data.response)  
-    return <select onChange={this.UseSelectedTime}  name="showTime">
-    <option>Select ShowTime</option>
-    {                            
-                
-        this.props.ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
-        this.props.ShowTime.data.response.map(event=> {
-            return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children  + " " + event.id + " " + event.ticketId + " " + event.fee + " " + event.ticketTypes[0].ticketName}>
-            {event.date}</option>
-        })
-    } 
-    </select>
+    return <div>
+        <label style={{ marginTop: 16 }}>Select Day</label>
+        <select onChange={this.UseSelectedTime}  name="showTime">
+            <option>Select ShowTime</option>
+            {                            
+                        
+                this.props.ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
+                this.props.ShowTime.data.response.map(event=> {
+                    return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children  + " " + event.id + " " + event.ticketId + " " + event.fee + " " + event.ticketTypes[0].ticketName}>
+                    {moment(event.date).format('LLLL')}</option>
+                })
+            } 
+            </select>
+    
+    </div>
             
             
 
     }
-    else if(this.props.ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && this.props.showTime.data.response.length ==0) {
-        <select name="showTime">
+
+    else{
+        return <select name="showTime">
                 <option>No show time available</option>
         </select>
     }
+   
 }
 
     
@@ -540,7 +549,7 @@ class Moviedetails extends React.Component {
                                 )} */}
 
                             <div  className={showTimeValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                            <label style={{ marginTop: 16 }}>Select Day</label>
+                            
 
                                     {
                                         this.rendershowTime()

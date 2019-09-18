@@ -80,11 +80,21 @@ class HeaderContainer extends React.Component{
 
         // console.log(this.props);
         // this.props.dispatch(userActions.getAll());
+        this.getProfileImage();
+    }
+
+    getProfileImage(){
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        const { dispatch } = this.props;
+        dispatch(userActions.getCustomerProfileImage(user.token, user.profilePicPath));
+        
     }
 
     render() {
         const user = JSON.parse(localStorage.getItem("user"));
 
+        console.log('user data', user);
         return (
             <Fragment>
                 <div className="db2-fixed-header">

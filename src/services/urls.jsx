@@ -19,6 +19,7 @@ export const routes = {
     GETALLQUESTIONS: BASEURL + '/UserSecurityApi/api/v1/Account/AllQuestions',
     REGISTRATIONURLV2: BASEURL + '/UserSecurityApi/api/v1/Account/RegistrationV2',
     DOCUMENT_UPLOAD: BASEURL + '/DocumentUpload/api/upload/document',
+    GET_USERPROFILE_IMAGE: BASEURL + '/DocumentUpload/api/upload/dp2/',
 
     //user security
     ONBOARDING_PRIORITY: BASEURL + '/UserSecurityApi/api/v1/Account/GetOnboardingPriority',

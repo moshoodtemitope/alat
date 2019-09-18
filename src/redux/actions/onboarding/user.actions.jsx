@@ -6,7 +6,10 @@ import {history} from './../../../_helpers/history';
 import {handleError, modelStateErrorHandler} from './../../../shared/utils';
 import {USER_REGISTER_FETCH, USER_REGISTER_SAVE, userConstants, BVN_VERIFICATION_PENDING, 
     BVN_VERIFICATION_SUCCESS, BVN_VERIFICATION_FAILURE, SKIP_BVN_PENDING, SKIP_BVN_SUCCESS,
-    OTP_VERIFICATION_PENDING, OTP_VERIFICATION_FAILURE, DATA_FROM_BVN, SAVE_BVN_INFO} from "../../constants/onboarding/user.constants";
+    OTP_VERIFICATION_PENDING, OTP_VERIFICATION_FAILURE, DATA_FROM_BVN, SAVE_BVN_INFO,
+    GET_PROFILE_IMAGE_SUCCESS,
+    GET_PROFILE_IMAGE_PENDING,
+    GET_PROFILE_IMAGE_FAILURE} from "../../constants/onboarding/user.constants";
 import { dispatch } from "rxjs/internal/observable/pairs";
 
 export const userActions = {
@@ -17,6 +20,7 @@ export const userActions = {
     skipBvn,
     saveBvnInfo,
     saveBvnData,
+    getCustomerProfileImage,
     loginAfterOnboarding,
     reissueToken
 };
@@ -72,9 +76,9 @@ function login(email, password) {
             }).catch(error => {
                 
                 // console.log(err.response.data.message);
-                console.log("---------error at login");
-                console.log(error);
-                console.log(error.response)
+                // console.log("---------error at login");
+                // console.log(error);
+                // console.log(error.response)
                 // submitting = false;
                 // throw new SubmissionError({ _error: err.response.data.message});
                 dispatch(failure(modelStateErrorHandler(error)));
@@ -200,6 +204,27 @@ function saveBvnData(otpData, action){
     }
     function pending(otpData) { return null }
     function save(otpData) { return { type: SAVE_BVN_INFO, otpData } }
+}
+
+function getCustomerProfileImage(token, image){
+    SystemConstant.HEADER['alat-token'] = token; 
+    return dispatch =>{
+        let profileroute = `${routes.GET_USERPROFILE_IMAGE}${image}`;
+        let consume = ApiService.request(profileroute, "GET", null, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response.data));
+            }).catch(error =>{
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+        
+    }
+
+    function request(request) { return { type:GET_PROFILE_IMAGE_PENDING, request} }
+    function success(response) { return {type:GET_PROFILE_IMAGE_SUCCESS, response} }
+    function failure(error) { return {type:GET_PROFILE_IMAGE_FAILURE, error} }
 }
 
 
