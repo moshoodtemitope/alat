@@ -1,9 +1,7 @@
 import React, { Component } from 'React';
 import { Link, Redirect } from 'react-router-dom';
-
 import successLogo from '../../../assets/img/success.svg';
 import { connect } from 'react-redux';
-
 import * as actions from '../../../redux/actions/cardless-withdrawal/export';
 
 class Success extends Component {

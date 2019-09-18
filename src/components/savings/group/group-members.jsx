@@ -8,9 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Members from './multiple-selection';
 import {history} from '../../../_helpers/history';
 
-// if(window.performance.navigation.type == 1)
-//     window.location.replace("http://localhost:8080/");
-    
+
 class MembersSlot extends React.Component {
     constructor(props){
         super(props)

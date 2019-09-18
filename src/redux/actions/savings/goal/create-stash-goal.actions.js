@@ -33,7 +33,7 @@ export const CreateStashGoal =(data)=>{
                 //TODO: edit localDB accounts object
                 dispatch(success(response.data, data));
                 history.push({
-                    pathname:"/savings/goal/create-stash-success-message",
+                    pathname:"/savings/goal/success",
                     state:{
                         details:response.data,
                     }

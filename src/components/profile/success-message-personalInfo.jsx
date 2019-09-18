@@ -168,26 +168,3 @@ const mapStateToProps = (state) => {
 
 
 export default connect(mapStateToProps)(PersonalInfoSuccessPage);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -20,6 +20,7 @@ form {
     line-height: 17px;
     color: #666666;
     font-weight: bold;
+    border-radius: 3px !important;
 }
 
 .docUpLoadFormProfile label {
@@ -66,6 +67,10 @@ form {
 
 .center-alignment {
     margin-left: 12px;
+}
+
+.height-39 {
+    height: 39px !important
 }
 
 .packageContent label {
@@ -406,6 +411,20 @@ form {
     margin-top: 20px;
 }
 
+.input-border-radius {
+    background: #FFFFFF;
+    border: 1px solid #EDEDED;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
+    border-radius: 3px !important;
+}
+
+.text-size-14 {
+    font-size: 14px;
+}
+
+.space-between {
+    justify-content: space-between;
+}
 
 .imgShape {
     /* margin-left: 30%; */
@@ -429,4 +448,9 @@ form {
 .parentForm.sucMsg {
    padding-left: 0px !important;
    text-align: center !important;
+}
+
+.loading-info {
+    text-align: center;
+    margin-top: 20px
 }

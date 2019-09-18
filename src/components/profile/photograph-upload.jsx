@@ -20,7 +20,6 @@ class PhotographUpload extends Component {
           file1: null,
           file2: null,
           file3: null,
-
           idCardType: null,
           idCardNumber: null,
 
@@ -90,18 +89,15 @@ CheckIfStoreInformationIsSet = () => {
        console.log(name);
        console.log(event.target.files[0]);
     //    return;
-       this.setState({[name]: event.target.files[0]});
+       this.setState({file3: event.target.files[0]});
    }
 
    SubmitDocuments = () => {
-       let payload = {
-           DocumentType: "Passport",
-           File: this.state.file3
-       }
-       
-       console.log(payload);
-    //    return;
-       this.props.dispatch(actions.addDocuments(payload(this.state.user.token, payload)));
+        const formData = new FormData()
+        formData.append('DocumentType', "Passport")
+        formData.append('File', this.state.file3,this.state.file3.name)
+        console.log(formData);
+       this.props.dispatch(actions.addDocuments(this.state.user.token, formData));
    }
 
 
@@ -245,7 +241,7 @@ GetUserProfileMenu = () => {
                                                         <p className="upLoadDiscription">take a picture of your face in a well lit place with your ears clearly visible</p>
                                                         <div className="signatureUploadTemp">
                                                                 <label htmlFor="file-upload3" className="resizeLabel">Upload</label>
-                                                                <input name="file3" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/>
+                                                                <input name="file3" accept="image/*" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/>
                                                         </div>
                                                    </div>
                                                </div>

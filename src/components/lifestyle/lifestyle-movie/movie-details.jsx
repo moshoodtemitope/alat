@@ -4,7 +4,8 @@ import {listStyleConstants} from "../../../redux/constants/lifestyle/lifestyle-c
 import {Redirect} from 'react-router-dom'
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
 import {getCinemaList, getSingleMovie} from '../../../redux/actions/lifestyle/movies-actions';
-import clock from '../../../assets/img/clock-circular-outline.svg'
+import clock from '../../../assets/img/clock-circular-outline.svg';
+import moment from 'moment';
 
 
 
@@ -162,14 +163,14 @@ class Moviedetails extends React.Component {
     increaseChild = () => {
         this.setState({ childNumber: this.state.childNumber + 1 }, () =>
             this.setState({
-                childAmount: this.state.initialChildAmount * this.state.childNumber
+                childrenAmount: this.state.initialChildAmount * this.state.childNumber
             })
         );
     };
 
     decreaseAdult = () => {
         let { adultNumber } = this.state;
-        if (adultNumber !== 1)
+        if (adultNumber !== 1 && adultNumber !== 0)
             this.setState({ adultNumber: adultNumber - 1 }, () =>
                 this.setState({
                     adultAmount: this.state.initialAdultAmount * this.state.adultNumber
@@ -186,8 +187,8 @@ class Moviedetails extends React.Component {
 
     decreaseStudent = () => {
         let { studentNumber } = this.state;
-        if (studentNumber !== 1)
-            this.setState({ studentNumber: studentNumber - 1 }, () =>
+        if (studentNumber !== 1 && studentNumber !== 0)
+            this.setState({ studentNumber: this.state.studentNumber - 1 }, () =>
                 this.setState({
                     studentAmount:
                         this.state.initialStudentAmount * this.state.studentNumber
@@ -197,10 +198,10 @@ class Moviedetails extends React.Component {
 
     decreaseChild = () => {
         let { childNumber } = this.state;
-        if (childNumber !== 1)
+        if (childNumber !== 1 && childNumber !== 0 )
             this.setState({ childNumber: childNumber - 1 }, () =>
                 this.setState({
-                    childAmount: this.state.initialChildAmount * this.state.childNumber
+                    childrenAmount: this.state.initialChildAmount * this.state.childNumber
                 })
             );
     };
@@ -265,9 +266,21 @@ class Moviedetails extends React.Component {
         console.log(fee);
         console.log(ticketType)
         console.log('oooooooooooooooooooooooooooooooooooo');
-        this.setState({initialStudentAmount: studentAmount, studentAmount});
-        this.setState({initialAdultAmount: adultAmount,adultAmount});
-        this.setState({initialChildAmount: childrenAmount,childrenAmount});
+        this.setState({initialStudentAmount: studentAmount, studentAmount}, () => {
+            if (this.state.studentAmount !== 0) {
+                this.setState({studentNumber: this.state.studentNumber + 1})
+            }
+        });
+        this.setState({initialAdultAmount: adultAmount,adultAmount}, () => {
+            if (this.state.AdultAmount !== 0) {
+                this.setState({adultNumber: this.state.adultNumber + 1})
+            } 
+        });
+        this.setState({initialChildAmount: childrenAmount,childrenAmount}, () => {
+            if (this.state.childrenAmount !== 0) {
+                this.setState({childNumber: this.state.childNumber + 1})
+            }
+        });
         this.setState({ showTimeId:showTimeId });
         this.setState({ticketId:ticketId});
         this.setState({fee:fee});
@@ -307,6 +320,47 @@ class Moviedetails extends React.Component {
         return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
     };
 
+    rendershowTime = () => {
+    if (this.props.ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_PENDING) {
+
+        return <select name="showTime">
+        <option>Loading Movie Showtime...</option>;
+        </select>
+       
+    }
+
+    
+
+    else if (this.props.ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && this.props.ShowTime.data.response.length > 0){
+        // console.log("=0000000000", this.props.showTime.data.response)  
+    return <div>
+        <label style={{ marginTop: 16 }}>Select Day</label>
+        <select onChange={this.UseSelectedTime}  name="showTime">
+            <option>Select ShowTime</option>
+            {                            
+                        
+                this.props.ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
+                this.props.ShowTime.data.response.map(event=> {
+                    return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children  + " " + event.id + " " + event.ticketId + " " + event.fee + " " + event.ticketTypes[0].ticketName}>
+                    {moment(event.date).format('LLLL')}</option>
+                })
+            } 
+            </select>
+    
+    </div>
+            
+            
+
+    }
+
+    else{
+        return <select name="showTime">
+                <option>No show time available</option>
+        </select>
+    }
+   
+}
+
     
 
     render() {
@@ -325,7 +379,7 @@ class Moviedetails extends React.Component {
          const {getCinemaList,ShowTime,buyMovieTicket}=this.props
 
         console.log("====================",details)
-       
+    
 
         return (
             <div>
@@ -475,20 +529,33 @@ class Moviedetails extends React.Component {
                                 </div>
 
 
+                                {/* {
+                                    this.props.showTime? null :(
+                                    <div  className={showTimeValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                        <label style={{ marginTop: 16 }}>Select Day</label>
+                                        
+                                        <select onChange={this.UseSelectedTime}  name="showTime">
+                                            <option>Select ShowTime</option>
+                                            {                                      
+                                                ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
+                                                ShowTime.data.response.map(event=> {
+                                                    return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children  + " " + event.id + " " + event.ticketId + " " + event.fee + " " + event.ticketTypes[0].ticketName}>
+                                                    {event.date}</option>
+                                                })
+                                            } 
+                                        </select>
+                                        {showTimeValidity && <div className='text-danger'>Select cinema show time </div>}
+                                    </div>
+                                )} */}
 
                             <div  className={showTimeValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                            <label style={{ marginTop: 16 }}>Select Day</label>
+                            
 
-                            <select onChange={this.UseSelectedTime}  name="showTime">
-                                <option>Select ShowTime</option>
-                                {                                      
-                                    ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
-                                    ShowTime.data.response.map(event=> {
-                                        return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children  + " " + event.id + " " + event.ticketId + " " + event.fee + " " + event.ticketTypes[0].ticketName}>
-                                        {event.date}</option>
-                                    })
-                                } 
-                            </select>
+                                    {
+                                        this.rendershowTime()
+                                    }
+                            
+                            
                             {showTimeValidity && <div className='text-danger'>Select cinema show time </div>}
                             </div>
 

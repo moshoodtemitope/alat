@@ -1,8 +1,6 @@
 import React, { Component, Fragment } from 'React';
 import { Link } from 'react-router-dom';
-
 import { connect } from 'react-redux';
-
 import atmLogo from '../../../assets/img/cardless-atm.svg';
 import * as actions from '../../../redux/actions/cardless-withdrawal/export';
 import Modal from 'react-responsive-modal';

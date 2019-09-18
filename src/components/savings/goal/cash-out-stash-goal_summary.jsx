@@ -42,8 +42,8 @@ class CashoutStashGoal extends Component {
             this.setState({
                 goalName:data.goalName,
                 goalId:data.goalId,
-                debitAccount:data.accountNumber,
-                Amount:data.amountSaved,
+                debitAccount:data.DebitAccount,
+                Amount:data.Amount,
                 partialWithdrawal:true
             });
         }
@@ -77,10 +77,10 @@ class CashoutStashGoal extends Component {
 
         event.preventDefault();
         this.props.dispatch(actions.StashCashout({
-            "GoalId":parseInt(this.state.goalId),
-            "DebitAccount":this.state.debitAccount,
-            "Amount":parseFloat(this.state.Amount),
-            "PartWithdrawal":true
+            "goalId":this.state.goalId,
+            "accountNumber":this.state.debitAccount,
+            "amount":this.state.Amount,
+            // "PartWithdrawal":true
 
         }));
 
@@ -135,7 +135,7 @@ class CashoutStashGoal extends Component {
                                                         </div>
                                                         <div className="right">
                                                             <p className='GoalText'>Amount</p>
-                                                            <p className='boldedText'>₦{this.state.goal.amountSaved}</p>
+                                                            <p className='boldedText'>₦{this.state.Amount}</p>
                                                         </div>
                                                     </div>
                                                     <div className="coverForSummary">

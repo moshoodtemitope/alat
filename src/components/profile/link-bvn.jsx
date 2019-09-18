@@ -272,14 +272,14 @@ GetUserProfileMenu = () => {
                                                         <div className="form-row">
                                                                     <div className={BVNValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
                                                                         <label className="label-text">BVN</label>
-                                                                        <input type="Number" className="form-control linkBVN" onChange={this.SetBvNNumber} placeholder="0000 0000 0000"/>
+                                                                        <input type="Number" className="form-control linkBVN input-border-radius" onChange={this.SetBvNNumber} placeholder="0000 0000 0000"/>
                                                                     </div>
                                                         </div>
                                                         
                                                         <div className="form-row">
                                                                 <div className={dateValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
                                                                         <label className="label-text">Date of Birth</label>
-                                                                        <DatePicker className="form-control linkBVN" selected={birthDate} 
+                                                                        <DatePicker className="form-control linkBVN input-border-radius" selected={birthDate} 
                                                                         placeholder="June 31, 2019"
                                                                         dateFormat="MMMM d, yyyy"
                                                                         showMonthDropdown
