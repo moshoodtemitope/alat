@@ -155,6 +155,10 @@ class DeleteGoal extends Component {
                                                 </div>
                                             </form>
                                         </div>
+                                        <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
+                                                this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
+                                                Go back
+                                    </a>
                                     </div>
 
                                 </div>
@@ -171,9 +175,9 @@ class DeleteGoal extends Component {
     }
 }
 const mapStateToProps = state => ({
-    delete_goal:state.delete_goal,
+    delete_goal:state.CustomerGoalReducerPile.delete_goal,
     alert:state.alert,
-    submitDashboardData:state.submitDashboardData
+    submitDashboardData:state.CustomerGoalReducerPile.submitDashboardData
 });
 
 

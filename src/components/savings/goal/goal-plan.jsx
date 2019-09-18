@@ -341,10 +341,10 @@ class GoalPlan extends React.Component {
     }
 }
 const mapStateToProps = state => ({
-    customerGoalTransHistory:state.customerGoalTransHistory,
+    customerGoalTransHistory:state.CustomerGoalReducerPile.customerGoalTransHistory,
     groupSavingsEsusu: state.getGroupSavingsEsusu.data,
     groups: state.customerGroup.data,
-    submitDashboardData:state.submitDashboardData
+    submitDashboardData:state.CustomerGoalReducerPile.submitDashboardData
 });
 
 export default connect (mapStateToProps)(GoalPlan);
