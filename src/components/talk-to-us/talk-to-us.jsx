@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
 import {NavLink} from 'react-router-dom';
+import emailCenter from '../../assets/img/email-contact.svg';
+import phoneContact from '../../assets/img/phone-contact.svg';
+import * as actions from "../../redux/actions/talk-to-us/talk-to-us-action";
+
 
 
  class TalkToUs extends Component{
@@ -50,16 +54,9 @@ import {NavLink} from 'react-router-dom';
         if (this.checkFullName() || this.checkEmailAddress() || this.checkMessage()) {
 
         } else {
-            // this.setState({isSubmitted : true });
-            // this.props.dispatch(actions.fetchFixedGoalStep1({
-            //     "goalName":this.state.goalName,
-            //     "startDate":this.state.startDate,
-            //     "endDate":this.state.endDate,
-            //     "targetAmount":this.state.targetAmount,
-            //     "goalFrequency":this.state.goalFrequency,
-            //     "showInterests":this.state.showInterests
-            // }));
-            // console.log('tag', '')
+            this.setState({isSubmitted : true });
+           
+            console.log('tag', '')
         }
         
        
@@ -91,7 +88,20 @@ import {NavLink} from 'react-router-dom';
                                 <div className="al-card no-pad">
                         
                                     <h4 className="m-b-10 center-text hd-underline">Talk to Us</h4>
+                                    <center>
                                     <p className="header-info">There's always an ALAT Assitance eager to help u</p>
+                                    <div style={{display:"flex", justifyContent:'center', alignItems:"center", }}> 
+                                        <div style={{marginRight:20, margin:5}}>
+                                        <img src={emailCenter}/><span style={{marginLeft:5}} >help@alat.ng</span>
+                                        </div>
+                                        <div style={{marginLeft:20, }}>
+                                        <img src={phoneContact}/><span style={{marginLeft:5}}>070022552528</span>
+                                        </div>
+                                        </div>
+
+                                    </center>
+
+
 
                                     <form onSubmit={this.onSubmit}>
 
@@ -136,8 +146,8 @@ import {NavLink} from 'react-router-dom';
                                                         type="text" 
                                                         autoComplete="off" 
                                                         className="form-control" 
-                                                         placeholder="Dubai Goal"
-                                                         name="message"
+                                                        placeholder="Comment Here..."
+                                                        name="message"
                                                          value={this.state.message}
                                                          onChange={this.handleChange}
                                                     />

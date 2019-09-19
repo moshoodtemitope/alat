@@ -28,6 +28,28 @@ class AtmLocator extends Component{
                             <div className="max-600">
                                 <div className="al-card no-pad">
                                     <h4 className="m-b-10 center-text hd-underline">ATM Locator</h4>
+                                    
+                                    <div style={{display:"flex", justifyContent:'center', alignItems:'center'}}>
+
+                                        <div style={{marginRight:5}}> 
+                                            <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Atm Locations</button>
+                                        </div>
+                                        <div style={{marginLeft:5}}>
+                                            <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Bank Branches</button>
+
+                                        </div>
+
+
+
+
+                                    </div>
+                                    <div style={{marginLeft:25, marginRight:25}}className="form-group"> 
+                                        <input  className="form-group"
+                                            type="text" 
+                                            autoComplete="off" 
+                                            className="form-control" 
+                                             placeholder="Search..."/>
+                                    </div>
 
                                 </div>
                             </div>
