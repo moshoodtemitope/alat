@@ -40,7 +40,7 @@ import { loanConstants } from '../constants/loans/loans.constants';
 import { ALATINSURANCE_REDUCER_CLEAR } from '../constants/insurance/insurance.constants';
 import { ALATCARD_REDUCER_CLEAR } from '../constants/cards/cards.constants';
 import { WESTERNUNION_REDUCER_CLEAR } from '../constants/remittance/remittance.constants';
-import {FIXED_GOAL_REDUCER_CLEAR} from '../constants/goal/fixed-goal.constant'
+import {fixedGoalConstants} from '../constants/goal/fixed-goal.constant'
 
 import movie from "../../components/lifestyle/lifestyle-movie/movie";
 //import { saveCardReducer } from "./fund-account.reducer";
@@ -126,7 +126,7 @@ const remittanceReducerPile = (state, action)=>{
     return remittanceReducer(state, action);
 }
 const GoalReducerPile=(state, action)=>{
-    if(action.type === FIXED_GOAL_REDUCER_CLEAR ){
+    if(action.type === fixedGoalConstants.FIXED_GOAL_REDUCER_CLEAR ){
         state = undefined
     }
 
