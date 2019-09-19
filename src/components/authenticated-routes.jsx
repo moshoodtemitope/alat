@@ -27,6 +27,7 @@ import LifestyleIndex from './lifestyle/index'
 import SavingsContainer from './savings/index'
 import { userActions } from "../redux/actions/onboarding/user.actions";
 import ProfileIndex from './profile';
+import TalkToUsIndex from './talk-to-us/index'
 
 
 
@@ -210,6 +211,7 @@ class AuthenticatedRoutes extends React.Component {
                     <PrivateRoute path='/receive-money' authed={this.props.user} component={RemittanceContainer}/>
                     <PrivateRoute path='/lifestyle' authed={this.props.user} component={LifestyleIndex}/>
                     <PrivateRoute path='/savings' authed={this.props.user} component={SavingsContainer}/>
+                    <PrivateRoute path='/talk-to-us' authed={this.props.user} component={TalkToUsIndex}/>
 
 
                     
