@@ -185,6 +185,7 @@ export const routes = {
     NEXT_OF_KIN_RELATIONSHIP: BASEURL + '/ProfileManagement.WebApi/api/nextOfKin/NextofKinRelationships',
     GET_CONTACT_DETAIL: BASEURL + '/ProfileManagement.WebApi/api/ContactDetails',
     GET_RESIDENTIAL_ADDRESS: BASEURL + '/ProfileManagement.WebApi/api/ResidentialAddress',
+    POST_RESIDENTIAL_ADDRESS: BASEURL + '/ProfileManagement.WebApi/api/ResidentialAddress/Save',
     GETPERSONALINFO: BASEURL + '/ProfileManagement.WebApi/api/PersonalInfo',
     GETSTATES: BASEURL + '/AccountMaintenance/api/account/GetStatesAndLgas',
     ADD_DOCUMENT: BASEURL + '/DocumentUpload/api/upload/document',
