@@ -4,6 +4,9 @@ import { alertActions } from "../alert.actions";
 import { SystemConstant } from "../../../shared/constants";
 import { modelStateErrorHandler, returnStatusCode } from "../../../shared/utils";
 import { loanOnboardingConstants } from '../../constants/onboarding/loan.constants';
+import {userConstants} from "../../constants/onboarding/user.constants";
+
+
 import {
     FETCH_BANK_PENDING,
     FETCH_BANK_SUCCESS,
@@ -68,12 +71,14 @@ export const LoanOnboardingStep3 = (data) => {
         return consume
             .then(response => {
                 //TODO: edit localDB accounts object
+               // console.log(response);
                 var dataToSave = {
                     ...response.data,
                     firstname: data.firstname
                 };
                 localStorage.setItem("user", JSON.stringify(dataToSave));
                 dispatch(success(response.data, data));
+                dispatch(login(response.data));
             })
             .catch(error => {
                 // console.log("error in here");
@@ -86,6 +91,7 @@ export const LoanOnboardingStep3 = (data) => {
 
     function request(request) { return { type: loanOnboardingConstants.LOAN_STEP3_PENDING, request } }
     function success(response, request) { return { type: loanOnboardingConstants.LOAN_STEP3_SUCCESS, data: { response: response, request: request } } }
+    function login(response) {return {type : userConstants.LOGIN_SUCCESS, response }}
     function failure(error) { return { type: loanOnboardingConstants.LOAN_STEP3_FAILURE, error } }
 }
 
