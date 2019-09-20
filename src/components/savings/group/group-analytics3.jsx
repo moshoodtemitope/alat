@@ -18,9 +18,7 @@ import MoreDetails from './details';
 import Members from './list-item';
 import {history} from '../../../_helpers/history';
 
-// if(window.performance.navigation.type == 1)
-//     window.location.replace("http://localhost:8080/");
-    
+
 class GroupAnalytics3 extends React.Component {
     constructor(props){
         super(props);

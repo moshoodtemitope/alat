@@ -393,6 +393,7 @@ CheckIfStoreInformationIsSet = () => {
        }
    }
 
+   
    InitiateNetworkCall = () => {
       let data = null;
       console.log(this.state.checkBoxStatus);
@@ -405,7 +406,7 @@ CheckIfStoreInformationIsSet = () => {
                     phoneNumber: parseInt(this.state.phoneNumber),
                     alternatePhoneNumber: parseInt(this.state.alternatePhoneNumber),
                     country: "Nigeria", 
-                    mailingCountry: 'Nigeria',
+                    mailingCountry: 'Nigeria', 
                     mailingStateId: parseInt(this.state.stateGvId),
                     mailingCityId: parseInt(this.state.localGvId),
                     pin: parseInt(this.state.Pin),
@@ -454,17 +455,17 @@ CheckIfStoreInformationIsSet = () => {
     //   return;
       this.props.dispatch(actions.addContactDetails(this.state.user.token, data));
    }
-
+   
    SetBvNNumber = (event) => {
        this.setState({bvnNumber: event.target.value});
    }
-
+   
    SetBirthDay = (birthDate) => {
         this.setState({  
             birthDate: birthDate
         });
    }  
-
+   
    NavigateToSuccessPage = () => {
        history.push('/profile-success-message');
    }
@@ -498,7 +499,7 @@ CheckIfStoreInformationIsSet = () => {
        this.checkApartmentValidity2();
        this.checkSectorValidity();
        console.log('code got here');
- 
+
        switch(this.checkValidity()){
            case null:
              console.log('Empty value was found');
@@ -1296,12 +1297,11 @@ GetUserProfileMenu = () => {
 }
 
 const mapStateToProps = (state) => {
-    return {
+    return { 
         profileMenu:state.profileMenu,
         getContactDetail:state.getContactDetail,
         alert:state.alert,
         addContactDetails:state.addContactDetails
-
     }
 }
 

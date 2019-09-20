@@ -77,6 +77,18 @@ export const TopUPGoalStep1 = (data) =>{
         }
     }
 };
+
+export const SubmitDashBoardGoalData = (data) =>{
+    return(dispatch)=>{
+        dispatch(success(data))
+    };
+    function success(data){
+        return{
+            type:customerGoalConstants.SUBMIT_DASHBOARD_DATA_SUCCESS,
+            data:data
+        }
+    }
+};
 // add ToUpGoal
 export const TopUPGoal =(data)=>{
     return (dispatch) => {
@@ -148,10 +160,10 @@ export const StashCashout =(data)=>{
             .then(response => {
                 //TODO: edit localDB accounts object
                 dispatch(success(response.data, data));
-                // history.push({
-                //     pathname:"/savings/top-up-goal-success",
-                //     state:{details:response.data}
-                // })
+                history.push({
+                    pathname:"/savings/cash-out-success-message",
+                    state:{details:response.data}
+                })
             })
             .catch(error => {
                 // console.log("error in here");
@@ -175,17 +187,14 @@ export const WithDrawFromGoal =(data)=>{
             .then(response => {
                 //TODO: edit localDB accounts object
                 dispatch(success(response.data, data));
-                // history.push({
-                //     pathname:"/savings/top-up-goal-success",
-                //     state:{details:response.data}
-                // })
+                history.push({
+                    pathname:"/savings/cash-out-success-message",
+                    state:{details:response.data}
+                })
             })
             .catch(error => {
-                // console.log("error in here");
-                // dispatch(success(response.data, request));
                 dispatch(failure(modelStateErrorHandler(error)));
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
-                // throw(error);
             });
     };
 

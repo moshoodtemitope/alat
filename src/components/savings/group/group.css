@@ -871,7 +871,7 @@ color: #4D4D4D;
 }
 
 .listedItems .left , .listedItems .right {
-    width: 50%;
+    width: 49%;
 }
 
 .listedItemMembers .left, .listedItemMembers .right {
@@ -996,9 +996,10 @@ color: #4D4D4D;
 
 #autoSummary {
    width: 80%;
-   margin-left: 10%;
+   /* margin-left: 10%; */
    margin-bottom: 40px;
    margin-top: 0px;
+   border-radius: 5px
 }
 
 #autoSummary .left p {

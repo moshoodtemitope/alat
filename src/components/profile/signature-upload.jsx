@@ -88,27 +88,24 @@ CheckIfStoreInformationIsSet = () => {
 
    HandleFileUpLoad = (event) => {
        let name = event.target.name;
-       console.log(name);
+    //    console.log(name);
        console.log(event.target.files[0]);
 
-       this.setState({[name]: event.target.files[0]});
+       this.setState({file3: event.target.files[0]});
    }
 
    SubmitDocuments = () => {
-       let payload = {
-           DocumentType: 'signature',
-           File: this.state.file3
-       }
-       
-       console.log(payload)
-    //    return;
-       this.props.dispatch(actions.addDocuments(payload(this.state.user.token, payload)));
-   }
 
+    const formData = new FormData()
+        formData.append('DocumentType', "Signature")
+        formData.append('File', this.state.file3, this.state.file3.name)
+        console.log(formData);
+        // return;
+        this.props.dispatch(actions.addDocuments(this.state.user.token, formData));
+   }
 
    HandleSubmit = (event) => {
         event.preventDefault();
-
         
         console.log("code Got here");
 
@@ -176,87 +173,182 @@ DispatchSuccessMessage = (data) => {
     this.props.dispatch(actions.profileSuccessMessage(data));
 }
 
+GetUserProfileMenu = () => {
+    this.props.dispatch(actions.profileMenu(this.state.user.token));
+}
+
    render(){
       const {isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, idTypeValidity, idFrontFace, idCardValidity, idCardNumberValidity} = this.state;
-       return(
-        <Fragment>
-                    <div className="">
-                         <div className="container">
-                                <div className="coverPropertiesofComponent">
-                                    <div className="col-sm-12">
-                                        <p className="page-title">Account Setting</p>
-                                    </div>
-
-                                    <div className="col-sm-12">
-                                        <div>
-                                            <div className="sub-tab-nav" style={{marginBottom: 10}}>
-                                                <ul>
-                                                    <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                                    
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                
-                                <div className="row packageContent">
-                                    <div className="col-sm-4">
-                                        <div className="forProfilePicture">
-                                                <div className="profilePixCircle">
-
-                                                </div>
-                                                <p className="personsName">{this.props.profileMenu.data.response.fullName}</p>
-                                                <p className="details">{this.props.profileMenu.data.response.username}</p>
-                                                <p className="details">{moment(this.props.profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>
-                                                <hr />
-
-                                                <div className="tickItems" onClick={this.NavigateToBVN}>
-                                                    {isBvNLinked === true ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
-                                                    <p className="pSubs">Link BVN</p>
-                                                </div>
-                                                <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
-                                                    {isProfileInformation ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
-                                                    <p className="pSubs">Personal Information</p>
-                                                </div>
-                                                <div className="tickItems" onClick={this.NavigateToContact}>
-                                                    {isContactDetails ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
-                                                    <p className="pSubs">Contact Details</p>
-                                                </div>
-                                                <div className="tickItems" onClick={this.NavigateToDocuments}>
-                                                    {isDocument ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt=""  className="largeVectorI" />}
-                                                    <p className="pSubs">Document Upload</p>
-                                                </div>
-                                                <div className="tickItems" onClick={this.NavigateToNextOfKin}>
-                                                    {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
-                                                    <p className="pSubs">Next of Kin</p>
-                                                </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-6">
-                                    <form onSubmit={this.HandleSubmit} className="parentForm docUpLoadFormProfile">
-                                           <p className="formHeading">Signature Upload</p>
-           
-                                           <div className="form-row">
-                                                <div className={idCardValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
-                                                    <p className="upLoadDiscription">Upload a picture of your signature on a plain white background</p>
-                                                    <div className="signatureUploadTemp">
-                                                            <label htmlFor="file-upload3" className="resizeLabel">Upload</label>
-                                                            <input name="file3" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/>
-                                                    </div>
-                                                </div>
+       
+       if(this.props.profileMenu.message === profile.GET_PROFILE_MENU_PENDING){
+          return(
+            <Fragment>
+                       <div className="">
+                            <div className="container">
+                                   <div className="coverPropertiesofComponent">
+                                       <div className="col-sm-12">
+                                           <p className="page-title">Account Setting</p>
+                                       </div>
+   
+                                       <div className="col-sm-12">
+                                           <div>
+                                               <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                                   <ul>
+                                                       <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                                       
+                                                   </ul>
+                                               </div>
                                            </div>
-                                           
-                                           <div className="align-buttons">
-                                                <button type="submit" className="twoBut">Submit</button>
+                                       </div>
+                                   
+                                      <p className="loading-info">Loading page ...</p>
+                                   </div>
+                               </div>
+                           </div>
+           </Fragment>
+          )
+       }
+
+       if(this.props.profileMenu.message === profile.GET_PROFILE_MENU_SUCCESS){
+           return(
+             <Fragment>
+                        <div className="">
+                             <div className="container">
+                                    <div className="coverPropertiesofComponent">
+                                        <div className="col-sm-12">
+                                            <p className="page-title">Account Setting</p>
+                                        </div>
+    
+                                        <div className="col-sm-12">
+                                            <div>
+                                                <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                                    <ul>
+                                                        <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                                        
+                                                    </ul>
+                                                </div>
                                             </div>
-                                    </form>
+                                        </div>
                                     
+                                    <div className="row packageContent">
+                                        <div className="col-sm-4">
+                                            <div className="forProfilePicture">
+                                                    <div className="profilePixCircle">
+    
+                                                    </div>
+                                                    <p className="personsName">{this.props.profileMenu.data.response.fullName}</p>
+                                                    <p className="details">{this.props.profileMenu.data.response.username}</p>
+                                                    <p className="details">{moment(this.props.profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>
+                                                    <hr />
+    
+                                                    <div className="tickItems" onClick={this.NavigateToBVN}>
+                                                        {isBvNLinked === true ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                        <p className="pSubs">Link BVN</p>
+                                                    </div>
+                                                    <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
+                                                        {isProfileInformation ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                        <p className="pSubs">Personal Information</p>
+                                                    </div>
+                                                    <div className="tickItems" onClick={this.NavigateToContact}>
+                                                        {isContactDetails ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                        <p className="pSubs">Contact Details</p>
+                                                    </div>
+                                                    <div className="tickItems" onClick={this.NavigateToDocuments}>
+                                                        {isDocument ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt=""  className="largeVectorI" />}
+                                                        <p className="pSubs">Document Upload</p>
+                                                    </div>
+                                                    <div className="tickItems" onClick={this.NavigateToNextOfKin}>
+                                                        {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                        <p className="pSubs">Next of Kin</p>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-sm-6">
+                                        <form onSubmit={this.HandleSubmit} className="parentForm docUpLoadFormProfile">
+                                               <p className="formHeading">Signature Upload</p>
+               
+                                               <div className="form-row">
+                                                    <div className={idCardValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
+                                                        <p className="upLoadDiscription">Upload a picture of your signature on a plain white background</p>
+                                                        <div className="signatureUploadTemp">
+                                                                <label htmlFor="file-upload3" className="resizeLabel">Upload</label>
+                                                                <input name="file3" accept="image/*" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/>
+                                                        </div>
+                                                    </div>
+                                               </div>
+                                               
+                                               <div className="align-buttons">
+                                                    <button type="submit" className="twoBut">Submit</button>
+                                                </div>
+                                        </form>
+                                        
+                                        </div>
                                     </div>
-                                </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-        </Fragment>
-       )
+            </Fragment>
+           )
+       }
+
+       if(this.props.profileMenu.message === profile.GET_PROFILE_MENU_FAILURE){
+          return(
+            <Fragment>
+                       <div className="">
+                            <div className="container">
+                                   <div className="coverPropertiesofComponent">
+                                       <div className="col-sm-12">
+                                           <p className="page-title">Account Setting</p>
+                                       </div>
+   
+                                       <div className="col-sm-12">
+                                           <div>
+                                               <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                                   <ul>
+                                                       <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                                       
+                                                   </ul>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   
+                                      <p>Something went wrong ...</p>
+                                   </div>
+                               </div>
+                           </div>
+           </Fragment>
+          )
+       }
+
+       if(this.props.profileMenu.data == undefined){
+            this.GetUserProfileMenu();
+            return(
+                <Fragment>
+                        <div className="">
+                                <div className="container">
+                                    <div className="coverPropertiesofComponent">
+                                        <div className="col-sm-12">
+                                            <p className="page-title">Account Setting</p>
+                                        </div>
+    
+                                        <div className="col-sm-12">
+                                            <div>
+                                                <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                                    <ul>
+                                                        <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                                        
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+                                        <p className="loading-info">Loading Data ...</p>
+                                    </div>
+                                </div>
+                            </div>
+            </Fragment>
+            )
+       }
    }
 }
 

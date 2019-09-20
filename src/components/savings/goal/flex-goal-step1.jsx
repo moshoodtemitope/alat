@@ -419,7 +419,7 @@ class FlexGoal extends React.Component {
                                                     </div>
                                                     <div className="form-row">
                                                         <div className={targetAmountInvalid ? "form-group col-md-6 form-error" : "form-group col-md-6"}>
-                                                            <label className="label-text">How much would you like to save</label>
+                                                            <label className="label-text">How much would you like to save ?</label>
                                                             <input
                                                                 onKeyUp= {this.showInterest}
                                                                 className="form-control"
@@ -432,7 +432,7 @@ class FlexGoal extends React.Component {
 
                                                             />
                                                             {targetAmountInvalid &&
-                                                            <div className="text-danger">Enter the amount you want to save</div>}
+                                                            <div className="text-danger">Enter the amount you want to save ?</div>}
                                                             {
                                                                 this.state.showMessage ?
                                                                     <div className="text-purple"><h3 className="text-purple"> You will have  saved ₦ {this.state.showTotalAmount} at the end of this goal.</h3></div>
@@ -444,7 +444,7 @@ class FlexGoal extends React.Component {
 
 
                                                         <div className={goalFrequencyInvalid ? "form-group col-md-6 form-error" : "form-group col-md-6"}>
-                                                            <label className="label-text">Saving Circle</label>
+                                                            <label className="label-text">Saving Cycle</label>
                                                             <select onChange={(e) => this.setState({ goalFrequencyName: e.target.value },()=>{
                                                                 this.calculateInterestRate();
                                                                 this.calculationForTotalAmount();
@@ -453,15 +453,7 @@ class FlexGoal extends React.Component {
                                                                 <option>Weekly</option>
                                                                 <option>Daily</option>
                                                             </select>
-                                                            {/*<Select type="text"*/}
-                                                                    {/*options={selectedTime}*/}
-                                                                    {/*name="goalFrequency"*/}
-                                                                    {/*autoComplete="off"*/}
-                                                                    {/*defaultValue={this.state.goalFrequencyName}*/}
-                                                                    {/*onChange={this.dateSelectChange}*/}
-                                                                    {/*value={goalFrequencyName.label}*/}
-
-                                                            {/*/>*/}
+                                                            
                                                             {goalFrequencyInvalid && <div className='text-danger'>Enter saving duration</div>}
                                                         </div>
                                                     </div>
@@ -469,7 +461,7 @@ class FlexGoal extends React.Component {
 
                                                     <div className="form-row">
                                                         <div className= {!startDateInvalid ? "form-group col-md-6 " : "form-group col-md-6 form-error"}>
-                                                            <label className="label-text">When would you like to start</label>
+                                                            <label className="label-text">When would you like to start ?</label>
                                                             <DatePicker
                                                                 className="form-control"
                                                                 selected={this.state.startDate}
@@ -494,17 +486,10 @@ class FlexGoal extends React.Component {
 
                                                         </div>
                                                         <div className={!endDateInvalid ? "form-group col-md-6" : "form-group col-md-6 form-error"}>
-                                                            <label className="label-text">How long do you want to save for </label>
+                                                            <label className="label-text">How long do you want to save for ? </label>
                                                             {this.renderSelect()}
 
-                                                            {/*<Select type="text"*/}
-                                                                    {/*options={this.state.returnItems}*/}
-                                                                    {/*name="endDate"*/}
-                                                                    {/*autoComplete="off"*/}
-                                                                    {/*defaultValue={this.state.goalFrequencyValue}*/}
-                                                                    {/*onChange={this.handleSelectChange}*/}
-                                                                    {/*value={goalFrequencyValue.label}/>*/}
-                                                            {endDateInvalid &&
+                                                                                                                      {endDateInvalid &&
                                                             <div className="text-danger">select a valid date</div>
                                                             }
                                                         </div>

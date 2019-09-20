@@ -17,8 +17,7 @@ class WithDrawFromGoalSummmary extends Component {
             debitAmount:"",
             Amount:"",
             goalId:"",
-            amountSaved:"",
-            goal:JSON.parse(localStorage.getItem('goal')) || [],
+            amountSaved:null,
 
 
         }
@@ -40,10 +39,10 @@ class WithDrawFromGoalSummmary extends Component {
 
             this.setState({
                 Amount:data.amount,
-                 goalName:data.goalName,
+                goalName:data.goalName,
                 goalId:data.goalId,
                 debitAccount:data.accountNumber,
-                amountSaved:data.amountSaved,
+                Amount:data.amount,
                 partialWithdrawal:true
             });
         }
@@ -77,11 +76,10 @@ class WithDrawFromGoalSummmary extends Component {
 
         event.preventDefault();
         this.props.dispatch(actions.WithDrawFromGoal({
-            "goalId":parseInt(this.state.goal.id),
-            // "amount":parseFloat(this.state.Amount),
-            "amountNumber":this.state.debitAccount,
-            "amount":parseFloat(this.state.goal.amountSaved),
-            "partialWithdrawal":true
+            "goalId":parseInt(this.state.goalId),
+            "accountNumber":this.state.debitAccount,
+            "amount":parseFloat(this.state.Amount),
+            // "partialWithdrawal":true
 
         }));
 
@@ -136,13 +134,13 @@ class WithDrawFromGoalSummmary extends Component {
                                                         </div>
                                                         <div className="right">
                                                             <p className='GoalText'>Amount</p>
-                                                            <p className='boldedText'>₦{this.state.goal.amountSaved}</p>
+                                                            <p className='boldedText'>₦{this.state.Amount}</p>
                                                         </div>
                                                     </div>
                                                     <div className="coverForSummary">
                                                         <div className="left">
                                                             <p className='GoalText'>Account Type</p>
-                                                            <p className='boldedText'>{this.state.user.accounts[0].accountType}</p>
+                                                            {/* <p className='boldedText'>{this.state.user.accounts[0].accountType}</p> */}
                                                         </div>
 
                                                     </div>
@@ -150,7 +148,7 @@ class WithDrawFromGoalSummmary extends Component {
                                                     <div className="coverForSummary">
                                                         <div className="left">
                                                             <p className='GoalText'>Account Balance</p>
-                                                            <p className='boldedText'>₦{this.state.user.accounts[0].availableBalance}</p>
+                                                            {/* <p className='boldedText'>₦{this.state.user.accounts[0].availableBalance}</p> */}
                                                         </div>
 
                                                         <div className="right">

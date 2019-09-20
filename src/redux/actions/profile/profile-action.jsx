@@ -77,7 +77,7 @@ export const capturePersonalInformation = (token, data) => {
 export const addNextOfKin = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.ADD_NEXT_OF_KIN, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.ADD_NEXT_OF_KIN, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
@@ -144,7 +144,7 @@ export const occupationAndSector = (token, data) => {
 export const addDocuments = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.ADD_DOCUMENT, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.ADD_DOCUMENT, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
