@@ -76,6 +76,38 @@ class HeaderContainer extends React.Component{
 
     }
 
+    // checkNDPR(){
+    //     this.apiService.request(routes.CHECK_NDRP, 'GET', null, SystemConstant.HEADER)
+    //       .subscribe(result => {
+            
+    //         if(result.priority===50){
+    //           this.isNDPRCompliant = false
+    //         }else{
+    //           this.isNDPRCompliant = true;
+    //         }
+            
+    //       }, error => {
+    //         console.log(error);
+    //       });
+    //   }
+
+    //   acceptNdpr(isAccepted){
+    //     if(isAccepted){
+    //       this.acceptingNDPR =true;
+    //       this.apiService.request(routes.ACCEPTNDRP+true, 'POST', {}, SystemConstant.HEADER)
+    //           .subscribe(data => {
+    //             // this.preparePage();
+    //           this.isNDPRCompliant = true;
+    //           this.acceptingNDPR =false;
+    //           }, err => {
+    //             this.isNDPRCompliant = false;
+    //             this.acceptingNDPR =false;
+    //           });
+    //     }else{
+    //       this.isNDPRCompliant = true;
+    //     }
+    //   }
+
     componentDidMount() {
 
         // console.log(this.props);
