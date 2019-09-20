@@ -11,7 +11,7 @@ import {profile} from '../../redux/constants/profile/profile-constants';
 import moment from 'moment';
 import {history} from '../../_helpers/history';
 
-
+var profileMenuStore = {}
 class PhotographUpload extends Component {
    constructor(props){
        super(props);
@@ -39,7 +39,21 @@ class PhotographUpload extends Component {
 
    componentDidMount = () => {
     this.CheckIfStoreInformationIsSet();
+    this.setProfile();
    }
+
+setProfile = () => {
+    let localStore = window.localStorage;
+    setTimeout(() => {
+        this.setState({
+            isProfileInformation: JSON.parse(localStore.getItem('isProfileInformation')),
+            isContactDetails: JSON.parse(localStore.getItem('isContactDetails')),
+            isDocument: JSON.parse(localStore.getItem('isDocument')),
+            isToNextOfKin: JSON.parse(localStore.getItem('navToNextOfKin')),
+            isBvNLinked: JSON.parse(localStore.getItem('isBvNLinked')),
+        }); 
+    }, 20);
+}
 
 CheckIfStoreInformationIsSet = () => {
     
@@ -174,6 +188,18 @@ DispatchSuccessMessage = (data) => {
 GetUserProfileMenu = () => {
     this.props.dispatch(actions.profileMenu(this.state.user.token));
  }
+
+ StoreInforMation = () => {
+    console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
+    profileMenuStore = this.props.profileMenu.data.response;
+ 
+    let localStore = window.localStorage;
+    localStore.setItem('isProfileInformation', this.props.profileMenu.data.response.personalInfoComplete);
+    localStore.setItem('isContactDetails', this.props.profileMenu.data.response.contactDetailsComplete);
+    localStore.setItem('isDocument', this.props.profileMenu.data.response.documentUploaded);
+    localStore.setItem('navToNextOfKin', this.props.profileMenu.data.response.nextOfKinComplete);
+    localStore.setItem('isBvNLinked', this.props.profileMenu.data.response.bvnLinked);
+}
 
    render(){
       const {isImageUploaded, isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, idTypeValidity, idFrontFace, idPhotographValid, idCardNumberValidity} = this.state;

@@ -20,54 +20,40 @@ class PersonalDefault extends Component {
           isDocument: false,
           isToNextOfKin: false,
           residentialAddress: false,
-          displayProfileItems: false
        }
 
        this.GetUserProfileMenu();
-       
+    //    this.GetResidentialAddress();
    }
    
    componentDidMount = () => {
        
        this.GetProfileMenu();
        this.GetRelationShips();
-    //    this.CheckIfStoreInformationIsSet();
-   
-    //    if(this.props.profileMenu.message === profile.GET_PROFILE_MENU_SUCCESS)
+       this.GetResidentialAddress();
        this.setProfile();
    }
 
    setProfile = () => {
-    //    setTimeout(() => {
         let localStore = window.localStorage;
-        this.setState({
-            isProfileInformation: localStore.getItem('isProfileInformation'),
-            isContactDetails: localStore.getItem('isContactDetails'),
-            isDocument: localStore.getItem('isDocument'),
-            isToNextOfKin: localStore.getItem('navToNextOfKin'),
-            isBvNLinked: localStore.getItem('isBvNLinked'),
-        }, () => {
-        this.setState({displayProfileItems: true})
-            console.log("Ppppp",localStore.getItem('isProfileInformation'))
-            console.log("CCCCCC",localStore.getItem('isContactDetails'))
-            console.log("DDD",localStore.getItem('isDocument'))
-            console.log("KKK",localStore.getItem('navToNextOfKin'))
-            console.log("LLLLLL",localStore.getItem('isBvNLinked'))
-        }); 
-        // this.setState({isContactDetails: localStore.getItem('isContactDetails')});
-        console.log('SET PROFILE WAS CALLED CHECKING IT NOW');
-
-        // console.log(localStore.getItem('isProfileInformation'))
-        // console.log(localStore.getItem('isContactDetails'))
-        // console.log(localStore.getItem('isDocument'))
-        // console.log(localStore.getItem('navToNextOfKin'))
-        // console.log(localStore.getItem('isBvNLinked'))
-
-    //    }, 1000)
+        setTimeout(() => {
+            this.setState({
+                isProfileInformation: JSON.parse(localStore.getItem('isProfileInformation')),
+                isContactDetails: JSON.parse(localStore.getItem('isContactDetails')),
+                isDocument: JSON.parse(localStore.getItem('isDocument')),
+                isToNextOfKin: JSON.parse(localStore.getItem('navToNextOfKin')),
+                isBvNLinked: JSON.parse(localStore.getItem('isBvNLinked')),
+            }); 
+        }, 20);
    }
 
    GetUserProfileMenu = () => {
       this.props.dispatch(actions.profileMenu(this.state.user.token));
+   }
+
+   GetResidentialAddress = () => {
+       console.log('WAS FIRED FROM DEFAULT PAGE')
+       this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
    }
 
    GetRelationShips = () => {
@@ -140,7 +126,6 @@ class PersonalDefault extends Component {
 
    CheckIfStoreInformationIsSet = () => {
        if(this.props.profileMenu.message == profile.GET_PROFILE_MENU_SUCCESS){
-        //    console.log('WAS IT EVER FIRED ====  ====  ======  ======= ///// ==')
            this.setState({isProfileInformation: this.props.profileMenu.data.response.personalInfoComplete});
            this.setState({isContactDetails: this.props.profileMenu.data.response.contactDetailsComplete});
            this.setState({isDocument: this.props.profileMenu.data.response.documentUploaded});
@@ -149,23 +134,11 @@ class PersonalDefault extends Component {
        }
    }
 
-//    CheckIfStoreInformationIsSetTwo = () => {
-//     console.log('WAS IT EVER FIRED ====  ====  ======  ======= ///// ==')
-//         if(this.props.profileMenu.message == profile.GET_PROFILE_MENU_SUCCESS){
-//             // console.log('WAS IT EVER FIRED ====  ====  ======  ======= ///// ==')
-//             this.setState({isProfileInformation: this.props.profileMenu.data.response.personalInfoComplete});
-//             this.setState({isContactDetails: this.props.profileMenu.data.response.contactDetailsComplete});
-//             this.setState({isDocument: this.props.profileMenu.data.response.documentUploaded});
-//             this.setState({navToNextOfKin: this.props.profileMenu.data.response.nextOfKinComplete});
-//             this.setState({isBvNLinked: this.props.profileMenu.data.response.bvnLinked});
-//         }
-//    }
 
    StoreInforMation = () => {
        console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
        profileMenuStore = this.props.profileMenu.data.response;
-    //    console.log("The data to store ",profileMenuStore)
-    //    this.setState({love: true});
+    
        let localStore = window.localStorage;
        localStore.setItem('isProfileInformation', this.props.profileMenu.data.response.personalInfoComplete);
        localStore.setItem('isContactDetails', this.props.profileMenu.data.response.contactDetailsComplete);
@@ -176,7 +149,7 @@ class PersonalDefault extends Component {
 
    render(){
        const {profileMenu, residentialAddress, isBvNLinked, isProfileInformation, isContactDetails, isDocument, isToNextOfKin} = this.state;
-        console.log("=====NextOfKing======", isToNextOfKin);
+
        if(this.props.profileMenu.message == profile.GET_PROFILE_MENU_PENDING){
             return(
                 <Fragment>
@@ -198,7 +171,7 @@ class PersonalDefault extends Component {
                 </Fragment>      
             );
        }
-        
+
        if(this.props.profileMenu.message == profile.GET_PROFILE_MENU_SUCCESS){
             this.StoreInforMation();  
             return(
@@ -206,7 +179,6 @@ class PersonalDefault extends Component {
                         <div className="col-sm-12">
                             <p className="page-title">Account Setting</p>
                         </div>
-
                         <div className="col-sm-12">
                             <div>
                                 <div className="sub-tab-nav" style={{marginBottom: 10}}>
@@ -224,8 +196,6 @@ class PersonalDefault extends Component {
                                             <div className="al-card no-pad">
                                             <h4 className="m-b-10 center-text hd-underline" id="profMenuHead">Profile</h4>
 
-                                            {
-                                                this.state.displayProfileItems ? 
                                                 <form onSubmit={this.handleSubmit}>
                                                     <div className="tickItems" onClick={this.NavigateToBVN}>
                                                         {isBvNLinked ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
@@ -244,17 +214,15 @@ class PersonalDefault extends Component {
                                                         <p className="pSubs">Document Upload</p>
                                                     </div>
                                                     <div className="tickItems" onClick={this.NavigateToNextOfKin}>
-                                                    
-                                                        {JSON.parse(isToNextOfKin) ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                        {/* {typeof isToNextOfKin} */}
+                                                        {isToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
                                                         <p className="pSubs">Next of Kin</p>
                                                     </div>
                                                     <div className="tickItems" onClick={this.NavigateResidentialAddress}>
                                                         {residentialAddress ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
                                                         <p className="pSubs">Residential Address</p>
                                                     </div>
-                                                </form>: <div>Loading Profile Menu...</div>
-                                            }
-
+                                                </form>
                                                 
                                             </div>
                                         </div>

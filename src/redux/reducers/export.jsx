@@ -339,5 +339,4 @@ export const profile = {
     nextOfKinsRelationship,
     addResidentialAddress,
     GetResidentialAddress
-
 }

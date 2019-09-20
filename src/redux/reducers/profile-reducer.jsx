@@ -292,19 +292,19 @@ export function addResidentialAddress (state=[], action){
 
 export function GetResidentialAddress (state=[], action){
     switch(action.type){
-        case profile.GET_RESIDENTIAL_PENDING: 
+        case profile.GET_RESIDENTIAL_ADDRESS_PENDING: 
            return {
-               message: profile.GET_RESIDENTIAL_PENDING,
+               message: profile.GET_RESIDENTIAL_ADDRESS_PENDING,
                data: action
            }
-        case profile.GET_RESIDENTIAL_SUCCESS:
+        case profile.GET_RESIDENTIAL_ADDRESS_SUCCESS:
            return {
-               message: profile.GET_RESIDENTIAL_SUCCESS,
+               message: profile.GET_RESIDENTIAL_ADDRESS_SUCCESS,
                data: action
            }
-        case profile.GET_RESIDENTIAL_FAILURE:
+        case profile.GET_RESIDENTIAL_ADDRESS_FAILURE:
            return {
-               message: profile.GET_RESIDENTIAL_FAILURE,
+               message: profile.GET_RESIDENTIAL_ADDRESS_FAILURE,
                data: action
            }
         default: 

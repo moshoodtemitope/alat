@@ -13,7 +13,7 @@ import moment from 'moment';
 import { Switch } from '../../shared/elements/_toggle';
 import AlatPinInput from '../../shared/components/alatPinInput';
 
-
+var profileMenuStore = {}
 var allStatesInfo = null;
 var allCityData = null;
 var localGov2 = null;
@@ -122,7 +122,21 @@ class ContactDetails extends Component {
 
    componentDidMount = () => {
        this.CheckIfStoreInformationIsSet();
+       this.setProfile();
    }
+
+   setProfile = () => {
+    let localStore = window.localStorage;
+    setTimeout(() => {
+        this.setState({
+            isProfileInformation: JSON.parse(localStore.getItem('isProfileInformation')),
+            isContactDetails: JSON.parse(localStore.getItem('isContactDetails')),
+            isDocument: JSON.parse(localStore.getItem('isDocument')),
+            isToNextOfKin: JSON.parse(localStore.getItem('navToNextOfKin')),
+            isBvNLinked: JSON.parse(localStore.getItem('isBvNLinked')),
+        }); 
+    }, 20);
+}
 
 CheckIfStoreInformationIsSet = () => {
     
@@ -134,6 +148,18 @@ CheckIfStoreInformationIsSet = () => {
      this.setState({navToNextOfKin: this.props.profileMenu.data.response.nextOfKinComplete});
      this.setState({isBvNLinked: this.props.profileMenu.data.response.bvnLinked});
  }
+}
+
+StoreInforMation = () => {
+    console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
+    profileMenuStore = this.props.profileMenu.data.response;
+ 
+    let localStore = window.localStorage;
+    localStore.setItem('isProfileInformation', this.props.profileMenu.data.response.personalInfoComplete);
+    localStore.setItem('isContactDetails', this.props.profileMenu.data.response.contactDetailsComplete);
+    localStore.setItem('isDocument', this.props.profileMenu.data.response.documentUploaded);
+    localStore.setItem('navToNextOfKin', this.props.profileMenu.data.response.nextOfKinComplete);
+    localStore.setItem('isBvNLinked', this.props.profileMenu.data.response.bvnLinked);
 }
 
    fetchContactDetails(){
@@ -873,6 +899,7 @@ GetUserProfileMenu = () => {
  
         if(getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && profileMenu.message === profile.GET_PROFILE_MENU_SUCCESS){
             this.UseGottenStateInfo();
+            this.StoreInforMation();  
             return(
                 <Fragment>
                     {/* <InnerContainer> */}
@@ -1228,6 +1255,7 @@ GetUserProfileMenu = () => {
         }
 
         if(getContactDetail.message == undefined){
+            this.GetUserProfileMenu();
             return(
                 <Fragment>
                        

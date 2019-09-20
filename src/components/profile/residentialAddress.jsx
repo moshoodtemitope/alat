@@ -13,6 +13,7 @@ import moment from 'moment';
 import { Switch } from '../../shared/elements/_toggle';
 import AlatPinInput from '../../shared/components/alatPinInput';
 
+var profileMenuStore = {}
 var residentialAddress = null;
 var allStatesInfo = null;
 var allCityData = null;
@@ -72,7 +73,21 @@ class ResidentialAddress extends Component {
 
    componentDidMount = () => {
        this.CheckIfStoreInformationIsSet();
+       this.setProfile();
    }
+
+setProfile = () => {
+    let localStore = window.localStorage;
+    setTimeout(() => {
+        this.setState({
+            isProfileInformation: JSON.parse(localStore.getItem('isProfileInformation')),
+            isContactDetails: JSON.parse(localStore.getItem('isContactDetails')),
+            isDocument: JSON.parse(localStore.getItem('isDocument')),
+            isToNextOfKin: JSON.parse(localStore.getItem('navToNextOfKin')),
+            isBvNLinked: JSON.parse(localStore.getItem('isBvNLinked')),
+        }); 
+    }, 20);
+}
 
 CheckIfStoreInformationIsSet = () => {
     
@@ -197,21 +212,6 @@ CheckIfStoreInformationIsSet = () => {
       this.props.dispatch(actions.addResidentialAddress(this.state.user.token, data));
    }
 
-//    StoreLocationInformation = () => {
-//         let states = this.props.getContactDetail.data.response.states;
-//         states.map(element => {
-//             if(element.cityId == residentialAddress.stateId)
-//                 theState = element.name;
-//         });
-
-//         let cities = this.props.getContactDetail.data.response.cities;
-//         cities.map(element => {
-//             // console.log(element.cityId);
-//             if(element.cityId == residentialAddress.town)
-//                 theCity = element.name;
-//         });
-//    }
-   
    SetBvNNumber = (event) => {
        this.setState({bvnNumber: event.target.value});
    }
@@ -466,6 +466,18 @@ DispatchSuccessMessage = (data) => {
 GetUserProfileMenu = () => {
     this.props.dispatch(actions.profileMenu(this.state.user.token));
  }
+
+ StoreInforMation = () => {
+    console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
+    profileMenuStore = this.props.profileMenu.data.response;
+ 
+    let localStore = window.localStorage;
+    localStore.setItem('isProfileInformation', this.props.profileMenu.data.response.personalInfoComplete);
+    localStore.setItem('isContactDetails', this.props.profileMenu.data.response.contactDetailsComplete);
+    localStore.setItem('isDocument', this.props.profileMenu.data.response.documentUploaded);
+    localStore.setItem('navToNextOfKin', this.props.profileMenu.data.response.nextOfKinComplete);
+    localStore.setItem('isBvNLinked', this.props.profileMenu.data.response.bvnLinked);
+}
 
    render(){
         const {isImageUploaded,  LocalGovValidity, PlaceOfBirthValidity,  NationalityValidity, StateOfOriginValidity,

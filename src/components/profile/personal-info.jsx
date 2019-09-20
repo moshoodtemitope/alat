@@ -12,7 +12,7 @@ import {occupationAndSector, getResidentialDetails, getContactDetails,getPersona
 import moment from 'moment';
 import AlatPinInput from '../../shared/components/alatPinInput';
 
-
+var profileMenuStore = {}
 class PersonalInfoMation extends Component {
    constructor(props){
        super(props);
@@ -83,7 +83,21 @@ class PersonalInfoMation extends Component {
 
    componentDidMount = () => {
        this.CheckIfStoreInformationIsSet();
+       this.setProfile();
    }
+
+setProfile = () => {
+    let localStore = window.localStorage;
+    setTimeout(() => {
+        this.setState({
+            isProfileInformation: JSON.parse(localStore.getItem('isProfileInformation')),
+            isContactDetails: JSON.parse(localStore.getItem('isContactDetails')),
+            isDocument: JSON.parse(localStore.getItem('isDocument')),
+            isToNextOfKin: JSON.parse(localStore.getItem('navToNextOfKin')),
+            isBvNLinked: JSON.parse(localStore.getItem('isBvNLinked')),
+        }); 
+    }, 20);
+}
 
 CheckIfStoreInformationIsSet = () => {
     
@@ -578,6 +592,18 @@ DispatchSuccessMessage = (data) => {
 GetUserProfileMenu = () => {
     this.props.dispatch(actions.profileMenu(this.state.user.token));
  }
+
+ StoreInforMation = () => {
+    console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
+    profileMenuStore = this.props.profileMenu.data.response;
+ 
+    let localStore = window.localStorage;
+    localStore.setItem('isProfileInformation', this.props.profileMenu.data.response.personalInfoComplete);
+    localStore.setItem('isContactDetails', this.props.profileMenu.data.response.contactDetailsComplete);
+    localStore.setItem('isDocument', this.props.profileMenu.data.response.documentUploaded);
+    localStore.setItem('navToNextOfKin', this.props.profileMenu.data.response.nextOfKinComplete);
+    localStore.setItem('isBvNLinked', this.props.profileMenu.data.response.bvnLinked);
+}
 
    render(){
        const {isImageUploaded, isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin, BVNValidity, birthDate, PinValidity, SectorValidity, EmployerPhoneNumberValidity,EmploymentValidity, AddressValidity, EmployersNameValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
