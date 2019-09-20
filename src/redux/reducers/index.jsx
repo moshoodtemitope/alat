@@ -418,8 +418,9 @@ const appReducer = combineReducers({
     getContactDetail:profile.getContactDetail,
     getPersonalInfo: profile.getPersonalInfo,
     getStates: profile.getStates,
-    nextOfKinsRelationship: profile.nextOfKinsRelationship
-
+    nextOfKinsRelationship: profile.nextOfKinsRelationship,
+    addResidentialAddress: profile.addResidentialAddress,
+    GetResidentialAddress: profile.GetResidentialAddress
 });
 
 //export defualt appReducer;

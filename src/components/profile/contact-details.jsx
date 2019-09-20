@@ -14,6 +14,7 @@ import { Switch } from '../../shared/elements/_toggle';
 import AlatPinInput from '../../shared/components/alatPinInput';
 
 
+var profileMenuStore = {}
 var allStatesInfo = null;
 var allCityData = null;
 var localGov2 = null;
@@ -115,14 +116,26 @@ class ContactDetails extends Component {
 
        }
        this.handleAlatPinChange = this.handleAlatPinChange.bind(this)
-
-
        this.fetchContactDetails();
    }
 
    componentDidMount = () => {
        this.CheckIfStoreInformationIsSet();
+       this.setProfile();
    }
+
+   setProfile = () => {
+    let localStore = window.localStorage;
+    setTimeout(() => {
+        this.setState({
+            isProfileInformation: JSON.parse(localStore.getItem('isProfileInformation')),
+            isContactDetails: JSON.parse(localStore.getItem('isContactDetails')),
+            isDocument: JSON.parse(localStore.getItem('isDocument')),
+            isToNextOfKin: JSON.parse(localStore.getItem('navToNextOfKin')),
+            isBvNLinked: JSON.parse(localStore.getItem('isBvNLinked')),
+        }); 
+    }, 20);
+}
 
 CheckIfStoreInformationIsSet = () => {
     
@@ -134,6 +147,18 @@ CheckIfStoreInformationIsSet = () => {
      this.setState({navToNextOfKin: this.props.profileMenu.data.response.nextOfKinComplete});
      this.setState({isBvNLinked: this.props.profileMenu.data.response.bvnLinked});
  }
+}
+
+StoreInforMation = () => {
+    console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
+    profileMenuStore = this.props.profileMenu.data.response;
+ 
+    let localStore = window.localStorage;
+    localStore.setItem('isProfileInformation', this.props.profileMenu.data.response.personalInfoComplete);
+    localStore.setItem('isContactDetails', this.props.profileMenu.data.response.contactDetailsComplete);
+    localStore.setItem('isDocument', this.props.profileMenu.data.response.documentUploaded);
+    localStore.setItem('navToNextOfKin', this.props.profileMenu.data.response.nextOfKinComplete);
+    localStore.setItem('isBvNLinked', this.props.profileMenu.data.response.bvnLinked);
 }
 
    fetchContactDetails(){
@@ -368,12 +393,6 @@ CheckIfStoreInformationIsSet = () => {
                                 result = null;
                                 break;
                             }
-                    // case 'street2':
-                    //         if(this.state[x] == null || this.state[x] == ""){
-                    //             console.log(x)
-                    //             result = null;
-                    //             break;
-                    //         }
                 }
             }
             
@@ -393,6 +412,7 @@ CheckIfStoreInformationIsSet = () => {
        }
    }
 
+   
    InitiateNetworkCall = () => {
       let data = null;
       console.log(this.state.checkBoxStatus);
@@ -405,7 +425,7 @@ CheckIfStoreInformationIsSet = () => {
                     phoneNumber: parseInt(this.state.phoneNumber),
                     alternatePhoneNumber: parseInt(this.state.alternatePhoneNumber),
                     country: "Nigeria", 
-                    mailingCountry: 'Nigeria',
+                    mailingCountry: 'Nigeria', 
                     mailingStateId: parseInt(this.state.stateGvId),
                     mailingCityId: parseInt(this.state.localGvId),
                     pin: parseInt(this.state.Pin),
@@ -454,17 +474,17 @@ CheckIfStoreInformationIsSet = () => {
     //   return;
       this.props.dispatch(actions.addContactDetails(this.state.user.token, data));
    }
-
+   
    SetBvNNumber = (event) => {
        this.setState({bvnNumber: event.target.value});
    }
-
+   
    SetBirthDay = (birthDate) => {
         this.setState({  
             birthDate: birthDate
         });
    }  
-
+   
    NavigateToSuccessPage = () => {
        history.push('/profile-success-message');
    }
@@ -498,7 +518,7 @@ CheckIfStoreInformationIsSet = () => {
        this.checkApartmentValidity2();
        this.checkSectorValidity();
        console.log('code got here');
- 
+    
        switch(this.checkValidity()){
            case null:
              console.log('Empty value was found');
@@ -560,7 +580,7 @@ CheckIfStoreInformationIsSet = () => {
      } 
 
     checkAlternatePhoneNumberValidity = () => {
-       if(this.state.alternateEmail == null || this.state.alternateEmail == ""){
+       if(this.state.alternatePhoneNumber == null || this.state.alternatePhoneNumber == ""){
            this.setState({alternatePhoneNumberValidity: true});
        }else{
            this.setState({alternatePhoneNumberValidity: false});
@@ -878,6 +898,7 @@ GetUserProfileMenu = () => {
  
         if(getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && profileMenu.message === profile.GET_PROFILE_MENU_SUCCESS){
             this.UseGottenStateInfo();
+            this.StoreInforMation();  
             return(
                 <Fragment>
                     {/* <InnerContainer> */}
@@ -1233,6 +1254,7 @@ GetUserProfileMenu = () => {
         }
 
         if(getContactDetail.message == undefined){
+            this.GetUserProfileMenu();
             return(
                 <Fragment>
                        
@@ -1291,17 +1313,15 @@ GetUserProfileMenu = () => {
                 </Fragment>      
             )
         }
-
    }
 }
 
 const mapStateToProps = (state) => {
-    return {
+    return { 
         profileMenu:state.profileMenu,
         getContactDetail:state.getContactDetail,
         alert:state.alert,
         addContactDetails:state.addContactDetails
-
     }
 }
 
