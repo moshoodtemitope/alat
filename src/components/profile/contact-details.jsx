@@ -13,6 +13,7 @@ import moment from 'moment';
 import { Switch } from '../../shared/elements/_toggle';
 import AlatPinInput from '../../shared/components/alatPinInput';
 
+
 var profileMenuStore = {}
 var allStatesInfo = null;
 var allCityData = null;
@@ -115,8 +116,6 @@ class ContactDetails extends Component {
 
        }
        this.handleAlatPinChange = this.handleAlatPinChange.bind(this)
-
-
        this.fetchContactDetails();
    }
 

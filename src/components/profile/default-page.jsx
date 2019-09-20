@@ -27,10 +27,9 @@ class PersonalDefault extends Component {
    }
    
    componentDidMount = () => {
-       
        this.GetProfileMenu();
        this.GetRelationShips();
-       this.GetResidentialAddress();
+       this.GetResidentialAddress();    
        this.setProfile();
    }
 
