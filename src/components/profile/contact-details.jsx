@@ -871,7 +871,7 @@ GetUserProfileMenu = () => {
 }
 
    render(){
-        const {isImageUploaded, PinValidity, AlternateEmailValidity, sameAddressAsAbove,SectorValidity, phoneNumberValidity, LocalGovValidity2, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity2, NationalityValidity, StateOfOriginValidity,
+        const {residentialAddress, isImageUploaded, PinValidity, AlternateEmailValidity, sameAddressAsAbove,SectorValidity, phoneNumberValidity, LocalGovValidity2, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity2, NationalityValidity, StateOfOriginValidity,
         EmailAddressValidity, streetValidity, busstopValidity, apartmentValidity, personalAddressValidity, StateOfOriginValidity2,
         personalAddressValidity2, alternatePhoneNumberValidity, houseNumberValidity,   isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin} = this.state;
         const {profileMenu, getContactDetail, GetResidentialAddress} = this.props;

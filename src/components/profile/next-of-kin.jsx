@@ -961,7 +961,7 @@ class NextOfKin extends Component {
     }
     
    render(){
-    const {isImageUploaded, isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin, birthDate, PinValidity, streetCompoundValidity, yourAddressValidity, sameAddressAsAbove, SurnameValidity, relationshipValidity, TitleValidity, phoneNumberValidity, LocalGovValidity, NationalityValidity, StateOfOriginValidity,
+    const {residentialAddress, isImageUploaded, isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin, birthDate, PinValidity, streetCompoundValidity, yourAddressValidity, sameAddressAsAbove, SurnameValidity, relationshipValidity, TitleValidity, phoneNumberValidity, LocalGovValidity, NationalityValidity, StateOfOriginValidity,
         EmailAddressValidity, cityValidity, streetValidity, GenderValidity, busstopValidity, DateOfBirthValidity, FirstNameValidity, OtherNameValidity
         } = this.state;
  

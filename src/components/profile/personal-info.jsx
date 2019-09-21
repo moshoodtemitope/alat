@@ -619,7 +619,7 @@ ChangeResidentialStatus = () => {
 }
 
    render(){
-       const {isImageUploaded, isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin, BVNValidity, birthDate, PinValidity, SectorValidity, EmployerPhoneNumberValidity,EmploymentValidity, AddressValidity, EmployersNameValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
+       const {residentialAddress, isImageUploaded, isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin, BVNValidity, birthDate, PinValidity, SectorValidity, EmployerPhoneNumberValidity,EmploymentValidity, AddressValidity, EmployersNameValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
         SurnameValidity, EmailAddressValidity, FirstNameValidity, MaritalStatusValidity, TitleValidity, OccupationValidity,GenderValidity, DateOfBirthValidity, OtherNameValidity, MothersMaidenNameValidity} = this.state;
         const {GetResidentialAddress, profileMenu, occupationAndSector, getContactDetail} = this.props
         console.log('=======',occupationAndSector)

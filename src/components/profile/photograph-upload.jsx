@@ -214,7 +214,7 @@ ChangeResidentialStatus = () => {
     }, 1000)
 }
    render(){
-      const {isImageUploaded, isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, idTypeValidity, idFrontFace, idPhotographValid, idCardNumberValidity} = this.state;
+      const {residentialAddress, isImageUploaded, isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, idTypeValidity, idFrontFace, idPhotographValid, idCardNumberValidity} = this.state;
       
       if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
              this.ChangeResidentialStatus();

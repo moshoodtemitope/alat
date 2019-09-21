@@ -492,7 +492,7 @@ ChangeResidentialStatus = () => {
 }
 
    render(){
-        const {isImageUploaded,  LocalGovValidity, PlaceOfBirthValidity,  NationalityValidity, StateOfOriginValidity,
+        const {residentialAddress, isImageUploaded,  LocalGovValidity, PlaceOfBirthValidity,  NationalityValidity, StateOfOriginValidity,
          streetValidity, busstopValidity, apartmentValidity, personalAddressValidity, 
           houseNumberValidity,   isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin} = this.state;
         const {GetResidentialAddress, profileMenu, getContactDetail } = this.props;
