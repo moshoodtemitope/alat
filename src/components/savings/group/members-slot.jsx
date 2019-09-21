@@ -7,6 +7,9 @@ import {Switch} from "react-router";
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import {history} from '../../../_helpers/history';
+import { GROUPSAVINGSCONSTANT } from '../../../redux/constants/savings/group';
+import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
+
 
 var theMembers = [];
 var element = {};
@@ -220,6 +223,11 @@ class MemberSlots extends React.Component{
 
 
     render(){
+        // if(this.props.rotatingGroupDetails.message === GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS){}
+        // if(){}
+        // if(){}
+        // if(){}
+        // if(){}
         return (
             <Fragment>
                 <InnerContainer>
@@ -299,7 +307,8 @@ function mapStateToProps(state){
     return {
         groupDetails: state.rotatingGroupDetails.data,
         groupSavingsEsusu: state.getGroupSavingsEsusu.data,
-        groups: state.customerGroup.data
+        groups: state.customerGroup.data,
+        rotatingGroupDetails: state.rotatingGroupDetails
     }
 }
 

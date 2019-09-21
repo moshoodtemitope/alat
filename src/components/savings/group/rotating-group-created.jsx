@@ -38,8 +38,13 @@ class RotatingGroupCreated extends React.Component {
             let Storage = window.localStorage;
             Storage.setItem('rotatingGpId', this.props.createdGroupSavings.data.response.id);
             console.log(Storage.getItem('rotatingGpId'));
-
+            console.log('condition never went through!  0000');
             this.props.dispatch(actions.rotatingGroupDetails(this.state.user.token, data));
+       }
+
+       if(this.props.createdGroupSavings.data == undefined){
+             this.FetchRotatingSavings(); 
+             console.log('condition never went through!');
        }
     }
 
@@ -82,50 +87,53 @@ class RotatingGroupCreated extends React.Component {
     FetchRotatingSavings = () => {
         let Store = window.localStorage;  
         let data = {
-            groupId: Store.getItem('rotatingGpId')
+            groupId: JSON.parse(Store.getItem('rotatingGpId'))
         }
+       
+        // setTimeout(() => {
         this.props.dispatch(actions.rotatingGroupDetails(this.state.user.token, data));
+        // }, 1000)
     }
 
     render() {
 
-        if(this.props.createdGroupSavings.message === GROUPSAVINGSCONSTANT.CREATE_ROTATING_GROUP){
-            // return(
-            //     <Fragment>
-            //         <InnerContainer>
-            //             <SavingsContainer>
-            //                 <div className="row">
-            //                     <div className="col-sm-12">
-            //                         <p className="page-title">Savings & Goals</p>
-            //                     </div>
-            //                     <div className="col-sm-12">
-            //                         <div className="tab-overflow">
-            //                             <div className="sub-tab-nav">
-            //                                 <ul>
-            //                                 <NavLink to='/savings/choose-goal-plan'>
-            //                                     <li><a href="#">Goals</a></li>
-            //                                 </NavLink>
-            //                                 {/* <NavLink to='/savings/goal/group-savings-selection'> */}
-            //                                     <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-            //                                 {/* </NavLink> */}
-            //                                     <li><a href="#">Investments</a></li>
-            //                                 </ul>
-            //                             </div>
-            //                         </div>
-            //                     </div>
-            //                     <p>Loading Group Details ...</p>
+        if(this.props.rotatingGroupDetails.message === GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS){
+            return(
+                <Fragment>
+                    <InnerContainer>
+                        <SavingsContainer>
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <p className="page-title">Savings & Goals</p>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div className="tab-overflow">
+                                        <div className="sub-tab-nav">
+                                            <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li><a href="#">Goals</a></li>
+                                            </NavLink>
+                                            {/* <NavLink to='/savings/goal/group-savings-selection'> */}
+                                                <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                            {/* </NavLink> */}
+                                                <li><a href="#">Investments</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>Loading Group Details ...</p>
     
-            //                 </div>
+                            </div>
     
-            //             </SavingsContainer>
+                        </SavingsContainer>
     
-            //         </InnerContainer>
+                    </InnerContainer>
     
-            //     </Fragment>
-            // )
+                </Fragment>
+            )
         }
-          
-        if(this.props.createdGroupSavings.message === GROUPSAVINGSCONSTANT.CREATE_ROTATING_GROUP_SUCCESS){
+    
+        if(this.props.rotatingGroupDetails.message === GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS_SUCCESS){
             return (
                 <Fragment>
                     <InnerContainer>
@@ -157,13 +165,13 @@ class RotatingGroupCreated extends React.Component {
                                            <h4 className="m-b-10 center-text hd-underline">Group Created</h4>
     
                                                 <form onSubmit={this.handleSubmit}>
-                                                <input type="text" id='hiddenReferralCode1' ref={ele => this.textInputHidden = ele} value={this.props.createdGroupSavings.data.response.referralCode}/>
+                                                <input type="text" id='hiddenReferralCode1' ref={ele => this.textInputHidden = ele} value={this.props.rotatingGroupDetails.data.response.referralCode}/>
                                                     <div className="form-group instruction">
                                                         <h6>Use the code below to invite your friends to join the group.</h6>
                                                     </div>
                                                     <div className="forCode">
                                                             <div className="left">
-                                                                <h2 id={this.props.createdGroupSavings.data.response.referralCode} ref={element => this.textInput = element}>{this.props.createdGroupSavings.data.response.referralCode}</h2>
+                                                                <h2 id={this.props.rotatingGroupDetails.data.response.referralCode} ref={element => this.textInput = element}>{this.props.rotatingGroupDetails.data.response.referralCode}</h2>
                                                             </div>
                                                             <div className="right">
                                                             <img onClick={this.CopyCode} className='itemToCopy' src="/src/assets/img/Group.png" alt=""/>
@@ -200,8 +208,8 @@ class RotatingGroupCreated extends React.Component {
                 </Fragment>
             );
         }
-         
-        if(this.props.createdGroupSavings.message === GROUPSAVINGSCONSTANT.CREATE_ROTATING_GROUP_ERROR){
+    
+        if(this.props.rotatingGroupDetails.message === GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS_ERROR){
             return(
                 <Fragment>
                     <InnerContainer>
@@ -236,9 +244,9 @@ class RotatingGroupCreated extends React.Component {
                 </Fragment>
             )
         }
-         
-        if(this.props.createdGroupSavings.data == undefined){
-            this.FetchRotatingSavings(); 
+
+        if(this.props.rotatingGroupDetails.data == undefined){
+            // this.FetchRotatingSavings(); 
             return(
                 <Fragment>
                     <InnerContainer>
@@ -274,7 +282,7 @@ class RotatingGroupCreated extends React.Component {
             )
         }
 
-        if(this.props.createdGroupSavings.data != undefined){
+        if(this.props.rotatingGroupDetails.data != undefined){
             if(Object.keys(this.props.createdGroupSavings.data.response).length != 0){
                 return (
                     <Fragment>
@@ -365,7 +373,8 @@ function mapStateToProps(state){
    return {
        createdGroupSavings: state.createRotatingGroupSavings,
        groupSavingsEsusu: state.getGroupSavingsEsusu.data,
-       groups: state.customerGroup.data
+       groups: state.customerGroup.data,
+       rotatingGroupDetails: state.rotatingGroupDetails
    }
 }
 
