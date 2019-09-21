@@ -32,6 +32,8 @@ class IdentityCardUpload extends Component {
           idCardValidity: false,
           isImageUploaded: false
        }
+
+       this.GetResidentialAddress();
    }
 
    SetBirthDay = (birthDate) => {
@@ -45,6 +47,11 @@ class IdentityCardUpload extends Component {
 
     this.setProfile();
    }
+
+   GetResidentialAddress = () => {
+    this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
+   }  
+
 
 setProfile = () => {
     let localStore = window.localStorage;
@@ -275,10 +282,18 @@ StoreInforMation = () => {
     localStore.setItem('isBvNLinked', this.props.profileMenu.data.response.bvnLinked);
 }
 
+ChangeResidentialStatus = () => {
+    setTimeout(() => {
+        this.setState({residentialAddress: true});
+    }, 1000)
+}
+
 
    render(){
       const {isImageUploaded, isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, birthDate, birthDateValidity, idTypeValidity, idFrontFace, idCardValidity, idCardNumberValidity} = this.state;
        
+      if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
+           this.ChangeResidentialStatus();
 
        if(this.props.profileMenu.message === profile.GET_PROFILE_MENU_SUCCESS){
         return(
@@ -504,7 +519,9 @@ StoreInforMation = () => {
 
 const mapStateToProps = (state) => {
     return {
-        profileMenu: state.profileMenu
+        profileMenu: state.profileMenu,
+        alert:state.alert,
+        GetResidentialAddress: state.GetResidentialAddress
     }
 }
 

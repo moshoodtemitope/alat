@@ -117,6 +117,7 @@ class ContactDetails extends Component {
        }
        this.handleAlatPinChange = this.handleAlatPinChange.bind(this)
        this.fetchContactDetails();
+       this.GetResidentialAddress();
    }
 
    componentDidMount = () => {
@@ -160,6 +161,11 @@ StoreInforMation = () => {
     localStore.setItem('navToNextOfKin', this.props.profileMenu.data.response.nextOfKinComplete);
     localStore.setItem('isBvNLinked', this.props.profileMenu.data.response.bvnLinked);
 }
+
+GetResidentialAddress = () => {
+    this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
+}
+
 
    fetchContactDetails(){
         const { dispatch } = this.props;
@@ -858,12 +864,21 @@ GetUserProfileMenu = () => {
     this.props.dispatch(actions.profileMenu(this.state.user.token));
  }
 
+ ChangeResidentialStatus = () => {
+    setTimeout(() => {
+        this.setState({residentialAddress: true});
+    }, 1000)
+}
+
    render(){
         const {isImageUploaded, PinValidity, AlternateEmailValidity, sameAddressAsAbove,SectorValidity, phoneNumberValidity, LocalGovValidity2, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity2, NationalityValidity, StateOfOriginValidity,
         EmailAddressValidity, streetValidity, busstopValidity, apartmentValidity, personalAddressValidity, StateOfOriginValidity2,
         personalAddressValidity2, alternatePhoneNumberValidity, houseNumberValidity,   isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin} = this.state;
-        const {profileMenu, getContactDetail } = this.props;
+        const {profileMenu, getContactDetail, GetResidentialAddress} = this.props;
         
+        if(GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
+            this.ChangeResidentialStatus();
+
         if(getContactDetail.message === profile.GET_CONTACT_DETAILS_PENDING){
             console.log('NOTHING EVER HAPPENED HERE')
             return(
@@ -1321,7 +1336,8 @@ const mapStateToProps = (state) => {
         profileMenu:state.profileMenu,
         getContactDetail:state.getContactDetail,
         alert:state.alert,
-        addContactDetails:state.addContactDetails
+        addContactDetails:state.addContactDetails,
+        GetResidentialAddress: state.GetResidentialAddress
     }
 }
 

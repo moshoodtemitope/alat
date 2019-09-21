@@ -31,6 +31,7 @@ class LinkBvN extends Component {
        }
 
        this.GetUserProfileMenu();
+       this.GetResidentialAddress();
    }
 
    componentDidMount = () => {
@@ -54,6 +55,11 @@ class LinkBvN extends Component {
 GetUserProfileMenu = () => {
     this.props.dispatch(actions.profileMenu(this.state.user.token));
  }
+
+GetResidentialAddress = () => {
+    this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
+}
+
 
    CheckIfStoreInformationIsSet = () => {
        
@@ -234,9 +240,18 @@ GetUserProfileMenu = () => {
     localStore.setItem('navToNextOfKin', this.props.profileMenu.data.response.nextOfKinComplete);
     localStore.setItem('isBvNLinked', this.props.profileMenu.data.response.bvnLinked);
 }
+
+ChangeResidentialStatus = () => {
+    setTimeout(() => {
+        this.setState({residentialAddress: true});
+    }, 1000)
+}
  
    render(){
        const {isImageUploaded, dateValidity, BVNValidity, birthDate,  isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin} = this.state;
+
+            if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
+                 this.ChangeResidentialStatus();
 
             if(this.props.profileMenu.data == undefined){
                 this.GetUserProfileMenu();
@@ -578,6 +593,7 @@ const mapStateToProps = (state) => {
         profileSuccessMessage: state.profileSuccessMessage.data,
         linkBvn: state.linkBVN.message,
         alert: state.alert,
+        GetResidentialAddress: state.GetResidentialAddress
     }
 }
 

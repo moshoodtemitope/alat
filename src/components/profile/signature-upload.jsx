@@ -36,6 +36,8 @@ class SignatureUpload extends Component {
           isDocument: false,
           navToNextOfKin: false
        }
+
+       this.GetResidentialAddress();
    }
 
 
@@ -43,6 +45,12 @@ class SignatureUpload extends Component {
     this.CheckIfStoreInformationIsSet();
     this.setProfile();
    }
+   
+
+   GetResidentialAddress = () => {
+    this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
+}
+
 
 setProfile = () => {
     let localStore = window.localStorage;
@@ -204,9 +212,18 @@ StoreInforMation = () => {
     localStore.setItem('isBvNLinked', this.props.profileMenu.data.response.bvnLinked);
 }
 
+
+ChangeResidentialStatus = () => {
+    setTimeout(() => {
+        this.setState({residentialAddress: true});
+    }, 1000)
+}
    render(){
       const {isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, idTypeValidity, idFrontFace, idCardValidity, idCardNumberValidity} = this.state;
        
+      if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
+             this.ChangeResidentialStatus();
+
        if(this.props.profileMenu.message === profile.GET_PROFILE_MENU_PENDING){
           return(
             <Fragment>
@@ -381,7 +398,9 @@ StoreInforMation = () => {
 
 function mapStateToProps(state) {
     return {
-        profileMenu: state.profileMenu
+        profileMenu: state.profileMenu,
+        alert:state.alert,
+        GetResidentialAddress: state.GetResidentialAddress
     }
 }
 

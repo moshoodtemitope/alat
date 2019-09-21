@@ -35,12 +35,19 @@ class PhotographUpload extends Component {
           navToNextOfKin: false,
           isImageUploaded: false
        }
+
+       this.GetResidentialAddress();
    }
 
    componentDidMount = () => {
     this.CheckIfStoreInformationIsSet();
     this.setProfile();
    }
+
+   GetResidentialAddress = () => {
+    this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
+}
+
 
 setProfile = () => {
     let localStore = window.localStorage;
@@ -201,9 +208,17 @@ GetUserProfileMenu = () => {
     localStore.setItem('isBvNLinked', this.props.profileMenu.data.response.bvnLinked);
 }
 
+ChangeResidentialStatus = () => {
+    setTimeout(() => {
+        this.setState({residentialAddress: true});
+    }, 1000)
+}
    render(){
       const {isImageUploaded, isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, idTypeValidity, idFrontFace, idPhotographValid, idCardNumberValidity} = this.state;
       
+      if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
+             this.ChangeResidentialStatus();
+
       if(this.props.profileMenu.message === profile.GET_PROFILE_MENU_SUCCESS){
         return(
             <Fragment>
@@ -381,7 +396,8 @@ GetUserProfileMenu = () => {
 const mapStateToProps = (state) => {
     return{
         profileMenu: state.profileMenu,
-        alert:state.alert
+        alert:state.alert,
+        GetResidentialAddress: state.GetResidentialAddress
     }
 }
 

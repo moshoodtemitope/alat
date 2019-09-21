@@ -79,12 +79,19 @@ class PersonalInfoMation extends Component {
        this.fetchContactDetails();
        this.fetchPersonalInfo();
        this.fetchStates();
+
+       this.GetResidentialAddress();
    }
 
    componentDidMount = () => {
        this.CheckIfStoreInformationIsSet();
        this.setProfile();
    }
+
+   GetResidentialAddress = () => {
+    this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
+}
+
 
 setProfile = () => {
     let localStore = window.localStorage;
@@ -605,15 +612,24 @@ GetUserProfileMenu = () => {
     localStore.setItem('isBvNLinked', this.props.profileMenu.data.response.bvnLinked);
 }
 
+ChangeResidentialStatus = () => {
+    setTimeout(() => {
+        this.setState({residentialAddress: true});
+    }, 1000)
+}
+
    render(){
        const {isImageUploaded, isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin, BVNValidity, birthDate, PinValidity, SectorValidity, EmployerPhoneNumberValidity,EmploymentValidity, AddressValidity, EmployersNameValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
         SurnameValidity, EmailAddressValidity, FirstNameValidity, MaritalStatusValidity, TitleValidity, OccupationValidity,GenderValidity, DateOfBirthValidity, OtherNameValidity, MothersMaidenNameValidity} = this.state;
-        const {profileMenu, occupationAndSector, getContactDetail} = this.props
+        const {GetResidentialAddress, profileMenu, occupationAndSector, getContactDetail} = this.props
         console.log('=======',occupationAndSector)
 
     //    if(this.props.capturePersonalInformation.response != undefined){
     //        this.PersonalInfomationHasBeenLinked();
     //    }
+       if(GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
+             this.ChangeResidentialStatus();
+
        
        if(profileMenu.message === profile.GET_PROFILE_MENU_PENDING){
         return(
@@ -1022,7 +1038,8 @@ function mapStateToProps(state){
         getStates:state.getStates,
         alert:state.alert,
         nextOfKinsRelationship: state.nextOfKinsRelationship.data,
-        capturePersonalInformation:state.capturePersonalInformation
+        capturePersonalInformation:state.capturePersonalInformation,
+        GetResidentialAddress: state.GetResidentialAddress
 
     };
 }

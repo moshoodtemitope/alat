@@ -149,12 +149,17 @@ class PersonalDefault extends Component {
        localStore.setItem('isBvNLinked', this.props.profileMenu.data.response.bvnLinked);
    }
 
+   ChangeResidentialStatus = () => {
+       setTimeout(() => {
+           this.setState({residentialAddress: true});
+       }, 1000)
+   }
+
    render(){
        const {profileMenu, residentialAddress, isBvNLinked, isProfileInformation, isContactDetails, isDocument, isToNextOfKin} = this.state;
 
-    //    if(this.props.alart.message === ""){
-             
-    //    }
+       if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
+             this.ChangeResidentialStatus();
 
        if(this.props.profileMenu.message == profile.GET_PROFILE_MENU_PENDING){
             return(
@@ -354,7 +359,8 @@ function mapStateToProps(state){
    return {
        profileMenu:state.profileMenu,
        profileSuccessMessage: state.profileSuccessMessage.data,
-       alert:state.alert
+       alert:state.alert,
+       GetResidentialAddress: state.GetResidentialAddress
    }
 }
 

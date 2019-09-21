@@ -19,6 +19,8 @@ class ProfileSuccessMessage extends Component {
        this.state = {
           user: JSON.parse(localStorage.getItem("user")),
        }
+
+       this.GetResidentialAddress();
    }
 
 CheckIfStoreInformationIsSet = () => {
@@ -42,6 +44,11 @@ CheckIfStoreInformationIsSet = () => {
 
        this.setProfile();
    }
+
+   GetResidentialAddress = () => {
+    this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
+}
+
 
    setProfile = () => {
     let localStore = window.localStorage;
@@ -117,9 +124,18 @@ StoreInforMation = () => {
     localStore.setItem('isBvNLinked', this.props.profileMenu.data.response.bvnLinked);
 }
 
+ChangeResidentialStatus = () => {
+    setTimeout(() => {
+        this.setState({residentialAddress: true});
+    }, 1000)
+}
 
    render(){
       const {isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument} = this.state;
+
+      if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
+             this.ChangeResidentialStatus();
+
        return(
         <Fragment>
            
@@ -195,8 +211,25 @@ StoreInforMation = () => {
 function mapStateToProps(state){
    return {
        profileMenu: state.profileMenu,
-       profileSuccessMessage: state.profileSuccessMessage.data
+       profileSuccessMessage: state.profileSuccessMessage.data,
+       alert:state.alert,
+       GetResidentialAddress: state.GetResidentialAddress
    }
 }
 
 export default connect(mapStateToProps)(ProfileSuccessMessage);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
