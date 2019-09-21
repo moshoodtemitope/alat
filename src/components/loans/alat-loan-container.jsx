@@ -3,6 +3,7 @@ import InnerContainer from '../../shared/templates/inner-container';
 import { Fragment } from 'react';
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import AlatLoanDashboard from './alat-loans/index-active';
+import LiquidateLoan from './alat-loans/liquidate-loan';
 
 
 class AlatLoanContainer extends Component {
@@ -23,15 +24,16 @@ class AlatLoanContainer extends Component {
                     <div>
                         <div className="sub-tab-nav">
                             <ul>
-                                <li><NavLink to={'/loans/alat-loans'}>Active Loans</NavLink></li>
+                                <li><NavLink to={'/loans/alat-loans/liquidate'}>Active Loans</NavLink></li>
                                 <li><NavLink to={'/loans/alat-loans/past-loans'}>Past Loans</NavLink></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 {this.props.children}
-                <Route path={'/loans/alat-loans'} exact component={AlatLoanDashboard} />
+                {/* <Route exact path={'/loans/alat-loans'} component={AlatLoanDashboard} /> */}
                 {/* <Route path={'/loans/alat-loans/past-loans'} component={Statement} /> */}
+                {/* <Route path={'/loans/alat-loans/liquidate'} component={LiquidateLoan} /> */}
             </Fragment>
         );
     }
