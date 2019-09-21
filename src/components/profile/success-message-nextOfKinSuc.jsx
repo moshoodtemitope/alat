@@ -17,6 +17,7 @@ class NextOfKinUpLoadedSuccessfully extends Component {
        super(props);
        this.state = {
           user: JSON.parse(localStorage.getItem("user")),
+          residentialAddress: false
        }
 
        this.GetResidentialAddress();
@@ -45,6 +46,15 @@ class NextOfKinUpLoadedSuccessfully extends Component {
 
    GetResidentialAddress = () => {
     this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
+}
+
+NavigateResidentialAddress = () => {
+    if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS){
+        this.DispatchSuccessMessage('Residential Address has been Created');
+        return
+    }
+
+    history.push('/profile/profile-residential-address');
 }
 
 
@@ -185,6 +195,10 @@ ChangeResidentialStatus = () => {
                                                 <div className="tickItems" onClick={this.NavigateToNextOfKin}>
                                                     {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
                                                     <p className="pSubs">Next of Kin</p>
+                                                </div>
+                                                <div className="tickItems" onClick={this.NavigateResidentialAddress}>
+                                                        {residentialAddress ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                        <p className="pSubs">Residential Address</p>
                                                 </div>
                                         </div>
                                     </div>

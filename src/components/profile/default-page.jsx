@@ -51,10 +51,6 @@ class PersonalDefault extends Component {
    }
 
    GetResidentialAddress = () => {
-       console.log('WAS FIRED FROM DEFAULT PAGE')
-       console.log('WAS FIRED FROM DEFAULT PAGE')
-       console.log('WAS FIRED FROM DEFAULT PAGE')
-       console.log('WAS FIRED FROM DEFAULT PAGE')
        this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
    }
 
@@ -113,7 +109,12 @@ class PersonalDefault extends Component {
        history.push('/profile/profile-next-of-kin');
    }
 
-   NavigateResidentialAddress = () => {
+    NavigateResidentialAddress = () => {
+        if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS){
+            this.DispatchSuccessMessage('Residential Address has been Created');
+            return
+        }
+
         history.push('/profile/profile-residential-address');
     }
 
