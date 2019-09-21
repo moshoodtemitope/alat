@@ -23,7 +23,7 @@ class PersonalDefault extends Component {
        }
 
        this.GetUserProfileMenu();
-    //    this.GetResidentialAddress();
+       this.GetResidentialAddress();
    }
    
    componentDidMount = () => {
@@ -51,6 +51,9 @@ class PersonalDefault extends Component {
    }
 
    GetResidentialAddress = () => {
+       console.log('WAS FIRED FROM DEFAULT PAGE')
+       console.log('WAS FIRED FROM DEFAULT PAGE')
+       console.log('WAS FIRED FROM DEFAULT PAGE')
        console.log('WAS FIRED FROM DEFAULT PAGE')
        this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
    }
@@ -148,6 +151,10 @@ class PersonalDefault extends Component {
 
    render(){
        const {profileMenu, residentialAddress, isBvNLinked, isProfileInformation, isContactDetails, isDocument, isToNextOfKin} = this.state;
+
+    //    if(this.props.alart.message === ""){
+             
+    //    }
 
        if(this.props.profileMenu.message == profile.GET_PROFILE_MENU_PENDING){
             return(
@@ -346,7 +353,8 @@ class PersonalDefault extends Component {
 function mapStateToProps(state){
    return {
        profileMenu:state.profileMenu,
-       profileSuccessMessage: state.profileSuccessMessage.data
+       profileSuccessMessage: state.profileSuccessMessage.data,
+       alert:state.alert
    }
 }
 
