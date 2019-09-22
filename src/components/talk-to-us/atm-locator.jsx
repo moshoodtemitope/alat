@@ -49,8 +49,8 @@ class AtmLocator extends Component{
                     
                     { atmlocations.map((atm, index)=>(
                            
-                           <div >
-                                <div className="location-icon center-align"><img src={atmImage} className=""></img></div>
+                           <div className="location" >
+                                <div className="location-icon center-align"><img src={atmImage} className="mdi-map-marker"></img></div>
                                 <div className="location-details">
                                     <p className="landmark">{atm.Area}</p>
                                     <p className="full-address">{atm.Address}</p>
@@ -105,10 +105,10 @@ class AtmLocator extends Component{
                     
                     { atmlocations.map((atm, index)=>(
                            
-                           <div >
-                                <div className="location-icon center-align"><img src={atmImage} className=""></img></div>
+                           <div className="location">
+                                <div className="location-icon center-align"><img src={atmImage} className=".mdi-map-marker"></img></div>
                                 <div className="location-details">
-                                    <p className="landmark">{atm.Area}</p>
+                                    <p className="landmark">{atm.BranchName}</p>
                                     <p className="full-address">{atm.Address}</p>
                                 </div>
                             </div>
@@ -178,10 +178,10 @@ class AtmLocator extends Component{
                                     <div style={{display:"flex", justifyContent:'center', alignItems:'center'}}>
 
                                         <div style={{marginRight:5}}> 
-                                            <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Atm Locations</button>
+                                            <button type="submit" className="btn m-t-10 m-b-20 text-center " onClick={() => this.setState({visible:false})}>Atm Locations</button>
                                         </div>
                                         <div style={{marginLeft:5}}>
-                                            <button type="submit" className="btn-alat m-t-10 m-b-20 text-center" onClick={this.showResult}>Bank Branches</button>
+                                            <button type="submit" className="btn m-t-10 m-b-20 text-center" onClick={this.showResult}>Bank Branches</button>
 
                                         </div>
 
@@ -201,7 +201,7 @@ class AtmLocator extends Component{
 
                                     </div> */}
                                     <div>
-                                        <div>
+                                        <div className="location">
                                             {
                                                 this.state.visible ?this.renderBankBranch() :this.renderAtmLocations()
 
