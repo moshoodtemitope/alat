@@ -68,3 +68,50 @@ export function ReportError(state=[], action){
            return {... state}
     }
 }
+
+export function GetPageData(state=[], action){
+    switch(action.type){
+        
+        case talktoUsConstant.GET_PAGE_DATA_PENDING: 
+           return {
+               message: talktoUsConstant.GET_PAGE_DATA_PENDING,
+               data: action
+           }
+        case talktoUsConstant.GET_PAGE_DATA_SUCCESS:
+           return {
+               message: talktoUsConstant.GET_PAGE_DATA_SUCCESS,
+               data: action
+           }
+        case talktoUsConstant.GET_PAGE_DATE_FAILURE:
+           return {
+               message: talktoUsConstant.GET_PAGE_DATE_FAILURE,
+               data: action
+           }
+        default: 
+           return {... state}
+    }
+}
+
+export function GetBankList(state=[], action){
+    switch(action.type){
+        
+        case talktoUsConstant.GET_BANK_LIST_PENDING: 
+           return {
+               message: talktoUsConstant.GET_BANK_LIST_PENDING,
+               data: action
+           }
+        case talktoUsConstant.GET_BANK_LIST_SUCCESS:
+           return {
+               message: talktoUsConstant.GET_BANK_LIST_SUCCESS,
+               data: action
+           }
+        case talktoUsConstant.GET_BANK_LIST_FAILURE:
+           return {
+               message: talktoUsConstant.GET_BANK_LIST_FAILURE,
+               data: action
+           }
+        default: 
+           return {... state}
+    }
+}
+

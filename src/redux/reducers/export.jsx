@@ -88,7 +88,7 @@ import {getWesternUnionCountries,receiveWesternUnion } from './remittance.reduce
          WithDrawFromGoal,PauseCustomerGoal,unPauseCustomerGoal,EditCustomerGoal,DeleteCustomerGoal,StashCashout,StashCashoutStep1,submitDashboardData} from './goal/get-customer-goal-trans-history-reducers';
      import {createRotatingSavings, rotatingGroupDetails, joinAGroup, EditSlots, 
         editGroupEsusu, deleteGroupEsusu, GetGroupsEsusu, joinGroupEsusu, refferalCode} from './group-savings/rotating-group-reducers';
-    import {GetBankBranch,TalkToUs,ReportError} from './talk-to-us/talk-to-us.reducer'
+    import {GetBankBranch,TalkToUs,ReportError,GetPageData, GetBankList} from './talk-to-us/talk-to-us.reducer'
 
 
 
@@ -268,7 +268,9 @@ export const fixedGoal ={
 export const talktous ={
     GetBankBranch,
     TalkToUs,
-    ReportError
+    ReportError,
+    GetPageData,
+    GetBankList,
 
 }
  

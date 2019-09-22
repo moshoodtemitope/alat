@@ -349,6 +349,8 @@ const appReducer = combineReducers({
     talk_to_us:talktous.TalkToUs,
     reportError:talktous.ReportError,
     get_bank_branch:talktous.GetBankBranch,
+    get_page_data:talktous.GetPageData,
+    GetBankList:talktous.GetBankList,
 
 
 

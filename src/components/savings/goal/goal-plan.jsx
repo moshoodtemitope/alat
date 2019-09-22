@@ -34,11 +34,11 @@ class GoalPlan extends React.Component {
     }
 
     CheckRotatingSavingsAvailability = () => {
-        this.props.dispatch(actions1.GetGroupsEsusu(this.state.user.token, null));
+        this.props.dispatch(actions1.GetGroupsEsusu(this.state.user.token));
     }
 
     CheckGroupSavingsAvailability = () => {
-        this.props.dispatch(actions.customerGroup(this.state.user.token, null));
+        this.props.dispatch(actions.customerGroup(this.state.user.token));
     }
     
     NavigateToGroupSavings = () => {

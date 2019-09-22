@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
 import {NavLink} from 'react-router-dom';
-import AmountInput from '../../shared/components/amountInput';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import SelectDebitableAccounts from '../../shared/components/selectDebitableAccounts';
-import Select from 'react-select';
+import { connect } from 'react-redux';
+import {talktoUsConstant} from '../../redux/constants/talk-to-us/talk-to-us.constant';
+import * as actions from "../../redux/actions/talk-to-us/talk-to-us-action";
+
+
 
 
 
@@ -20,9 +23,9 @@ const selectedTime = [
 
  class ReportError extends Component{
      constructor(props){
-         super(props)
+         super(props);
          this.state={
-            dateError:null,
+            user: JSON.parse(localStorage.getItem("user")),
             DateErrorInvalid:false,
             Amount:null,
             message:null,
@@ -32,7 +35,11 @@ const selectedTime = [
             isAccountInvalid:false,
             channel:null,
             channelInvalid:false,
-            channelFrequency:""
+            channelFrequency:"",
+            TransactionTypeId:"",
+            ChannelId:"",
+            TransactionDate:null,
+            SourceTypeId:""
 
          }
          this.handleSelectDebitableAccounts = this.handleSelectDebitableAccounts.bind(this);
@@ -40,9 +47,23 @@ const selectedTime = [
 
      }
 
+     componentDidMount(){
+         this.fetchPageData();
+         this.fetchbankList()
+     }
+     fetchPageData(){
+         const {dispatch}=this.props
+         dispatch(actions.GetPageData(this.state.user.token))
+     }
+
+     fetchbankList(){
+         const {dispatch} =this.props
+         dispatch(actions.GetBankList(this.state.user.token))
+     }
+
 
     valDateError = () => {
-        if (this.state.dateError == null) {
+        if (this.state.TransactionDate == null) {
             this.setState({ DateErrorInvalid: true });
             return true;
         } else {
@@ -50,9 +71,9 @@ const selectedTime = [
             return false;
         }
     };
-    handleDateError = (dateError) => {
-        startDate.setHours(startDate.getHours() + 1);
-        this.setState({ dateError: dateError });
+    handleDateError = (TransactionDate) => {
+        TransactionDate.setHours(TransactionDate.getHours() + 1);
+        this.setState({ TransactionDate: TransactionDate });
     };
     checkAmount = () => {
         if (this.state.Amount == "") {
@@ -110,37 +131,50 @@ const selectedTime = [
  
          return formatter.format(number);
     };
-    handleSelectChange = (channel) => {
-        this.setState({ "channelFrequency": channel.value,
-                        "channelFrequency" : channel.label
-              });
-        if (this.state.formsubmitted && channel.value != "")
-            this.setState({ channelInvalid: false })
+    handleSelectChannel = (event) => {
+        let channelId = event.target.value;
+        console.log(channelId)
+        this.setState({ChannelId:channelId });
     };
 
-    onSubmit(event){
+    handleSelectTrancType=(event)=>{
+        let transactionTypeId = event.target.value;
+        console.log(transactionTypeId)
+        this.setState({TransactionTypeId:transactionTypeId})
+    }
+    handleChange = (e) => {
+        let name = e.target.value;
+        console.log(name)
+        this.setState({ [name]: e.target.value })
+    };
+    handleSourceType =(e)=>{
+        let sourceType = e.target.value;
+        console.log(sourceType);
+        this.setState({SourceTypeId:sourceType})
+
+    }
+
+    onSubmit=(event)=>{
         event.preventDefault();
-
-        if (this.valDateError() || this.checkAmount() ||this.checkChannelFrequency()|| this.checkAccountNumber()) {
-
-        } else {
-            // this.setState({isSubmitted : true });
-            // this.props.dispatch(actions.fetchFixedGoalStep1({
-            //     "goalName":this.state.goalName,
-            //     "startDate":this.state.startDate,
-            //     "endDate":this.state.endDate,
-            //     "targetAmount":this.state.targetAmount,
-            //     "goalFrequency":this.state.goalFrequency,
-            //     "showInterests":this.state.showInterests
-            // }));
-            // console.log('tag', '')
-        }
+            this.props.dispatch(actions.ReportErrorMessage( {
+                "Amount":this.state.Amount,
+                "TransactionTypeId":this.state.TransactionTypeId,
+                "ChannelId":this.state.ChannelId,
+                "TransactionDate":this.state.TransactionDate,
+                "Bank":this.state.Bank,
+                "SourceTypeId":this.state.SourceTypeId
+                
+    
+            }
+        ));
+        // }
         
        
     }
 
     render(){
         const {AmountInvalid, DateErrorInvalid, MessageInvalid,channelInvalid,channelFrequency} =this.state
+        // const {get_page_data} =this.props.get_page_data
         return(
             <div className="row">
                 <div className="col-sm-12">
@@ -158,6 +192,11 @@ const selectedTime = [
                         </div>
                     </div>
                 </div>
+                <center>
+                        {this.props.alert && this.props.alert.message &&
+                                                <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                    }
+                </center>
                 <div className="col-sm-12">
                     <div className="row">
                         <div className="col-sm-12">
@@ -172,7 +211,7 @@ const selectedTime = [
                                                 <label className="label-text">Date of Error </label>
                                                 <DatePicker 
                                                             className="form-control"
-                                                            selected={this.state.dateError}
+                                                            selected={this.state.TransactionDate}
                                                             autoComplete="off" 
                                                             placeholderText="Date of Error"
                                                             dateFormat=" MMMM d, yyyy"
@@ -186,7 +225,7 @@ const selectedTime = [
                                                             minDate={new Date()}
                                                             showWeekNumbers
                                                             onChange={this.handleDateError}
-                                                            value={this.state.dateError}
+                                                            value={this.state.TransactionDate}
                                                             
                                                     />
                                                         
@@ -216,16 +255,19 @@ const selectedTime = [
                                                     </div>
                                                 </div>
                                                 <div className="form-row">
-                                        <div className= {channelInvalid ? "form-group col-md-6 " : "form-group col-md-6 form-error"}>
-                                                <label className="label-text">Channel</label>
-                                                 <Select type="text" 
-                                                            options={selectedTime}
-                                                            name="channelFrequency"
-                                                            autoComplete="off"
-                                                            onChange={this.handleSelectChange}
-                                                            value={channelFrequency.label}
-                                                          />
-                                                      
+                                                <div className= {channelInvalid ? "form-group col-md-6 " : "form-group col-md-6 form-error"}>
+                                                    <label className="label-text">Channel</label>
+                                                                    <select name="channelFrequency" className="form-control input-border-radius" onChange={this.handleSelectChannel}>
+                                                                            <option>Select Transaction Type</option>
+                                                                            {                                      
+                                                                                this.props.get_page_data.message === talktoUsConstant.GET_PAGE_DATA_SUCCESS && 
+                                                                                this.props.get_page_data.data.response.data.ChannelTypes.map(channel=> {
+                                                                            
+                                                                                    return <option  value={channel.Id}>
+                                                                                    {channel.Type}</option>
+                                                                                })
+                                                                            }     
+                                                                    </select>
 
                                                         {channelInvalid &&
                                                             <div className="text-danger">Enter Amount</div>
@@ -234,13 +276,18 @@ const selectedTime = [
                                                     </div>
                                                     <div className={!channelInvalid ? "form-group col-md-6" : "form-group col-md-6 form-error"}>
                                                         <label className="label-text">Transaction Type</label>
-                                                        <Select type="text" 
-                                                            options={selectedTime}
-                                                            name="channelFrequency"
-                                                            autoComplete="off"
-                                                            onChange={this.handleSelectChange}
-                                                            value={channelFrequency.label}
-                                                          />
+                                                       
+                                                          <select name="channelFrequency" className="form-control input-border-radius" onChange={this.handleSelectTrancType}>
+                                                                            <option>Select Transaction Type</option>
+                                                                            {                                      
+                                                                                this.props.get_page_data.message === talktoUsConstant.GET_PAGE_DATA_SUCCESS && 
+                                                                               this.props. get_page_data.data.response.data.TransactionTypes.map(channel=> {
+                                                                            
+                                                                                    return <option  value={channel.Id}>
+                                                                                    {channel.TransactionType}</option>
+                                                                                })
+                                                                            }     
+                                                                    </select>
                                                       
 
                                                         {channelInvalid &&
@@ -249,12 +296,44 @@ const selectedTime = [
                                                     </div>
                                                 </div>
 
+
                                                 <div className="form-group">
                                                     <SelectDebitableAccounts
                                                     labelText={"Source Account"}
                                                     value={this.state.accountNumber}
                                                     accountInvalid={this.state.isAccountInvalid}
                                                     onChange={this.handleSelectDebitableAccounts} />
+                                                </div>
+                                                <div className="form-row">
+                                                    <div className={!channelInvalid ? "form-group col-md-6" : "form-group col-md-6 form-error"}>
+                                                             <label className="label-text">Banks</label>
+                                                        <select name="channelFrequency" className="form-control input-border-radius" onChange={this.handleChange}>
+                                                                 <option>Select Bank</option>
+                                                                    {                                      
+                                                                        this.props.GetBankList.message === talktoUsConstant.GET_BANK_LIST_SUCCESS && 
+                                                                        this.props.GetBankList.data.response.data.map(bank=> {
+                                                                            
+                                                                                    return <option  value={bank.BankCode}>
+                                                                                    {bank.BankName}</option>
+                                                                                })
+                                                                            }     
+                                                                </select>
+                                                     </div>
+
+                                                     <div className={!channelInvalid ? "form-group col-md-6" : "form-group col-md-6 form-error"}>
+                                                             <label className="label-text">Source</label>
+                                                        <select name="channelFrequency" className="form-control input-border-radius" onChange={this.handleSourceType}>
+                                                                 <option>Source Type</option>
+                                                                    {                                      
+                                                                        this.props.get_page_data.message === talktoUsConstant.GET_PAGE_DATA_SUCCESS && 
+                                                                        this.props.get_page_data.data.response.data.SourceTypes.map(source=> {
+                                                                            
+                                                                                    return <option  value={source.Id}>
+                                                                                    {source.SourceType}</option>
+                                                                                })
+                                                                            }     
+                                                                </select>
+                                                     </div>
                                                 </div>
                                                 <div className={MessageInvalid ? "form-group form-error" : "form-group"}>
                                                     <label className="label-text">Additional Information</label>
@@ -276,8 +355,8 @@ const selectedTime = [
                                             <div className="row">
                                                 <div className="col-sm-12">
                                                     <center>
-                                                        <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">
-                                                            Report Error
+                                                        <button disabled={this.props.reportError.message === talktoUsConstant.REPORT_ERROR_PENDING} type="submit" className="btn-alat m-t-10 m-b-20 text-center">
+                                                            {this.props.reportError.message ===talktoUsConstant.REPORT_ERROR_PENDING ? 'Processing...':"Report Error"}
 
                                                         </button>
                                                     </center>
@@ -295,5 +374,13 @@ const selectedTime = [
         )
     }
 }
+const mapStateToProps = state => ({
+    alert:state.alert,
+    talk_to_us:state.talk_to_us,
+    reportError:state.reportError,
+    get_bank_branch:state.get_bank_branch,
+    get_page_data:state.get_page_data,
+    GetBankList:state.GetBankList
+});
 
-export default ReportError
+export default connect (mapStateToProps)(ReportError) 

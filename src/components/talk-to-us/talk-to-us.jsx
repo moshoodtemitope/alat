@@ -3,17 +3,21 @@ import {NavLink} from 'react-router-dom';
 import emailCenter from '../../assets/img/email-contact.svg';
 import phoneContact from '../../assets/img/phone-contact.svg';
 import * as actions from "../../redux/actions/talk-to-us/talk-to-us-action";
-
+import {connect} from 'react-redux';
+import {talktoUsConstant} from '../../redux/constants/talk-to-us/talk-to-us.constant'
 
 
  class TalkToUs extends Component{
 
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state={
+            user: JSON.parse(localStorage.getItem("user")),
             fullName:"",
             email:"",
             message:"",
+            Body:null,
+            RecipientEmail:"ayomichaels17@gmail.com",
             fullNameInvalid:false,
             EmailAddressInvalid:false,
             MessageInvalid:false,
@@ -41,7 +45,7 @@ import * as actions from "../../redux/actions/talk-to-us/talk-to-us-action";
     };
 
     checkMessage =()=>{
-        if (this.state.message == "") {
+        if (this.state.Body == "") {
             this.setState({ MessageInvalid: true });
             return true;
         }
@@ -50,20 +54,23 @@ import * as actions from "../../redux/actions/talk-to-us/talk-to-us-action";
    
     onSubmit(event){
         event.preventDefault();
+        this.props.dispatch(actions.TalkUsMessage( {
+            "Email": "help@alat.ng",
+            "RecipientEmail":this.state.RecipientEmail,
+            "SenderName":this.state.user.fullName,
+            "Subject": "New Message from AYOMIDE on ALAT Web",
+            "Body":this.state.Body
+            
 
-        if (this.checkFullName() || this.checkEmailAddress() || this.checkMessage()) {
-
-        } else {
-            this.setState({isSubmitted : true });
-           
-            console.log('tag', '')
         }
-        
+    ));
+
+               
        
     }
 
     render(){
-        const {fullNameInvalid, EmailAddressInvalid, MessageInvalid} = this.state
+        const { MessageInvalid} = this.state
         return(
             <div className="row">
                 <div className="col-sm-12">
@@ -81,6 +88,12 @@ import * as actions from "../../redux/actions/talk-to-us/talk-to-us-action";
                         </div>
                     </div>
                 </div>
+                    <center>
+                        {this.props.alert && this.props.alert.message &&
+                                                <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                    }
+                    </center>
+               
                 <div className="col-sm-12">
                     <div className="row">
                         <div className="col-sm-12">
@@ -90,7 +103,7 @@ import * as actions from "../../redux/actions/talk-to-us/talk-to-us-action";
                                     <h4 className="m-b-10 center-text hd-underline">Talk to Us</h4>
                                     <center>
                                     <p className="header-info">There's always an ALAT Assitance eager to help u</p>
-                                    <div style={{display:"flex", justifyContent:'center', alignItems:"center", }}> 
+                                    <div style={{display:"flex", justifyContent:'center', alignItems:"center", borderBottom:"1px solid #f5f5f5" }}> 
                                         <div style={{marginRight:20, margin:5}}>
                                         <img src={emailCenter}/><span style={{marginLeft:5}} >help@alat.ng</span>
                                         </div>
@@ -106,7 +119,7 @@ import * as actions from "../../redux/actions/talk-to-us/talk-to-us-action";
                                     <form onSubmit={this.onSubmit}>
 
                                     <div className="form-row">
-                                        <div className= {!fullNameInvalid ? "form-group col-md-6 " : "form-group col-md-6 form-error"}>
+                                        <div className="form-group col-md-6">
                                                 <label className="label-text">Full Name </label>
                                                 <input 
                                                         type="text" 
@@ -114,16 +127,14 @@ import * as actions from "../../redux/actions/talk-to-us/talk-to-us-action";
                                                         className="form-control" 
                                                          placeholder="Iduma Chika"
                                                          name="fullName"
-                                                         value={this.state.fullName}
+                                                         value={this.state.user.fullName}
                                                          onChange={this.handleChange}/>
                                                         
 
-                                                            {fullNameInvalid &&
-                                                                <div className="text-danger">Enter your full Name</div>
-                                                            }
+                                                          
                                         
                                                     </div>
-                                                    <div className={!EmailAddressInvalid ? "form-group col-md-6" : "form-group col-md-6 form-error"}>
+                                                    <div className= "form-group col-md-6">
                                                         <label className="label-text">Email</label>
                                                         <input 
                                                         type="text" 
@@ -131,13 +142,11 @@ import * as actions from "../../redux/actions/talk-to-us/talk-to-us-action";
                                                         className="form-control" 
                                                          placeholder="Idumachika@gmail.com"
                                                          name="email"
-                                                         value={this.state.email}
+                                                         value={this.state.RecipientEmail}
                                                          onChange={this.handleChange}/>
                                                       
 
-                                                        {EmailAddressInvalid &&
-                                                            <div className="text-danger">Enter your Email Address</div>
-                                                        }
+                                                       
                                                     </div>
                                                 </div>
                                                 <div className={MessageInvalid ? "form-group form-error" : "form-group"}>
@@ -147,8 +156,8 @@ import * as actions from "../../redux/actions/talk-to-us/talk-to-us-action";
                                                         autoComplete="off" 
                                                         className="form-control" 
                                                         placeholder="Comment Here..."
-                                                        name="message"
-                                                         value={this.state.message}
+                                                        name="Body"
+                                                         value={this.state.Body}
                                                          onChange={this.handleChange}
                                                     />
                                                     {MessageInvalid &&
@@ -158,8 +167,8 @@ import * as actions from "../../redux/actions/talk-to-us/talk-to-us-action";
                                             <div className="row">
                                                 <div className="col-sm-12">
                                                     <center>
-                                                        <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">
-                                                            Send Message
+                                                        <button disabled={this.props.talk_to_us.message=== talktoUsConstant.TALK_TO_US_PENDING} type="submit" className="btn-alat m-t-10 m-b-20 text-center">
+                                                            {this.props.talk_to_us.message ===talktoUsConstant.TALK_TO_US_PENDING ? "Processing...": "Send Message" }
 
                                                         </button>
                                                     </center>
@@ -182,5 +191,14 @@ import * as actions from "../../redux/actions/talk-to-us/talk-to-us-action";
         )
     }
 }
+const mapStateToProps = state => ({
+    alert:state.alert,
+    talk_to_us:state.talk_to_us,
+    reportError:state.reportError,
+    get_bank_branch:state.get_bank_branch,
+    get_page_data:state.get_page_data,
 
-export default TalkToUs
+});
+
+
+export default connect(mapStateToProps)(TalkToUs)
