@@ -49,7 +49,7 @@ class AtmLocator extends Component{
                     
                     { atmlocations.map((atm, index)=>(
                            
-                           <div className="location" >
+                           <div className="location">
                                 <div className="location-icon center-align"><img src={atmImage} className="mdi-map-marker"></img></div>
                                 <div className="location-details">
                                     <p className="landmark">{atm.Area}</p>
