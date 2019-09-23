@@ -145,7 +145,7 @@ class JoinAGroup extends React.Component {
                                                     <div className='form-group col-md-12 joinGroup'>
                                                         <h6>Enter Group Code</h6>
                                                         <input type="text" placeholder='GPEFA34UE' id='enterCode' onChange={this.handleReferralCode}/>
-                                                        <p id={this.state.warningStyle}>character must not exceed or below 10</p>
+                                                        <p id={this.state.warningStyle}>9 Characters Only</p>
                                                     </div>
                                                 </div>
                                                
