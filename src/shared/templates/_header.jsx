@@ -7,6 +7,7 @@ import $ from 'jquery';
 import {Fragment} from "react";
 import {userActions} from "../../redux/actions/onboarding/user.actions";
 import whitelogo from "../../assets/img/white-logo.svg";
+import selfCareImage from '../../assets/img/contact-centers.svg'
 import profileImage from "../../assets/img/10.jpg";
 
 class HeaderContainer extends React.Component{
@@ -150,7 +151,15 @@ class HeaderContainer extends React.Component{
                                     <p className="name">{user.fullName}</p>
                                 </div>
                                 { this.renderMiniNav() }
+                                <div className="user-name-circle clearfix">
+                                   <NavLink to="/talk-to-us">
+                                   <p className="name">Talk to us</p>
+                                   <img  style={{margin:'5px', marginTop:'5px'}}src={selfCareImage} />
+
+                                   </NavLink>
+                                </div>
                                 <span className="notification-top"><i className="demo-icon icon-alert-active"></i></span>
+                              
                             </div>
 
 

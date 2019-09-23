@@ -194,8 +194,8 @@ class WithDrawFromGoalSummmary extends Component {
 }
 const mapStateToProps = state => ({
     alert: state.alert,
-    withdraw_from_goal:state.withdraw_from_goal,
-    withdraw_from_goal_step1:state.withdraw_from_goal_step1,
+    withdraw_from_goal:state.CustomerGoalReducerPile.withdraw_from_goal,
+    withdraw_from_goal_step1:state.CustomerGoalReducerPile.withdraw_from_goal_step1,
     accounts: state.dashboard_accounts
 
 

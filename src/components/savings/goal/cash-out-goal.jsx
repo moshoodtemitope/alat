@@ -210,6 +210,10 @@ class StashCashout extends Component {
 
                                         </div>
                                     </div>
+                                    <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
+                                                this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
+                                                Go back
+                                        </a>
 
                                 </div>
                             </div>
@@ -223,8 +227,8 @@ class StashCashout extends Component {
 }
 const mapStateToProps = state => ({
     alert:state.alert,
-    stashGoal_step1:state.stashGoal_step1,
-    submitDashboardData:state.submitDashboardData
+    stashGoal_step1:state.CustomerGoalReducerPile.stashGoal_step1,
+    submitDashboardData:state.CustomerGoalReducerPile.submitDashboardData
 });
 
 export default connect (mapStateToProps)(StashCashout);

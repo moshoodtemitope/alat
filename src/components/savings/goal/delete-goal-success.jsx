@@ -77,6 +77,6 @@ class DeleteGoalSuccess extends React.Component {
     }
 }
 const mapStateToProps = state => ({
-    top_up_goal:state.top_up_goal,
+    top_up_goal:state.CustomerGoalReducerPile.top_up_goal,
 });
 export default connect(mapStateToProps)(DeleteGoalSuccess);

@@ -343,6 +343,11 @@ class ViewGroupSummary extends React.Component {
 
 
                                         </div>
+                                        <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
+                                                this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
+                                                Go back
+                                        </a>
+
 
                                     </div>
 
@@ -361,10 +366,10 @@ class ViewGroupSummary extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        customerGoalTransHistory:state.customerGoalTransHistory,
+        customerGoalTransHistory:state.CustomerGoalReducerPile.customerGoalTransHistory,
         alert:state.alert,
-        pause_goal:state.pause_goal,
-        submitDashboardData:state.submitDashboardData
+        pause_goal:state.CustomerGoalReducerPile.pause_goal,
+        submitDashboardData:state.CustomerGoalReducerPile.submitDashboardData
 
     }
 }

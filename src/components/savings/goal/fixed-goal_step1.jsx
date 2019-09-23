@@ -448,6 +448,6 @@ class FixedGoal extends Component {
     }
 }
 const mapStateToProps = state => ({
-    fixed_goal_step1: state.GoalReducerPile.fixed_goal_step1
+    fixed_goal_step1:state.GoalReducerPile.fixed_goal_step1
 })
 export default connect(mapStateToProps)(FixedGoal);

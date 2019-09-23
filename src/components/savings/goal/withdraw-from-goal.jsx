@@ -232,8 +232,8 @@ class WithdrawFromGoal extends Component {
 }
 const mapStateToProps = state => ({
     alert:state.alert,
-    withdraw_from_goal_step1:state.withdraw_from_goal_step1,
-    submitDashboardData:state.submitDashboardData
+    withdraw_from_goal_step1:state.CustomerGoalReducerPile.withdraw_from_goal_step1,
+    submitDashboardData:state.CustomerGoalReducerPile.submitDashboardData
 });
 
 export default connect (mapStateToProps)(WithdrawFromGoal);

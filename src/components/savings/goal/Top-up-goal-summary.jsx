@@ -143,6 +143,10 @@ class TopUPGoalSummmary extends Component {
 
 
                                         </div>
+                                        <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
+                                                this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
+                                                Go back
+                                        </a>
 
 
                                     </div>
@@ -163,9 +167,8 @@ class TopUPGoalSummmary extends Component {
     }
 }
 const mapStateToProps = state => ({
-    top_up_goal_step1:state.top_up_goal_step1,
-    top_up_goal:state.top_up_goal,
-    create_stash_goal:state.create_stash_goal,
+    top_up_goal_step1:state.CustomerGoalReducerPile.top_up_goal_step1,
+    top_up_goal:state.CustomerGoalReducerPile.top_up_goal,
     alert: state.alert,
     accounts: state.dashboard_accounts
 

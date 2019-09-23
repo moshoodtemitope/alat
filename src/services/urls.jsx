@@ -83,6 +83,7 @@ export const routes = {
     GETLIMIT: BASEURL + '/AccountMaintenance/api/transactions/getTransactionlimit', 
     GetAllCustomerAccountsWithLimitsV2: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2', 
     FETCH_CUSTOMER_ACCOUNTS: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccounts', 
+
     
     // Card Maintenance
    
@@ -275,5 +276,9 @@ export const routes = {
     FETCH_MOVIE_GENRE : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetGenreList',
     FETCH_MOVIE_CINEMAS : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetCinemaList',
     GET_CONVENIENCE_FEE : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetCinemaListAndFee',
+    SEND_MESSAGE:BASEURL + '/Contact.WebApi/api/Contact/send',
+    GET_PAGE_DATA:BASEURL +'/Contact.WebApi/api/contact/getpagedata',
+    BRANCH_ATM:BASEURL + '/Contact.WebApi/api/contact/branchesatm',
+    REPORT_ERROR:BASEURL + '/Contact.WebApi/api/contact/reporterror',
 
 };
