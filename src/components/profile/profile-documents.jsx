@@ -218,7 +218,7 @@ NavigateToDocuments = () => {
 
 NavigateToNextOfKin = () => {
      if(this.props.profileMenu.data.response.nextOfKinComplete == true){
-         this.DispatchSuccessMessage('Next of kin has been Created');
+         this.DispatchSuccessMessage('Next of kin Created');
          return
      }
 
