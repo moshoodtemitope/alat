@@ -1,4 +1,4 @@
-import {userRegistrationRequest, bvnDetailsReducer,bvnSkipReducer, bvnCustomerDetailsReducer} from "./onboarding.reducer";
+import {userRegistrationRequest, bvnDetailsReducer,bvnSkipReducer, bvnCustomerDetailsReducer, getNDPRStatusReducer,acceptNDRpReducer} from "./onboarding.reducer";
 import {getCinemaList, 
     getSingleMovie, 
     buyMovieTicket,
@@ -109,7 +109,9 @@ export const onboarding = {
     userRegistrationRequest,
     bvnDetailsReducer,
     bvnSkipReducer,
-    bvnCustomerDetailsReducer
+    bvnCustomerDetailsReducer,
+    getNDPRStatusReducer,
+    acceptNDRpReducer
 };
 
 export const loans = {
