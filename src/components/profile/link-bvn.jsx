@@ -4,7 +4,6 @@ import DatePicker from "react-datepicker";
 import * as actions from '../../redux/actions/profile/profile-action';
 import {Fragment} from "react";
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
-import InnerContainer from '../../shared/templates/inner-container';
 import {history} from '../../_helpers/history';
 import { connect } from 'react-redux';
 import {profile} from '../../redux/constants/profile/profile-constants';
@@ -130,7 +129,7 @@ GetResidentialAddress = () => {
            isOnBoarding: false
        }
 
-       console.log(data)
+    //    console.log(data)
     //    return;
        this.props.dispatch(actions.linkBVN(this.state.user.token, data));
    }

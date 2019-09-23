@@ -19,6 +19,7 @@ import {dashboard,
         customerGoal,
         movies,
         preferences,
+        talktous,
         profile,
         insurance,
         alatCards} from "./export";
@@ -344,7 +345,15 @@ const appReducer = combineReducers({
     // fixed_goal_step2:fixedGoal.fixedGoalStep2Reducer,
     // add_goal_reducer:fixedGoal.addGoalReducer,
 
-   
+    // talktous
+    talk_to_us:talktous.TalkToUs,
+    reportError:talktous.ReportError,
+    get_bank_branch:talktous.GetBankBranch,
+    get_page_data:talktous.GetPageData,
+    GetBankList:talktous.GetBankList,
+
+
+
     
 
    

@@ -1,6 +1,6 @@
 const URL = 'https://api.alat.ng';
-//  const URL = 'https://196.43.215.170';
- //const URL = 'https://196.43.215.157';
+//const URL = 'https://196.43.215.170';
+//const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
 
@@ -26,6 +26,8 @@ export const routes = {
     ANNOUNCEMENT: BASEURL + '/UserSecurityapi/api/v1/Account/GetNewsFeeds',
     REISSUE_TOKEN: BASEURL + '/UserSecurityApi/api/v1/Account/ReissueToken',
     LOGIN: BASEURL + '/UserSecurityApi/api/v1/Account/LoginV2',
+    ACCEPTNDRP: BASEURL + '/UserSecurityApi/api/v1/Account/AcceptNdrp?isNdrpAccepted=',
+  CHECK_NDRP: BASEURL + '/UserSecurityApi/api/v1/Account/GetNDRPPriority',
 
     //account maintanance
     CUSTOMERACCOUNTS_ACCOUNT_MAINTANANCE: BASEURL + '/AccountMaintenance/api/account/customeraccounts',
@@ -81,6 +83,7 @@ export const routes = {
     GETLIMIT: BASEURL + '/AccountMaintenance/api/transactions/getTransactionlimit', 
     GetAllCustomerAccountsWithLimitsV2: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2', 
     FETCH_CUSTOMER_ACCOUNTS: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccounts', 
+
     
     // Card Maintenance
    
@@ -274,5 +277,9 @@ export const routes = {
     FETCH_MOVIE_GENRE : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetGenreList',
     FETCH_MOVIE_CINEMAS : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetCinemaList',
     GET_CONVENIENCE_FEE : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetCinemaListAndFee',
+    SEND_MESSAGE:BASEURL + '/Contact.WebApi/api/Contact/send',
+    GET_PAGE_DATA:BASEURL +'/Contact.WebApi/api/contact/getpagedata',
+    BRANCH_ATM:BASEURL + '/Contact.WebApi/api/contact/branchesatm',
+    REPORT_ERROR:BASEURL + '/Contact.WebApi/api/contact/reporterror',
 
 };

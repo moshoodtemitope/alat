@@ -7,6 +7,9 @@ import {Switch} from "react-router";
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import {history} from '../../../_helpers/history';
+import { GROUPSAVINGSCONSTANT } from '../../../redux/constants/savings/group';
+import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
+
 
 var theMembers = [];
 var element = {};
@@ -15,7 +18,6 @@ var membersAccordingToSlot = []; // accending order
 var slot = [];
 var groupMembers;
 var selectCounter = 0;
-
 
 
 class MemberSlots extends React.Component{
@@ -48,45 +50,64 @@ class MemberSlots extends React.Component{
     }
 
     componentDidMount = () => {
-        const members = this.props.groupDetails.response.members; // an array
-        for(var i=0; i<members.length; i++){
-            arraysOfSlot.push(members[i]['slot']);
+        if(this.props.groupDetails != undefined){
+                let storageL = window.localStorage;
+                    storageL.setItem('rotatingGroupId', this.props.groupDetails.response.id);
+                         
+                const members = this.props.groupDetails.response.members; // an array
+                for(var i=0; i<members.length; i++){
+                    arraysOfSlot.push(members[i]['slot']);
+                }
+
+                arraysOfSlot.sort((a, b) => {
+                    return a - b;
+                });
+        
+                const setMember = (aMember) => {
+                    for(var i=0; i<members.length; i++){
+                        if(aMember == members[i]['slot'])
+                                membersAccordingToSlot.push(members[i]);
+                                groupMembers = membersAccordingToSlot;
+                    }
+                }
+        
+                for(var i=0; i<arraysOfSlot.length; i++){
+                    setMember(arraysOfSlot[i]);
+                }
+        
+                const setOptions = (members) => {  
+                    for(var i=0; i<members.length; i++){
+                        element.value = members[i].firstName + " " + members[i].lastName;
+                        element.label = members[i].firstName + " " + members[i].lastName;
+                        theMembers.push(element);
+                        element = {};
+                    }
+                }
+        
+                this.setState({'sortedMembers': groupMembers}, () => {
+                    console.log(this.state.sortedMembers);
+                });
+                this.setState({'renderCalled': true});
+                setOptions(membersAccordingToSlot);
+                console.log(members);
+                this.setState({'members': theMembers})
+                this.MembersInitialValues();
+                console.log('Rotating Group Returned Undefined 99999999999')
+            
         }
 
-        /// sorting in accending order!
-        arraysOfSlot.sort((a, b) => {
-            return a - b;
-        });
+        if(this.props.groupDetails == undefined){
 
-        const setMember = (aMember) => {
-             for(var i=0; i<members.length; i++){
-                  if(aMember == members[i]['slot'])
-                        membersAccordingToSlot.push(members[i]);
-                        groupMembers = membersAccordingToSlot;
-             }
         }
+    }
 
-        for(var i=0; i<arraysOfSlot.length; i++){
-              setMember(arraysOfSlot[i]);
+    FetchRotatingGroupDetails = () => {
+        let storage = window.localStorage;
+        let data = {
+            groupId: JSON.parse(storage.getItem('rotatingGroupId'))
         }
-
-        const setOptions = (members) => {  
-            for(var i=0; i<members.length; i++){
-                   element.value = members[i].firstName + " " + members[i].lastName;
-                   element.label = members[i].firstName + " " + members[i].lastName;
-                   theMembers.push(element);
-                   element = {};
-            }
-        }
-
-        this.setState({'sortedMembers': groupMembers}, () => {
-            console.log(this.state.sortedMembers);
-        });
-        this.setState({'renderCalled': true});
-        setOptions(membersAccordingToSlot);
-        console.log(members);
-        this.setState({'members': theMembers})
-        this.MembersInitialValues();
+        console.log('DEW SOME ONE IS GOING TO REALLY LIKE THIS')
+        this.props.dispatch(actions.rotatingGroupDetails(this.state.user.token, data));
     }
 
 
@@ -159,7 +180,7 @@ class MemberSlots extends React.Component{
 
     GenerateOptions = () => {
           if(this.state.renderCalled != true)
-              return;
+              return <option>empty</option>;
           let optionsElm = (aMember) => {
                 console.log(aMember)
                 let members = this.state.sortedMembers.map((element, index) => {
@@ -199,9 +220,9 @@ class MemberSlots extends React.Component{
             slots: theSlots
         }
 
-        console.log(theSlots);
-        return;
-        // this.props.dispatch(actions.EditSlot(this.state.user.token, data));
+        // console.log(theSlots);
+        // return;
+        this.props.dispatch(actions.EditSlot(this.state.user.token, data));
     }
 
     handleSubmit = (event) => {
@@ -210,85 +231,235 @@ class MemberSlots extends React.Component{
     }
 
     NavigateToGroupSavings = () => {
-        // let groupSavings = this.props.groups.response; //returns an array
-        // let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
-        // if(groupSavings.length != 0 || rotatingSavings.length != 0){
+        
             history.push('/savings/activityDashBoard');
-        //     return;
-        // }
-        // history.push('/savings/goal/group-savings-selection');
+        
     }
 
-
     render(){
-        return (
-            <Fragment>
-                        <div className="row">
-                            <div className="col-sm-12">
-                                <p className="page-title">Savings & Goals</p>
-                            </div>
-                            <div className="col-sm-12">
-                                <div className="tab-overflow">
-                                    <div className="sub-tab-nav">
-                                        <ul>
-                                        <NavLink to='/savings/choose-goal-plan'>
-                                            <li><a href="#">Goals</a></li>
-                                        </NavLink>
-                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
-                                            <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                        {/* </NavLink> */}
-                                            <li><a href="#">Investments</a></li>
-                                        </ul>
+        if(this.props.rotatingGroupDetails.message === GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS){
+            return (
+                <Fragment>
+                    
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <p className="page-title">Savings & Goals</p>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div className="tab-overflow">
+                                        <div className="sub-tab-nav">
+                                            <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li><a href="#">Goals</a></li>
+                                            </NavLink>
+                                                <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                            
+                                                {/* <li><a href="#">Investments</a></li> */}
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
+                               <p>Loading Data, wait for it...</p>
                             </div>
-                            {this.props.alert && this.props.alert.message &&
-                            <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
-                            }
-                            <div className="col-sm-12">
-                                <div className="row">
-                                    <div className="col-sm-12">
-                                      <div className="max-600">
-                                       <div className="al-card no-pad">
-                                       <h4 className="m-b-10 center-text hd-underline">Members Slot</h4>
-
-                                            <form onSubmit={this.handleSubmit}>
-                                                <div className="form-group">
-                                                    <div className='form-row'>
-                                                        {this.GenerateOptions(groupMembers)}
-                                                    </div>
-                                                </div>
                         
-                                                <div className="row">
-                                                    <div className="col-sm-12">
-                                                        <center>
-                                                            {/* <NavLink to='/savings/group/group-created'> */}
-                                                                  <button type="submit" id="upDateButton">
-                                                                     Update
-                                                                   </button>
-                                                            {/* </NavLink> */}
-                                                        </center>
-                                                    </div>
-                                                </div>
-                                            </form>
-
-
-
-                                        </div>
-
-
-                                       </div>
-
-                                      </div>
-
+                </Fragment>
+            );
+        }
+        if(this.props.rotatingGroupDetails.message === GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS_SUCCESS){
+            return (
+                <Fragment>
+                    
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <p className="page-title">Savings & Goals</p>
                                 </div>
-
+                                <div className="col-sm-12">
+                                    <div className="tab-overflow">
+                                        <div className="sub-tab-nav">
+                                            <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li><a href="#">Goals</a></li>
+                                            </NavLink>
+                                                <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                                <li><a href="#">Investments</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                {this.props.alert && this.props.alert.message &&
+                                <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                                }
+                                <div className="col-sm-12">
+                                    <div className="row">
+                                        <div className="col-sm-12">
+                                          <div className="max-600">
+                                           <div className="al-card no-pad">
+                                           <h4 className="m-b-10 center-text hd-underline">Members Slot</h4>
+    
+                                                <form onSubmit={this.handleSubmit}>
+                                                    <div className="form-group">
+                                                        <div className='form-row'>
+                                                            {this.GenerateOptions(groupMembers)}
+                                                        </div>
+                                                    </div>
+                            
+                                                    <div className="row">
+                                                        <div className="col-sm-12">
+                                                            <center>
+                                                                      <button type="submit" id="upDateButton">
+                                                                         Update
+                                                                       </button>
+                                                            </center>
+                                                        </div>
+                                                    </div>
+                                                </form>
+    
+    
+    
+                                            </div>
+    
+    
+                                           </div>
+    
+                                          </div>
+    
+                                    </div>
+    
+                                </div>
+    
                             </div>
-
-                        </div>
-
-            </Fragment>
-        );
+    
+                    
+                </Fragment>
+            );
+        }
+        if(this.props.rotatingGroupDetails.message === GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS_ERROR){
+            return (
+                <Fragment>
+                    
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <p className="page-title">Savings & Goals</p>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div className="tab-overflow">
+                                        <div className="sub-tab-nav">
+                                            <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li><a href="#">Goals</a></li>
+                                            </NavLink>
+                                                <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                               <p>Please Check Your Internet Connection ...</p>
+                            </div>
+                        
+                </Fragment>
+            );
+        }
+        if(this.props.rotatingGroupDetails.data == undefined){
+            this.FetchRotatingGroupDetails();
+            return (
+                <Fragment>
+                    
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <p className="page-title">Savings & Goals</p>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div className="tab-overflow">
+                                        <div className="sub-tab-nav">
+                                            <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li><a href="#">Goals</a></li>
+                                            </NavLink>
+                                            {/* <NavLink to="/savings/goal/group-savings-selection"> */}
+                                                <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                            {/* </NavLink> */}
+                                                <li><a href="#">Investments</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                               <p>Loading Data ...</p>
+                            </div>
+                        
+                </Fragment>
+            );
+        }
+        if(this.props.rotatingGroupDetails.data != undefined){
+            return (
+                <Fragment>
+                    
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <p className="page-title">Savings & Goals</p>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div className="tab-overflow">
+                                        <div className="sub-tab-nav">
+                                            <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li><a href="#">Goals</a></li>
+                                            </NavLink>
+                                                <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                                <li><a href="#">Investments</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                {this.props.alert && this.props.alert.message &&
+                                <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                                }
+                                <div className="col-sm-12">
+                                    <div className="row">
+                                        <div className="col-sm-12">
+                                          <div className="max-600">
+                                           <div className="al-card no-pad">
+                                           <h4 className="m-b-10 center-text hd-underline">Members Slot</h4>
+    
+                                                <form onSubmit={this.handleSubmit}>
+                                                    <div className="form-group">
+                                                        <div className='form-row'>
+                                                            {this.GenerateOptions(groupMembers)}
+                                                        </div>
+                                                    </div>
+                            
+                                                    <div className="row">
+                                                        <div className="col-sm-12">
+                                                            <center>
+                                                                {/* <NavLink to='/savings/group/group-created'> */}
+                                                                      <button type="submit" id="upDateButton">
+                                                                         Update
+                                                                       </button>
+                                                                {/* </NavLink> */}
+                                                            </center>
+                                                        </div>
+                                                    </div>
+                                                </form>
+    
+    
+    
+                                            </div>
+    
+    
+                                           </div>
+    
+                                          </div>
+    
+                                    </div>
+    
+                                </div>
+    
+                            </div>
+    
+                        
+                </Fragment>
+            );
+        }
     }
 }
 
@@ -296,7 +467,8 @@ function mapStateToProps(state){
     return {
         groupDetails: state.rotatingGroupDetails.data,
         groupSavingsEsusu: state.getGroupSavingsEsusu.data,
-        groups: state.customerGroup.data
+        groups: state.customerGroup.data,
+        rotatingGroupDetails: state.rotatingGroupDetails
     }
 }
 
