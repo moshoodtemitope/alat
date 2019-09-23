@@ -70,6 +70,7 @@ class PersonalInfoMation extends Component {
         isImageUploaded: false,
         Pin:"",
         isPinInvalid: false,
+        residentialAddress: false
 
        }
        this.handleAlatPinChange = this.handleAlatPinChange.bind(this)
@@ -79,12 +80,19 @@ class PersonalInfoMation extends Component {
        this.fetchContactDetails();
        this.fetchPersonalInfo();
        this.fetchStates();
+
+       this.GetResidentialAddress();
    }
 
    componentDidMount = () => {
        this.CheckIfStoreInformationIsSet();
        this.setProfile();
    }
+
+   GetResidentialAddress = () => {
+    this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
+}
+
 
 setProfile = () => {
     let localStore = window.localStorage;
@@ -557,6 +565,15 @@ NavigateToPersonalInfo = () => {
      history.push('/profile/profile-personalInfo');
 }
 
+NavigateResidentialAddress = () => {
+    if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS){
+        this.DispatchSuccessMessage('Residential Address has been Created');
+        return
+    }
+
+    history.push('/profile/profile-residential-address');
+}
+
 NavigateToContact = () => {
      if(this.props.profileMenu.data.response.contactDetailsComplete == true){
              this.DispatchSuccessMessage('Contact Created Successfully');
@@ -605,15 +622,24 @@ GetUserProfileMenu = () => {
     localStore.setItem('isBvNLinked', this.props.profileMenu.data.response.bvnLinked);
 }
 
+ChangeResidentialStatus = () => {
+    setTimeout(() => {
+        this.setState({residentialAddress: true});
+    }, 1000)
+}
+
    render(){
-       const {isImageUploaded, isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin, BVNValidity, birthDate, PinValidity, SectorValidity, EmployerPhoneNumberValidity,EmploymentValidity, AddressValidity, EmployersNameValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
+       const {residentialAddress, isImageUploaded, isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin, BVNValidity, birthDate, PinValidity, SectorValidity, EmployerPhoneNumberValidity,EmploymentValidity, AddressValidity, EmployersNameValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
         SurnameValidity, EmailAddressValidity, FirstNameValidity, MaritalStatusValidity, TitleValidity, OccupationValidity,GenderValidity, DateOfBirthValidity, OtherNameValidity, MothersMaidenNameValidity} = this.state;
-        const {profileMenu, occupationAndSector, getContactDetail} = this.props
+        const {GetResidentialAddress, profileMenu, occupationAndSector, getContactDetail} = this.props
         console.log('=======',occupationAndSector)
 
     //    if(this.props.capturePersonalInformation.response != undefined){
     //        this.PersonalInfomationHasBeenLinked();
     //    }
+       if(GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
+             this.ChangeResidentialStatus();
+
        
        if(profileMenu.message === profile.GET_PROFILE_MENU_PENDING){
         return(
@@ -730,6 +756,10 @@ GetUserProfileMenu = () => {
                                                     <div className="tickItems" onClick={this.NavigateToNextOfKin}>
                                                         {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
                                                         <p className="pSubs">Next of Kin</p>
+                                                    </div>
+                                                    <div className="tickItems" onClick={this.NavigateResidentialAddress}>
+                                                        {residentialAddress ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                        <p className="pSubs">Residential Address</p>
                                                     </div>
                                             </div>
                                             
@@ -1022,7 +1052,8 @@ function mapStateToProps(state){
         getStates:state.getStates,
         alert:state.alert,
         nextOfKinsRelationship: state.nextOfKinsRelationship.data,
-        capturePersonalInformation:state.capturePersonalInformation
+        capturePersonalInformation:state.capturePersonalInformation,
+        GetResidentialAddress: state.GetResidentialAddress
 
     };
 }

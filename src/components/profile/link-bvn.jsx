@@ -27,10 +27,13 @@ class LinkBvN extends Component {
             isContactDetails: false,
             isDocument: false,
             navToNextOfKin: false,
-            isImageUploaded: false
+            isImageUploaded: false,
+            residentialAddress: false,
+            residentialAddress: false
        }
 
        this.GetUserProfileMenu();
+       this.GetResidentialAddress();
    }
 
    componentDidMount = () => {
@@ -54,6 +57,11 @@ class LinkBvN extends Component {
 GetUserProfileMenu = () => {
     this.props.dispatch(actions.profileMenu(this.state.user.token));
  }
+
+GetResidentialAddress = () => {
+    this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
+}
+
 
    CheckIfStoreInformationIsSet = () => {
        
@@ -167,6 +175,15 @@ GetUserProfileMenu = () => {
    NavigateToSuccessPage = () => {
         this.DispatchSuccessMessage("BVN Linked Successfully!");
    }
+   
+   NavigateResidentialAddress = () => {
+    if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS){
+        this.DispatchSuccessMessage('Residential Address has been Created');
+        return
+    }
+
+    history.push('/profile/profile-residential-address');
+}
 
    NavigateToBVN = () => {
     if(this.props.profileMenu.data.response.bvnLinked == true){
@@ -234,9 +251,18 @@ GetUserProfileMenu = () => {
     localStore.setItem('navToNextOfKin', this.props.profileMenu.data.response.nextOfKinComplete);
     localStore.setItem('isBvNLinked', this.props.profileMenu.data.response.bvnLinked);
 }
+
+ChangeResidentialStatus = () => {
+    setTimeout(() => {
+        this.setState({residentialAddress: true});
+    }, 1000)
+}
  
    render(){
-       const {isImageUploaded, dateValidity, BVNValidity, birthDate,  isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin} = this.state;
+       const {residentialAddress, isImageUploaded, dateValidity, BVNValidity, birthDate,  isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin} = this.state;
+
+            if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
+                 this.ChangeResidentialStatus();
 
             if(this.props.profileMenu.data == undefined){
                 this.GetUserProfileMenu();
@@ -350,6 +376,10 @@ GetUserProfileMenu = () => {
                                                             <div className="tickItems" onClick={this.NavigateToNextOfKin}>
                                                                 {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
                                                                 <p className="pSubs">Next of Kin</p>
+                                                            </div>
+                                                            <div className="tickItems" onClick={this.NavigateResidentialAddress}>
+                                                               {residentialAddress ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                               <p className="pSubs">Residential Address</p>
                                                             </div>
                                                     </div>
                                                     
@@ -578,6 +608,7 @@ const mapStateToProps = (state) => {
         profileSuccessMessage: state.profileSuccessMessage.data,
         linkBvn: state.linkBVN.message,
         alert: state.alert,
+        GetResidentialAddress: state.GetResidentialAddress
     }
 }
 

@@ -113,10 +113,12 @@ class ContactDetails extends Component {
         isImageUploaded: false,
         Pin:"",
         isPinInvalid: false,
+        residentialAddress: false
 
        }
        this.handleAlatPinChange = this.handleAlatPinChange.bind(this)
        this.fetchContactDetails();
+       this.GetResidentialAddress();
    }
 
    componentDidMount = () => {
@@ -160,6 +162,11 @@ StoreInforMation = () => {
     localStore.setItem('navToNextOfKin', this.props.profileMenu.data.response.nextOfKinComplete);
     localStore.setItem('isBvNLinked', this.props.profileMenu.data.response.bvnLinked);
 }
+
+GetResidentialAddress = () => {
+    this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
+}
+
 
    fetchContactDetails(){
         const { dispatch } = this.props;
@@ -777,6 +784,15 @@ StoreInforMation = () => {
        history.push('/profile-success-message');
    }
 
+   NavigateResidentialAddress = () => {
+    if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS){
+        this.DispatchSuccessMessage('Residential Address has been Created');
+        return
+    }
+
+    history.push('/profile/profile-residential-address');
+}
+
    HandleCheckBoxInput = () => {
        this.setState({checkBoxStatus: !this.state.checkBoxStatus}, () => {
            if (this.state.checkBoxStatus) {
@@ -858,12 +874,21 @@ GetUserProfileMenu = () => {
     this.props.dispatch(actions.profileMenu(this.state.user.token));
  }
 
+ ChangeResidentialStatus = () => {
+    setTimeout(() => {
+        this.setState({residentialAddress: true});
+    }, 1000)
+}
+
    render(){
-        const {isImageUploaded, PinValidity, AlternateEmailValidity, sameAddressAsAbove,SectorValidity, phoneNumberValidity, LocalGovValidity2, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity2, NationalityValidity, StateOfOriginValidity,
+        const {residentialAddress, isImageUploaded, PinValidity, AlternateEmailValidity, sameAddressAsAbove,SectorValidity, phoneNumberValidity, LocalGovValidity2, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity2, NationalityValidity, StateOfOriginValidity,
         EmailAddressValidity, streetValidity, busstopValidity, apartmentValidity, personalAddressValidity, StateOfOriginValidity2,
         personalAddressValidity2, alternatePhoneNumberValidity, houseNumberValidity,   isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin} = this.state;
-        const {profileMenu, getContactDetail } = this.props;
+        const {profileMenu, getContactDetail, GetResidentialAddress} = this.props;
         
+        if(GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
+            this.ChangeResidentialStatus();
+
         if(getContactDetail.message === profile.GET_CONTACT_DETAILS_PENDING){
             console.log('NOTHING EVER HAPPENED HERE')
             return(
@@ -952,6 +977,10 @@ GetUserProfileMenu = () => {
                                                         <div className="tickItems" onClick={this.NavigateToNextOfKin}>
                                                             {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
                                                             <p className="pSubs">Next of Kin</p>
+                                                        </div>
+                                                        <div className="tickItems" onClick={this.NavigateResidentialAddress}>
+                                                            {residentialAddress ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                            <p className="pSubs">Residential Address</p>
                                                         </div>
                                                 </div>
                                             </div>
@@ -1321,7 +1350,8 @@ const mapStateToProps = (state) => {
         profileMenu:state.profileMenu,
         getContactDetail:state.getContactDetail,
         alert:state.alert,
-        addContactDetails:state.addContactDetails
+        addContactDetails:state.addContactDetails,
+        GetResidentialAddress: state.GetResidentialAddress
     }
 }
 

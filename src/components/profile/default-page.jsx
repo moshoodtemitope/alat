@@ -23,7 +23,7 @@ class PersonalDefault extends Component {
        }
 
        this.GetUserProfileMenu();
-    //    this.GetResidentialAddress();
+       this.GetResidentialAddress();
    }
    
    componentDidMount = () => {
@@ -51,7 +51,6 @@ class PersonalDefault extends Component {
    }
 
    GetResidentialAddress = () => {
-       console.log('WAS FIRED FROM DEFAULT PAGE')
        this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
    }
 
@@ -110,7 +109,12 @@ class PersonalDefault extends Component {
        history.push('/profile/profile-next-of-kin');
    }
 
-   NavigateResidentialAddress = () => {
+    NavigateResidentialAddress = () => {
+        if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS){
+            this.DispatchSuccessMessage('Residential Address has been Created');
+            return
+        }
+
         history.push('/profile/profile-residential-address');
     }
 
@@ -146,8 +150,17 @@ class PersonalDefault extends Component {
        localStore.setItem('isBvNLinked', this.props.profileMenu.data.response.bvnLinked);
    }
 
+   ChangeResidentialStatus = () => {
+       setTimeout(() => {
+           this.setState({residentialAddress: true});
+       }, 1000)
+   }
+
    render(){
        const {profileMenu, residentialAddress, isBvNLinked, isProfileInformation, isContactDetails, isDocument, isToNextOfKin} = this.state;
+
+       if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
+             this.ChangeResidentialStatus();
 
        if(this.props.profileMenu.message == profile.GET_PROFILE_MENU_PENDING){
             return(
@@ -346,7 +359,9 @@ class PersonalDefault extends Component {
 function mapStateToProps(state){
    return {
        profileMenu:state.profileMenu,
-       profileSuccessMessage: state.profileSuccessMessage.data
+       profileSuccessMessage: state.profileSuccessMessage.data,
+       alert:state.alert,
+       GetResidentialAddress: state.GetResidentialAddress
    }
 }
 

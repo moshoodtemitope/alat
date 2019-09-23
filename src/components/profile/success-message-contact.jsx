@@ -17,7 +17,10 @@ class ContactSuccessPage extends Component {
        super(props);
        this.state = {
           user: JSON.parse(localStorage.getItem("user")),
+          residentialAddress: false
        }
+
+       this.GetResidentialAddress();
    }
 
    CheckIfStoreInformationIsSet = () => {
@@ -40,6 +43,11 @@ class ContactSuccessPage extends Component {
 
        this.setProfile();
    }
+
+   GetResidentialAddress = () => {
+    this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
+}
+
 
 setProfile = () => {
     let localStore = window.localStorage;
@@ -69,6 +77,15 @@ NavigateToPersonalInfo = () => {
      }
 
      history.push('/profile/profile-personalInfo');
+}
+
+NavigateResidentialAddress = () => {
+    if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS){
+        this.DispatchSuccessMessage('Residential Address has been Created');
+        return
+    }
+
+    history.push('/profile/profile-residential-address');
 }
 
 NavigateToContact = () => {
@@ -115,8 +132,17 @@ StoreInforMation = () => {
     localStore.setItem('isBvNLinked', this.props.profileMenu.data.response.bvnLinked);
 }
 
+ChangeResidentialStatus = () => {
+    setTimeout(() => {
+        this.setState({residentialAddress: true});
+    }, 1000)
+}
+
    render(){
-       const {isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument } = this.state;
+       const {residentialAddress, isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument } = this.state;
+
+       if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
+             this.ChangeResidentialStatus();
        return(
         <Fragment>
              {/* <InnerContainer> */}
@@ -169,6 +195,10 @@ StoreInforMation = () => {
                                                     {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
                                                     <p className="pSubs">Next of Kin</p>
                                                 </div>
+                                                <div className="tickItems" onClick={this.NavigateResidentialAddress}>
+                                                    {residentialAddress ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                    <p className="pSubs">Residential Address</p>
+                                                </div>
                                         </div>
                                     </div>
                                     <div className="col-sm-6">
@@ -190,7 +220,9 @@ StoreInforMation = () => {
 
 const mapStateToProps = (state) => {
     return {
-        profileMenu: state.profileMenu
+        profileMenu: state.profileMenu,
+        alert:state.alert,
+        GetResidentialAddress: state.GetResidentialAddress
     }
 }
 
