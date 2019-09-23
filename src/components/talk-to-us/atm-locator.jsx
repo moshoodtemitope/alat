@@ -94,7 +94,7 @@ class AtmLocator extends Component{
         let get_bank_branch = props.get_bank_branch;
         if(get_bank_branch.message === talktoUsConstant.GET_BANK_BRANCHES_PENDING){
             return(
-                <h4 className="text-center" style={{ marginTop: '65px'}}>Loading Atm Locations...</h4>
+                <h4 className="text-center" style={{ marginTop: '65px'}}>Loading Bank Branch Locations...</h4>
             );
         }
         else if(get_bank_branch.message === talktoUsConstant.GET_BANK_BRANCHES_SUCCESS){

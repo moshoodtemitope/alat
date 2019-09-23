@@ -39,7 +39,8 @@ const selectedTime = [
             TransactionTypeId:"",
             ChannelId:"",
             TransactionDate:null,
-            SourceTypeId:""
+            SourceTypeId:"",
+            BankName:""
 
          }
          this.handleSelectDebitableAccounts = this.handleSelectDebitableAccounts.bind(this);
@@ -156,6 +157,9 @@ const selectedTime = [
 
     onSubmit=(event)=>{
         event.preventDefault();
+        if(this.valDateError()|| this.checkAmount()){
+
+        }else{
             this.props.dispatch(actions.ReportErrorMessage( {
                 "Amount":this.state.Amount,
                 "TransactionTypeId":this.state.TransactionTypeId,
@@ -163,11 +167,9 @@ const selectedTime = [
                 "TransactionDate":this.state.TransactionDate,
                 "Bank":this.state.Bank,
                 "SourceTypeId":this.state.SourceTypeId
-                
-    
             }
         ));
-        // }
+        }
         
        
     }
@@ -193,11 +195,12 @@ const selectedTime = [
                     </div>
                 </div>
                 <center>
-                        {this.props.alert && this.props.alert.message &&
-                                                <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
-                    }
+                        
                 </center>
                 <div className="col-sm-12">
+                {this.props.alert && this.props.alert.message &&
+                                                <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                    }
                     <div className="row">
                         <div className="col-sm-12">
                             <div className="max-600">
@@ -215,7 +218,7 @@ const selectedTime = [
                                                             autoComplete="off" 
                                                             placeholderText="Date of Error"
                                                             dateFormat=" MMMM d, yyyy"
-                                                            name="startDate"
+                                                            name="TransactionDate"
                                                             peekNextMonth
                                                             showMonthDropdown
                                                             showYearDropdown
@@ -257,8 +260,8 @@ const selectedTime = [
                                                 <div className="form-row">
                                                 <div className= {channelInvalid ? "form-group col-md-6 " : "form-group col-md-6 form-error"}>
                                                     <label className="label-text">Channel</label>
-                                                                    <select name="channelFrequency" className="form-control input-border-radius" onChange={this.handleSelectChannel}>
-                                                                            <option>Select Transaction Type</option>
+                                                                    <select name="" className="form-control input-border-radius" onChange={this.handleSelectChannel}>
+                                                                            <option>Select Channel</option>
                                                                             {                                      
                                                                                 this.props.get_page_data.message === talktoUsConstant.GET_PAGE_DATA_SUCCESS && 
                                                                                 this.props.get_page_data.data.response.data.ChannelTypes.map(channel=> {
@@ -277,7 +280,7 @@ const selectedTime = [
                                                     <div className={!channelInvalid ? "form-group col-md-6" : "form-group col-md-6 form-error"}>
                                                         <label className="label-text">Transaction Type</label>
                                                        
-                                                          <select name="channelFrequency" className="form-control input-border-radius" onChange={this.handleSelectTrancType}>
+                                                          <select name="TransactionTypeId" className="form-control input-border-radius" onChange={this.handleSelectTrancType}>
                                                                             <option>Select Transaction Type</option>
                                                                             {                                      
                                                                                 this.props.get_page_data.message === talktoUsConstant.GET_PAGE_DATA_SUCCESS && 
@@ -307,7 +310,7 @@ const selectedTime = [
                                                 <div className="form-row">
                                                     <div className={!channelInvalid ? "form-group col-md-6" : "form-group col-md-6 form-error"}>
                                                              <label className="label-text">Banks</label>
-                                                        <select name="channelFrequency" className="form-control input-border-radius" onChange={this.handleChange}>
+                                                        <select name="BankName" className="form-control input-border-radius" onChange={this.handleChange}>
                                                                  <option>Select Bank</option>
                                                                     {                                      
                                                                         this.props.GetBankList.message === talktoUsConstant.GET_BANK_LIST_SUCCESS && 
@@ -322,7 +325,7 @@ const selectedTime = [
 
                                                      <div className={!channelInvalid ? "form-group col-md-6" : "form-group col-md-6 form-error"}>
                                                              <label className="label-text">Source</label>
-                                                        <select name="channelFrequency" className="form-control input-border-radius" onChange={this.handleSourceType}>
+                                                        <select name="SourceTypeId" className="form-control input-border-radius" onChange={this.handleSourceType}>
                                                                  <option>Source Type</option>
                                                                     {                                      
                                                                         this.props.get_page_data.message === talktoUsConstant.GET_PAGE_DATA_SUCCESS && 
