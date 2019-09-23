@@ -14,6 +14,7 @@ import { Switch } from '../../shared/elements/_toggle';
 import AlatPinInput from '../../shared/components/alatPinInput';
 
 
+var profileMenuStore = {}
 var allStatesInfo = null;
 var allCityData = null;
 var localGov2 = null;
@@ -112,17 +113,31 @@ class ContactDetails extends Component {
         isImageUploaded: false,
         Pin:"",
         isPinInvalid: false,
+        residentialAddress: false
 
        }
        this.handleAlatPinChange = this.handleAlatPinChange.bind(this)
-
-
        this.fetchContactDetails();
+       this.GetResidentialAddress();
    }
 
    componentDidMount = () => {
        this.CheckIfStoreInformationIsSet();
+       this.setProfile();
    }
+
+   setProfile = () => {
+    let localStore = window.localStorage;
+    setTimeout(() => {
+        this.setState({
+            isProfileInformation: JSON.parse(localStore.getItem('isProfileInformation')),
+            isContactDetails: JSON.parse(localStore.getItem('isContactDetails')),
+            isDocument: JSON.parse(localStore.getItem('isDocument')),
+            isToNextOfKin: JSON.parse(localStore.getItem('navToNextOfKin')),
+            isBvNLinked: JSON.parse(localStore.getItem('isBvNLinked')),
+        }); 
+    }, 20);
+}
 
 CheckIfStoreInformationIsSet = () => {
     
@@ -135,6 +150,23 @@ CheckIfStoreInformationIsSet = () => {
      this.setState({isBvNLinked: this.props.profileMenu.data.response.bvnLinked});
  }
 }
+
+StoreInforMation = () => {
+    console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
+    profileMenuStore = this.props.profileMenu.data.response;
+ 
+    let localStore = window.localStorage;
+    localStore.setItem('isProfileInformation', this.props.profileMenu.data.response.personalInfoComplete);
+    localStore.setItem('isContactDetails', this.props.profileMenu.data.response.contactDetailsComplete);
+    localStore.setItem('isDocument', this.props.profileMenu.data.response.documentUploaded);
+    localStore.setItem('navToNextOfKin', this.props.profileMenu.data.response.nextOfKinComplete);
+    localStore.setItem('isBvNLinked', this.props.profileMenu.data.response.bvnLinked);
+}
+
+GetResidentialAddress = () => {
+    this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
+}
+
 
    fetchContactDetails(){
         const { dispatch } = this.props;
@@ -368,12 +400,6 @@ CheckIfStoreInformationIsSet = () => {
                                 result = null;
                                 break;
                             }
-                    // case 'street2':
-                    //         if(this.state[x] == null || this.state[x] == ""){
-                    //             console.log(x)
-                    //             result = null;
-                    //             break;
-                    //         }
                 }
             }
             
@@ -393,6 +419,7 @@ CheckIfStoreInformationIsSet = () => {
        }
    }
 
+   
    InitiateNetworkCall = () => {
       let data = null;
       console.log(this.state.checkBoxStatus);
@@ -405,7 +432,7 @@ CheckIfStoreInformationIsSet = () => {
                     phoneNumber: parseInt(this.state.phoneNumber),
                     alternatePhoneNumber: parseInt(this.state.alternatePhoneNumber),
                     country: "Nigeria", 
-                    mailingCountry: 'Nigeria',
+                    mailingCountry: 'Nigeria', 
                     mailingStateId: parseInt(this.state.stateGvId),
                     mailingCityId: parseInt(this.state.localGvId),
                     pin: parseInt(this.state.Pin),
@@ -454,17 +481,17 @@ CheckIfStoreInformationIsSet = () => {
     //   return;
       this.props.dispatch(actions.addContactDetails(this.state.user.token, data));
    }
-
+   
    SetBvNNumber = (event) => {
        this.setState({bvnNumber: event.target.value});
    }
-
+   
    SetBirthDay = (birthDate) => {
         this.setState({  
             birthDate: birthDate
         });
    }  
-
+   
    NavigateToSuccessPage = () => {
        history.push('/profile-success-message');
    }
@@ -498,7 +525,7 @@ CheckIfStoreInformationIsSet = () => {
        this.checkApartmentValidity2();
        this.checkSectorValidity();
        console.log('code got here');
- 
+    
        switch(this.checkValidity()){
            case null:
              console.log('Empty value was found');
@@ -560,7 +587,7 @@ CheckIfStoreInformationIsSet = () => {
      } 
 
     checkAlternatePhoneNumberValidity = () => {
-       if(this.state.alternateEmail == null || this.state.alternateEmail == ""){
+       if(this.state.alternatePhoneNumber == null || this.state.alternatePhoneNumber == ""){
            this.setState({alternatePhoneNumberValidity: true});
        }else{
            this.setState({alternatePhoneNumberValidity: false});
@@ -757,6 +784,15 @@ CheckIfStoreInformationIsSet = () => {
        history.push('/profile-success-message');
    }
 
+   NavigateResidentialAddress = () => {
+    if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS){
+        this.DispatchSuccessMessage('Residential Address has been Created');
+        return
+    }
+
+    history.push('/profile/profile-residential-address');
+}
+
    HandleCheckBoxInput = () => {
        this.setState({checkBoxStatus: !this.state.checkBoxStatus}, () => {
            if (this.state.checkBoxStatus) {
@@ -838,12 +874,21 @@ GetUserProfileMenu = () => {
     this.props.dispatch(actions.profileMenu(this.state.user.token));
  }
 
+ ChangeResidentialStatus = () => {
+    setTimeout(() => {
+        this.setState({residentialAddress: true});
+    }, 1000)
+}
+
    render(){
-        const {isImageUploaded, PinValidity, AlternateEmailValidity, sameAddressAsAbove,SectorValidity, phoneNumberValidity, LocalGovValidity2, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity2, NationalityValidity, StateOfOriginValidity,
+        const {residentialAddress, isImageUploaded, PinValidity, AlternateEmailValidity, sameAddressAsAbove,SectorValidity, phoneNumberValidity, LocalGovValidity2, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity2, NationalityValidity, StateOfOriginValidity,
         EmailAddressValidity, streetValidity, busstopValidity, apartmentValidity, personalAddressValidity, StateOfOriginValidity2,
         personalAddressValidity2, alternatePhoneNumberValidity, houseNumberValidity,   isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin} = this.state;
-        const {profileMenu, getContactDetail } = this.props;
+        const {profileMenu, getContactDetail, GetResidentialAddress} = this.props;
         
+        if(GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
+            this.ChangeResidentialStatus();
+
         if(getContactDetail.message === profile.GET_CONTACT_DETAILS_PENDING){
             console.log('NOTHING EVER HAPPENED HERE')
             return(
@@ -878,6 +923,7 @@ GetUserProfileMenu = () => {
  
         if(getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && profileMenu.message === profile.GET_PROFILE_MENU_SUCCESS){
             this.UseGottenStateInfo();
+            this.StoreInforMation();  
             return(
                 <Fragment>
                     {/* <InnerContainer> */}
@@ -931,6 +977,10 @@ GetUserProfileMenu = () => {
                                                         <div className="tickItems" onClick={this.NavigateToNextOfKin}>
                                                             {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
                                                             <p className="pSubs">Next of Kin</p>
+                                                        </div>
+                                                        <div className="tickItems" onClick={this.NavigateResidentialAddress}>
+                                                            {residentialAddress ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                            <p className="pSubs">Residential Address</p>
                                                         </div>
                                                 </div>
                                             </div>
@@ -1233,6 +1283,7 @@ GetUserProfileMenu = () => {
         }
 
         if(getContactDetail.message == undefined){
+            this.GetUserProfileMenu();
             return(
                 <Fragment>
                        
@@ -1291,17 +1342,16 @@ GetUserProfileMenu = () => {
                 </Fragment>      
             )
         }
-
    }
 }
 
 const mapStateToProps = (state) => {
-    return {
+    return { 
         profileMenu:state.profileMenu,
         getContactDetail:state.getContactDetail,
         alert:state.alert,
-        addContactDetails:state.addContactDetails
-
+        addContactDetails:state.addContactDetails,
+        GetResidentialAddress: state.GetResidentialAddress
     }
 }
 

@@ -16,7 +16,7 @@ import LinkBVNSuccessPage from './success-message-linkBVN';
 import NextOfKinUpLoadedSuccessfully from './success-message-nextOfKinSuc';
 import DocumentUploadedSuccessfully from './profile-documents';
 import PersonalInfoSuccessPage from './success-message-personalInfo'
-
+import ResidentialAddress from './residentialAddress';
 
 
 class ProfileIndex extends Component {
@@ -50,6 +50,7 @@ class ProfileIndex extends Component {
                                 <Route path="/profile/profile-success-nextofkin"  component={NextOfKinUpLoadedSuccessfully} />
                                 <Route path="/profile/profile-success-document"  component={DocumentUploadedSuccessfully} />
                                 <Route path="/profile/profile-success-personalInfo" component={PersonalInfoSuccessPage} />
+                                <Route path="/profile/profile-residential-address" component={ResidentialAddress} />
                             </div>
                         </div> 
                     {/* </div>  */}

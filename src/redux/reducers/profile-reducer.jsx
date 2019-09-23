@@ -296,17 +296,17 @@ export function GetResidentialAddress (state=[], action){
            return {
                message: profile.GET_RESIDENTIAL_ADDRESS_PENDING,
                data: action
-           }       
+           }
         case profile.GET_RESIDENTIAL_ADDRESS_SUCCESS:
            return {
                message: profile.GET_RESIDENTIAL_ADDRESS_SUCCESS,
                data: action
-           }        
+           }
         case profile.GET_RESIDENTIAL_ADDRESS_FAILURE:
            return {
                message: profile.GET_RESIDENTIAL_ADDRESS_FAILURE,
                data: action
-           }      
+           }
         default: 
            return {... state}
     }
