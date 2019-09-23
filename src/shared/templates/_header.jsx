@@ -2,7 +2,6 @@ import * as React from 'react';
 import { NavLink} from 'react-router-dom';
 import {history} from "../../_helpers/history";
 import { connect } from 'react-redux';
-// import {alertActions} from "../../redux/actions/alert.actions";
 import $ from 'jquery';
 import {Fragment} from "react";
 import {userActions} from "../../redux/actions/onboarding/user.actions";
@@ -153,8 +152,8 @@ class HeaderContainer extends React.Component{
                                 { this.renderMiniNav() }
                                 <div className="user-name-circle clearfix">
                                    <NavLink to="/talk-to-us">
-                                   <p className="name">Talk to us</p>
-                                   <img  style={{margin:'5px', marginTop:'5px'}}src={selfCareImage} />
+                                   <p className="name">Talk to Us</p>
+                                   <img  style={{ margin:'5px',marginTop:'5px'}}src={selfCareImage} />
 
                                    </NavLink>
                                 </div>

@@ -304,8 +304,6 @@ class GroupAnalytics extends React.Component {
         if(this.props.groupDetails.message === GROUPSAVINGSCONSTANT.GROUPDETAILS_ERROR){
             return (  
                 <Fragment>
-                    <InnerContainer>
-                        <SavingsContainer>
                             <div className="row">
                                 <div className="col-sm-12">
                                     <p className="page-title">Savings & Goals</p>
@@ -317,10 +315,8 @@ class GroupAnalytics extends React.Component {
                                             <NavLink to='/savings/choose-goal-plan'>
                                                 <li><a href="#">Goals</a></li>
                                             </NavLink>
-                                            {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                 <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                            {/* </NavLink> */}
-                                                <li><a href="#">Investments</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
                                             </ul>
                                         </div>
                                     </div>
@@ -351,8 +347,6 @@ class GroupAnalytics extends React.Component {
     
                             </div>
     
-                        </SavingsContainer>
-                    </InnerContainer>
                 </Fragment>
             );
         }
@@ -360,8 +354,6 @@ class GroupAnalytics extends React.Component {
         if(this.props.groupDetails.message === GROUPSAVINGSCONSTANT.GROUPDETAILS_SUCCESS){
             return (
                 <Fragment>
-                    <InnerContainer>
-                        <SavingsContainer>
                             <div className="row">
                                 <div className="col-sm-12">
                                     <p className="page-title">Savings & Goals</p>
@@ -373,10 +365,8 @@ class GroupAnalytics extends React.Component {
                                             <NavLink to='/savings/choose-goal-plan'>
                                                 <li><a href="#">Goals</a></li>
                                             </NavLink>
-                                            {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                 <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                            {/* </NavLink> */}
-                                                <li><a href="#">Investments</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
                                             </ul>
                                         </div>
                                     </div>
@@ -464,8 +454,6 @@ class GroupAnalytics extends React.Component {
     
                             </div>
     
-                        </SavingsContainer>
-                    </InnerContainer>
                 </Fragment>
             );
         }
@@ -486,10 +474,8 @@ class GroupAnalytics extends React.Component {
                                                 <NavLink to='/savings/choose-goal-plan'>
                                                     <li><a href="#">Goals</a></li>
                                                 </NavLink>
-                                                {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                     <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                                {/* </NavLink> */}
-                                                    <li><a href="#">Investments</a></li>
+                                                    {/* <li><a href="#">Investments</a></li> */}
                                                 </ul>
                                             </div>
                                         </div>
