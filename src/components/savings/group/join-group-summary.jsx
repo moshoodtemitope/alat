@@ -1,7 +1,5 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import {NavLink} from "react-router-dom";
 import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
 import "react-datepicker/dist/react-datepicker.css";
@@ -11,6 +9,8 @@ import * as actions from '../../../redux/actions/savings/group-savings/group-sav
 import {history} from '../../../_helpers/history';
 import { Description } from './component';
 import moment from "moment";
+import { GROUPSAVINGSCONSTANT } from '../../../redux/constants/savings/group';
+
 
 class JoinGroupSummary extends React.Component {
     constructor(props){
@@ -65,8 +65,7 @@ class JoinGroupSummary extends React.Component {
             this.props.dispatch(action.joinGroupEsusu(this.state.user.token, data));
        if(this.props.findGroup.response.groupData != null)
             this.props.dispatch(actions.joinGroup(this.state.user.token, data));
-       //return;
-       //this.props.dispatch(actions.joinGroup(this.state.user.token, data));
+      
     }
 
     handleSubmit = (event) => {
@@ -84,13 +83,9 @@ class JoinGroupSummary extends React.Component {
     }
 
     NavigateToGroupSavings = () => {
-        // let groupSavings = this.props.groups.response; //returns an array
-        // let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
-        // if(groupSavings.length != 0 || rotatingSavings.length != 0){
+        
             history.push('/savings/activityDashBoard');
-        //     return;
-        // }
-        // history.push('/savings/goal/group-savings-selection');
+        
     }
 
     render() {
@@ -109,10 +104,8 @@ class JoinGroupSummary extends React.Component {
                                             <NavLink to='/savings/choose-goal-plan'>
                                                 <li><a href="#">Goals</a></li>
                                             </NavLink>
-                                            {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                 <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                            {/* </NavLink> */}
-                                                <li><a href="#">Investments</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
                                             </ul>
                                         </div>
                                     </div>
@@ -200,17 +193,15 @@ class JoinGroupSummary extends React.Component {
                                             <NavLink to='/savings/choose-goal-plan'>
                                                 <li><a href="#">Goals</a></li>
                                             </NavLink>
-                                            {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                 <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                            {/* </NavLink> */}
-                                                <li><a href="#">Investments</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
-                                {/* {this.props.alert && this.props.alert.message &&
+                                {this.props.alert && this.props.alert.message &&
                                 <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
-                                } */}
+                                }
                                 <div className="col-sm-12">
                                     <div className="row">
                                         <div className="col-sm-12">
@@ -256,7 +247,9 @@ class JoinGroupSummary extends React.Component {
                                                              <button onClick={this.handleDecline}>Decline</button>
                                                          </div>
                                                          <div className="col-sm-6 right">
-                                                             <button type="submit" id='acepting'>Accept</button>
+                                                             <button disabled={this.props.joinGroupEsusu.message ===GROUPSAVINGSCONSTANT.JOIN_GROUP_ESUSU } type="submit" id='acepting'>
+                                                             {this.props.joinGroupEsusu.message === GROUPSAVINGSCONSTANT.JOIN_GROUP_ESUSU ? "Processing...":'Accept'}
+                                                             </button>
                                                          </div>
                                                     </div>
                                                 </form>
@@ -286,6 +279,7 @@ function mapStateToProps(state){
         groupSavingsEsusu: state.getGroupSavingsEsusu.data,
         groups: state.customerGroup.data,
         alert:state.alert,
+        joinGroupEsusu:state.joinGroupEsusu
 
     }
 }

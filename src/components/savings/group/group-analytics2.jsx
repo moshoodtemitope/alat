@@ -213,10 +213,8 @@ class GroupAnalytics2 extends React.Component {
                                             <NavLink to='/savings/choose-goal-plan'>
                                                 <li><a href="#">Goals</a></li>
                                             </NavLink>
-                                            {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                 <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                            {/* </NavLink> */}
-                                                <li><a href="#">Investments</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
     
                                             </ul>
                                         </div>
@@ -295,8 +293,7 @@ class GroupAnalytics2 extends React.Component {
             if(Object.keys(this.props.groupDetails.data.response).length != 0){
                 return (
                     <Fragment>
-                        <InnerContainer>
-                            <SavingsContainer>
+                        
                                 <div className="row">
                                     <div className="col-sm-12">
                                         <p className="page-title">Savings & Goals</p>
@@ -308,9 +305,7 @@ class GroupAnalytics2 extends React.Component {
                                                 <NavLink to='/savings/choose-goal-plan'>
                                                     <li><a href="#">Goals</a></li>
                                                 </NavLink>
-                                                {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                     <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                                {/* </NavLink> */}
                                                     <li><a href="#">Investments</a></li>
         
                                                 </ul>
@@ -381,8 +376,7 @@ class GroupAnalytics2 extends React.Component {
         
                                 </div>
         
-                            </SavingsContainer>
-                        </InnerContainer>
+                           
                     </Fragment>
                 );
             }else{

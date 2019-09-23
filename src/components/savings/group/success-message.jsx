@@ -1,7 +1,5 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import {Switch} from "react-router";
 import Members from './list-item';
@@ -37,13 +35,9 @@ class SuccessMessage extends React.Component {
     }
 
     NavigateToGroupSavings = () => {
-        // let groupSavings = this.props.groups.response; //returns an array
-        // let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
-        // if(groupSavings.length != 0 || rotatingSavings.length != 0){
+        
             history.push('/savings/activityDashBoard');
-        //     return;
-        // }
-        // history.push('/savings/goal/group-savings-selection');
+        
     }
 
 
@@ -63,10 +57,7 @@ class SuccessMessage extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a href="#">Goals</a></li>
                                         </NavLink>
-                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                             <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                        {/* </NavLink> */}
-                                            <li><a href="#">Investments</a></li>
 
                                         </ul>
                                     </div>
@@ -85,15 +76,7 @@ class SuccessMessage extends React.Component {
                                                 <div className="form-group">
                                                     <label id="sucMessage" className="sucMg">Scheduling was successfull</label>
                                                 </div>
-                                                {/* <div className="form-row">
-                                                <Members 
-                                                   userType="admin"
-                                                   name="Group Savings"
-                                                   position="Status: running"
-                                                   amount={this.props.setAmountToWithDraw}
-                                                   intent={this.props.setFrequency}
-                                                   id="autoSummary"/>
-                                                </div> */}
+                                                
                                             </form>
 
                                         </div>

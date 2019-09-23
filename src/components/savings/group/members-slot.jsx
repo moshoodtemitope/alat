@@ -93,10 +93,7 @@ class MemberSlots extends React.Component{
                 this.setState({'members': theMembers})
                 this.MembersInitialValues();
                 console.log('Rotating Group Returned Undefined 99999999999')
-            //     break;
-            // case undefined: 
-            //     console.log('Rotating Group Returned Undefined ')
-            //     this.FetchRotatingGroupDetails();
+            
         }
 
         if(this.props.groupDetails == undefined){
@@ -223,9 +220,9 @@ class MemberSlots extends React.Component{
             slots: theSlots
         }
 
-        console.log(theSlots);
-        return;
-        // this.props.dispatch(actions.EditSlot(this.state.user.token, data));
+        // console.log(theSlots);
+        // return;
+        this.props.dispatch(actions.EditSlot(this.state.user.token, data));
     }
 
     handleSubmit = (event) => {
@@ -234,13 +231,9 @@ class MemberSlots extends React.Component{
     }
 
     NavigateToGroupSavings = () => {
-        // let groupSavings = this.props.groups.response; //returns an array
-        // let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
-        // if(groupSavings.length != 0 || rotatingSavings.length != 0){
+        
             history.push('/savings/activityDashBoard');
-        //     return;
-        // }
-        // history.push('/savings/goal/group-savings-selection');
+        
     }
 
     render(){
@@ -259,10 +252,9 @@ class MemberSlots extends React.Component{
                                             <NavLink to='/savings/choose-goal-plan'>
                                                 <li><a href="#">Goals</a></li>
                                             </NavLink>
-                                            {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                 <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                            {/* </NavLink> */}
-                                                <li><a href="#">Investments</a></li>
+                                            
+                                                {/* <li><a href="#">Investments</a></li> */}
                                             </ul>
                                         </div>
                                     </div>
@@ -288,9 +280,7 @@ class MemberSlots extends React.Component{
                                             <NavLink to='/savings/choose-goal-plan'>
                                                 <li><a href="#">Goals</a></li>
                                             </NavLink>
-                                            {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                 <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                            {/* </NavLink> */}
                                                 <li><a href="#">Investments</a></li>
                                             </ul>
                                         </div>
@@ -316,11 +306,9 @@ class MemberSlots extends React.Component{
                                                     <div className="row">
                                                         <div className="col-sm-12">
                                                             <center>
-                                                                {/* <NavLink to='/savings/group/group-created'> */}
                                                                       <button type="submit" id="upDateButton">
                                                                          Update
                                                                        </button>
-                                                                {/* </NavLink> */}
                                                             </center>
                                                         </div>
                                                     </div>
@@ -360,10 +348,8 @@ class MemberSlots extends React.Component{
                                             <NavLink to='/savings/choose-goal-plan'>
                                                 <li><a href="#">Goals</a></li>
                                             </NavLink>
-                                            {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                 <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                            {/* </NavLink> */}
-                                                <li><a href="#">Investments</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
                                             </ul>
                                         </div>
                                     </div>
@@ -419,9 +405,7 @@ class MemberSlots extends React.Component{
                                             <NavLink to='/savings/choose-goal-plan'>
                                                 <li><a href="#">Goals</a></li>
                                             </NavLink>
-                                            {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                 <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                            {/* </NavLink> */}
                                                 <li><a href="#">Investments</a></li>
                                             </ul>
                                         </div>

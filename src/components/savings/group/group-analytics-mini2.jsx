@@ -61,7 +61,7 @@ class GroupAnalyticsMini2 extends React.Component {
     }
 
     MoveToEditSlot = () => {
-        history.push('/group-savings/edit-members-slots');
+        history.push('/savings/group-savings/edit-members-slots');
     }
 
     ShowEditButton = () => {
@@ -69,13 +69,9 @@ class GroupAnalyticsMini2 extends React.Component {
     }
 
     NavigateToGroupSavings = () => {
-        // let groupSavings = this.props.groups.response; //returns an array
-        // let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
-        // if(groupSavings.length != 0 || rotatingSavings.length != 0){
+        
             history.push('/savings/activityDashBoard');
-        //     return;
-        // }
-        // history.push('/savings/goal/group-savings-selection');
+        
     }
 
 
@@ -85,8 +81,7 @@ class GroupAnalyticsMini2 extends React.Component {
         if(this.props.rotatingGroupDetails.message === GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS){
             return (
                 <Fragment>
-                    <InnerContainer>
-                        <SavingsContainer>
+                    
                             <div className="row">
                                 <div className="col-sm-12">
                                     <p className="page-title">Savings & Goals</p>
@@ -109,17 +104,104 @@ class GroupAnalyticsMini2 extends React.Component {
                                 <p>loading data ...</p>
                             </div>
     
-                        </SavingsContainer>
-                    </InnerContainer>
+                        
                 </Fragment>
             );
         }
-        if(this.props.rotatingGroupDetails.message === GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS_SUCCESS){}
+        if(this.props.rotatingGroupDetails.message === GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS_SUCCESS){
+            return (
+                <Fragment>
+                    
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <p className="page-title">Savings & Goals</p>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div className="tab-overflow">
+                                        <div className="sub-tab-nav">
+                                            <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li><a href="#">Goals</a></li>
+                                            </NavLink>
+                                            {/* <NavLink to="/savings/goal/group-savings-selection"> */}
+                                                <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                            {/* </NavLink> */}
+                                                <li><a href="#">Investments</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div className="row">
+                                        <div className="col-sm-12">
+                                        <div className="max-600">
+                                        <div className="al-card no-pad">
+                                    
+                                                <div class='firstSubHead'>
+                                                    <p>ROTATING SAVING GROUP</p>
+                                                    <p>{this.props.groupDetails.response.name}</p>
+                                                    
+                                                </div>
+                                                <SubHead 
+                                                        type={this.state.type}
+                                                        rightname="Group Summary"
+                                                        middlename="Members"
+                                                        leftName="Members"
+                                                        memberClicked={this.ShowMembers}
+                                                        groupSummaryWasClicked={this.GroupSummary}
+                                                        />
+                                            
+                                                <div className='statContainer'>
+                                                
+                                                    {this.props.groupDetails.response.members.map((element,index) => {
+                                                        if(element['isAdmin'] == true){
+                                                            return <Members 
+                                                                key={index}
+                                                                userType="admin"
+                                                                name={ element['lastName'] + " " + element['firstName'] }
+                                                                position="admin"
+                                                                />
+                                                        }
+                                                    })}
+    
+                                                    {this.props.groupDetails.response.members.map((element, index) => {
+                                                        if(element['isAdmin'] == false){
+                                                            return <Members 
+                                                                            key={index}
+                                                                            userType="members"
+                                                                            fullname={ element['lastName'] + " " + element['firstName'] }
+                                                                            
+                                                                            />
+                                                        }
+                                                    })}
+    
+                                                    {isAdmin ? this.ShowEditButton() : ""}
+                                                    {/* <NavLink to='/group-savings/edit-members-slots'>
+                                                            <p id='editSlots'>Edit Slot</p>
+                                                    </NavLink> */}
+                                                    {adminValidity ? <div></div> : <div className={"setPadBottom"}></div> }
+                                                </div>
+                
+                                            </div>
+    
+                                        </div>
+    
+                                        </div>
+    
+                                    </div>
+    
+                                </div>
+    
+                            </div>
+    
+                      
+                </Fragment>
+            );
+        }
         if(this.props.rotatingGroupDetails.message === GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS_ERROR){
             return (
                 <Fragment>
-                    <InnerContainer>
-                        <SavingsContainer>
+                    
                             <div className="row">
                                 <div className="col-sm-12">
                                     <p className="page-title">Savings & Goals</p>
@@ -142,16 +224,14 @@ class GroupAnalyticsMini2 extends React.Component {
                                 <p>Please Check Your Internet Connection ...</p>
                             </div>
     
-                        </SavingsContainer>
-                    </InnerContainer>
+                        
                 </Fragment>
             );
         }
         if(this.props.rotatingGroupDetails.data == undefined){
             return (
                 <Fragment>
-                    <InnerContainer>
-                        <SavingsContainer>
+                    
                             <div className="row">
                                 <div className="col-sm-12">
                                     <p className="page-title">Savings & Goals</p>
@@ -174,8 +254,7 @@ class GroupAnalyticsMini2 extends React.Component {
                                 <p>loading data ...</p>
                             </div>
     
-                        </SavingsContainer>
-                    </InnerContainer>
+                        
                 </Fragment>
             );
         }
@@ -183,8 +262,7 @@ class GroupAnalyticsMini2 extends React.Component {
             if(Object.keys(this.props.rotatingGroupDetails.data.response).length == 0)
                 return (
                     <Fragment>
-                        <InnerContainer>
-                            <SavingsContainer>
+                        
                                 <div className="row">
                                     <div className="col-sm-12">
                                         <p className="page-title">Savings & Goals</p>
@@ -207,8 +285,7 @@ class GroupAnalyticsMini2 extends React.Component {
                                     <p>loading data ...</p>
                                 </div>
         
-                            </SavingsContainer>
-                        </InnerContainer>
+                            
                     </Fragment>
                 );
             if(Object.keys(this.props.rotatingGroupDetails.data.response).length != 0)

@@ -1,7 +1,5 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import {NavLink, Route} from "react-router-dom";
 import {Switch} from "react-router";
 import Select from 'react-select';
@@ -12,6 +10,8 @@ import { connect } from "react-redux";
 import * as action from '../../../redux/actions/savings/group-savings/group-savings-actions';
 import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import {history} from '../../../_helpers/history';
+import { GROUPSAVINGSCONSTANT } from '../../../redux/constants/savings/group';
+
 
 class JoinAGroup extends React.Component {
     constructor(props){
@@ -74,7 +74,6 @@ class JoinAGroup extends React.Component {
        this.props.dispatch(actions.refferalCode(data2))
        this.props.dispatch(action.findGroup(this.state.user.token, data));
        
-    //    this.formSubmitButton.disable = true;
     }
 
     NavigateToSummary = () => {
@@ -94,13 +93,9 @@ class JoinAGroup extends React.Component {
     }
 
     NavigateToGroupSavings = () => {
-        // let groupSavings = this.props.groups.response; //returns an array
-        // let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
-        // if(groupSavings.length != 0 || rotatingSavings.length != 0){
+        
             history.push('/savings/activityDashBoard');
-        //     return;
-        // }
-        // history.push('/savings/goal/group-savings-selection');
+        
     }
 
 
@@ -119,14 +114,15 @@ class JoinAGroup extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a href="#">Goals</a></li>
                                         </NavLink>
-                                        {/* <NavLink to='/savings/goal/group-savings-selection'> */}
                                             <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                        {/* </NavLink> */}
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
                                         </ul>
                                     </div>
                                 </div>
                             </div>
+                            {this.props.alert && this.props.alert.message &&
+                            <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                            } 
                             <div className="col-sm-12">
                                 <div className="row">
                                     <div className="col-sm-12">
@@ -151,9 +147,9 @@ class JoinAGroup extends React.Component {
                                                    
                                                     <div className="form-group col-md-12 butLeft joinButton">
                                                        <center>
-                                                           {/* <NavLink to='/savings/group/joingroup-success-message'> */}
-                                                                 <button type='submit' ref={element => this.formSubmitButton = element}>Join Group</button>
-                                                           {/* </NavLink> */}
+                                                                 <button disabled={this.props.findGroup.message === GROUPSAVINGSCONSTANT.FIND_GROUP} type='submit' ref={element => this.formSubmitButton = element}>
+                                                                 {this.props.findGroup.message ===GROUPSAVINGSCONSTANT.FIND_GROUP ? 'Processing...':'Join Group'}
+                                                                 </button>
                                                        </center>
                                                     </div>
                                                    
@@ -172,8 +168,11 @@ class JoinAGroup extends React.Component {
 
 function mapStateToProps(state){
    return {
-       groupSavingsEsusu: state.getGroupSavingsEsusu.data,
-       groups: state.customerGroup.data
+    // groupSavingsEsusu: state.getGroupSavingsEsusu,
+    findGroup:state.findGroup,
+    joinGroup:state.joinGroup,
+    groups: state.customerGroup.data,
+    alert:state.alert
    }
 }
 
