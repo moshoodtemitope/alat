@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Fragment} from "react";
 import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '../container';
+import SavingsContainer from '..';
 import {NavLink, Route} from "react-router-dom";
 import { connect } from "react-redux";
 import "react-datepicker/dist/react-datepicker.css";
@@ -89,8 +89,7 @@ class GroupCreated extends React.Component {
         if(this.props.groupDetails.message === GROUPSAVINGSCONSTANT.GROUPDETAILS && this.props.payload == undefined){
             return(
                 <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
+                
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -129,9 +128,7 @@ class GroupCreated extends React.Component {
 
                         </div>
 
-                    </SavingsContainer>
-
-                </InnerContainer>
+                    
 
 
             </Fragment>
@@ -141,8 +138,7 @@ class GroupCreated extends React.Component {
         if(this.props.groupDetails.message === GROUPSAVINGSCONSTANT.GROUPDETAILS_SUCCESS && this.props.payload == undefined){
             return (
                 <Fragment>
-                    <InnerContainer>
-                        <SavingsContainer>
+                    
                             <div className="row">
                                 <div className="col-sm-12">
                                     <p className="page-title">Savings & Goals</p>
@@ -206,9 +202,7 @@ class GroupCreated extends React.Component {
     
                             </div>
     
-                        </SavingsContainer>
-    
-                    </InnerContainer>
+                        
     
     
                 </Fragment>
@@ -218,8 +212,7 @@ class GroupCreated extends React.Component {
         if(this.props.groupDetails.message === GROUPSAVINGSCONSTANT.GROUPDETAILS_ERROR && this.props.payload == undefined){
              return(
                 <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
+                
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -258,9 +251,7 @@ class GroupCreated extends React.Component {
 
                         </div>
 
-                    </SavingsContainer>
-
-                </InnerContainer>
+                    
 
 
             </Fragment>
@@ -270,8 +261,7 @@ class GroupCreated extends React.Component {
         if(this.props.payload != undefined){
             return (
                 <Fragment>
-                    <InnerContainer>
-                        <SavingsContainer>
+                    
                             <div className="row">
                                 <div className="col-sm-12">
                                     <p className="page-title">Savings & Goals</p>
@@ -335,10 +325,7 @@ class GroupCreated extends React.Component {
     
                             </div>
     
-                        </SavingsContainer>
-    
-                    </InnerContainer>
-    
+                        
     
                 </Fragment>
             );
@@ -348,8 +335,7 @@ class GroupCreated extends React.Component {
             this.GetGroupDetails();
             return(
                 <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
+                
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -388,9 +374,7 @@ class GroupCreated extends React.Component {
 
                         </div>
 
-                    </SavingsContainer>
 
-                </InnerContainer>
 
 
             </Fragment>
@@ -400,8 +384,7 @@ class GroupCreated extends React.Component {
         if(this.props.groupDetails.data == undefined && this.props.payload == undefined){
             return(
                <Fragment>
-               <InnerContainer>
-                   <SavingsContainer>
+               
                        <div className="row">
                            <div className="col-sm-12">
                                <p className="page-title">Savings & Goals</p>
@@ -440,9 +423,7 @@ class GroupCreated extends React.Component {
 
                        </div>
 
-                   </SavingsContainer>
-
-               </InnerContainer>
+                   
 
 
            </Fragment>

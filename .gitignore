@@ -12,6 +12,9 @@
 # production
 /build
 
+# Compiled
+*.zip
+
 # misc
 .DS_Store
 .env.local

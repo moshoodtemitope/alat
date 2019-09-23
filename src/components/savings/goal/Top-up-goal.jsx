@@ -1,7 +1,5 @@
 import React, {Component, } from 'react';
 import {Fragment} from 'react';
-import InnerContainer from "../../../shared/templates/inner-container";
-import SavingsContainer from "../container";
 import {NavLink, Redirect} from "react-router-dom";
 import SelectDebitableAccounts from "../../../shared/components/selectDebitableAccounts";
 import {customerGoalConstants} from "../../../redux/constants/goal/get-customer-trans-history.constant";
@@ -21,9 +19,12 @@ class TopUPGoal extends Component {
             isSubmit: false,
             formattedValue: "",
             Amount:"",
+            goalName:"",
             showMessage:false,
-            goal:JSON.parse(localStorage.getItem('goal')) || [],
-            payOutInterest:""
+            payOutInterest:"",
+            amountSaved:null,
+            goalId:null,
+            goalTypeName:null,
 
 
         };
@@ -32,6 +33,29 @@ class TopUPGoal extends Component {
 
 
     }
+
+    componentDidMount = () => {
+        this.init();
+    };
+
+    init = () => {
+        if (this.props.submitDashboardData.message !== customerGoalConstants.SUBMIT_DASHBOARD_DATA_SUCCESS)
+            this.props.history.push("/savings/choose-goal-plan");
+        else {
+            
+            let data = JSON.parse(this.props.submitDashboardData.data.data);
+            
+          
+            this.setState({
+                goalName:data.goalName,
+                goalId:data.id,
+                debitAccount:data.DebitAccount,
+                amountSaved:data.amountSaved,
+                goalTypeName:data.goalTypeName,
+                partialWithdrawal:true
+            });
+        }
+    };
 
 
 
@@ -89,55 +113,26 @@ class TopUPGoal extends Component {
         return formatter.format(number);
     }
     setFregValue = () => {
-        this.setState({ payOutInterest: this.calculateInterest()});
+        this.setState({ payOutInterest: this.calculateStashInterest() });
 
 
     };
-    calculateInterest(){
-
-        let days = null;
-        let res;
-        if(this.state.Amount){
-
-            /* let start = moment(this.formula.startDate).format('DD-MM-YYYY').toString();
-             let end = moment(this.formula.targetDate).format('DD MMMM, YYYY').toString();
-             let startDate = moment(start, 'DD MMMM, YYYY');
-             let enddate = moment(end, 'DD MMMM, YYYY');
-             //let date = moment(enddate, 'DD-MM-YYYY').add(res, 'days');
-
-             res = enddate.diff(startDate, 'days'); */
-
-            let amount = this.removeComma(this.state.Amount) + this.state.goal.targetAmount;
-
-            //var ia:any = ((amount / 365) * this.formula.interestRate );
-
-            // let diff_in_months = Math.floor(enddate.diff(startDate, 'months', true));
-            let dailycontribution;
-
-
-            let ia = ((amount / 365) * 0.10 );
-            dailycontribution = 1 * ( ia - (0.10) *ia);
-            this.interest =  parseFloat(dailycontribution).toFixed(2);
-
-            if(this.state.goal.goalTypeName.indexOf('Stash') >= 0){
-               return this.showInterests = true;
-                this.calculateStashInterest();
-            }else{
-                return this.showInterests = false;
-            }
-        }
-    }
+    
     calculateStashInterest(){
             let days = null;
             let res;
             if(this.state.Amount){
-                let amount = parseFloat(this.removeComma(this.state.Amount)) + this.state.goal.amountSaved;
+                let amount = parseFloat(this.removeComma(this.state.Amount)) + this.state.amountSaved;
+                console.log(amount)
+                console.log(this.state.amountSaved)
                 let ia = ((amount / 365) * 0.10 );
                 let interest = (ia - (parseFloat(0.10) * ia)).toFixed(2);
                 this.interest =  interest;
-                return this.showInterests = true;
+                this.showInterests = true;
+                return this.interest
             }else{
-                return this.showInterests = false;
+                this.showInterests = false;
+                return util.formatAmount(this.interest);             
             }
         }
 
@@ -148,8 +143,8 @@ class TopUPGoal extends Component {
             //not valid
         }else {
             this.props.dispatch(actions.TopUPGoalStep1( {
-                    'goalName':this.state.goal.goalName,
-                    'goalId':this.state.goal.id,
+                    'goalName':this.state.goalName,
+                    'goalId':this.state.goalId,
                     'amount': this.state.Amount,
                     'accountNumber':this.state.accountToDebit
                 }
@@ -171,8 +166,6 @@ class TopUPGoal extends Component {
         const {AmountInvalid} =this.state;
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
                         {this.gotoStep2()}
 
                         <div className="row">
@@ -224,12 +217,18 @@ class TopUPGoal extends Component {
                                                     />
                                                     {AmountInvalid &&
                                                     <div className="text-danger">Enter the amount you want to save</div>}
-                                                    {
-                                                        this.state.showMessage ?
-                                                            <div className="text-purple"><h3 className="text-purple"> Base on your previous savings you will earn
-                                                                ₦ {util.formatAmount(this.state.payOutInterest)} in interest daily. Your stash will need to exist for a minimum of 30 days to qualify for interest </h3></div>
-                                                            : null
+                                                    {this.state.goalTypeName === "Stash" ?
+                                                        <div>
+
+                                                        {
+                                                            this.state.showMessage ?
+                                                                <div className="text-purple"><h3 className="text-purple"> Base on your previous savings you will earn
+                                                                    ₦ {util.formatAmount(this.state.payOutInterest)} in interest daily. Your stash will need to exist for a minimum of 30 days to qualify for interest </h3></div>
+                                                                : null
+                                                        }
+                                                        </div>:null
                                                     }
+                                                    
                                                 </div>                                                {
 
                                             }
@@ -261,8 +260,6 @@ class TopUPGoal extends Component {
 
                             </div>
 
-                    </SavingsContainer>
-                </InnerContainer>
             </Fragment>
 
 
@@ -273,7 +270,8 @@ class TopUPGoal extends Component {
 }
 const mapStateToProps = state => ({
     top_up_goal_step1:state.top_up_goal_step1,
-    alert:state.alert
+    alert:state.alert,
+    submitDashboardData:state.submitDashboardData
 });
 
 

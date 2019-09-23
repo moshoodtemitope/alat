@@ -1,7 +1,5 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from './../container';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import {Switch} from "react-router";
 import Select from 'react-select';
@@ -169,7 +167,7 @@ class GroupAnalytics extends React.Component {
     };
 
     EditThisGroup = () => {
-        history.push('/group-savings/edit-group');
+        history.push('/savings/group-savings/edit-group');
     };
 
     GoToContributionPage = () => {
@@ -204,8 +202,7 @@ class GroupAnalytics extends React.Component {
             this.FetchGroupDetails();
             return (  
                 <Fragment>
-                    <InnerContainer>
-                        <SavingsContainer>
+                    
                             <div className="row">
                                 <div className="col-sm-12">
                                     <p className="page-title">Savings & Goals</p>
@@ -251,8 +248,7 @@ class GroupAnalytics extends React.Component {
     
                             </div>
     
-                        </SavingsContainer>
-                    </InnerContainer>
+                        
                 </Fragment>
             );
         }
@@ -260,8 +256,7 @@ class GroupAnalytics extends React.Component {
         if(this.props.groupDetails.message === GROUPSAVINGSCONSTANT.GROUPDETAILS){
             return (  
                 <Fragment>
-                    <InnerContainer>
-                        <SavingsContainer>
+                    
                             <div className="row">
                                 <div className="col-sm-12">
                                     <p className="page-title">Savings & Goals</p>
@@ -307,8 +302,7 @@ class GroupAnalytics extends React.Component {
     
                             </div>
     
-                        </SavingsContainer>
-                    </InnerContainer>
+                        
                 </Fragment>
             );
         }
@@ -486,8 +480,7 @@ class GroupAnalytics extends React.Component {
             if(Object.keys(this.props.groupDetails.data.response).length != 0){
                 return (
                     <Fragment>
-                        <InnerContainer>
-                            <SavingsContainer>
+                        
                                 <div className="row">
                                     <div className="col-sm-12">
                                         <p className="page-title">Savings & Goals</p>
@@ -590,8 +583,7 @@ class GroupAnalytics extends React.Component {
         
                                 </div>
         
-                            </SavingsContainer>
-                        </InnerContainer>
+                            
                     </Fragment>
                 );
             }

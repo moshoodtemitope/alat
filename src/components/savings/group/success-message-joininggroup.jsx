@@ -49,8 +49,7 @@ class JoinGroupSuccessMessage extends React.Component {
     render() {
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
+               
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -100,8 +99,7 @@ class JoinGroupSuccessMessage extends React.Component {
                             </div>
                         </div>
 
-                    </SavingsContainer>
-                </InnerContainer>
+                  
             </Fragment>
         );
     }

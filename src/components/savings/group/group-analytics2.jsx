@@ -1,7 +1,5 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from './../container';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import {Switch} from "react-router";
 import Select from 'react-select';
@@ -102,8 +100,7 @@ class GroupAnalytics2 extends React.Component {
            this.FetchGroupDetails();
             return (
                 <Fragment>
-                    <InnerContainer>
-                        <SavingsContainer>
+                    
                             <div className="row">
                                 <div className="col-sm-12">
                                     <p className="page-title">Savings & Goals</p>
@@ -129,8 +126,7 @@ class GroupAnalytics2 extends React.Component {
 
                             </div>
 
-                        </SavingsContainer>
-                    </InnerContainer>
+                        
                 </Fragment>
             );
         }
@@ -138,8 +134,7 @@ class GroupAnalytics2 extends React.Component {
         if(this.props.groupDetails.message === GROUPSAVINGSCONSTANT.GROUPDETAILS){
             return (
                 <Fragment>
-                    <InnerContainer>
-                        <SavingsContainer>
+                    
                             <div className="row">
                                 <div className="col-sm-12">
                                     <p className="page-title">Savings & Goals</p>
@@ -165,8 +160,7 @@ class GroupAnalytics2 extends React.Component {
 
                             </div>
 
-                        </SavingsContainer>
-                    </InnerContainer>
+                        
                 </Fragment>
             );
         }
@@ -174,8 +168,7 @@ class GroupAnalytics2 extends React.Component {
         if(this.props.groupDetails.message === GROUPSAVINGSCONSTANT.GROUPDETAILS_ERROR){
             return (
                 <Fragment>
-                    <InnerContainer>
-                        <SavingsContainer>
+                    
                             <div className="row">
                                 <div className="col-sm-12">
                                     <p className="page-title">Savings & Goals</p>
@@ -200,8 +193,7 @@ class GroupAnalytics2 extends React.Component {
     
                             </div>
     
-                        </SavingsContainer>
-                    </InnerContainer>
+                        
                 </Fragment>
             );
         }
@@ -209,8 +201,7 @@ class GroupAnalytics2 extends React.Component {
         if(this.props.groupDetails.message === GROUPSAVINGSCONSTANT.GROUPDETAILS_SUCCESS){
             return (
                 <Fragment>
-                    <InnerContainer>
-                        <SavingsContainer>
+                    
                             <div className="row">
                                 <div className="col-sm-12">
                                     <p className="page-title">Savings & Goals</p>
@@ -295,8 +286,7 @@ class GroupAnalytics2 extends React.Component {
     
                             </div>
     
-                        </SavingsContainer>
-                    </InnerContainer>
+                        
                 </Fragment>
             );
         }
@@ -417,7 +407,6 @@ function mapStateToProps(state){
 
 export default connect(mapStateToProps)(GroupAnalytics2)
 
-//export default GroupAnalytics2;
  
 
 

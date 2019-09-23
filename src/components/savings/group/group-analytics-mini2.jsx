@@ -1,7 +1,5 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from './../container';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import {Switch} from "react-router";
 import "react-datepicker/dist/react-datepicker.css";
@@ -15,6 +13,7 @@ import { connect } from "react-redux";
 import {history} from '../../../_helpers/history';
 import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import { GROUPSAVINGSCONSTANT } from '../../../redux/constants/savings/group';
+
 
 class GroupAnalyticsMini2 extends React.Component {
     constructor(props){
@@ -215,8 +214,7 @@ class GroupAnalyticsMini2 extends React.Component {
             if(Object.keys(this.props.rotatingGroupDetails.data.response).length != 0)
                 return (
                     <Fragment>
-                        <InnerContainer>
-                            <SavingsContainer>
+                        
                                 <div className="row">
                                     <div className="col-sm-12">
                                         <p className="page-title">Savings & Goals</p>
@@ -299,8 +297,7 @@ class GroupAnalyticsMini2 extends React.Component {
         
                                 </div>
         
-                            </SavingsContainer>
-                        </InnerContainer>
+                          
                     </Fragment>
                 );
         }

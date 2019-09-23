@@ -47,7 +47,8 @@ class HeaderContainer extends React.Component{
             return(
                 <div className="mini-nav" style={{display: 'block'}}>
                     <ul>
-                        <li><a href="#">Profile</a></li>
+                        <li><NavLink to="/profile">Profile</NavLink></li>
+                        <li><NavLink to="/settings">Settings</NavLink></li>
                         <li>
                             {/*<NavLink to="/logout">Logout</NavLink>*/}
                             <a onClick={this.logout.bind(this)}>Logout</a>
@@ -62,6 +63,8 @@ class HeaderContainer extends React.Component{
                 <div className="mini-nav">
                     <ul>
                         <li><a href="#">Profile</a></li>
+                        <li><NavLink to="/account">Accounts</NavLink></li>
+                        <li><NavLink to="/settings">Settings</NavLink></li>
                         <li>
                             <NavLink to="/logout">Logout</NavLink>
                             {/*<a onClick={this.logout.bind(this)}>Logout</a>*/}
@@ -73,15 +76,57 @@ class HeaderContainer extends React.Component{
 
     }
 
+    // checkNDPR(){
+    //     this.apiService.request(routes.CHECK_NDRP, 'GET', null, SystemConstant.HEADER)
+    //       .subscribe(result => {
+            
+    //         if(result.priority===50){
+    //           this.isNDPRCompliant = false
+    //         }else{
+    //           this.isNDPRCompliant = true;
+    //         }
+            
+    //       }, error => {
+    //         console.log(error);
+    //       });
+    //   }
+
+    //   acceptNdpr(isAccepted){
+    //     if(isAccepted){
+    //       this.acceptingNDPR =true;
+    //       this.apiService.request(routes.ACCEPTNDRP+true, 'POST', {}, SystemConstant.HEADER)
+    //           .subscribe(data => {
+    //             // this.preparePage();
+    //           this.isNDPRCompliant = true;
+    //           this.acceptingNDPR =false;
+    //           }, err => {
+    //             this.isNDPRCompliant = false;
+    //             this.acceptingNDPR =false;
+    //           });
+    //     }else{
+    //       this.isNDPRCompliant = true;
+    //     }
+    //   }
+
     componentDidMount() {
 
         // console.log(this.props);
         // this.props.dispatch(userActions.getAll());
+        this.getProfileImage();
+    }
+
+    getProfileImage(){
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        const { dispatch } = this.props;
+        dispatch(userActions.getCustomerProfileImage(user.token, user.profilePicPath));
+        
     }
 
     render() {
         const user = JSON.parse(localStorage.getItem("user"));
 
+        console.log('user data', user);
         return (
             <Fragment>
                 <div className="db2-fixed-header">

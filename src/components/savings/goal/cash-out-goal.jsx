@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Fragment} from 'react';
 import InnerContainer from "../../../shared/templates/inner-container";
-import SavingsContainer from "../container";
+import SavingsContainer from "..";
 import {NavLink, Redirect} from "react-router-dom";
 import SelectDebitableAccounts from "../../../shared/components/selectDebitableAccounts";
 import {customerGoalConstants} from "../../../redux/constants/goal/get-customer-trans-history.constant";
@@ -23,8 +23,8 @@ class StashCashout extends Component {
             formattedValue: "",
             Amount:null,
             showMessage:false,
-            goal:JSON.parse(localStorage.getItem('goal')) || [],
-            payOutInterest:""
+            payOutInterest:"",
+            debitAmount:""
 
 
         };
@@ -33,6 +33,27 @@ class StashCashout extends Component {
 
 
     }
+    componentDidMount = () => {
+        this.init();
+    };
+
+    init = () => {
+        if (this.props.submitDashboardData.message !== customerGoalConstants.SUBMIT_DASHBOARD_DATA_SUCCESS)
+            this.props.history.push("/savings/choose-goal-plan");
+        else {
+            
+            let data = JSON.parse(this.props.submitDashboardData.data.data);
+            
+          
+            this.setState({
+                goalName:data.goalName,
+                goalId:data.id,
+                debitAccount:data.DebitAccount,
+                Amount:data.amountSaved,
+                partialWithdrawal:true
+            });
+        }
+    };
 
 
     validateAmount = (amount) => {
@@ -55,6 +76,8 @@ class StashCashout extends Component {
             return true;
         }
     }
+    
+
     handleAmount = (event) => {
         // console.log
         let intVal = event.target.value.replace(/,/g, '');
@@ -93,10 +116,12 @@ class StashCashout extends Component {
             //not valid
         }else {
             this.props.dispatch(actions.StashCashoutStep1( {
-                    // 'goalName':this.state.goal.goalName,
-                    'goalId':this.state.goal.id,
-                    "amountSaved":this.toCurrency(this.state.goal.amountSaved),
-                    'accountNumber':this.state.accountToDebit
+                    'goalName':this.state.goalName,
+                    'goalId':parseInt(this.state.goalId),
+                    "DebitAccount":this.state.accountToDebit,
+                    'Amount':this.state.Amount,
+                    'partialWithdrawal': true
+
                 }
             ));
 
@@ -112,15 +137,16 @@ class StashCashout extends Component {
 
     render() {
         const {AmountInvalid} =this.state;
+        
         return (
             <Fragment>
-                <InnerContainer>
-                    <SavingsContainer>
-                        {this.gotoStep2()}
+
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
                             </div>
+                            {this.gotoStep2()}
+
                             <div className="col-sm-12">
                                 <div className="tab-overflow">
                                     <div className="sub-tab-nav">
@@ -151,7 +177,7 @@ class StashCashout extends Component {
                                                     <Description
                                                         leftHeader={this.state.user.fullName}
                                                         leftDescription={this.state.user.email}
-                                                        rightHeader={'₦'+this.state.goal.amountSaved}
+                                                        rightHeader={'₦'+this.state.Amount}
                                                         rightDiscription="Amount Saved"/>
                                                 </div>
 
@@ -173,7 +199,7 @@ class StashCashout extends Component {
                                                     <div className="col-sm-12">
                                                         <center>
                                                             <button type="submit" value="Fund Account" className="btn-alat m-t-10 m-b-20 text-center">
-                                                                {this.props.stashGoal_step1.stashout_goal_status_step1 === customerGoalConstants.STASH_CASHOUT_STEP1_PENDING ? "Processing..." : "Proceed and Checkout"}
+                                                                {this.props.stashGoal_step1.stashout_goal_status_step1 === customerGoalConstants.STASH_CASHOUT_STEP1_PENDING ? "Processing..." : "Proceed and Cashout"}
                                                             </button>
                                                         </center>
                                                     </div>
@@ -190,9 +216,6 @@ class StashCashout extends Component {
 
                         </div>
 
-                    </SavingsContainer>
-                </InnerContainer>
-
             </Fragment>
 
         );
@@ -200,7 +223,8 @@ class StashCashout extends Component {
 }
 const mapStateToProps = state => ({
     alert:state.alert,
-    stashGoal_step1:state.stashGoal_step1
+    stashGoal_step1:state.stashGoal_step1,
+    submitDashboardData:state.submitDashboardData
 });
 
 export default connect (mapStateToProps)(StashCashout);

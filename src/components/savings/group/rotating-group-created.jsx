@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Fragment} from "react";
 import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '../container';
+import SavingsContainer from '..';
 import {NavLink, Route} from "react-router-dom";
 import {Switch} from "react-router";
 import Select from 'react-select';
@@ -100,8 +100,7 @@ class RotatingGroupCreated extends React.Component {
         if(this.props.rotatingGroupDetails.message === GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS){
             return(
                 <Fragment>
-                    <InnerContainer>
-                        <SavingsContainer>
+                    
                             <div className="row">
                                 <div className="col-sm-12">
                                     <p className="page-title">Savings & Goals</p>
@@ -125,9 +124,7 @@ class RotatingGroupCreated extends React.Component {
     
                             </div>
     
-                        </SavingsContainer>
-    
-                    </InnerContainer>
+                        
     
                 </Fragment>
             )
@@ -136,8 +133,7 @@ class RotatingGroupCreated extends React.Component {
         if(this.props.rotatingGroupDetails.message === GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS_SUCCESS){
             return (
                 <Fragment>
-                    <InnerContainer>
-                        <SavingsContainer>
+                    
                             <div className="row">
                                 <div className="col-sm-12">
                                     <p className="page-title">Savings & Goals</p>
@@ -200,9 +196,7 @@ class RotatingGroupCreated extends React.Component {
     
                             </div>
     
-                        </SavingsContainer>
-    
-                    </InnerContainer>
+                        
     
     
                 </Fragment>
@@ -212,8 +206,7 @@ class RotatingGroupCreated extends React.Component {
         if(this.props.rotatingGroupDetails.message === GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS_ERROR){
             return(
                 <Fragment>
-                    <InnerContainer>
-                        <SavingsContainer>
+                    
                             <div className="row">
                                 <div className="col-sm-12">
                                     <p className="page-title">Savings & Goals</p>
@@ -237,9 +230,7 @@ class RotatingGroupCreated extends React.Component {
     
                             </div>
     
-                        </SavingsContainer>
-    
-                    </InnerContainer>
+                        
     
                 </Fragment>
             )
@@ -249,8 +240,7 @@ class RotatingGroupCreated extends React.Component {
             // this.FetchRotatingSavings(); 
             return(
                 <Fragment>
-                    <InnerContainer>
-                        <SavingsContainer>
+                    
                             <div className="row">
                                 <div className="col-sm-12">
                                     <p className="page-title">Savings & Goals</p>
@@ -274,9 +264,7 @@ class RotatingGroupCreated extends React.Component {
     
                             </div>
     
-                        </SavingsContainer>
-    
-                    </InnerContainer>
+                        
     
                 </Fragment>
             )
@@ -286,8 +274,7 @@ class RotatingGroupCreated extends React.Component {
             if(Object.keys(this.props.createdGroupSavings.data.response).length != 0){
                 return (
                     <Fragment>
-                        <InnerContainer>
-                            <SavingsContainer>
+                        
                                 <div className="row">
                                     <div className="col-sm-12">
                                         <p className="page-title">Savings & Goals</p>
@@ -350,10 +337,7 @@ class RotatingGroupCreated extends React.Component {
         
                                 </div>
         
-                            </SavingsContainer>
-        
-                        </InnerContainer>
-        
+                            
         
                     </Fragment>
                 );

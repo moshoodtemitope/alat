@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="theme-color" content="#9D0F3E" />
+
+    <link rel="shortcut icon" href="" type="image/x-icon" />
+    <title>ALAT by Wema</title>
+
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- font-awesome.css -->
+    <link href="css/font-awesome/font-awesome.css" rel="stylesheet">
+    <link href="css/fontello/css/fontello.css" rel="stylesheet">
+    <link href="css/selectize.default.css" rel="stylesheet">
+    <link href="css/datepicker.min.css" rel="stylesheet" type="text/css">
+
+    <!--JQuery-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/matchHeight.js"></script>
+    <script src="js/jquery.bxslider.js"></script>
+    <script src="js/standalone/selectize.min.js"></script>
+    <script src="js/datepicker.min.js"></script>
+    <script src="js/i18n/datepicker.en.js"></script>
+
+    <!-- User Defined Style -->
+    <link href="css/jquery.bxslider.css" rel="stylesheet">
+    <link href="css/app.css" rel="stylesheet">
+    <link href="css/dashboard.css" rel="stylesheet">
+  <!--   <link href="css/components.css" rel="stylesheet"> -->
+</head>
+<body class="dashboard-main">
+	<div class="db2-fixed-header">
+		<div class="container">
+			<div class="row"> 
+				<div class="col-xs-4 col-sm-4">
+					<div id="nav-icon1" class="">
+		              <span></span>
+		              <span></span>
+		              <span></span> 
+		            </div>
+					<a href="/">
+						<img src="img/white-logo.svg">
+					</a>
+				</div>
+
+				<div class="col-xs-8 col-sm-8">
+					<div class="user-name-circle clearfix">
+						<div class="circle-image">
+				          <img src="img/10.jpg">
+				        </div>
+				        <p class="name">Laketu Adeleke</p>
+				    </div>
+
+				    <span class="notification-top"><i class="demo-icon icon-alert-active"></i></span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="hr-nav-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<ul>
+						<li><a href="dashboard.html" class="clearfix"><i class="demo-icon icon-home" aria-hidden="true"></i> <span>Dashboard</span></a></li>
+						<li><a href="send-money.html" class="clearfix"><i class="demo-icon icon-send-money" aria-hidden="true"></i> <span>Transfer</span></a>
+							<ul>
+								<li><a href="#">To Wema Account</a></li>
+								<li><a href="#">To Other Banks</a></li>
+								<li><a href="#">ATM Cardless Withdrawal</a></li>
+								<li><a href="#">To Email / Phone No</a></li>
+							</ul>
+						</li>
+						<li><a href="cards.html" class="clearfix"><i class="demo-icon icon-bills" aria-hidden="true"></i> <span>Airtime & Bills</span></a></li>
+						<li><a href="fund-account.html" class="clearfix"><i class="demo-icon icon-target" aria-hidden="true"></i><span> Savings</span></a></li>
+						<li><a href="transaction-history.html" class="clearfix"><i class="demo-icon icon-loans" aria-hidden="true"></i><span> Loans</span></a></li>
+						<li><a href="send-money.html" class="clearfix"><i class="demo-icon icon-movies" aria-hidden="true"></i> <span>Lifestyle</span></a></li>
+						<li><a href="cards.html" class="clearfix"><i class="demo-icon icon-western-union" aria-hidden="true"></i> <span>Remmitance</span></a></li>
+						<li><a href="fund-account.html" class="active clearfix"><i class="demo-icon icon-card" aria-hidden="true"></i><span> Cards</span></a></li>
+						<li><a href="transaction-history.html" class="clearfix"><i class="demo-icon icon-setting-icon" aria-hidden="true"></i><span>Settings</span></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="dashboard-wrapper">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="page-title">Cards Management</p>
+				</div>
+
+				<div class="col-sm-12">
+					<div class="tab-overflow">
+						<div class="sub-tab-nav">
+							<ul>
+								<li><a href="card-request.html">Request Card</a></li>
+								<li><a href="card-control.html">Card Control</a></li>
+								<li><a href="card-pin.html">Card PIN</a></li>
+								<li><a href="card-block.html">Block Card</a></li>
+								<li><a href="card-dollar.html" class="active">Dollar Card</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-12">
+					<div class="row">
+			  			
+			  			<div class="col-sm-12 col-md-4">
+
+			  				<div class="al-card no-pad acct-profile">
+			  					<div class="pin-links">
+			  						<ul>
+			  							<li><a href="card-dollar.html">Create New Card<span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></a></li>
+			  							<li><a href="card-dollar-details.html">View Card Details<span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></a></li>
+			  							<li><a href="card-dollar-topup.html">Card Top-Up<span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></a></li>
+			  							<li><a href="card-dollar-liquidate.html">Liquidate Card<span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></a></li>
+			  							<li><a href="card-dollar-history.html" class="active">Transaction History<span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></a></li>
+			  							<li><a href="card-dollar-delete.html">Delete Card<span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></a></li>
+			  						</ul>
+			  					</div>
+			  				</div>
+			  			</div>
+
+			  			<div class="col-sm-12 col-md-8">
+
+			  				<div class="al-card transact-history">
+			  					<h4 class="m-b-20">Transaction History</h4>
+
+			  					<div class="history-search">
+			  						<div class="row">
+			  							<div class="col-sm-12 col-md-6">
+			  								<div class="input-ctn">
+							                    <input type="text" placeholder="Enter a keyword to search" />
+							                </div>
+			  							</div>
+
+			  							<div class="col-sm-12 col-md-3">
+			  								<div class="input-ctn">
+							                    <input type='text' class="datepicker-here" data-position='top left' data-language='en' placeholder="Start Date" />
+							                    <i class="fa fa-calendar" aria-hidden="true"></i>
+							                </div>
+			  							</div>
+
+			  							<div class="col-sm-12 col-md-3">
+			  								<div class="input-ctn">
+							                    <input type='text' class="datepicker-here" data-position='top left' data-language='en' placeholder="End Date" />
+							                    <i class="fa fa-calendar" aria-hidden="true"></i>
+							                </div>
+			  							</div>
+
+
+			  						</div>
+			  					</div>
+
+			  					<div class="history-table clearfix">
+			  						<div class="history-ctn">
+					                    <div class="history-list clearfix">
+						                     <img src="img/hs-transfer.svg">
+						                     <p class="desc">Funded Apple Virtual Card with USD 200 for NGN 80,000<span class="date">Feb 9, 2017</span></p>
+						                     <p class="balance credit">N20,000</p>
+					                    </div>
+					                </div>
+
+					                <div class="history-ctn">
+					                    <div class="history-list clearfix">
+						                     <img src="img/hs-atm.svg">
+						                     <p class="desc">Funded Apple Virtual Card with USD 200 for NGN 80,000<span class="date">Feb 9, 2017</span></p>
+						                     <p class="balance debit">1,000,000</p>
+					                    </div>
+					                </div>
+
+					                <div class="history-ctn">
+					                    <div class="history-list clearfix">
+						                     <img src="img/hs-pos.svg">
+						                     <p class="desc">Funded Apple Virtual Card with USD 200 for NGN 80,000<span class="date">Feb 9, 2017</span></p>
+						                     <p class="balance credit">N5,000</p>
+					                    </div>
+					                </div>
+
+					                <div class="history-ctn">
+					                    <div class="history-list clearfix">
+						                     <img src="img/hs-fund.svg">
+						                     <p class="desc">Funded Apple Virtual Card with USD 200 for NGN 80,000<span class="date">Feb 9, 2017</span></p>
+						                     <p class="balance credit">N675,098</p>
+					                    </div>
+					                </div>
+
+					                <div class="history-ctn">
+					                    <div class="history-list clearfix">
+						                     <img src="img/hs-transfer.svg">
+						                     <p class="desc">Funded Apple Virtual Card with USD 200 for NGN 80,000<span class="date">Feb 9, 2017</span></p>
+						                     <p class="balance credit">USD 200</p>
+					                    </div>
+					                </div>
+
+					                <div class="history-ctn">
+					                    <div class="history-list clearfix">
+						                     <img src="img/hs-transfer.svg">
+						                     <p class="desc">Funded Apple Virtual Card with USD 200 for NGN 80,000<span class="date">Feb 9, 2017</span></p>
+						                     <p class="balance credit">N20,000</p>
+					                    </div>
+					                </div>
+
+					                <div class="history-ctn">
+					                    <div class="history-list clearfix">
+						                     <img src="img/hs-atm.svg">
+						                     <p class="desc">Funded Apple Virtual Card with USD 200 for NGN 80,000<span class="date">Feb 9, 2017</span></p>
+						                     <p class="balance debit">1,000,000</p>
+					                    </div>
+					                </div>
+
+					                <div class="history-ctn">
+					                    <div class="history-list clearfix">
+						                     <img src="img/hs-pos.svg">
+						                     <p class="desc">Funded Apple Virtual Card with USD 200 for NGN 80,000<span class="date">Feb 9, 2017</span></p>
+						                     <p class="balance credit">N5,000</p>
+					                    </div>
+					                </div>
+
+					                <div class="history-ctn">
+					                    <div class="history-list clearfix">
+						                     <img src="img/hs-fund.svg">
+						                     <p class="desc">Funded Apple Virtual Card with USD 200 for NGN 80,000<span class="date">Feb 9, 2017</span></p>
+						                     <p class="balance credit">N675,098</p>
+					                    </div>
+					                </div>
+
+					                <div class="history-ctn">
+					                    <div class="history-list clearfix">
+						                     <img src="img/hs-transfer.svg">
+						                     <p class="desc">Funded Apple Virtual Card with USD 200 for NGN 80,000<span class="date">Feb 9, 2017</span></p>
+						                     <p class="balance credit">USD 200</p>
+					                    </div>
+					                </div>
+
+					                <div class="history-paginate">
+					                	<ul>
+					                		<li><a href="#" class="active">1</a></li>
+					                		<li><a href="#">2</a></li>
+					                		<li><a href="#">3</a></li>
+					                		<li><a href="#">5</a></li>
+					                	</ul>
+					                </div>
+			  					</div>
+			  				</div>
+			  			</div>
+			  		</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript">
+	$('select').selectize();
+</script>
+
+</html>

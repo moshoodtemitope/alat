@@ -44,7 +44,6 @@ export const groupDetails = (token, data) => {
                 dispatch(failure(modelStateErrorHandler(error)));
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
 
-                // dispatch(failure(error.response.data.message.toString()));
             });
     };
 
@@ -68,7 +67,6 @@ export const deleteGroup = (token, data) => {
                 dispatch(failure(modelStateErrorHandler(error)));
                  dispatch(alertActions.error(modelStateErrorHandler(error)));
 
-                // dispatch(failure(error.response.data.message.toString()));
             });
     };
 
@@ -91,7 +89,6 @@ export const contribute = (token, data) => {
                 dispatch(failure(modelStateErrorHandler(error)));
                  dispatch(alertActions.error(modelStateErrorHandler(error)));
 
-                // dispatch(failure(error.response.data.message.toString()));
             });
     };
 
@@ -114,7 +111,6 @@ export const editGroup = (token, data) => {
                 dispatch(failure(modelStateErrorHandler(error)));
                  dispatch(alertActions.error(modelStateErrorHandler(error)));
 
-                // dispatch(failure(error.response.data.message.toString()));
             });
     };
 
@@ -136,8 +132,6 @@ export const pauseGroup = (token, data) => {
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
                  dispatch(alertActions.error(modelStateErrorHandler(error)));
-
-                // dispatch(failure(error.response.data.message.toString()));
             });
     };
 
@@ -161,7 +155,6 @@ export const findGroup = (token, data) => {
                 dispatch(failure(modelStateErrorHandler(error)));
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
 
-                // dispatch(failure(error.response.data.message.toString()));
             });
     };
 
@@ -178,14 +171,12 @@ export const customerGroup = (token, data = null) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
-                // if(data.parent != undefined)
-                //     history.push('/savings/group/group-analytics');
+            
             })
             .catch(error => {
-                 dispatch(failure(modelStateErrorHandler(error)));
-                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
 
-                // dispatch(failure(error.response.data.message.toString()));
             });
     };
 
@@ -208,7 +199,6 @@ export const joinGroup = (token, data) => {
                 dispatch(failure(modelStateErrorHandler(error)));
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
 
-                // dispatch(failure(error.response.data.message.toString()));
             });
     };
 
@@ -254,7 +244,6 @@ export const deleteMember = (token, data) => {
                 dispatch(failure(modelStateErrorHandler(error)));
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
 
-                // dispatch(failure(error.response.data.message.toString()));
             });
     };
      
@@ -276,7 +265,6 @@ export const cashOut = (token, data) => {
                 dispatch(failure(modelStateErrorHandler(error)));
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
 
-                // dispatch(failure(error.response.data.message.toString()));
             });
     };
       

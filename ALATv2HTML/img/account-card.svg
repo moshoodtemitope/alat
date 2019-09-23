@@ -1,0 +1,22 @@
+<svg width="364" height="199" viewBox="0 0 364 199" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="363" height="199" rx="4" fill="#57084E"/>
+<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="363" height="199">
+<rect width="363" height="199" rx="6" fill="#6848E7"/>
+</mask>
+<g mask="url(#mask0)">
+<path d="M0 33L363 132.805V200H0V33Z" fill="black" fill-opacity="0.1"/>
+<rect x="217" y="-1" width="146" height="200" fill="black" fill-opacity="0.07"/>
+<circle cx="228.5" cy="176.5" r="30.4286" stroke="#C89797" stroke-opacity="0.17" stroke-width="8.14286"/>
+<circle cx="180.5" cy="47.5" r="17.4643" stroke="#C89797" stroke-opacity="0.07" stroke-width="4.07143"/>
+<circle cx="77" cy="52" r="2.77857" stroke="#C89797" stroke-opacity="0.14" stroke-width="2.44286"/>
+<circle cx="77" cy="52" r="2.77857" stroke="#C89797" stroke-opacity="0.14" stroke-width="2.44286"/>
+<circle cx="243" cy="21" r="2.77857" stroke="#C89797" stroke-opacity="0.14" stroke-width="2.44286"/>
+<circle cx="243" cy="21" r="2.77857" stroke="#C89797" stroke-opacity="0.14" stroke-width="2.44286"/>
+<circle cx="42" cy="161" r="2.77857" stroke="#C89797" stroke-opacity="0.14" stroke-width="2.44286"/>
+<circle cx="42" cy="161" r="2.77857" stroke="#C89797" stroke-opacity="0.14" stroke-width="2.44286"/>
+<circle cx="237" cy="108" r="2.77857" stroke="#C89797" stroke-opacity="0.14" stroke-width="2.44286"/>
+<circle cx="237" cy="108" r="2.77857" stroke="#C89797" stroke-opacity="0.14" stroke-width="2.44286"/>
+<circle cx="309.5" cy="7.5" r="30.4286" stroke="#C89797" stroke-opacity="0.17" stroke-width="8.14286"/>
+<circle cx="-5.5" cy="89.5" r="30.4286" stroke="#C89797" stroke-opacity="0.1" stroke-width="8.14286"/>
+</g>
+</svg>

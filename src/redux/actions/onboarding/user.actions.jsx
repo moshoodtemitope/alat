@@ -1,11 +1,15 @@
 import {ApiService} from "../../../services/apiService";
 import {routes} from "../../../services/urls";
 import {alertActions} from "../alert.actions";
+import {SystemConstant} from "../../../shared/constants";
 import {history} from './../../../_helpers/history';
 import {handleError, modelStateErrorHandler} from './../../../shared/utils';
 import {USER_REGISTER_FETCH, USER_REGISTER_SAVE, userConstants, BVN_VERIFICATION_PENDING, 
     BVN_VERIFICATION_SUCCESS, BVN_VERIFICATION_FAILURE, SKIP_BVN_PENDING, SKIP_BVN_SUCCESS,
-    OTP_VERIFICATION_PENDING, OTP_VERIFICATION_FAILURE, DATA_FROM_BVN, SAVE_BVN_INFO} from "../../constants/onboarding/user.constants";
+    OTP_VERIFICATION_PENDING, OTP_VERIFICATION_FAILURE, DATA_FROM_BVN, SAVE_BVN_INFO,
+    GET_PROFILE_IMAGE_SUCCESS,
+    GET_PROFILE_IMAGE_PENDING,
+    GET_PROFILE_IMAGE_FAILURE} from "../../constants/onboarding/user.constants";
 import { dispatch } from "rxjs/internal/observable/pairs";
 
 export const userActions = {
@@ -16,8 +20,30 @@ export const userActions = {
     skipBvn,
     saveBvnInfo,
     saveBvnData,
-    loginAfterOnboarding
+    getCustomerProfileImage,
+    loginAfterOnboarding,
+    reissueToken
 };
+
+function reissueToken(payload) {
+    let userDetails = JSON.parse(localStorage.getItem("user"));
+    SystemConstant.HEADER['alat-token'] = userDetails.token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.REISSUE_TOKEN, "GET", payload, SystemConstant.HEADER);
+        return consume
+            .then(response => {
+                
+                if(userDetails){
+                    userDetails.token = response.data.token;
+                    localStorage.setItem("user", JSON.stringify(userDetails));
+                    console.log("reissuired token---------")
+                }
+            })
+            .catch(error => {
+                console.log("reissue token failed", error)
+            });
+    };
+}
 
 function login(email, password) {
     return dispatch => {
@@ -50,9 +76,9 @@ function login(email, password) {
             }).catch(error => {
                 
                 // console.log(err.response.data.message);
-                console.log("---------error at login");
-                console.log(error);
-                console.log(error.response)
+                // console.log("---------error at login");
+                // console.log(error);
+                // console.log(error.response)
                 // submitting = false;
                 // throw new SubmissionError({ _error: err.response.data.message});
                 dispatch(failure(modelStateErrorHandler(error)));
@@ -79,13 +105,16 @@ function loginAfterOnboarding(loginData){
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
-function logout() {
+function logout(type) {
     // userService.logout();
     //console.error("We are logging you out...");
     localStorage.clear();
     history.push('/');
     // window.location.reload();
-    return { type: userConstants.LOGOUT };
+    return (dispatch)=>{
+    dispatch(logout());
+    }
+    function logout() {return { type: userConstants.LOGOUT }}
 }
 
 function skipBvn(bvnDetails){
@@ -177,6 +206,27 @@ function saveBvnData(otpData, action){
     function save(otpData) { return { type: SAVE_BVN_INFO, otpData } }
 }
 
+function getCustomerProfileImage(token, image){
+    SystemConstant.HEADER['alat-token'] = token; 
+    return dispatch =>{
+        let profileroute = `${routes.GET_USERPROFILE_IMAGE}${image}`;
+        let consume = ApiService.request(profileroute, "GET", null, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response.data));
+            }).catch(error =>{
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+        
+    }
+
+    function request(request) { return { type:GET_PROFILE_IMAGE_PENDING, request} }
+    function success(response) { return {type:GET_PROFILE_IMAGE_SUCCESS, response} }
+    function failure(error) { return {type:GET_PROFILE_IMAGE_FAILURE, error} }
+}
+
 
 
 function register(user, action) {
@@ -199,5 +249,38 @@ function register(user, action) {
     function fetch(user) { return { type: USER_REGISTER_FETCH, user } }
     function save(user) { return { type: USER_REGISTER_SAVE, user } }
 }
+
+
+export const uploadDocument =(token, data, action)=>{
+    const requestHeaders =  Object.assign({},SystemConstant.HEADER);
+    delete  requestHeaders['Content-Type'];
+    delete requestHeaders['Accept'];  
+    requestHeaders['alat-token'] =  token;
+    requestHeaders['Content-Type'] =  false;
+      return (dispatch) => {
+          let consume = ApiService.request(routes.DOCUMENT_UPLOAD,
+               "POST", data, requestHeaders);
+          dispatch(request(consume));
+          return consume
+              .then(response => {
+                  //TODO: edit localDB accounts object
+                //   dispatch(success(response.data, data));
+                dispatch(success(response.data));
+              })
+              .catch(error => {
+                 // console.log("error in here");
+                 // dispatch(success(response.data, request));
+                   dispatch(failure(modelStateErrorHandler(error)));
+                   dispatch(alertActions.error(modelStateErrorHandler(error)));
+                  // throw(error);
+              });
+      };
+  
+      function request(request) { return { type: action.pending, request } }
+    //   function success(response, request) { return { type: loanOnboardingConstants.LOAN_SALARYTRANSACTION_SUCCESS, data: { response : response, request: request } }}
+      function success(response) { return { type: action.success, data: { response : response } }}
+      function failure(error) { return { type: action.failure, error } }
+  }
+
 
 
