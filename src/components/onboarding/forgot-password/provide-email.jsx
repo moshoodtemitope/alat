@@ -13,7 +13,7 @@ import 'react-inputs-validation/lib/react-inputs-validation.min.css';
 // const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 
-class Login extends React.Component{
+class ProvideEmail extends React.Component{
       constructor(props) {
           super(props);
           this.state = {
@@ -44,7 +44,7 @@ class Login extends React.Component{
       //       const errors = [];
       //       if (email.length < 1) {
       //           this.setState({ hasErrors: true });
-      //           //this.setState(this.state.errors.email, "Email or Username is required to login into your account");
+      //           //this.setState(this.state.errors.email, "Email or Username is required to ProvideEmail into your account");
       //           // this.setState(this.state.errors.email, {array: {$push: ["First"]}});
       //           errors['email'] = "Email or Username is required to login into your account";
       //       }
@@ -78,13 +78,18 @@ class Login extends React.Component{
       }
 
       render(){
-        const { email, password, submitted, error } = this.state;
-        const { loggingIn, alert } = this.props;
+        const { email, submitted, error } = this.state;
+        const {alert } = this.props;
         return (
             <OnboardingContainer>
                 <div className="row">
                     <div className="col-12">
-                        <h3>Welcome Back!<span></span></h3>
+                        <h3>Forgot Password<span></span></h3>
+                    </div>
+                    <div className="col-12">
+                        <p>
+                        Type the email connected to your ALAT account
+                        </p>
                     </div>
                 </div>
                 <div className="row">
@@ -95,7 +100,7 @@ class Login extends React.Component{
                         <form className="onboard-form" onSubmit={this.handleSubmit}>
                             {error && <div className="info-label error">{error}</div>}
                             <div className="input-ctn">
-                                <label>Email Address/Username</label>
+                                <label>Email Address</label>
                                 <Textbox
                                     tabIndex="1"
                                     id={'email'}
@@ -113,29 +118,9 @@ class Login extends React.Component{
                                     }}
                                 />
                             </div>
-                            <div className="input-ctn">
-                                <label>Password</label>
-                                <Textbox
-                                    tabIndex="2"
-                                    id={'password'}
-                                    name="password"
-                                    type="password"
-                                    value={password}
-                                    onChange={(password, e) => {
-                                        this.setState({ password });
-                                    }}
-                                    onBlur={(e) => {}}
-                                    validationOption={{
-                                        name: 'Password',
-                                        check: true, 
-                                        required: true 
-                                    }}
-                                />
-                                <small className="error-msg forgotpw-link">  <NavLink to="/forgot-password">Forgot password?</NavLink></small>
-                            </div>
-                            <button type="submit" disabled={loggingIn} className="btn-alat btn-block">{ loggingIn ? "Processing..." : "Login" }</button>
+                            <button type="submit" className="btn-alat btn-block">Submit</button>
                         </form>
-                        <p className="text-center">Don't have an account? <NavLink to="/signup-landing">Sign up</NavLink></p>
+                        <p className="text-center"> <NavLink to="/">Back</NavLink></p>
                         <p className="text-center m-t-20">Need help? <a target="_blank" href="http://www.alat.ng/contact-us">We are here for you</a></p>
                     </div>
                 </div>
@@ -146,12 +131,11 @@ class Login extends React.Component{
 
 function mapStateToProps(state) {
       const { alert } = state;
-      const { loggingIn } = state.authentication;
+      
       // const { storage } = state.storage_reducer;
     return {
-        loggingIn,
         alert
     };
 }
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(ProvideEmail);
