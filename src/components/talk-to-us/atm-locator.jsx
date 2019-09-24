@@ -14,11 +14,30 @@ class AtmLocator extends Component{
         super(props)
         this.state={
             user: JSON.parse(localStorage.getItem("user")),
-            visible:false
+            visible:false,
+            data: [],
+            filteredData: [],
+            query: "",
 
 
         }
     }
+    handleInputChange = (event) => {
+        const query = event.target.value;
+       let data =this.props.get_bank_branch.data.response.Atms
+    
+        this.setState(prevState => {
+          const filteredData = data.filter(element => {
+            return element.name.toLowerCase().includes(query.toLowerCase());
+          });
+    
+          return {
+            query,
+            filteredData
+          };
+        });
+      };
+
     componentDidMount(){
         this.fetchAtmBranches()
 
@@ -27,10 +46,12 @@ class AtmLocator extends Component{
     fetchAtmBranches(){
         const {dispatch}=this.props
         dispatch(actions.GetBankLocator(this.state.user.token))
+
     }
     showResult=() =>{
         this.setState({ visible: true });
     }
+   
    
     renderAtmLocations(){
 
@@ -85,6 +106,28 @@ class AtmLocator extends Component{
 
                 );
             }
+
+        }
+        renderSearchAtms(){
+            return (
+                <div className="location">
+                    
+                    { this.state.filteredData.map((atm, index)=>(
+                           
+                           <div className="location" key={index}>
+                                <div className="location-icon center-align"><img src={atmImage} className=".mdi-map-marker"></img></div>
+                                <div className="location-details">
+                                    <p className="landmark">{atm.BranchName}</p>
+                                    <p className="full-address">{atm.Address}</p>
+                                </div>
+                            </div>
+                           
+
+                    ))}
+                    
+                </div>       
+
+            )
 
         }
 
@@ -145,9 +188,7 @@ class AtmLocator extends Component{
         
 
         }
-        renderResult(){
-        }
-    
+        
 
     render(){
         return(
@@ -194,7 +235,9 @@ class AtmLocator extends Component{
                                             type="text" 
                                             autoComplete="off" 
                                             className="form-control" 
-                                             placeholder="Search..."/>
+                                             placeholder="Search..."
+                                             value={this.state.query}
+                                             onChange={this.handleInputChange}/>
                                     </div>
                                     {/* <div>
 
@@ -206,6 +249,7 @@ class AtmLocator extends Component{
                                                 this.state.visible ?this.renderBankBranch() :this.renderAtmLocations()
 
                                             }
+                                            {this.renderSearchAtms()}
                                       
 
                                             

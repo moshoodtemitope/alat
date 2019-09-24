@@ -27,20 +27,27 @@ const selectedTime = [
          this.state={
             user: JSON.parse(localStorage.getItem("user")),
             DateErrorInvalid:false,
-            Amount:null,
-            message:null,
+            Amount:"",
+            Description:null,
             AmountInvalid:false,
             MessageInvalid:false,
             debitAccount:"",
             isAccountInvalid:false,
             channel:null,
+            Bank:"",
             channelInvalid:false,
-            channelFrequency:"",
-            TransactionTypeId:"",
-            ChannelId:"",
+            transactiontypeInvalid:false,
+            sourceTypeInvalid:false,
+            channelFrequency:null,
+            TransactionTypeId:null,
+            ChannelId:null,
             TransactionDate:null,
-            SourceTypeId:"",
-            BankName:""
+            bankInvalid:false,
+            SourceTypeId:null,
+            BankName:null,
+            TransactionType:null,
+            SourceType:null,
+            
 
          }
          this.handleSelectDebitableAccounts = this.handleSelectDebitableAccounts.bind(this);
@@ -82,6 +89,72 @@ const selectedTime = [
             return true;
         }
     };
+    checkChannelValidity = () => {
+        if(this.state.channelFrequency == null || this.state.channelFrequency == ""){
+            this.setState({channelInvalid: true});
+        }else{
+            this.setState({channelInvalid: false});
+        }
+    }
+    checkTransactionTypeValidity =()=>{
+        if(this.state.TransactionType ==null || this.state.TransactionType == ""){
+            this.setState({transactiontypeInvalid:true});
+        }else{
+            this.setState({transactiontypeInvalid:false})
+        }
+    }
+    checkBankValidity =()=>{
+        if(this.state.BankName ==null || this.state.BankName == ""){
+            this.setState({bankInvalid:true});
+        }else{
+            this.setState({bankInvalid:false})
+        }
+    }
+    checkSourceValidity =()=>{
+        if(this.state.SourceType ==null || this.state.SourceType == ""){
+            this.setState({sourceTypeInvalid:true});
+        }else{
+            this.setState({sourceTypeInvalid:false})
+        }
+    }
+    checkValidity = () => {
+        let result = 'valid';
+        for(let x in this.state){
+             switch(x){
+                 
+                 case 'channelFrequency':
+                         if(this.state[x] == null || this.state[x] == ""){
+                             console.log(x)
+                             result = null;
+                             break;
+                         }
+                case 'TransactionType':
+                        if(this.state[x] == null || this.state[x] ==""){
+                                 console.log(x)
+                                 result =null;
+                                 break;
+                             }
+                 case 'BankName':
+                        if(this.state[x] == null || this.state[x] ==""){
+                                console.log(x)
+                                result =null;
+                                break;
+                             }
+                case 'SourceType':
+                        if(this.state[x] == null || this.state[x] ==""){
+                             console.log(x)
+                            result =null;
+                            break;
+                        }
+ 
+                 
+             }
+         }
+ 
+        console.log(result);
+        return result;
+    }
+ 
 
     handleSelectDebitableAccounts(account) {
         console.log('dss', account);
@@ -97,12 +170,7 @@ const selectedTime = [
             return true;
         }
     }
-    checkChannelFrequency = () => {
-        if (this.state.channel == "") {
-            this.setState({ channelInvalid: true });
-            return true;
-        }
-    };
+    
      
     handleAmount = (e) => {
         // console.log
@@ -134,48 +202,88 @@ const selectedTime = [
     };
     handleSelectChannel = (event) => {
         let channelId = event.target.value;
+        let name = event.target.name;
+
         console.log(channelId)
         this.setState({ChannelId:channelId });
+        this.setState({[name] : event.target.value})
+
     };
 
     handleSelectTrancType=(event)=>{
         let transactionTypeId = event.target.value;
+        let name = event.target.name;
+
+
         console.log(transactionTypeId)
         this.setState({TransactionTypeId:transactionTypeId})
+        this.setState({[name] : event.target.value})
+
     }
     handleChange = (e) => {
         let name = e.target.value;
         console.log(name)
         this.setState({ [name]: e.target.value })
     };
+
+    handleBank=()=>{
+        let Bank = e.target.value;
+        let name = event.target.name;
+
+        console.log(sourceType);
+        this.setState({Bank:Bank})
+        this.setState({[name] : event.target.value})
+
+    }
     handleSourceType =(e)=>{
         let sourceType = e.target.value;
+        let name = event.target.name;
+
         console.log(sourceType);
         this.setState({SourceTypeId:sourceType})
+        this.setState({[name] : event.target.value})
 
+    }
+    InitiateNetworkCall=()=>{
+        const data ={
+            "Amount":this.state.Amount,
+            "TransactionTypeId":this.state.TransactionTypeId,
+            "ChannelId":this.state.ChannelId,
+            "TransactionDate":this.state.TransactionDate,
+            "Bank":this.state.Bank,
+            "SourceTypeId":this.state.SourceTypeId,
+            "Description":this.state.Description
+
+        }
+        console.log(data)
+        this.props.dispatch(actions.ReportErrorMessage(data))
     }
 
     onSubmit=(event)=>{
         event.preventDefault();
-        if(this.valDateError()|| this.checkAmount()){
+        this.valDateError()
+        this.checkAmount() 
+        this.checkAccountNumber() 
+        this.checkTransactionTypeValidity();
+        this.checkChannelValidity()
+        this.checkSourceValidity()
+        this.checkBankValidity()
 
-        }else{
-            this.props.dispatch(actions.ReportErrorMessage( {
-                "Amount":this.state.Amount,
-                "TransactionTypeId":this.state.TransactionTypeId,
-                "ChannelId":this.state.ChannelId,
-                "TransactionDate":this.state.TransactionDate,
-                "Bank":this.state.Bank,
-                "SourceTypeId":this.state.SourceTypeId
+            switch(this.checkValidity()){
+                case null:
+                  console.log('Empty value was found');
+                  break;
+                case 'valid': 
+                  console.log("No Empty Value Found");
+                  this.InitiateNetworkCall();
+                  break;
             }
-        ));
-        }
         
        
     }
 
     render(){
-        const {AmountInvalid, DateErrorInvalid, MessageInvalid,channelInvalid,channelFrequency} =this.state
+        const {AmountInvalid, DateErrorInvalid,bankInvalid,sourceTypeInvalid, MessageInvalid,channelInvalid,channelFrequency,transactiontypeInvalid} =this.state
         // const {get_page_data} =this.props.get_page_data
         return(
             <div className="row">
@@ -238,7 +346,7 @@ const selectedTime = [
                                                             }
                                         
                                                     </div>
-                                                    <div className={!AmountInvalid ? "form-group col-md-6" : "form-group col-md-6 form-error"}>
+                                                    <div className={AmountInvalid ? "form-group form-error col-md-6" : "form-group col-md-6 "}>
                                                         <label className="label-text">Amount</label>
                                                         <input 
                                                             className="form-control" 
@@ -258,9 +366,9 @@ const selectedTime = [
                                                     </div>
                                                 </div>
                                                 <div className="form-row">
-                                                <div className= {channelInvalid ? "form-group col-md-6 " : "form-group col-md-6 form-error"}>
+                                                <div className= {channelInvalid ? "form-group form-error col-md-6  " : "form-group col-md-6"}>
                                                     <label className="label-text">Channel</label>
-                                                                    <select name="" className="form-control input-border-radius" onChange={this.handleSelectChannel}>
+                                                                    <select  className="form-control input-border-radius" onChange={this.handleSelectChannel} name="channelFrequency">
                                                                             <option>Select Channel</option>
                                                                             {                                      
                                                                                 this.props.get_page_data.message === talktoUsConstant.GET_PAGE_DATA_SUCCESS && 
@@ -273,28 +381,28 @@ const selectedTime = [
                                                                     </select>
 
                                                         {channelInvalid &&
-                                                            <div className="text-danger">Enter Amount</div>
+                                                            <div className="text-danger">Select Channel</div>
                                                         }
                                         
                                                     </div>
-                                                    <div className={!channelInvalid ? "form-group col-md-6" : "form-group col-md-6 form-error"}>
+                                                    <div className={transactiontypeInvalid ? "form-group form-error col-md-6 " : "form-group col-md-6"}>
                                                         <label className="label-text">Transaction Type</label>
                                                        
-                                                          <select name="TransactionTypeId" className="form-control input-border-radius" onChange={this.handleSelectTrancType}>
+                                                          <select  className="form-control input-border-radius" onChange={this.handleSelectTrancType} name="TransactionType">
                                                                             <option>Select Transaction Type</option>
                                                                             {                                      
                                                                                 this.props.get_page_data.message === talktoUsConstant.GET_PAGE_DATA_SUCCESS && 
-                                                                               this.props. get_page_data.data.response.data.TransactionTypes.map(channel=> {
+                                                                               this.props. get_page_data.data.response.data.TransactionTypes.map(transac=> {
                                                                             
-                                                                                    return <option  value={channel.Id}>
-                                                                                    {channel.TransactionType}</option>
+                                                                                    return <option  value={transac.Id}>
+                                                                                    {transac.TransactionType}</option>
                                                                                 })
                                                                             }     
                                                                     </select>
                                                       
 
-                                                        {channelInvalid &&
-                                                            <div className="text-danger">Enter Amount</div>
+                                                        {transactiontypeInvalid &&
+                                                            <div className="text-danger">Enter Transaction Type</div>
                                                         }
                                                     </div>
                                                 </div>
@@ -308,9 +416,9 @@ const selectedTime = [
                                                     onChange={this.handleSelectDebitableAccounts} />
                                                 </div>
                                                 <div className="form-row">
-                                                    <div className={!channelInvalid ? "form-group col-md-6" : "form-group col-md-6 form-error"}>
+                                                    <div className={bankInvalid ? "form-group form-error col-md-6 " : "form-group col-md-6 "}>
                                                              <label className="label-text">Banks</label>
-                                                        <select name="BankName" className="form-control input-border-radius" onChange={this.handleChange}>
+                                                        <select className="form-control input-border-radius" onChange={this.handleBank} name="BankName" >
                                                                  <option>Select Bank</option>
                                                                     {                                      
                                                                         this.props.GetBankList.message === talktoUsConstant.GET_BANK_LIST_SUCCESS && 
@@ -321,11 +429,14 @@ const selectedTime = [
                                                                                 })
                                                                             }     
                                                                 </select>
+                                                                {bankInvalid &&
+                                                            <div className="text-danger">Select Bank Name</div>
+                                                        }
                                                      </div>
 
-                                                     <div className={!channelInvalid ? "form-group col-md-6" : "form-group col-md-6 form-error"}>
+                                                     <div className={sourceTypeInvalid ? "form-group col-md-6 form-error" : "form-group col-md-6 "}>
                                                              <label className="label-text">Source</label>
-                                                        <select name="SourceTypeId" className="form-control input-border-radius" onChange={this.handleSourceType}>
+                                                        <select className="form-control input-border-radius" onChange={this.handleSourceType}  name="SourceType">
                                                                  <option>Source Type</option>
                                                                     {                                      
                                                                         this.props.get_page_data.message === talktoUsConstant.GET_PAGE_DATA_SUCCESS && 
@@ -336,7 +447,9 @@ const selectedTime = [
                                                                                 })
                                                                             }     
                                                                 </select>
-                                                     </div>
+                                                        {sourceTypeInvalid &&
+                                                            <div className="text-danger">Select Source Type</div>
+                                                        }                                                     </div>
                                                 </div>
                                                 <div className={MessageInvalid ? "form-group form-error" : "form-group"}>
                                                     <label className="label-text">Additional Information</label>
@@ -346,7 +459,7 @@ const selectedTime = [
                                                         className="form-control" 
                                                          placeholder="Comment Here..."
                                                          name="message"
-                                                         value={this.state.message}
+                                                         value={this.state.Description}
                                                          onChange={this.handleChange}
                                                     />
                                                     {MessageInvalid &&
