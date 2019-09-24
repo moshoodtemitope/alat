@@ -226,8 +226,8 @@ const selectedTime = [
         this.setState({ [name]: e.target.value })
     };
 
-    handleBank=(e)=>{
-        let Bank = e.target.value;
+    handleBank=(event)=>{
+        let Bank = event.target.value;
         let name = event.target.name;
         console.log(Bank)
 
@@ -235,8 +235,8 @@ const selectedTime = [
         this.setState({[name] : event.target.value})
 
     }
-    handleSourceType =(e)=>{
-        let sourceType = e.target.value;
+    handleSourceType =(event)=>{
+        let sourceType = event.target.value;
         let name = event.target.name;
          this.setState({SourceTypeId:sourceType})
         this.setState({[name] : event.target.value})
