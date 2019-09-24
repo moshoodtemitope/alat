@@ -16,26 +16,23 @@ class AtmLocator extends Component{
             user: JSON.parse(localStorage.getItem("user")),
             visible:false,
             data: [],
-            filteredData: [],
-            query: "",
+            filtered: [],
 
 
         }
     }
     handleInputChange = (event) => {
-        const query = event.target.value;
-       let data =this.props.get_bank_branch.data.response.Atms
-    
-        this.setState(prevState => {
-          const filteredData = data.filter(element => {
-            return this.props.get_bank_branch.data.response.toLowerCase().toString().includes(query.toLowerCase());
-          });
-    
-          return {
-            query,
-            filteredData
-          };
+        let keyword = event.target.value;
+        const data=this.props.get_bank_branch.data.response.Atms
+        let filtered=data.filter((item)=>{
+          return item.Area.indexOf(keyword) > -1
         });
+        if (keyword === "") {
+          filtered = [];
+        }
+        this.setState({
+          filtered
+        })
       };
 
     componentDidMount(){
@@ -109,25 +106,58 @@ class AtmLocator extends Component{
 
         }
         renderSearchAtms(){
-            return (
-                <div className="location">
-                    
-                    { this.state.filteredData.map((atm, index)=>(
-                           
-                           <div className="location" key={index}>
-                                <div className="location-icon center-align"><img src={atmImage} className=".mdi-map-marker"></img></div>
-                                <div className="location-details">
-                                    <p className="landmark">{atm.BranchName}</p>
-                                    <p className="full-address">{atm.Address}</p>
+            let props = this.props;
+            let get_bank_branch = props.get_bank_branch;
+            if(get_bank_branch.message === talktoUsConstant.GET_BANK_BRANCHES_PENDING){
+                return(
+                    <h4 className="text-center" style={{ marginTop: '65px'}}>Loading Atm Locations...</h4>
+                );
+            }
+            else if(get_bank_branch.message === talktoUsConstant.GET_BANK_BRANCHES_SUCCESS){
+                    let atmlocations = get_bank_branch.data.response.Atms;
+                            console.log('=========',atmlocations)
+                    return(
+                        <div className="location">
+                        
+                        { atmlocations.map((atm, index)=>(
+                               
+                               <div className="location">
+                                    <div className="location-icon center-align"><img src={atmImage} className="mdi-map-marker"></img></div>
+                                    <div className="location-details">
+                                        <p className="landmark">{atm.Area}</p>
+                                        <p className="full-address">{atm.Address}</p>
+                                    </div>
                                 </div>
-                            </div>
-                           
-
-                    ))}
+                               
+    
+                        ))}
+                        
+                    </div>       
                     
-                </div>       
-
-            )
+                    );
+                }
+                else if(get_bank_branch.message === talktoUsConstant.GET_BANK_BRANCHES_FAILURE){
+                 
+    
+    
+                   
+                    return(
+                       
+                        <h4>{get_bank_branch.data.error}</h4>
+    
+                          
+                    );
+                        // user has goals
+                           
+                } else{
+                    return(
+                       <div>
+                           <p>Nothing to show</p>
+                       </div>
+    
+                    );
+                }
+    
 
         }
 
@@ -219,7 +249,7 @@ class AtmLocator extends Component{
                                     <div style={{display:"flex", justifyContent:'center', alignItems:'center'}}>
 
                                         <div style={{marginRight:5}}> 
-                                            <button type="submit" className="btn m-t-10 m-b-20 text-center " onClick={() => this.setState({visible:false})}>Atm Locations</button>
+                                            <button type="submit" className="btn   m-t-10 m-b-20 text-center " onClick={() => this.setState({visible:false})}>Atm Locations</button>
                                         </div>
                                         <div style={{marginLeft:5}}>
                                             <button type="submit" className="btn m-t-10 m-b-20 text-center" onClick={this.showResult}>Bank Branches</button>
@@ -236,7 +266,7 @@ class AtmLocator extends Component{
                                             autoComplete="off" 
                                             className="form-control" 
                                              placeholder="Search..."
-                                             value={this.state.query}
+                                             value={this.state.filtered}
                                              onChange={this.handleInputChange}/>
                                     </div>
                                     {/* <div>
@@ -249,7 +279,7 @@ class AtmLocator extends Component{
                                                 this.state.visible ?this.renderBankBranch() :this.renderAtmLocations()
 
                                             }
-                                            {this.renderSearchAtms()}
+                                            {/* {this.renderSearchAtms()} */}
                                       
 
                                             
