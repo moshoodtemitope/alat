@@ -28,7 +28,7 @@ export const routes = {
     LOGIN: BASEURL + '/UserSecurityApi/api/v1/Account/LoginV2',
     ACCEPTNDRP: BASEURL + '/UserSecurityApi/api/v1/Account/AcceptNdrp?isNdrpAccepted=',
     CHECK_NDRP: BASEURL + '/UserSecurityApi/api/v1/Account/GetNDRPPriority',
-
+        
     //account maintanance
     CUSTOMERACCOUNTS_ACCOUNT_MAINTANANCE: BASEURL + '/AccountMaintenance/api/account/customeraccounts',
     GETACCOUNTHISTORY: BASEURL + '/AccountMaintenance/api/transactions',

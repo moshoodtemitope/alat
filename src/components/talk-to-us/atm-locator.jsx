@@ -6,9 +6,6 @@ import {talktoUsConstant} from '../../redux/constants/talk-to-us/talk-to-us.cons
 import * as actions from "../../redux/actions/talk-to-us/talk-to-us-action";
 import './talk-to-us.css'
 
-
-
-
 class AtmLocator extends Component{
     constructor(props){
         super(props)
@@ -16,7 +13,7 @@ class AtmLocator extends Component{
             user: JSON.parse(localStorage.getItem("user")),
             visible:false,
             data: [],
-            filtered: [],
+            filtered: []
 
 
         }
@@ -27,14 +24,15 @@ class AtmLocator extends Component{
 
         const data=this.props.get_bank_branch.data.response.Atms
         let filtered=data.filter((item)=>{
-          return item.Area.indexOf(keyword) > -1
+            console.log(item.Area.indexOf(keyword) > -1);
+            // return item.Area.indexOf(keyword) > -1;
         });
-        if (keyword === "") {
-          filtered = [];
-        }
-        this.setState({
-          filtered,
-        })
+        // if (keyword === "") {
+        //   filtered = [];
+        // }
+        // this.setState({
+        //   filtered,
+        // })
       };
 
     componentDidMount(){
@@ -176,9 +174,8 @@ class AtmLocator extends Component{
                         console.log('=========',atmlocations)
                 return(
                     <div className="location">
-                    
+
                     { atmlocations.map((atm, index)=>(
-                           
                            <div className="location">
                                 <div className="location-icon center-align"><img src={atmImage} className=".mdi-map-marker"></img></div>
                                 <div className="location-details">
@@ -186,8 +183,6 @@ class AtmLocator extends Component{
                                     <p className="full-address">{atm.Address}</p>
                                 </div>
                             </div>
-                           
-
                     ))}
                     
                 </div>       

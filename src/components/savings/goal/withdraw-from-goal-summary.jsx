@@ -76,9 +76,9 @@ class WithDrawFromGoalSummmary extends Component {
 
         event.preventDefault();
         this.props.dispatch(actions.WithDrawFromGoal({
-            "goalId":parseInt(this.state.goalId),
+            "goalId":this.state.goalId,
             "accountNumber":this.state.debitAccount,
-            "amount":parseFloat(this.state.Amount),
+            "amount":this.state.Amount,
             // "partialWithdrawal":true
 
         }));
