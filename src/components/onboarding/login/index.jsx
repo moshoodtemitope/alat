@@ -131,6 +131,7 @@ class Login extends React.Component{
                                         required: true 
                                     }}
                                 />
+                                <small className="error-msg forgotpw-link">  <NavLink to="/forgot-password">Forgot password?</NavLink></small>
                             </div>
                             <button type="submit" disabled={loggingIn} className="btn-alat btn-block">{ loggingIn ? "Processing..." : "Login" }</button>
                         </form>

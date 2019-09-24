@@ -15,7 +15,13 @@ import {USER_REGISTER_FETCH, USER_REGISTER_SAVE, userConstants, BVN_VERIFICATION
     GET_NDPRSTATUS_FAILURE,
     ACCEPT_NDRP_SUCCESS,
     ACCEPT_NDRP_PENDING,
-    ACCEPT_NDRP_FAILURE} from "../../constants/onboarding/user.constants";
+    ACCEPT_NDRP_FAILURE,
+    SENDANSWERFOR_FORGOTPW_SUCCESS,
+    SENDANSWERFOR_FORGOTPW_PENDING,
+    SENDANSWERFOR_FORGOTPW_FAILURE,
+    SENDEMAILFOR_FORGOTPW_SUCCESS,
+    SENDEMAILFOR_FORGOTPW_PENDING,
+    SENDEMAILFOR_FORGOTPW_FAILURE} from "../../constants/onboarding/user.constants";
 import { dispatch } from "rxjs/internal/observable/pairs";
 
 export const userActions = {
@@ -30,6 +36,8 @@ export const userActions = {
     loginAfterOnboarding,
     checkNDPRStatus,
     acceptNDPR,
+    sendForgotPwEmail,
+    sendForgotPwAnswer,
     reissueToken
 };
 
@@ -111,6 +119,44 @@ function loginAfterOnboarding(loginData){
     function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
     function success(response) { return { type: userConstants.LOGIN_SUCCESS, response } }
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+}
+
+function sendForgotPwEmail(payload){
+    return dispatch =>{
+        let consume = ApiService.request(routes.EMAIL_FOR_FORGETPASSWORD, "POST", payload,  SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response));
+                history.push('/forgot-password/security-question');
+            }).catch(error =>{
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+        
+    }
+    function request(user) { return { type: SENDEMAILFOR_FORGOTPW_PENDING, user } }
+    function success(response) { return { type: SENDEMAILFOR_FORGOTPW_SUCCESS, response, payload } }
+    function failure(error) { return { type: SENDEMAILFOR_FORGOTPW_FAILURE, error } }
+}
+
+function sendForgotPwAnswer(payload){
+    return dispatch =>{
+        let consume = ApiService.request(routes.VERIFYUSER_FOR_FORGETPASSWORD, "POST", payload,  SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response));
+                history.push('/forgot-password/success');
+            }).catch(error =>{
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+        
+    }
+    function request(user) { return { type: SENDANSWERFOR_FORGOTPW_PENDING, user } }
+    function success(response) { return { type: SENDANSWERFOR_FORGOTPW_SUCCESS, response } }
+    function failure(error) { return { type: SENDANSWERFOR_FORGOTPW_FAILURE, error } }
 }
 
 

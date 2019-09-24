@@ -6,7 +6,13 @@ import {USER_REGISTER_SAVE, USER_REGISTER_FETCH, BVN_VERIFICATION_SUCCESS,
     GET_NDPRSTATUS_FAILURE,
     ACCEPT_NDRP_SUCCESS,
     ACCEPT_NDRP_PENDING,
-    ACCEPT_NDRP_FAILURE} from "../constants/onboarding/user.constants"
+    ACCEPT_NDRP_FAILURE,
+    SENDANSWERFOR_FORGOTPW_SUCCESS,
+    SENDANSWERFOR_FORGOTPW_PENDING,
+    SENDANSWERFOR_FORGOTPW_FAILURE,
+    SENDEMAILFOR_FORGOTPW_SUCCESS,
+    SENDEMAILFOR_FORGOTPW_PENDING,
+    SENDEMAILFOR_FORGOTPW_FAILURE} from "../constants/onboarding/user.constants"
 
 export function userRegistrationRequest(state={}, action) {
     switch (action.type) {
@@ -103,6 +109,62 @@ export function bvnCustomerDetailsReducer(state=[], action){
     }
 
 }
+
+export function sendEmailForgotPasswordReducer(state=[], action){
+    switch (action.type) {
+        case SENDEMAILFOR_FORGOTPW_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: SENDEMAILFOR_FORGOTPW_PENDING,
+                sendmail_status: action
+            };
+        case SENDEMAILFOR_FORGOTPW_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: SENDEMAILFOR_FORGOTPW_SUCCESS,
+                sendmail_status: action
+            };
+        case SENDEMAILFOR_FORGOTPW_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: SENDEMAILFOR_FORGOTPW_FAILURE,
+                sendmail_status: action
+            };
+
+        default:
+            return { ...state }
+    }
+
+}
+
+
+export function sendAnswerForgotPasswordReducer(state=[], action){
+    switch (action.type) {
+        case SENDANSWERFOR_FORGOTPW_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: SENDANSWERFOR_FORGOTPW_PENDING,
+                sendanswer_status: action
+            };
+        case SENDANSWERFOR_FORGOTPW_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: SENDANSWERFOR_FORGOTPW_SUCCESS,
+                sendanswer_status: action
+            };
+        case SENDANSWERFOR_FORGOTPW_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: SENDANSWERFOR_FORGOTPW_FAILURE,
+                sendanswer_status: action
+            };
+
+        default:
+            return { ...state }
+    }
+
+}
+
 
 export function getNDPRStatusReducer(state=[], action){
     switch (action.type) {
