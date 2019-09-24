@@ -199,7 +199,7 @@ const selectedTime = [
                 </center>
                 <div className="col-sm-12">
                 {this.props.alert && this.props.alert.message &&
-                                                <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                        <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                     }
                     <div className="row">
                         <div className="col-sm-12">
