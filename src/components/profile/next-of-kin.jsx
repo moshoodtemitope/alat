@@ -14,7 +14,7 @@ import moment from 'moment';
 import AlatPinInput from '../../shared/components/alatPinInput';
 import { Switch } from '../../shared/elements/_toggle';
 
-
+var profileMenuStore = {}
 var residentialAddress = null;
 var theState = null;
 var theCity = null;
@@ -103,18 +103,40 @@ class NextOfKin extends Component {
           navToNextOfKin: false,
           isImageUploaded: false,
           Pin: "",
-          isPinInvalid: false
+          isPinInvalid: false,
+          residentialAddress: false
         }
         this.handleAlatPinChange=this.handleAlatPinChange.bind(this)
         this.fetchResidentialAddress();
         this.fetchContactDetails();
         this.GetUserProfileMenu();
         this.fetchNextOfKin();
+
+        this.GetResidentialAddress();
     }
+
+    GetResidentialAddress = () => {
+        this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
+    }
+    
 
     componentDidMount = () => {
         this.CheckIfStoreInformationIsSet();
+        this.setProfile();
        }
+    
+    setProfile = () => {
+        let localStore = window.localStorage;
+        setTimeout(() => {
+            this.setState({
+                isProfileInformation: JSON.parse(localStore.getItem('isProfileInformation')),
+                isContactDetails: JSON.parse(localStore.getItem('isContactDetails')),
+                isDocument: JSON.parse(localStore.getItem('isDocument')),
+                isToNextOfKin: JSON.parse(localStore.getItem('navToNextOfKin')),
+                isBvNLinked: JSON.parse(localStore.getItem('isBvNLinked')),
+            }); 
+        }, 20);
+   }
     
     CheckIfStoreInformationIsSet = () => {
         
@@ -871,6 +893,15 @@ class NextOfKin extends Component {
  
         history.push('/profile/profile-next-of-kin');
     }
+    
+    NavigateResidentialAddress = () => {
+        if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS){
+            this.DispatchSuccessMessage('Residential Address has been Created');
+            return
+        }
+
+        history.push('/profile/profile-residential-address');
+    }
  
     DispatchSuccessMessage = (data) => {
         this.props.dispatch(actions.profileSuccessMessage(data));
@@ -920,14 +951,35 @@ class NextOfKin extends Component {
                  theCity = element.name;
         });
     }
+
+    StoreInforMation = () => {
+        console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
+        profileMenuStore = this.props.profileMenu.data.response;
+     
+        let localStore = window.localStorage;
+        localStore.setItem('isProfileInformation', this.props.profileMenu.data.response.personalInfoComplete);
+        localStore.setItem('isContactDetails', this.props.profileMenu.data.response.contactDetailsComplete);
+        localStore.setItem('isDocument', this.props.profileMenu.data.response.documentUploaded);
+        localStore.setItem('navToNextOfKin', this.props.profileMenu.data.response.nextOfKinComplete);
+        localStore.setItem('isBvNLinked', this.props.profileMenu.data.response.bvnLinked);
+    }
+
+    ChangeResidentialStatus = () => {
+        setTimeout(() => {
+            this.setState({residentialAddress: true});
+        }, 1000)
+    }
     
    render(){
-    const {isImageUploaded, isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin, birthDate, PinValidity, streetCompoundValidity, yourAddressValidity, sameAddressAsAbove, SurnameValidity, relationshipValidity, TitleValidity, phoneNumberValidity, LocalGovValidity, NationalityValidity, StateOfOriginValidity,
+    const {residentialAddress, isImageUploaded, isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin, birthDate, PinValidity, streetCompoundValidity, yourAddressValidity, sameAddressAsAbove, SurnameValidity, relationshipValidity, TitleValidity, phoneNumberValidity, LocalGovValidity, NationalityValidity, StateOfOriginValidity,
         EmailAddressValidity, cityValidity, streetValidity, GenderValidity, busstopValidity, DateOfBirthValidity, FirstNameValidity, OtherNameValidity
         } = this.state;
-
-        const {profileMenu, getContactDetail, nextOfKinsRelationship,getResidential} = this.props;
+ 
+        const {GetResidentialAddress, profileMenu, getContactDetail, nextOfKinsRelationship,getResidential} = this.props;
         
+        if(GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
+             this.ChangeResidentialStatus();
+
         if(getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS 
             && getResidential.message === profile.GET_RESIDENTIAL_SUCCESS){
             this.StoreLocationInformation();
@@ -971,7 +1023,6 @@ class NextOfKin extends Component {
         if(profileMenu.message === profile.GET_PROFILE_MENU_SUCCESS){
             return(
                 <Fragment>
-                     {/* <InnerContainer> */}
                             <div className="">
                                  <div className="container">
                                         <div className="coverPropertiesofComponent">
@@ -1020,6 +1071,10 @@ class NextOfKin extends Component {
                                                         <div className="tickItems" onClick={this.NavigateToNextOfKin}>
                                                             {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
                                                             <p className="pSubs">Next of Kin</p>
+                                                        </div>
+                                                        <div className="tickItems" onClick={this.NavigateResidentialAddress}>
+                                                             {residentialAddress ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                              <p className="pSubs">Residential Address</p>
                                                         </div>
                                                 </div>
                                                 
@@ -1579,8 +1634,8 @@ const mapStateToProps = (state) => {
         alert:state.alert,
         getResidential:state.getResidential,
         addNextOfKin:state.addNextOfKin,
-        nextOfKinsRelationship:state.nextOfKinsRelationship
-
+        nextOfKinsRelationship:state.nextOfKinsRelationship,
+        GetResidentialAddress: state.GetResidentialAddress
     }
 }
 

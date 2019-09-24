@@ -12,6 +12,7 @@ import moment from 'moment';
 import {history} from '../../_helpers/history';
 
 
+var profileMenuStore = {}
 class SignatureUpload extends Component {
    constructor(props){
        super(props);
@@ -33,14 +34,37 @@ class SignatureUpload extends Component {
           isProfileInformation: false,
           isContactDetails: false,
           isDocument: false,
-          navToNextOfKin: false
+          navToNextOfKin: false,
+          residentialAddress: false,
        }
+
+       this.GetResidentialAddress();
    }
 
 
    componentDidMount = () => {
     this.CheckIfStoreInformationIsSet();
+    this.setProfile();
    }
+   
+
+   GetResidentialAddress = () => {
+    this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
+}
+
+
+setProfile = () => {
+    let localStore = window.localStorage;
+    setTimeout(() => {
+        this.setState({
+            isProfileInformation: JSON.parse(localStore.getItem('isProfileInformation')),
+            isContactDetails: JSON.parse(localStore.getItem('isContactDetails')),
+            isDocument: JSON.parse(localStore.getItem('isDocument')),
+            isToNextOfKin: JSON.parse(localStore.getItem('navToNextOfKin')),
+            isBvNLinked: JSON.parse(localStore.getItem('isBvNLinked')),
+        }); 
+    }, 20);
+}
 
 CheckIfStoreInformationIsSet = () => {
     
@@ -85,6 +109,15 @@ CheckIfStoreInformationIsSet = () => {
    HandleSelectedCardType = (event) => {
        this.setState({idCardType: event.target.value});
    }
+
+   NavigateResidentialAddress = () => {
+    if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS){
+        this.DispatchSuccessMessage('Residential Address has been Created');
+        return
+    }
+
+    history.push('/profile/profile-residential-address');
+}
 
    HandleFileUpLoad = (event) => {
        let name = event.target.name;
@@ -177,9 +210,30 @@ GetUserProfileMenu = () => {
     this.props.dispatch(actions.profileMenu(this.state.user.token));
 }
 
+StoreInforMation = () => {
+    console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
+    profileMenuStore = this.props.profileMenu.data.response;
+ 
+    let localStore = window.localStorage;
+    localStore.setItem('isProfileInformation', this.props.profileMenu.data.response.personalInfoComplete);
+    localStore.setItem('isContactDetails', this.props.profileMenu.data.response.contactDetailsComplete);
+    localStore.setItem('isDocument', this.props.profileMenu.data.response.documentUploaded);
+    localStore.setItem('navToNextOfKin', this.props.profileMenu.data.response.nextOfKinComplete);
+    localStore.setItem('isBvNLinked', this.props.profileMenu.data.response.bvnLinked);
+}
+
+
+ChangeResidentialStatus = () => {
+    setTimeout(() => {
+        this.setState({residentialAddress: true});
+    }, 1000)
+}
    render(){
-      const {isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, idTypeValidity, idFrontFace, idCardValidity, idCardNumberValidity} = this.state;
+      const {residentialAddress, isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, idTypeValidity, idFrontFace, idCardValidity, idCardNumberValidity} = this.state;
        
+      if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
+             this.ChangeResidentialStatus();
+
        if(this.props.profileMenu.message === profile.GET_PROFILE_MENU_PENDING){
           return(
             <Fragment>
@@ -260,6 +314,10 @@ GetUserProfileMenu = () => {
                                                     <div className="tickItems" onClick={this.NavigateToNextOfKin}>
                                                         {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
                                                         <p className="pSubs">Next of Kin</p>
+                                                    </div>
+                                                    <div className="tickItems" onClick={this.NavigateResidentialAddress}>
+                                                        {residentialAddress ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                        <p className="pSubs">Residential Address</p>
                                                     </div>
                                             </div>
                                         </div>
@@ -354,7 +412,9 @@ GetUserProfileMenu = () => {
 
 function mapStateToProps(state) {
     return {
-        profileMenu: state.profileMenu
+        profileMenu: state.profileMenu,
+        alert:state.alert,
+        GetResidentialAddress: state.GetResidentialAddress
     }
 }
 

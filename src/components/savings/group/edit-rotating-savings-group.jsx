@@ -1,7 +1,5 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import {Switch} from "react-router";
 import Select from 'react-select';
@@ -25,9 +23,6 @@ const quantityOfMembers = [
     {  value: '10', label: "10"}
 ];
 
- 
-
-
 class EditRotatingGroup extends React.Component {
     constructor(props){
         super(props);
@@ -45,7 +40,6 @@ class EditRotatingGroup extends React.Component {
             accountSelectedValidity: false,
             monthlyContributionValidity: false,
             groupNameValidity: false,
-
             startDate: "",
             howOftenDoYouWantToSave: null,
             groupName: "",
@@ -230,13 +224,8 @@ class EditRotatingGroup extends React.Component {
     }
 
     NavigateToGroupSavings = () => {
-        // let groupSavings = this.props.groups.response; //returns an array
-        // let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
-        // if(groupSavings.length != 0 || rotatingSavings.length != 0){
             history.push('/savings/activityDashBoard');
-        //     return;
-        // }
-        // history.push('/savings/goal/group-savings-selection');
+    
     }
 
     render() {
@@ -245,6 +234,7 @@ class EditRotatingGroup extends React.Component {
 
         return (
             <Fragment>
+                
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>
@@ -256,11 +246,9 @@ class EditRotatingGroup extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a href="#">Goals</a></li>
                                         </NavLink>
-                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                             <li onClick={this.NavigateToGroupSavings}><a href="#">Group Savings</a></li>
-                                        {/* </NavLink> */}
                                             
-                                        <li><a href="#">Investments</a></li>
+                                        {/* <li><a href="#">Investments</a></li> */}
 
                                         </ul>
                                     </div>
@@ -347,6 +335,7 @@ class EditRotatingGroup extends React.Component {
 
                         </div>
 
+                   
             </Fragment>
         );
     }

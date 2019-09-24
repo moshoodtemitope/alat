@@ -11,12 +11,16 @@ import {profile} from '../../redux/constants/profile/profile-constants';
 import moment from 'moment';
 
 
+var profileMenuStore = {}
 class LinkBVNSuccessPage extends Component {
    constructor(props){
        super(props);
        this.state = {
           user: JSON.parse(localStorage.getItem("user")),
+          residentialAddress: false
        }
+
+       this.GetResidentialAddress();
    }
 
    CheckIfStoreInformationIsSet = () => {
@@ -36,7 +40,27 @@ class LinkBVNSuccessPage extends Component {
        setTimeout(function(){
           history.push('/profile');
        }, 5000);
+
+       this.setProfile();
    }
+
+   GetResidentialAddress = () => {
+    this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
+}
+
+
+   setProfile = () => {
+    let localStore = window.localStorage;
+    setTimeout(() => {
+        this.setState({
+            isProfileInformation: JSON.parse(localStore.getItem('isProfileInformation')),
+            isContactDetails: JSON.parse(localStore.getItem('isContactDetails')),
+            isDocument: JSON.parse(localStore.getItem('isDocument')),
+            isToNextOfKin: JSON.parse(localStore.getItem('navToNextOfKin')),
+            isBvNLinked: JSON.parse(localStore.getItem('isBvNLinked')),
+        }); 
+    }, 20);
+}
 
    NavigateToBVN = () => {
     if(this.props.profileMenu.data.response.bvnLinked == true){
@@ -54,6 +78,15 @@ NavigateToPersonalInfo = () => {
      }
 
      history.push('/profile/profile-personalInfo');
+}
+
+NavigateResidentialAddress = () => {
+    if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS){
+        this.DispatchSuccessMessage('Residential Address has been Created');
+        return
+    }
+
+    history.push('/profile/profile-residential-address');
 }
 
 NavigateToContact = () => {
@@ -88,8 +121,30 @@ DispatchSuccessMessage = (data) => {
     this.props.dispatch(actions.profileSuccessMessage(data));
 }
 
+StoreInforMation = () => {
+    console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
+    profileMenuStore = this.props.profileMenu.data.response;
+ 
+    let localStore = window.localStorage;
+    localStore.setItem('isProfileInformation', this.props.profileMenu.data.response.personalInfoComplete);
+    localStore.setItem('isContactDetails', this.props.profileMenu.data.response.contactDetailsComplete);
+    localStore.setItem('isDocument', this.props.profileMenu.data.response.documentUploaded);
+    localStore.setItem('navToNextOfKin', this.props.profileMenu.data.response.nextOfKinComplete);
+    localStore.setItem('isBvNLinked', this.props.profileMenu.data.response.bvnLinked);
+}
+
+ChangeResidentialStatus = () => {
+    setTimeout(() => {
+        this.setState({residentialAddress: true});
+    }, 1000)
+}
+
    render(){
-       const {isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument } = this.state;
+       const {residentialAddress, isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument } = this.state;
+
+       if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
+             this.ChangeResidentialStatus();
+
        return(
         <Fragment>
              {/* <InnerContainer> */}
@@ -142,6 +197,10 @@ DispatchSuccessMessage = (data) => {
                                                     {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
                                                     <p className="pSubs">Next of Kin</p>
                                                 </div>
+                                                <div className="tickItems" onClick={this.NavigateResidentialAddress}>
+                                                    {residentialAddress ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                    <p className="pSubs">Residential Address</p>
+                                                </div>
                                         </div>
                                     </div>
                                     <div className="col-sm-6">
@@ -163,7 +222,9 @@ DispatchSuccessMessage = (data) => {
 
 const mapStateToProps = (state) => {
     return {
-        profileMenu: state.profileMenu
+        profileMenu: state.profileMenu,
+        alert:state.alert,
+        GetResidentialAddress: state.GetResidentialAddress
     }
 }
 

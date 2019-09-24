@@ -19,6 +19,7 @@ import {dashboard,
         customerGoal,
         movies,
         preferences,
+        talktous,
         profile,
         insurance,
         alatCards} from "./export";
@@ -40,9 +41,10 @@ import { loanConstants } from '../constants/loans/loans.constants';
 import { ALATINSURANCE_REDUCER_CLEAR } from '../constants/insurance/insurance.constants';
 import { ALATCARD_REDUCER_CLEAR } from '../constants/cards/cards.constants';
 import { WESTERNUNION_REDUCER_CLEAR } from '../constants/remittance/remittance.constants';
-import {FIXED_GOAL_REDUCER_CLEAR} from '../constants/goal/fixed-goal.constant'
-
-import movie from "../../components/lifestyle/lifestyle-movie/movie";
+import {fixedGoalConstants} from '../constants/goal/fixed-goal.constant';
+import {flexGoalConstants} from '../constants/goal/flex-goal.constant';
+import {createGoalConstants} from '../constants/goal/create-stash.constant';
+import {customerGoalConstants} from '../constants/goal/get-customer-trans-history.constant';
 //import { saveCardReducer } from "./fund-account.reducer";
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
@@ -126,13 +128,33 @@ const remittanceReducerPile = (state, action)=>{
     return remittanceReducer(state, action);
 }
 const GoalReducerPile=(state, action)=>{
-    if(action.type === FIXED_GOAL_REDUCER_CLEAR ){
+    if(action.type === fixedGoalConstants.FIXED_GOAL_REDUCER_CLEAR ){
         state = undefined
     }
 
     return GoalReducer(state, action)
 }
 
+const FlexGoalReducerPile=(state,action)=>{
+    if(action.type === flexGoalConstants.FLEX_GOAL_REDUCER_CLEAR){
+        state = undefined
+    }
+    return FlexGoalReducer(state, action)
+}
+
+const CreateGoalReducerPile=(state,action)=>{
+    if(action.type === createGoalConstants.STASH_GOAL_REDUCER_CLEAR){
+        state =undefined
+    }
+    return CreateGoalReducer(state, action)
+}
+
+const CustomerGoalReducerPile=(state,action)=>{
+    if(action.type === customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR){
+        state = undefined
+    }
+    return CustomerGoalReducer(state, action)
+}
 const remittanceReducer = combineReducers({
     getCountries: receiveMoney.getWesternUnionCountries,
     receiveWUMoney: receiveMoney.receiveWesternUnion
@@ -217,7 +239,42 @@ const loansReducer = combineReducers({
     add_goal_reducer:fixedGoal.addGoalReducer,
 
 
-})
+});
+            
+ const FlexGoalReducer =combineReducers({
+
+    flex_goal_step1:flexGoal.flexGoalStep1Reducer,
+    flex_goal_step2:flexGoal.flexGoalStep2Reducer,
+    add_flex_goal:flexGoal.addFlexGoalReducer,
+
+ })
+  const CreateGoalReducer = combineReducers({
+      
+    create_stash_goal:stashGoal.createStashGoalReducer,
+    create_stash_step1:stashGoal.createStashGoalStep1Reducer,
+
+  })
+  const CustomerGoalReducer = combineReducers({
+          //customer Goal reducers
+
+    customerGoalTransHistory:customerGoal.getCustomerGoalTransHistoryReducer,
+    customerGoalType:customerGoal.GET_GOAL_TYPE,
+    customerGoalFormular:customerGoal.GET_FORMULAR,
+    top_up_goal:customerGoal.TopUPGoal,
+    top_up_goal_step1:customerGoal.TopUPGoalStep1,
+    withdraw_from_goal_step1:customerGoal.WithDrawFromGoalStep1,
+    withdraw_from_goal:customerGoal.WithDrawFromGoal,
+    delete_goal:customerGoal.DeleteCustomerGoal,
+    edit_goal:customerGoal.EditCustomerGoal,
+    pause_goal:customerGoal.PauseCustomerGoal,
+    unpause_goal:customerGoal.unPauseCustomerGoal,
+    stashGoal:customerGoal.StashCashout,
+    stashGoal_step1:customerGoal.StashCashoutStep1,
+    Cashout:customerGoal.Cashout,
+    submitDashboardData:customerGoal.submitDashboardData,
+
+
+  })
 
 
 const alatCardsReducer = combineReducers({
@@ -270,6 +327,9 @@ const appReducer = combineReducers({
     insurancePile,
     remittanceReducerPile,
     GoalReducerPile,
+    FlexGoalReducerPile,
+    CreateGoalReducerPile,
+    CustomerGoalReducerPile,
     // storage_reducer
     // storage_reducer
 
@@ -287,30 +347,18 @@ const appReducer = combineReducers({
     // fixed_goal_step2:fixedGoal.fixedGoalStep2Reducer,
     // add_goal_reducer:fixedGoal.addGoalReducer,
 
-    // flex goal reducers
-    flex_goal_step1:flexGoal.flexGoalStep1Reducer,
-    flex_goal_step2:flexGoal.flexGoalStep2Reducer,
-    add_flex_goal:flexGoal.addFlexGoalReducer,
-    create_stash_goal:stashGoal.createStashGoalReducer,
-    create_stash_step1:stashGoal.createStashGoalStep1Reducer,
+    // talktous
+    talk_to_us:talktous.TalkToUs,
+    reportError:talktous.ReportError,
+    get_bank_branch:talktous.GetBankBranch,
+    get_page_data:talktous.GetPageData,
+    GetBankList:talktous.GetBankList,
 
-    //customer Goal reducers
-    customerGoalTransHistory:customerGoal.getCustomerGoalTransHistoryReducer,
-    customerGoalType:customerGoal.GET_GOAL_TYPE,
-    customerGoalFormular:customerGoal.GET_FORMULAR,
-    top_up_goal:customerGoal.TopUPGoal,
-    top_up_goal_step1:customerGoal.TopUPGoalStep1,
-    withdraw_from_goal_step1:customerGoal.WithDrawFromGoalStep1,
-    withdraw_from_goal:customerGoal.WithDrawFromGoal,
-    delete_goal:customerGoal.DeleteCustomerGoal,
-    edit_goal:customerGoal.EditCustomerGoal,
-    pause_goal:customerGoal.PauseCustomerGoal,
-    unpause_goal:customerGoal.unPauseCustomerGoal,
-    stashGoal:customerGoal.StashCashout,
-    stashGoal_step1:customerGoal.StashCashoutStep1,
-    Cashout:customerGoal.Cashout,
-    submitDashboardData:customerGoal.submitDashboardData,
 
+
+    
+
+   
     //Group Savings Reducers (GROUP SAVINGS)
     groupSavings: groupSavings.groupSavingsTargetGoal,
     groupDetails: groupSavings.groupDetails,
@@ -381,8 +429,9 @@ const appReducer = combineReducers({
     getContactDetail:profile.getContactDetail,
     getPersonalInfo: profile.getPersonalInfo,
     getStates: profile.getStates,
-    nextOfKinsRelationship: profile.nextOfKinsRelationship
-
+    nextOfKinsRelationship: profile.nextOfKinsRelationship,
+    addResidentialAddress: profile.addResidentialAddress,
+    GetResidentialAddress: profile.GetResidentialAddress
 });
 
 //export defualt appReducer;

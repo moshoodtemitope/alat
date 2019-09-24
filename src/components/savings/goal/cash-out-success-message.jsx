@@ -64,6 +64,10 @@ class CashOutGoalSuccess extends React.Component {
                                         </div>
 
                                     </div>
+                                    <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
+                                                this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
+                                                Go back
+                                    </a>
                                 </div>
 
                             </div>
@@ -75,6 +79,6 @@ class CashOutGoalSuccess extends React.Component {
     }
 }
 const mapStateToProps = state => ({
-    top_up_goal:state.top_up_goal,
+    top_up_goal:state.CustomerGoalReducerPile.top_up_goal,
 });
 export default connect(mapStateToProps)(CashOutGoalSuccess);

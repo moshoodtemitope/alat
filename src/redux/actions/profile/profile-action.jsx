@@ -54,7 +54,7 @@ export const profileMenu = (token) => {
 export const capturePersonalInformation = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.POST_PROFILE_INFO, "POST", data, SystemConstant.HEADER, true);
+        let consume = ApiService.request(routes.POST_PROFILE_INFO, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
@@ -275,27 +275,48 @@ export const nextOfKinsRelationship = (token) => {
     function failure(error) { return {type: profile.GET_NEXT_OF_KIN_RELATIONSHIP_FAILURE, error} }
 };
 
-// export const residentialAddress = (token) => {
-//     SystemConstant.HEADER['alat-token'] = token;
-//     return (dispatch) => {
-//         let consume = ApiService.request(routes.GET_RESIDENTIAL_ADDRESS, "GET", null, SystemConstant.HEADER, true);
-//         dispatch(request(consume));
-//         return consume
-//             .then(response => {
-//                 dispatch(success(response.data));
-//                 // history.push('/');
-//             })
-//             .catch(error => {
-//                 // dispatch(failure(modelStateErrorHandler(error)));
-//                 dispatch(alertActions.error(modelStateErrorHandler(error)));
-//                 // dispatch(failure(error.response.data.message.toString()));
-//             });
-//     };
+export const GetResidentialAddress = (token) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.GET_RESIDENTIAL_ADDRESS, "GET", null, SystemConstant.HEADER, true);
+        dispatch(request(consume));
+    return consume
+            .then(response => {
+                dispatch(success(response.data));
+                // history.push('/');
+            })
+            .catch(error => {
+                // dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // dispatch(failure(error.response.data.message.toString()));
+            });
+    };
 
-//     function request(request) { return {type: profile.GET_RESIDENTIAL_ADDRESS_PENDING, request} }
-//     function success(response) { return {type: profile.GET_RESIDENTIAL_ADDRESS_SUCCESS, response} }
-//     function failure(error) { return {type: profile.GET_RESIDENTIAL_ADDRESS_FAILURE, error} }
-// };
+    function request(request) { return {type: profile.GET_RESIDENTIAL_ADDRESS_PENDING, request} }
+    function success(response) { return {type: profile.GET_RESIDENTIAL_ADDRESS_SUCCESS, response} }
+    function failure(error) { return {type: profile.GET_RESIDENTIAL_ADDRESS_FAILURE, error} }
+};
+
+export const addResidentialAddress = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.POST_RESIDENTIAL_ADDRESS, "POST", data, SystemConstant.HEADER, false);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+                // history.push('/');
+            })
+            .catch(error => {
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function request(request) { return {type: profile.POST_RESIDENTIAL_ADDRESS_PENDING, request} }
+    function success(response) { return {type: profile.POST_RESIDENTIAL_ADDRESS_SUCCESS, response} }
+    function failure(error) { return {type: profile.POST_RESIDENTIAL_ADDRESS_FAILURE, error} }
+};
+
 
 export const profileSuccessMessage = (data) =>{
     return (dispatch) => {

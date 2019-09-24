@@ -2,11 +2,11 @@ import * as React from 'react';
 import { NavLink} from 'react-router-dom';
 import {history} from "../../_helpers/history";
 import { connect } from 'react-redux';
-// import {alertActions} from "../../redux/actions/alert.actions";
 import $ from 'jquery';
 import {Fragment} from "react";
 import {userActions} from "../../redux/actions/onboarding/user.actions";
 import whitelogo from "../../assets/img/white-logo.svg";
+import selfCareImage from '../../assets/img/contact-centers.svg'
 import profileImage from "../../assets/img/10.jpg";
 import {
     GET_NDPRSTATUS_SUCCESS,
@@ -236,7 +236,15 @@ class HeaderContainer extends React.Component{
                                     <p className="name">{user.fullName}</p>
                                 </div>
                                 { this.renderMiniNav() }
+                                <div className="user-name-circle clearfix">
+                                   {/* <NavLink to="/talk-to-us">
+                                   <p className="name">Talk to Us</p>
+                                   <img  style={{ margin:'5px',marginTop:'5px'}}src={selfCareImage} />
+
+                                   </NavLink> */}
+                                </div>
                                 <span className="notification-top"><i className="demo-icon icon-alert-active"></i></span>
+                              
                             </div>
 
 

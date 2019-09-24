@@ -1,7 +1,5 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../shared/templates/inner-container';
-import SavingsContainer from './container';
 import {NavLink, Route} from "react-router-dom";
 import {Switch} from "react-router";
 import "react-datepicker/dist/react-datepicker.css";
@@ -26,41 +24,15 @@ class MembersSlot extends React.Component {
         this.handleSelectChange = this.handleSelectChange.bind(this);
     }
 
-    // GenerateSelectionElements = () => {
-    //     const elem = '';
-    //     const anArray = [];
-    //     for(var i=0; i < numberOfPersonsInGroup.length; i++){
-    //         anArray.push(0);
-    //     }
-        
-    //     const count = 0;
-    //     return anArray.map(() => {
-    //          count++;
-    //                 return  <div className='col-sm-12'>
-    //                             <label>Slot {count}</label>
-    //                             <Select type="text" 
-    //                             options={this.state.groupMembers}
-    //                             name="timeSaved"
-    //                             onChange={this.handleSelectChange}
-    //                             value="Select A name"
-    //                             />
-    //                         </div>
-                              
-    //     });
-    // }
-
+    
     handleSelectChange = (event) => {
         event.preventDefault();
     }
 
     NavigateToGroupSavings = () => {
-        // let groupSavings = this.props.groups.response; //returns an array
-        // let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
-        // if(groupSavings.length != 0 || rotatingSavings.length != 0){
+        
             history.push('/savings/activityDashBoard');
-        //     return;
-        // }
-        // history.push('/savings/goal/group-savings-selection');
+        
     }
 
    
@@ -78,10 +50,8 @@ class MembersSlot extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a href="#">Goals</a></li>
                                         </NavLink>
-                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                             <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                        {/* </NavLink> */}
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
                                         </ul>
                                     </div>
                                 </div>

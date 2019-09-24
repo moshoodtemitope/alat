@@ -34,11 +34,11 @@ class GoalPlan extends React.Component {
     }
 
     CheckRotatingSavingsAvailability = () => {
-        this.props.dispatch(actions1.GetGroupsEsusu(this.state.user.token, null));
+        this.props.dispatch(actions1.GetGroupsEsusu(this.state.user.token));
     }
 
     CheckGroupSavingsAvailability = () => {
-        this.props.dispatch(actions.customerGroup(this.state.user.token, null));
+        this.props.dispatch(actions.customerGroup(this.state.user.token));
     }
     
     NavigateToGroupSavings = () => {
@@ -320,9 +320,9 @@ class GoalPlan extends React.Component {
                                     <ul style={{cursor:"pointer"}}>
                                         <li><a onClick={() => this.setState({visible: true})} href="#" className="active">Goals</a></li>
                                             <li onClick={this.NavigateToGroupSavings}><a className="forGroupLink">Group Savings</a></li>
-                                        <NavLink to="/savings/fixed-goal">
+                                        {/* <NavLink to="/savings/fixed-goal">
                                             <li><a href="#">Investments</a></li>
-                                        </NavLink>
+                                        </NavLink> */}
                                         {
                                             this.state.visible ?
                                             <li style={{float:'right',color:'white',fontSize:'16px, font-family:"proxima_novaregular'}}> <a onClick={this.togglePage} className="btn-alat">Create a Savings Goal</a> </li> : null
@@ -341,10 +341,10 @@ class GoalPlan extends React.Component {
     }
 }
 const mapStateToProps = state => ({
-    customerGoalTransHistory:state.customerGoalTransHistory,
+    customerGoalTransHistory:state.CustomerGoalReducerPile.customerGoalTransHistory,
     groupSavingsEsusu: state.getGroupSavingsEsusu.data,
     groups: state.customerGroup.data,
-    submitDashboardData:state.submitDashboardData
+    submitDashboardData:state.CustomerGoalReducerPile.submitDashboardData
 });
 
 export default connect (mapStateToProps)(GoalPlan);

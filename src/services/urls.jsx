@@ -1,6 +1,6 @@
-// const URL = 'https://api.alat.ng';
-//  const URL = 'https://196.43.215.170';
- const URL = 'https://196.43.215.157';
+//const URL = 'https://api.alat.ng';
+const URL = 'https://196.43.215.170';
+//const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
 
@@ -83,6 +83,7 @@ export const routes = {
     GETLIMIT: BASEURL + '/AccountMaintenance/api/transactions/getTransactionlimit', 
     GetAllCustomerAccountsWithLimitsV2: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2', 
     FETCH_CUSTOMER_ACCOUNTS: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccounts', 
+
     
     // Card Maintenance
    
@@ -188,6 +189,7 @@ export const routes = {
     NEXT_OF_KIN_RELATIONSHIP: BASEURL + '/ProfileManagement.WebApi/api/nextOfKin/NextofKinRelationships',
     GET_CONTACT_DETAIL: BASEURL + '/ProfileManagement.WebApi/api/ContactDetails',
     GET_RESIDENTIAL_ADDRESS: BASEURL + '/ProfileManagement.WebApi/api/ResidentialAddress',
+    POST_RESIDENTIAL_ADDRESS: BASEURL + '/ProfileManagement.WebApi/api/ResidentialAddress/Save',
     GETPERSONALINFO: BASEURL + '/ProfileManagement.WebApi/api/PersonalInfo',
     GETSTATES: BASEURL + '/AccountMaintenance/api/account/GetStatesAndLgas',
     ADD_DOCUMENT: BASEURL + '/DocumentUpload/api/upload/document',
@@ -275,5 +277,9 @@ export const routes = {
     FETCH_MOVIE_GENRE : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetGenreList',
     FETCH_MOVIE_CINEMAS : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetCinemaList',
     GET_CONVENIENCE_FEE : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetCinemaListAndFee',
+    SEND_MESSAGE:BASEURL + '/Contact.WebApi/api/Contact/send',
+    GET_PAGE_DATA:BASEURL +'/Contact.WebApi/api/contact/getpagedata',
+    BRANCH_ATM:BASEURL + '/Contact.WebApi/api/contact/branchesatm',
+    REPORT_ERROR:BASEURL + '/Contact.WebApi/api/contact/reporterror',
 
 };

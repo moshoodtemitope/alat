@@ -158,6 +158,10 @@ import * as actions from '../../../redux/actions/savings/goal/create-stash-goal.
 
                                 
                                 </div>
+                                <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(createGoalConstants.STASH_GOAL_REDUCER_CLEAR));
+                                                this.props.history.push('/savings/create-stash_step1') }} className="add-bene m-t-50">
+                                                Go back
+                                        </a>
 
                             
                             </div>
@@ -173,8 +177,8 @@ import * as actions from '../../../redux/actions/savings/goal/create-stash-goal.
     }
 }
 const mapStateToProps = state => ({
-    create_stash_goal_step1:state.create_stash_step1,
-    create_stash_goal:state.create_stash_goal,
+    create_stash_goal_step1:state.CreateGoalReducerPile.create_stash_step1,
+    create_stash_goal:state.CreateGoalReducerPile.create_stash_goal,
     alert: state.alert,
 
 });

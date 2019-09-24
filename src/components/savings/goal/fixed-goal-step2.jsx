@@ -1,5 +1,7 @@
 import * as React from "react";
 import {Fragment} from "react";
+import InnerContainer from '../../../shared/templates/inner-container';
+import SavingsContainer from '..';
 import Select from 'react-select';
 import { connect } from 'react-redux';
 import { Redirect,Link,NavLink } from 'react-router-dom';
@@ -29,6 +31,7 @@ class FixedGoal extends React.Component {
             endDate:"",
             goalName:"",
             goalFrequency:"",
+            //accountNumber:"",
             debitAccount:"",
             isSubmitted: false,
             isAccountInvalid: false,
@@ -37,6 +40,9 @@ class FixedGoal extends React.Component {
             showInterests:"",
             goalFrequencyType: "",
             goalFrequencyLabel: "",
+
+            // frequencyAmount:"",
+
 
         };
         this.onSubmit = this.onSubmit.bind(this);
@@ -84,7 +90,7 @@ class FixedGoal extends React.Component {
             console.log('tag', data);
 
             this.setState({
-                targetAmount:data.targetAmount,
+                targetAmount:util.formatAmount(data.targetAmount),
                 startDate:data.startDate,
                 endDate:data.endDate,
                 goalName:data.goalName,
@@ -105,14 +111,13 @@ class FixedGoal extends React.Component {
         if (frequency == "daily")
         {
             timeBetween = enddate.diff(startDate,'days') + 1;
-            console.log("days",timeBetween)
+            console.log(timeBetween)
 
         }
 
         else if (frequency == "weekly")
         {
             timeBetween = enddate.diff(startDate, 'week') + 1;
-            console.log("week",timeBetween)
         }
         else
         {
@@ -122,7 +127,6 @@ class FixedGoal extends React.Component {
             let startDay = moment(startDate).date();
             let endDay = moment(enddate).date();
             timeBetween = (years * 12) + (targetMonth - startMonth);
-            console.log("monthly",timeBetween)
             if (endDay >= startDay){
                 timeBetween += 1;
             }
@@ -130,15 +134,15 @@ class FixedGoal extends React.Component {
 
         if (timeBetween < 1){
             timeBetween = 1;
-            console.log('timeBetween', timeBetween);
+            // console.log('timeBetween', timeBetween)
         }
-        console.log("=========" + util.formatAmount(amount/timeBetween));
-        return this.setState({showInterests:  parseFloat(util.formatAmount(amount/timeBetween)).toFixed(2)});
-
+        // console.log("monthly" +amount/timeBetween)
+        return this.setState({showInterests:  parseFloat(amount/timeBetween).toFixed(2)});
     }
 
     handleSelectChange = (frequency) => {
         console.log(frequency);
+        // let label = frequency.id.split("/")[0]
         this.setState({ "goalFrequencyType": frequency.value,
             "goalFrequencyLabel" : frequency.label,
             "goalFrequency": `${frequency.id}`
@@ -149,6 +153,13 @@ class FixedGoal extends React.Component {
         if (this.state.formsubmitted && frequency.value != "") {
             this.setState({ goalFrequencyInvalid: false })
         }
+
+
+        // this.setState({
+        //         // showInterests:this.ComputeDebitAmount(this.state.goalFrequencyType,this.state.targetAmount,this.state.startDate,this.state.endDate)
+        //         showInterests: this.ComputeDebitAmount(this.state.goalFrequencyType)
+        // })
+
     };
 
 
@@ -195,7 +206,7 @@ class FixedGoal extends React.Component {
 
     render() {
 
-        let { goalFrequencyLabel,goalFrequencyType,goalFrequencyInvalid} =this.state;
+        let { frequency, goalFrequencyLabel,goalFrequencyType, goalFrequency, goalFrequencyInvalid} =this.state;
 
         return (
             <Fragment>
@@ -279,10 +290,11 @@ class FixedGoal extends React.Component {
 
 
                                         </div>
+                                        <center>
                                         <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(fixedGoalConstants.FIXED_GOAL_REDUCER_CLEAR));
                                                 this.props.history.push('/savings/fixed-goal') }} className="add-bene m-t-50">
                                                 Go back
-                                        </a>
+                                        </a>                                        </center>
 
                                     </div>
 
@@ -304,3 +316,8 @@ const mapStateToProps = state => ({
     fixed_goal_step2:state.GoalReducerPile.fixed_goal_step2
 });
 export default connect(mapStateToProps)(FixedGoal);
+
+
+
+
+

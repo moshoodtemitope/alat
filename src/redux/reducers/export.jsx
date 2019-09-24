@@ -56,7 +56,7 @@ import { loanCalcDataReducer, loanApplyReducer, GetIndustriesReducer, GetEmploye
      loanMandateStatusReducer, loanValidateRemitaOtpReducer, loanStatementUpload, continueApplication, 
      SignatureReducer , PassportReducer, KycRequired, termsReducer } from './loan.reducer';
 import { linkBVN, profileSuccessMessage, profileMenu, capturePersonalInformation,getContactDetail,
-        getResidential, addNextOfKin, addContactDetails, occupationAndSector, addDocuments,getPersonalInfo, getStates, nextOfKinsRelationship } from './profile-reducer';
+        getResidential, addNextOfKin, addContactDetails, occupationAndSector, addDocuments,getPersonalInfo, GetResidentialAddress, addResidentialAddress, getStates, nextOfKinsRelationship } from './profile-reducer';
 
 import { geCurrentVirtualCardsRequest,
          sendVCNewCardinfo,
@@ -88,6 +88,7 @@ import {getWesternUnionCountries,receiveWesternUnion } from './remittance.reduce
          WithDrawFromGoal,PauseCustomerGoal,unPauseCustomerGoal,EditCustomerGoal,DeleteCustomerGoal,StashCashout,StashCashoutStep1,submitDashboardData} from './goal/get-customer-goal-trans-history-reducers';
      import {createRotatingSavings, rotatingGroupDetails, joinAGroup, EditSlots, 
         editGroupEsusu, deleteGroupEsusu, GetGroupsEsusu, joinGroupEsusu, refferalCode} from './group-savings/rotating-group-reducers';
+    import {GetBankBranch,TalkToUs,ReportError,GetPageData, GetBankList} from './talk-to-us/talk-to-us.reducer'
 
 
 
@@ -266,6 +267,14 @@ export const fixedGoal ={
     setAmountToWithDraw,
     setFrequency,
 }
+export const talktous ={
+    GetBankBranch,
+    TalkToUs,
+    ReportError,
+    GetPageData,
+    GetBankList,
+
+}
  
 export const rotatingSavings = {
     createRotatingSavings,
@@ -340,6 +349,7 @@ export const profile = {
     getResidential,
     getPersonalInfo,
     getStates,
-    nextOfKinsRelationship
-
+    nextOfKinsRelationship,
+    addResidentialAddress,
+    GetResidentialAddress
 }
