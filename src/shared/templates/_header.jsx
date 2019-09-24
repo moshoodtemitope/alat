@@ -237,11 +237,11 @@ class HeaderContainer extends React.Component{
                                 </div>
                                 { this.renderMiniNav() }
                                 <div className="user-name-circle clearfix">
-                                   <NavLink to="/talk-to-us">
+                                   {/* <NavLink to="/talk-to-us">
                                    <p className="name">Talk to Us</p>
                                    <img  style={{ margin:'5px',marginTop:'5px'}}src={selfCareImage} />
 
-                                   </NavLink>
+                                   </NavLink> */}
                                 </div>
                                 <span className="notification-top"><i className="demo-icon icon-alert-active"></i></span>
                               

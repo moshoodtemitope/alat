@@ -101,7 +101,7 @@ import {talktoUsConstant} from '../../redux/constants/talk-to-us/talk-to-us.cons
                         
                                     <h4 className="m-b-10 center-text hd-underline">Talk to Us</h4>
                                     <center>
-                                    <p className="header-info">There's always an ALAT Assitance eager to help u</p>
+                                    <p className="info-text2">There's always an ALAT Assitance eager to help u</p>
                                     <div style={{display:"flex", justifyContent:'center', alignItems:"center", borderBottom:"1px solid #f5f5f5", marginBottom:20 }}> 
                                         <div style={{marginRight:20, margin:5}}>
                                         <img src={emailCenter}/><span style={{marginLeft:5}} >help@alat.ng</span>
