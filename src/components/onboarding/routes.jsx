@@ -1,5 +1,8 @@
 import * as React from 'react';
 import Login from "./login";
+import ProvideEmail from "./forgot-password/provide-email";
+import ProvideSecurityAnswer from "./forgot-password/security-answer";
+import SuccessMessage from "./forgot-password/success";
 import Signup from "./signup";
 import Bvn from "./signup/bvn";
 import VerifyBvn from "./signup/verify-bvn";
@@ -82,6 +85,10 @@ class OnboardingRoute extends React.Component {
                 <Route path="/register/confirm-bvndetails" component={ConfirmBvnDetails} />
                 <Route path="/register/security-questions" component={SecurityQuestions} />
                 <Route path="/register/doc-upload" component={DocumentUplaod} />
+
+                <Route exact path="/forgot-password" component={ProvideEmail} />
+                <Route path="/forgot-password/security-question" component={ProvideSecurityAnswer} />
+                <Route path="/forgot-password/success" component={SuccessMessage} />
                 {/* <PrivateRoute fakeAuth={fakeAuth} exact path='/dashboard' component={Dashboard} />*/}
                 {/*<Route component={Error404} />*/}
                 <Route path="/signup-landing" component={OnboardingLandingPage} />

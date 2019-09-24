@@ -1122,6 +1122,10 @@ ul.menu-side {
     z-index: 10;
     overflow: auto;
 }
+.linkcta:hover{
+  cursor: pointer;
+  text-decoration: underline;
+}
 .ndprMsg {
   position: relative;
   top: 100px;
