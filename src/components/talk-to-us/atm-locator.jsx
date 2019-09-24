@@ -6,36 +6,51 @@ import {talktoUsConstant} from '../../redux/constants/talk-to-us/talk-to-us.cons
 import * as actions from "../../redux/actions/talk-to-us/talk-to-us-action";
 import './talk-to-us.css'
 
-
-
-
 class AtmLocator extends Component{
     constructor(props){
         super(props)
         this.state={
             user: JSON.parse(localStorage.getItem("user")),
             visible:false,
-            data: [],
-            filtered: [],
+            value:'',
+            atm:null,
 
 
         }
     }
     handleInputChange = (event) => {
-        let keyword = event.target.value;
-        console.log('=========',keyword)
+        this.search(event.target.value)
+        this.setState({ value: event.target.value });
 
-        const data=this.props.get_bank_branch.data.response.Atms
-        let filtered=data.filter((item)=>{
-          return item.Area.indexOf(keyword) > -1
-        });
-        if (keyword === "") {
-          filtered = [];
-        }
-        this.setState({
-          filtered,
-        })
-      };
+    }
+
+    search(){
+        const atm = this.props.get_bank_branch.data.response;
+        console.log(atm)
+        this.setState({ atm })
+    }
+
+    //     const data=this.props.get_bank_branch.data.response.Atms;
+    //     let container = [];
+        
+    //     let computeData = (aData, item) => {
+    //         aData.map((element) => {
+    //             if(element == keyword){
+    //                 container.push(item);
+    //             }
+    //         })
+    //     }
+
+    //     data.map((item) => {
+    //         let aData = item.Area.split('');
+    //         computeData(aData, item)
+         
+    //     });
+
+    //     this.setState({
+    //       filtered: container
+    //     })
+    //   };
 
     componentDidMount(){
         this.fetchAtmBranches()
@@ -176,9 +191,8 @@ class AtmLocator extends Component{
                         console.log('=========',atmlocations)
                 return(
                     <div className="location">
-                    
+
                     { atmlocations.map((atm, index)=>(
-                           
                            <div className="location">
                                 <div className="location-icon center-align"><img src={atmImage} className=".mdi-map-marker"></img></div>
                                 <div className="location-details">
@@ -186,8 +200,6 @@ class AtmLocator extends Component{
                                     <p className="full-address">{atm.Address}</p>
                                 </div>
                             </div>
-                           
-
                     ))}
                     
                 </div>       
@@ -220,6 +232,17 @@ class AtmLocator extends Component{
 
         }
         
+        resultu = () => {
+            if (this.state.atm !== null && this.state.atm !== "") {
+                return this.renderSearchAtms();
+            }
+            else{
+                return this.renderAtmLocations(); 
+            }
+        
+            
+    
+        }
 
     render(){
         return(
@@ -267,7 +290,7 @@ class AtmLocator extends Component{
                                             autoComplete="off" 
                                             className="form-control" 
                                              placeholder="Search..."
-                                             value={this.state.filtered}
+                                             value={this.state.value}
                                              onChange={this.handleInputChange}/>
                                     </div>
                                     {/* <div>
@@ -280,7 +303,7 @@ class AtmLocator extends Component{
                                                 this.state.visible ?this.renderBankBranch() :this.renderAtmLocations()
 
                                             }
-                                            {/* {this.renderSearchAtms()} */}
+                                            {this.resultu()}
                                       
 
                                             
