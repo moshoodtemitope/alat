@@ -31,6 +31,7 @@ export const routes = {
     EMAIL_FOR_FORGETPASSWORD: BASEURL + '/UserSecurityApi/api/v1/Account/EmailForForgetPassword',
     VERIFYUSER_FOR_FORGETPASSWORD: BASEURL + '/UserSecurityApi/api/v1/Account/VerifyUserForForgetPassword',
     RESET_PASSWORD_WITHPIN: BASEURL + '/UserSecurityApi/api/v1/Account/CallResetPasswordWithPin',
+    GET_QUESTIONBY_TOKEN: BASEURL + '/UserSecurityApi/api/v1/Account/GetUserQuestionByToken?token=',
 
     //account maintanance
     CUSTOMERACCOUNTS_ACCOUNT_MAINTANANCE: BASEURL + '/AccountMaintenance/api/account/customeraccounts',

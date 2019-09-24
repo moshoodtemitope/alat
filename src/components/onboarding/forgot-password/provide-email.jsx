@@ -9,6 +9,10 @@ import {alertActions} from "../../../redux/actions/alert.actions";
 import {userActions} from "../../../redux/actions/onboarding/user.actions";
 import { Textbox } from 'react-inputs-validation';
 import 'react-inputs-validation/lib/react-inputs-validation.min.css';
+import {
+    SENDEMAILFOR_FORGOTPW_SUCCESS,
+    SENDEMAILFOR_FORGOTPW_PENDING,
+    SENDEMAILFOR_FORGOTPW_FAILURE} from "../../../redux/constants/onboarding/user.constants";
 
 // const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -31,46 +35,25 @@ class ProvideEmail extends React.Component{
           });
           
           //dispatch(userActions.logout());
-          this.handleChange = this.handleChange.bind(this);
+        //   this.handleChange = this.handleChange.bind(this);
           this.handleSubmit = this.handleSubmit.bind(this);
       }
 
-      handleChange(e) {
-          const { name, value } = e.target;
-          this.setState({ [name]: value });
-      }
+    //   handleChange(e) {
+    //       const { name, value } = e.target;
+    //       this.setState({ [name]: value });
+    //   }
 
-      // validateForm(email, password) {
-      //       const errors = [];
-      //       if (email.length < 1) {
-      //           this.setState({ hasErrors: true });
-      //           //this.setState(this.state.errors.email, "Email or Username is required to ProvideEmail into your account");
-      //           // this.setState(this.state.errors.email, {array: {$push: ["First"]}});
-      //           errors['email'] = "Email or Username is required to login into your account";
-      //       }
-      //       // if (email.split("").filter(x => x === "@").length !== 1) {
-      //       //     errors.push("Email should contain a @");
-      //       // }
-      //       // if (email.indexOf(".") === -1) {
-      //       //     errors.push("Email should contain at least one dot");
-      //       // }
-      //       if (password.length < 1) {
-      //           this.setState({ hasErrors: true });
-      //           errors['password'] = "Password is required";
-      //           //this.setState(this.state.errors.password, "Password is required");
-      //       }
-      //       // console.log(errors);
-      //       return errors;
-      // }
+      
 
       handleSubmit(e) {
           e.preventDefault();
           this.setState({ submitted: true });
-          const { email, password } = this.state;
+          const { email} = this.state;
           const { dispatch } = this.props;
-          if (email && password) {
+          if (email.length>=7) {
               this.setState({ submitted: true });
-              dispatch(userActions.login(email, password));
+              dispatch(userActions.sendForgotPwEmail({email}));
           }
           else{
               this.setState({ submitted: false });
@@ -80,6 +63,7 @@ class ProvideEmail extends React.Component{
       render(){
         const { email, submitted, error } = this.state;
         const {alert } = this.props;
+        let   sendemailrequest = this.props.sendemailfor_forgotpw;
         return (
             <OnboardingContainer>
                 <div className="row">
@@ -94,10 +78,10 @@ class ProvideEmail extends React.Component{
                 </div>
                 <div className="row">
                     <div className="col-12">
-                        {alert && alert.message && !alert.message.includes("'closed'") &&
-                        <div className={`info-label ${alert.type}`}>{alert.message}</div>
-                        }
                         <form className="onboard-form" onSubmit={this.handleSubmit}>
+                        {(sendemailrequest.is_processing===false && sendemailrequest.fetch_status===SENDEMAILFOR_FORGOTPW_FAILURE)&&
+                            <div className="info-label error">{sendemailrequest.sendmail_status.error}</div>
+                        }
                             {error && <div className="info-label error">{error}</div>}
                             <div className="input-ctn">
                                 <label>Email Address</label>
@@ -118,7 +102,8 @@ class ProvideEmail extends React.Component{
                                     }}
                                 />
                             </div>
-                            <button type="submit" className="btn-alat btn-block">Submit</button>
+                            <button type="submit" disabled={sendemailrequest.is_processing} 
+                                    className="btn-alat btn-block">{sendemailrequest.is_processing?'Please wait...':'Submit'}</button>
                         </form>
                         <p className="text-center"> <NavLink to="/">Back</NavLink></p>
                         <p className="text-center m-t-20">Need help? <a target="_blank" href="http://www.alat.ng/contact-us">We are here for you</a></p>
@@ -134,7 +119,8 @@ function mapStateToProps(state) {
       
       // const { storage } = state.storage_reducer;
     return {
-        alert
+        alert,
+        sendemailfor_forgotpw : state.sendemailfor_forgotpw_request,
     };
 }
 
