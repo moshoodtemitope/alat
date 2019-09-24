@@ -28,7 +28,7 @@ class AtmLocator extends Component{
     
         this.setState(prevState => {
           const filteredData = data.filter(element => {
-            return element.name.toLowerCase().includes(query.toLowerCase());
+            return this.props.get_bank_branch.data.response.toLowerCase().toString().includes(query.toLowerCase());
           });
     
           return {
