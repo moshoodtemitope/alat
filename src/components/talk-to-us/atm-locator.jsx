@@ -23,6 +23,8 @@ class AtmLocator extends Component{
     }
     handleInputChange = (event) => {
         let keyword = event.target.value;
+        console.log('=========',keyword)
+
         const data=this.props.get_bank_branch.data.response.Atms
         let filtered=data.filter((item)=>{
           return item.Area.indexOf(keyword) > -1
@@ -31,7 +33,7 @@ class AtmLocator extends Component{
           filtered = [];
         }
         this.setState({
-          filtered
+          filtered,
         })
       };
 
@@ -115,7 +117,6 @@ class AtmLocator extends Component{
             }
             else if(get_bank_branch.message === talktoUsConstant.GET_BANK_BRANCHES_SUCCESS){
                     let atmlocations = get_bank_branch.data.response.Atms;
-                            console.log('=========',atmlocations)
                     return(
                         <div className="location">
                         
