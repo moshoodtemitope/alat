@@ -27,7 +27,7 @@ const selectedTime = [
          this.state={
             user: JSON.parse(localStorage.getItem("user")),
             DateErrorInvalid:false,
-            Amount:"",
+            Amount:null,
             Description:null,
             AmountInvalid:false,
             MessageInvalid:false,
@@ -84,9 +84,10 @@ const selectedTime = [
         this.setState({ TransactionDate: TransactionDate });
     };
     checkAmount = () => {
-        if (this.state.Amount == "") {
+        if (this.state.Amount == null || this.state.Amount) {
             this.setState({ AmountInvalid: true });
-            return true;
+        }else{
+            this.setState({ AmountInvalid: false });
         }
     };
     checkChannelValidity = () => {
@@ -104,7 +105,7 @@ const selectedTime = [
         }
     }
     checkBankValidity =()=>{
-        if(this.state.BankName ==null || this.state.BankName == ""){
+        if(this.state.BankName == null || this.state.BankName == ""){
             this.setState({bankInvalid:true});
         }else{
             this.setState({bankInvalid:false})
@@ -222,15 +223,14 @@ const selectedTime = [
     }
     handleChange = (e) => {
         let name = e.target.value;
-        console.log(name)
         this.setState({ [name]: e.target.value })
     };
 
-    handleBank=()=>{
+    handleBank=(e)=>{
         let Bank = e.target.value;
         let name = event.target.name;
+        console.log(Bank)
 
-        console.log(sourceType);
         this.setState({Bank:Bank})
         this.setState({[name] : event.target.value})
 
@@ -238,9 +238,7 @@ const selectedTime = [
     handleSourceType =(e)=>{
         let sourceType = e.target.value;
         let name = event.target.name;
-
-        console.log(sourceType);
-        this.setState({SourceTypeId:sourceType})
+         this.setState({SourceTypeId:sourceType})
         this.setState({[name] : event.target.value})
 
     }
