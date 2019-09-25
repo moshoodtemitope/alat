@@ -147,7 +147,7 @@ class GoalOtp extends Component {
             );
             if (this.props.pageState == 0) {
                 this.props.resetPageState(2);
-                verify = <Redirect to="/bills/data/buy/success" />
+                verify = <Redirect to="/loans/alat-loans/success" />
             }
         }
 

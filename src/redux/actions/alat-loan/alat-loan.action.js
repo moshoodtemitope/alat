@@ -151,7 +151,7 @@ export const getLoanState = (token, data) => {
         return consume
             .then(response => {
                 console.log(response.data);
-                console.log("response.data");
+                console.log("--------///response.data");
                 dispatch(success(response.data));
             })
             .catch(error => {
@@ -204,8 +204,12 @@ export const sendLoan = (token, data, isResending = false) => {
         let consume = ApiService.request(routes.SEND_ACCEPT_LOAN, "POST", data, SystemConstant.HEADER);
         return consume
             .then(response => {
-                if(!isResending) dispatch(setLoanDetail(data))
-                dispatch(success());
+                if(!isResending){
+                    dispatch(setLoanDetail(data))
+                    dispatch(success());
+                }else{
+                    dispatch(isFetchingFalse());
+                } 
             })
             .catch(error => {
 

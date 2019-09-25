@@ -13,6 +13,7 @@ import * as actions from '../../../redux/actions/alat-loan/export';
 import AlatLoansContainer from '../alat-loan-container';
 import Success from '../../account-settings/shared/success';
 import AlatLoanContainer from '../alat-loan-container';
+import Checkbox from '../../../shared/elements/_checkbox';
 
 const pattern = /^\d+$/;
 class Apply extends Component {
@@ -20,6 +21,8 @@ class Apply extends Component {
         super(props);
         this.state = {
             selectedOffer: null,
+            selectedAccount: null,
+            isChecked: false,
             validation: {
                 accountError: {
                     hasError: false,
@@ -39,6 +42,17 @@ class Apply extends Component {
                         options: [],
                     },
                     label: 'Select Loan',
+                    value: '',
+                    validation: {},
+                    loaded: false,
+                    valid: true
+                },
+                activeAccount: {
+                    elementType: 'select',
+                    elementConfig: {
+                        options: [],
+                    },
+                    label: 'Select account to credit',
                     value: '',
                     validation: {},
                     loaded: false,
@@ -91,36 +105,76 @@ class Apply extends Component {
 
     componentDidMount() {
         this.props.getLoanOffers(this.state.user.token);
+        this.props.fetchDebitableAccounts(this.state.user.token)
+    }
+
+    sortAccountsForSelect = () => {
+        let arrayToDisplay = [];
+        console.log(this.props.accounts);
+        console.log("this.props.accounts");
+
+        if (this.props.accounts.length >= 1) {
+            this.props.accounts.map((data => arrayToDisplay.push({ value: data.AccountNumber, label: data.AccountDescription + " - ₦" + formatAmount(data.AvailableBalance) })));
+        } else {
+            arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account Available' }];
+        }
+        console.log(arrayToDisplay)
+
+        const updatedSelectOption = {
+            ...this.state.applyForm
+        }
+        updatedSelectOption.activeAccount.elementConfig.options = arrayToDisplay;
+        updatedSelectOption.activeAccount.loaded = true;
+        this.setState({ applyForm: updatedSelectOption });
+    }
+
+    accountChangedHandler = (selectedAccount) => {
+        var validation = { ...this.state.validation };
+        validation.accountError.hasError = false;
+        this.setState({ selectedAccount, validation });
+        console.log(`Option selected:`, selectedAccount);
     }
 
 
     sortOffersForSelect = () => {
-        var arrayToDisplay = [];
+        let arrayToDisplay = [];
         console.log(this.props.loanOffers);
         console.log("this.props.offer");
 
-        // if (this.props.loanOffers.length >= 1) {
-        //     this.props.loanOffers.map((data => arrayToDisplay.push({ value: data.AccountNumber, label: data.AccountDescription + " - ₦" + formatAmount(data.AvailableBalance) })));
-        // } else {
-        //     arrayToDisplay = [{ value: '', displayValue: 'No offers Available' }];
-        // }
-        // console.log(arrayToDisplay)
+        if (this.props.loanOffers.length >= 1) {
+            this.props.loanOffers.map((data => arrayToDisplay.push({
+                value: data.AmountOffered,
+                label: "₦" + formatAmount(data.AmountOffered) + " at " + formatAmount(data.Interest) + "% in " + data.Tenure + "days",
+                providerCode: data.ProviderCode,
+                offerId: data.OfferId,
+                interest: data.Interest,
+                amountOffered: data.AmountOffered,
+                amountPayable: data.AmountPayable,
+                term: data.Terms
+            })));
+        } else {
+            arrayToDisplay = [{ value: '', displayValue: 'No offers Available' }];
+        }
+        console.log(arrayToDisplay)
 
-        // const updatedSelectOption = {
-        //     ...this.state.applyForm
-        // }
-        // updatedSelectOption.activeOffer.elementConfig.options = arrayToDisplay;
-        // updatedSelectOption.activeOffer.loaded = true;
-        // this.setState({ applyForm: updatedSelectOption });
+        const updatedSelectOption = {
+            ...this.state.applyForm
+        }
+        updatedSelectOption.activeOffer.elementConfig.options = arrayToDisplay;
+        updatedSelectOption.activeOffer.loaded = true;
+        this.setState({ applyForm: updatedSelectOption });
     }
 
-    accountChangedHandler = (selectedOffer) => {
+    offerChangedHandler = (selectedOffer) => {
         var validation = { ...this.state.validation };
         validation.accountError.hasError = false;
         this.setState({ selectedOffer, validation });
         console.log(`Option selected:`, selectedOffer);
     }
 
+    handleClick = () => {
+        this.setState({ isChecked: !this.state.isChecked });
+    }
 
     inputChangedHandler = (event, inputIdentifier) => {
         if (this.props.alert.message) this.props.clearError();
@@ -162,7 +216,6 @@ class Apply extends Component {
     }
 
     pinInputValidation = (value) => {
-
         return (value.length == 4 && pattern.test(value));
     }
 
@@ -195,14 +248,14 @@ class Apply extends Component {
 
             const payload = {
                 AlatPin: this.state.applyForm.pin.value,
-                DebitAccount: (this.state.selectedOffer ? this.state.selectedOffer.value : this.state.applyForm.activeAccount.elementConfig.options[0].value),
+                AccountNumber: (this.state.selectedAccount ? this.state.selectedAccount.value : this.state.applyForm.activeAccount.elementConfig.options[0].value),
                 LoanId: this.props.loanInfo.loanId,
                 Amount: parseFloat(this.state.applyForm.amount.value),
-                ProviderCode: this.props.loanInfo.providerCode
+                ProviderCode: this.state.selectedOffer.providerCode,
             }
             console.log("all good", payload);
 
-            this.props.onRepayLoan(this.state.user.token, payload);
+            // this.props.onRepayLoan(this.state.user.token, payload);
         }
     }
 
@@ -210,8 +263,9 @@ class Apply extends Component {
 
 
     render() {
-        let liquidateLoan = <Redirect to='/loans/alat-loans' />
-        if (this.props.loanInfo && !this.props.isSuccess) {
+        let form = <Redirect to='/loans/alat-loans' />
+
+        if (this.props.loanStatusData) {
             const formElementArray = [];
             for (let key in this.state.applyForm) {
                 formElementArray.push({
@@ -222,9 +276,13 @@ class Apply extends Component {
             if (this.props.loanOffers.length >= 1 && !this.state.applyForm.activeOffer.loaded) {
                 this.sortOffersForSelect();
             }
-            const { selectedOffer } = this.state;
 
-            liquidateLoan = (
+            if (this.props.accounts.length >= 1 && !this.state.applyForm.activeAccount.loaded) {
+                this.sortAccountsForSelect();
+            }
+            const { selectedOffer, selectedAccount } = this.state;
+
+            form = (
                 <Fragment>
                     <AlatLoanContainer>
                         <div className="col-sm-12">
@@ -238,67 +296,86 @@ class Apply extends Component {
                                                     {(this.props.alert.message) ?
                                                         <div className="info-label error">{this.props.alert.message} {this.props.alert.message.indexOf("rror") != -1 ? <span onClick={() => { this.props.getLoanOffers(this.state.user.token) }} style={{ textDecoration: "underline", cursor: "pointer" }}>Click here to try again</span> : null}</div> : null
                                                     }
-                                                    {/* <div class="al-card no-pad">
+                                                    <div class="al-card no-pad">
                                                         <div class="trans-summary-card">
                                                             <div class="name-amount clearfix">
-                                                                <p className="pl-name-email">{this.props.loanInfo.name} <span>Loan Name</span></p>
-                                                                <p className="pl-amount" style={{ textAlign: "right" }}>{"₦" + formatAmount(this.props.loanInfo.outstanding)} <span style={{ display: "block", marginTop: 5 }}>Outstanding Balance</span></p>
+                                                                <p className="pl-name-email">{selectedOffer ? "₦" + formatAmount(selectedOffer.amountPayable) : "₦" + 0} <span>Loan Repayment</span></p>
+                                                                <p className="pl-amount" style={{ textAlign: "right" }}>{selectedOffer ? selectedOffer.interest + "%" : 0 + "%"} <span style={{ display: "block", marginTop: 5 }}>Loan Interest</span></p>
                                                             </div>
                                                         </div>
-                                                    </div> 
+                                                    </div>
 
+                                                    <div className="row">
+                                                        {formElementArray.map((formElement) => {
+                                                            if (formElement.id == "amount") {
+                                                                return (
+                                                                    <div className="input-ctn col-md-12" key={formElement.id}>
+                                                                        <label>{formElement.config.label}</label>
+                                                                        <Input
+                                                                            elementType={formElement.config.elementType}
+                                                                            elementConfig={formElement.config.elementConfig}
+                                                                            value={formElement.config.valueToDisplay}
+                                                                            changed={(event) => this.inputChangedHandler(event, formElement.id)}
+                                                                            wrongInput={!formElement.config.valid} />
+                                                                        {formElement.id == "amount" ?
+                                                                            this.state.validation.amountEmpty ? <p className="text-danger">Amount is Required</p> :
+                                                                                this.state.validation.higherPay ? <p className="text-danger">Amount should not exceed your outstanding</p> : null
+                                                                            : null}
+                                                                    </div>
+                                                                )
+                                                            } else if (formElement.config.elementType !== "input") {
+                                                                return (
+                                                                    <div className="input-ctn col-md-12" key={formElement.id}>
+                                                                        <label>Select an account to debit</label>
+                                                                        <Select key={formElement.id}
+                                                                            value={formElement.id == "activeOffer" ?
+                                                                                (selectedOffer) :
+                                                                                (selectedAccount == null ? formElement.config.elementConfig.options[0] : selectedAccount)}
+                                                                            onChange={formElement.id == "activeOffer" ? this.offerChangedHandler : this.accountChangedHandler}
+                                                                            options={formElement.config.elementConfig.options}
+                                                                            placeholder={this.props.alert.message ? "Failed. Please try again" :
+                                                                                formElement.id == "activeOffer" ?
+                                                                                    (this.props.loanOffers.length > 0 ? "Select Loan Offer..." : "Loading Loan Offers...") :
+                                                                                    (this.props.accounts.length > 0 ? "Select Account..." : "Loading Account...")}
+                                                                        />
+                                                                        {this.state.validation.accountError.hasError ? <p className="text-danger">{this.state.validation.accountError.error}</p> : null}
+                                                                    </div>
 
-                                                      {formElementArray.map((formElement) => {
-                                                        if (formElement.id == "amount") {
+                                                                )
+                                                            };
                                                             return (
-                                                                <div className="input-ctn" key={formElement.id}>
+                                                                <div className={formElement.id == "expiryDate" || formElement.id == "cvv" ? "col-md-6 input-ctn" : "input-ctn col-md-12"} key={formElement.id}>
                                                                     <label>{formElement.config.label}</label>
                                                                     <Input
                                                                         elementType={formElement.config.elementType}
                                                                         elementConfig={formElement.config.elementConfig}
-                                                                        value={formElement.config.valueToDisplay}
+                                                                        value={formElement.config.value}
                                                                         changed={(event) => this.inputChangedHandler(event, formElement.id)}
                                                                         wrongInput={!formElement.config.valid} />
-                                                                    {formElement.id == "amount" ?
-                                                                        this.state.validation.amountEmpty ? <p className="text-danger">Amount is Required</p> :
-                                                                            this.state.validation.higherPay ? <p className="text-danger">Amount should not exceed your outstanding</p> : null
-                                                                        : null}
+                                                                    {formElement.id == "pin" && (this.state.validation.pinError.hasError) ? <p className="text-danger">{this.state.validation.pinError.error}</p> : null}
                                                                 </div>
                                                             )
-                                                        } else if (formElement.config.elementType !== "input") {
-                                                            return (
-                                                                <div className="input-ctn" key={formElement.id}>
-                                                                    <label>Select an account to debit</label>
-                                                                    <Select key={formElement.id}
-                                                                        value={selectedOffer == null ? formElement.config.elementConfig.options : selectedOffer}
-                                                                        onChange={this.accountChangedHandler}
-                                                                        options={formElement.config.elementConfig.options}
-                                                                        placeholder={this.props.alert.message ? "Failed. Please try again" : (this.props.accounts.length > 0 ? "Select..." : "Loading Account...")}
-                                                                    />
-                                                                    {this.state.validation.accountError.hasError ? <p className="text-danger">{this.state.validation.accountError.error}</p> : null}
-                                                                </div>
-                                                            )
-                                                        };
-                                                        return (
-                                                            <div className="input-ctn" key={formElement.id}>
-                                                                <label>{formElement.config.label}</label>
-                                                                <Input
-                                                                    elementType={formElement.config.elementType}
-                                                                    elementConfig={formElement.config.elementConfig}
-                                                                    value={formElement.config.value}
-                                                                    changed={(event) => this.inputChangedHandler(event, formElement.id)}
-                                                                    wrongInput={!formElement.config.valid} />
-                                                                {formElement.id == "pin" && (this.state.validation.pinError.hasError) ? <p className="text-danger">{this.state.validation.pinError.error}</p> : null}
-                                                            </div>
-                                                      )
 
-                                                    })} */}
+                                                        })}
+                                                    </div>
+
 
                                                     <div className="row">
+                                                        <div className="col-md-12">
+                                                            <Checkbox
+                                                                id="checkbox3"
+                                                                value="random3"
+                                                                name="example"
+                                                                label={
+                                                                    <span>I accept terms and conditions. <a rel="noopener noreferrer" href="https://www.alat.ng/loan-terms" target="_blank"> Click here to read</a></span>
+                                                                }
+                                                                isChecked={this.state.isChecked}
+                                                                changed={this.handleClick} />
+                                                            {!this.state.isChecked && this.state.validation.unchecked ? <span className="text-center text-danger">Kindly accept terms and conditions to continue</span> : null}
+                                                        </div>
                                                         <div className="col-sm-12">
-                                                            {this.props.loanInfo.charge > 0 ? <p className="info-text m-b-20" style={{ color: "#5C3158" }}>You will be charged a fee of ₦{this.props.loanInfo.charge} for this transaction</p> : null}
                                                             <center>
-                                                                <button disabled={this.props.fetching} onClick={this.onSubmitForm} className="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Confirm"}</button>
+                                                                <button onClick={this.onSubmitForm} className="btn-alat m-t-10 m-b-20 text-center">Click Here to Accept Terms</button>
                                                             </center>
                                                         </div>
                                                     </div>
@@ -318,9 +395,10 @@ class Apply extends Component {
 
             )
         }
-        if (this.props.pageState == 0 && this.props.isSuccess) {
-            this.props.resetPageState(2);
-            liquidateLoan = <Success
+        if (this.props.pageState == 0) {
+            console.log("sucess already...in apply others")
+            // this.props.resetPageState(2);
+            form = <Success
                 message={"You just liquidated your loan with a sum of ₦" + this.state.applyForm.amount.valueToDisplay}
                 homeUrl="/loans/alat-loans"
                 isActionButton={true}
@@ -328,14 +406,15 @@ class Apply extends Component {
             />
         }
 
-        return liquidateLoan;
+        return form;
     }
 }
 
 const mapStateToProps = state => {
     return {
+        accounts: state.data_reducer.debitableAccounts,
         loanOffers: state.alat_loan_reducer.loanOffers,
-        loanInfo: state.alat_loan_reducer.loanInfo,
+        loanStatusData: state.alat_loan_reducer.loanStatusData,
         pageState: state.alat_loan_reducer.pageState,
         alert: state.alert,
         isSuccess: state.alat_loan_reducer.isSuccess,
@@ -345,6 +424,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         getLoanOffers: (token) => dispatch(actions.getLoanOffers(token)),
+        fetchDebitableAccounts: (token) => dispatch(dataActions.fetchDebitableAccounts(token)),
         // clearError: () => dispatch(alertActions.clear()),
         // onRepayLoan: (token, data) => dispatch(actions.liquidateLoan(token, data)),
         // resetPageState: (code) => dispatch(actions.resetBillPage(code)),

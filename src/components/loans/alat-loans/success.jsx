@@ -2,12 +2,12 @@ import React, { Component } from 'React';
 import { Link, Redirect } from 'react-router-dom';
 
 import { Switch } from '../../../shared/elements/_toggle';
-import { Input } from './input';
 import successLogo from '../../../assets/img/success.svg';
 import { formatAmount } from '../../../shared/utils';
+import { alertActions } from "../../../redux/actions/alert.actions";
 import { connect } from 'react-redux';
 
-import * as actions from '../../../redux/actions/dataActions/export';
+// import * as actions from '../../../redux/actions/dataActions/export';
 
 class Success extends Component {
     constructor(props) {
@@ -78,7 +78,7 @@ class Success extends Component {
 
     render() {
         var success = <Redirect to='/loans/alat-loans' />
-        if (this.props.loanStatusData != null   ) {
+        if (this.props.loanStatusData != null) {
             const formElementArray = [];
             for (let key in this.state.setAutomationForm) {
                 formElementArray.push({
@@ -196,10 +196,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        sendLoanDetail: (token, data, resending) => dispatch(actions.sendLoan(token, data, resending)),
-        resetPageState: (code) => dispatch(actions.resetPageState(code)),
-        sendLoanWithOtp: (token, data) => dispatch(actions.sendLoanWithOtp(token, data)),
-        clearLoanInfo: () => dispatch(actions.clearLoanInfo()),
+        // sendLoanDetail: (token, data, resending) => dispatch(actions.sendLoan(token, data, resending)),
+        // resetPageState: (code) => dispatch(actions.resetPageState(code)),
         clearError: () => dispatch(alertActions.clear())
     }
 }

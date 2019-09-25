@@ -161,6 +161,7 @@ class LiquidateLoan extends Component {
     goHome = (event) => {
         if(event) event.preventDefault();
         this.props.clearLoanInfo();
+        this.props.history.push('/loans/alat-loans');
     }
 
     onSubmitForm = (event) => {
@@ -309,8 +310,8 @@ class LiquidateLoan extends Component {
 
             )
         }
-        if (this.props.pageState == 0 && this.props.isSuccess) {
-            this.props.resetPageState(2);
+        if (this.props.pageState == 0) {
+            // this.props.resetPageState(2);
             liquidateLoan = <Success
                 message={"You just liquidated your loan with a sum of ₦" + this.state.liquidateLoanForm.amount.valueToDisplay}
                 homeUrl="/loans/alat-loans"

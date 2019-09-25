@@ -29,6 +29,7 @@ class Index extends Component {
     onShowModal = (event) => {
         console.log("dot here")
         event.preventDefault();
+        this.props.clearError();
         this.setState({ showModal: true });
     }
 
