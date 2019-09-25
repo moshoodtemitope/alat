@@ -444,7 +444,6 @@ GetResidentialAddress = () => {
                         apartment: this.state.apartment,
                         stateId: parseInt(this.state.stateGvId), 
                         lgaId: parseInt(this.state.localGvId),
-                        // lcdaId: 8,
                         isReactivation: false,
                         address: this.state.personalAddress
                     }
