@@ -113,7 +113,7 @@ class HeaderContainer extends React.Component{
         // console.log(this.props);
         // this.props.dispatch(userActions.getAll());
         this.getProfileImage();
-        this.getNDPRStatus();
+        // this.getNDPRStatus();
     }
 
     getProfileImage(){
