@@ -323,6 +323,6 @@ class CreateStash extends React.Component {
     }
 }
 const mapStateToProps = state => ({
-    create_stash_goal_step1:state.create_stash_step1
+    create_stash_goal_step1:state.CreateGoalReducerPile.create_stash_step1
 });
 export default connect(mapStateToProps)(CreateStash);

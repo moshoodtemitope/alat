@@ -20,11 +20,15 @@ import TransferHome from "./transfer/transfer-home";
 import FundAccountIndex from './fund-account/index';
 import AccountSettings from './account-settings/container';
 import LoansIndex from './loans';
+import InsuranceContainer from './insurance/insurance-container';
 import CardsContainer from './cards/cards-container';
 import RemittanceContainer from './remittance/remittance-container';
 import LifestyleIndex from './lifestyle/index'
 import SavingsContainer from './savings/index'
 import { userActions } from "../redux/actions/onboarding/user.actions";
+import ProfileIndex from './profile';
+import TalkToUsIndex from './talk-to-us/index'
+
 
 
 
@@ -197,6 +201,8 @@ class AuthenticatedRoutes extends React.Component {
                     <PrivateRoute path='/loans' authed={this.props.user} component={LoansIndex}/>
                     <PrivateRoute path='/account' authed={this.props.user} component={Accounts}/>
                     <PrivateRoute path='/settings' authed={this.props.user} component={AccountSettings}/>
+                    <PrivateRoute path='/profile' authed={this.props.user} component={ProfileIndex} />
+                    <PrivateRoute path='/insurance' authed={this.props.user} component={InsuranceContainer}/>
                     <PrivateRoute path='/cards' authed={this.props.user} component={CardsContainer}/>
                     <PrivateRoute path='/hotlist' authed={this.props.user} component={CardsContainer}/>
                     <PrivateRoute path='/setcard-pin' authed={this.props.user} component={CardsContainer}/>
@@ -205,6 +211,7 @@ class AuthenticatedRoutes extends React.Component {
                     <PrivateRoute path='/receive-money' authed={this.props.user} component={RemittanceContainer}/>
                     <PrivateRoute path='/lifestyle' authed={this.props.user} component={LifestyleIndex}/>
                     <PrivateRoute path='/savings' authed={this.props.user} component={SavingsContainer}/>
+                    <PrivateRoute path='/talk-to-us' authed={this.props.user} component={TalkToUsIndex}/>
 
 
                     

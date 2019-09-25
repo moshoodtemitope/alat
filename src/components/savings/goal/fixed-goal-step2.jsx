@@ -291,8 +291,10 @@ class FixedGoal extends React.Component {
 
                                         </div>
                                         <center>
-                                            <a style={{ cursor: "pointer" }} onClick={this.OnBackClick} className="add-bene m-t-50">Go Back</a>
-                                        </center>
+                                        <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(fixedGoalConstants.FIXED_GOAL_REDUCER_CLEAR));
+                                                this.props.history.push('/savings/fixed-goal') }} className="add-bene m-t-50">
+                                                Go back
+                                        </a>                                        </center>
 
                                     </div>
 
@@ -310,7 +312,12 @@ class FixedGoal extends React.Component {
     }
 }
 const mapStateToProps = state => ({
-    fixed_goal_step1: state.fixed_goal_step1,
-    fixed_goal_step2:state.fixed_goal_step2
+    fixed_goal_step1: state.GoalReducerPile.fixed_goal_step1,
+    fixed_goal_step2:state.GoalReducerPile.fixed_goal_step2
 });
 export default connect(mapStateToProps)(FixedGoal);
+
+
+
+
+

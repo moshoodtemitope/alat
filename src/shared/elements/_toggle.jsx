@@ -10,7 +10,7 @@ export const Switch = function(props) {
 	);
 }
 
-const ToggleButton = function(props) {
-		let classNames = ["toggle-button", props.isChecked ? "toggle-button_position-right" : "toggle-button_position-left"].join(" ");
-		return (<div className={props.isChecked? "toggle-button toggle-button_position-right" : "toggle-button toggle-button_position-left"}></div>);
+export const ToggleButton = function(props) {
+		let classNames = ["toggle-button", (props.isChecked) ? "toggle-button_position-right" : "toggle-button_position-left"].join(" ");
+		return (<div className={props.isChecked ? "toggle-button toggle-button_position-right" : "toggle-button toggle-button_position-left"}></div>);
 };

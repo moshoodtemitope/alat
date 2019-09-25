@@ -211,7 +211,6 @@ class FixedGoal extends Component {
         let amount= parseFloat(this.removeComma(this.state.targetAmount));
         let startDate = moment(this.state.startDate, 'DD MMMM, YYYY');
         let enddate = moment(this.state.endDate, 'DD MMMM, YYYY');
-        // let date = moment(enddate, 'DD-MM-YYYY').add(res, 'days');
         res = enddate.diff(startDate, 'days');
         let months = Math.round((res/365) * 12);
         let debitAmount = (amount/months).toFixed(2);
@@ -267,7 +266,7 @@ class FixedGoal extends Component {
 
         return (
             <Fragment>
-                        <div className="row">
+                    <div className="row">
                         {this.gotoStep2()}
 
                             <div className="col-sm-12">
@@ -296,7 +295,7 @@ class FixedGoal extends Component {
                                       <div className="max-600">
                                        <div className="al-card no-pad">
                                        <h4 className="m-b-10 center-text hd-underline">Create a Fixed Goal</h4>
-                                       <p className="header-info">Save daily, weekly or monthly towards a target amount, earn <span style={{color:"#AB2656"}}> 10% interest p.a </span> No withdrawal allowed and you will lose your interest if you dont meet your target</p>
+                                       <p className="header-info">Save daily, weekly or monthly towards a target amount, earn <span style={{color:"#AB2656"}}> 10% interest p.a ?</span> No withdrawal allowed and you will lose your interest if you don't meet your target</p>
 
                                             <form onSubmit={this.onSubmit}>
                                                 <div className={GoalNameInvalid ? "form-group form-error" : "form-group"}>
@@ -316,7 +315,7 @@ class FixedGoal extends Component {
                                                     </div>
                                                 <div className="form-row">
                                                     <div className= {!startDateInvalid ? "form-group col-md-6 " : "form-group col-md-6 form-error"}>
-                                                        <label className="label-text">When would you like to start</label>
+                                                        <label className="label-text">When would you like to start ?</label>
                                                         <DatePicker 
                                                             className="form-control"
                                                             selected={this.state.startDate}
@@ -344,7 +343,7 @@ class FixedGoal extends Component {
                                         
                                                     </div>
                                                     <div className={!endDateInvalid ? "form-group col-md-6" : "form-group col-md-6 form-error"}>
-                                                        <label className="label-text">When do you want to achieve this</label>
+                                                        <label className="label-text">When do you want to achieve this ?</label>
                                                         <DatePicker  
                                                             selected={this.state.endDate}
                                                             className="form-control"
@@ -373,7 +372,7 @@ class FixedGoal extends Component {
                                                 </div>
                                                 <div className="form-row">
                                                     <div className={targetAmountInvalid ? "form-group col-md-6 form-error" : "form-group col-md-6"}>
-                                                        <label className="label-text">How much would you like to save</label>
+                                                        <label className="label-text">How much would you like to save ?</label>
                                                         <input 
                                                             onKeyUp= {this.showInterest}
                                                             className="form-control" 
@@ -386,7 +385,7 @@ class FixedGoal extends Component {
                                                           
                                                          />
                                                          {targetAmountInvalid && 
-                                                            <div className="text-danger">Enter the amount you want to save</div>}
+                                                            <div className="text-danger">Enter the amount you want to save ?</div>}
                                                             {
                                                             this.state.showMessage ? 
                                                               <div className="text-purple m-b-55"><h3 className="text-purple m-b-55"> You will earn approximately ₦ {util.formatAmount(this.state.showInterests)} in interest.</h3></div> 
@@ -398,12 +397,12 @@ class FixedGoal extends Component {
                                                     
 
                                                     <div className={goalFrequencyInvalid ? "form-group col-md-6 form-error" : "form-group col-md-6"}>
-                                                        <label className="label-text">How often do you want to save</label>
+                                                        <label className="label-text">How often do you want to save ?</label>
                                                         <Select type="text" 
                                                             options={selectedTime}
                                                             name="goalFrequency"
                                                             autoComplete="off"
-                                                                onChange={this.handleSelectChange}
+                                                            onChange={this.handleSelectChange}
                                                             value={goalFrequency.label}
                                                           />
                                                           {goalFrequencyInvalid && <div className='text-danger'>Enter saving duration</div>}
@@ -449,6 +448,6 @@ class FixedGoal extends Component {
     }
 }
 const mapStateToProps = state => ({
-    fixed_goal_step1: state.fixed_goal_step1
+    fixed_goal_step1:state.GoalReducerPile.fixed_goal_step1
 })
 export default connect(mapStateToProps)(FixedGoal);

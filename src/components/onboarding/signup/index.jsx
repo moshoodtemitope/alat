@@ -206,6 +206,7 @@ class Signup extends React.Component{
                             <button type="submit" disabled={submitted} className="btn-alat btn-block">{ submitted ? "Processing..." : "Get Started" }</button>
                         </form>
                         <p className="text-center">Already have an account? <NavLink to="/">Login</NavLink></p>
+                        <p className="text-center m-t-20">Need help? <a target="_blank" href="http://www.alat.ng/contact-us">We are here for you</a></p>
                     </div>
                 </div>
                 <Modal open={openModal} onClose={this.onCloseModal} center>
