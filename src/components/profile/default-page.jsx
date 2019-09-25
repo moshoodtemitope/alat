@@ -59,13 +59,13 @@ class PersonalDefault extends Component {
    }
 
    GetProfileMenu = () => {
-       console.log('pspspspspspsps');
+    //    console.log('pspspspspspsps');
        this.props.dispatch(actions.profileMenu(this.state.user.token));
    }
 
    NavigateToBVN = () => {
        if(this.props.profileMenu.data.response.bvnLinked == true){
-             this.DispatchSuccessMessage('BVN has Been Linked');
+            //  this.DispatchSuccessMessage('BVN has Been Linked');
              return;
        }
 
@@ -139,7 +139,7 @@ class PersonalDefault extends Component {
 
 
    StoreInforMation = () => {
-       console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
+    //    console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
        profileMenuStore = this.props.profileMenu.data.response;
     
        let localStore = window.localStorage;

@@ -75,7 +75,7 @@ GetResidentialAddress = () => {
    }
 
    SetBVNValidityStatus = () => {
-      console.log();
+    //   console.log();
       if(this.state.bvnNumber == null || this.state.bvnNumber  == "" || this.state.bvnNumber.toString().length < 11){
           this.setState({BVNValidity: true});
       }else{
@@ -97,26 +97,26 @@ GetResidentialAddress = () => {
             switch(x){
                 case 'bvnNumber':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }else{
                             if(this.state[x].toString().length < 11){
-                                console.log(this.state[x]);
+                                // console.log(this.state[x]);
                                 result = null;
                                 break;
                             }
                         }
                 case 'birthDate':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }
             }
         }
 
-       console.log(result);
+    //    console.log(result);
        return result;
    }
 
@@ -139,14 +139,14 @@ GetResidentialAddress = () => {
    }
 
    SetBirthDay = (birthDate) => {
-       console.log(birthDate + " " + "ududududu");
+    //    console.log(birthDate + " " + "ududududu");
         this.setState({
             birthDate: birthDate
         }, () => {
-            console.log(this.state.birthDate);
+            // console.log(this.state.birthDate);
         });
 
-        console.log("fififififif");
+        // console.log("fififififif");
    }
 
    HandleSubmit = (event) => {
@@ -154,14 +154,14 @@ GetResidentialAddress = () => {
        this.SetDateValidity();
        this.SetBVNValidityStatus();
 
-       console.log('was fired');
+    //    console.log('was fired');
 
        switch(this.checkValidity()){
            case null:
-             console.log('Empty value was found');
+            //  console.log('Empty value was found');
              break;
            case 'valid': 
-             console.log("No Empty Value Found");
+            //  console.log("No Empty Value Found");
              this.InitiateNetworkCall();
              break;
        }
@@ -240,7 +240,7 @@ GetUserProfileMenu = () => {
 
 
  StoreInforMation = () => {
-    console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
+    // console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
     profileMenuStore = this.props.profileMenu.data.response;
  
     let localStore = window.localStorage;

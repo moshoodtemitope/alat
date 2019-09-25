@@ -388,6 +388,7 @@ const appReducer = combineReducers({
     deleteGroupEsusu: rotatingSavings.deleteGroupEsusu,
     joinGroupEsusu: rotatingSavings.joinGroupEsusu,
     refferalCode: rotatingSavings.refferalCode,
+    ActivateGroup: rotatingSavings.ActivateGroup,
     // pauseGroupEsusu: rotatingSavings.pauseGroupEsusu
 
 

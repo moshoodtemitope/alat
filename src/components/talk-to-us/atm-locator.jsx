@@ -13,26 +13,45 @@ class AtmLocator extends Component{
             user: JSON.parse(localStorage.getItem("user")),
             visible:false,
             data: [],
-            filtered: []
-
-
+            filtered: [],
+            itemSearch: "ATM",
+            searchInput: "",
+            display: "block",
+            itemsToFilter: []
         }
     }
     handleInputChange = (event) => {
-        let keyword = event.target.value;
-        console.log('=========',keyword)
+        let 
+            {itemSearch} = this.state,
+            searchInput = event.target.value;
 
-        const data=this.props.get_bank_branch.data.response.Atms
-        let filtered=data.filter((item)=>{
-            console.log(item.Area.indexOf(keyword) > -1);
-            // return item.Area.indexOf(keyword) > -1;
-        });
-        // if (keyword === "") {
-        //   filtered = [];
-        // }
-        // this.setState({
-        //   filtered,
-        // })
+            if (searchInput.length > 0) {
+                this.setState({display: "none"})
+            }
+            else {
+                this.setState({display: "block"})
+            }
+
+            this.setState({searchInput}, () => {
+                if (itemSearch === "ATM") {
+                    const data1 = this.props.get_bank_branch.data.response.Atms
+                    this.setState({itemsToFilter: data1}, () => this.renderSearch(this.state.itemsToFilter))
+                    
+                }
+                else {
+                    const data2 = this.props.get_bank_branch.data.response.Branches
+                    this.setState({itemsToFilter: data2}, () => this.renderSearch(this.state.itemsToFilter))
+                }
+            })
+
+   
+
+        
+        // let filtered=data.filter((item)=>{
+        //     console.log(item.Area.indexOf(keyword) > -1);
+        //     // return item.Area.indexOf(keyword) > -1;
+        // });
+     
       };
 
     componentDidMount(){
@@ -46,7 +65,48 @@ class AtmLocator extends Component{
 
     }
     showResult=() =>{
-        this.setState({ visible: true });
+        this.setState({ visible: true, itemSearch: "branches", searchInput: "", display: "block" });
+    }
+
+    renderSearch = (data) => {
+        if (data !== []) {
+            console.log("Emmanuel")
+            return (
+                <div className="location">
+                    { data.map((atm) => {
+                        if(atm.Address.toLowerCase().includes(this.state.searchInput.toLowerCase()) && this.state.itemSearch !== "branches" ) {
+                            return (
+                                <div className="location">
+                                    <div className="location-icon center-align"><img src={atmImage} className="mdi-map-marker"></img></div>
+                                    <div className="location-details">
+                                        <p className="landmark">{atm.Area}</p>
+                                        <p className="full-address">{atm.Address}</p>
+                                    </div>
+                                </div>
+                            )
+                        }
+                        else if (atm.Address.toLowerCase().includes(this.state.searchInput.toLowerCase()) && this.state.itemSearch == "branches") {
+                            return (
+                                <div className="location">
+                                    <div className="location-icon center-align"><img src={atmImage} className=".mdi-map-marker"></img></div>
+                                    <div className="location-details">
+                                        <p className="landmark">{atm.BranchName}</p>
+                                        <p className="full-address">{atm.Address}</p>
+                                    </div>
+                                </div>
+                            )
+                        }
+
+                    } 
+                        
+                       
+                    )}
+                </div>)
+        }
+        else {
+            console.log("John Doe")
+        }
+        
     }
    
    
@@ -61,7 +121,7 @@ class AtmLocator extends Component{
         }
         else if(get_bank_branch.message === talktoUsConstant.GET_BANK_BRANCHES_SUCCESS){
                 let atmlocations = get_bank_branch.data.response.Atms;
-                        console.log('=========',atmlocations)
+                        // console.log('=========',atmlocations)
                 return(
                     <div className="location">
                     
@@ -245,7 +305,7 @@ class AtmLocator extends Component{
                                     <div style={{display:"flex", justifyContent:'center', alignItems:'center'}}>
 
                                         <div style={{marginRight:5}}> 
-                                            <button type="submit" className="btn   m-t-10 m-b-20 text-center " onClick={() => this.setState({visible:false})}>Atm Locations</button>
+                                            <button type="submit" className="btn   m-t-10 m-b-20 text-center " onClick={() => this.setState({visible:false, itemSearch: "ATM", searchInput: "", display: "block" })}>ATM Locations</button>
                                         </div>
                                         <div style={{marginLeft:5}}>
                                             <button type="submit" className="btn m-t-10 m-b-20 text-center" onClick={this.showResult}>Bank Branches</button>
@@ -262,7 +322,7 @@ class AtmLocator extends Component{
                                             autoComplete="off" 
                                             className="form-control" 
                                              placeholder="Search..."
-                                             value={this.state.filtered}
+                                             value={this.state.searchInput}
                                              onChange={this.handleInputChange}/>
                                     </div>
                                     {/* <div>
@@ -270,16 +330,19 @@ class AtmLocator extends Component{
 
                                     </div> */}
                                     <div>
-                                        <div className="location">
+                                        <div className="location" style={{display: this.state.display}}>
                                             {
-                                                this.state.visible ?this.renderBankBranch() :this.renderAtmLocations()
+                                                this.state.visible ? this.renderBankBranch() :this.renderAtmLocations()
 
                                             }
-                                            {/* {this.renderSearchAtms()} */}
-                                      
-
                                             
                                         </div>
+
+                                        
+                                        {
+                                            this.renderSearch(this.state.itemsToFilter)
+                                        }
+                                        
                                     </div>
 
                                    

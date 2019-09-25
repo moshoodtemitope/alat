@@ -41,7 +41,7 @@ class EditGroupSavings extends React.Component {
     }
 
     handleSelectDebitableAccounts = (account) => {
-        console.log('dss', account);
+        // console.log('dss', account);
         this.setState({ selectedAccount: account })
     }
     
@@ -58,43 +58,43 @@ class EditGroupSavings extends React.Component {
             switch(x){
                 case 'groupName':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }     
                 case 'groupPurpose':
                    if(this.state[x] == null || this.state[x] == ""){
-                       console.log(x)
+                    //    console.log(x)
                        result = null;
                        break;
                    }
                 case 'targetAmount':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }
                 case 'minimumIndividualAmount':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }
                 case 'targetDate':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x) 
                       result = null;
                       break;
                    }
                 case 'selectedAccount':
                       if(this.state[x] == null || this.state[x] == ""){
-                        console.log(x)
+                        // console.log(x) 
                         result = null;
                         break;
                       }
             }
         }
-        console.log(result);
+        // console.log(result);
         return result;
     }
 
@@ -173,7 +173,7 @@ class EditGroupSavings extends React.Component {
     }
 
     checkMinimumAccountToContribute = () => {
-        console.log(this.state.minimumIndividualAmount);
+        // console.log(this.state.minimumIndividualAmount);
         if(this.state.minimumIndividualAmount == null || this.state.minimumIndividualAmount == ""){
             this.setState({AmountToContribute: true});
             return false;
@@ -193,7 +193,7 @@ class EditGroupSavings extends React.Component {
             debitAccount: this.state.selectedAccount,
             purpose: this.state.groupPurpose, 
         }
-        console.log(data)
+        // console.log(data)
         //return;
         this.props.dispatch(actions.editGroup(this.state.user.token, data));
     }

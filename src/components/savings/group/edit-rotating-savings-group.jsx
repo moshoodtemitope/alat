@@ -95,7 +95,7 @@ class EditRotatingGroup extends React.Component {
     }
     
     handleSelectDebitableAccounts = (account) => {
-        console.log('dss', account);
+        // console.log('dss', account);
         this.setState({ selectedAccount: account });
         if (this.state.isSubmitted) { 
             if(account.length == 10)
@@ -129,38 +129,38 @@ class EditRotatingGroup extends React.Component {
             switch(x){
                 case 'groupName':
                    if(this.state[x] == new Date() || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }    
                 case 'startDate':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }     
                 case 'monthlyContribution':
                    if(this.state[x] == null || this.state[x] == ""){
-                       console.log(x)
+                    //    console.log(x)
                        result = null;
                        break;
                    }
                 case 'numberOfMembers':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }
                 case 'selectedAccount':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }
             }
         }
 
-        console.log(result);
+        // console.log(result);
         return result;
     }
 
@@ -199,7 +199,7 @@ class EditRotatingGroup extends React.Component {
             // DebitAccount: this.state.selectedAccount
         }
 
-        console.log(data);
+        // console.log(data);
         //return
         this.props.dispatch(actions.editGroupEsusu(this.state.user.token, data));
     }
@@ -216,7 +216,7 @@ class EditRotatingGroup extends React.Component {
 
         switch(this.checkingUserInputs()){
             case null:
-               console.log('Empty fields present');
+            //    console.log('Empty fields present');
                break;
             case 'valid':
                this.SubmitAutomatedGroupSavings();

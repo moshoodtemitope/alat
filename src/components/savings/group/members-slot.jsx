@@ -85,14 +85,14 @@ class MemberSlots extends React.Component{
                 }
         
                 this.setState({'sortedMembers': groupMembers}, () => {
-                    console.log(this.state.sortedMembers);
+                    // console.log(this.state.sortedMembers);
                 });
                 this.setState({'renderCalled': true});
                 setOptions(membersAccordingToSlot);
-                console.log(members);
+                // console.log(members);
                 this.setState({'members': theMembers})
                 this.MembersInitialValues();
-                console.log('Rotating Group Returned Undefined 99999999999')
+                // console.log('Rotating Group Returned Undefined 99999999999')
             
         }
 
@@ -106,7 +106,7 @@ class MemberSlots extends React.Component{
         let data = {
             groupId: JSON.parse(storage.getItem('rotatingGroupId'))
         }
-        console.log('DEW SOME ONE IS GOING TO REALLY LIKE THIS')
+        // console.log('DEW SOME ONE IS GOING TO REALLY LIKE THIS')
         this.props.dispatch(actions.rotatingGroupDetails(this.state.user.token, data));
     }
 
@@ -149,7 +149,7 @@ class MemberSlots extends React.Component{
     UpdateInitialStateValuesContinued = (element) => {
         for(let u in element)
             this.setState({[u]: element[u]}, () =>{
-                console.log(this.state);
+                // console.log(this.state);
             });
         
         let state = this.state;
@@ -182,7 +182,7 @@ class MemberSlots extends React.Component{
           if(this.state.renderCalled != true)
               return <option>empty</option>;
           let optionsElm = (aMember) => {
-                console.log(aMember)
+                // console.log(aMember)
                 let members = this.state.sortedMembers.map((element, index) => {
                      if(element.firstName == aMember.firstName && element.lastName == aMember.lastName)
                            return <option value={element.firstName + ' ' + element.lastName} selected='selected'>
