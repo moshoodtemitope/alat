@@ -15,6 +15,7 @@ import whitelogo from "../../../assets/img/white-logo.svg";
 import  {routes} from '../../../services/urls';
 import emptyVC from "../../../assets/img/credit-card-2.svg"; 
 import successIcon from "../../../assets/img/success-tick.svg";
+import Slider from "react-animated-slider";
 import {
     getALATCardSettings,
     updateALATCardSettings,
@@ -59,6 +60,7 @@ class CardsControl extends React.Component {
 
     componentDidMount() {
         this.getCustomerAtmCardSettings();
+        
         
     }
 
@@ -202,6 +204,13 @@ class CardsControl extends React.Component {
         this.setState({ ForeignTravelCountriesField: ForeignTravelCountriesField.value });
     }
 
+    renderAllCards(){
+        let props = this.props,
+            loadSettings = props.loadALATCardSetting;
+
+            console.log('cards are', loadSettings.alatcardsettings_info.response.allCards);
+    }
+
     renderALATCardSettings(){
         let props = this.props,
             loadSettings = props.loadALATCardSetting,
@@ -237,7 +246,7 @@ class CardsControl extends React.Component {
                                     label: country.countryName
                                 })
                             })
-
+                            this.renderAllCards();
                             if(this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField!==undefined
                                 && this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField!==''){
                                     // document.querySelector('#startdate').value = this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField;

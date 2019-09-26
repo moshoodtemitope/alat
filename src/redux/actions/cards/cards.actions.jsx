@@ -690,6 +690,7 @@ export const getALATCardSettings = (token)=>{
                     dispatch(request(consume2))
                     return consume2
                         .then(response2=>{
+                            // console.log('cards are', response2.data);
                             let panNum = response.data[0].maskedPan.replace(/\*/g, '');
                             let consume3 = ApiService.request(routes.GET_CARD_CONTROL_SETTINGS, "POST", {pan:panNum}, SystemConstant.HEADER); 
         
@@ -698,6 +699,7 @@ export const getALATCardSettings = (token)=>{
                                 .then(response3=>{
                                     let bulkResponse={
                                             panDetails              : response.data[0],
+                                            allCards                : response2.data.cardList,
                                             cardControlSettings     : response2.data,
                                             otherCardControlDetails : response3.data
                                     }
@@ -717,7 +719,7 @@ export const getALATCardSettings = (token)=>{
                                         }
                                     }
                                     else{
-                                        dispatch(failure('An error occured. Please try again '));
+                                        dispatch(failure('An error occured. Please try again'));
                                     }
                                 })
                         })
@@ -735,7 +737,7 @@ export const getALATCardSettings = (token)=>{
                                 }
                             }
                             else{
-                                dispatch(failure('An error occured. Please try again '));
+                                dispatch(failure('An error occured. Please try again'));
                             }
                         })
                 }
@@ -761,7 +763,7 @@ export const getALATCardSettings = (token)=>{
                     }
                 }
                 else{
-                    dispatch(failure('An error occured. Please try again '));
+                    dispatch(failure('An error occured. Please try again'));
                 }
             })
     };
