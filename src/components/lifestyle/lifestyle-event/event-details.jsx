@@ -320,7 +320,7 @@ class EventDetails extends React.Component {
                             marginTop: 37
                         }}>
                       <form onSubmit={this.ShowBuyTicketData  } style={{ width: "100%" }}>
-                           <div  className={TicketClassValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                           <div  className={TicketClassValidity ? "form-group form-error col-md-12" : "form-group col-md-12"} style={{paddingLeft: 0}}>
                                     <label>Select Ticket Class</label>
 
                                         <select onChange={this.UseSelectedItem } name="ticketClass">
@@ -335,29 +335,29 @@ class EventDetails extends React.Component {
                                             }
                                         </select>
                                         </div>
-                                <div className="form-group col-md-6">
-                                        <label style={{ marginTop: 16 }}>Select Day</label>
-                                        <select onChange={this.UseSelectedTime}>
-                                            <option key={details.date}>{details.date}</option>
-                                            {/* {                                      
-                                                ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
-                                                ShowTime.data.response.map(event=> {
-                                                    return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children}>{event.date}</option>
-                                                })
-                                            }  */}
-                                        </select>
-                                </div>
-
-                            <div
-                                // className="row"
-                                // style={{
-                                //     marginTop: 23,
-                                //     marginLeft: 0,
-                                //     justifyContent: "space-between"
-                                // }}
+                                        <div className="row">
+                                            <div className="form-group col-md-6">
+                                                <label style={{ marginTop: 16 }}>Select Day</label>
+                                                <select onChange={this.UseSelectedTime}>
+                                                    <option key={details.date}>{details.date}</option>
+                                                    {/* {                                      
+                                                        ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
+                                                        ShowTime.data.response.map(event=> {
+                                                            return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children}>{event.date}</option>
+                                                        })
+                                                    }  */}
+                                                </select>
+                                            </div>
+                                            <div
+                                className="col-md-6"
+                                style={{
+                                    marginTop: 23,
+                                    // marginLeft: 0,
+                                    // justifyContent: "space-between"
+                                }}
                             >
                                 
-                               <div className="col-sm-4" style={{ paddingRight: 30 }}>
+                               <div style={{ paddingRight: 30 }}>
                                     <div style={{ marginLeft: -13 }}>Quantity</div>
                                     <div
                                         className="row"
@@ -423,10 +423,14 @@ class EventDetails extends React.Component {
                                             fontSize: 14
                                         }}
                                     >
-                                        N{this.formatAmountNoDecimal(this.state.childAmount)}
+                                        ₦{this.formatAmountNoDecimal(this.state.childAmount)}
                                     </div> 
                                 </div>
                             </div>
+                                        </div>
+                                
+
+                            
                             <div
                                 className="row"
                                 style={{

@@ -4,6 +4,8 @@ import {listStyleConstants} from "../../constants/lifestyle/lifestyle-constants"
 import {SystemConstant} from "../../../shared/constants";
 import {alertActions} from "../alert.actions";
 import {modelStateErrorHandler} from "../../../shared/utils";
+import {history} from "../../../_helpers/history";
+
 
 
 
@@ -120,6 +122,10 @@ export const buyMovieTicket = (token, data) => {
             .then(response => {
                 // consume.log(response);
                 dispatch(success(response.data));
+                history.push({
+                    pathname:"/lifestyle/movie-success",
+                    state:{details:response.data}
+                })
             })
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
@@ -234,6 +240,19 @@ export const SubmitTicketData =(data) =>{
         }
     }
 }
+export const SubmitMoviesData =(data) =>{
+    return(dispatch)=>{
+        dispatch(success(data))
+
+    }
+    function success(data){
+        return{
+            type:listStyleConstants.SUBMIT_MOVIE_DATA_SUCCESS,
+            data:data
+        }
+    }
+}
+
 export const SubmitEventTicketData =(data) =>{
     return(dispatch)=>{
         dispatch(success(data))
@@ -291,6 +310,13 @@ export const postMovieContent =(data) =>{
         }
     }
 }
+export const ClearAction=(type)=>{
+    return (dispatch) =>{
+        dispatch(clear(type))
+    };
+    function clear(type){return {type : type}}
+};
+
 
 
 

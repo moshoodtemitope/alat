@@ -1,16 +1,12 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import successLogo from '../../../assets/img/success.svg';
-import {NavLink, Route, Redirect} from "react-router-dom";
-import Members from '../../savings/group/list-item';
+import {NavLink} from "react-router-dom";
 import { connect } from "react-redux";
-import {flexGoalConstants} from '../../../redux/constants/goal/flex-goal.constant'
-import * as actions from '../../../redux/actions/savings/goal/flex-goal.actions'
+import {customerGoalConstants} from '../../../redux/constants/goal/get-customer-trans-history.constant';
+import * as actions from '../../../redux/actions/savings/goal/get-customer-transaction-history.actions'
 
-
-class FlexSuccessMessage extends React.Component {
+class CashOutGoalSuccess extends React.Component {
     constructor(props){
         super(props);
         this.state={
@@ -18,20 +14,10 @@ class FlexSuccessMessage extends React.Component {
 
         }
     }
-    componentDidMount(){
-        const details = this.props.location.state.name;
-        this.setState({
-            create_stash_goal: details,
-
-        });
-
-    }
 
 
     render() {
-        const details =this.props.location.state.details;
-        console.log(details);
-
+        const data = this.props.location.state;
         return (
             <Fragment>
                         <div className="row">
@@ -45,7 +31,7 @@ class FlexSuccessMessage extends React.Component {
                                             <NavLink to='/savings/choose-goal-plan'>
                                                 <li><a className="active">Goals</a></li>
                                             </NavLink>
-                                            <NavLink to="/savings/activityDashBoard">
+                                            <NavLink to="/savings/goal/group-savings-selection">
                                                 <li><a>Group Savings</a></li>
                                             </NavLink>
                                             <li><a href="#">Investments</a></li>
@@ -63,35 +49,26 @@ class FlexSuccessMessage extends React.Component {
                                                 <form>
                                                     <div className="form-group">
                                                         <center>
-                                                            <img className="successIcon"    alt="" src={successLogo}/>
+                                                            <img className="successIcon" alt="" src={successLogo}/>
                                                         </center>
-                                                        <label id="sucMessage">Flex Goal created  successfully</label>
+                                                        <label className="top-goal-Message">{data.details}</label>
                                                     </div>
-                                                    <div className="form-row">
-                                                        <Members
-                                                            userType="admin"
-                                                            name={details.goalTypeName}
-                                                            position="Status: Completed"
-                                                            amount={"₦"+details.targetAmount}
-                                                            intent="Amount Saved"
-                                                            id="autoSummary"/>
-                                                    </div>
+
                                                 </form>
                                             </div>
-
+                                            <center>
+                                                <a onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
+                                                    this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">Go to Dashboard</a>
+                                            </center>
 
                                         </div>
-                                        <center>
-                                            <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(flexGoalConstants.FLEX_GOAL_REDUCER_CLEAR));
-                                                this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
-                                                Go to Dashboard
-                                            </a>
-                                        </center>
-
 
                                     </div>
+                                    <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
+                                                this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
+                                                Go back
+                                    </a>
                                 </div>
-
 
                             </div>
 
@@ -102,7 +79,6 @@ class FlexSuccessMessage extends React.Component {
     }
 }
 const mapStateToProps = state => ({
-    create_stash_goal:state.create_stash_goal,
-    create_stash_goal_step1:state.create_stash_step1
+    top_up_goal:state.CustomerGoalReducerPile.top_up_goal,
 });
-export default connect(mapStateToProps)(FlexSuccessMessage);
+export default connect(mapStateToProps)(CashOutGoalSuccess);

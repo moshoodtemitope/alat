@@ -1113,6 +1113,30 @@ ul.menu-side {
 .dashboard-main {
   background: #f8f8f8; }
 
+  .ndPrWrap {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    background: #fff;
+    z-index: 10;
+    overflow: auto;
+}
+.linkcta:hover{
+  cursor: pointer;
+  text-decoration: underline;
+}
+.ndprMsg {
+  position: relative;
+  top: 100px;
+  width: 50%;
+  margin: 0 auto;
+}
+.ndprMsg .username-heading{
+  font-size: 19px;
+  margin-bottom: 14px;
+}
+
 .db2-fixed-header {
   background: #AB2656;
   padding: 12px 0px;

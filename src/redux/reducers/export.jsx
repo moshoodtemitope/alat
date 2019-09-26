@@ -1,4 +1,11 @@
-import {userRegistrationRequest, bvnDetailsReducer,bvnSkipReducer, bvnCustomerDetailsReducer} from "./onboarding.reducer";
+import {userRegistrationRequest, 
+    bvnDetailsReducer,
+    bvnSkipReducer, 
+    bvnCustomerDetailsReducer, 
+    getNDPRStatusReducer,
+    acceptNDRpReducer,
+    sendEmailForgotPasswordReducer,
+    sendAnswerForgotPasswordReducer} from "./onboarding.reducer";
 import {getCinemaList, 
     getSingleMovie, 
     buyMovieTicket,
@@ -15,7 +22,7 @@ import {getCinemaList,
      SearchfetchEventList,
       movieDetails,
       FetchMovieGenre,
-      PostMovieContent
+      PostMovieContent,SubmitMovieData
     } from './lifestyle/lifestyle-reducer';
 
 
@@ -55,6 +62,8 @@ import { loanCalcDataReducer, loanApplyReducer, GetIndustriesReducer, GetEmploye
         LoanHistoryReducer, WorkIdFrontReducer, WorkIdBackReducer, loanRejectReducer, loanStandingOrderReducer,
      loanMandateStatusReducer, loanValidateRemitaOtpReducer, loanStatementUpload, continueApplication, 
      SignatureReducer , PassportReducer, KycRequired, termsReducer } from './loan.reducer';
+import { linkBVN, profileSuccessMessage, profileMenu, capturePersonalInformation,getContactDetail,
+        getResidential, addNextOfKin, addContactDetails, occupationAndSector, addDocuments,getPersonalInfo, GetResidentialAddress, addResidentialAddress, getStates, nextOfKinsRelationship } from './profile-reducer';
 
 import { geCurrentVirtualCardsRequest,
          sendVCNewCardinfo,
@@ -82,10 +91,11 @@ import {getWesternUnionCountries,receiveWesternUnion } from './remittance.reduce
      import {createStashGoalReducer,createStashGoalStep1Reducer} from './goal/create-stash.reducer'
     import {groupSavingsTargetGoal, groupDetails, deleteGroup, contribute, editGroup, pauseGroup, findGroup, customerGroup, joinGroup, scheduleContribution, deleteMember, cashOut,
     continueScheduleGroupPayment, setAutomateSavingsEndDate, setAutomateSavingsStartDate, setAmountToWithDraw, setFrequency} from './group-savings/group-savings-reducers';
-     import {getCustomerGoalTransHistoryReducer,GET_FORMULAR,GET_GOAL_TYPE,TopUPGoalStep1,TopUPGoal,WithDrawFromGoalStep1,
-         WithDrawFromGoal,PauseCustomerGoal,unPauseCustomerGoal,EditCustomerGoal,DeleteCustomerGoal,StashCashout,StashCashoutStep1} from './goal/get-customer-goal-trans-history-reducers';
+     import {getCustomerGoalTransHistoryReducer,GET_FORMULAR,GET_GOAL_TYPE,TopUPGoalStep1,TopUPGoal,WithDrawFromGoalStep1,Cashout,
+         WithDrawFromGoal,PauseCustomerGoal,unPauseCustomerGoal,EditCustomerGoal,DeleteCustomerGoal,StashCashout,StashCashoutStep1,submitDashboardData} from './goal/get-customer-goal-trans-history-reducers';
      import {createRotatingSavings, rotatingGroupDetails, joinAGroup, EditSlots, 
         editGroupEsusu, deleteGroupEsusu, GetGroupsEsusu, joinGroupEsusu, refferalCode} from './group-savings/rotating-group-reducers';
+    import {GetBankBranch,TalkToUs,ReportError,GetPageData, GetBankList} from './talk-to-us/talk-to-us.reducer'
 
 
 
@@ -107,7 +117,11 @@ export const onboarding = {
     userRegistrationRequest,
     bvnDetailsReducer,
     bvnSkipReducer,
-    bvnCustomerDetailsReducer
+    bvnCustomerDetailsReducer,
+    getNDPRStatusReducer,
+    acceptNDRpReducer,
+    sendEmailForgotPasswordReducer,
+    sendAnswerForgotPasswordReducer
 };
 
 export const loans = {
@@ -262,6 +276,14 @@ export const fixedGoal ={
     setAmountToWithDraw,
     setFrequency,
 }
+export const talktous ={
+    GetBankBranch,
+    TalkToUs,
+    ReportError,
+    GetPageData,
+    GetBankList,
+
+}
  
 export const rotatingSavings = {
     createRotatingSavings,
@@ -292,7 +314,9 @@ export const customerGoal={
     EditCustomerGoal,
     DeleteCustomerGoal,
     StashCashout,
-    StashCashoutStep1
+    StashCashoutStep1,
+    Cashout,
+    submitDashboardData
 
 
 };
@@ -313,34 +337,28 @@ export const movies = {
     SearchfetchEventList,
     movieDetails,
     FetchMovieGenre,
-    PostMovieContent
+    PostMovieContent,
+    SubmitMovieData
 }
 
 export const preferences = {
     getAllEngagements,
     getCustomersEngagements
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export const profile = {
+    linkBVN,
+    profileSuccessMessage,
+    profileMenu,
+    capturePersonalInformation,
+    addNextOfKin,
+    addContactDetails,
+    occupationAndSector,
+    addDocuments,
+    getContactDetail,
+    getResidential,
+    getPersonalInfo,
+    getStates,
+    nextOfKinsRelationship,
+    addResidentialAddress,
+    GetResidentialAddress
+}

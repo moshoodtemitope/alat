@@ -1,7 +1,5 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import {Switch} from "react-router";
 import Select from 'react-select';
@@ -23,6 +21,17 @@ class ParentDashBoard extends React.Component {
             user: JSON.parse(localStorage.getItem("user")),
             clicked: false
         }
+
+        this.CheckRotatingSavingsAvailability();
+        this.CheckGroupSavingsAvailability();
+    }
+
+    CheckRotatingSavingsAvailability = () => {
+        this.props.dispatch(actions1.GetGroupsEsusu(this.state.user.token, null));
+    }
+
+    CheckGroupSavingsAvailability = () => {
+        this.props.dispatch(actions.customerGroup(this.state.user.token, null));
     }
 
     GetGroups = () => {
@@ -123,7 +132,50 @@ class ParentDashBoard extends React.Component {
         history.push('/savings/goal/group-savings-selection');
     }
 
+    
     render() {
+        if(this.props.groupSavingsEsusu == undefined && this.props.groups == undefined){
+            this.CheckRotatingSavingsAvailability();
+            this.CheckGroupSavingsAvailability();
+
+            return(
+                <Fragment>
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <p className="page-title">Savings & Goals</p>
+                            </div>
+                            <div className="col-sm-12">
+                                <div className="tab-overflow">
+                                    <div className="sub-tab-nav">
+                                        <ul>
+                                        <NavLink to='/savings/choose-goal-plan'>
+                                            <li><a id='parentGoal'>Goals</a></li>
+                                        </NavLink>
+                                            <li><a className="active">Group Savings</a></li>
+                                        {/* <li><a>Investments</a></li> */}
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                                <div className="row">
+                                <h4 className="m-b-10 center-text hd-underline">Automate Group Savings</h4>
+
+                                    <div className="bodyDetails">
+                                          
+                                            <div className="loadingData">
+                                                <p style={{textAlign:'center'}}>Loading data...</p>
+                                            </div>
+                                    </div>
+                               </div>
+                        </div>
+
+                    
+            </Fragment>
+            );
+        }
+
         if(this.props.groupSavingsEsusu.response == undefined && this.props.groups.response == undefined){
             return(
                 <Fragment>
@@ -139,23 +191,22 @@ class ParentDashBoard extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a id='parentGoal'>Goals</a></li>
                                         </NavLink>
-                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                             <li><a className="active">Group Savings</a></li>
-                                        {/* </NavLink> */}
-                                        <li><a>Investments</a></li>
+                                        {/* <li><a>Investments</a></li> */}
 
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                           
+                            
                                 <div className="row">
+                                    
                                     <div className="bodyDetails">
+                                    <h4 className="m-b-10 text-center hd-underline">Automate Group Savings</h4>
+                                    <div className="loadingData" style={{textAlign: "center", width: "100%"}}>
+                                        <p >Loading group savings ...</p>
+                                    </div>
                                           
-                                          <h4 className="m-b-10 text-center hd-underline">Automate Group Savings</h4>
-                                            <div className="loadingData">
-                                                <p style={{textAlign:"center",}}>Loading group savings ...</p>
-                                            </div>
                                     </div>
                                </div>
                         </div>
@@ -183,10 +234,8 @@ class ParentDashBoard extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a id='parentGoal'>Goals</a></li>
                                         </NavLink>
-                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                             <li><a className="active">Group Savings</a></li>
-                                        {/* </NavLink> */}
-                                        <li><a>Investments</a></li>
+                                        {/* <li><a>Investments</a></li> */}
 
                                         </ul>
                                     </div>
@@ -234,10 +283,8 @@ class ParentDashBoard extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a id='parentGoal'>Goals</a></li>
                                         </NavLink>
-                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                             <li><a className="active">Group Savings</a></li>
-                                        {/* </NavLink> */}
-                                        <li><a>Investments</a></li>
+                                        {/* <li><a>Investments</a></li> */}
 
                                         </ul>
                                     </div>
@@ -288,10 +335,8 @@ class ParentDashBoard extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a id='parentGoal'>Goals</a></li>
                                         </NavLink>
-                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                             <li><a className="active">Group Savings</a></li>
-                                        {/* </NavLink> */}
-                                        <li><a>Investments</a></li>
+                                        {/* <li><a>Investments</a></li> */}
 
                                         </ul>
                                     </div>
@@ -325,6 +370,8 @@ class ParentDashBoard extends React.Component {
         }
     }
 }
+
+
 
 function mapStateToProps(state){
     return {

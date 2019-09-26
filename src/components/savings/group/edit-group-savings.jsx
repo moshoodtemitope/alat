@@ -1,7 +1,5 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import {Switch} from "react-router";
 import Select from 'react-select';
@@ -213,32 +211,13 @@ class EditGroupSavings extends React.Component {
 
     handleSubmit = (event) => {
          event.preventDefault();
-        //console.log("handleSubmit was triggered");
-        // if(this.checkMinimumAccountToContribute() || this.checkTheSelectedAccount()||this.checkTheEndDate()||this.checkGroupPurpose()||this.checkGroupName()||this.checkTheTargetAmount()){
-        //     console.log(this.checkMinimumAccountToContribute())
-        // } 
         this.SubmitTargetGoalEdited();
-        // console.log('did the code ever got here')
-        // console.log(this.state)
-        // switch(this.checkingUserInputs()){
-        //     case null:
-        //        console.log('empty feild found');
-        //        break;
-        //     case "valid":
-        //         // this.SubmitTargetGoal();
-        //         console.log("no empty feilds found")
-        //         break;
-        // }
+        
     }
 
     NavigateToGroupSavings = () => {
-        // let groupSavings = this.props.groups.response; //returns an array
-        // let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
-        // if(groupSavings.length != 0 || rotatingSavings.length != 0){
-            history.push('/savings/activityDashBoard');
-        //     return;
-        // }
-        // history.push('/savings/goal/group-savings-selection');
+        history.push('/savings/activityDashBoard');
+        
     }
 
 
@@ -258,10 +237,8 @@ class EditGroupSavings extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a href="#">Goals</a></li>
                                         </NavLink>
-                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                             <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                        {/* </NavLink> */}
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
                                         </ul>
                                     </div>
                                 </div>

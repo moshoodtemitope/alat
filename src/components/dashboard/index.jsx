@@ -18,6 +18,7 @@ import {getAccountHistory, getAccounts} from "../../redux/actions/dashboard/dash
 import {dashboardConstants as userConstants} from "../../redux/constants/dashboard/dashboard.constants";
 import Slider from "react-animated-slider";
 import * as utils from "../../shared/utils";
+import { profileMenu } from "../../redux/actions/profile/profile-action";
 
 class Dashboard extends React.Component{
     constructor(props) {
@@ -26,6 +27,10 @@ class Dashboard extends React.Component{
             // user: user
             user: JSON.parse(localStorage.getItem("user"))
         };
+    }
+
+    GetUserProfileMenu = () => {
+        this.props.dispatch(profileMenu(this.state.user.token));
     }
 
     fetchAccounts(){
@@ -37,6 +42,7 @@ class Dashboard extends React.Component{
 
     componentDidMount() {
         this.fetchAccounts();
+        this.GetUserProfileMenu();
     }
 
     renderAccounts(){
@@ -244,7 +250,6 @@ class Dashboard extends React.Component{
 
                             <div className="col-sm-12">
                                 <div className="row">
-
                                     <div className="col-sm-12 col-md-6">
                                         <div className="al-card no-pad acct-card-pad acct-match">
                                             <div className="account-slide">
@@ -329,7 +334,7 @@ class Dashboard extends React.Component{
                                         </div>
                                     </div>
                                     <div className="col-sm-12 col-md-4">
-                                        <div className="al-card">
+                                        {/* <div className="al-card">
                                             <div className="reminder-card">
                                                 <div className="text-center">
                                                     <img src={calendar} />
@@ -337,7 +342,7 @@ class Dashboard extends React.Component{
                                                         <a href="" className="btn-alat m-t-20">Setup a reminder</a>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> */}
                                         <AnnouncementCard />
                                     </div>
                                 </div>

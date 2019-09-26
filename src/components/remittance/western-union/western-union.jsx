@@ -184,7 +184,7 @@ class WesternUnion extends React.Component {
                                                     type="number"
                                                     autoComplete ="off"
                                                     value={mtcnNumber}
-                                                    maxLength="10"
+                                                    maxLength="16"
                                                     placeholder= "Enter MTCN number"
                                                     onChange= {(mtcnNumber, e)=>{
                                                         this.setState({mtcnNumber});

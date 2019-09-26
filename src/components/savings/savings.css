@@ -16,6 +16,7 @@
    margin-right:10px;
 }
 
+
 .dashboardCards {
     display: flex;
     flex-wrap: wrap;
@@ -69,12 +70,23 @@
    font-size: 14px;
    line-height: 20px;
    display: block;
-   margin-left: 15px;
+   margin-left: 14px;
    padding-left: 10px;
    padding-right: 20px;
    font-family:"proxima_novaregular", sans-serif !important;
 
 }
+/* .info-text2:hover{
+    color: #FFFFFF;
+    font-size: 14px;
+    line-height: 20px;
+    display: block;
+    margin-left: 14px;
+    padding-left: 10px;
+    padding-right: 20px;
+    font-family:"proxima_novaregular", sans-serif !important;
+ 
+ } */
 .flex-goal{
    box-shadow: 3px 8px 24px rgba(255, 255, 255, 0.3221);
    border-radius: 6px;
@@ -86,6 +98,19 @@
    margin-left:10px;
    margin-right:10px;
 }
+
+/* .flex-goal:hover{
+    box-shadow: 3px 8px 24px rgba(255, 255, 255, 0.3221);
+   border-radius: 6px;
+   background: #A90836;
+   border: 0.95px solid #FFF4F4;
+   box-sizing: border-box;
+   width: 300px;
+   height: 250px;
+   margin-left:10px;
+   margin-right:10px;
+
+} */
 .stash-goal{
    border-radius: 6px;
    background: #ffffff;

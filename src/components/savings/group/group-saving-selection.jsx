@@ -1,7 +1,5 @@
 import React from 'react';
 import {Fragment} from "react";
-import SavingsContainer from '..';
-import InnerContainer from '../../../shared/templates/inner-container';
 import calender from '../../../assets/img/calender.svg' ;
 import graph from '../../../assets/img/graph.svg';
 import stash from '../../../assets/img/stash.svg';
@@ -9,8 +7,6 @@ import '../savings.css';
 import {NavLink, Route} from "react-router-dom";
 import './group.css';
 
-// if(window.performance.navigation.type == 1)
-//     window.location.replace("http://localhost:8080/");
 
 class GroupSavingsSelection extends React.Component {
     render() {
@@ -31,7 +27,7 @@ class GroupSavingsSelection extends React.Component {
                                         <NavLink to="/savings/goal/group-savings-selection">
                                             <li><a className="active">Group Savings</a></li>
                                         </NavLink>
-                                        <li><a href="#">Investments</a></li>
+                                        {/* <li><a href="#">Investments</a></li> */}
                                     </ul>
                                 </div>
                             </div>

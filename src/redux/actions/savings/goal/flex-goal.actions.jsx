@@ -46,7 +46,7 @@ export const addFlexGoal =(data)=>{
                 //TODO: edit localDB accounts object
                 dispatch(success(response.data, data));
                 history.push({
-                    pathname:"/savings/flex-success-message",
+                    pathname:"/savings/goal/success",
                     state:{details:response.data}
 
                 })
