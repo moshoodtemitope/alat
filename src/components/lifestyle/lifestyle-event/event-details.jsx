@@ -5,7 +5,7 @@ import {Redirect} from 'react-router-dom'
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
 import {getCinemaList,} from '../../../redux/actions/lifestyle/movies-actions';
 import clock from '../../../assets/img/clock-circular-outline.svg'
-
+import unescape from 'lodash/unescape';
 
 
 
@@ -114,8 +114,8 @@ class EventDetails extends React.Component {
 
     decreaseChild = () => {
         let { childNumber } = this.state;
-        if (childNumber !== 1)
-            this.setState({ childNumber: childNumber - 1 }, () =>
+        if (childNumber !== 0)
+            this.setState({ childNumber: this.state.childNumber - 1 }, () =>
                 this.setState({
                     childAmount: this.state.initialChildAmount * this.state.childNumber
                 })
@@ -180,7 +180,9 @@ class EventDetails extends React.Component {
 
         }
   
-        this.setState({initialChildAmount:gottenValue[0]});
+        this.setState({initialChildAmount:gottenValue[0]}, () => {
+            this.setState({childNumber: 1})
+        });
         this.setState({childAmount:gottenValue[0]});
         this.setState({ticketClassses:gottenValue[2]});
         this.setState({eventId:gottenValue[3]});
@@ -330,7 +332,7 @@ class EventDetails extends React.Component {
                                                 // getEvents.message == listStyleConstants.GET_EVENTS_SUCCESS && 
                                                 //  this.LopEventList()
                                                 details.ticketClassses.map(event=> {
-                                                    return <option key={event.title} value={event.ticketId + " " + "000" + event.price + " " + event.title + " " + event.eventId}>{event.title}</option>
+                                                    return <option key={event.title} value={event.ticketId + " " + "000" + event.price + " " + event.title + " " + event.eventId}>{unescape(event.title)}</option>
                                                 })
                                             }
                                         </select>
@@ -423,7 +425,10 @@ class EventDetails extends React.Component {
                                             fontSize: 14
                                         }}
                                     >
-                                        ₦{this.formatAmountNoDecimal(this.state.childAmount)}
+                                    {
+                                        (this.state.childAmount).toString().includes("-") ? "0" : `₦${this.formatAmountNoDecimal(this.state.childAmount)}`
+                                    }
+                                        
                                     </div> 
                                 </div>
                             </div>

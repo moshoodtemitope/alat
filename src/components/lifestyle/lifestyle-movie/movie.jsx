@@ -68,11 +68,14 @@ class Movie extends React.Component {
     };
     filterGenreOnchangeHandler(e){
         let {value} = e.target
+        if(value!=="ShowResultBy") {
+            this.setState({doFilter: true, genreType: value }, () => { 
+                this.renderFilter(this.state.genreType);
+                this.setState({display: "none"})
+            })
+        }
         // this.filterGenre(e.target.value);
-        this.setState({doFilter: true, genreType: value }, () =>{ 
-            this.renderFilter(this.state.genreType);
-            this.setState({display: "none"})
-        })
+        
         // return 
         // console.log("values",e.target.value)
 
@@ -418,7 +421,7 @@ class Movie extends React.Component {
                                     <li style={{float:"right", marginTop: -31}} >
                                         <label style={{ marginBottom: 0, color: "#666666", fontSize: 14}}>Filter</label>
                                         <select style={{width:"100%",height:"40px", marginTop:8, margin:4, float:'right', borderRadius:"3px !important", border: "1px solid lightgray"}} onChange={e=>this.filterGenreOnchangeHandler(e)}>
-                                            <option>Show Result By</option>
+                                            <option key="ShowResultBy" value="ShowResultBy">Show Result By</option>
                                             {                                      
                                                 this.props.FetchMovieGenre.message == listStyleConstants.FETCH_MOVIE_GENRE_SUCCESS && 
                                                 this.props.FetchMovieGenre.data.response.map(genre=> {
