@@ -258,14 +258,14 @@ class Moviedetails extends React.Component {
         let name = event.target.name;
 
        
-        console.log(adultAmount);
-        console.log(childrenAmount);
-        console.log(studentAmount);
-        console.log(showTimeId);
-        console.log(ticketId);
-        console.log(fee);
-        console.log(ticketType)
-        console.log('oooooooooooooooooooooooooooooooooooo');
+        // console.log(adultAmount);
+        // console.log(childrenAmount);
+        // console.log(studentAmount);
+        // console.log(showTimeId);
+        // console.log(ticketId);
+        // console.log(fee);
+        // console.log(ticketType)
+        // console.log('oooooooooooooooooooooooooooooooooooo');
         this.setState({initialStudentAmount: studentAmount, studentAmount}, () => {
             if (this.state.studentAmount !== 0) {
                 this.setState({studentNumber: this.state.studentNumber + 1})
@@ -364,7 +364,7 @@ class Moviedetails extends React.Component {
     
 
     render() {
-         const details = this.props.location.state.details;
+        //  const details = this.props.location.state.details;
 
        const {
             movieLocation,
@@ -378,7 +378,7 @@ class Moviedetails extends React.Component {
         } = this.state;
          const {getCinemaList,ShowTime,buyMovieTicket}=this.props
 
-        console.log("====================",details)
+        // console.log("====================",details)
     
 
         return (
@@ -405,7 +405,7 @@ class Moviedetails extends React.Component {
                     width: 640,
                     height: 360
                     }}
-                    src={`https://www.youtube.com/embed/${details.youtubeId}`}
+                    src={`https://www.youtube.com/embed/${this.state.goal.youtubeId}`}
                     frameBorder='0'
 
                 />
@@ -439,7 +439,7 @@ class Moviedetails extends React.Component {
                         <div className="col-sm-3">
                             <i className="toshow">
                                 <img
-                                    src={details.artworkThumbnail}
+                                    src={this.state.goal.artworkThumbnail}
                                     style={{
                                         width: 168,
                                         height: 226,
@@ -454,7 +454,7 @@ class Moviedetails extends React.Component {
                             style={{ fontSize: 26, color: "#444444", paddingLeft: 55 }}
                         >
                             <div style={{ fontFamily:"proxima_novasemibold", marginBottom: 21 }}>
-                                {details.title}
+                                {this.state.goal.title}
                             </div>
                             <div
                                 style={{
@@ -475,7 +475,7 @@ class Moviedetails extends React.Component {
                                     // fontFamily: "Proxima Nova"
                                 }}
                             >
-                                {details.description}
+                                {this.state.goal.description}
                             </div>
                             <div>
                                 <i className="toshow">
@@ -497,7 +497,7 @@ class Moviedetails extends React.Component {
                                         color: "#9C9C9C"
                                     }}
                                 >
-                                    {details.duration}
+                                    {this.state.goal.duration}
                 </span>
                             </div>
                         </div>
@@ -520,7 +520,7 @@ class Moviedetails extends React.Component {
                                     {
                                         getCinemaList.message == listStyleConstants.GET_CINEMA_LIST_SUCCESS && 
                                         getCinemaList.data.response.map(event => {
-                                            return (<option key={event.cinemaUid} value={event.cinemaUid + " " + "000" + details.id }>{event.name}</option>)
+                                            return (<option key={event.cinemaUid} value={event.cinemaUid + " " + "000" + this.state.goal.id }>{event.name}</option>)
                                         })
                                     }
                                 </select>
@@ -801,8 +801,16 @@ class Moviedetails extends React.Component {
                                 </button>
                             </div>
                         </form>
+                                       
                     </div>
+                                        
                 </div>
+                                         <center>
+                                            <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(listStyleConstants.MOVIE_REDUCER_CLEAR));
+                                                this.props.history.push('/lifestyle/movie') }} className="add-bene m-t-50">
+                                                Go back
+                                            </a>
+                                        </center>
             </div>
             </div>
         );
@@ -811,9 +819,9 @@ class Moviedetails extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        getCinemaList: state.getCinemaList,
-        ShowTime:state.ShowTime,
-        SubmitTicketData:state.SubmitTicketData,
+        getCinemaList: state.LifestyleReducerPile.getCinemaList,
+        ShowTime:state.LifestyleReducerPile.ShowTime,
+        SubmitTicketData:state.LifestyleReducerPile.SubmitTicketData,
     };
 }
 

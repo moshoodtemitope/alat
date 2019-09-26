@@ -231,8 +231,8 @@ class BuyTicket extends Component {
 }
 const mapStateToProps = state => ({
     alert:state.alert,
-    SubmitTicketData:state.SubmitTicketData,
-    buyMovieTicket:state.buyMovieTicket
+    SubmitTicketData:state.LifestyleReducerPile.SubmitTicketData,
+    buyMovieTicket:state.LifestyleReducerPile.buyMovieTicket
 
 });
 

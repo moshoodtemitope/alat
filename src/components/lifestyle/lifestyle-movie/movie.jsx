@@ -455,10 +455,10 @@ class Movie extends React.Component {
 }
     function mapStateToProps(state){
     return {
-        getMovieList: state.getMovieList,
-        getCinemaList: state.getCinemaList.data,
-        SearchfetchMovieList:state.SearchfetchMovieList,
-        FetchMovieGenre:state.FetchMovieGenre
+        getMovieList: state.LifestyleReducerPile.getMovieList,
+        getCinemaList: state.LifestyleReducerPile.getCinemaList.data,
+        SearchfetchMovieList:state.LifestyleReducerPile.SearchfetchMovieList,
+        FetchMovieGenre:state.LifestyleReducerPile.FetchMovieGenre
         
 
     };
