@@ -681,98 +681,169 @@ export const activateALATCard = (payload,token)=>{
     function failure(error) { return {type:ACTIVATE_ALATCARD_FAILURE, error} }
 }
 
-export const getALATCardSettings = (token)=>{
+export const getALATCardSettings = (token, account)=>{
     SystemConstant.HEADER['alat-token'] = token;  
 
-    return (dispatch)=>{
-        let consume =  ApiService.request(routes.GET_CARD_EXISTING_SETTINGS, "GET", null, SystemConstant.HEADER); 
-        dispatch(request(consume));
-        return consume
-            .then(response=>{
-                if(response.data.cardList.length>=1){
-                    let consume2 = ApiService.request(routes.GET_PANS, "GET", SystemConstant.HEADER); 
-                    
-                    dispatch(request(consume2))
-                    return consume2
-                        .then(response2=>{
-                            // let panNum = response2.data[0].maskedPan.replace(/\*/g, '');
-                            let panNum = response.data.cardList[0].pan;
-                            let consume3 = ApiService.request(routes.GET_CARD_CONTROL_SETTINGS, "POST", {pan:panNum}, SystemConstant.HEADER); 
-        
-                            dispatch(request(consume3))
-                            return consume3
-                                .then(response3=>{
-                                    let bulkResponse={
-                                            // panDetails              : response2.data,
-                                            panDetails              : response2.data[0],
+
+    if(account===null){
+        return (dispatch)=>{
+            let consume =  ApiService.request(routes.GET_CARD_EXISTING_SETTINGS, "GET", null, SystemConstant.HEADER); 
+            dispatch(request(consume));
+            return consume
+                .then(response=>{
+                    if(response.data.cardList.length>=1){
+
+                        let panNum = response.data.cardList[0].pan;
+                        let consume2 = ApiService.request(routes.GET_CARD_CONTROL_SETTINGS, "POST", {pan:panNum}, SystemConstant.HEADER); 
+                       
+                        
+                        dispatch(request(consume2))
+                        return consume2
+                            .then(response2=>{
+                                // let panNum = response2.data[0].maskedPan.replace(/\*/g, '');
+                                // let panNum = response.data.cardList[0].pan;
+                                let bulkResponse;
+                                    bulkResponse={
                                             allCards                : response.data.cardList,
                                             cardControlSettings     : response.data,
-                                            otherCardControlDetails : response3.data
+                                            otherCardControlDetails : response2.data
                                     }
                                     dispatch(success(bulkResponse));
-                                })
-                                .catch(error=>{
-                                    if(error.response && typeof(error.response.message) !=="undefined"){
-                                        dispatch(failure(error.response.message.toString()));
-                                    }
-                                    else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
-                                        if(error.response.data.Message){
-                                            dispatch(failure(error.response.data.Message.toString()));
-                                        }
-                    
-                                        if(error.response!==undefined && error.response.data.message){
-                                            dispatch(failure(error.response.data.message.toString()));
-                                        }
-                                    }
-                                    else{
-                                        dispatch(failure('An error occured. Please try again'));
-                                    }
-                                })
-                        })
-                        .catch(error=>{
-                            if(error.response && typeof(error.response.message) !=="undefined"){
-                                dispatch(failure(error.response.message.toString()));
-                            }
-                            else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
-                                if(error.response.data.Message){
-                                    dispatch(failure(error.response.data.Message.toString()));
+                            })
+                            .catch(error=>{
+                                if(error.response && typeof(error.response.message) !=="undefined"){
+                                    dispatch(failure(error.response.message.toString()));
                                 }
-            
-                                if(error.response!==undefined && error.response.data.message){
-                                    dispatch(failure(error.response.data.message.toString()));
+                                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                                    if(error.response.data.Message){
+                                        dispatch(failure(error.response.data.Message.toString()));
+                                    }
+                
+                                    if(error.response!==undefined && error.response.data.message){
+                                        dispatch(failure(error.response.data.message.toString()));
+                                    }
                                 }
-                            }
-                            else{
-                                dispatch(failure('An error occured. Please try again'));
-                            }
-                        })
-                }
-                else{
-                    // let bulkResponse={
-                    //     panDetails : null
-                    // }
-                    // dispatch(success(bulkResponse));
-                    history.push("/cards");
-                }
-            })
-            .catch(error=>{
-                if(error.response && typeof(error.response.message) !=="undefined"){
-                    dispatch(failure(error.response.message.toString()));
-                }
-                else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
-                    if(error.response.data.Message){
-                        dispatch(failure(error.response.data.Message.toString()));
+                                else{
+                                    dispatch(failure('An error occured. Please try again'));
+                                }
+                            })
                     }
+                    else{
+                        // let bulkResponse={
+                        //     panDetails : null
+                        // }
+                        // dispatch(success(bulkResponse));
+                        history.push("/cards");
+                    }
+                })
+                .catch(error=>{
+                    if(error.response && typeof(error.response.message) !=="undefined"){
+                        dispatch(failure(error.response.message.toString()));
+                    }
+                    else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+                        if(error.response.data.Message){
+                            dispatch(failure(error.response.data.Message.toString()));
+                        }
+    
+                        if(error.response!==undefined && error.response.data.message){
+                            dispatch(failure(error.response.data.message.toString()));
+                        }
+                    }
+                    else{
+                        dispatch(failure('An error occured. Please try again'));
+                    }
+                })
+        };
+    }
 
-                    if(error.response!==undefined && error.response.data.message){
-                        dispatch(failure(error.response.data.message.toString()));
-                    }
-                }
-                else{
-                    dispatch(failure('An error occured. Please try again'));
-                }
-            })
-    };
+
+
+    // return (dispatch)=>{
+    //     let consume =  ApiService.request(routes.GET_CARD_EXISTING_SETTINGS, "GET", null, SystemConstant.HEADER); 
+    //     dispatch(request(consume));
+    //     return consume
+    //         .then(response=>{
+    //             if(response.data.cardList.length>=1){
+    //                 let consume2 = ApiService.request(routes.GET_PANS, "GET", SystemConstant.HEADER); 
+                    
+    //                 dispatch(request(consume2))
+    //                 return consume2
+    //                     .then(response2=>{
+    //                         // let panNum = response2.data[0].maskedPan.replace(/\*/g, '');
+    //                         let panNum = response.data.cardList[0].pan;
+    //                         let consume3 = ApiService.request(routes.GET_CARD_CONTROL_SETTINGS, "POST", {pan:panNum}, SystemConstant.HEADER); 
+        
+    //                         dispatch(request(consume3))
+    //                         return consume3
+    //                             .then(response3=>{
+    //                                 let bulkResponse={
+    //                                         // panDetails              : response2.data,
+    //                                         panDetails              : response2.data[0],
+    //                                         allCards                : response.data.cardList,
+    //                                         cardControlSettings     : response.data,
+    //                                         otherCardControlDetails : response3.data
+    //                                 }
+    //                                 dispatch(success(bulkResponse));
+    //                             })
+    //                             .catch(error=>{
+    //                                 if(error.response && typeof(error.response.message) !=="undefined"){
+    //                                     dispatch(failure(error.response.message.toString()));
+    //                                 }
+    //                                 else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+    //                                     if(error.response.data.Message){
+    //                                         dispatch(failure(error.response.data.Message.toString()));
+    //                                     }
+                    
+    //                                     if(error.response!==undefined && error.response.data.message){
+    //                                         dispatch(failure(error.response.data.message.toString()));
+    //                                     }
+    //                                 }
+    //                                 else{
+    //                                     dispatch(failure('An error occured. Please try again'));
+    //                                 }
+    //                             })
+    //                     })
+    //                     .catch(error=>{
+    //                         if(error.response && typeof(error.response.message) !=="undefined"){
+    //                             dispatch(failure(error.response.message.toString()));
+    //                         }
+    //                         else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+    //                             if(error.response.data.Message){
+    //                                 dispatch(failure(error.response.data.Message.toString()));
+    //                             }
+            
+    //                             if(error.response!==undefined && error.response.data.message){
+    //                                 dispatch(failure(error.response.data.message.toString()));
+    //                             }
+    //                         }
+    //                         else{
+    //                             dispatch(failure('An error occured. Please try again'));
+    //                         }
+    //                     })
+    //             }
+    //             else{
+                    
+    //                 history.push("/cards");
+    //             }
+    //         })
+    //         .catch(error=>{
+    //             if(error.response && typeof(error.response.message) !=="undefined"){
+    //                 dispatch(failure(error.response.message.toString()));
+    //             }
+    //             else if(error.response!==undefined && ((error.response.data.Message) || (error.response.data.message))){
+    //                 if(error.response.data.Message){
+    //                     dispatch(failure(error.response.data.Message.toString()));
+    //                 }
+
+    //                 if(error.response!==undefined && error.response.data.message){
+    //                     dispatch(failure(error.response.data.message.toString()));
+    //                 }
+    //             }
+    //             else{
+    //                 dispatch(failure('An error occured. Please try again'));
+    //             }
+    //         })
+    // };
     
     function request(request) { return { type:GETALAT_CARDSETTINGS_PENDING, request} }
     function success(response) { return {type:GETALAT_CARDSETTINGS_SUCCESS, response} }

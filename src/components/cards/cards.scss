@@ -11,6 +11,22 @@
     color: #AB2656;
     font-weight: 600;
 }
+.logos-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    img{
+        width: 40px;
+    }
+}
+.cardtype{
+    position: absolute;
+    bottom: 55px;
+    right: 27px;
+    font-size: 14px;
+    font-weight: normal;
+    letter-spacing: 1.3px;
+}
 .amountsummary-text {
     margin: 20px 0;
     font-size: 15px;
@@ -22,6 +38,9 @@
 .design-options-wrap{
     width: 80%;
     margin: 0 auto;
+    &.width-unset{
+        width: 100%;
+    }
     .slider{
         height: 240px;
     }
@@ -228,7 +247,7 @@
             bottom: 20px;
         }
     }
-    &.choosecarddesign{
+    &.choosecarddesign, &.atmdesign{
         position: absolute;
         width: 100%;
         max-width: 420px;

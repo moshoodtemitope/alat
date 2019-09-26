@@ -12,6 +12,9 @@ import { Switch } from '../../../shared/elements/_toggle';
 import "./../cards.scss";
 import * as utils from '../../../shared/utils';
 import whitelogo from "../../../assets/img/white-logo.svg"; 
+import alatcardBg from "../../../assets/img/alat_card_bg.svg"; 
+import wemacardBg from "../../../assets/img/wema_card_bg.svg"; 
+import mastercardBg from "../../../assets/img/master_card.svg"; 
 import  {routes} from '../../../services/urls';
 import emptyVC from "../../../assets/img/credit-card-2.svg"; 
 import successIcon from "../../../assets/img/success-tick.svg";
@@ -55,7 +58,7 @@ class CardsControl extends React.Component {
         this.handleIsCardLocked            = this.handleIsCardLocked.bind(this);
         this.handleChange                  = this.handleChange.bind(this);
         
-        
+        console.log('logged user info', this.state.user);
     }
 
     componentDidMount() {
@@ -67,7 +70,7 @@ class CardsControl extends React.Component {
 
     getCustomerAtmCardSettings(){
         const { dispatch } = this.props;
-        dispatch(getALATCardSettings(this.state.user.token));
+        dispatch(getALATCardSettings(this.state.user.token, null));
 
     }
     updateCardSettings(){
@@ -211,6 +214,19 @@ class CardsControl extends React.Component {
             console.log('cards are', loadSettings.alatcardsettings_info.response.allCards);
     }
 
+    handleSlideChange(event){
+        // let{selectedDesignId} = this.state;
+
+        // if(selectedDesignId!==''){
+        //     document.querySelectorAll('.choosecarddesign').forEach((eachDesign)=>{
+        //         if(eachDesign.getAttribute('data-designid')===selectedDesignId){
+        //             eachDesign.classList.add('selected-design');
+        //         }
+        //     })
+        // }
+
+    }
+
     renderALATCardSettings(){
         let props = this.props,
             loadSettings = props.loadALATCardSetting,
@@ -234,8 +250,8 @@ class CardsControl extends React.Component {
                             defaultEndDate='',
                             StartDateField,
                             EndDateField;
-                        if(cardDetails.panDetails!==null){
-                            cardDataInfo        = cardDetails.panDetails; 
+                        if(cardDetails.allCards.length===1){
+                            cardDataInfo        = cardDetails.allCards[0]; 
                             settingInfo         = cardDetails.cardControlSettings;
                             otherSettingsInfo   = cardDetails.otherCardControlDetails;
                         let    options             =[];
@@ -293,9 +309,15 @@ class CardsControl extends React.Component {
                                     }, this.state);
 
                                 }
+                            let cardDesignUrl;
+                            if(cardDataInfo.isAlatCard===true){
+                                cardDesignUrl = `${alatcardBg}`;
+                            }else{
+                                cardDesignUrl = `${wemacardBg}`;
+                            }
                            
-                            let cardDesignUrl = `${BASEURL}/${cardDataInfo.design.url}`,
-                                cardStyle= {
+                            //  cardDesignUrl = `${BASEURL}/${cardDataInfo.design.url}`;
+                            let  cardStyle= {
                                     backgroundImage: `url('${cardDesignUrl}')`,
                                     backgroundSize: 'cover',
                                     backgroundRepeat: 'no-repeat',
@@ -324,11 +346,15 @@ class CardsControl extends React.Component {
                                 <div>
                                     
                                     <div className="atmcard-wrap nonvirtual" style={cardStyle}>
+                                        <div className="logos-wrap">
+                                            <img src={mastercardBg} alt=""/>
+                                           {cardDataInfo.isAlatCard===true &&  <img src={whitelogo} alt=""/>}
+                                        </div>
                                         <div className="cardnum-digits">
                                         {cardDataInfo.maskedPan}
                                         </div>
-                                        <div className="cardname">
-                                            {cardDataInfo.embossingName}
+                                        <div className="cardtype">
+                                            {cardDataInfo.cardType}
                                         </div>
                                         
                                     </div>
@@ -470,6 +496,53 @@ class CardsControl extends React.Component {
                                     </div>
                                 </div>
                             );
+                        }else if(cardDetails.allCards.length>=1){
+                            let cardDesignUrl, cardStyle, presSelectedCountry;
+                            return(
+                                <div className="design-options-wrap width-unset">
+                                    <Slider duration="500" infinite="true" emulateTouch="true" onSlideChange={event => this.handleSlideChange(event)}>
+                                        {cardDetails.allCards.map((eachCard, key)=>{
+                                            cardDataInfo        = eachCard; 
+
+                                           
+                                            if(cardDataInfo.isAlatCard===true){
+                                                cardDesignUrl = `${alatcardBg}`;
+                                            }else{
+                                                cardDesignUrl = `${wemacardBg}`;
+                                            }
+                                           
+                                            cardStyle= {
+                                                backgroundImage: `url('${cardDesignUrl}')`,
+                                                backgroundSize: 'cover',
+                                                backgroundRepeat: 'no-repeat',
+                                                backgroundPosition: 'center center'
+                                            },
+                                            presSelectedCountry='';
+                                            
+                                            
+
+                                            return(
+                                                // cardStyle.backgroundImage = `url(${BASEURL}/${eachDesign.url})`,
+                                                <div className="atmcard-wrap nonvirtual atmdesign" style={cardStyle}  key={key}>
+                                                    <div className="logos-wrap">
+                                                        <img src={mastercardBg} alt=""/>
+                                                    {cardDataInfo.isAlatCard===true &&  <img src={whitelogo} alt=""/>}
+                                                    </div>
+                                                    <div className="cardnum-digits">
+                                                    {cardDataInfo.maskedPan}
+                                                    </div>
+                                                    <div className="cardtype">
+                                                        {cardDataInfo.cardType}
+                                                    </div>
+                                                    
+                                                </div>
+                                                // <div className="atmcard-wrap nonvirtual " onClick={this.selectADesign} data-designid={eachDesign.id} style={{backgroundImage : `url(${BASEURL}/${eachDesign.url})`}} key={key}>
+                                                // </div>
+                                            )
+                                        })}
+                                    </Slider>
+                                </div>
+                            )
                         }else{
                             return(
                                 <div>
