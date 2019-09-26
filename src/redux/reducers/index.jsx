@@ -309,6 +309,8 @@ const appReducer = combineReducers({
     onboarding_dataFrom_bvn: onboarding.bvnCustomerDetailsReducer,
     ndpr_status_request: onboarding.getNDPRStatusReducer,
     acceptndrp_request: onboarding.acceptNDRpReducer,
+    sendemailfor_forgotpw_request: onboarding.sendEmailForgotPasswordReducer,
+    sendanswerfor_forgotpw_request: onboarding.sendAnswerForgotPasswordReducer,
     dashboard_accounts: dashboard.accountFetch,
     dashboard_accounts_history: dashboard.accountHistoryReducer,
     dashboard_userGoals: dashboard.userGoalsReducer,

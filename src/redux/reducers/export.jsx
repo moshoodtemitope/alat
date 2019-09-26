@@ -1,4 +1,11 @@
-import {userRegistrationRequest, bvnDetailsReducer,bvnSkipReducer, bvnCustomerDetailsReducer, getNDPRStatusReducer,acceptNDRpReducer} from "./onboarding.reducer";
+import {userRegistrationRequest, 
+    bvnDetailsReducer,
+    bvnSkipReducer, 
+    bvnCustomerDetailsReducer, 
+    getNDPRStatusReducer,
+    acceptNDRpReducer,
+    sendEmailForgotPasswordReducer,
+    sendAnswerForgotPasswordReducer} from "./onboarding.reducer";
 import {getCinemaList, 
     getSingleMovie, 
     buyMovieTicket,
@@ -112,7 +119,9 @@ export const onboarding = {
     bvnSkipReducer,
     bvnCustomerDetailsReducer,
     getNDPRStatusReducer,
-    acceptNDRpReducer
+    acceptNDRpReducer,
+    sendEmailForgotPasswordReducer,
+    sendAnswerForgotPasswordReducer
 };
 
 export const loans = {

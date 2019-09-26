@@ -55,7 +55,7 @@ class LinkBvN extends Component {
 
 GetUserProfileMenu = () => {
     this.props.dispatch(actions.profileMenu(this.state.user.token));
- }
+}
 
 GetResidentialAddress = () => {
     this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));

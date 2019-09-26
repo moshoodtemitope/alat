@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 // import {history} from "../_helpers";
 import {Router} from "react-router";
 // import {getGoalsSummary} from "./actions";
+import {NavLink, Redirect} from "react-router-dom";
 import {Fragment} from "react";
 import {getGoalsSummary} from "../../redux/actions/dashboard/dashboard.actions";
 import savemoney from "../../assets/img/save-money.svg";
@@ -55,7 +56,10 @@ class UserGoals extends React.Component{
                                 className="red-text">10%</span> interest</h3>
                             <p>Create goals to meet your targtes and earn interest while doing
                                 so.</p>
+                            <NavLink to="/savings/choose-goal-plan">
+
                             <a href="" className="btn-alat m-b-10 m-t-20">Discover More</a>
+                            </NavLink>
                         </div>
                     );
                 }
@@ -83,7 +87,9 @@ class UserGoals extends React.Component{
                             </div>
                         </div>
                         <p className="">{goals.length} Active Goals</p>
+                        <NavLink to="/savings/choose-goal-plan">
                         <a href="#" className="btn-alat border-btn btn-sm">View all goals</a>
+                        </NavLink>
                     </div>
                 );
             }
