@@ -95,7 +95,7 @@ class Success extends Component {
                                     <center>
                                         <img src={successLogo} className="m-b-30 m-t-20" alt="Success" />
                                     </center>
-                                    <h5 className="center-text red-text"> You ₦{formatAmount(parseInt(this.props.loanDetail.Amount))} Loan is Aprroved</h5>
+                                    <h5 className="center-text red-text"> Your ₦{formatAmount(parseInt(this.props.loanDetail.Amount))} Loan is Aprroved</h5>
 
                                     <div className="m-t-20 width-400">
                                         {/* <div className="al-card no-pad">

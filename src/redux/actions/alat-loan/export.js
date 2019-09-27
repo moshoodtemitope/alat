@@ -10,5 +10,6 @@ export {
     sendLoan,
     sendLoanWithOtp,
     setLoanDetail,
-    liquidateAlatLoan
+    liquidateAlatLoan,
+    acceptInterswitchLoan
 } from './alat-loan.action';

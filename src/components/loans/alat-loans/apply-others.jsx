@@ -8,9 +8,8 @@ import { formatAmountNoDecimal, formatAmount } from '../../../shared/utils';
 import { connect } from 'react-redux';
 
 import * as dataActions from '../../../redux/actions/dataActions/export';
-import * as loanAction from '../../../redux/actions/alat-loan/export';
 import * as actions from '../../../redux/actions/alat-loan/export';
-import AlatLoansContainer from '../alat-loan-container';
+import Modal from 'react-responsive-modal';
 import Success from '../../account-settings/shared/success';
 import AlatLoanContainer from '../alat-loan-container';
 import Checkbox from '../../../shared/elements/_checkbox';
@@ -23,6 +22,9 @@ class Apply extends Component {
             selectedOffer: null,
             selectedAccount: null,
             isChecked: false,
+            prevLength: 0,
+            terms: "",
+            showModal: false,
             validation: {
                 accountError: {
                     hasError: false,
@@ -32,8 +34,11 @@ class Apply extends Component {
                     hasError: false,
                     error: 'Pin must be 4 digits',
                 },
-                amountEmpty: false,
-                higherPay: false
+                panError: false,
+                cvvError: false,
+                offerError: false,
+                expiryDateError: false,
+                termsError: false
             },
             applyForm: {
                 activeOffer: {
@@ -80,7 +85,7 @@ class Apply extends Component {
                 cvv: {
                     elementType: 'input',
                     elementConfig: {
-                        type: 'password',
+                        type: 'text',
                         placeholder: ''
                     },
                     value: '',
@@ -167,14 +172,27 @@ class Apply extends Component {
 
     offerChangedHandler = (selectedOffer) => {
         var validation = { ...this.state.validation };
-        validation.accountError.hasError = false;
-        this.setState({ selectedOffer, validation });
+        if (validation.offerError == true) validation.offerError = false;
+        this.setState({ selectedOffer, validation, terms: selectedOffer.term });
         console.log(`Option selected:`, selectedOffer);
     }
 
     handleClick = () => {
+        let validation = { ...this.state.validation };
+        if (validation.unchecked == true) validation.unchecked = false;
         this.setState({ isChecked: !this.state.isChecked });
     }
+
+    onShowModal = () => {
+        this.props.clearError();
+        this.setState({ showModal: true });
+    }
+
+    onCloseModal = () => {
+        this.setState({ showModal: false })
+        this.props.clearError();
+    }
+
 
     inputChangedHandler = (event, inputIdentifier) => {
         if (this.props.alert.message) this.props.clearError();
@@ -187,32 +205,51 @@ class Apply extends Component {
             ...updatedApplyForm[inputIdentifier]
         };
 
-        if (inputIdentifier == "amount") {
-            updatedFormElement.valueToDisplay = event.target.value;
-            updatedFormElement.value = updatedFormElement.valueToDisplay.replace(/\,/g, '');
+        if (inputIdentifier == "expiryDate") {
+            updatedFormElement.value = event.target.value;
+            console.log(event.target.value)
+            console.log(updatedFormElement.value)
+            if (updatedFormElement.value.length >= 1) {
+                if (updatedFormElement.value.length > 5) return;
+
+                if (!pattern.test(updatedFormElement.value.replace(/\//g, ''))) {
+                    return;
+                }
+                if (updatedFormElement.value.length == 2 & this.state.prevLength == 1) {
+                    updatedFormElement.value = updatedFormElement.value + "/";
+                }
+                if (event.target.value.length == 3) {
+                    let date = updatedFormElement.value.replace(/\//g, '');
+                    updatedFormElement.value = date;
+                }
+                if (validation.expiryDateError == true) validation.expiryDateError = updatedFormElement.value.length == 5 ? false : true;
+            }
+        }
+        if (inputIdentifier == "pan") {
+            updatedFormElement.value = event.target.value;
             if (updatedFormElement.value.length >= 1) {
                 if (updatedFormElement.value.length > 20) return;
-                if (validation.amountEmpty == true) validation.amountEmpty = false;
-                if (validation.higherPay == true) validation.higherPay = false;
+
                 // if (updatedFormElement.value.length >= 1) {
                 if (!pattern.test(updatedFormElement.value)) {
                     return;
                 }
-                updatedFormElement.valueToDisplay = formatAmountNoDecimal(parseInt(updatedFormElement.value));
                 // }
-                console.log(updatedFormElement)
             }
+            if (validation.panError == true) validation.panError = updatedFormElement.value.length >= 16 ? false : true;
         }
-        if (inputIdentifier == "pin") {
+        if (inputIdentifier == "pin" || inputIdentifier == "cvv") {
             updatedFormElement.value = event.target.value;
             if (updatedFormElement.value.length >= 1) {
-                if (!pattern.test(updatedFormElement.value) || updatedFormElement.value.length > 4) return;
+                if (inputIdentifier == "pin" && (!pattern.test(updatedFormElement.value) || updatedFormElement.value.length > 4)) return;
+                if (inputIdentifier == "cvv" && (!pattern.test(updatedFormElement.value) || updatedFormElement.value.length > 3)) return;
             }
-            validation.pinError.hasError = false;
+            if (inputIdentifier == "pin" && validation.pinError.hasError == true) validation.pinError.hasError = updatedFormElement.value.length == 4 ? false : true;
+            if (inputIdentifier == "cvv" && validation.cvvError == true) validation.cvvError = updatedFormElement.value.length == 3 ? false : true;
         }
 
         updatedApplyForm[inputIdentifier] = updatedFormElement;
-        this.setState({ applyForm: updatedApplyForm, validation });
+        this.setState({ applyForm: updatedApplyForm, validation, prevLength: updatedFormElement.value.length });
     }
 
     pinInputValidation = (value) => {
@@ -235,27 +272,35 @@ class Apply extends Component {
         if (this.props.alert.message) this.props.clearError();
         if (
             (this.state.applyForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedOffer) ||
+            !this.state.selectedOffer ||
             !this.pinInputValidation(this.state.applyForm.pin.value) ||
-            this.state.applyForm.amount.value == '' ||
-            this.state.applyForm.amount.value > this.props.loanInfo + 1
+            this.state.applyForm.expiryDate.value.length < 5 ||
+            this.state.applyForm.cvv.value.length < 3 ||
+            this.state.applyForm.pan.value.length < 16 ||
+            !this.state.isChecked
         ) {
-            if (this.state.applyForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedOffer) validation.accountError.hasError = true;
+            if (this.state.applyForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedAccount) validation.accountError.hasError = true;
+            if (!this.state.selectedOffer) validation.offerError = true;
+            if (!this.state.isChecked) validation.termsError = true;
             if (!this.pinInputValidation(this.state.applyForm.pin.value)) validation.pinError.hasError = true;
-            if (this.state.applyForm.amount.value == '') validation.amountEmpty = true;
-            if (this.state.applyForm.amount.value > this.props.loanInfo.outstanding + 1) validation.higherPay = true
+            if (this.state.applyForm.expiryDate.value.length < 5 || this.state.applyForm.expiryDate.value.replace(/[^/]/g, '').length > 1) validation.expiryDateError = true;
+            if (this.state.applyForm.cvv.value < 3) validation.cvvError = true;
+            if (this.state.applyForm.pan.value.length < 16) validation.panError = true;
+
             this.setState({ validation });
         } else {
 
             const payload = {
-                AlatPin: this.state.applyForm.pin.value,
-                AccountNumber: (this.state.selectedAccount ? this.state.selectedAccount.value : this.state.applyForm.activeAccount.elementConfig.options[0].value),
-                LoanId: this.props.loanInfo.loanId,
-                Amount: parseFloat(this.state.applyForm.amount.value),
                 ProviderCode: this.state.selectedOffer.providerCode,
+                AccountNumber: (this.state.selectedAccount ? this.state.selectedAccount.value : this.state.applyForm.activeAccount.elementConfig.options[0].value),
+                OfferId: this.state.selectedOffer.offerId,
+                CardCvv: this.state.applyForm.cvv.value,
+                CardPin: this.state.applyForm.pin.value,
+                CardExpiryDate: this.state.applyForm.expiryDate.value.replace(/\//g, ''),
+                CardPan: this.state.applyForm.pan.value
             }
             console.log("all good", payload);
-
-            // this.props.onRepayLoan(this.state.user.token, payload);
+            this.props.acceptLoanOffer(this.state.user.token, payload);
         }
     }
 
@@ -264,7 +309,6 @@ class Apply extends Component {
 
     render() {
         let form = <Redirect to='/loans/alat-loans' />
-
         if (this.props.loanStatusData) {
             const formElementArray = [];
             for (let key in this.state.applyForm) {
@@ -281,10 +325,26 @@ class Apply extends Component {
                 this.sortAccountsForSelect();
             }
             const { selectedOffer, selectedAccount } = this.state;
-
+            let hasError1 = this.state.validation.panError;
+            let hasError2 = this.state.validation.pinError.hasError || this.state.validation.expiryDateError || this.state.validation.cvvError;
+            let hasError3 = this.state.validation.accountError.hasError || this.state.validation.offerError
             form = (
                 <Fragment>
                     <AlatLoanContainer>
+                        <Modal open={this.state.showModal} onClose={this.onCloseModal} center>
+                            <div className="disclaimer text-center">
+                                <h4 className="hd-underline" style={{ width: "100%", color: "#AB2656" }}>Terms and Conditions</h4>
+                                {(this.props.alert.message) ?
+                                    <div className="info-label error">{this.props.alert.message} </div> : null
+                                }
+                                <ul className="disclaimer-list">
+                                    <p>{this.state.terms}</p>
+                                </ul>
+                                <div className="btn-">
+                                    <button onClick={this.onCloseModal} style={{ width: "80%" }} className="btn-alat"><b>Okay, I Accept</b></button><br /><br />
+                                </div>
+                            </div>
+                        </Modal>
                         <div className="col-sm-12">
                             <div className="row">
                                 <div className="col-sm-12">
@@ -307,9 +367,9 @@ class Apply extends Component {
 
                                                     <div className="row">
                                                         {formElementArray.map((formElement) => {
-                                                            if (formElement.id == "amount") {
+                                                            if (formElement.id == "pan") {
                                                                 return (
-                                                                    <div className="input-ctn col-md-12" key={formElement.id}>
+                                                                    <div className="input-ctn col-md-12" style={hasError1 ? { marginBottom: 0 } : null} key={formElement.id}>
                                                                         <label>{formElement.config.label}</label>
                                                                         <Input
                                                                             elementType={formElement.config.elementType}
@@ -317,16 +377,14 @@ class Apply extends Component {
                                                                             value={formElement.config.valueToDisplay}
                                                                             changed={(event) => this.inputChangedHandler(event, formElement.id)}
                                                                             wrongInput={!formElement.config.valid} />
-                                                                        {formElement.id == "amount" ?
-                                                                            this.state.validation.amountEmpty ? <p className="text-danger">Amount is Required</p> :
-                                                                                this.state.validation.higherPay ? <p className="text-danger">Amount should not exceed your outstanding</p> : null
-                                                                            : null}
+                                                                        {formElement.id == "pan" &&
+                                                                            this.state.validation.panError ? <p className="text-danger">Enter a valid card number</p> : null}
                                                                     </div>
                                                                 )
                                                             } else if (formElement.config.elementType !== "input") {
                                                                 return (
-                                                                    <div className="input-ctn col-md-12" key={formElement.id}>
-                                                                        <label>Select an account to debit</label>
+                                                                    <div className="input-ctn col-md-12" style={hasError3 && formElement.id != "activeAccount" ? { marginBottom: 0 } : null} key={formElement.id}>
+                                                                        <label>{formElement.config.label}</label>
                                                                         <Select key={formElement.id}
                                                                             value={formElement.id == "activeOffer" ?
                                                                                 (selectedOffer) :
@@ -338,13 +396,14 @@ class Apply extends Component {
                                                                                     (this.props.loanOffers.length > 0 ? "Select Loan Offer..." : "Loading Loan Offers...") :
                                                                                     (this.props.accounts.length > 0 ? "Select Account..." : "Loading Account...")}
                                                                         />
-                                                                        {this.state.validation.accountError.hasError ? <p className="text-danger">{this.state.validation.accountError.error}</p> : null}
+                                                                        {formElement.id == "activeAccount" && this.state.validation.accountError.hasError ? <p className="text-danger">{this.state.validation.accountError.error}</p> : null}
+                                                                        {formElement.id == "activeOffer" && this.state.validation.offerError ? <p className="text-danger">You need to select an offer</p> : null}
                                                                     </div>
 
                                                                 )
                                                             };
                                                             return (
-                                                                <div className={formElement.id == "expiryDate" || formElement.id == "cvv" ? "col-md-6 input-ctn" : "input-ctn col-md-12"} key={formElement.id}>
+                                                                <div className={formElement.id == "expiryDate" || formElement.id == "cvv" ? "col-md-6 input-ctn" : "input-ctn col-md-12"} style={hasError2 ? { marginBottom: 0 } : null} key={formElement.id}>
                                                                     <label>{formElement.config.label}</label>
                                                                     <Input
                                                                         elementType={formElement.config.elementType}
@@ -353,13 +412,13 @@ class Apply extends Component {
                                                                         changed={(event) => this.inputChangedHandler(event, formElement.id)}
                                                                         wrongInput={!formElement.config.valid} />
                                                                     {formElement.id == "pin" && (this.state.validation.pinError.hasError) ? <p className="text-danger">{this.state.validation.pinError.error}</p> : null}
+                                                                    {formElement.id == "expiryDate" && (this.state.validation.expiryDateError) ? <p className="text-danger">Invalid expiry date</p> : null}
+                                                                    {formElement.id == "cvv" && (this.state.validation.cvvError) ? <p className="text-danger">Invalid cvv</p> : null}
                                                                 </div>
                                                             )
 
                                                         })}
                                                     </div>
-
-
                                                     <div className="row">
                                                         <div className="col-md-12">
                                                             <Checkbox
@@ -367,15 +426,20 @@ class Apply extends Component {
                                                                 value="random3"
                                                                 name="example"
                                                                 label={
-                                                                    <span>I accept terms and conditions. <a rel="noopener noreferrer" href="https://www.alat.ng/loan-terms" target="_blank"> Click here to read</a></span>
+                                                                    <span>I accept terms and conditions.
+                                                                        {selectedOffer ? selectedOffer.term.includes("http://") || selectedOffer.term.includes("https://") ?
+                                                                            <a rel="noopener noreferrer" href={selectedOffer.term} target="_blank"> Click here to read</a> :
+                                                                            <a rel="noopener noreferrer" className="goback" style={{ color: "#AB2656" }} onClick={this.onShowModal} > Click here to read</a>
+                                                                            : <small><i> Select a loan offer to read T&C</i></small>}
+                                                                    </span>
                                                                 }
                                                                 isChecked={this.state.isChecked}
                                                                 changed={this.handleClick} />
-                                                            {!this.state.isChecked && this.state.validation.unchecked ? <span className="text-center text-danger">Kindly accept terms and conditions to continue</span> : null}
+                                                            {!this.state.isChecked && this.state.validation.termsError ? <span className="text-center text-danger">Kindly accept terms and conditions to continue</span> : null}
                                                         </div>
                                                         <div className="col-sm-12">
                                                             <center>
-                                                                <button onClick={this.onSubmitForm} className="btn-alat m-t-10 m-b-20 text-center">Click Here to Accept Terms</button>
+                                                                <button onClick={this.onSubmitForm} className="btn-alat m-t-10 m-b-20 text-center">Submit</button>
                                                             </center>
                                                         </div>
                                                     </div>
@@ -398,11 +462,18 @@ class Apply extends Component {
         if (this.props.pageState == 0) {
             console.log("sucess already...in apply others")
             // this.props.resetPageState(2);
+            let updatedApplyForm = {
+                ...this.state.applyForm
+            }
+            updatedApplyForm.expiryDate.value = '';
+            updatedApplyForm.pan.value = '';
+            updatedApplyForm.pin.value = '';
+            updatedApplyForm.cvv.value = '';
+            this.setState({applyForm : updatedApplyForm, selectedOffer : null});
             form = <Success
-                message={"You just liquidated your loan with a sum of ₦" + this.state.applyForm.amount.valueToDisplay}
+                message={"Your ₦" +formatAmount(parseInt(this.state.selectedOffer.amountOffered))+ " Loan is Aprroved"}
                 homeUrl="/loans/alat-loans"
-                isActionButton={true}
-                clicked={this.goHome}
+                isActionButton={false}
             />
         }
 
@@ -425,9 +496,9 @@ const mapDispatchToProps = dispatch => {
     return {
         getLoanOffers: (token) => dispatch(actions.getLoanOffers(token)),
         fetchDebitableAccounts: (token) => dispatch(dataActions.fetchDebitableAccounts(token)),
-        // clearError: () => dispatch(alertActions.clear()),
-        // onRepayLoan: (token, data) => dispatch(actions.liquidateLoan(token, data)),
-        // resetPageState: (code) => dispatch(actions.resetBillPage(code)),
+        clearError: () => dispatch(alertActions.clear()),
+        acceptLoanOffer: (token, data) => dispatch(actions.acceptInterswitchLoan(token, data)),
+        resetPageState: (code) => dispatch(actions.resetPageState(code)),
         // clearLoanInfo: () => dispatch(actions.clearLoanInfo())
     }
 }

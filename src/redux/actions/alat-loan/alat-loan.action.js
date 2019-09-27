@@ -249,3 +249,29 @@ export const sendLoanWithOtp = (token, data) => {
         }
     }
 };
+
+export const acceptInterswitchLoan = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        dispatch(isFetchingTrue());
+        let consume = ApiService.request(routes.ACCEPT_INTERSWITCH_LOAN, "POST", data, SystemConstant.HEADER);
+        return consume
+            .then(response => {
+                console.log(response.data);
+                console.log("response.data");
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+
+                dispatch(isFetchingFalse());
+                console.log(error);
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function success() {
+        return {
+            type: actionTypes.ACCEPT_INTERSWITCH_LOAN_SUCCESS,
+        }
+    }
+};
