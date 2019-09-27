@@ -205,7 +205,7 @@ class CardsControl extends React.Component {
     renderALATCardSettings(){
         let props = this.props,
             loadSettings = props.loadALATCardSetting,
-            udpdateCard  = props.updateCustomerCardSettings;
+            updateCard  = props.updateCustomerCardSettings;
         let {startDate,
             endDate, invalidInterval} = this.state;
 
@@ -449,11 +449,11 @@ class CardsControl extends React.Component {
                                                                                 }
                                                                         }}   
                                                 className="btn-alat m-t-10 m-b-20 text-center"
-                                                disabled={udpdateCard.is_processing}> {udpdateCard.is_processing? 'Updating...': 'Update'}</button>
+                                                disabled={updateCard.is_processing}> {updateCard.is_processing? 'Updating...': 'Update'}</button>
                                                 
                                                 {invalidInterval && <div className="error-msg">Start date cannot exceed End date</div>}
-                                                {(udpdateCard.is_processing===false && udpdateCard.fetch_status===UPDATEALAT_CARDSETTINGS_FAILURE)&&
-                                                    <div className="error-msg">{udpdateCard.updatealatcard_info.error}</div>
+                                                {(updateCard.is_processing===false && updateCard.fetch_status===UPDATEALAT_CARDSETTINGS_FAILURE)&&
+                                                    <div className="error-msg">{updateCard.updatealatcard_info.error}</div>
                                                 }
                                                 
                                                 {this.state.showForeignError===true && <div className="error-msg">Select the country where you want to use your card and dates your card should be active</div> }
