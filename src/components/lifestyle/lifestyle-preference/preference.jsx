@@ -82,8 +82,8 @@ class Preference extends Component{
 
 function mapStateToProps(state){
    return {
-      getAllEngagements: state.getAllEngagements.data,
-      getCustomersEngagements: state.getCustomersEngagements.data
+      getAllEngagements: state.LifestyleReducerPile.getAllEngagements.data,
+      getCustomersEngagements: state.LifestyleReducerPile.getCustomersEngagements.data
    }
 }
 

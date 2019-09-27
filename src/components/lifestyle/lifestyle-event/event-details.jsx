@@ -23,7 +23,7 @@ class EventDetails extends React.Component {
             childNumber:0,
             childAmount:0,
             initialChildAmount:0,
-            ticketClassses:null,
+            ticketClassses:"",
             user: JSON.parse(localStorage.getItem("user")),
             dataContainer: null,
             eventId:"",
@@ -196,7 +196,6 @@ class EventDetails extends React.Component {
 
 
        
-        console.log(gottenValue);
         
         let data = {
             item: gottenValue[0],
@@ -238,7 +237,6 @@ class EventDetails extends React.Component {
             
         } = this.state;
          const {getCinemaList,getEvents,ShowTime,buyMovieTicket,SubmitEventData}=this.props
-         const details = this.props.location.state.details
 
         return (
             <div>
@@ -356,10 +354,11 @@ class EventDetails extends React.Component {
                                         <option>Select Ticket Type</option>
 
                                             {
-                                                // this.props.SubmitEventData.message == listStyleConstants.SUBMIT_EVENT_DATA_SUCCESS && 
+                                            //  this.props.SubmitEventData.message == listStyleConstants.SUBMIT_EVENT_DATA_SUCCESS && 
+                                                getEvents.message === listStyleConstants.GET_EVENTS_SUCCESS &&
                                                
-                                                details.ticketClassses.map(event=> {
-                                                    return <option key={event.title} value={event.ticketId + " " + "000" + event.price + " " + event.title + " " + event.eventId}>{unescape(event.title)}</option>
+                                                getEvents.data.response.eventList.map(event=> {
+                                                    return <option key={event.ticketClassses[0].title} value={event.ticketClassses[0].ticketId + " " + "000" + event.ticketClassses[0].price + " " + event.ticketClassses[0].title + " " + event.ticketClassses[0].eventId}>{unescape(event.ticketClassses[0].title)}</option>
                                                 })
                                             }
                                            
@@ -512,6 +511,7 @@ function mapStateToProps(state) {
         SubmitEventTicketData:state.LifestyleReducerPile.SubmitEventTicketData,
         getEvents:state.LifestyleReducerPile.getEvents,
         SubmitEventData:state.LifestyleReducerPile.SubmitEventData,
+
     };
 }
 

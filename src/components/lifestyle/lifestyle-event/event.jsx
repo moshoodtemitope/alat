@@ -86,7 +86,7 @@ class Event extends Component {
                                     pathname:"/lifestyle/event-details",
                                     
                                 }}>
-                                    <div  id={JSON.stringify(event)} onClick={that.EventDetails}  className="picCard" style={{backgroundImage: 'url("'+event.thumbnailImage+'")'}}>
+                                    <div  id={localStorage.setItem("goal",JSON.stringify(event))} onClick={that.EventDetails}  className="picCard" style={{backgroundImage: 'url("'+event.thumbnailImage+'")'}}>
                                     </div>
                                 </Link>
 
@@ -179,6 +179,9 @@ class Event extends Component {
                                 <div className="eventCards" key={index}>
                                     <Link to={{
                                         pathname:"/lifestyle/event-details",
+                                        state:{
+                                            details:event
+                                        }
                                        
                                     }}>
                                         <div  id={JSON.stringify(event)} onClick={that.EventDetails}  className="picCard" style={{backgroundImage: 'url("'+event.thumbnailImage+'")'}}>
