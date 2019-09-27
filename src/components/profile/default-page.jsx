@@ -65,7 +65,7 @@ class PersonalDefault extends Component {
 
    NavigateToBVN = () => {
        if(this.props.profileMenu.data.response.bvnLinked == true){
-            //  this.DispatchSuccessMessage('BVN has Been Linked');
+             this.DispatchSuccessMessage('BVN has Been Linked');
              return;
        }
 
