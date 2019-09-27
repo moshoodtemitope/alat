@@ -28,8 +28,9 @@ class Movie extends React.Component {
             display: "block"
 
         };
-        // this.handleSubmit =this.handleSubmit.bind(this)
         this.showMovies = true;
+        this.moviesDetails =this.moviesDetails.bind(this)
+
        
     }
 
@@ -121,13 +122,13 @@ class Movie extends React.Component {
                         return(
                                 <div  className="eventCards" key={index}>
                                     <Link to={{
-                                        pathname:"/lifestyle/movie-details",
-                                        state:{
-                                            details:film
-                                        }
+                                        // pathname:"/lifestyle/movie-details",
+                                        // state:{
+                                        //     details:film
+                                        // }
                                     
                                     }}>
-                                        <div   className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
+                                        <div id={JSON.stringify(film)} onClick={()=>this.moviesDetails}   className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
                                         </div>
                                         
                                     </Link>

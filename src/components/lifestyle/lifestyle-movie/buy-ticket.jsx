@@ -42,7 +42,10 @@ class BuyTicket extends Component {
         if (this.state.isSubmitted) {
             if (pin.length != 4)
            this.setState({isPinInvalid : false})
-        }
+        // }else if(this.state.Pin === ""){
+        //     this.setState({isPinInvalid : false})
+            
+         }
     }
 
 

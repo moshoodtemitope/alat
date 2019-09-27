@@ -4,7 +4,6 @@ import DatePicker from "react-datepicker";
 import * as actions from '../../redux/actions/profile/profile-action';
 import {Fragment} from "react";
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
-import InnerContainer from '../../shared/templates/inner-container';
 import {connect} from 'react-redux'
 import {history} from '../../_helpers/history';
 import {profile} from '../../redux/constants/profile/profile-constants';
