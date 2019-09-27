@@ -99,12 +99,11 @@ class SuccessMessage extends React.Component {
 
 function mapStateToProps(state){
     return {
-        setAmountToWithDraw: state.setAmountToWithDraw.data,
-        setFrequency: state.setFrequency.data,
-        groupSavingsEsusu: state.getGroupSavingsEsusu.data,
+        setAmountToWithDraw:state.setAmountToWithDraw.data,
+        setFrequency:state.setFrequency.data,
+        groupSavingsEsusu:state.getGroupSavingsEsusu.data,
         groups:state.customerGroup.data,
-        alert:state.alert,
-
+        alert:state.alert
     }
 }
 export default connect(mapStateToProps)(SuccessMessage);

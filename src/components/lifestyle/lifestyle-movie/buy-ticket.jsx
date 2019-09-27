@@ -27,7 +27,6 @@ class BuyTicket extends Component {
             child:"",
             student:"",
             isPinInvalid: false,
-            goal: JSON.parse(localStorage.getItem("goal")),
 
 
 
@@ -42,7 +41,10 @@ class BuyTicket extends Component {
         if (this.state.isSubmitted) {
             if (pin.length != 4)
            this.setState({isPinInvalid : false})
+          
         }
+        
+         
     }
 
 

@@ -142,7 +142,7 @@ class BuyTicket extends Component {
                         </div>
                     </div>
                         {this.props.alert && this.props.alert.message &&
-                        <div style={{width: "100%", marginRight:"120px",marginLeft:"120px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                        <div style={{width: "50%", marginRight:"120px",marginLeft:"279px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                         }
                         <div className="col-sm-12">
                             <div className="row">

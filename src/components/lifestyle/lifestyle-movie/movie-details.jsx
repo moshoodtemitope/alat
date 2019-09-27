@@ -6,6 +6,8 @@ import * as actions from '../../../redux/actions/lifestyle/movies-actions';
 import {getCinemaList, getSingleMovie} from '../../../redux/actions/lifestyle/movies-actions';
 import clock from '../../../assets/img/clock-circular-outline.svg';
 import moment from 'moment';
+import unescape from 'lodash/unescape';
+
 
 
 
@@ -191,7 +193,7 @@ class Moviedetails extends React.Component {
 
     decreaseAdult = () => {
         let { adultNumber } = this.state;
-        if (adultNumber !== 1 && adultNumber !== 0)
+        if ( adultNumber !== 0)
             this.setState({ adultNumber: adultNumber - 1 }, () =>
                 this.setState({
                     adultAmount: this.state.initialAdultAmount * this.state.adultNumber
@@ -208,7 +210,7 @@ class Moviedetails extends React.Component {
 
     decreaseStudent = () => {
         let { studentNumber } = this.state;
-        if (studentNumber !== 1 && studentNumber !== 0)
+        if (studentNumber !== 0)
             this.setState({ studentNumber: this.state.studentNumber - 1 }, () =>
                 this.setState({
                     studentAmount:
@@ -219,7 +221,7 @@ class Moviedetails extends React.Component {
 
     decreaseChild = () => {
         let { childNumber } = this.state;
-        if (childNumber !== 1 && childNumber !== 0 )
+        if ( childNumber !== 0 )
             this.setState({ childNumber: childNumber - 1 }, () =>
                 this.setState({
                     childrenAmount: this.state.initialChildAmount * this.state.childNumber
@@ -489,7 +491,7 @@ class Moviedetails extends React.Component {
                                     // fontFamily: "Proxima Nova"
                                 }}
                             >
-                                {this.state.description}
+                                {unescape(this.state.description)}
                             </div>
                             <div>
                                 <i className="toshow">
