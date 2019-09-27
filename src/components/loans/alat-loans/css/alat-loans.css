@@ -1,0 +1,25 @@
+.disclaimer{
+    max-width: 450px;
+}
+
+.disclaimer-list{
+    text-align: justify;
+    padding: 40px
+}
+
+.disclaimer-list li {
+    font-size: 16px;
+    font-weight: 500;
+    color: #666666;
+    margin: 15px 0;
+    list-style-type: disc;
+}
+
+.disclaimer-btn {
+    border: none;
+    background: none;
+    color: #AB2656;
+    padding: 9px 30px;
+    cursor: pointer;
+}
+

@@ -254,7 +254,7 @@ class Dashboard extends React.Component{
                                         <div className="al-card no-pad acct-card-pad acct-match">
                                             <div className="account-slide">
                                                 <h4>My Accounts <span>
-                                                <NavLink to="/accounts/accounts-history">
+                                                <NavLink to="/account/account-history">
                                                     {/* View All */}
                                                 </NavLink>
                                                 </span></h4>
