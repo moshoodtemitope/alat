@@ -274,7 +274,7 @@ class Dashboard extends React.Component{
 
                                         <div className="al-card transact-history">
                                             <h4 className="m-b-20">Transaction History <span>
-                                                <NavLink to="/accounts/accounts-history">
+                                                <NavLink to="/account/account-history">
                                                     View All
                                                 </NavLink>
                                             </span></h4>
