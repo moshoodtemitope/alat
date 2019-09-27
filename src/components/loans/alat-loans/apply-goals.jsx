@@ -8,16 +8,18 @@ import { formatAmountNoDecimal, formatAmount } from '../../../shared/utils';
 import { connect } from 'react-redux';
 
 import * as dataActions from '../../../redux/actions/dataActions/export';
-import * as loanAction from '../../../redux/actions/alat-loan/export';
 import * as actions from '../../../redux/actions/alat-loan/export';
 import AlatLoansContainer from '../alat-loan-container';
-import Success from '../../account-settings/shared/success';
+import Checkbox from '../../../shared/elements/_checkbox';
 
 const pattern = /^\d+$/;
-class LiquidateLoan extends Component {
+const noSpecialChar = /^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/;
+
+class ApplyGoals extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isChecked: false,
             selectedAccounts: null,
             validation: {
                 accountError: {
@@ -29,9 +31,19 @@ class LiquidateLoan extends Component {
                     error: 'Pin must be 4 digits',
                 },
                 amountEmpty: false,
-                higherPay: false
+                higherPay: false,
+                unchecked: false
             },
-            liquidateLoanForm: {
+            applyForm: {
+                loanName: {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'text',
+                        placeholder: ''
+                    },
+                    value: '',
+                    label: 'Give this Loan a name. (Optional)',
+                },
                 amount: {
                     elementType: 'input',
                     elementConfig: {
@@ -40,14 +52,14 @@ class LiquidateLoan extends Component {
                     },
                     value: '',
                     valueToDisplay: '',
-                    label: 'Enter amount you want to pay',
+                    label: 'Enter Loan Amount',
                 },
                 activeAccount: {
                     elementType: 'select',
                     elementConfig: {
                         options: [],
                     },
-                    label: 'Select an account to debit',
+                    label: 'Select account to credit',
                     value: '',
                     validation: {},
                     loaded: false,
@@ -60,12 +72,6 @@ class LiquidateLoan extends Component {
                         placeholder: ''
                     },
                     value: '',
-                    // validation: {
-                    //     required: true,
-                    //     minLength: 4,
-                    //     maxLength: 4,
-                    //     isNumeric: true,
-                    // },
                     label: 'Enter ALAT PIN',
                     touched: false
                 },
@@ -80,6 +86,9 @@ class LiquidateLoan extends Component {
         this.props.fetchDebitableAccounts(this.state.user.token);
     }
 
+    handleClick = () => {
+        this.setState({ isChecked: !this.state.isChecked });
+    }
 
     sortAccountsForSelect = () => {
         var arrayToDisplay = [];
@@ -94,11 +103,11 @@ class LiquidateLoan extends Component {
         console.log(arrayToDisplay)
 
         const updatedSelectOption = {
-            ...this.state.liquidateLoanForm
+            ...this.state.applyForm
         }
         updatedSelectOption.activeAccount.elementConfig.options = arrayToDisplay;
         updatedSelectOption.activeAccount.loaded = true;
-        this.setState({ liquidateLoanForm: updatedSelectOption });
+        this.setState({ applyForm: updatedSelectOption });
     }
 
     accountChangedHandler = (selectedAccount) => {
@@ -112,12 +121,12 @@ class LiquidateLoan extends Component {
     inputChangedHandler = (event, inputIdentifier) => {
         if (this.props.alert.message) this.props.clearError();
         let validation = { ...this.state.validation };
-        
-        const updatedLiquidateLoanForm = {
-            ...this.state.liquidateLoanForm
+
+        const updatedApplyForm = {
+            ...this.state.applyForm
         }
         const updatedFormElement = {
-            ...updatedLiquidateLoanForm[inputIdentifier]
+            ...updatedApplyForm[inputIdentifier]
         };
 
         if (inputIdentifier == "amount") {
@@ -126,7 +135,7 @@ class LiquidateLoan extends Component {
             if (updatedFormElement.value.length >= 1) {
                 if (updatedFormElement.value.length > 20) return;
                 if (validation.amountEmpty == true) validation.amountEmpty = false;
-                if (validation.higherPay == true)validation.higherPay = false;
+                if (validation.higherPay == true) validation.higherPay = false;
                 // if (updatedFormElement.value.length >= 1) {
                 if (!pattern.test(updatedFormElement.value)) {
                     return;
@@ -143,9 +152,15 @@ class LiquidateLoan extends Component {
             }
             validation.pinError.hasError = false;
         }
+        if (inputIdentifier == "loanName") {
+            updatedFormElement.value = event.target.value;
+            if (updatedFormElement.value.length >= 1) {
+                if (!noSpecialChar.test(updatedFormElement.value) || updatedFormElement.value.length > 30) return;
+            }
+        }
 
-        updatedLiquidateLoanForm[inputIdentifier] = updatedFormElement;
-        this.setState({ liquidateLoanForm: updatedLiquidateLoanForm, validation });
+        updatedApplyForm[inputIdentifier] = updatedFormElement;
+        this.setState({ applyForm: updatedApplyForm, validation });
     }
 
     pinInputValidation = (value) => {
@@ -159,9 +174,8 @@ class LiquidateLoan extends Component {
     }
 
     goHome = (event) => {
-        if(event) event.preventDefault();
+        if (event) event.preventDefault();
         this.props.clearLoanInfo();
-        this.props.history.push('/loans/alat-loans');
     }
 
     onSubmitForm = (event) => {
@@ -169,50 +183,43 @@ class LiquidateLoan extends Component {
         event.preventDefault();
         if (this.props.alert.message) this.props.clearError();
         if (
-                (this.state.liquidateLoanForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedAccounts) ||
-                !this.pinInputValidation(this.state.liquidateLoanForm.pin.value) ||
-                this.state.liquidateLoanForm.amount.value == '' ||
-                this.state.liquidateLoanForm.amount.value > this.props.loanInfo + 1
-            ) {
-                if (this.state.liquidateLoanForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedAccounts) validation.accountError.hasError = true;
-                if (!this.pinInputValidation(this.state.liquidateLoanForm.pin.value)) validation.pinError.hasError = true;
-                if(this.state.liquidateLoanForm.amount.value == '') validation.amountEmpty = true;
-                if(this.state.liquidateLoanForm.amount.value > this.props.loanInfo.outstanding + 1) validation.higherPay = true
-                this.setState({ validation });
+            (this.state.applyForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedAccounts) ||
+            !this.pinInputValidation(this.state.applyForm.pin.value) ||
+            this.state.applyForm.amount.value == '' ||
+            this.state.applyForm.amount.value > this.props.loanStatusData.MaximumAmount ||
+            !this.state.isChecked
+        ) {
+            if (this.state.applyForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedAccounts) validation.accountError.hasError = true;
+            if (!this.pinInputValidation(this.state.applyForm.pin.value)) validation.pinError.hasError = true;
+            if (this.state.applyForm.amount.value == '') validation.amountEmpty = true;
+            if (this.state.applyForm.amount.value > this.props.loanStatusData.MaximumAmount) validation.higherPay = true
+            if (!this.state.isChecked) validation.unchecked = true;
+            this.setState({ validation });
         } else {
-            
+
             const payload = {
-                AlatPin : this.state.liquidateLoanForm.pin.value,
-                DebitAccount: (this.state.selectedAccounts ? this.state.selectedAccounts.value : this.state.liquidateLoanForm.activeAccount.elementConfig.options[0].value),
-                LoanId: this.props.loanInfo.loanId,
-                Amount: parseFloat(this.state.liquidateLoanForm.amount.value),
-                ProviderCode: this.props.loanInfo.providerCode
+                Name: this.state.applyForm.loanName.value,
+                AlatPin: this.state.applyForm.pin.value,
+                CreditAccount: (this.state.selectedAccounts ? this.state.selectedAccounts.value : this.state.applyForm.activeAccount.elementConfig.options[0].value),
+                Amount: this.state.applyForm.amount.value,
             }
             console.log("all good", payload);
-            if(this.props.loanInfo.isGoalLoan){
-                delete payload.ProviderCode;
-                this.props.onRepayAlatLoan(this.state.user.token, payload)
-            }else{
-                this.props.onRepayLoan(this.state.user.token, payload);
-            }
-            
+            this.props.sendLoanDetail(this.state.user.token, payload);
         }
     }
 
 
-
-
     render() {
         let liquidateLoan = <Redirect to='/loans/alat-loans' />
-        if (this.props.loanInfo && !this.props.isSuccess) {
+        if (this.props.loanStatusData) {
             const formElementArray = [];
-            for (let key in this.state.liquidateLoanForm) {
+            for (let key in this.state.applyForm) {
                 formElementArray.push({
                     id: key,
-                    config: this.state.liquidateLoanForm[key]
+                    config: this.state.applyForm[key]
                 });
             }
-            if (this.props.accounts.length >= 1 && !this.state.liquidateLoanForm.activeAccount.loaded) {
+            if (this.props.accounts.length >= 1 && !this.state.applyForm.activeAccount.loaded) {
                 this.sortAccountsForSelect();
             }
             const { selectedAccount } = this.state;
@@ -225,21 +232,21 @@ class LiquidateLoan extends Component {
                             <div className="col-sm-12">
                                 <div className="max-600">
                                     <div className="al-card no-pad">
-                                        <h4 className="m-b-10 center-text hd-underline">Liquidate Loan</h4>
+                                        <h4 className="m-b-10 center-text hd-underline">Apply for Loan</h4>
                                         <div className="transfer-ctn">
+
                                             <form>
-                                            {(this.props.alert.message) ?
+                                                {(this.props.alert.message) ?
                                                     <div className="info-label error">{this.props.alert.message} {this.props.alert.message.indexOf("rror") != -1 ? <span onClick={() => { this.props.fetchDebitableAccounts(this.state.user.token) }} style={{ textDecoration: "underline", cursor: "pointer" }}>Click here to try again</span> : null}</div> : null
                                                 }
                                                 <div class="al-card no-pad">
                                                     <div class="trans-summary-card">
                                                         <div class="name-amount clearfix">
-                                                            <p className="pl-name-email">{this.props.loanInfo.name} <span>Loan Name</span></p>
-                                                            <p className="pl-amount" style={{ textAlign: "right" }}>{"₦" + formatAmount(this.props.loanInfo.outstanding)} <span style={{ display: "block", marginTop: 5 }}>Outstanding Balance</span></p>
+                                                            <p className="pl-name-email">{this.props.loanStatusData.InterestRate}% p.a. <span>Interest Rate</span></p>
+                                                            <p className="pl-amount" style={{ textAlign: "right" }}>{"₦" + (formatAmount(this.state.applyForm.amount.value == "" ? 0 : ((this.state.applyForm.amount.value * (this.props.loanStatusData.InterestRate / 100)) / 365).toFixed(2)))} <span style={{ display: "block", marginTop: 5 }}>Daily Interest</span></p>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
 
                                                 {formElementArray.map((formElement) => {
                                                     if (formElement.id == "amount") {
@@ -252,9 +259,9 @@ class LiquidateLoan extends Component {
                                                                     value={formElement.config.valueToDisplay}
                                                                     changed={(event) => this.inputChangedHandler(event, formElement.id)}
                                                                     wrongInput={!formElement.config.valid} />
-                                                                {formElement.id == "amount" ? 
-                                                                    this.state.validation.amountEmpty ? <p className="text-danger">Amount is Required</p> : 
-                                                                    this.state.validation.higherPay ? <p className="text-danger">Amount should not exceed your outstanding</p>: null 
+                                                                {formElement.id == "amount" ?
+                                                                    this.state.validation.amountEmpty ? <p className="text-danger">Amount is Required</p> :
+                                                                        this.state.validation.higherPay ? <p className="text-danger">You can't take above ₦{formatAmountNoDecimal(this.props.loanStatusData.MaximumAmount)}</p> : null
                                                                     : null}
                                                             </div>
                                                         )
@@ -282,16 +289,28 @@ class LiquidateLoan extends Component {
                                                                 changed={(event) => this.inputChangedHandler(event, formElement.id)}
                                                                 wrongInput={!formElement.config.valid} />
                                                             {formElement.id == "pin" && (this.state.validation.pinError.hasError) ? <p className="text-danger">{this.state.validation.pinError.error}</p> : null}
+                                                            {formElement.id == "loanName" ? <p className="info-text m-b-20">You are qualified for a loan to the tune of <strong>₦{formatAmountNoDecimal(this.props.loanStatusData.MaximumAmount)}</strong> for this transaction</p> : null}
                                                         </div>
                                                     )
 
                                                 })}
 
                                                 <div className="row">
+                                                    <div className="col-md-12">
+                                                        <Checkbox
+                                                            id="checkbox3"
+                                                            value="random3"
+                                                            name="example"
+                                                            label={
+                                                                <span>I accept terms and conditions. <a rel="noopener noreferrer" href="https://www.alat.ng/loan-terms" target="_blank"> Click here to read</a></span>
+                                                            }
+                                                            isChecked={this.state.isChecked}
+                                                            changed={this.handleClick} />
+                                                        {!this.state.isChecked && this.state.validation.unchecked ? <span className="text-center text-danger">Kindly accept terms and conditions to continue</span> : null}
+                                                    </div>
                                                     <div className="col-sm-12">
-                                                        {this.props.loanInfo.charge > 0 ? <p className="info-text m-b-20" style={{ color: "#5C3158" }}>You will be charged a fee of ₦{this.props.loanInfo.charge} for this transaction</p> : null}
                                                         <center>
-                                                            <button disabled={this.props.fetching} onClick={this.onSubmitForm} className="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Confirm"}</button>
+                                                            <button disabled={this.props.fetching} onClick={this.onSubmitForm} className="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Submit"}</button>
                                                         </center>
                                                     </div>
                                                 </div>
@@ -311,13 +330,8 @@ class LiquidateLoan extends Component {
             )
         }
         if (this.props.pageState == 0) {
-            // this.props.resetPageState(2);
-            liquidateLoan = <Success
-                message={"You just liquidated your loan with a sum of ₦" + this.state.liquidateLoanForm.amount.valueToDisplay}
-                homeUrl="/loans/alat-loans"
-                isActionButton={true}
-                clicked={this.goHome}
-            />
+            this.props.resetPageState(2);
+            liquidateLoan = <Redirect to='/loans/alat-loans/goals-otp'/>
         }
 
         return (
@@ -331,10 +345,10 @@ class LiquidateLoan extends Component {
 const mapStateToProps = state => {
     return {
         accounts: state.data_reducer.debitableAccounts,
-        loanInfo: state.alat_loan_reducer.loanInfo,
+        loanStatusData: state.alat_loan_reducer.loanStatusData,
+        fetching: state.alat_loan_reducer.isFetching,
         pageState: state.alat_loan_reducer.pageState,
         alert: state.alert,
-        isSuccess: state.alat_loan_reducer.isSuccess,
     }
 }
 
@@ -342,11 +356,10 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchDebitableAccounts: (token) => dispatch(dataActions.fetchDebitableAccounts(token)),
         clearError: () => dispatch(alertActions.clear()),
-        onRepayLoan: (token, data) => dispatch(actions.liquidateLoan(token, data)),
-        onRepayAlatLoan: (token, data) => dispatch(actions.liquidateAlatLoan(token, data)),
+        sendLoanDetail: (token, data) => dispatch(actions.sendLoan(token, data)),
         resetPageState: (code) => dispatch(actions.resetPageState(code)),
         clearLoanInfo: () => dispatch(actions.clearLoanInfo())
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LiquidateLoan);
+export default connect(mapStateToProps, mapDispatchToProps)(ApplyGoals);

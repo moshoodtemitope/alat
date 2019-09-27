@@ -172,6 +172,13 @@ export const routes = {
 
     //ALat-Loans
     GET_ACTIVE_LOANS : BASEURL + '/Lending.API/api/loan/GetCustomerStatus',
+    LIQUIDATE_LOAN : BASEURL + '/Lending.API/Api/Loan/RepayLoan',
+    LIQUIDATE_ALAT_LOAN: BASEURL + '/Lending.API/Api/AlatLoan/RepayLoan',
+    GET_LOAN_STATE : BASEURL + '/Lending.API/Api/AlatLoan/GetDashboardData',
+    GET_LOAN_OFFERS : BASEURL + '/Lending.API/Api/Loan/GetOffers',
+    SEND_ACCEPT_LOAN : BASEURL + '/Lending.API/api/AlatLoan/SendAcceptLoanOtp',
+    SEND_ACCEPT_LOAN_WITH_OTP : BASEURL + '/Lending.API/api/AlatLoan/AcceptLoanWithOtp',
+    ACCEPT_INTERSWITCH_LOAN :BASEURL + '/Lending.API/Api/Loan/AcceptOfferV2',
 
     //WesternUnion
     WESTERNUNION_COUNTRIES: BASEURL + '/PaymentApi/api/WesternunionCountries',
