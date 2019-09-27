@@ -1,7 +1,5 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import {Switch} from "react-router";
 import "react-datepicker/dist/react-datepicker.css";
@@ -222,7 +220,7 @@ class MemberSlots extends React.Component{
 
         // console.log(theSlots);
         // return;
-        this.props.dispatch(actions.EditSlot(this.state.user.token, data));
+        this.props.dispatch(actions.EditSlots(this.state.user.token, data));
     }
 
     handleSubmit = (event) => {

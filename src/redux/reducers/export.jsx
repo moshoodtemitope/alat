@@ -1,4 +1,11 @@
-import {userRegistrationRequest, bvnDetailsReducer,bvnSkipReducer, bvnCustomerDetailsReducer, getNDPRStatusReducer,acceptNDRpReducer} from "./onboarding.reducer";
+import {userRegistrationRequest, 
+    bvnDetailsReducer,
+    bvnSkipReducer, 
+    bvnCustomerDetailsReducer, 
+    getNDPRStatusReducer,
+    acceptNDRpReducer,
+    sendEmailForgotPasswordReducer,
+    sendAnswerForgotPasswordReducer} from "./onboarding.reducer";
 import {getCinemaList, 
     getSingleMovie, 
     buyMovieTicket,
@@ -15,7 +22,8 @@ import {getCinemaList,
      SearchfetchEventList,
       movieDetails,
       FetchMovieGenre,
-      PostMovieContent,SubmitMovieData
+      PostMovieContent,SubmitMovieData,
+      SubmitEventData
     } from './lifestyle/lifestyle-reducer';
 
 
@@ -112,7 +120,9 @@ export const onboarding = {
     bvnSkipReducer,
     bvnCustomerDetailsReducer,
     getNDPRStatusReducer,
-    acceptNDRpReducer
+    acceptNDRpReducer,
+    sendEmailForgotPasswordReducer,
+    sendAnswerForgotPasswordReducer
 };
 
 export const loans = {
@@ -330,7 +340,8 @@ export const movies = {
     movieDetails,
     FetchMovieGenre,
     PostMovieContent,
-    SubmitMovieData
+    SubmitMovieData,
+    SubmitEventData
 }
 
 export const preferences = {

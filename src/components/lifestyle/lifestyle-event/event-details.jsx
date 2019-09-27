@@ -23,29 +23,55 @@ class EventDetails extends React.Component {
             childNumber:0,
             childAmount:0,
             initialChildAmount:0,
-            ticketClassses:null,
+            ticketClassses:"",
             user: JSON.parse(localStorage.getItem("user")),
             dataContainer: null,
             eventId:"",
             ticketClass: null,
             TicketClassValidity:false,
-            goal: JSON.parse(localStorage.getItem("goal")),
+            thumbnailImage:"",
+            location:'',
+            title:"",
+            date:"",
+            description:"",
+            originalImage:"",
+            source:"",
+            // ticketClassses:""
 
 
         };
         this.fetchCinemaList();
 
     }
+    componentDidMount = () => {
+        this.init();
+    };
 
-    componentDidMount(){
-        const details = this.props.location.state.details;
-        this.setState({
-            getCinemaList: details,
+    init = () => {
+        if (this.props.SubmitEventData.message !== listStyleConstants.SUBMIT_EVENT_DATA_SUCCESS)
+            this.props.history.push("/lifestyle/event");
+        else {
+            
+            let data = JSON.parse(this.props.SubmitEventData.data.data);
+            console.log('======',data)
+            
+          
+            this.setState({
+                description:data.description,
+                thumbnailImage:data.thumbnailImage,
+                title:data.title,
+                location:data.location,
+                id:data.id,
+                date:data.date,
+                source:data.source,
+                originalImage:data.originalImage,
+                ticketClassses:data.ticketClassses
+                
+            });
+        }
+    };
 
-        },()=>{  localStorage.setItem('goal', JSON.stringify(details))
-        });
-
-    }
+    
     
     
     fetchCinemaList(){
@@ -125,18 +151,18 @@ class EventDetails extends React.Component {
         const data = {
             ShowTimeId:this.state.itemId,
             TicketAmount:this.state.childAmount,
-            title:this.props.location.state.details.title,
+            title:this.state.title,
             quantity:this.state.childNumber,
             adultquatity:this.state.adultNumber,
             studentQuantity:this.state.studentNumber,
             ticketClassses:this.state.ticketClassses,
             eventId:this.state.eventId,
-            source:this.props.location.state.details.source
+            source:this.state.source
         }
         console.log("=========",data)
 
         
-        this.props.dispatch(actions.SubmitEventTicketData(this.state.user.token, data));
+        this.props.dispatch(actions.SubmitEventTicketData(data));
 
 
     }
@@ -170,7 +196,6 @@ class EventDetails extends React.Component {
 
 
        
-        console.log(gottenValue);
         
         let data = {
             item: gottenValue[0],
@@ -204,19 +229,19 @@ class EventDetails extends React.Component {
     
 
     render() {
-        const details = this.props.location.state.details;
-
        let {
             
             childNumber,
-            TicketClassValidity
+            TicketClassValidity,
+            ticketClassses
+            
         } = this.state;
-         const {getCinemaList,getEvents,ShowTime,buyMovieTicket}=this.props
+         const {getCinemaList,getEvents,ShowTime,buyMovieTicket,SubmitEventData}=this.props
 
         return (
             <div>
             <div className="row" style={{justifyContent: "center", marginBottom:"15px"}}>
-            <img src={details.originalImage} class="img-responsive"/>
+            <img src={this.state.originalImage} class="img-responsive"/>
             </div>
        
             <div className="max-750">
@@ -245,7 +270,7 @@ class EventDetails extends React.Component {
                         <div className="col-sm-3">
                             <i className="toshow">
                                 <img
-                                    src={details.thumbnailImage}
+                                    src={this.state.thumbnailImage}
                                     style={{
                                         width: 168,
                                         height: 226,
@@ -264,7 +289,7 @@ class EventDetails extends React.Component {
                             style={{ fontSize: 26, color: "#444444", paddingLeft: 55 }}
                         >
                             <div style={{ fontFamily: "proxima_novasemibold", marginBottom: 21 }}>
-                                {details.title}
+                                {this.state.title}
                             </div>
                             <div
                                 style={{
@@ -285,7 +310,7 @@ class EventDetails extends React.Component {
                                     // fontFamily: "Proxima Nova"
                                 }}
                             >
-                                {details.description.toString().length > 30 ? details.description.toString().substring(0, 60)+"...": details.description.toString()}
+                                {unescape(this.state.description.toString().length > 30 ? this.state.description.toString().substring(0, 60)+"...": this.state.description.toString())}
                             </div>
                             <div>
                                 <i className="toshow">
@@ -307,7 +332,7 @@ class EventDetails extends React.Component {
                                         color: "#9C9C9C"
                                     }}
                                 >
-                                    {details.location}
+                                    {this.state.location}
                 </span>
                             </div>
                         </div>
@@ -329,19 +354,23 @@ class EventDetails extends React.Component {
                                         <option>Select Ticket Type</option>
 
                                             {
-                                                // getEvents.message == listStyleConstants.GET_EVENTS_SUCCESS && 
-                                                //  this.LopEventList()
-                                                details.ticketClassses.map(event=> {
-                                                    return <option key={event.title} value={event.ticketId + " " + "000" + event.price + " " + event.title + " " + event.eventId}>{unescape(event.title)}</option>
+                                            //  this.props.SubmitEventData.message == listStyleConstants.SUBMIT_EVENT_DATA_SUCCESS && 
+                                                getEvents.message === listStyleConstants.GET_EVENTS_SUCCESS &&
+                                               
+                                                getEvents.data.response.eventList.map(event=> {
+                                                    return <option key={event.ticketClassses[0].title} value={event.ticketClassses[0].ticketId + " " + "000" + event.ticketClassses[0].price + " " + event.ticketClassses[0].title + " " + event.ticketClassses[0].eventId}>{unescape(event.ticketClassses[0].title)}</option>
                                                 })
                                             }
+                                           
                                         </select>
+                                        {TicketClassValidity &&
+                                                        <div className="text-danger">please enter ticket type</div>}
                                         </div>
                                         <div className="row">
                                             <div className="form-group col-md-6">
                                                 <label style={{ marginTop: 16 }}>Select Day</label>
                                                 <select onChange={this.UseSelectedTime}>
-                                                    <option key={details.date}>{details.date}</option>
+                                                    <option key={this.state.date}>{this.state.date}</option>
                                                     {/* {                                      
                                                         ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
                                                         ShowTime.data.response.map(event=> {
@@ -461,7 +490,14 @@ class EventDetails extends React.Component {
                             </div>
                         </form>
                     </div>
+
                 </div>
+                <center>
+                        <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(listStyleConstants.MOVIE_REDUCER_CLEAR));
+                                this.props.history.push('/lifestyle/event-details') }} className="add-bene m-t-50">
+                                Go back
+                        </a>
+                 </center>
             </div>
             </div>
         );
@@ -470,10 +506,12 @@ class EventDetails extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        getCinemaList: state.getCinemaList,
-        ShowTime:state.ShowTime,
-        SubmitEventTicketData:state.SubmitEventTicketData,
-        getEvents:state.getEvents
+        getCinemaList:state.LifestyleReducerPile.getCinemaList,
+        ShowTime:state.LifestyleReducerPile.ShowTime,
+        SubmitEventTicketData:state.LifestyleReducerPile.SubmitEventTicketData,
+        getEvents:state.LifestyleReducerPile.getEvents,
+        SubmitEventData:state.LifestyleReducerPile.SubmitEventData,
+
     };
 }
 

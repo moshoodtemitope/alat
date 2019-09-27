@@ -275,6 +275,17 @@ class AtmLocator extends Component{
 
         }
         
+        resultu = () => {
+            if (this.state.atm !== null && this.state.atm !== "") {
+                return this.renderSearchAtms();
+            }
+            else{
+                return this.renderAtmLocations(); 
+            }
+        
+            
+    
+        }
 
     render(){
         return(

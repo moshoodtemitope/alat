@@ -6,7 +6,7 @@ import {Fragment} from "react";
 import moment from 'moment';
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
 import {listStyleConstants} from '../../../redux/constants/lifestyle/lifestyle-constants';
-import {getEvents} from "../../../redux/actions/lifestyle/movies-actions";
+import {getEvents,SubmitEventData} from "../../../redux/actions/lifestyle/movies-actions";
 import clock from '../../../assets/img/clock-circular-outline.svg'
 
 
@@ -40,16 +40,18 @@ class Event extends Component {
     search = data => {
 
         this.setState({searchItem: data}, () => this.renderEvent());
-        // this.props.dispatch(actions.SearchFetchEvent(this.state.user.token, data))
-        // const events = this.props.getEvents.data.response.eventList;
-        // events.map((event) => {
-        //     if ((event.title).toLowerCase().toString().includes(data)) {
-        //        console.log("=====", event.title)
-        //     }
-        // })
-    
-        // this.setState({ event });
+      
       };
+
+    EventDetails=(event)=>{
+        let events = event.target.id
+        console.log('======',events)
+        this.props.dispatch(SubmitEventData(event.target.id))
+
+        
+
+    }
+   
     
     
     onChangeHandler = async e => {
@@ -82,11 +84,9 @@ class Event extends Component {
                             <div className="eventCards" key={index}>
                                 <Link to={{
                                     pathname:"/lifestyle/event-details",
-                                    state:{
-                                        details:event
-                                    }
+                                    
                                 }}>
-                                    <div className="picCard" style={{backgroundImage: 'url("'+event.thumbnailImage+'")'}}>
+                                    <div  id={localStorage.setItem("goal",JSON.stringify(event))} onClick={that.EventDetails}  className="picCard" style={{backgroundImage: 'url("'+event.thumbnailImage+'")'}}>
                                     </div>
                                 </Link>
 
@@ -110,35 +110,14 @@ class Event extends Component {
         }
 
     }
-    // handleSubmit = (e) => {
-    //     e.preventDefault();
-
-    //                let data={
-    //             "ShowTimeId":this.state.ShowTimeId,	
-    //             "CinemaId":this.state.cinemaId,
-    //             "TicketId":this.state.ticketId,
-    //             'AccountNo':this.state.accountToDebit,
-    //             'Pin':this.state.Pin,
-    //             'TicketAmount':this.state.TicketAmount,
-    //             "Adult":this.state.adult,
-    //             "Student":this.state.student,
-    //             "Children":this.state.child,
-    //             "fee":this.state.fee,
-
-    //         };
-    //         console.log(data)
-        
-    //         this.props.dispatch(actions.postMovieContent(this.state.user.token, data));
-
-
-           
-    //     };
+    
 
 
     renderEvent(){
         let user = this.state.user;
         let props = this.props;
         let getEvents = props.getEvents;
+        let that =this
         if(getEvents.message === listStyleConstants.GET_EVENTS_PENDING){
             return  <h4 className="text-center">Loading Event...</h4>;
         }
@@ -162,8 +141,10 @@ class Event extends Component {
                                     state:{
                                         details:event
                                     }
+
+                                  
                                 }}>
-                                    <div className="picCard" style={{backgroundImage: 'url("'+event.thumbnailImage+'")'}}>
+                                    <div id={JSON.stringify(event)} onClick={that.EventDetails} className="picCard" style={{backgroundImage: 'url("'+event.thumbnailImage+'")'}}>
                                     </div>
                                 </Link>
 
@@ -201,8 +182,9 @@ class Event extends Component {
                                         state:{
                                             details:event
                                         }
+                                       
                                     }}>
-                                        <div className="picCard" style={{backgroundImage: 'url("'+event.thumbnailImage+'")'}}>
+                                        <div  id={JSON.stringify(event)} onClick={that.EventDetails}  className="picCard" style={{backgroundImage: 'url("'+event.thumbnailImage+'")'}}>
                                         </div>
                                     </Link>
     
@@ -278,9 +260,7 @@ class Event extends Component {
                                         <li><NavLink to={'/lifestyle/event'}>Event</NavLink></li>
                                         <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li>
                                         
-                                        <li style={{float:"right"}}>
-                                             {/* <label>Search by keyword</label> */}
-                                            <input style={{width:"100%",height:"30px", marginTop:8, float:'right'}} type="text" placeholder="search ..." value={this.state.value} onChange={ e => this.onChangeHandler(e)}/></li>
+                                        <li style={{float:"right", marginTop: -31, width: 181}}><label style={{ marginBottom: 0, color: "#666666", fontSize: 14}}>Search by keyword</label><input style={{width:"100%",height:"40px", marginTop:4, float:'right',}} type="text" placeholder="search ..." value={this.state.value} onChange={ e => this.onChangeHandler(e)}/></li>
 
                                     </ul>
                                 </div>
@@ -303,8 +283,9 @@ class Event extends Component {
 }
 function mapStateToProps(state){
     return {
-        getEvents: state.getEvents,
-        SearchfetchEventList:state.SearchfetchEventList
+        getEvents: state.LifestyleReducerPile.getEvents,
+        SearchfetchEventList:state.LifestyleReducerPile.SearchfetchEventList,
+        SubmitEventData:state.LifestyleReducerPile.SubmitEventData,
     };
 }
 
