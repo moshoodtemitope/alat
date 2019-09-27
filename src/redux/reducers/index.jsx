@@ -257,7 +257,7 @@ const LifestyleReducer = combineReducers({
     getCustomersEngagements: preferences.getCustomersEngagements,
 
     movieDetails: movies.movieDetails,
-    
+
     //MOVIES
     getCinemaList:movies.getCinemaList,
     getSingleMovie:movies.getSingleMovie,
@@ -270,6 +270,7 @@ const LifestyleReducer = combineReducers({
     FetchMovieGenre:movies.FetchMovieGenre,
     PostMovieContent:movies.PostMovieContent,
     SubmitMovieData:movies.SubmitMovieData,
+    SubmitEventData:movies.SubmitEventData
 
 })
             

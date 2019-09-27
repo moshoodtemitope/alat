@@ -164,7 +164,7 @@ class BuyTicket extends Component {
                                                 <div className="form-group">
                                                        <div className="puchaseSumTickets">
                                                            <div className="left">
-                                                                <p style={{fontSize:12,fontFamily:"proxima_novasemibold"}}>{this.state.goal.title}</p>
+                                                                <p style={{fontSize:12,fontFamily:"proxima_novasemibold"}}>{this.state.title}</p>
                                                                 <p style={{fontSize:12, fontFamily:'proxima_novaregular'}}>{this.state.ticketType}</p>
                                                            </div>
                                                            <div className="right">

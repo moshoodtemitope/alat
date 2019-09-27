@@ -25,7 +25,6 @@ class BuyTicket extends Component {
             Pin:"",
             source:"",
             isPinInvalid: false,
-            goal: JSON.parse(localStorage.getItem("goal")),
 
 
 
@@ -35,6 +34,34 @@ class BuyTicket extends Component {
         this.handleAlatPinChange = this.handleAlatPinChange.bind(this);
 
     };
+
+    componentDidMount = () => {
+        this.init();
+    };
+
+    init = () => {
+        if (this.props.SubmitEventTicketData.message !== listStyleConstants.SUBMIT_EVENT_TICKET_SUCCESS)
+            this.props.history.push("/lifestyle/event-details");
+        else {
+            let data =this.props.SubmitEventTicketData.data.data
+        
+            
+            console.log('tag', data);
+
+            this.setState({
+                TicketAmount:data.TicketAmount,
+                title:data.title,
+                cinemaId:data.cinemaId,
+                ShowTimeId:data.ShowTimeId,
+                ticketClassses:data.ticketClassses,
+                quantity:data.quantity,
+                source:data.source,
+                eventId:data.eventId
+                
+            });
+        }
+    };
+
     handleAlatPinChange(pin) {
         this.setState({ Pin: pin })
         if (this.state.isSubmitted) {
@@ -61,33 +88,7 @@ class BuyTicket extends Component {
    
 
     
-    componentDidMount = () => {
-        this.init();
-    };
-
-    init = () => {
-        if (this.props.SubmitEventTicketData.message !== listStyleConstants.SUBMIT_EVENT_TICKET_SUCCESS)
-            this.props.history.push("/lifestyle/event-details");
-        else {
-            let data = {
-                ...this.props.SubmitEventTicketData.data.data
-            };
-            console.log('tag', data);
-
-            this.setState({
-                TicketAmount:data.TicketAmount,
-                title:data.title,
-                cinemaId:data.cinemaId,
-                ShowTimeId:data.ShowTimeId,
-                ticketClassses:data.ticketClassses,
-                quantity:data.quantity,
-                source:data.source,
-                eventId:data.eventId
-                
-            });
-        }
-    };
-
+    
 
 
     handleSubmit = (e) => {
@@ -156,12 +157,12 @@ class BuyTicket extends Component {
                                                 <div className="form-group">
                                                        <div className="puchaseSumTickets">
                                                            <div className="left">
-                                                                <p style={{fontSize:12,fontFamily:"proxima_novasemibold"}}>{this.state.goal.title}</p>
+                                                                <p style={{fontSize:12,fontFamily:"proxima_novasemibold"}}>{this.state.title}</p>
                                                                 <p style={{fontSize:10, fontFamily:'proxima_novaregular'}}>{this.state.ticketClassses}</p>
                                                            </div>
                                                            <div className="right">
                                                                <p>N{this.state.TicketAmount}</p>
-                                                               <p style={{fontSize:12, fontFamily:'proxima_novaregular'}}>Quantity {this.state.goal.quantity}</p>
+                                                               <p style={{fontSize:12, fontFamily:'proxima_novaregular'}}>Quantity {this.state.quantity}</p>
 
                                                            </div>
                                                        </div>
@@ -197,12 +198,14 @@ class BuyTicket extends Component {
                                                 </div>
                                                
                                             </form>
-                                            {/* <center>
-                                                        <button onClick={this.NavigateBack} type="submit" id="navButToMovieSelect">
-                                                               Go Back
-                                                        </button>      
-                                                        </center> */}
+                                            
                                         </div>
+                                        <center>
+                                                <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(listStyleConstants.MOVIE_REDUCER_CLEAR));
+                                                    this.props.history.push('/lifestyle/event-details') }} className="add-bene m-t-50">
+                                                    Go back
+                                                </a>
+                                            </center>
                                     </div>
                                 </div>
                                 </div>
@@ -220,8 +223,8 @@ class BuyTicket extends Component {
 }
 const mapStateToProps = state => ({
     alert:state.alert,
-    SubmitEventTicketData:state.SubmitEventTicketData,
-    purchaseEventTicket:state.purchaseEventTicket
+    SubmitEventTicketData:state.LifestyleReducerPile.SubmitEventTicketData,
+    purchaseEventTicket:state.LifestyleReducerPile.purchaseEventTicket
 
 });
 

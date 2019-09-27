@@ -78,6 +78,10 @@ class Movie extends React.Component {
 
     }
     
+    // componentWillMount(){
+    //     this.moviesDetails()
+    // }
+    
     
     onChangeHandler = async e => {
         this.search(e.target.value);
@@ -88,7 +92,7 @@ class Movie extends React.Component {
 
     moviesDetails=(event)=>{
         let movies = event.target.id
-        console.log(movies)
+        console.log('======',movies)
         this.props.dispatch(SubmitMoviesData(event.target.id))
 
         
@@ -100,6 +104,7 @@ class Movie extends React.Component {
         let user = this.state.user;
         let props = this.props;
         let getMovieList = props.getMovieList;
+        let that =this
 
         if(getMovieList.message === listStyleConstants.GET_MOVIE_LIST_PENDING){
             return  <h4 style={{marginTop:100}} className="text-center">Loading Movies...</h4>;
@@ -119,15 +124,18 @@ class Movie extends React.Component {
                                 <div  className="eventCards" key={index}>
                                     <Link to={{
                                         pathname:"/lifestyle/movie-details",
-                                        state:{
-                                            details:film
-                                        }
-                                    
+                                        
+                                        
+                                                                         
                                     }}>
-                                        <div   className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
+                                        <div id={JSON.stringify(film)} onClick={that.moviesDetails} className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")',}}>
+                                          
                                         </div>
                                         
+                                        
                                     </Link>
+                                   
+
 
                                     <div className="boldHeader">{film.title.toString().length > 15 ? film.title.toString().substring(0, 15)+"...": film.title.toString()}</div>
                                         <div id="disc">{ film.description.toString().length > 30 ? film.description.toString().substring(0, 30)+"...": film.description.toString() }</div>
@@ -180,7 +188,7 @@ class Movie extends React.Component {
                                             details:film
                                         }
                                     }}>
-                                        <div className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
+                                        <div id={JSON.stringify(film)} onClick={that.moviesDetails} className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
                                         </div>
                                     </Link>
 
