@@ -12,12 +12,15 @@ import CardsControlContainer from './cards-control'
 // import fxTransfer from './fx-transfer/fxTransfer'
 
 class CardsContainer extends React.Component {
-
+    
     componentDidMount(){
     }
     render() {
         // (this.props);
-        
+        this.state = {
+            user: JSON.parse(localStorage.getItem("user")),
+            toggleModal: 'toggleModal'
+        }
         return (
             <Fragment>
                 <InnerContainer>
@@ -32,10 +35,20 @@ class CardsContainer extends React.Component {
                                     <div>
                                         <div className="sub-tab-nav">
                                             <ul>
-                                                <li><NavLink to={'/cards'}>Request Card</NavLink></li>
+                                                {this.state.user.isWemaMobileUser===false &&
+                                                    <li><NavLink to={'/cards'}>Request Card</NavLink></li>
+                                                }
+                                                
                                                 <li><NavLink to={'/cards-control'}> Card Control</NavLink></li>
-                                                <li><NavLink to={'/setcard-pin'}> Set Card Pin</NavLink></li>
-                                                <li><NavLink to={'/hotlist'}>Hotlist Card </NavLink></li>
+                                                {this.state.user.isWemaMobileUser===false &&
+                                                    <li><NavLink to={'/setcard-pin'}> Set Card Pin</NavLink></li>
+                                                }
+                                                {this.state.user.isWemaMobileUser===false &&
+                                                    <li><NavLink to={'/hotlist'}>Hotlist Card </NavLink></li>
+                                                }
+                                                
+                                                
+
                                                 <li><NavLink to={"/virtual-cards"}> Alat Dollar Card </NavLink></li>
                                             </ul>
                                         </div>

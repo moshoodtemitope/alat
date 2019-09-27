@@ -24,6 +24,7 @@ class OnboardingContainer extends React.Component {
                                 <div className="row">
                                     <div className="col-4">
                                         <img src={logo} alt="ALAT Logo" />
+                                        {/* <img src="./../../src/assets/img/alat-logo.png" alt="ALAT Logo" /> */}
                                     </div>
                                     {(step > 0)?
                                         <div className="col-sm-8 col-8 text-right pull-right">

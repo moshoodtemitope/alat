@@ -72,6 +72,9 @@ class RequestCard extends React.Component {
     }
 
     componentDidMount() {
+        if(this.state.user.isWemaMobileUser===true){
+            this.props.history.push("/cards-control");
+        }
         this.getCustomerATMCardsData()
     }
 
@@ -532,7 +535,7 @@ class RequestCard extends React.Component {
                 case LOADING_INFOFOR_CARDREQUEST_SUCCESS:
                     let cardInfoFromRequest = loadCardsInfo.atmcard_info.response;
                         console.log('cards is', cardInfoFromRequest)
-                        if(cardInfoFromRequest.cardDesignId.length===0){
+                        if(cardInfoFromRequest.cardsList.length===0){
                             return(
                                 <div>
                                     {this.renderNoAlatCard()}

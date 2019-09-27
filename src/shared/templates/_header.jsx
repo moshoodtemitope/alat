@@ -21,7 +21,8 @@ class HeaderContainer extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            miniNavToggle: false
+            miniNavToggle: false,
+            displayNdpr: true
         };
         const { dispatch } = this.props;
 
@@ -57,11 +58,13 @@ class HeaderContainer extends React.Component{
             return(
                 <div className="mini-nav" style={{display: 'block'}}>
                     <ul>
+                        
+                        <li><NavLink to="/account">My accounts</NavLink></li>
                         <li><NavLink to="/profile">Profile</NavLink></li>
                         <li><NavLink to="/settings">Settings</NavLink></li>
-                        <li><NavLink to="/talk-to-us">Talk to us</NavLink></li>
+                        {/* <li><NavLink to="/talk-to-us">Talk to us</NavLink></li>
                         <li><NavLink to="/talk-to-us/report-error">Report an error</NavLink></li>
-                        <li><NavLink to="/talk-to-us/atm-locator">Locate ATM</NavLink> </li>
+                        <li><NavLink to="/talk-to-us/atm-locator">Locate ATM</NavLink> </li> */}
                         <li>
                             {/*<NavLink to="/logout">Logout</NavLink>*/}
                             <a onClick={this.logout.bind(this)}>Logout</a>
@@ -113,7 +116,7 @@ class HeaderContainer extends React.Component{
         // console.log(this.props);
         // this.props.dispatch(userActions.getAll());
         this.getProfileImage();
-        // this.getNDPRStatus();
+        this.getNDPRStatus();
     }
 
     getProfileImage(){
@@ -155,10 +158,12 @@ class HeaderContainer extends React.Component{
                 let ndprData = ndprRequest.ndpr_status.response.data;
                 
                 let acceptndprRequest = this.props.acceptndrprequest;
-                    if(ndprData.priority===50){
+                    if(ndprData.priority===50 && this.state.displayNdpr===true){
+                    // if(ndprData.priority===0 && this.state.displayNdpr===true){
                         return(
                             <div className="ndPrWrap">
                                 <div className="ndprMsg al-card">
+                                <span className="close-btn" onClick={()=>this.setState({displayNdpr:false})}>X</span>
                                     <h3 className="username-heading">Dear {user.fullName},</h3>
                                     <p>
                                     Our Privacy Policy has been updated to give you more clarity on how we collect the information you share with us and how we use it.
