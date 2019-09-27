@@ -681,11 +681,11 @@ export const activateALATCard = (payload,token)=>{
     function failure(error) { return {type:ACTIVATE_ALATCARD_FAILURE, error} }
 }
 
-export const getALATCardSettings = (token, account)=>{
+export const getALATCardSettings = (token, pan)=>{
     SystemConstant.HEADER['alat-token'] = token;  
 
 
-    if(account===null){
+    // if(account===null){
         return (dispatch)=>{
             let consume =  ApiService.request(routes.GET_CARD_EXISTING_SETTINGS, "GET", null, SystemConstant.HEADER); 
             dispatch(request(consume));
@@ -693,7 +693,14 @@ export const getALATCardSettings = (token, account)=>{
                 .then(response=>{
                     if(response.data.cardList.length>=1){
 
-                        let panNum = response.data.cardList[0].pan;
+                        let panNum;
+                            if(pan===null){
+                                panNum = response.data.cardList[0].pan;
+                            }
+                            if(pan!==null && pan!=='' && pan.length>=9){
+                                panNum = pan;
+                            }
+                            
                         let consume2 = ApiService.request(routes.GET_CARD_CONTROL_SETTINGS, "POST", {pan:panNum}, SystemConstant.HEADER); 
                        
                         
@@ -754,7 +761,7 @@ export const getALATCardSettings = (token, account)=>{
                     }
                 })
         };
-    }
+    // }
 
 
 
@@ -845,8 +852,8 @@ export const getALATCardSettings = (token, account)=>{
     //         })
     // };
     
-    function request(request) { return { type:GETALAT_CARDSETTINGS_PENDING, request} }
-    function success(response) { return {type:GETALAT_CARDSETTINGS_SUCCESS, response} }
+    function request(request) { return { type:GETALAT_CARDSETTINGS_PENDING, request, pan } }
+    function success(response) { return {type:GETALAT_CARDSETTINGS_SUCCESS, response, pan} }
     function failure(error) { return {type:GETALAT_CARDSETTINGS_FAILURE, error} }
 }
 
