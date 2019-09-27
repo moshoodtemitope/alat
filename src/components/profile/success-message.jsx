@@ -10,6 +10,8 @@ import InnerContainer from '../../shared/templates/inner-container';
 // import {connect} from 'react-redux';
 import {profile} from '../../redux/constants/profile/profile-constants';
 import moment from 'moment';
+import CompletedprofileImage from '../../assets/img/selected.svg';
+import NotCompletedprofileImage from '../../assets/img/unsuccessfull.svg'
 
 
 var profileMenuStore = {}
@@ -179,29 +181,31 @@ ChangeResidentialStatus = () => {
                                                 <hr />
 
                                                 <div className="tickItems" onClick={this.NavigateToBVN}>
-                                                    {isBvNLinked === true ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
-                                                    <p className="pSubs">Link BVN</p>
-                                                </div>
-                                                <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
-                                                    {isProfileInformation ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
-                                                    <p className="pSubs">Personal Information</p>
-                                                </div>
-                                                <div className="tickItems" onClick={this.NavigateToContact}>
-                                                    {isContactDetails ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
-                                                    <p className="pSubs">Contact Details</p>
-                                                </div>
-                                                <div className="tickItems" onClick={this.NavigateToDocuments}>
-                                                    {isDocument ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt=""  className="largeVectorI" />}
-                                                    <p className="pSubs">Document Upload</p>
-                                                </div>
-                                                <div className="tickItems" onClick={this.NavigateToNextOfKin}>
-                                                    {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
-                                                    <p className="pSubs">Next of Kin</p>
-                                                </div>
-                                                <div className="tickItems" onClick={this.NavigateResidentialAddress}>
-                                                    {residentialAddress ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
-                                                    <p className="pSubs">Residential Address</p>
-                                                </div>
+                                                        {isBvNLinked ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>}
+                                                        <p className="pSubs">Link BVN</p>
+                                                    </div>
+                                                    
+                                                    <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
+                                                        {isProfileInformation ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>}
+                                                        <p className="pSubs">Personal Information</p>
+                                                    </div>
+                                                    <div className="tickItems" onClick={this.NavigateToContact}>
+                                                        {isContactDetails ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage}  alt="" className="largeVectorI"/>}
+                                                        <p className="pSubs">Contact Details</p>
+                                                    </div>
+                                                    <div className="tickItems" onClick={this.NavigateToDocuments}>
+                                                        {isDocument ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt=""  className="largeVectorI" />}
+                                                        <p className="pSubs">Document Upload</p>
+                                                    </div>
+                                                    <div className="tickItems" onClick={this.NavigateToNextOfKin}>
+                                                        {/* {typeof isToNextOfKin} */}
+                                                        {isToNextOfKin ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>} 
+                                                        <p className="pSubs">Next of Kin</p>
+                                                    </div>
+                                                    <div className="tickItems" onClick={this.NavigateResidentialAddress}>
+                                                        {residentialAddress ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>} 
+                                                        <p className="pSubs">Residential Address</p>
+                                                    </div>
                                         </div>
                                     </div>
                                     <div className="col-sm-6">

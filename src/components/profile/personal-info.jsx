@@ -10,6 +10,9 @@ import {profile} from '../../redux/constants/profile/profile-constants';
 import {occupationAndSector, getResidentialDetails, getContactDetails,getPersonalInfo,getStates} from "../../redux/actions/profile/profile-action"
 import moment from 'moment';
 import AlatPinInput from '../../shared/components/alatPinInput';
+import CompletedprofileImage from '../../assets/img/selected.svg';
+import NotCompletedprofileImage from '../../assets/img/unsuccessfull.svg'
+
 
 var profileMenuStore = {}
 class PersonalInfoMation extends Component {
@@ -735,29 +738,30 @@ ChangeResidentialStatus = () => {
                                                     <p className="details">{this.props.profileMenu.data.response.username}</p>
                                                     <p className="details">{moment(this.props.profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>
                                                     <hr />
-    
                                                     <div className="tickItems" onClick={this.NavigateToBVN}>
-                                                        {isBvNLinked === true ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                        {isBvNLinked ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>}
                                                         <p className="pSubs">Link BVN</p>
                                                     </div>
+                                                    
                                                     <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
-                                                        {isProfileInformation ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                        {isProfileInformation ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>}
                                                         <p className="pSubs">Personal Information</p>
                                                     </div>
                                                     <div className="tickItems" onClick={this.NavigateToContact}>
-                                                        {isContactDetails ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                        {isContactDetails ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage}  alt="" className="largeVectorI"/>}
                                                         <p className="pSubs">Contact Details</p>
                                                     </div>
                                                     <div className="tickItems" onClick={this.NavigateToDocuments}>
-                                                        {isDocument ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt=""  className="largeVectorI" />}
+                                                        {isDocument ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt=""  className="largeVectorI" />}
                                                         <p className="pSubs">Document Upload</p>
                                                     </div>
                                                     <div className="tickItems" onClick={this.NavigateToNextOfKin}>
-                                                        {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                        {/* {typeof isToNextOfKin} */}
+                                                        {isToNextOfKin ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>} 
                                                         <p className="pSubs">Next of Kin</p>
                                                     </div>
                                                     <div className="tickItems" onClick={this.NavigateResidentialAddress}>
-                                                        {residentialAddress ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                        {residentialAddress ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>} 
                                                         <p className="pSubs">Residential Address</p>
                                                     </div>
                                             </div>
