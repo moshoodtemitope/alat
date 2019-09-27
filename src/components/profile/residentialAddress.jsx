@@ -64,6 +64,7 @@ class ResidentialAddress extends Component {
         isProfileInformation: false,
         isContactDetails: false,
         isDocument: false,
+        isToNextOfKin: false,
         navToNextOfKin: false,
         isImageUploaded: false,
         Pin:"",
@@ -507,7 +508,7 @@ ChangeResidentialStatus = () => {
    render(){
         const {residentialAddress, isImageUploaded,  LocalGovValidity, PlaceOfBirthValidity,  NationalityValidity, StateOfOriginValidity,
          streetValidity, busstopValidity, apartmentValidity, personalAddressValidity, 
-          houseNumberValidity,   isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin} = this.state;
+          houseNumberValidity,   isBvNLinked, isProfileInformation, isContactDetails, isDocument, isToNextOfKin, navToNextOfKin} = this.state;
         const {GetResidentialAddress, profileMenu, getContactDetail } = this.props;
         
         if(GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)

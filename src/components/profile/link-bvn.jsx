@@ -27,6 +27,7 @@ class LinkBvN extends Component {
             isProfileInformation: false,
             isContactDetails: false,
             isDocument: false,
+            isToNextOfKin: false,
             navToNextOfKin: false,
             isImageUploaded: false,
             residentialAddress: false,
@@ -260,7 +261,7 @@ ChangeResidentialStatus = () => {
 }
  
    render(){
-       const {residentialAddress, isImageUploaded, dateValidity, BVNValidity, birthDate,  isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin} = this.state;
+       const {residentialAddress, isToNextOfKin, isImageUploaded, dateValidity, BVNValidity, birthDate,  isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin} = this.state;
 
             if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
                  this.ChangeResidentialStatus();

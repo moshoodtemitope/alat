@@ -69,6 +69,7 @@ class PersonalInfoMation extends Component {
         isContactDetails: false,
         isDocument: false,
         navToNextOfKin: false,
+        isToNextOfKin: false,
         isImageUploaded: false,
         Pin:"",
         isPinInvalid: false,
@@ -596,10 +597,10 @@ NavigateToDocuments = () => {
 }
 
 NavigateToNextOfKin = () => {
-     if(this.props.profileMenu.data.response.nextOfKinComplete == true){
-         this.DispatchSuccessMessage('Next of kin has been Created');
-         return
-     }
+    //  if(this.props.profileMenu.data.response.nextOfKinComplete == true){
+    //      this.DispatchSuccessMessage('Next of kin has been Created');
+    //      return
+    //  }
 
     history.push('/profile/profile-next-of-kin');
 }
@@ -631,7 +632,7 @@ ChangeResidentialStatus = () => {
 }
 
    render(){
-       const {residentialAddress, isImageUploaded, isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin, BVNValidity, birthDate, PinValidity, SectorValidity, EmployerPhoneNumberValidity,EmploymentValidity, AddressValidity, EmployersNameValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
+       const {residentialAddress, isToNextOfKin, isImageUploaded, isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin, BVNValidity, birthDate, PinValidity, SectorValidity, EmployerPhoneNumberValidity,EmploymentValidity, AddressValidity, EmployersNameValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
         SurnameValidity, EmailAddressValidity, FirstNameValidity, MaritalStatusValidity, TitleValidity, OccupationValidity,GenderValidity, DateOfBirthValidity, OtherNameValidity, MothersMaidenNameValidity} = this.state;
         const {GetResidentialAddress, profileMenu, occupationAndSector, getContactDetail} = this.props
         console.log('=======',occupationAndSector)
@@ -659,8 +660,7 @@ ChangeResidentialStatus = () => {
                         <div className="sub-tab-nav" style={{marginBottom: 10}}>
                             <ul>
                                 <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                
                             </ul>
                         </div>
                     </div>
@@ -690,8 +690,7 @@ ChangeResidentialStatus = () => {
                         <div className="sub-tab-nav" style={{marginBottom: 10}}>
                             <ul>
                                 <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                             
                             </ul>
                         </div>
                     </div>

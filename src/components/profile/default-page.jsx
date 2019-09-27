@@ -7,7 +7,7 @@ import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import {history} from '../../_helpers/history';
 import { profile } from '../../redux/constants/profile/profile-constants';
 import CompletedprofileImage from '../../assets/img/selected.svg';
- import NotCompletedprofileImage from '../../assets/img/unsuccessfull.svg'
+import NotCompletedprofileImage from '../../assets/img/unsuccessfull.svg'
 
 var profileMenuStore = {}
 class PersonalDefault extends Component {

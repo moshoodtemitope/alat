@@ -103,6 +103,7 @@ class NextOfKin extends Component {
           isProfileInformation: false,
           isContactDetails: false,
           isDocument: false,
+          isToNextOfKin: false,
           navToNextOfKin: false,
           isImageUploaded: false,
           Pin: "",
@@ -974,7 +975,7 @@ class NextOfKin extends Component {
     }
     
    render(){
-    const {residentialAddress, isImageUploaded, isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin, birthDate, PinValidity, streetCompoundValidity, yourAddressValidity, sameAddressAsAbove, SurnameValidity, relationshipValidity, TitleValidity, phoneNumberValidity, LocalGovValidity, NationalityValidity, StateOfOriginValidity,
+    const {residentialAddress, isImageUploaded, isBvNLinked, isProfileInformation, isContactDetails, isToNextOfKin, isDocument, navToNextOfKin, birthDate, PinValidity, streetCompoundValidity, yourAddressValidity, sameAddressAsAbove, SurnameValidity, relationshipValidity, TitleValidity, phoneNumberValidity, LocalGovValidity, NationalityValidity, StateOfOriginValidity,
         EmailAddressValidity, cityValidity, streetValidity, GenderValidity, busstopValidity, DateOfBirthValidity, FirstNameValidity, OtherNameValidity
         } = this.state;
  
@@ -1008,8 +1009,7 @@ class NextOfKin extends Component {
                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                 <ul>
                                     <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                 
                                 </ul>
                             </div>
                         </div>
@@ -1038,8 +1038,7 @@ class NextOfKin extends Component {
                                                     <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                                         <ul> 
                                                             <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                                            <li>Pin Management</li>
-                                                            <li>Security Questions</li>
+                                                           
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -1314,8 +1313,7 @@ class NextOfKin extends Component {
                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                 <ul>
                                     <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/event'}>Pin Management</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/preference'}>Security Questions</NavLink></li>
+                                
                                 </ul>
                             </div>
                         </div>

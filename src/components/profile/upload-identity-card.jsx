@@ -38,6 +38,7 @@ class IdentityCardUpload extends Component {
           isBvNLinked: false, navToNextOfKin: false,
           isProfileInformation: false, 
           isContactDetails: false, 
+        //   isToNextOfKin: false,
           isDocument: false, 
           isToNextOfKin: false,
        }

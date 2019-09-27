@@ -19,7 +19,13 @@ class NextOfKinUpLoadedSuccessfully extends Component {
        super(props);
        this.state = {
           user: JSON.parse(localStorage.getItem("user")),
-          residentialAddress: false
+          residentialAddress: false,
+
+          isProfileInformation: false,
+          isContactDetails: false,
+          isDocument: false,
+          isToNextOfKin: false,
+          isBvNLinked: false
        }
 
        this.GetResidentialAddress();
@@ -142,7 +148,7 @@ ChangeResidentialStatus = () => {
 }
 
    render(){
-       const {residentialAddress, isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument } = this.state;
+       const {residentialAddress, isToNextOfKin, isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument } = this.state;
 
        if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
              this.ChangeResidentialStatus();
