@@ -6,6 +6,8 @@ import {Fragment} from "react";
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import {history} from '../../_helpers/history';
 import { profile } from '../../redux/constants/profile/profile-constants';
+import CompletedprofileImage from '../../assets/img/selected.svg';
+import NotCompletedprofileImage from '../../assets/img/unsuccessfull.svg'
 
 var profileMenuStore = {}
 class PersonalDefault extends Component {
@@ -210,28 +212,29 @@ class PersonalDefault extends Component {
 
                                                 <form onSubmit={this.handleSubmit}>
                                                     <div className="tickItems" onClick={this.NavigateToBVN}>
-                                                        {isBvNLinked ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                        {isBvNLinked ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>}
                                                         <p className="pSubs">Link BVN</p>
                                                     </div>
+                                                    
                                                     <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
-                                                        {isProfileInformation ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                        {isProfileInformation ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>}
                                                         <p className="pSubs">Personal Information</p>
                                                     </div>
                                                     <div className="tickItems" onClick={this.NavigateToContact}>
-                                                        {isContactDetails ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                        {isContactDetails ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage}  alt="" className="largeVectorI"/>}
                                                         <p className="pSubs">Contact Details</p>
                                                     </div>
                                                     <div className="tickItems" onClick={this.NavigateToDocuments}>
-                                                        {isDocument ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt=""  className="largeVectorI" />}
+                                                        {isDocument ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt=""  className="largeVectorI" />}
                                                         <p className="pSubs">Document Upload</p>
                                                     </div>
                                                     <div className="tickItems" onClick={this.NavigateToNextOfKin}>
                                                         {/* {typeof isToNextOfKin} */}
-                                                        {isToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                        {isToNextOfKin ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>} 
                                                         <p className="pSubs">Next of Kin</p>
                                                     </div>
                                                     <div className="tickItems" onClick={this.NavigateResidentialAddress}>
-                                                        {residentialAddress ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                        {residentialAddress ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>} 
                                                         <p className="pSubs">Residential Address</p>
                                                     </div>
                                                 </form>
