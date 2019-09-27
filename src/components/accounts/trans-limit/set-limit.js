@@ -93,7 +93,7 @@ class SetLimit extends Component {
 
     accountChangedHandler = (selectedAccount) => {
         this.setState({ selectedAccount });
-
+        this.props.getAccountLimits(this.state.user.token, { AccountNumber: selectedAccount.value })
         console.log(`Option selected:`, selectedAccount);
     }
 
@@ -202,7 +202,7 @@ class SetLimit extends Component {
 
                                     <div className="transfer-ctn" style={{ padding: "30px 30px" }}>
                                         <h4 className="mb-3">Transaction Limit</h4>
-                                        <p className="s-info mb-4">Set your daily transaction limit. Your maximum transaction limit is <span style={{ color: "#AB2656", fontWeight: "600" }}>{this.props.limits.LimitToCompare > 1 ? `₦${formatAmountNoDecimal(this.props.limits.LimitToCompare)}` : this.props.limits.LimitToCompare}</span></p>
+                                        <p className="s-info mb-4">Set your daily transaction limit. Your maximum transaction limit is <span style={{ color: "#AB2656", fontWeight: "600" }}>{this.props.limits.LimitToCompare > 1 ? `₦${formatAmountNoDecimal(this.props.limits.LimitToCompare)}` : this.props.limits.WemaBankMaxLimit}</span></p>
                                         <form>
 
                                             <div className="row">

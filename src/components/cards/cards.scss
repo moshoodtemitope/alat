@@ -11,6 +11,29 @@
     color: #AB2656;
     font-weight: 600;
 }
+.logos-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    img{
+        width: 35px;
+        &.larger{
+            width:25px;
+        }
+    }
+}
+.cardtype{
+    position: absolute;
+    bottom: 55px;
+    right: 27px;
+    font-size: 14px;
+    font-weight: normal;
+    letter-spacing: 1.3px;
+    &.nonalat-card{
+        bottom: 24px;
+        left: 30px;
+    }
+}
 .amountsummary-text {
     margin: 20px 0;
     font-size: 15px;
@@ -19,9 +42,37 @@
         margin-right: 14px;
     }
 }
+span.close-btn {
+    font-weight: 800;
+    font-size: 19px;
+    color: #85929E;
+    float: right;
+    &:hover{
+        cursor: pointer;
+    }
+}
+.design-options-wrap{
+    .slider a.previousButton:not(.disabled):hover, .slider a.nextButton:not(.disabled):hover{
+        transform: translateY(-50%);
+    }
+}
+.transfer-ctn.no-padding-t{
+    padding-top: 0;
+}
+
 .design-options-wrap{
     width: 80%;
     margin: 0 auto;
+    &.width-unset{
+        width: 100%;
+        .slider{
+            width: 70%;
+            height: 200px;
+        }
+        .slider a.previousButton, .slider a.nextButton{
+            transform: translateY(-50%);
+        }
+    }
     .slider{
         height: 240px;
     }
@@ -228,7 +279,7 @@
             bottom: 20px;
         }
     }
-    &.choosecarddesign{
+    &.choosecarddesign, &.atmdesign{
         position: absolute;
         width: 100%;
         max-width: 420px;
@@ -254,6 +305,12 @@
     }
     &.slide.current{
         left: 30px;
+    }
+    &.atmdesign{
+        width: 86%;
+        height: 200px;
+        border-radius: 9px;
+        // left: unset;
     }
 }
 .helptext{
@@ -345,7 +402,7 @@ input{
     font-size: 17px;
 }
 .cardnum-digits {
-    font-size: 23px;
+    font-size: 20px;
     font-weight: 600;
     margin-top: 18px;
     letter-spacing: 1.5px;

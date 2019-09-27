@@ -64,6 +64,8 @@ class Event extends Component {
         let user = this.state.user;
         let props = this.props;
         let SearchfetchEventList = props.SearchfetchEventList;
+        let that =this
+
         if(SearchfetchEventList.message === listStyleConstants.SEARCH_FETCH_EVENT_PENDING){
             return  <h4  style={{marginTop:"60px"}} className="text-center">Loading Event...</h4>;
         }

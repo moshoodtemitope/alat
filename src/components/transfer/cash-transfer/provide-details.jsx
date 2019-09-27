@@ -278,7 +278,7 @@ class ProvideDetails extends React.Component{
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                            {this.renderBankFee()}
+                                                            {/* {this.renderBankFee()} */}
 
                                                        
                                                         <div className="inputctn-wrap">

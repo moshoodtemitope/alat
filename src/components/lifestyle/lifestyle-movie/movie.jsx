@@ -168,6 +168,8 @@ class Movie extends React.Component {
         let user = this.state.user;
         let props = this.props;
         let SearchfetchMovieList = props.SearchfetchMovieList;
+        let that =this
+
 
         if(SearchfetchMovieList.message === listStyleConstants.SEARCH_FETCH_MOVIE_PENDING){
             return  <h4 style={{marginTop:"60px"}} className="text-center">Loading Movies...</h4>;
