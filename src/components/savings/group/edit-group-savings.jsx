@@ -37,11 +37,22 @@ class EditGroupSavings extends React.Component {
     }
 
     componentDidMount = () => {
-        this.InitialPropertyCheck();
+        if(this.props.groupDetails != undefined){
+            window.localStorage.setItem('groupId', this.props.groupDetails.response.id);
+            this.InitialPropertyCheck();
+        }
+    }
+
+    GetGroupData = () => {
+         let Store = window.localStorage;
+         let data = {
+             groupId: Store.getItem('groupId')
+         }
+    
+         this.props.dispatch(actions.groupDetails(this.state.user.token, data));
     }
 
     handleSelectDebitableAccounts = (account) => {
-        console.log('dss', account);
         this.setState({ selectedAccount: account })
     }
     
@@ -58,43 +69,43 @@ class EditGroupSavings extends React.Component {
             switch(x){
                 case 'groupName':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }     
                 case 'groupPurpose':
                    if(this.state[x] == null || this.state[x] == ""){
-                       console.log(x)
+                    //    console.log(x)
                        result = null;
                        break;
                    }
                 case 'targetAmount':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }
                 case 'minimumIndividualAmount':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }
                 case 'targetDate':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x) 
                       result = null;
                       break;
                    }
                 case 'selectedAccount':
                       if(this.state[x] == null || this.state[x] == ""){
-                        console.log(x)
+                        // console.log(x) 
                         result = null;
                         break;
                       }
             }
         }
-        console.log(result);
+        // console.log(result);
         return result;
     }
 
@@ -111,8 +122,6 @@ class EditGroupSavings extends React.Component {
     }
 
     SetStartDate = (targetDate) => {
-        // console.log(targetDate);
-        // console.log("44444444444444444")
        this.setState({
            targetDate:targetDate
        })
@@ -131,7 +140,7 @@ class EditGroupSavings extends React.Component {
             return true;
         }
     }
-
+    
     checkGroupPurpose = () => {
         if(this.state.groupPurpose == null || this.state.groupPurpose == ""){
             this.setState({Purpose: true})
@@ -173,7 +182,6 @@ class EditGroupSavings extends React.Component {
     }
 
     checkMinimumAccountToContribute = () => {
-        console.log(this.state.minimumIndividualAmount);
         if(this.state.minimumIndividualAmount == null || this.state.minimumIndividualAmount == ""){
             this.setState({AmountToContribute: true});
             return false;
@@ -181,162 +189,421 @@ class EditGroupSavings extends React.Component {
             this.setState({AmountToContribute: false})
             return true;
         }
-     }
+    }
+
+    // checkingUserInputs = () => {
+    //     let result = "valid";
+    //     for(var x in this.state){
+    //         switch(x){
+    //             case 'howMuchValidity':
+    //                 if(this.state[x] == null || this.state[x] == ""){
+    //                     console.log(x)
+    //                     result = null;
+    //                     break;
+    //                 }     
+    //             case 'GroupEndDate':
+    //                 if(this.state[x] == null || this.state[x] == ""){
+    //                     console.log(x)
+    //                     result = null;
+    //                     break;
+    //                 }     
+    //             case 'AmountToContribute':
+    //                 if(this.state[x] == null || this.state[x] == ""){
+    //                     console.log(x)
+    //                     result = null;
+    //                     break;
+    //                 }  
+    //             case 'NoAccountSelectionWasDon':
+    //                 if(this.state[x] == null || this.state[x] == ""){
+    //                     console.log(x)
+    //                     result = null;
+    //                     break;
+    //                 }   
+    //             case 'theGroupName':
+    //                 if(this.state[x] == null || this.state[x] == ""){
+    //                     console.log(x)
+    //                     result = null;
+    //                     break;
+    //                 }        
+    //             case 'Purpose':
+    //                 if(this.state[x] == null || this.state[x] == ""){
+    //                     console.log(x)
+    //                     result = null;
+    //                     break;
+    //                 }          
+    //         }
+    //     }
+
+    //     // console.log(result);
+    //     return result;
+    // }
 
     SubmitTargetGoalEdited = () => {
         const data = {
             groupId: this.props.groupDetails.response.id,
-            name:this.state.groupName,
+            name: this.state.groupName,
             targetAmount: parseFloat(this.state.targetAmount),
             targetDate: this.state.targetDate,
             minimumIndividualAmount: parseFloat(this.state.minimumIndividualAmount),
             debitAccount: this.state.selectedAccount,
             purpose: this.state.groupPurpose, 
         }
-        console.log(data)
-        //return;
+
         this.props.dispatch(actions.editGroup(this.state.user.token, data));
     }
 
     InitialPropertyCheck = () => {
-       if(this.props.groupDetails != undefined){
-           this.setState({groupName: this.props.groupDetails.response.name});
-           this.setState({targetAmount: this.props.groupDetails.response.targetAmount});
-           ///this.setState({targetDate: this.props.groupDetails.response.targetDate});
-           this.setState({minimumIndividualAmount: this.props.groupDetails.response.minimumIndividualAmount});
-           this.setState({selectedAccount: this.props.groupDetails.response.debitAccount});
-           this.setState({groupPurpose: this.props.groupDetails.response.purpose});
-       }
+       setTimeout(() => {
+            if(this.props.groupDetails != undefined){
+                this.setState({groupName: this.props.groupDetails.response.name});
+                this.setState({targetAmount: this.props.groupDetails.response.targetAmount});
+                ///this.setState({targetDate: this.props.groupDetails.response.targetDate});
+                this.setState({minimumIndividualAmount: this.props.groupDetails.response.minimumIndividualAmount});
+                this.setState({selectedAccount: this.props.groupDetails.response.debitAccount});
+                this.setState({groupPurpose: this.props.groupDetails.response.purpose});
+            }
+       }, 1000);
     }
 
     handleSubmit = (event) => {
          event.preventDefault();
-        this.SubmitTargetGoalEdited();
+         this.checkGroupName();  
+         this.checkGroupPurpose();
+         this.checkTheTargetAmount();
+         this.checkTheEndDate();  
+         this.checkTheEndDate(); 
+         this.checkTheSelectedAccount(); 
+         this.checkMinimumAccountToContribute(); 
+
+         switch(this.checkingUserInputs()){
+            case null:
+               return;
+            case 'valid':
+               this.SubmitTargetGoalEdited();
+         }
         
     }
 
     NavigateToGroupSavings = () => {
         history.push('/savings/activityDashBoard');
-        
     }
-
-
 
     render() {
         const {targetDate, theGroupName, Purpose, howMuchValidity, GroupEndDate, AmountToContribute, NoAccountSelectionWasDon, selectedAccount} = this.state;
-        return (
-            <Fragment>
-                        <div className="row">
-                            <div className="col-sm-12">
-                                <p className="page-title">Savings & Goals</p>
-                            </div>
-                            <div className="col-sm-12">
-                                <div className="tab-overflow">
-                                    <div className="sub-tab-nav">
-                                        <ul>
-                                        <NavLink to='/savings/choose-goal-plan'>
-                                            <li><a href="#">Goals</a></li>
-                                        </NavLink>
-                                            <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                            {/* <li><a href="#">Investments</a></li> */}
-                                        </ul>
+
+        if(this.props.theGroupDetails.data ==undefined){
+            this.GetGroupData();
+            return (
+                <Fragment>
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <p className="page-title">Savings & Goals</p>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div className="tab-overflow">
+                                        <div className="sub-tab-nav">
+                                            <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li><a href="#">Goals</a></li>
+                                            </NavLink>
+                                                <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
+                                <p>Loading Data wait for it ...</p>
                             </div>
-                            {this.props.alert && this.props.alert.message &&
-                            <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
-                            }
-                            <div className="col-sm-12">
-                                <div className="row">
-                                    <div className="col-sm-12">
-                                      <div className="max-600">
-                                       <div className="al-card no-pad">
-                                       <h4 className="m-b-10 center-text hd-underline"> Edit Target Goal </h4>
+    
+                </Fragment>
+            );
+        }
+        if(this.props.theGroupDetails.message === GROUPSAVINGSCONSTANT.EDITGROUP){
+            return (
+                <Fragment>
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <p className="page-title">Savings & Goals</p>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div className="tab-overflow">
+                                        <div className="sub-tab-nav">
+                                            <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li><a href="#">Goals</a></li>
+                                            </NavLink>
+                                                <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>Loading Data wait for it ...</p>
+                            </div>
+    
+                </Fragment>
+            );
+        }
 
-                                            <form onSubmit={this.handleSubmit}>
-                                                <div className={theGroupName ? "form-group form-error" : "form-group"}>
-                                                    
-                                                       <label>Give your group a name</label>
-                                                       <input type="text" className="form-control" onChange={this.SetName} placeholder="Dubai Goal"/>
-                                                   
-                                                </div>
-                                                <div className="form-row">
-                                                    <div className={Purpose ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                        <label className="label-text">What is the purpose of this group?</label>
-                                                        <input type="text" className="form-control" onChange={this.SetPurpose} placeholder="Raise Money"/>
-                                                    </div>
-                                                    <div className={howMuchValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                        <label className="label-text">How much is the group raising?</label>
-                                                        <input type="Number" className="form-control" onChange={this.SetTargetAmount} placeholder="N100, 0000"/>
-                                                    </div>
-                                                </div>
-                                                <div className="form-row">
-                                                    <div className={GroupEndDate ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                        <label className="label-text">when does the group want to meet this goal</label>
-                                                        <DatePicker className="form-control" selected={targetDate} 
-                                                        placeholder="June 31, 2019"
-                                                        dateFormat=" MMMM d, yyyy"
-                                                        showMonthDropdown
-                                                        showYearDropdown
-                                                        onChange={this.SetStartDate}
-                                                        dropdownMode="select"
+        if(this.props.theGroupDetails.message === GROUPSAVINGSCONSTANT.EDITGROUP_SUCCESS){
+            this.InitialPropertyCheck();
+            return (
+                <Fragment>
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <p className="page-title">Savings & Goals</p>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div className="tab-overflow">
+                                        <div className="sub-tab-nav">
+                                            <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li><a href="#">Goals</a></li>
+                                            </NavLink>
+                                                <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                {this.props.alert && this.props.alert.message &&
+                                <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                                }
+                                <div className="col-sm-12">
+                                    <div className="row">
+                                        <div className="col-sm-12">
+                                          <div className="max-600">
+                                           <div className="al-card no-pad">
+                                           <h4 className="m-b-10 center-text hd-underline"> Edit Target Goal </h4>
+    
+                                                <form onSubmit={this.handleSubmit}>
+                                                    <div className={theGroupName ? "form-group form-error" : "form-group"}>
                                                         
-                                                        />
+                                                           <label>Give your group a name</label>
+                                                           <input type="text" className="form-control" onChange={this.SetName} placeholder="Dubai Goal"/>
                                                        
                                                     </div>
-                                                    <div className={AmountToContribute ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                        <label className="label-text">Amount to contribute per person (optional)</label>
-                                                        <input type="Number" className="form-control" onChange={this.SetAmountToContributeIndividually} placeholder="E.g. ₦100,000"/>
+                                                    <div className="form-row">
+                                                        <div className={Purpose ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                            <label className="label-text">What is the purpose of this group?</label>
+                                                            <input type="text" className="form-control" onChange={this.SetPurpose} placeholder="Raise Money"/>
+                                                        </div>  
+                                                        <div className={howMuchValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                            <label className="label-text">How much is the group raising?</label>
+                                                            <input type="Number" className="form-control" onChange={this.SetTargetAmount} placeholder="N100, 0000"/>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                
-                                                <div className={NoAccountSelectionWasDon ? "form-error" : "accountSelection"}>
-                                                    <div className='col-sm-12'>
-                                                              
-                                                                    <SelectDebitableAccounts
-                                                                        options={selectedAccount}
-                                                                        // value={this.state.selectedAccount}
-                                                                        accountInvalid={this.state.isAccountInvalid}
-                                                                        onChange={this.handleSelectDebitableAccounts}
-                                                                        options={selectedAccount}
-                                                                        labelText="Select Account to debit" />
-                                                              
+                                                    <div className="form-row">
+                                                        <div className={GroupEndDate ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                            <label className="label-text">when does the group want to meet this goal</label>
+                                                            <DatePicker className="form-control" selected={targetDate} 
+                                                            placeholder="June 31, 2019"
+                                                            dateFormat=" MMMM d, yyyy"
+                                                            showMonthDropdown
+                                                            showYearDropdown
+                                                            onChange={this.SetStartDate}
+                                                            dropdownMode="select"
+                                                            
+                                                            />
+                                                           
+                                                        </div>
+                                                        <div className={AmountToContribute ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                            <label className="label-text">Amount to contribute per person (optional)</label>
+                                                            <input type="Number" className="form-control" onChange={this.SetAmountToContributeIndividually} placeholder="E.g. ₦100,000"/>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                
-                                                <div className="row">
-                                                    <div className="col-sm-12">
-                                                        <center>
-                                                            {/* <NavLink to='/savings/group/group-created'> */}
-                                                                  <button
-                                                                  disabled={this.props.data.message == GROUPSAVINGSCONSTANT.CREATEGROUPSAINGSPENDING}
-                                                                   type="submit" className="btn-alat m-t-10 m-b-20 text-center">
-                                                                   {this.props.data.message == GROUPSAVINGSCONSTANT.CREATEGROUPSAINGSPENDING ? "Processing..." :"Next"}
-
-                                                                   </button>
-                                                            {/* </NavLink> */}
-                                                        </center>
+                                                    
+                                                    <div className={NoAccountSelectionWasDon ? "form-error" : "accountSelection"}>
+                                                        <div className='col-sm-12'>
+                                                                  
+                                                                        <SelectDebitableAccounts
+                                                                            options={selectedAccount}
+                                                                            // value={this.state.selectedAccount}
+                                                                            accountInvalid={this.state.isAccountInvalid}
+                                                                            onChange={this.handleSelectDebitableAccounts}
+                                                                            options={selectedAccount}
+                                                                            labelText="Select Account to debit" />
+                                                                  
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </form>
-
-
-
-                                        </div>
-
-
-                                       </div>
-
-                                      </div>
-
+                                                    
+                                                    <div className="row">
+                                                        <div className="col-sm-12">
+                                                            <center>
+                                                                {/* <NavLink to='/savings/group/group-created'> */}
+                                                                      <button
+                                                                      disabled={this.props.data.message == GROUPSAVINGSCONSTANT.CREATEGROUPSAINGSPENDING}
+                                                                       type="submit" className="btn-alat m-t-10 m-b-20 text-center">
+                                                                       {this.props.data.message == GROUPSAVINGSCONSTANT.CREATEGROUPSAINGSPENDING ? "Processing..." :"Next"}
+    
+                                                                       </button>
+                                                                {/* </NavLink> */}
+                                                            </center>
+                                                        </div>
+                                                    </div>
+                                                </form>
+    
+    
+    
+                                            </div>
+    
+    
+                                           </div>
+    
+                                          </div>
+    
+                                    </div>
+    
                                 </div>
-
+    
                             </div>
+    
+                </Fragment>
+            );
+        }
 
-                        </div>
+        if(this.props.theGroupDetails.message == GROUPSAVINGSCONSTANT.EDITGROUP_ERROR){
+            return (
+                <Fragment>
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <p className="page-title">Savings & Goals</p>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div className="tab-overflow">
+                                        <div className="sub-tab-nav">
+                                            <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li><a href="#">Goals</a></li>
+                                            </NavLink>
+                                                <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>Please Check Your Network ...</p>
+                            </div>
+    
+                </Fragment>
+            );
+        }
 
-            </Fragment>
-        );
+        if(this.props.theGroupDetails != undefined){
+            return (
+                <Fragment>
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <p className="page-title">Savings & Goals</p>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div className="tab-overflow">
+                                        <div className="sub-tab-nav">
+                                            <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li><a href="#">Goals</a></li>
+                                            </NavLink>
+                                                <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                {this.props.alert && this.props.alert.message &&
+                                <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                                }
+                                <div className="col-sm-12">
+                                    <div className="row">
+                                        <div className="col-sm-12">
+                                          <div className="max-600">
+                                           <div className="al-card no-pad">
+                                           <h4 className="m-b-10 center-text hd-underline"> Edit Target Goal </h4>
+    
+                                                <form onSubmit={this.handleSubmit}>
+                                                    <div className={theGroupName ? "form-group form-error" : "form-group"}>
+                                                        
+                                                           <label>Give your group a name</label>
+                                                           <input type="text" className="form-control" onChange={this.SetName} placeholder="Dubai Goal"/>
+                                                       
+                                                    </div>
+                                                    <div className="form-row">
+                                                        <div className={Purpose ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                            <label className="label-text">What is the purpose of this group?</label>
+                                                            <input type="text" className="form-control" onChange={this.SetPurpose} placeholder="Raise Money"/>
+                                                        </div>
+                                                        <div className={howMuchValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                            <label className="label-text">How much is the group raising?</label>
+                                                            <input type="Number" className="form-control" onChange={this.SetTargetAmount} placeholder="N100, 0000"/>
+                                                        </div>
+                                                    </div>
+                                                    <div className="form-row">
+                                                        <div className={GroupEndDate ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                            <label className="label-text">when does the group want to meet this goal</label>
+                                                            <DatePicker className="form-control" selected={targetDate} 
+                                                            placeholder="June 31, 2019"
+                                                            dateFormat=" MMMM d, yyyy"
+                                                            showMonthDropdown
+                                                            showYearDropdown
+                                                            onChange={this.SetStartDate}
+                                                            dropdownMode="select"
+                                                            
+                                                            />
+                                                           
+                                                        </div>
+                                                        <div className={AmountToContribute ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                            <label className="label-text">Amount to contribute per person (optional)</label>
+                                                            <input type="Number" className="form-control" onChange={this.SetAmountToContributeIndividually} placeholder="E.g. ₦100,000"/>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div className={NoAccountSelectionWasDon ? "form-error" : "accountSelection"}>
+                                                        <div className='col-sm-12'>
+                                                                  
+                                                                        <SelectDebitableAccounts
+                                                                            options={selectedAccount}
+                                                                            // value={this.state.selectedAccount}
+                                                                            accountInvalid={this.state.isAccountInvalid}
+                                                                            onChange={this.handleSelectDebitableAccounts}
+                                                                            options={selectedAccount}
+                                                                            labelText="Select Account to debit" />
+                                                                  
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div className="row">
+                                                        <div className="col-sm-12">
+                                                            <center>
+                                                                {/* <NavLink to='/savings/group/group-created'> */}
+                                                                      <button
+                                                                      disabled={this.props.data.message == GROUPSAVINGSCONSTANT.CREATEGROUPSAINGSPENDING}
+                                                                       type="submit" className="btn-alat m-t-10 m-b-20 text-center">
+                                                                       {this.props.data.message == GROUPSAVINGSCONSTANT.CREATEGROUPSAINGSPENDING ? "Processing..." :"Next"}
+    
+                                                                       </button>
+                                                                {/* </NavLink> */}
+                                                            </center>
+                                                        </div>
+                                                    </div>
+                                                </form>
+    
+    
+    
+                                            </div>
+    
+    
+                                           </div>
+    
+                                          </div>
+    
+                                    </div>
+    
+                                </div>
+    
+                            </div>
+    
+                </Fragment>
+            );
+        }
     }
 }
 
@@ -346,7 +613,8 @@ function mapStateToProps(state){
         alert: state.alert,
         groupDetails: state.groupDetails.data,
         groupSavingsEsusu: state.getGroupSavingsEsusu.data,
-        groups: state.customerGroup.data
+        groups: state.customerGroup.data,
+        theGroupDetails: state.groupDetails
     }
 }
 export default connect(mapStateToProps)(EditGroupSavings);

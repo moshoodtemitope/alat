@@ -9,6 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import {history} from '../../../_helpers/history';
+import { GROUPSAVINGSCONSTANT } from "../../../redux/constants/savings/group";
 
 const quantityOfMembers = [
     { value: '1' ,label:"1" },
@@ -57,6 +58,20 @@ class EditRotatingGroup extends React.Component {
         }
     }
 
+    componentDidMount = () => {
+        if(this.props.rotatingGroupDetails != undefined){
+            window.localStorage.setItem('rotatingGroupId', this.props.rotatingGroupDetails.response.id);
+        }
+    }
+
+    FetchRotatingGroupDetails = () => {
+        let storage = window.localStorage;
+        let data = {
+            groupId: JSON.parse(storage.getItem('rotatingGroupId'))
+        }
+        this.props.dispatch(actions.rotatingGroupDetails(this.state.user.token, data));
+    }
+
     validateFrequencyOfWithdrawals=()=>{
         if(this.state.numberOfMembers == null || this.state.numberOfMembers == ""){
             this.setState({howMuchValidity: true});
@@ -95,7 +110,7 @@ class EditRotatingGroup extends React.Component {
     }
     
     handleSelectDebitableAccounts = (account) => {
-        console.log('dss', account);
+        // console.log('dss', account);
         this.setState({ selectedAccount: account });
         if (this.state.isSubmitted) { 
             if(account.length == 10)
@@ -129,38 +144,38 @@ class EditRotatingGroup extends React.Component {
             switch(x){
                 case 'groupName':
                    if(this.state[x] == new Date() || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }    
                 case 'startDate':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }     
                 case 'monthlyContribution':
                    if(this.state[x] == null || this.state[x] == ""){
-                       console.log(x)
+                    //    console.log(x)
                        result = null;
                        break;
                    }
                 case 'numberOfMembers':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }
                 case 'selectedAccount':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }
             }
         }
 
-        console.log(result);
+        // console.log(result);
         return result;
     }
 
@@ -196,11 +211,11 @@ class EditRotatingGroup extends React.Component {
             MonthlyContribution: parseFloat(this.state.monthlyContribution),
             NumberOfMembers: parseInt(this.state.numberOfMembers),
             StartDate: this.state.startDate,
-            // DebitAccount: this.state.selectedAccount
         }
 
-        console.log(data);
-        //return
+        // console.log(data);
+        // return;
+
         this.props.dispatch(actions.editGroupEsusu(this.state.user.token, data));
     }
 
@@ -216,7 +231,7 @@ class EditRotatingGroup extends React.Component {
 
         switch(this.checkingUserInputs()){
             case null:
-               console.log('Empty fields present');
+            //    console.log('Empty fields present');
                break;
             case 'valid':
                this.SubmitAutomatedGroupSavings();
@@ -231,113 +246,306 @@ class EditRotatingGroup extends React.Component {
     render() {
         const {selectedAccount, numberOfMembers, startDateValidity,
             groupNameValidity, isAccountInvalid, monthlyContributionValidity, howMuchValidity} = this.state;
-
-        return (
-            <Fragment>
-                
-                        <div className="row">
-                            <div className="col-sm-12">
-                                <p className="page-title">Savings & Goals</p>
-                            </div>
-                            <div className="col-sm-12">
-                                <div className="tab-overflow">
-                                    <div className="sub-tab-nav">
-                                        <ul>
-                                        <NavLink to='/savings/choose-goal-plan'>
-                                            <li><a href="#">Goals</a></li>
-                                        </NavLink>
-                                            <li onClick={this.NavigateToGroupSavings}><a href="#">Group Savings</a></li>
-                                            
-                                        {/* <li><a href="#">Investments</a></li> */}
-
-                                        </ul>
+        
+        if(this.props.rotatingGroupDetailsData.data != undefined){
+            return (
+                <Fragment>
+                    
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <p className="page-title">Savings & Goals</p>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div className="tab-overflow">
+                                        <div className="sub-tab-nav">
+                                            <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li><a href="#">Goals</a></li>
+                                            </NavLink>
+                                                <li onClick={this.NavigateToGroupSavings}><a href="#">Group Savings</a></li>
+                                                
+                                            {/* <li><a href="#">Investments</a></li> */}
+    
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="col-sm-12">
-                                <div className="row">
-                                    <div className="col-sm-12">
-                                      <div className="max-600">
-                                       <div className="al-card no-pad">
-                                       <h4 className="m-b-10 center-text hd-underline">Edit Rotating Savings Group</h4>
-
-                                            <form onSubmit={this.handleSubmit}>
-                                                <div className="form-row">
-                                                    <div className={groupNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                        <label className="label-text">Give your group a name</label>
-                                                        <input type="text" placeholder="Dubai Goal" onChange={this.handleGroupName}/>
-                                                   </div>
-                                                </div>
-                                                <div className="form-row">
-                                                    <div className={monthlyContributionValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                         <label className="label-text">Monthly Contributions</label>
-                                                         <input type="number" placeholder="N 100,000" onChange={this.handleMonthlContributions}/>
-                                                    </div>
-                                                    <div className={howMuchValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                        <label className="label-text">Number of members?</label>
-                                                         <Select type="text" 
-                                                            options={quantityOfMembers}
-                                                            name="numberOfMembers"
-                                                            onChange={this.handleSelectChange}
-                                                            value={numberOfMembers.label}
-                                                          />
-                                                    </div>
-                                                </div>
-                                                <div className="form-row">
-                                                    <div className={startDateValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                        <label className="label-text">when does the group wants to meet this goal?</label>
-                                                        <DatePicker className="form-control" selected={this.state.startDate}
-                                                            placeholder="October 31, 2017"
-                                                            dateFormat=" MMMM d, yyyy"
-                                                            showMonthDropdown
-                                                            onChange={this.handleSelectedDate}
-                                                            showYearDropdown
-                                                            value={this.state.startDate}
-                                                            dropdownMode="select"
-                                                        />
-                                                    </div>
-                                                    
-                                                </div>
-
-                                                <div className="form-row">
-                                                    <div className={isAccountInvalid ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                        <SelectDebitableAccounts
-                                                            accountInvalid={this.state.isAccountInvalid}
-                                                            onChange={this.handleSelectDebitableAccounts}
-                                                            labelText="Select Account to debit" 
-                                                            options={selectedAccount}/>
+                                <div className="col-sm-12">
+                                    <div className="row">
+                                        <div className="col-sm-12">
+                                            <div className="max-600">
+                                            <div className="al-card no-pad">
+                                            <h4 className="m-b-10 center-text hd-underline editRotHeading">Edit Rotating Savings Group</h4>
+    
+                                                <form onSubmit={this.handleSubmit}>
+                                                    <div className="form-row">
+                                                        <div className={groupNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                            <label className="label-text">Give your group a name</label>
+                                                            <input type="text" placeholder="Dubai Goal" onChange={this.handleGroupName}/>
                                                         </div>
-                                                </div>
-
-                                                <div className="row">
-                                                    <div className="col-sm-12">
-                                                        <center>
-                                                           
-                                                                  <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Create Group</button>
-                                                           
-                                                        </center>
                                                     </div>
-                                                </div>
-                                            </form>
-
-
-
-                                        </div>
-
-
-                                       </div>
-
-                                      </div>
-
+                                                    <div className="form-row">
+                                                        <div className={monthlyContributionValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                                <label className="label-text">Monthly Contributions</label>
+                                                                <input type="number" placeholder="N 100,000" onChange={this.handleMonthlContributions}/>
+                                                        </div>
+                                                        <div className={howMuchValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                            <label className="label-text">Number of members?</label>
+                                                                <Select type="text" 
+                                                                options={quantityOfMembers}
+                                                                name="numberOfMembers"
+                                                                onChange={this.handleSelectChange}
+                                                                value={numberOfMembers.label}
+                                                                />
+                                                        </div>
+                                                    </div>
+                                                    <div className="form-row">
+                                                        <div className={startDateValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                            <label className="label-text">when does the group wants to meet this goal?</label>
+                                                            <DatePicker className="form-control" selected={this.state.startDate}
+                                                                placeholder="October 31, 2017"
+                                                                dateFormat=" MMMM d, yyyy"
+                                                                showMonthDropdown
+                                                                onChange={this.handleSelectedDate}
+                                                                showYearDropdown
+                                                                value={this.state.startDate}
+                                                                dropdownMode="select"
+                                                            />
+                                                        </div>
+                                                        
+                                                    </div>
+    
+                                                    <div className="form-row">
+                                                        <div className={isAccountInvalid ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                            <SelectDebitableAccounts
+                                                                accountInvalid={this.state.isAccountInvalid}
+                                                                onChange={this.handleSelectDebitableAccounts}
+                                                                labelText="Select Account to debit" 
+                                                                options={selectedAccount}/>
+                                                            </div>
+                                                    </div>
+    
+                                                    <div className="row">
+                                                        <div className="col-sm-12">
+                                                            <center>
+                                                                
+                                                                        <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Create Group</button>
+                                                                
+                                                            </center>
+                                                        </div>
+                                                    </div>
+                                                </form>
+    
+    
+    
+                                            </div>
+    
+    
+                                            </div>
+    
+                                            </div>
+    
+                                    </div>
+    
                                 </div>
-
+    
                             </div>
+    
+                        
+                </Fragment>
+            );
+        }
+    
+        if(this.props.rotatingGroupDetailsData.message === GROUPSAVINGSCONSTANT.EDIT_GROUP_ESUSU){
+            return (
+                <Fragment>
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <p className="page-title">Savings & Goals</p>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div className="tab-overflow">
+                                        <div className="sub-tab-nav">
+                                            <ul>
+                                                <NavLink to='/savings/choose-goal-plan'>
+                                                    <li><a href="#">Goals</a></li>
+                                                </NavLink>     
+                                                <li onClick={this.NavigateToGroupSavings}><a href="#">Group Savings</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>Loading data ...</p>
+                            </div>
+                </Fragment>
+            );
+        }
 
-                        </div>
+        if(this.props.rotatingGroupDetailsData.message === GROUPSAVINGSCONSTANT.EDIT_GROUP_ESUSU_SUCCESS){
+            return (
+                <Fragment>
+                    
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <p className="page-title">Savings & Goals</p>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div className="tab-overflow">
+                                        <div className="sub-tab-nav">
+                                            <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li><a href="#">Goals</a></li>
+                                            </NavLink>
+                                                <li onClick={this.NavigateToGroupSavings}><a href="#">Group Savings</a></li>
+                                                
+                                           
+    
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div className="row">
+                                        <div className="col-sm-12">
+                                          <div className="max-600">
+                                           <div className="al-card no-pad">
+                                           <h4 className="m-b-10 center-text hd-underline editRotHeading">Edit Rotating Savings Group</h4>
+    
+                                                <form onSubmit={this.handleSubmit}>
+                                                    <div className="form-row">
+                                                        <div className={groupNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                            <label className="label-text">Give your group a name</label>
+                                                            <input type="text" placeholder="Dubai Goal" onChange={this.handleGroupName}/>
+                                                       </div>
+                                                    </div>
+                                                    <div className="form-row">
+                                                        <div className={monthlyContributionValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                             <label className="label-text">Monthly Contributions</label>
+                                                             <input type="number" placeholder="N 100,000" onChange={this.handleMonthlContributions}/>
+                                                        </div>
+                                                        <div className={howMuchValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
+                                                            <label className="label-text">Number of members?</label>
+                                                             <Select type="text" 
+                                                                options={quantityOfMembers}
+                                                                name="numberOfMembers"
+                                                                onChange={this.handleSelectChange}
+                                                                value={numberOfMembers.label}
+                                                              />
+                                                        </div>
+                                                    </div>
+                                                    <div className="form-row">
+                                                        <div className={startDateValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                            <label className="label-text">when does the group wants to meet this goal?</label>
+                                                            <DatePicker className="form-control" selected={this.state.startDate}
+                                                                placeholder="October 31, 2017"
+                                                                dateFormat=" MMMM d, yyyy"
+                                                                showMonthDropdown
+                                                                onChange={this.handleSelectedDate}
+                                                                showYearDropdown
+                                                                value={this.state.startDate}
+                                                                dropdownMode="select"
+                                                            />
+                                                        </div>
+                                                        
+                                                    </div>
+    
+                                                    <div className="form-row">
+                                                        <div className={isAccountInvalid ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                            <SelectDebitableAccounts
+                                                                accountInvalid={this.state.isAccountInvalid}
+                                                                onChange={this.handleSelectDebitableAccounts}
+                                                                labelText="Select Account to debit" 
+                                                                options={selectedAccount}/>
+                                                            </div>
+                                                    </div>
+    
+                                                    <div className="row">
+                                                        <div className="col-sm-12">
+                                                            <center>
+                                                                <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Create Group</button>    
+                                                            </center>
+                                                        </div>
+                                                    </div>
+                                                </form>
+    
+    
+    
+                                            </div>
+    
+    
+                                           </div>
+    
+                                          </div>
+    
+                                    </div>
+    
+                                </div>
+    
+                            </div>
+    
+                       
+                </Fragment>
+            );
+        }
 
-                   
-            </Fragment>
-        );
+        if(this.props.rotatingGroupDetailsData.message === GROUPSAVINGSCONSTANT.EDIT_GROUP_ESUSU_ERROR){
+            return (
+                <Fragment>
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <p className="page-title">Savings & Goals</p>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div className="tab-overflow">
+                                        <div className="sub-tab-nav">
+                                            <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li><a href="#">Goals</a></li>
+                                            </NavLink>
+                                                <li onClick={this.NavigateToGroupSavings}><a href="#">Group Savings</a></li>
+                                                
+                                        
+    
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>Please Check Your Internet Connection ...</p>
+                            </div>
+                </Fragment>
+            );
+        }
+
+   
+        if(this.props.rotatingGroupDetailsData.data == undefined){
+            this.FetchRotatingGroupDetails();
+            return (
+                <Fragment>
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <p className="page-title">Savings & Goals</p>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div className="tab-overflow">
+                                        <div className="sub-tab-nav">
+                                            <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li><a href="#">Goals</a></li>
+                                            </NavLink>
+                                                <li onClick={this.NavigateToGroupSavings}><a href="#">Group Savings</a></li>
+                                                
+                                        
+    
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>Loading data ...</p>
+                            </div>
+                </Fragment>
+            );
+        }
+        
     }
 }
 
@@ -346,7 +554,8 @@ function mapStateToProps(state){
         createGroupSavings: state.createRotatingGroupSavings.data,
         rotatingGroupDetails: state.rotatingGroupDetails.data,
         groupSavingsEsusu: state.getGroupSavingsEsusu.data,
-        groups: state.customerGroup.data
+        groups: state.customerGroup.data,
+        rotatingGroupDetailsData: state.rotatingGroupDetails
     }
 }
 export default connect(mapStateToProps)(EditRotatingGroup);

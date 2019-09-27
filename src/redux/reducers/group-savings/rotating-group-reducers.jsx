@@ -111,6 +111,28 @@ export function GetGroupsEsusu(state=[], action){
     }
 }
 
+export function ActivateGroup (state=[], action){
+    switch(action.type){
+        case GROUPSAVINGSCONSTANT.ACTIVATE_ROTATING_GROUP_PENDING: 
+           return {
+               message: GROUPSAVINGSCONSTANT.ACTIVATE_ROTATING_GROUP_PENDING,
+               data: action
+           }
+        case GROUPSAVINGSCONSTANT.ACTIVATE_ROTATING_GROUP_SUCCESS:
+           return {
+               message: GROUPSAVINGSCONSTANT.ACTIVATE_ROTATING_GROUP_SUCCESS,
+               data: action
+           }
+        case GROUPSAVINGSCONSTANT.ACTIVATE_ROTATING_GROUP_FAILURE:
+           return {
+               message: GROUPSAVINGSCONSTANT.ACTIVATE_ROTATING_GROUP_FAILURE,
+               data: action
+           }
+        default: 
+           return {... state}
+    }
+}
+
 export function editGroupEsusu(state=[], action){
     switch(action.type){
         case GROUPSAVINGSCONSTANT.EDIT_GROUP: 

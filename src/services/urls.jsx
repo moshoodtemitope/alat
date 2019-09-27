@@ -1,6 +1,6 @@
 // const URL = 'https://api.alat.ng';
 const URL = 'https://196.43.215.170';
-// const URL = 'https://196.43.215.157';
+ //onst URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
 
@@ -273,6 +273,7 @@ export const routes = {
     JOIN_GROUP_ESUSU: BASEURL + '/Savings.WebApi/api/EsusuSaving/JoinGroup',
     GET_ALL_SECURITY_QUESTIONS : BASEURL + '/AccountSetting/api/securityquestion',
     SAVE_SECURITY_QUESTION : BASEURL + '/AccountSetting/api/securityquestion/saveorupdate',
+    ACTIVATE_GROUP: BASEURL + '/Savings.WebApi/Api/EsusuSaving/Activate',
 
     //EVENTS
     GET_EVENTS: BASEURL + '/LifeStylePaymentMoviesApi/api/events/getevents?pageNum=',

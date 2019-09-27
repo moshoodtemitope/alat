@@ -312,6 +312,29 @@ export function GetResidentialAddress (state=[], action){
     }
 }
 
+export function ActivateGroup (state=[], action){
+    switch(action.type){
+        case profile.ACTIVATE_ROTATING_GROUP_PENDING: 
+           return {
+               message: profile.ACTIVATE_ROTATING_GROUP_PENDING,
+               data: action
+           }
+        case profile.ACTIVATE_ROTATING_GROUP_SUCCESS:
+           return {
+               message: profile.ACTIVATE_ROTATING_GROUP_SUCCESS,
+               data: action
+           }
+        case profile.ACTIVATE_ROTATING_GROUP_FAILURE:
+           return {
+               message: profile.ACTIVATE_ROTATING_GROUP_FAILURE,
+               data: action
+           }
+        default: 
+           return {... state}
+    }
+}
+
+
 
     export function profileSuccessMessage (state=[], action){
         switch(action.type){

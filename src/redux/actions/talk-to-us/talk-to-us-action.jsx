@@ -18,6 +18,7 @@ export const TalkUsMessage =(data)=>{
             .then(response => {
                 //TODO: edit localDB accounts object
                 dispatch(success(response.data));
+                // history.push({pathname:"/savings/group/success-message"})
                
             })
             .catch(error => {

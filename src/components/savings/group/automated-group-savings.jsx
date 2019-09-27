@@ -52,37 +52,37 @@ class AutomateGroupSavings extends React.Component {
             switch(x){
                 case 'startDate':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }     
                 case 'endDate':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }     
                 case 'amountToBeWithDrawn':
                    if(this.state[x] == null || this.state[x] == ""){
-                       console.log(x)
+                    //    console.log(x)
                        result = null;
                        break;
                    }
                 case 'howOftenDoYouWantToSave':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }
                 case 'selectedAccount':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }
             }
         }
-        console.log(result);
+        // console.log(result);
         return result;
     }
 
@@ -133,7 +133,7 @@ class AutomateGroupSavings extends React.Component {
     }
 
     handleSelectDebitableAccounts = (account) => {
-        console.log('dss', account);
+        // console.log('dss', account);
         this.setState({ selectedAccount: account });
         if (this.state.isSubmitted) { 
             if(account.length == 10)
@@ -175,7 +175,7 @@ class AutomateGroupSavings extends React.Component {
                         "howOftenDoYouWantToSave" : Frequency.label
 
               });
-              console.log(Frequency.label)
+            //   console.log(Frequency.label)
         //  if (this.state.formsubmitted && Frequency.value != "")
         //   this.setState({ TimeSavedInvalid: false })
     }
@@ -227,13 +227,13 @@ class AutomateGroupSavings extends React.Component {
         
         switch(this.checkingUserInputs()){
             case null:
-               console.log('Empty fields presents')
+            //    console.log('Empty fields presents')
                break;
             case 'valid':
                this.SubmitAutomatedGroupSavings();
         }
         
-        console.log('what');
+        // console.log('what');
     }
 
     NavigateToGroupSavings = () => {

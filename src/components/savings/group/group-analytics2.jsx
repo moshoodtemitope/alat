@@ -87,7 +87,7 @@ class GroupAnalytics2 extends React.Component {
             groupId: Store.getItem('groupSavingsId')
         }
         this.props.dispatch(actions.groupDetails(this.state.user.token, data));
-        console.log('WAS FIRED FFFFFFFFFFFFFF')
+        // console.log('WAS FIRED FFFFFFFFFFFFFF')
     }
 
     LogUserOut = () => {

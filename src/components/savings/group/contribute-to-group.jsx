@@ -25,7 +25,7 @@ class ContributeToGroup extends React.Component {
     }
 
     handleSelectDebitableAccounts = (account) => {
-        console.log('dss', account);
+        // console.log('dss', account);
         this.setState({ selectedAccount: account });
     }
     
@@ -43,19 +43,19 @@ class ContributeToGroup extends React.Component {
             switch(x){
                 case 'selectedAccount':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }     
                 case 'amount':
                    if(this.state[x] == null || this.state[x] == ""){
-                       console.log(x)
+                    //    console.log(x)
                        result = null;
                        break;
                    }
             }
         }
-        console.log(result);
+        // console.log(result);
         return result;
     }
 
@@ -88,7 +88,7 @@ class ContributeToGroup extends React.Component {
             debitAccount: this.state.selectedAccount
         };
 
-        console.log(data);
+        // console.log(data); 
 
         this.props.dispatch(actions.contribute(this.state.user.token, data));
     }
@@ -106,11 +106,11 @@ class ContributeToGroup extends React.Component {
          
         switch(this.checkingUserInputs()){
             case null:
-               console.log('Empty fields are found');
+            //    console.log('Empty fields are found');
                break;
             case 'valid':
                this.ContributeToGroup();
-               console.log('its Valid');
+            //    console.log('its Valid');
         }
     }
 

@@ -46,7 +46,7 @@ class GroupAnalytics3 extends React.Component {
     }
 
     HandleNavigation = () => {
-        console.log('was fired');
+        // console.log('was fired');
         //return <Redirect to="/savings/group/group-analytics2" />
         this.props.history.push("/savings/group/group-analytics2");
     }
@@ -71,7 +71,7 @@ class GroupAnalytics3 extends React.Component {
             groupId: Store.getItem('groupSavingsId')
         }
         this.props.dispatch(actions.groupDetails(this.state.user.token, data));
-        console.log('WAS FIRED FFFFFFFFFFFFFF')
+        // console.log('WAS FIRED FFFFFFFFFFFFFF')
     }
 
     LogUserOut = () => {

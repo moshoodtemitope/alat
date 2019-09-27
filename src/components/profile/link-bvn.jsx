@@ -8,6 +8,8 @@ import {history} from '../../_helpers/history';
 import { connect } from 'react-redux';
 import {profile} from '../../redux/constants/profile/profile-constants';
 import moment from 'moment';
+import CompletedprofileImage from '../../assets/img/selected.svg';
+import NotCompletedprofileImage from '../../assets/img/unsuccessfull.svg'
 
 var profileMenuStore = {}
 class LinkBvN extends Component {
@@ -25,6 +27,7 @@ class LinkBvN extends Component {
             isProfileInformation: false,
             isContactDetails: false,
             isDocument: false,
+            isToNextOfKin: false,
             navToNextOfKin: false,
             isImageUploaded: false,
             residentialAddress: false,
@@ -55,7 +58,7 @@ class LinkBvN extends Component {
 
 GetUserProfileMenu = () => {
     this.props.dispatch(actions.profileMenu(this.state.user.token));
- }
+}
 
 GetResidentialAddress = () => {
     this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
@@ -75,7 +78,7 @@ GetResidentialAddress = () => {
    }
 
    SetBVNValidityStatus = () => {
-      console.log();
+    //   console.log();
       if(this.state.bvnNumber == null || this.state.bvnNumber  == "" || this.state.bvnNumber.toString().length < 11){
           this.setState({BVNValidity: true});
       }else{
@@ -97,26 +100,26 @@ GetResidentialAddress = () => {
             switch(x){
                 case 'bvnNumber':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }else{
                             if(this.state[x].toString().length < 11){
-                                console.log(this.state[x]);
+                                // console.log(this.state[x]);
                                 result = null;
                                 break;
                             }
                         }
                 case 'birthDate':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }
             }
         }
 
-       console.log(result);
+    //    console.log(result);
        return result;
    }
 
@@ -139,14 +142,14 @@ GetResidentialAddress = () => {
    }
 
    SetBirthDay = (birthDate) => {
-       console.log(birthDate + " " + "ududududu");
+    //    console.log(birthDate + " " + "ududududu");
         this.setState({
             birthDate: birthDate
         }, () => {
-            console.log(this.state.birthDate);
+            // console.log(this.state.birthDate);
         });
 
-        console.log("fififififif");
+        // console.log("fififififif");
    }
 
    HandleSubmit = (event) => {
@@ -154,14 +157,14 @@ GetResidentialAddress = () => {
        this.SetDateValidity();
        this.SetBVNValidityStatus();
 
-       console.log('was fired');
+    //    console.log('was fired');
 
        switch(this.checkValidity()){
            case null:
-             console.log('Empty value was found');
+            //  console.log('Empty value was found');
              break;
            case 'valid': 
-             console.log("No Empty Value Found");
+            //  console.log("No Empty Value Found");
              this.InitiateNetworkCall();
              break;
        }
@@ -240,7 +243,7 @@ GetUserProfileMenu = () => {
 
 
  StoreInforMation = () => {
-    console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
+    // console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
     profileMenuStore = this.props.profileMenu.data.response;
  
     let localStore = window.localStorage;
@@ -258,7 +261,7 @@ ChangeResidentialStatus = () => {
 }
  
    render(){
-       const {residentialAddress, isImageUploaded, dateValidity, BVNValidity, birthDate,  isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin} = this.state;
+       const {residentialAddress, isToNextOfKin, isImageUploaded, dateValidity, BVNValidity, birthDate,  isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin} = this.state;
 
             if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
                  this.ChangeResidentialStatus();
@@ -357,28 +360,30 @@ ChangeResidentialStatus = () => {
                                                             <hr />
             
                                                             <div className="tickItems" onClick={this.NavigateToBVN}>
-                                                                {isBvNLinked === true ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                                {isBvNLinked ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>}
                                                                 <p className="pSubs">Link BVN</p>
                                                             </div>
+                                                            
                                                             <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
-                                                                {isProfileInformation ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                                {isProfileInformation ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>}
                                                                 <p className="pSubs">Personal Information</p>
                                                             </div>
                                                             <div className="tickItems" onClick={this.NavigateToContact}>
-                                                                {isContactDetails ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                                {isContactDetails ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage}  alt="" className="largeVectorI"/>}
                                                                 <p className="pSubs">Contact Details</p>
                                                             </div>
                                                             <div className="tickItems" onClick={this.NavigateToDocuments}>
-                                                                {isDocument ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt=""  className="largeVectorI" />}
+                                                                {isDocument ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt=""  className="largeVectorI" />}
                                                                 <p className="pSubs">Document Upload</p>
                                                             </div>
                                                             <div className="tickItems" onClick={this.NavigateToNextOfKin}>
-                                                                {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                                {/* {typeof isToNextOfKin} */}
+                                                                {isToNextOfKin ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>} 
                                                                 <p className="pSubs">Next of Kin</p>
                                                             </div>
                                                             <div className="tickItems" onClick={this.NavigateResidentialAddress}>
-                                                               {residentialAddress ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
-                                                               <p className="pSubs">Residential Address</p>
+                                                                {residentialAddress ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>} 
+                                                                <p className="pSubs">Residential Address</p>
                                                             </div>
                                                     </div>
                                                     
@@ -495,27 +500,32 @@ ChangeResidentialStatus = () => {
                                                                 <p className="details">{this.props.profileMenu.data.response.username}</p>
                                                                 <p className="details">{moment(this.props.profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>
                                                                 <hr />
-                
-                                                                <div className="tickItems" onClick={this.NavigateToBVN}>
-                                                                    {isBvNLinked === true ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
-                                                                    <p className="pSubs">Link BVN</p>
-                                                                </div>
-                                                                <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
-                                                                    {isProfileInformation ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
-                                                                    <p className="pSubs">Personal Information</p>
-                                                                </div>
-                                                                <div className="tickItems" onClick={this.NavigateToContact}>
-                                                                    {isContactDetails ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
-                                                                    <p className="pSubs">Contact Details</p>
-                                                                </div>
-                                                                <div className="tickItems" onClick={this.NavigateToDocuments}>
-                                                                    {isDocument ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt=""  className="largeVectorI" />}
-                                                                    <p className="pSubs">Document Upload</p>
-                                                                </div>
-                                                                <div className="tickItems" onClick={this.NavigateToNextOfKin}>
-                                                                    {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
-                                                                    <p className="pSubs">Next of Kin</p>
-                                                                </div>
+                                                            <div className="tickItems" onClick={this.NavigateToBVN}>
+                                                                {isBvNLinked ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>}
+                                                                <p className="pSubs">Link BVN</p>
+                                                            </div>
+                                                            
+                                                            <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
+                                                                {isProfileInformation ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>}
+                                                                <p className="pSubs">Personal Information</p>
+                                                            </div>
+                                                            <div className="tickItems" onClick={this.NavigateToContact}>
+                                                                {isContactDetails ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage}  alt="" className="largeVectorI"/>}
+                                                                <p className="pSubs">Contact Details</p>
+                                                            </div>
+                                                            <div className="tickItems" onClick={this.NavigateToDocuments}>
+                                                                {isDocument ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt=""  className="largeVectorI" />}
+                                                                <p className="pSubs">Document Upload</p>
+                                                            </div>
+                                                            <div className="tickItems" onClick={this.NavigateToNextOfKin}>
+                                                                {/* {typeof isToNextOfKin} */}
+                                                                {isToNextOfKin ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>} 
+                                                                <p className="pSubs">Next of Kin</p>
+                                                            </div>
+                                                            <div className="tickItems" onClick={this.NavigateResidentialAddress}>
+                                                                {residentialAddress ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>} 
+                                                                <p className="pSubs">Residential Address</p>
+                                                            </div>
                                                         </div>
                                                         
                                                     </div>

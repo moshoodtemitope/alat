@@ -22,7 +22,8 @@ import {getCinemaList,
      SearchfetchEventList,
       movieDetails,
       FetchMovieGenre,
-      PostMovieContent,SubmitMovieData
+      PostMovieContent,SubmitMovieData,
+      SubmitEventData
     } from './lifestyle/lifestyle-reducer';
 
 
@@ -94,7 +95,7 @@ import {getWesternUnionCountries,receiveWesternUnion } from './remittance.reduce
      import {getCustomerGoalTransHistoryReducer,GET_FORMULAR,GET_GOAL_TYPE,TopUPGoalStep1,TopUPGoal,WithDrawFromGoalStep1,Cashout,
          WithDrawFromGoal,PauseCustomerGoal,unPauseCustomerGoal,EditCustomerGoal,DeleteCustomerGoal,StashCashout,StashCashoutStep1,submitDashboardData} from './goal/get-customer-goal-trans-history-reducers';
      import {createRotatingSavings, rotatingGroupDetails, joinAGroup, EditSlots, 
-        editGroupEsusu, deleteGroupEsusu, GetGroupsEsusu, joinGroupEsusu, refferalCode} from './group-savings/rotating-group-reducers';
+        editGroupEsusu, ActivateGroup, deleteGroupEsusu, GetGroupsEsusu, joinGroupEsusu, refferalCode} from './group-savings/rotating-group-reducers';
     import {GetBankBranch,TalkToUs,ReportError,GetPageData, GetBankList} from './talk-to-us/talk-to-us.reducer'
 
 
@@ -294,7 +295,8 @@ export const rotatingSavings = {
     editGroupEsusu,
     deleteGroupEsusu,
     joinGroupEsusu,
-    refferalCode
+    refferalCode,
+    ActivateGroup
 }
 export const stashGoal={
     createStashGoalStep1Reducer,
@@ -338,7 +340,8 @@ export const movies = {
     movieDetails,
     FetchMovieGenre,
     PostMovieContent,
-    SubmitMovieData
+    SubmitMovieData,
+    SubmitEventData
 }
 
 export const preferences = {
