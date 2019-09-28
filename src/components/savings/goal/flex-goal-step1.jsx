@@ -546,7 +546,7 @@ class FlexGoal extends React.Component {
     }
 }
 const mapStateToProps = state => ({
-    flex_goal_step1: state.flex_goal_step1
+    flex_goal_step1: state.FlexGoalReducerPile.flex_goal_step1
 });
 export default connect(mapStateToProps)(FlexGoal);
 

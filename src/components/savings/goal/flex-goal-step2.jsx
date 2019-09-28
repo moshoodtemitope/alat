@@ -147,7 +147,7 @@ import React from 'react'
                                              <NavLink to="/savings/activityDashBoard">
                                              <li><a href="statement.html">Group Savings</a></li>
                                              </NavLink>
-                                             <li><a href="#">Investments</a></li>
+                                             {/* <li><a href="#">Investments</a></li> */}
 
                                          </ul>
                                      </div>
@@ -193,6 +193,10 @@ import React from 'react'
 
 
                                         </div>
+                                        <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(flexGoalConstants.FLEX_GOAL_REDUCER_CLEAR));
+                                                this.props.history.push('/savings/flex-goal') }} className="add-bene m-t-50">
+                                                Go back
+                                        </a>
 
                                        </div>
 
@@ -211,7 +215,7 @@ import React from 'react'
      }
  }
  const mapStateToProps = state => ({
-     flex_goal_step1:state.flex_goal_step1,
-     flex_goal_step2:state.flex_goal_step2
+     flex_goal_step1:state.FlexGoalReducerPile.flex_goal_step1,
+     flex_goal_step2:state.FlexGoalReducerPile.flex_goal_step2
  })
  export default connect(mapStateToProps)(FlexGoal);

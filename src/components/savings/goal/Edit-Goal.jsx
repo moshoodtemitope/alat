@@ -443,6 +443,6 @@ class EditGoal extends React.Component {
     }
 }
 const mapStateToProps = state => ({
-    edit_goal: state.edit_goal
+    edit_goal: state.CustomerGoalReducerPile.edit_goal
 });
 export default connect(mapStateToProps)(EditGoal);

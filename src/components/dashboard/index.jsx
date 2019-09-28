@@ -254,7 +254,7 @@ class Dashboard extends React.Component{
                                         <div className="al-card no-pad acct-card-pad acct-match">
                                             <div className="account-slide">
                                                 <h4>My Accounts <span>
-                                                <NavLink to="/accounts/accounts-history">
+                                                <NavLink to="/account/account-history">
                                                     {/* View All */}
                                                 </NavLink>
                                                 </span></h4>
@@ -274,7 +274,7 @@ class Dashboard extends React.Component{
 
                                         <div className="al-card transact-history">
                                             <h4 className="m-b-20">Transaction History <span>
-                                                <NavLink to="/accounts/accounts-history">
+                                                <NavLink to="/account/account-history">
                                                     View All
                                                 </NavLink>
                                             </span></h4>
@@ -334,7 +334,7 @@ class Dashboard extends React.Component{
                                         </div>
                                     </div>
                                     <div className="col-sm-12 col-md-4">
-                                        <div className="al-card">
+                                        {/* <div className="al-card">
                                             <div className="reminder-card">
                                                 <div className="text-center">
                                                     <img src={calendar} />
@@ -342,7 +342,7 @@ class Dashboard extends React.Component{
                                                         <a href="" className="btn-alat m-t-20">Setup a reminder</a>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> */}
                                         <AnnouncementCard />
                                     </div>
                                 </div>

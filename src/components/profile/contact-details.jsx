@@ -12,8 +12,11 @@ import { getContactDetails } from "../../redux/actions/profile/profile-action";
 import moment from 'moment';
 import { Switch } from '../../shared/elements/_toggle';
 import AlatPinInput from '../../shared/components/alatPinInput';
+import CompletedprofileImage from '../../assets/img/selected.svg';
+import NotCompletedprofileImage from '../../assets/img/unsuccessfull.svg'
 
 
+var profileMenuStore = {}
 var allStatesInfo = null;
 var allCityData = null;
 var localGov2 = null;
@@ -108,21 +111,36 @@ class ContactDetails extends Component {
         isProfileInformation: false,
         isContactDetails: false,
         isDocument: false,
+        isToNextOfKin: false,
         navToNextOfKin: false,
         isImageUploaded: false,
         Pin:"",
         isPinInvalid: false,
+        residentialAddress: false
 
        }
        this.handleAlatPinChange = this.handleAlatPinChange.bind(this)
-
-
        this.fetchContactDetails();
+       this.GetResidentialAddress();
    }
 
    componentDidMount = () => {
        this.CheckIfStoreInformationIsSet();
+       this.setProfile();
    }
+
+   setProfile = () => {
+    let localStore = window.localStorage;
+    setTimeout(() => {
+        this.setState({
+            isProfileInformation: JSON.parse(localStore.getItem('isProfileInformation')),
+            isContactDetails: JSON.parse(localStore.getItem('isContactDetails')),
+            isDocument: JSON.parse(localStore.getItem('isDocument')),
+            isToNextOfKin: JSON.parse(localStore.getItem('navToNextOfKin')),
+            isBvNLinked: JSON.parse(localStore.getItem('isBvNLinked')),
+        }); 
+    }, 20);
+}
 
 CheckIfStoreInformationIsSet = () => {
     
@@ -136,13 +154,30 @@ CheckIfStoreInformationIsSet = () => {
  }
 }
 
+StoreInforMation = () => {
+    // console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
+    profileMenuStore = this.props.profileMenu.data.response;
+ 
+    let localStore = window.localStorage;
+    localStore.setItem('isProfileInformation', this.props.profileMenu.data.response.personalInfoComplete);
+    localStore.setItem('isContactDetails', this.props.profileMenu.data.response.contactDetailsComplete);
+    localStore.setItem('isDocument', this.props.profileMenu.data.response.documentUploaded);
+    localStore.setItem('navToNextOfKin', this.props.profileMenu.data.response.nextOfKinComplete);
+    localStore.setItem('isBvNLinked', this.props.profileMenu.data.response.bvnLinked);
+}
+
+GetResidentialAddress = () => {
+    this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
+}
+
+
    fetchContactDetails(){
         const { dispatch } = this.props;
         dispatch(getContactDetails(this.state.user.token));
    };
 
    SetBVNValidityStatus = () => {
-      console.log();
+    //   console.log();
       if(this.state.bvnNumber == null || this.state.bvnNumber  == "" || this.state.bvnNumber.toString().length < 11){
           this.setState({BVNValidity: true});
       }else{
@@ -171,90 +206,90 @@ CheckIfStoreInformationIsSet = () => {
                 switch(x){
                     case 'Pin':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x);
+                                // console.log(x);
                                 result = null;
                                 break;
                             }
                     case 'phoneNumber':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
             
                     case 'EmailAddress':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
 
                     case 'alternatePhoneNumber': 
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
 
                     case 'alternateEmail' :
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                 
                     case 'LocalGv':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     case 'StateOfOrigin':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x);
+                                // console.log(x);
                                 result = null;
                                 break;
                             }
                     case 'Nationality':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     case 'houseNumber':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     case 'apartment': 
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     
                     case 'personalAddress':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     case 'street':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     case 'busStop': 
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                 }
             }
-            console.log(result);
+            // console.log(result);
             return result;
    }
 
@@ -264,116 +299,110 @@ CheckIfStoreInformationIsSet = () => {
                 switch(x){
                     case 'Pin':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x);
+                                // console.log(x);
                                 result = null;
                                 break;
                             }
                     case 'phoneNumber':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     case 'alternatePhoneNumber': 
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     case 'alternateEmail' :
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     case 'EmailAddress':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                 
                     case 'LocalGv':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     case 'StateOfOrigin':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x);
+                                // console.log(x);
                                 result = null;
                                 break;
                             }
                     case 'Nationality':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     case 'houseNumber':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     case 'apartment': 
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     
                     case 'personalAddress':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     case 'street':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     case 'busStop': 
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
 
                     case 'StateOfOrigin2': 
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x);
+                                // console.log(x);
                                 result = null;
                                 break;
                             }
                 
                     case 'Nationality2':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     case 'LocalGv2':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     case 'personalAddress2':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
-                    // case 'street2':
-                    //         if(this.state[x] == null || this.state[x] == ""){
-                    //             console.log(x)
-                    //             result = null;
-                    //             break;
-                    //         }
                 }
             }
             
@@ -393,9 +422,10 @@ CheckIfStoreInformationIsSet = () => {
        }
    }
 
+   
    InitiateNetworkCall = () => {
       let data = null;
-      console.log(this.state.checkBoxStatus);
+    //   console.log(this.state.checkBoxStatus);
       switch(this.state.checkBoxStatus){
           case true:
                 data = {
@@ -405,7 +435,7 @@ CheckIfStoreInformationIsSet = () => {
                     phoneNumber: parseInt(this.state.phoneNumber),
                     alternatePhoneNumber: parseInt(this.state.alternatePhoneNumber),
                     country: "Nigeria", 
-                    mailingCountry: 'Nigeria',
+                    mailingCountry: 'Nigeria', 
                     mailingStateId: parseInt(this.state.stateGvId),
                     mailingCityId: parseInt(this.state.localGvId),
                     pin: parseInt(this.state.Pin),
@@ -417,7 +447,6 @@ CheckIfStoreInformationIsSet = () => {
                         apartment: this.state.apartment,
                         stateId: parseInt(this.state.stateGvId), 
                         lgaId: parseInt(this.state.localGvId),
-                        // lcdaId: 8,
                         isReactivation: false,
                         address: this.state.personalAddress
                     }
@@ -450,21 +479,21 @@ CheckIfStoreInformationIsSet = () => {
                         }
             }
       }
-      console.log(data);
+    //   console.log(data);
     //   return;
       this.props.dispatch(actions.addContactDetails(this.state.user.token, data));
    }
-
+   
    SetBvNNumber = (event) => {
        this.setState({bvnNumber: event.target.value});
    }
-
+   
    SetBirthDay = (birthDate) => {
         this.setState({  
             birthDate: birthDate
         });
    }  
-
+   
    NavigateToSuccessPage = () => {
        history.push('/profile-success-message');
    }
@@ -497,14 +526,14 @@ CheckIfStoreInformationIsSet = () => {
        this.checkHouseNumberValidity2();
        this.checkApartmentValidity2();
        this.checkSectorValidity();
-       console.log('code got here');
- 
+    //    console.log('code got here');
+    
        switch(this.checkValidity()){
            case null:
-             console.log('Empty value was found');
+            //  console.log('Empty value was found');
              break;
            case 'valid': 
-             console.log("No Empty Value Found");
+            //  console.log("No Empty Value Found");
              this.InitiateNetworkCall();
              break;
        }
@@ -542,12 +571,12 @@ CheckIfStoreInformationIsSet = () => {
 
     SetInputValue2 = (event) => {
        let name = event.target.name;
-       console.log(event.target.value);
+    //    console.log(event.target.value);
        
        this.setState({[name] : event.target.value});
        allCityData.map(element => {
            if(event.target.value == element.name){
-                console.log(element.name);
+                // console.log(element.name);
                 this.setState({localGvId2: element.cityId})
                 this.setState({stateGvId2: element.stateId});
            }
@@ -560,7 +589,7 @@ CheckIfStoreInformationIsSet = () => {
      } 
 
     checkAlternatePhoneNumberValidity = () => {
-       if(this.state.alternateEmail == null || this.state.alternateEmail == ""){
+       if(this.state.alternatePhoneNumber == null || this.state.alternatePhoneNumber == ""){
            this.setState({alternatePhoneNumberValidity: true});
        }else{
            this.setState({alternatePhoneNumberValidity: false});
@@ -710,7 +739,7 @@ CheckIfStoreInformationIsSet = () => {
         }else{
             this.setState({personalAddressValidity: false});
         }
-        console.log('was invoked  iiiiiiii');
+        // console.log('was invoked  iiiiiiii');
     }
 
     checkApartmentValidity2 = () => {
@@ -757,6 +786,15 @@ CheckIfStoreInformationIsSet = () => {
        history.push('/profile-success-message');
    }
 
+   NavigateResidentialAddress = () => {
+    if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS){
+        this.DispatchSuccessMessage('Residential Address has been Created');
+        return
+    }
+
+    history.push('/profile/profile-residential-address');
+}
+
    HandleCheckBoxInput = () => {
        this.setState({checkBoxStatus: !this.state.checkBoxStatus}, () => {
            if (this.state.checkBoxStatus) {
@@ -769,7 +807,7 @@ CheckIfStoreInformationIsSet = () => {
    }
 
    allStatesTrigger = () => {
-       console.log('DEBUGGING CODE');
+    //    console.log('DEBUGGING CODE');
     //    console.log(allStatesInfo);
    }
 
@@ -780,8 +818,8 @@ CheckIfStoreInformationIsSet = () => {
        allStatesInfo = stateData;
        allCityData = cityData;
 
-       console.log(stateData);
-       console.log(cityData);
+    //    console.log(stateData);
+    //    console.log(cityData);
    }
 
    NavigateToBVN = () => {
@@ -838,14 +876,23 @@ GetUserProfileMenu = () => {
     this.props.dispatch(actions.profileMenu(this.state.user.token));
  }
 
+ ChangeResidentialStatus = () => {
+    setTimeout(() => {
+        this.setState({residentialAddress: true});
+    }, 1000)
+}
+
    render(){
-        const {isImageUploaded, PinValidity, AlternateEmailValidity, sameAddressAsAbove,SectorValidity, phoneNumberValidity, LocalGovValidity2, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity2, NationalityValidity, StateOfOriginValidity,
+        const {residentialAddress, isImageUploaded, PinValidity, AlternateEmailValidity, sameAddressAsAbove,SectorValidity, phoneNumberValidity, LocalGovValidity2, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity2, NationalityValidity, StateOfOriginValidity,
         EmailAddressValidity, streetValidity, busstopValidity, apartmentValidity, personalAddressValidity, StateOfOriginValidity2,
-        personalAddressValidity2, alternatePhoneNumberValidity, houseNumberValidity,   isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin} = this.state;
-        const {profileMenu, getContactDetail } = this.props;
+        personalAddressValidity2, alternatePhoneNumberValidity, houseNumberValidity,   isBvNLinked, isProfileInformation, isContactDetails, isDocument,isToNextOfKin, navToNextOfKin} = this.state;
+        const {profileMenu, getContactDetail, GetResidentialAddress} = this.props;
         
+        if(GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
+            this.ChangeResidentialStatus();
+
         if(getContactDetail.message === profile.GET_CONTACT_DETAILS_PENDING){
-            console.log('NOTHING EVER HAPPENED HERE')
+            // console.log('NOTHING EVER HAPPENED HERE')
             return(
                 <Fragment>
                     {/* <InnerContainer> */}
@@ -878,6 +925,7 @@ GetUserProfileMenu = () => {
  
         if(getContactDetail.message === profile.GET_CONTACT_DETAILS_SUCCESS && profileMenu.message === profile.GET_PROFILE_MENU_SUCCESS){
             this.UseGottenStateInfo();
+            this.StoreInforMation();  
             return(
                 <Fragment>
                     {/* <InnerContainer> */}
@@ -912,26 +960,32 @@ GetUserProfileMenu = () => {
                                                         <p className="details">{moment(this.props.profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>
                                                         <hr />
 
-                                                        <div className="tickItems" onClick={this.NavigateToBVN}>
-                                                            {isBvNLinked === true ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
-                                                            <p className="pSubs">Link BVN</p>
-                                                        </div>
-                                                        <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
-                                                            {isProfileInformation ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
-                                                            <p className="pSubs">Personal Information</p>
-                                                        </div>
-                                                        <div className="tickItems" onClick={this.NavigateToContact}>
-                                                            {isContactDetails ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
-                                                            <p className="pSubs">Contact Details</p>
-                                                        </div>
-                                                        <div className="tickItems" onClick={this.NavigateToDocuments}>
-                                                            {isDocument ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt=""  className="largeVectorI" />}
-                                                            <p className="pSubs">Document Upload</p>
-                                                        </div>
-                                                        <div className="tickItems" onClick={this.NavigateToNextOfKin}>
-                                                            {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
-                                                            <p className="pSubs">Next of Kin</p>
-                                                        </div>
+                                                    <div className="tickItems" onClick={this.NavigateToBVN}>
+                                                        {isBvNLinked ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>}
+                                                        <p className="pSubs">Link BVN</p>
+                                                    </div>
+                                                    
+                                                    <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
+                                                        {isProfileInformation ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>}
+                                                        <p className="pSubs">Personal Information</p>
+                                                    </div>
+                                                    <div className="tickItems" onClick={this.NavigateToContact}>
+                                                        {isContactDetails ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage}  alt="" className="largeVectorI"/>}
+                                                        <p className="pSubs">Contact Details</p>
+                                                    </div>
+                                                    <div className="tickItems" onClick={this.NavigateToDocuments}>
+                                                        {isDocument ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt=""  className="largeVectorI" />}
+                                                        <p className="pSubs">Document Upload</p>
+                                                    </div>
+                                                    <div className="tickItems" onClick={this.NavigateToNextOfKin}>
+                                                        {/* {typeof isToNextOfKin} */}
+                                                        {isToNextOfKin ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>} 
+                                                        <p className="pSubs">Next of Kin</p>
+                                                    </div>
+                                                    <div className="tickItems" onClick={this.NavigateResidentialAddress}>
+                                                        {residentialAddress ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>} 
+                                                        <p className="pSubs">Residential Address</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div className="col-sm-7">
@@ -1233,6 +1287,7 @@ GetUserProfileMenu = () => {
         }
 
         if(getContactDetail.message == undefined){
+            this.GetUserProfileMenu();
             return(
                 <Fragment>
                        
@@ -1262,7 +1317,7 @@ GetUserProfileMenu = () => {
         }
 
         if(profileMenu.data == undefined){
-            console.log('NOTHING EVER HAPPENED HERE')
+            // console.log('NOTHING EVER HAPPENED HERE')
             this.GetUserProfileMenu();
             return(
                 <Fragment>
@@ -1291,17 +1346,16 @@ GetUserProfileMenu = () => {
                 </Fragment>      
             )
         }
-
    }
 }
 
 const mapStateToProps = (state) => {
-    return {
+    return { 
         profileMenu:state.profileMenu,
         getContactDetail:state.getContactDetail,
         alert:state.alert,
-        addContactDetails:state.addContactDetails
-
+        addContactDetails:state.addContactDetails,
+        GetResidentialAddress: state.GetResidentialAddress
     }
 }
 

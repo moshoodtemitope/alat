@@ -9,7 +9,19 @@ import {USER_REGISTER_FETCH, USER_REGISTER_SAVE, userConstants, BVN_VERIFICATION
     OTP_VERIFICATION_PENDING, OTP_VERIFICATION_FAILURE, DATA_FROM_BVN, SAVE_BVN_INFO,
     GET_PROFILE_IMAGE_SUCCESS,
     GET_PROFILE_IMAGE_PENDING,
-    GET_PROFILE_IMAGE_FAILURE} from "../../constants/onboarding/user.constants";
+    GET_PROFILE_IMAGE_FAILURE,
+    GET_NDPRSTATUS_SUCCESS,
+    GET_NDPRSTATUS_PENDING,
+    GET_NDPRSTATUS_FAILURE,
+    ACCEPT_NDRP_SUCCESS,
+    ACCEPT_NDRP_PENDING,
+    ACCEPT_NDRP_FAILURE,
+    SENDANSWERFOR_FORGOTPW_SUCCESS,
+    SENDANSWERFOR_FORGOTPW_PENDING,
+    SENDANSWERFOR_FORGOTPW_FAILURE,
+    SENDEMAILFOR_FORGOTPW_SUCCESS,
+    SENDEMAILFOR_FORGOTPW_PENDING,
+    SENDEMAILFOR_FORGOTPW_FAILURE} from "../../constants/onboarding/user.constants";
 import { dispatch } from "rxjs/internal/observable/pairs";
 
 export const userActions = {
@@ -22,6 +34,10 @@ export const userActions = {
     saveBvnData,
     getCustomerProfileImage,
     loginAfterOnboarding,
+    checkNDPRStatus,
+    acceptNDPR,
+    sendForgotPwEmail,
+    sendForgotPwAnswer,
     reissueToken
 };
 
@@ -105,6 +121,46 @@ function loginAfterOnboarding(loginData){
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
+function sendForgotPwEmail(payload){
+    return dispatch =>{
+        let consume = ApiService.request(routes.EMAIL_FOR_FORGETPASSWORD, "POST", payload,  SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response));
+                history.push('/forgot-password/security-question');
+            }).catch(error =>{
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+        
+    }
+    function request(user) { return { type: SENDEMAILFOR_FORGOTPW_PENDING, user } }
+    function success(response) { return { type: SENDEMAILFOR_FORGOTPW_SUCCESS, response, payload } }
+    function failure(error) { return { type: SENDEMAILFOR_FORGOTPW_FAILURE, error } }
+}
+
+function sendForgotPwAnswer(payload){
+    return dispatch =>{
+        let consume = ApiService.request(routes.VERIFYUSER_FOR_FORGETPASSWORD, "POST", payload,  SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response));
+                history.push('/forgot-password/success');
+            }).catch(error =>{
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+        
+    }
+    function request(user) { return { type: SENDANSWERFOR_FORGOTPW_PENDING, user } }
+    function success(response) { return { type: SENDANSWERFOR_FORGOTPW_SUCCESS, response } }
+    function failure(error) { return { type: SENDANSWERFOR_FORGOTPW_FAILURE, error } }
+}
+
+
+
 function logout(type) {
     // userService.logout();
     //console.error("We are logging you out...");
@@ -137,6 +193,47 @@ function skipBvn(bvnDetails){
     function request(request) { return { type:SKIP_BVN_PENDING, request} }
     function success(response) { return {type:SKIP_BVN_SUCCESS, response} }
     function failure(error) { return {type:BVN_VERIFICATION_FAILURE, error} }
+}
+
+function checkNDPRStatus(token){
+    SystemConstant.HEADER['alat-token'] = token; 
+    return dispatch =>{
+        let consume = ApiService.request(routes.CHECK_NDRP, "GET", null,  SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response));
+            }).catch(error =>{
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+        
+    }
+
+    function request(request) { return { type:GET_NDPRSTATUS_PENDING, request} }
+    function success(response) { return {type:GET_NDPRSTATUS_SUCCESS, response} }
+    function failure(error) { return {type:GET_NDPRSTATUS_FAILURE, error} }
+}
+
+function acceptNDPR(token){
+    SystemConstant.HEADER['alat-token'] = token; 
+    return dispatch =>{
+        let consume = ApiService.request(routes.ACCEPTNDRP+true, "POST", null,  SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response));
+                window.location.reload();
+            }).catch(error =>{
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+        
+    }
+
+    function request(request) { return { type:ACCEPT_NDRP_PENDING, request} }
+    function success(response) { return {type:ACCEPT_NDRP_SUCCESS, response} }
+    function failure(error) { return {type:ACCEPT_NDRP_FAILURE, error} }
 }
 
 function bvnVerify (bvnDetails){

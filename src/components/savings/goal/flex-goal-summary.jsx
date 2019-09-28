@@ -160,6 +160,10 @@ import * as actions from '../../../redux/actions/savings/goal/flex-goal.actions'
 
                             
                             </div>
+                            <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(flexGoalConstants.FLEX_GOAL_REDUCER_CLEAR));
+                                                this.props.history.push('/savings/flex-goal-step2') }} className="add-bene m-t-50">
+                                                Go back
+                            </a>
 
                         
                         
@@ -178,10 +182,10 @@ import * as actions from '../../../redux/actions/savings/goal/flex-goal.actions'
     }
 }
 const mapStateToProps = state => ({
-    flex_goal_step1: state.flex_goal_step1,
-    flex_goal_step2:state.flex_goal_step2,
+    flex_goal_step1: state.FlexGoalReducerPile.flex_goal_step1,
+    flex_goal_step2:state.FlexGoalReducerPile.flex_goal_step2,
     alert: state.alert,
-    add_flex_goal:state.add_flex_goal
+    add_flex_goal:state.FlexGoalReducerPile.add_flex_goal
 
 });
 export default connect(mapStateToProps)(FlexGoalSummary);
