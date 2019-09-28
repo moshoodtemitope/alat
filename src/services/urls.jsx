@@ -1,7 +1,7 @@
-//const URL = 'https://api.alat.ng';
-//const URL = 'https://196.43.215.172';
-const URL = 'https://196.43.215.170';
-//const URL = 'https://196.43.215.157';
+//const URL = 'https://api.alat.ng';  //Live
+//const URL = 'https://196.43.215.172'; //Pre -prod
+const URL = 'https://196.43.215.170'; //QA
+//const URL = 'https://196.43.215.157'; //DEV
 
 const BASEURL = URL;
 
