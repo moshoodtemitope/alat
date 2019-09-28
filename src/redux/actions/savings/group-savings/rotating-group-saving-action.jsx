@@ -103,6 +103,7 @@ export const ActivateGroup = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                history.push('/savings/group-started-successfully'); 
             }) 
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
