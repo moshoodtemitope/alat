@@ -95,4 +95,4 @@ function mapStateToProps(state){
         alert:state.alert
     }
 }
-export default connect(mapStateToProps)(SuccessMessage);
+export default connect(mapStateToProps)(GroupStartedSuccessfully);
