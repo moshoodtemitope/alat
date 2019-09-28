@@ -27,7 +27,6 @@ class BuyTicket extends Component {
             child:"",
             student:"",
             isPinInvalid: false,
-            goal: JSON.parse(localStorage.getItem("goal")),
 
 
 
@@ -42,7 +41,10 @@ class BuyTicket extends Component {
         if (this.state.isSubmitted) {
             if (pin.length != 4)
            this.setState({isPinInvalid : false})
+          
         }
+        
+         
     }
 
 
@@ -164,7 +166,7 @@ class BuyTicket extends Component {
                                                 <div className="form-group">
                                                        <div className="puchaseSumTickets">
                                                            <div className="left">
-                                                                <p style={{fontSize:12,fontFamily:"proxima_novasemibold"}}>{this.state.goal.title}</p>
+                                                                <p style={{fontSize:12,fontFamily:"proxima_novasemibold"}}>{this.state.title }</p>
                                                                 <p style={{fontSize:12, fontFamily:'proxima_novaregular'}}>{this.state.ticketType}</p>
                                                            </div>
                                                            <div className="right">
@@ -206,6 +208,12 @@ class BuyTicket extends Component {
                                             </form>
                                            
                                         </div>
+                                        <center>
+                                            <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(listStyleConstants.MOVIE_REDUCER_CLEAR));
+                                                this.props.history.push('/lifestyle/movie-details') }} className="add-bene m-t-50">
+                                                Go back
+                                            </a>
+                                        </center>
                                         
 
                                     </div>
@@ -225,8 +233,8 @@ class BuyTicket extends Component {
 }
 const mapStateToProps = state => ({
     alert:state.alert,
-    SubmitTicketData:state.SubmitTicketData,
-    buyMovieTicket:state.buyMovieTicket
+    SubmitTicketData:state.LifestyleReducerPile.SubmitTicketData,
+    buyMovieTicket:state.LifestyleReducerPile.buyMovieTicket
 
 });
 

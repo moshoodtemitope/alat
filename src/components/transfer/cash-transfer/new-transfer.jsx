@@ -30,7 +30,7 @@ import {connect} from "react-redux";
 import Select from 'react-select';
 import Modal from 'react-responsive-modal';
 import {Textbox} from "react-inputs-validation";
-const options = [
+let options = [
 ];
 
 class NewTransfer extends React.Component {
@@ -324,7 +324,7 @@ class NewTransfer extends React.Component {
     }
 
     proceedWithSelectBeneficary(beneficiary){
-        console.log("selected ben is", beneficiary);
+        
         const {dispatch} = this.props;
         // this.setState({})
         dispatch(cashTransferData({
@@ -415,9 +415,12 @@ class NewTransfer extends React.Component {
                 );
             case FETCH_BANK_SUCCESS:
                 let banksList = props.bankList.banks_data.response;
-                for(var bank in banksList){
-                    options.push({value: banksList[bank].BankCode, label: banksList[bank].BankName});
-                }
+                // for(var bank in banksList){
+                //     options.push({value: banksList[bank].BankCode, label: banksList[bank].BankName});
+                // }
+                banksList.map(eachBank=>{
+                    options.push({value: eachBank.BankCode, label: eachBank.BankName});
+                })
                 const { selectedBank } = this.state;
                 return(
                     <Select

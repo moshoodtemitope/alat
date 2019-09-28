@@ -1,7 +1,5 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import {Switch} from "react-router";
 import "react-datepicker/dist/react-datepicker.css";
@@ -13,10 +11,10 @@ import { NavButtons } from './component';
 import MoreDetails from './details';
 import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import {history} from '../../../_helpers/history';
-import moment from 'moment'
+import moment from 'moment';
+import { GROUPSAVINGSCONSTANT } from '../../../redux/constants/savings/group';
 
-// if(window.performance.navigation.type == 1)
-//     window.location.replace("http://localhost:8080/");
+
 
 class GroupAnalyticsMini extends React.Component {
     constructor(props){
@@ -33,9 +31,25 @@ class GroupAnalyticsMini extends React.Component {
     }
 
     componentDidMount = () => {
-        let isAdmin = this.props.groupDetails.response.isAdmin;
-        this.setState({'adminValidity': isAdmin});
-        this.setState({'isAdmin': isAdmin});
+        if(this.props.groupDetails != undefined){
+            let isAdmin = this.props.groupDetails.response.isAdmin;
+            this.setState({'adminValidity': isAdmin});
+            this.setState({'isAdmin': isAdmin});
+
+            let storage = window.localStorage;
+            storage.setItem('rotatingGroupId', this.props.groupDetails.response.id)
+        }
+        
+        if(this.props.groupDetails == undefined)
+             this.FetchRotatingGroupDetails();
+    }
+
+    FetchRotatingGroupDetails = () => {
+        let storage = window.localStorage;
+        let data = {
+            groupId: JSON.parse(storage.getItem('rotatingGroupId'))
+        }
+        this.props.dispatch(actions.rotatingGroupDetails(this.state.user.token, data));
     }
 
     GetSmallNavs = () => {
@@ -108,105 +122,332 @@ class GroupAnalyticsMini extends React.Component {
 
 
     NavigateToGroupSavings = () => {
-        // let groupSavings = this.props.groups.response; //returns an array
-        // let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
-        // if(groupSavings.length != 0 || rotatingSavings.length != 0){
-            history.push('/savings/activityDashBoard');
-        //     return;
-        // }
-        // history.push('/savings/goal/group-savings-selection');
+        history.push('/savings/activityDashBoard');
+    }
+
+    ActivateGroup = () => {
+        let data = {
+            groupId: parseInt(this.props.groupDetails.response.id)
+        }
+
+        this.props.dispatch(actions.ActivateGroup(this.state.user.token, data));
     }
 
 
     render() {
         const {isAdmin, adminValidity} = this.state;
         
-        return (
-            <Fragment>
-                        <div className="row">
-                            <div className="col-sm-12">
-                                <p className="page-title">Savings & Goals</p>
-                            </div>
-                            <div className="col-sm-12">
-                                <div className="tab-overflow">
-                                    <div className="sub-tab-nav">
-                                        <ul>
-                                        <NavLink to='/savings/choose-goal-plan'>
-                                            <li><a href="#">Goals</a></li>
-                                        </NavLink>
-                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
-                                            <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                        {/* </NavLink> */}
-                                            <li><a href="#">Investments</a></li>
-
-                                        </ul>
+        if(this.props.rotatingGroupDetails.message === GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS){
+            return (
+                <Fragment>
+                    
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <p className="page-title">Savings & Goals</p>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div className="tab-overflow">
+                                        <div className="sub-tab-nav">
+                                            <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li><a href="#">Goals</a></li>
+                                            </NavLink>
+                                                <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
+    
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
+                                <div className="col-sm-12">
+                                  <p>loading group details ...</p>
+    
+                                </div>
+    
                             </div>
-                            <div className="col-sm-12">
+    
+                        
+                </Fragment>
+            );
+        }
+        if(this.props.rotatingGroupDetails.message === GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS_SUCCESS){
+            return (
+                <Fragment>
+                    
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <p className="page-title">Savings & Goals</p>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div className="tab-overflow">
+                                        <div className="sub-tab-nav">
+                                            <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li><a href="#">Goals</a></li>
+                                            </NavLink>
+                                                <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
+    
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div className="row">
+                                        <div className="col-sm-12">
+                                         
+                                          <div className="max-600">
+                                           <div className="al-card no-pad">
+                                                 <div class='firstSubHead'>
+                                                      <p>ROTATING SAVING GROUP</p>
+                                                      <p>{this.props.groupDetails.response.name}</p>
+                                                 </div>
+                                                    <SubHead 
+                                                        type={this.state.type}
+                                                        rightname="Group Summary"
+                                                        leftName="Members"
+                                                        memberClicked={this.ShowMembers}
+                                                        groupSummaryWasClicked={this.GroupSummary}
+                                                        />
+                                                        
+                                                 <div className='statContainer'>
+                                                    <ProgressBar 
+                                                        discTopSpan="Group Progress"
+                                                        discTopRight={this.GetStatusOfGroupMessage()}
+                                                        percentage={this.GetStatusOfGroup()}
+                                                        
+                                                        discSpan={this.PotContribution()}
+                                                        discBottomSib="Pot Total"
+                                                        />                
+                                                        <p id="firstPoint">Payment</p>
+                                                        <p id='secondPoint'>{this.UpNext}</p>
+                                                        <p id='thirdPoint'>Up Next</p>
+                                                        
+                                                        <MoreDetails 
+                                                          lefthead={this.GetStartDate()}
+                                                          leftBottom="Target Date"
+                                                          rightContent={this.GetReferalCode()}
+                                                          rightContentBottom="Group Code"
+                                                         />
+    
+                                                        <Buttons
+                                                            buttonType={this.state.buttonType}
+                                                            buttonName="Start"
+                                                            buttonClicked = {this.ActivateGroup}     
+                                                            />
+                                                            
+                                                        {isAdmin ? this.GetSmallNavs() : ""}
+    
+                                                        {adminValidity ? <div></div> : <div className={"setPadBottom"}></div> }
+                                                        
+                                                 </div>
+                                                 
+                                                 
+                                            </div>
+    
+                                           </div>
+    
+                                          </div>
+    
+                                    </div>
+    
+                                </div>
+    
+                            </div>
+    
+                        
+                </Fragment>
+            );
+        }
+        if(this.props.rotatingGroupDetails.message === GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS_ERROR){
+            return (
+                <Fragment>
+                    
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <p className="page-title">Savings & Goals</p>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div className="tab-overflow">
+                                        <div className="sub-tab-nav">
+                                            <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li><a href="#">Goals</a></li>
+                                            </NavLink>
+                                                <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
+    
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-sm-12">
+                                  <p>Please Check Your Network Connection ...</p>
+    
+                                </div>
+    
+                            </div>
+    
+                       
+                </Fragment>
+            );
+        }
+
+        if(this.props.rotatingGroupDetails.data == undefined){
+            return (
+                <Fragment>
+                    
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <p className="page-title">Savings & Goals</p>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div className="tab-overflow">
+                                        <div className="sub-tab-nav">
+                                            <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li><a href="#">Goals</a></li>
+                                            </NavLink>
+                                                <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                                <li><a href="#">Investments</a></li>
+    
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-sm-12">
+                                  <p>loading group details ...</p>
+    
+                                </div>
+    
+                            </div>
+    
+                     
+                </Fragment>
+            );
+        }
+        
+        if(this.props.rotatingGroupDetails.data != undefined){
+            if(Object.keys(this.props.rotatingGroupDetails.data.response).length == 0)
+                return (
+                    <Fragment>
+                       
                                 <div className="row">
                                     <div className="col-sm-12">
-                                     
-                                      <div className="max-600">
-                                       <div className="al-card no-pad">
-                                             <div class='firstSubHead'>
-                                                  <p>ROTATING SAVING GROUP</p>
-                                                  <p>{this.props.groupDetails.response.name}</p>
-                                             </div>
-                                                <SubHead 
-                                                    type={this.state.type}
-                                                    rightname="Group Summary"
-                                                    leftName="Members"
-                                                    memberClicked={this.ShowMembers}
-                                                    groupSummaryWasClicked={this.GroupSummary}
-                                                    />
-                                                    
-                                             <div className='statContainer'>
-                                                <ProgressBar 
-                                                    discTopSpan="Group Progress"
-                                                    discTopRight={this.GetStatusOfGroupMessage()}
-                                                    percentage={this.GetStatusOfGroup()}
-                                                    
-                                                    discSpan={this.PotContribution()}
-                                                    discBottomSib="Pot Total"
-                                                    />               
-                                                    <p id="firstPoint">Payment</p>
-                                                    <p id='secondPoint'>{this.UpNext}</p>
-                                                    <p id='thirdPoint'>Up Next</p>
-                                                    
-                                                    <MoreDetails 
-                                                      lefthead={this.GetStartDate()}
-                                                      leftBottom="Target Date"
-                                                      rightContent={this.GetReferalCode()}
-                                                      rightContentBottom="Group Code"
-                                                     />
-
-                                                    <Buttons
-                                                        buttonType={this.state.buttonType}
-                                                        buttonName="Start"          
-                                                        />
-                                                    
-                                                    {isAdmin ? this.GetSmallNavs() : ""}
-
-                                                    {adminValidity ? <div></div> : <div className={"setPadBottom"}></div> }
-                                                    
-                                             </div>
-                                             
-                                             
+                                        <p className="page-title">Savings & Goals</p>
+                                    </div>
+                                    <div className="col-sm-12">
+                                        <div className="tab-overflow">
+                                            <div className="sub-tab-nav">
+                                                <ul>
+                                                <NavLink to='/savings/choose-goal-plan'>
+                                                    <li><a href="#">Goals</a></li>
+                                                </NavLink>
+                                                    <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                                    <li><a href="#">Investments</a></li>
+        
+                                                </ul>
+                                            </div>
                                         </div>
-
-                                       </div>
-
-                                      </div>
-
+                                    </div>
+                                    <div className="col-sm-12">
+                                    <p>loading group details ...</p>
+        
+                                    </div>
+        
                                 </div>
-
-                            </div>
-
-                        </div>
-
-            </Fragment>
-        );
+        
+                            
+                    </Fragment>
+                );
+            if(Object.keys(this.props.rotatingGroupDetails.data.response).length != 0)
+                return (
+                    <Fragment>
+                        
+                                <div className="row">
+                                    <div className="col-sm-12">
+                                        <p className="page-title">Savings & Goals</p>
+                                    </div>
+                                    <div className="col-sm-12">
+                                        <div className="tab-overflow">
+                                            <div className="sub-tab-nav">
+                                                <ul>
+                                                <NavLink to='/savings/choose-goal-plan'>
+                                                    <li><a href="#">Goals</a></li>
+                                                </NavLink>
+                                                    <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                                    <li><a href="#">Investments</a></li>
+        
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-12">
+                                        <div className="row">
+                                            <div className="col-sm-12">
+                                            
+                                            <div className="max-600">
+                                            <div className="al-card no-pad">
+                                                    <div class='firstSubHead'>
+                                                        <p>ROTATING SAVING GROUP</p>
+                                                        <p>{this.props.groupDetails.response.name}</p>
+                                                    </div>
+                                                        <SubHead 
+                                                            type={this.state.type}
+                                                            rightname="Group Summary"
+                                                            leftName="Members"
+                                                            memberClicked={this.ShowMembers}
+                                                            groupSummaryWasClicked={this.GroupSummary}
+                                                            />
+                                                            
+                                                    <div className='statContainer'>
+                                                        <ProgressBar 
+                                                            discTopSpan="Group Progress"
+                                                            discTopRight={this.GetStatusOfGroupMessage()}
+                                                            percentage={this.GetStatusOfGroup()}
+                                                            
+                                                            discSpan={this.PotContribution()}
+                                                            discBottomSib="Pot Total"
+                                                            />               
+                                                            <p id="firstPoint">Payment</p>
+                                                            <p id='secondPoint'>{this.UpNext}</p>
+                                                            <p id='thirdPoint'>Up Next</p>
+                                                            
+                                                            <MoreDetails 
+                                                            lefthead={this.GetStartDate()}
+                                                            leftBottom="Target Date"
+                                                            rightContent={this.GetReferalCode()}
+                                                            rightContentBottom="Group Code"
+                                                            />
+                                       
+                                                            <Buttons
+                                                                buttonType={this.state.buttonType}
+                                                                buttonName="Start"          
+                                                                />
+                                                            
+                                                            {isAdmin ? this.GetSmallNavs() : ""}
+        
+                                                            {adminValidity ? <div></div> : <div className={"setPadBottom"}></div> }
+                                                            
+                                                    </div>
+                                                    
+                                                    
+                                                </div>
+        
+                                            </div>
+        
+                                            </div>
+        
+                                        </div>
+        
+                                    </div>
+        
+                                </div>
+        
+                           
+                    </Fragment>
+                );
+        }
     }
 }
 
@@ -214,7 +455,8 @@ function mapStateToProps(state){
     return {
         groupDetails: state.rotatingGroupDetails.data,
         groupSavingsEsusu: state.getGroupSavingsEsusu.data,
-        groups: state.customerGroup.data
+        groups: state.customerGroup.data,
+        rotatingGroupDetails: state.rotatingGroupDetails
     }
  }
  

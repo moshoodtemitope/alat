@@ -1,13 +1,19 @@
+<<<<<<< HEAD
 //const URL = 'https://api.alat.ng';
 const URL = 'https://196.43.215.170';
 //const URL = 'https://196.43.215.157';
+=======
+// const URL = 'https://api.alat.ng';
+const URL = 'https://196.43.215.170';
+ //onst URL = 'https://196.43.215.157';
+>>>>>>> test-merge
 
 const BASEURL = URL;
 
 export const routes = {
     BASEURL: BASEURL,
 
-    //registration
+    //registration   
     SIGNUP_IMAGES: BASEURL + '/RegistrationApi',
     SIGNUP_PHONE: BASEURL + '/RegistrationApi/api/registration/SavePhoneNumber',
     BVN_VERIFICATION: BASEURL + '/RegistrationApi/api/registration/CallBvnService',
@@ -19,12 +25,19 @@ export const routes = {
     GETALLQUESTIONS: BASEURL + '/UserSecurityApi/api/v1/Account/AllQuestions',
     REGISTRATIONURLV2: BASEURL + '/UserSecurityApi/api/v1/Account/RegistrationV2',
     DOCUMENT_UPLOAD: BASEURL + '/DocumentUpload/api/upload/document',
+    GET_USERPROFILE_IMAGE: BASEURL + '/DocumentUpload/api/upload/dp2/',
 
     //user security
     ONBOARDING_PRIORITY: BASEURL + '/UserSecurityApi/api/v1/Account/GetOnboardingPriority',
     ANNOUNCEMENT: BASEURL + '/UserSecurityapi/api/v1/Account/GetNewsFeeds',
     REISSUE_TOKEN: BASEURL + '/UserSecurityApi/api/v1/Account/ReissueToken',
     LOGIN: BASEURL + '/UserSecurityApi/api/v1/Account/LoginV2',
+    ACCEPTNDRP: BASEURL + '/UserSecurityApi/api/v1/Account/AcceptNdrp?isNdrpAccepted=',
+    CHECK_NDRP: BASEURL + '/UserSecurityApi/api/v1/Account/GetNDRPPriority',
+    EMAIL_FOR_FORGETPASSWORD: BASEURL + '/UserSecurityApi/api/v1/Account/EmailForForgetPassword',
+    VERIFYUSER_FOR_FORGETPASSWORD: BASEURL + '/UserSecurityApi/api/v1/Account/VerifyUserForForgetPassword',
+    RESET_PASSWORD_WITHPIN: BASEURL + '/UserSecurityApi/api/v1/Account/CallResetPasswordWithPin',
+    GET_QUESTIONBY_TOKEN: BASEURL + '/UserSecurityApi/api/v1/Account/GetUserQuestionByToken?token=',
 
     //account maintanance
     CUSTOMERACCOUNTS_ACCOUNT_MAINTANANCE: BASEURL + '/AccountMaintenance/api/account/customeraccounts',
@@ -80,11 +93,14 @@ export const routes = {
     GETLIMIT: BASEURL + '/AccountMaintenance/api/transactions/getTransactionlimit', 
     GetAllCustomerAccountsWithLimitsV2: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccountsWithLimitsV2', 
     FETCH_CUSTOMER_ACCOUNTS: BASEURL + '/PaymentApi/api/Accounts/GetAllCustomerAccounts', 
+
     
     // Card Maintenance
    
     GET_CARD_CONTROL_SETTINGS: BASEURL + '/CardMaintenanceApi/api/v1/CardControl/CardSettingFromCardControl',
     GET_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getpans',
+    // GET_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getallpans',
+    // GET_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getactivepans',
     ACTIVATE_CARD: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/activatecard',
     GET_ACTIVE_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getactivepans',
     GET_CARD_EXISTING_SETTINGS: BASEURL + '/CardMaintenanceApi/api/v1/CardControl/CustomerCardsFromCardControl',
@@ -164,6 +180,13 @@ export const routes = {
 
     //ALat-Loans
     GET_ACTIVE_LOANS : BASEURL + '/Lending.API/api/loan/GetCustomerStatus',
+    LIQUIDATE_LOAN : BASEURL + '/Lending.API/Api/Loan/RepayLoan',
+    LIQUIDATE_ALAT_LOAN: BASEURL + '/Lending.API/Api/AlatLoan/RepayLoan',
+    GET_LOAN_STATE : BASEURL + '/Lending.API/Api/AlatLoan/GetDashboardData',
+    GET_LOAN_OFFERS : BASEURL + '/Lending.API/Api/Loan/GetOffers',
+    SEND_ACCEPT_LOAN : BASEURL + '/Lending.API/api/AlatLoan/SendAcceptLoanOtp',
+    SEND_ACCEPT_LOAN_WITH_OTP : BASEURL + '/Lending.API/api/AlatLoan/AcceptLoanWithOtp',
+    ACCEPT_INTERSWITCH_LOAN :BASEURL + '/Lending.API/Api/Loan/AcceptOfferV2',
 
     //WesternUnion
     WESTERNUNION_COUNTRIES: BASEURL + '/PaymentApi/api/WesternunionCountries',
@@ -176,7 +199,44 @@ export const routes = {
     CHECK_ANSWER: BASEURL + '/AccountSetting/api/securityquestion/validate',
     CHANGE_PIN: BASEURL + '/AccountSetting/api/pin/change',
     RESET_PIN :BASEURL + '/AccountSetting/api/pin/CreateOrReset',
+    //profiles
+    GET_PROFILE_MENU: BASEURL + '/ProfileManagement.WebApi/api/ProfileMenu',
+    POST_PROFILE_INFO: BASEURL + '/ProfileManagement.WebApi/api/PersonalInfo/Add',
+    ADD_NEXT_OF_KIN: BASEURL + '/ProfileManagement.WebApi/api/nextOfKin/AddV2',
+    ADD_CONTACT: BASEURL + '/ProfileManagement.WebApi/api/ContactDetails/SaveV2',
+    OCCUPA_AND_SECTOR: BASEURL + '/ProfileManagement.WebApi/api/OccupationAndSector',
+    NEXT_OF_KIN_RELATIONSHIP: BASEURL + '/ProfileManagement.WebApi/api/nextOfKin/NextofKinRelationships',
+    GET_CONTACT_DETAIL: BASEURL + '/ProfileManagement.WebApi/api/ContactDetails',
+    GET_RESIDENTIAL_ADDRESS: BASEURL + '/ProfileManagement.WebApi/api/ResidentialAddress',
+    POST_RESIDENTIAL_ADDRESS: BASEURL + '/ProfileManagement.WebApi/api/ResidentialAddress/Save',
+    GETPERSONALINFO: BASEURL + '/ProfileManagement.WebApi/api/PersonalInfo',
+    GETSTATES: BASEURL + '/AccountMaintenance/api/account/GetStatesAndLgas',
+    ADD_DOCUMENT: BASEURL + '/DocumentUpload/api/upload/document',
 
+    IDENTITY_TYPE: BASEURL + '/DocumentUpload/api/upload/check',
+    
+
+
+
+    //Insurance
+     FETCH_EXISTING_POLICIES: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceTransactionHistory',
+     FETCH_ACCIDENT_SCHEDULE: BASEURL + '/PaymentApi/api/Insurance/PersonalAccidentSchedule',
+     FETCH_BILLS_BENEFICIARIES: BASEURL + '/PaymentApi/api/Insurance/TravelSchedule',
+     FETCH_INSURANCE_PRODUCTS: BASEURL + '/PaymentApi/api/Insurance/GetProduct',
+     FETCH_INSURANCE_COUNTRIES: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceCountries',
+     FETCH_INSURANCE_COLORLIST: BASEURL + '/PaymentApi/api/Insurance/GetColorList',
+     FETCH_INSURANCE_LGA: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceAllLga',
+     FETCH_INSURANCE_BODYTYPES: BASEURL + '/PaymentApi/api/Insurance/GetBodyTypes',
+     FETCH_INSURANCE_MANUFACTUREYEAR: BASEURL + '/PaymentApi/api/Insurance/GetManufactureYear',
+     FETCH_INSURANCE_TITLES: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceTitles',
+     FETCH_INSURANCE_GENDERS: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceGenders',
+     FETCH_INSURANCE_NONSCHENGENCOUNTRIES: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceNonSchengenCountries',
+     FETCH_COVERS_IN_PRODCUTS: BASEURL + '/PaymentApi/api/Insurance/GetProductSubClassCoverTypes',
+     FETCH_CARS_MADEINYEAR: BASEURL + '/PaymentApi/api/Insurance/GetVehicleMake?makeYear=',
+     FETCH_CAR_MODELS: BASEURL + '/PaymentApi/api/Insurance/GetVehicleMakeModel',
+     FETCH_VEHICLE_DETAILS: BASEURL + '/PaymentApi/api/Insurance/GetVehiclesDetails',
+     SEND_MOTOR_SCHEDULE: BASEURL + '/PaymentApi/api/Insurance/MotorSchedule',
+     FINALPAYMENT_FORAUTO_INSURANCE: BASEURL + '/PaymentApi/api/Insurance/FinalizePartnerPayment',
 
     //savings&goals
     ADDGOAL: BASEURL + '/Savings.WebApi/api/Savings/AddGoal',
@@ -219,6 +279,7 @@ export const routes = {
     JOIN_GROUP_ESUSU: BASEURL + '/Savings.WebApi/api/EsusuSaving/JoinGroup',
     GET_ALL_SECURITY_QUESTIONS : BASEURL + '/AccountSetting/api/securityquestion',
     SAVE_SECURITY_QUESTION : BASEURL + '/AccountSetting/api/securityquestion/saveorupdate',
+    ACTIVATE_GROUP: BASEURL + '/Savings.WebApi/Api/EsusuSaving/Activate',
 
     //EVENTS
     GET_EVENTS: BASEURL + '/LifeStylePaymentMoviesApi/api/events/getevents?pageNum=',
@@ -236,5 +297,9 @@ export const routes = {
     FETCH_MOVIE_GENRE : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetGenreList',
     FETCH_MOVIE_CINEMAS : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetCinemaList',
     GET_CONVENIENCE_FEE : BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetCinemaListAndFee',
+    SEND_MESSAGE:BASEURL + '/Contact.WebApi/api/Contact/send',
+    GET_PAGE_DATA:BASEURL +'/Contact.WebApi/api/contact/getpagedata',
+    BRANCH_ATM:BASEURL + '/Contact.WebApi/api/contact/branchesatm',
+    REPORT_ERROR:BASEURL + '/Contact.WebApi/api/contact/reporterror',
 
 };

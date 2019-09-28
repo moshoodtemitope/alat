@@ -3,15 +3,16 @@ import {Fragment} from "react";
 import calender from '../../../assets/img/calender.svg' ;
 import graph from '../../../assets/img/graph.svg';
 import stash from '../../../assets/img/stash.svg';
-import {NavLink, Link} from "react-router-dom";
+import {NavLink, Link, Redirect} from "react-router-dom";
 import '../savings.css';
 import { connect } from "react-redux";
-import {getCustomerGoalTransHistory, GoalType, GoalFormula} from '../../../redux/actions/savings/goal/get-customer-transaction-history.actions'
+import {getCustomerGoalTransHistory, GoalType, GoalFormula,SubmitDashBoardGoalData} from '../../../redux/actions/savings/goal/get-customer-transaction-history.actions'
 import moment from 'moment';
 import ProgressBar from '../../savings/group/progress-bar';
 import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
 import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import {history} from '../../../_helpers/history';
+import {customerGoalConstants} from '../../../redux/constants/goal/get-customer-trans-history.constant'
 
 
 class GoalPlan extends React.Component {
@@ -33,11 +34,11 @@ class GoalPlan extends React.Component {
     }
 
     CheckRotatingSavingsAvailability = () => {
-        this.props.dispatch(actions1.GetGroupsEsusu(this.state.user.token, null));
+        this.props.dispatch(actions1.GetGroupsEsusu(this.state.user.token));
     }
 
     CheckGroupSavingsAvailability = () => {
-        this.props.dispatch(actions.customerGroup(this.state.user.token, null));
+        this.props.dispatch(actions.customerGroup(this.state.user.token));
     }
     
     NavigateToGroupSavings = () => {
@@ -74,6 +75,19 @@ class GoalPlan extends React.Component {
     togglePage =()=>{
         this.setState({visible: false})
     };
+    handleSubmit=(event)=>{
+        console.log(JSON.parse(event.target.id));
+        this.props.dispatch(SubmitDashBoardGoalData(event.target.id))
+
+    }
+    gotopage2=()=>{
+        if(this.props.submitDashboardData){
+            if(this.props.submitDashboardData.message === customerGoalConstants.SUBMIT_DASHBOARD_DATA_SUCCESS){
+                return <Redirect to="/savings/cash-out"/>
+            }
+        }
+    }
+    
 
 
     renderGoalsElement(customerGoalTransHistory){
@@ -81,20 +95,20 @@ class GoalPlan extends React.Component {
             return(
                 <div className="row">
                     <NavLink to="/savings/fixed-goal">
-                        <div className="fixed-goal">
-                            <img className="goal-icon" src={calender} alt=''/>
-                            <p className="flex-text">Fixed Goal</p>
-                            <p className="info-text3">Save daily, weekly or monthly towards
-                                a target amount, earn 10% interest. No withdrawals allowed and you will lose your interest if you don't meet your target.
-                            </p>
-                        </div>
+                           <div className="fixed-goal">
+                                <img className="goal-icon" src={calender} alt=''/>
+                                <p className="flex-text">Fixed Goal</p>
+                                <p className="info-text3">Save daily, weekly or monthly towards
+                                    a target amount, earn 10% interest. No withdrawals allowed and you will lose your interest if you don't meet your target.
+                                </p>
+                            </div>
                     </NavLink>
                     <NavLink to="/savings/flex-goal">
                         <div className="flex-goal">
                             <img className="goal-icon" src={graph} alt=''/>
                             <p className="plan-text">Flexi Goal</p>
                             <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days
-                                but you will lose your interest if you don't meet your</p>
+                                but you will lose your interest if you don't meet your target</p>
                         </div>
                     </NavLink>
                     <NavLink to="/savings/create-stash_step1">
@@ -117,27 +131,34 @@ class GoalPlan extends React.Component {
                 let goals = customerGoalTransHistory.customer_goal_data.response.data;
 
 
-                if(goals.length === 0 && !this.state.visible){
+                if(goals.length === 0 ){
+                    this.setState({visible: false})
                     return(
                         <div className="row">
-                            <NavLink to={"/savings/fixed-goal"}>
-                                <div className="fixed-goal">
-                                    <img className="goal-icon" src={calender} alt=''/>
-                                    <p className="flex-text">Fixed Goal</p>
-                                    <p className="info-text3">Save daily, weekly or monthly towards
-                                        a target amount, earn 10% interest. No withdrawals allowed and you will lose your interest if you don't meet your target.
-                                    </p>
-                                </div>
-                            </NavLink>
+
+                                <NavLink to={"/savings/fixed-goal"}>
+
+                                    <div className="fixed-goal">
+                                        <img className="goal-icon" src={calender} alt=''/>
+                                        <p className="flex-text">Fixed Goal</p>
+                                        <p className="info-text3">Save daily, weekly or monthly towards
+                                            a target amount, earn 10% interest. No withdrawals allowed and you will lose your interest if you don't meet your target.
+                                        </p>
+                                    </div>
+
+                                </NavLink>
+
                             <NavLink to={"/savings/flex-goal"}>
+
                                 <div className="flex-goal">
                                     <img className="goal-icon" src={graph} alt=''/>
                                     <p className="plan-text">Flexi Goal</p>
                                     <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days
-                                        but you will lose your interest if you don't meet your</p>
+                                        but you will lose your interest if you don't meet your target</p>
                                 </div>
                             </NavLink>
                             <NavLink to={"/savings/create-stash_step1"}>
+
                                 <div className="stash-goal">
                                     <img className="goal-icon" src={stash} alt=''/>
                                     <p className="plan-text">Stash</p>
@@ -155,7 +176,7 @@ class GoalPlan extends React.Component {
                         <div className="compContainer2">
                             {goals.map((hist, key)=> (
                                     <div className="eachComp2">
-                                        <div className='topCard'>
+                                        <div className='topCard' >
                                             <div className="left" key={key}>
                                                 <p className='top' >{hist.goalTypeName}</p>
                                                 <p className='bottom'>{hist.goalName}</p>
@@ -168,7 +189,7 @@ class GoalPlan extends React.Component {
                                             <ProgressBar
                                                 percentage={hist.percentageCompleted}
                                                 discBottom={"₦" + this.toCurrency(hist.amountSaved) + " " + "of"}
-                                                discSpan={" " + "₦" + hist.targetAmount}
+                                                discSpan={" " + "₦" + this.toCurrency(hist.targetAmount)}
                                                 discBottomSib='Amount Saved'
                                                 discBottomRight={hist.percentageCompleted.toFixed(1) + "%"}
                                             />
@@ -193,23 +214,19 @@ class GoalPlan extends React.Component {
                                                             <div className="innerRight">
                                                             <Link to={{
                                                                 pathname:'/savings/top-up-goal-step1',
-                                                                state:{
-                                                                    name:hist
-                                                                }
+                                                               
                                                             } }>
                                                                 <span style={{ fontFamily:"proxima_novaregular",fontSize:"12px"
-                                                                }}>Top Up Stash</span>
+                                                                }} id={JSON.stringify(hist)} onClick={this.handleSubmit}>Top Up Stash</span>
                                                             </Link>
 
 
                                                             <Link to={{
                                                                 pathname:'/savings/stash-cashout',
-                                                                state:{
-                                                                    name:hist
-                                                                }
+                                                                
                                                             } }>
-                                                                <span style={{ fontFamily:"proxima_novaregular",fontSize:"12px"
-                                                                }}>Cashout Stash</span>
+                                                                <span style={{fontFamily:"proxima_novaregular",fontSize:"12px"
+                                                                }} id={JSON.stringify(hist)} onClick={this.handleSubmit}>Cashout Stash</span>
                                                             </Link>
                                                             </div>
 
@@ -224,12 +241,10 @@ class GoalPlan extends React.Component {
                                             <div className="right">
                                                 <Link to={{
                                                     pathname:'/savings/view-goal-summary',
-                                                    state:{
-                                                        name:hist
-                                                    }
+                                                    
                                                 } }>
                                                 <span style={{ fontFamily:"proxima_novaregular"
-                                                }}>View Details</span>
+                                                }} id={JSON.stringify(hist)} onClick={this.handleSubmit}>View Details</span>
                                                 </Link>
 
                                             </div>
@@ -267,7 +282,7 @@ class GoalPlan extends React.Component {
                                 <img className="goal-icon" src={graph} alt=''/>
                                 <p className="plan-text">Flexi Goal</p>
                                 <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days
-                                    but you will lose your interest if you don't meet your</p>
+                                    but you will lose your interest if you don't meet your target</p>
                             </div>
                         </NavLink>
                         <NavLink to="/savings/create-stash_step1">
@@ -303,12 +318,10 @@ class GoalPlan extends React.Component {
                                 <div className="sub-tab-nav">
                                     <ul style={{cursor:"pointer"}}>
                                         <li><a onClick={() => this.setState({visible: true})} href="#" className="active">Goals</a></li>
-                                        {/* <NavLink to='/savings/goal/group-savings-selection'> */}
                                             <li onClick={this.NavigateToGroupSavings}><a className="forGroupLink">Group Savings</a></li>
-                                        {/* </NavLink> */}
-                                        <NavLink to="/savings/fixed-goal">
+                                        {/* <NavLink to="/savings/fixed-goal">
                                             <li><a href="#">Investments</a></li>
-                                        </NavLink>
+                                        </NavLink> */}
                                         {
                                             this.state.visible ?
                                             <li style={{float:'right',color:'white',fontSize:'16px, font-family:"proxima_novaregular'}}> <a onClick={this.togglePage} className="btn-alat">Create a Savings Goal</a> </li> : null
@@ -327,9 +340,10 @@ class GoalPlan extends React.Component {
     }
 }
 const mapStateToProps = state => ({
-    customerGoalTransHistory:state.customerGoalTransHistory,
+    customerGoalTransHistory:state.CustomerGoalReducerPile.customerGoalTransHistory,
     groupSavingsEsusu: state.getGroupSavingsEsusu.data,
-    groups: state.customerGroup.data
+    groups: state.customerGroup.data,
+    submitDashboardData:state.CustomerGoalReducerPile.submitDashboardData
 });
 
 export default connect (mapStateToProps)(GoalPlan);

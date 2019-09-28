@@ -69,6 +69,9 @@ class SetCardPin extends React.Component {
 
     componentDidMount() {
         // this.props.dispatch(clearCardsStore());
+        if(this.state.user.isWemaMobileUser===true){
+            this.props.history.push("/cards-control");
+        }
         this.makeInitialRequest();
         // this.getRandomQuestion();
         // this.getHotlistReasonsForCustomer();
@@ -138,7 +141,6 @@ class SetCardPin extends React.Component {
     
 
     renderSuccesfullPinUpdate(){
-        console.log('randome', this.props.activateALATCardRequest);
         return(
                 <div>
                     <center>
@@ -207,6 +209,7 @@ class SetCardPin extends React.Component {
                                     tabIndex="2"
                                     maxLength='4'
                                     id={'lastFourDigitsNum'}
+                                    type="password"
                                     name="lastFourDigitsNum"
                                     value={lastFourDigitsNum}
                                     onChange= {(lastFourDigitsNum, e)=>{ 
@@ -313,6 +316,7 @@ class SetCardPin extends React.Component {
                             tabIndex="2"
                             id={'securityAnswer'}
                             name="securityAnswer"
+                            type="password"
                             value={securityAnswer}
                             onChange= {(securityAnswer, e)=>{ 
                                 this.setState({securityAnswer});
@@ -354,63 +358,55 @@ class SetCardPin extends React.Component {
             activateCardRequest     = props.activateALATCardRequest,
             currentCardRequest      = props.existingAtmCard; 
 
-            console.log('current', currentCardRequest);
+            
 
             // if(currentCardRequest.fetch_status===GETCURRENT_ATMCARD_SUCCESS && currentCardRequest.atmcards_info.response.data.length>=1){
                 return(
                     <div className="col-sm-12">
-                        <div className="row">
-                            <div className="col-sm-12">
-                                <div className="max-600">
-                                    <div className="al-card no-pad">
-                                    <h4 className="m-b-10 center-text hd-underline">Set your ALAT Card Pin</h4>
-                                        <div className="transfer-ctn ">
+                        <div className="max-600">
+                            <div className="al-card no-pad">
+                            <h4 class="m-b-10 center-text hd-underline">Set your ALAT Card Pin</h4>
+                                <div className="transfer-ctn ">
 
-                                            {/* Loading Current ATM Card and Random question */}
-                                            {(currentCardRequest.fetch_status === GETCURRENT_ATMCARD_PENDING ||
-                                                    randomQuestion.fetch_status === GETRANDOM_SECURITYQUESTION_PENDING) &&
-                                                        <center>
-                                                            Loading ATM card details...
-                                                        </center>
-                                            }
-
-                                            {/* If Loading Current ATM Card and/or Fails */}
-                                            {(currentCardRequest.fetch_status === GETCURRENT_ATMCARD_FAILURE ||
-                                                    randomQuestion.fetch_status === GETRANDOM_SECURITYQUESTION_FAILURE) &&
-                                                        <center>
-                                                            An error occured
-                                                            <a className="cta-link tobottom text-center" onClick={this.makeInitialRequest}>Try again</a>
-                                                        </center>
-                                            }
-
-                                            {/* Show acceptance message */}
-                                            {showAcceptTerms && 
-                                                (randomQuestion.fetch_status===GETRANDOM_SECURITYQUESTION_SUCCESS &&
-                                                currentCardRequest.fetch_status===GETCURRENT_ATMCARD_SUCCESS
-                                                && currentCardRequest.atmcards_info.response.data.length>=1) &&
-                                                <div className="accept-msg text-center">
-                                                    <span> By clicking the button below, you hereby agree that you have read our terms and coditions of service</span>
-                                                    <center>
-                                                        <button type="button"  className="btn-alat m-t-10 m-b-20 text-center"
-                                                                                onClick={()=>this.setState({showAcceptTerms:false})}> Accept Terms and Proceed</button>
-                                                    </center>
-                                                </div>
-                                            }
-
-                                            {/* Show for no ALAT CARD requested yet */}
-                                            {showAcceptTerms && 
-                                                (randomQuestion.fetch_status===GETRANDOM_SECURITYQUESTION_SUCCESS &&
-                                                currentCardRequest.fetch_status===GETCURRENT_ATMCARD_SUCCESS
-                                                && currentCardRequest.atmcards_info.response.data.length===0) &&
+                                    {/* Loading Current ATM Card and Random question */}
+                                    {/* {(currentCardRequest.fetch_status === GETCURRENT_ATMCARD_PENDING ||
+                                            randomQuestion.fetch_status === GETRANDOM_SECURITYQUESTION_PENDING) &&
                                                 <center>
                                                     <img className="nocards-icon" src={emptyVC} />
                                                     <p> You currently do not have an  ALAT card</p>
                                                     <button type="submit" onClick={()=>this.props.history.push("/cards")}   
                                                         className="btn-alat m-t-10 m-b-20 text-center">Request Card</button>
                                                 </center>
-                                            }
+                                            } */}
 
-                                            
+                                    {(currentCardRequest.fetch_status === GETCURRENT_ATMCARD_PENDING ||
+                                            randomQuestion.fetch_status === GETRANDOM_SECURITYQUESTION_PENDING) &&
+                                                <center>
+                                                    Loading ATM card details...
+                                                </center>
+                                    }
+
+                                    {/* If Loading Current ATM Card and/or Fails */}
+                                    {(currentCardRequest.is_processing === false &&
+                                            randomQuestion.fetch_status === GETRANDOM_SECURITYQUESTION_FAILURE) &&
+                                                <center>
+                                                    An error occured
+                                                    <a className="cta-link tobottom text-center" onClick={this.makeInitialRequest}>Try again</a>
+                                                </center>
+                                    }
+
+                                    {/* Show acceptance message */}
+                                    {showAcceptTerms && 
+                                        (randomQuestion.fetch_status===GETRANDOM_SECURITYQUESTION_SUCCESS &&
+                                         currentCardRequest.fetch_status===GETCURRENT_ATMCARD_SUCCESS) &&
+                                        <div className="accept-msg text-center">
+                                            <span> By clicking the button below, you hereby agree that you have read our terms and coditions of service</span>
+                                            <center>
+                                                <button type="button"  className="btn-alat m-t-10 m-b-20 text-center"
+                                                                        onClick={()=>this.setState({showAcceptTerms:false})}> Accept Terms and Proceed</button>
+                                            </center>
+                                        </div>
+                                    }
 
                                             {/* Show Random Question */}
 
@@ -433,8 +429,6 @@ class SetCardPin extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
                     
                 )
             // }else{

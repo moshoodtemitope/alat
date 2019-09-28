@@ -42,8 +42,8 @@ class CashoutStashGoal extends Component {
             this.setState({
                 goalName:data.goalName,
                 goalId:data.goalId,
-                debitAccount:data.accountNumber,
-                Amount:data.amountSaved,
+                debitAccount:data.DebitAccount,
+                Amount:data.Amount,
                 partialWithdrawal:true
             });
         }
@@ -77,10 +77,10 @@ class CashoutStashGoal extends Component {
 
         event.preventDefault();
         this.props.dispatch(actions.StashCashout({
-            "GoalId":parseInt(this.state.goalId),
-            "DebitAccount":this.state.debitAccount,
-            "Amount":parseFloat(this.state.Amount),
-            "PartWithdrawal":true
+            "goalId":this.state.goalId,
+            "accountNumber":this.state.debitAccount,
+            "amount":this.state.Amount,
+            // "PartWithdrawal":true
 
         }));
 
@@ -135,7 +135,7 @@ class CashoutStashGoal extends Component {
                                                         </div>
                                                         <div className="right">
                                                             <p className='GoalText'>Amount</p>
-                                                            <p className='boldedText'>₦{this.state.goal.amountSaved}</p>
+                                                            <p className='boldedText'>₦{this.state.Amount}</p>
                                                         </div>
                                                     </div>
                                                     <div className="coverForSummary">
@@ -177,6 +177,10 @@ class CashoutStashGoal extends Component {
 
 
                                     </div>
+                                    <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
+                                                this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
+                                                Go back
+                                        </a>
 
 
 
@@ -195,8 +199,8 @@ class CashoutStashGoal extends Component {
 }
 const mapStateToProps = state => ({
     alert: state.alert,
-    stashGoal:state.stashGoal,
-    stashGoal_step1:state.stashGoal_step1,
+    stashGoal:state.CustomerGoalReducerPile.stashGoal,
+    stashGoal_step1:state.CustomerGoalReducerPile.stashGoal_step1,
     accounts: state.dashboard_accounts
 
 

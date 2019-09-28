@@ -21,7 +21,7 @@ class Dashboard extends Component{
     }
 
     componentDidMount() {
-        console.log("in data now")
+        console.log("in data liquid now")
         this.props.resetPinState();
         if(this.props.beneficiaries < 1){
             this.props.fetchBeneficiaries(this.state.user.token);
@@ -35,13 +35,13 @@ class Dashboard extends Component{
 
 
    render() {
-    console.log("in data now- render method")
+    console.log("in dashboard now- render method");
        return(
            
            <Fragment>
                 {this.props.children}
-                <Route exact path='/loans/alat-loans' render={(props) => <Index {...props} activeLoans={this.props.beneficiaries} fetchingLoans={this.props.fetchingLoans} />} />
-                 <Route exact path='/loans/alat-loans/liquidate' render={(props) => <LiquidateLoan {...props} />} />
+                {/* <Route exact path='/loans/alat-loans' render={(props) => <Index {...props} activeLoans={this.props.activeLoans} fetchingLoans={this.props.fetchingLoans} />} /> */}
+                 <Route path='/loans/alat-loans/liquidate' render={(props) => <LiquidateLoan {...props} />} />
                 {/*<Route path='/bills/data/buy/confirm' render={(props) => <ConfirmData {...props} />} />
                 <Route path='/bills/data/buy/success' render={(props) => <Success {...props} />} />
                 <Route path='/bills/data/buy/verify' render={(props) => <VerifyOtp {...props} />} /> */}

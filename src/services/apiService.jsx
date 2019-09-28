@@ -40,6 +40,8 @@ export class ApiService {
                 }
                 axios.defaults.headers.common['alat-client-apiKey'] = 'ERTojertoijertoijert';
                 axios.defaults.headers.common['Content-Type'] = 'application/json';
+                // axios.default.headers.common['content-type'] ='multipart/form-data'
+               
             }
            
             else if(headers !== undefined){
