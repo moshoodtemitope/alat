@@ -50,7 +50,7 @@ import {listStyleConstants} from '../constants/lifestyle/lifestyle-constants'
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
 const rootReducer = (state, action)=>{
-    console.log(action);
+    //console.log(action);
     if(action.type === userConstants.LOGOUT)
         { 
               state = undefined;   

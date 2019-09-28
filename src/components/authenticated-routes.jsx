@@ -41,7 +41,7 @@ import TalkToUsIndex from './talk-to-us/index'
 
 var timer = 60
 var user = JSON.parse(localStorage.getItem("user"));
-console.log("ouside", user);
+//console.log("ouside", user);
 function PrivateRoute({ component: Component, authed, ...rest }) {
     return (
         <Route

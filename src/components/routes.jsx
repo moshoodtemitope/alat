@@ -53,18 +53,18 @@ class IndexedRoute extends React.Component {
     }
 
     componentDidMount() {
-        console.log('==== Routes mounted!');
+       // console.log('==== Routes mounted!');
     }
 
     render() {
-        console.warn("user----------------------- ", this.props.user);
+       // console.warn("user----------------------- ", this.props.user);
         var layers = (
             <Fragment>
                 <OnboardingRoute />
             </Fragment>
         )
         if (this.props.user) {
-            console.log("..///..//---////name auth loaded")
+            //console.log("..///..//---////name auth loaded")
             layers = (
                 <Fragment>
                     <OnboardingRoute />
