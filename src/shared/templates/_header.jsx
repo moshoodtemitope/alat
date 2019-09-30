@@ -27,13 +27,13 @@ class HeaderContainer extends React.Component{
         const { dispatch } = this.props;
 
         $('#nav-icon1').click(function(){
-            console.error("clicked");
+            //console.error("clicked");
             $(this).toggleClass('open');
             $('.hr-nav-header').fadeToggle();
         });
 
         $('.user-name-circle').click(function(){
-            console.log("Image clicked");
+            //console.log("Image clicked");
             $('.mini-nav').fadeToggle(300);
         });
         this.toggleMiniNav = this.toggleMiniNav.bind(this);
@@ -263,7 +263,7 @@ class HeaderContainer extends React.Component{
 
 
 function mapStateToProps(state) {
-    console.log(state);
+    //console.log(state);
     const { user } = state;
     return {
         user,

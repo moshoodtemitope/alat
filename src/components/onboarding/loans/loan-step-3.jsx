@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 import * as actions from '../../../redux/actions/onboarding/loan.actions';
 import { loanOnboardingConstants } from '../../../redux/constants/onboarding/loan.constants';
 import LoanOnboardingContainer from './loanOnboarding-container';
+import Select from 'react-select';
 
 class LoanOnboardingStep3 extends React.Component {
     constructor(props) {
@@ -17,6 +18,8 @@ class LoanOnboardingStep3 extends React.Component {
             password: "",
             verifyPassword: "",
             verifyEmail: "",
+            securityAnswer: "",
+            securityQuestion: "",
 
             bvnInvalid: false,
             emailInvalid: false,
@@ -24,6 +27,8 @@ class LoanOnboardingStep3 extends React.Component {
             dobInvalid: false,
             passwordInvalid: false,
             verifyPasswordInvalid: false,
+            securityAnswerInvalid: false,
+            securityQuestionInvalid: false,
             isSubmitted: false,
 
             phoneNumber: "",
@@ -46,12 +51,52 @@ class LoanOnboardingStep3 extends React.Component {
                     LoanAmount: data.LoanAmount,
                     Tenure: data.Term
                 });
+                this.getSecurityQuestions();
 
             } else {
                 this.props.history.push("/loan/step-2");
             }
         } else {
             this.props.history.push("/loan/step-2");
+        }
+    }
+
+    getSecurityQuestions=()=>{
+        this.props.dispatch(actions.GetSecurityquestion());
+    }
+
+    handleQuestionChange = (Question) => {
+        this.setState({ securityQuestion: Question.label });
+        if (Question.value != "") {
+            this.setState({ securityQuestionInvalid: false });
+        }
+    }
+
+    renderSecurityQuestions = ( ) => {
+        let secStatus = this.props.sec_question.sec_que_status
+        switch (secStatus) {
+            case loanOnboardingConstants.SECURITY_QUESTION_SUCCESS:
+                let questionList = this.props.sec_question.sec_que_data.response.data;
+                 var questionOptions = [];
+                for (var question in questionList) {
+                    questionOptions.push({ value: questionList[question].id, label: questionList[question].question });
+                }
+                return (<Select
+                     options={questionOptions}
+                     onChange={this.handleQuestionChange}
+                />);
+            case loanOnboardingConstants.SECURITY_QUESTION_PENDING:
+                return (<select disabled>
+                    <option>Fetching Questions...</option>
+                </select>
+                );
+            case loanOnboardingConstants.SECURITY_QUESTION_FAILURE:
+                return (<Fragment>
+                    <select className="error-field" disabled>
+                        <option>Unable to load questions</option>
+                    </select>
+                    <a className="cta-link to-right" onClick={this.getSecurityQuestions}>Try again</a>
+                </Fragment>)
         }
     }
 
@@ -184,11 +229,34 @@ class LoanOnboardingStep3 extends React.Component {
             return false;
         }
     }
+    
+    valSecQuestion =()=>{
+        if (this.state.securityQuestion === "") {
+            this.setState({ securityQuestionInvalid: true });
+            return true;
+        }
+        else {
+            this.setState({ securityQuestionInvalid: false });
+            return false;
+        }
+    }
 
+    valQuestionAnswer =()=>{
+        if (this.state.securityAnswer === "") {
+            this.setState({ securityAnswerInvalid: true });
+            return true;
+        }
+        else {
+            this.setState({ securityAnswerInvalid: false });
+            return false;
+        }
+    }
+    
+   
     validateForm() {
 
         if (this.validateBvn(1) || this.validateEmail() || this.ValConfirmEmail() || this.valConfirmPasswordValid() ||
-            this.checkPwd() || this.valDob()) {
+            this.checkPwd() || this.valDob() || this.valSecQuestion() || this.valQuestionAnswer()) {
                 return true;
             
         } else {
@@ -214,9 +282,18 @@ class LoanOnboardingStep3 extends React.Component {
             "email" : this.state.email,
             "password" : this.state.password,
             loanAmount: this.state.LoanAmount,
-            tenure: this.state.Tenure
+            tenure: this.state.Tenure,
+            securityQuestion: this.state.securityQuestion,
+            securityAnswer: this.state.securityAnswer
+
         }));
         }
+    }
+
+    goBack=(e)=>{
+        e.preventDefault();
+        this.props.dispatch(actions.goBackStoreClear(loanOnboardingConstants.LOAN_STEP2_CLEAR));
+        this.props.history.push('/loan/step-2');
     }
 
     gotoOtp = () => {
@@ -227,8 +304,8 @@ class LoanOnboardingStep3 extends React.Component {
     }
 
     render() {
-        const { bvn, email, dob, password, verifyPassword, verifyEmail, bvnInvalid, passwordInvalidMessage,
-            emailInvalid, verifyEmailInvalid, dobInvalid, passwordInvalid, verifyPasswordInvalid } = this.state;
+        const { bvn, email, dob, password, verifyPassword, verifyEmail, bvnInvalid, passwordInvalidMessage, securityQuestionInvalid,
+            emailInvalid, verifyEmailInvalid, dobInvalid, passwordInvalid, verifyPasswordInvalid, securityAnswer, securityAnswerInvalid } = this.state;
 
         let props = this;
 
@@ -301,6 +378,20 @@ class LoanOnboardingStep3 extends React.Component {
                                     <div className="text-danger">select a valid date</div>
                                 }
                             </div>
+                            <div className={securityQuestionInvalid ? "input-ctn form-error" : "input-ctn"}>
+                                <label>Select Security Question</label>
+                                {this.renderSecurityQuestions()}
+                                {securityQuestionInvalid &&
+                                    <div className="text-danger">you need to select a security question</div>
+                                }
+                            </div>
+                            <div className={securityAnswerInvalid ? "input-ctn form-error" : "input-ctn"}>
+                                <label>Answer Sequrity Security Question</label>
+                                <input onChange={this.handleInputChange} type="text" onBlur={this.valConfirmPasswordValid} name="securityAnswer" value={securityAnswer} />
+                                {securityAnswerInvalid &&
+                                    <div className="text-danger">you have to provide an answer</div>
+                                }
+                            </div>
 
                             <div className="row">
                                 <div className="col-sm-12">
@@ -316,6 +407,9 @@ class LoanOnboardingStep3 extends React.Component {
                         </form>
                     </div>
                 </div>
+                <center>
+                    <a style={{ cursor: "pointer"}} onClick={this.goBack} className="add-bene m-t-50">Go Back</a>
+                </center>           
             </div>
         </LoanOnboardingContainer>);
     }
@@ -325,7 +419,8 @@ function mapStateToProps(state) {
     return {
         alert: state.alert,
         loan_step2: state.loanOnboardingReducerPile.loanOnboardingStep2,
-        loan_bvn: state.loanOnboardingReducerPile.loanOnboardingBVN
+        loan_bvn: state.loanOnboardingReducerPile.loanOnboardingBVN,
+        sec_question: state.loanOnboardingReducerPile.sec_question
     };
 }
 

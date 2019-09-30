@@ -4,11 +4,13 @@ import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import * as onboardingActions from '../../../redux/actions/onboarding/loan.actions';
 import { loanOnboardingConstants } from '../../../redux/constants/onboarding/loan.constants';
+import ExtendModal from '../_modal';
+//import Modal from 'react-responsive-modal';
 
-import * as loanActions from '../../../redux/actions/loans/loans.action';
-import { loanConstants } from '../../../redux/constants/loans/loans.constants';
+//import * as loanActions from '../../../redux/actions/loans/loans.action';
+//import { loanConstants } from '../../../redux/constants/loans/loans.constants';
 
-import ImageUploader from 'react-images-upload';
+//import ImageUploader from 'react-images-upload';
 import '../../../assets/css/docupload/custom-upload.css';
 //import LoanOnboardingContainer from './loanOnboarding-container';
 //import OtpValidation from '../../../shared/components/otpvalidation';
@@ -35,6 +37,11 @@ class SalaryDetails extends React.Component {
 
             accountNumberInvalid: false,
             selectedBankInvalid: false,
+            ///////////////////Modal prperties
+            openModal: false,
+            IsSuccess: false,
+            modalMessage: "",
+            modalFired: false,
         }
     }
     componentDidMount = () => {
@@ -44,12 +51,12 @@ class SalaryDetails extends React.Component {
     init = () => {
         this.fetchBanks();
         if (this.props.loan_reqStat)
-        if (this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS) {
-           let data = {
-            ...this.props.loan_reqStat.loan_reqStat_data.data
-           };
-           this.setState({ employerDetails: data});
-        }
+            if (this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS) {
+                let data = {
+                    ...this.props.loan_reqStat.loan_reqStat_data.data
+                };
+                this.setState({ employerDetails: data });
+            }
     }
 
     validateFields = () => {
@@ -74,7 +81,7 @@ class SalaryDetails extends React.Component {
             selectedBankInvalid = false;
         }
 
-        if (acctNumberInvalid  || selectedBankInvalid)
+        if (acctNumberInvalid || selectedBankInvalid)
             return true;
         else return false;
     }
@@ -133,13 +140,14 @@ class SalaryDetails extends React.Component {
 
         } else {
 
-            var data = {
-                AccountNumber: this.state.accountNumber,
-                BankId: this.state.bankCode,
-                ...this.state.employerDetails
-            };
-            this.props.dispatch(onboardingActions.requestStatement(this.props.token, data));
-        }
+        var data = {
+            AccountNumber: this.state.accountNumber,
+            BankId: this.state.bankCode,
+            ...this.state.employerDetails
+        };
+        this.props.dispatch(onboardingActions.requestStatement(this.props.token, data));
+         this.setState({modalFired : false});
+         }
     }
 
     handleChange = (selectedBank) => {
@@ -147,7 +155,7 @@ class SalaryDetails extends React.Component {
     }
 
     handleInputChange = (e) => {
-         if (e.target.name == "accountNumber") {
+        if (e.target.name == "accountNumber") {
             if (/^\d+$/.test(e.target.value)) {
                 this.setState({ accountNumber: e.target.value }, () => {
                     if (this.state.isSubmitted)
@@ -173,25 +181,48 @@ class SalaryDetails extends React.Component {
                 var data = {
                     ...this.props.loan_reqStat.loan_reqStat_data.data
                 };
-                if(data.response){
-                if (data.response.Response.NextScreen == 0) { return (<Redirect to={this.props.ticketUrl} />) }
-                //this.props.history.push("/loan/ticket");
-                if(data.response.Response.NextScreen == 1){ return (<Redirect to={this.props.statementUploadUrl} />) }
+                if (data.response) {
+                    if (data.response.Response.NextScreen == 0) { return (<Redirect to={this.props.ticketUrl} />) }
+                    //this.props.history.push("/loan/ticket");
+                    if (data.response.Response.NextScreen == 1) { return (<Redirect to={this.props.statementUploadUrl} />) }
 
-                if (data.response.Response.NextScreen == 2) return (<Redirect to={this.props.salaryEntryUrl} />)
+                    if (data.response.Response.NextScreen == 2) return (<Redirect to={this.props.salaryEntryUrl} />)
                 }
                 //this.props.history.push("/loan/salary-entry");
             }
     }
+    //Modal Methods
+    PopupModal = () => {
+        if (this.props.alert) {
+            if (this.props.alert.status_code && !this.state.modalFired) {
+                if (this.props.alert.status_code == 400)
+                    this.controlModal();
+                    this.setState({modalFired : true})
+            }
+        }
+    }
 
-  
+    //Modal Methods
+    controlModal = () => {
+        this.setState({ openModal: !this.state.openModal });
+    }
+
+    SubmitModal = () => {
+        this.props.dispatch(onboardingActions.clearLoanOnboardingStore());
+        this.props.gotoDashBoard();
+    }
+
+    //Modal Methods ends
+
 
     render() {
-        const { employerName, accountNumber, accountNumberInvalid, selectedEmployer,
+        const { employerName, accountNumber, accountNumberInvalid, selectedEmployer, openModal,
             selectedBankInvalid } = this.state;
         let props = this.props;
+        this.PopupModal()
         return (
             <Fragment>
+               
                 {this.gotoNextPage()}
                 <div className="col-sm-12">
                     <div className="max-500">
@@ -235,7 +266,7 @@ class SalaryDetails extends React.Component {
                                             <center>
                                                 <button type="submit" disabled={!this.state.isAccepted || this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_PENDING} className="btn-alat m-t-10 m-b-20 text-center">
                                                     {this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_PENDING ?
-                                                        "Proceesing..." : "Proceed"}
+                                                        "Processing..." : "Proceed"}
                                                 </button>
                                             </center>
                                         </div>
@@ -248,6 +279,9 @@ class SalaryDetails extends React.Component {
                         </center> */}
                     </div>
                 </div>
+                <ExtendModal openModal={this.state.openModal} onCloseModal={this.controlModal} showCloseIcon={false}
+                    IsSuccess={this.state.IsSuccess} message={this.props.alert.message} SubmitAction={this.SubmitModal}
+                />
             </Fragment>
         );
     }

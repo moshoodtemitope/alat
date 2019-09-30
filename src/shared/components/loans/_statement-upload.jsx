@@ -113,8 +113,8 @@ class StatementUpload extends React.Component {
                                                     onChange={(e) => this.pdfInputChange(e.target.files)} />
                                                 Upload
                                              </label>}
-                                            {this.state.pdf.name != "" && <input onClick={this.proceedClick} type="button" disabled={this.props.statement_upload.loan_statement_status == loanConstants.LOAN_STATEMENT_UPLOAD_PENDING} 
-                                            value={ this.props.statement_upload.loan_statement_status == loanConstants.LOAN_STATEMENT_UPLOAD_PENDING ? "Processing..." : "Proceed" } className="btn-alat m-t-20 m-b-20 text-center" />}
+                                            {this.state.pdf.name != "" && <button onClick={this.proceedClick} type="button" disabled={this.props.statement_upload.loan_statement_status == loanConstants.LOAN_STATEMENT_UPLOAD_PENDING} 
+                                             className="btn-alat m-t-20 m-b-20 text-center">{ this.props.statement_upload.loan_statement_status == loanConstants.LOAN_STATEMENT_UPLOAD_PENDING ? "Processing..." : "Proceed" }</button>}
                                         </center>
                                     </div>
                                 </div>

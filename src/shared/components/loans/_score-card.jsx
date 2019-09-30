@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 import * as actions from '../../../redux/actions/onboarding/loan.actions';
 import { loanOnboardingConstants } from '../../../redux/constants/onboarding/loan.constants';
 import { LoanApplicationProgress } from '../../../shared/constants';
+import ExtendModal from '../_modal';
 
 class ScoreCard extends React.Component {
     constructor(props) {
@@ -20,7 +21,12 @@ class ScoreCard extends React.Component {
             selectedDependant: null,
             selectedYOE: null,
             selectedQualification: null,
-            isPopulated: false
+            isPopulated: false,
+            ///////////////////Modal prperties
+            openModal: false,
+            IsSuccess: false,
+            modalMessage: "",
+            modalFired: false,
         }
         //this.submitScoreCardAnswer = this.submitScoreCardAnswer.bind(this);
     }
@@ -30,21 +36,21 @@ class ScoreCard extends React.Component {
     }
 
     init = () => {
-        if (this.props.salary_entry){
+        if (this.props.salary_entry) {
             if (this.props.salary_entry.loan_salEnt_status == loanOnboardingConstants.LOAN_SALARYENTRY_SUCCESS) {
                 this.props.dispatch(actions.getScoreCard(this.state.user.token));
             } else {
                 // return (<Redirect to={this.props.backwardUrl}/>);  //this.props.history.push());
                 this.props.gotoPreviosuPageMethod();
             }
-        }else
+        } else
             if (this.props.loan_status) {
-                if (this.props.loan_status.loan_app_data.data == LoanApplicationProgress.Inprogress_ScoreCard) { 
+                if (this.props.loan_status.loan_app_data.data == LoanApplicationProgress.Inprogress_ScoreCard) {
                     this.props.dispatch(actions.getScoreCard(this.state.user.token));
                 }
                 else { this.props.gotoPreviosuPageMethod(); }
             }
-            else { this.props.gotoPreviosuPageMethod();  }
+            else { this.props.gotoPreviosuPageMethod(); }
 
     }
 
@@ -117,14 +123,41 @@ class ScoreCard extends React.Component {
     gotoNextPage = () => {
         if (this.props.score_card_A)  //loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS
             if (this.props.score_card_A.loan_scoreA_status == loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS
-                || this.props.score_card_A.loan_scoreA_status == loanOnboardingConstants.LOAN_SCORECARD_ANSWER_FAILURE) {
-               // this.props.history.push(this.props.forwardUrl);
-               this.props.gotoNextPageMethod();
+                // || this.props.score_card_A.loan_scoreA_status == loanOnboardingConstants.LOAN_SCORECARD_ANSWER_FAILURE
+                ) {
+                // this.props.history.push(this.props.forwardUrl);
+                this.props.gotoNextPageMethod();
             }
     }
 
+    //Modal Methods
+    PopupModal = () => {
+        if (this.props.alert) {
+            if (this.props.alert.status_code && !this.state.modalFired) {
+                // console.log(this.props.alert);
+                // console.log(this.props.alert.status_code);
+                if (this.props.alert.status_code == 400)
+                    this.controlModal();
+                this.setState({ modalFired: true })
+            }
+        }
+    }
+
+    //Modal Methods
+    controlModal = () => {
+        this.setState({ openModal: !this.state.openModal });
+    }
+
+    SubmitModal = () => {
+        this.props.dispatch(actions.clearLoanOnboardingStore());
+        this.props.gotoDashBoard();
+    }
+
+    //Modal Methods ends
+
     render() {
         const { YearsOfExperience, NumberOfDependants, EducationQualifications, selectedQualification, selectedDependant, selectedYOE } = this.state;
+        this.PopupModal();
         return (
             <Fragment>
                 {this.populateOptions()}
@@ -133,7 +166,7 @@ class ScoreCard extends React.Component {
                     <div className="max-500">
                         <div className="loan-header-text text-center">
                             <h4 className="text-black">Score Card</h4>
-                            <p>Kindly select the answer that best describes you.</p>
+                            <p>You're almost there. Tell us a bit more about you.</p>
                         </div>
                         <div className="al-card no-pad">
                             {this.props.alert && this.props.alert.message &&
@@ -190,6 +223,9 @@ class ScoreCard extends React.Component {
                         </center> */}
                     </div>
                 </div>
+                <ExtendModal openModal={this.state.openModal} onCloseModal={this.controlModal} showCloseIcon={false}
+                    IsSuccess={this.state.IsSuccess} message={this.props.alert.message} SubmitAction={this.SubmitModal}
+                />
             </Fragment>
         );
     }

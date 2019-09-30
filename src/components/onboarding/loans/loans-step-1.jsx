@@ -83,8 +83,8 @@ class LoanOboardingStep1 extends React.Component {
                     {this.renderRedirect()}
                     <div className="row">
                         <div className="col-12">
-                            <h3>Welcome to ALAT's Salary based Lending platform</h3>
-                            {/* <p style={{ "marginTop : 20px"}}>Let's get to know you</p> */}
+                            <h3>Welcome to ALAT Salary Loan</h3>
+                            <p style={{ marginTop : "20px"}}>Let's get to know you</p>
                         </div>
                     </div>
                     <div className="row">

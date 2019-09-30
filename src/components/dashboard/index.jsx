@@ -36,7 +36,7 @@ class Dashboard extends React.Component{
     fetchAccounts(){
         const { dispatch } = this.props;
         // console.log(this.props);
-        console.log(this.state.user.token);
+        //console.log(this.state.user.token);
         dispatch(getAccounts(this.state.user.token, true));
     }
 
@@ -128,15 +128,15 @@ class Dashboard extends React.Component{
     }
 
     getAccountHistory(accountIndex){
-        console.log(accountIndex.slideIndex);
-        console.log(this.props);
+        //console.log(accountIndex.slideIndex);
+       // console.log(this.props);
 
         const { dispatch } = this.props;
         let props = this.props;
         let accounts = props.accounts;
         let userAccounts = accounts.user_account_data.response.Accounts;
         let selectedAccount = userAccounts[accountIndex.slideIndex];
-        console.log(selectedAccount);
+       // console.log(selectedAccount);
         let payload = {
             Take: 10,
             Skip: 0,
@@ -187,7 +187,7 @@ class Dashboard extends React.Component{
     renderHistory(){
         let props = this.props;
         let accountsHistory = props.accounts_history;
-        console.error(accountsHistory);
+        //console.error(accountsHistory);
         if(accountsHistory.account_history === userConstants.DASHBOARD_ACCOUNT_FETCH_HISTORY_PENDING){
             return  <h4 className="text-center" style={{ marginTop: '65px'}}>Loading account history...</h4>;
         }
@@ -357,7 +357,7 @@ class Dashboard extends React.Component{
 }
 
 function mapStateToProps(state) {
-    console.log(state);
+    //console.log(state);
     const { authentication } = state;
     const { user } = authentication;
     return {

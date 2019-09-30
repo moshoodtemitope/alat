@@ -18,7 +18,7 @@ class MenuContainer extends React.Component{
           toggleModal: 'toggleModal'
        }
 
-       console.log('user data is', this.state.user);
+       //console.log('user data is', this.state.user);
     }
 
     // closeModal = (event) => {
