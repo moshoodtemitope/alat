@@ -186,6 +186,18 @@ class AuthenticatedRoutes extends React.Component {
             this.props.logout();
         }
         return (
+            <Fragment>
+                <Modal open={this.state.openModal} onClose={this.closeModal} center>
+                    <div className="div-modal">
+
+                        <h3>You will be logged out in <strong>{this.state.countDownSeconds} seconds</strong></h3>
+
+                        <div className="btn-opt">
+                            <button onClick={this.logoutButton} className="border-btn">Log out</button>
+                            <button onClick={this.closeModal} className="btn-alat">Continue</button>
+                        </div>
+                    </div>
+                </Modal>
             <Router history={history}>
                 <Switch>
                    
@@ -218,6 +230,7 @@ class AuthenticatedRoutes extends React.Component {
 
                 </Switch>
             </Router>
+            </Fragment>
 
             // <Router history={history}>
             //     <Switch>
