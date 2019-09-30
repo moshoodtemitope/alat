@@ -31,19 +31,21 @@ class SelectDebitableAccounts extends React.Component {
             this.props.accounts.debitable_accounts_data.data.map((data => 
                 arrayToDisplay.push({ value: data.AccountNumber, 
                                       accountCurrency: data.Currency,
+                                      QualifedForPayment: data.QualifedForPayment,
                                       label: data.AccountDescription  +"\t"+ " (" +data.AccountNumber + " )   -" +data.Currency+ formatAmount(data.AvailableBalance) })
                                       
                 ));
                 if(typeof this.props.currency !=="undefined"){
-                    arrayToDisplay = arrayToDisplay.filter(item=>item.accountCurrency ===this.props.currency);
+                    arrayToDisplay = arrayToDisplay.filter(item=>(item.accountCurrency ===this.props.currency && item.QualifedForPayment===true));
                     
                     if(arrayToDisplay.length ===0){
-                        console.log('length', arrayToDisplay.length);
+                        // console.log('length', arrayToDisplay.length);
                         arrayToDisplay.push({ value: '', label: 'No Debitable Account in your recipient currency' });
                         // arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account in your recipient currency' }];
                     }
                 }else{
-                    arrayToDisplay = arrayToDisplay.filter(item=>item.accountCurrency ==='NGN');
+                    // arrayToDisplay = arrayToDisplay.filter(item=>(item.accountCurrency ==='NGN' && item.QualifedForPayment===true));
+                    arrayToDisplay = arrayToDisplay.filter(item=>(item.QualifedForPayment===true));
                     if(arrayToDisplay.length ===0){
                         arrayToDisplay.push({ value: '', label: 'No Debitable Naira Account Available' });
                         // arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account in your recipient currency' }];

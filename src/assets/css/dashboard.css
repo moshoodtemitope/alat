@@ -2435,15 +2435,61 @@ ul.menu-side {
   .welcome-name {
     font-size: 1.71429em; }
   .hr-nav-header {
-    display: none; }
+    /* display: none;  */
+  }
+  .menulogo-wrap{
+    display: block;
+    position: relative;
+    left: 40px;
+  }
   #nav-icon1 {
     display: block;
-    margin-left: -15px; }
+    /* margin-left: -15px;  */
+    position: fixed;
+    left: 15px;
+    top: 9px;
+  }
   .hr-nav-header {
     height: 100%;
     overflow: scroll;
-    display: none;
-    margin-top: 70px; }
+    /* display: none; */
+    background: rgba(0,0,0,0.5);
+    margin-top: 70px; 
+    width: 0;
+  }
+    .hr-nav-header .container{
+      /* background: #fff;
+      width: 80%;
+      position: fixed;
+      top: 70px;
+      bottom: 0;
+      overflow: auto; */
+      width: 0;
+    }
+    /* .mobile-menu-bottomlayer {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    } */
+    /* .hr-nav-header.open-fullmenu{
+      width: 0;
+    } */
+    .hr-nav-header.open-fullmenu .container{
+      background: #fff;
+      width: 80%;
+      position: fixed;
+      top: 70px;
+      bottom: 0;
+      overflow: auto;
+    }
+    .open-fullmenu  .mobile-menu-bottomlayer{
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+    }
     .hr-nav-header ul {
       padding: 10px 0; }
       .hr-nav-header ul li {

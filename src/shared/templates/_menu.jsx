@@ -15,9 +15,12 @@ class MenuContainer extends React.Component{
        super(props);
        this.state = {
           user: JSON.parse(localStorage.getItem("user")),
-          toggleModal: 'toggleModal'
+          toggleModal: 'toggleModal',
+          showMenu: false
        }
 
+       this.closeMobileMenu = this.closeMobileMenu.bind(this);
+       this.openMobileMenu    = this.openMobileMenu.bind(this); 
        //console.log('user data is', this.state.user);
     }
 
@@ -44,11 +47,33 @@ class MenuContainer extends React.Component{
     //     console.log('Function Ran')
     // }
 
+    closeMobileMenu(){
+        this.setState({showMenu:false})
+    }
+
+    openMobileMenu(){
+        let {showMenu} = this.state;
+        if(showMenu ===true){
+            this.setState({showMenu:false})
+        }
+        
+        if(showMenu ===false){
+            this.setState({showMenu:true})
+        }
+    }
+    
+
     render() {
-        const {toggleModal} = this.state;
+        let {toggleModal, showMenu} = this.state;
         return (
             <Fragment>
-                <div className="hr-nav-header">
+                <div id="nav-icon1" className="" onClick={ this.openMobileMenu }>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div className={showMenu?"hr-nav-header open-fullmenu":"hr-nav-header"}>
+                    <div className="mobile-menu-bottomlayer" onClick={this.closeMobileMenu}></div>
                     <div className="container">
                         <div className="row">
                             <div className="col-sm-12 remove-padding">

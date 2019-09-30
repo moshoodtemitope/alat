@@ -100,6 +100,7 @@ class Dashboard extends React.Component{
                 return(
                     <Slider duration="500" infinite="true" emulateTouch="true" onSlideChange={event => this.getAccountHistory(event)}>
                         {userAccounts.map(function(acct, key){
+                            
                             return(
     
                                 <div className="account-card m-b-50" key={key}>
@@ -115,7 +116,12 @@ class Dashboard extends React.Component{
                                     </div>
     
                                     <div className="account-balance clearfix">
-                                        <p className="balance">₦{utils.formatAmount(acct.AvailableBalance)}</p>
+                                        <p className="balance">
+                                        {acct.Currency==="NGN" && <span>&#8358;</span> } 
+                                        {acct.Currency==="GBP" && <span>&#x00A3;</span> }
+                                        {acct.Currency==="USD" && <span>&#x24;</span> }
+                                        {(acct.Currency!=="USD" && acct.Currency!=="GBP" && acct.Currency!=="NGN") && <span>{acct.Currency}</span> }
+                                        {utils.formatAmount(acct.AvailableBalance)}</p>
                                         {acct.IsDebitable && <NavLink to={"/fund"} className="btn-alat btn-white m-t-10 btn-sm">Fund Account</NavLink>}
                                     </div>
                                 </div>
