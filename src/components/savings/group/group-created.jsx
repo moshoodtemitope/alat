@@ -34,7 +34,7 @@ class GroupCreated extends React.Component {
     }
 
     GetGroupDetails = () => {
-        console.log('THE CODE GOT HERE OH!');
+        // console.log('THE CODE GOT HERE OH!');
         const groupDetailsStore = window.localStorage;
         const id = groupDetailsStore.getItem('groupDetialsId');
         const data = {
@@ -74,10 +74,10 @@ class GroupCreated extends React.Component {
 
 
     CopyCode = (event) => {
-        console.log(this.textInputHidden);
+        // console.log(this.textInputHidden);
         this.textInputHidden.select();
         document.execCommand("copy");
-        console.log('its here now');
+        // console.log('its here now');
     }
 
     render() {

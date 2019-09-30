@@ -45,6 +45,7 @@ import {fixedGoalConstants} from '../constants/goal/fixed-goal.constant';
 import {flexGoalConstants} from '../constants/goal/flex-goal.constant';
 import {createGoalConstants} from '../constants/goal/create-stash.constant';
 import {customerGoalConstants} from '../constants/goal/get-customer-trans-history.constant';
+import {listStyleConstants} from '../constants/lifestyle/lifestyle-constants'
 //import { saveCardReducer } from "./fund-account.reducer";
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
@@ -134,7 +135,12 @@ const GoalReducerPile=(state, action)=>{
 
     return GoalReducer(state, action)
 }
-
+const LifestyleReducerPile=(state,action)=>{
+    if(action.type ===listStyleConstants.MOVIE_REDUCER_CLEAR){
+        state = undefined
+    }
+    return LifestyleReducer(state, action)
+}
 const FlexGoalReducerPile=(state,action)=>{
     if(action.type === flexGoalConstants.FLEX_GOAL_REDUCER_CLEAR){
         state = undefined
@@ -240,6 +246,33 @@ const loansReducer = combineReducers({
 
 
 });
+const LifestyleReducer = combineReducers({
+    //EVENTS
+    getEvents: movies.getEvents,
+    getSingleEvent: movies.getSingleEvent,
+    purchaseEventTicket: movies.purchaseEventTicket,
+    getMovieList:movies.fetchMovieList,
+
+    getAllEngagements: preferences.getAllEngagements,
+    getCustomersEngagements: preferences.getCustomersEngagements,
+
+    movieDetails: movies.movieDetails,
+
+    //MOVIES
+    getCinemaList:movies.getCinemaList,
+    getSingleMovie:movies.getSingleMovie,
+    buyMovieTicket:movies.buyMovieTicket,
+    ShowTime:movies.ShowTime,
+    SubmitTicketData:movies.SubmitTicketData,
+    SubmitEventTicketData:movies.SubmitEventTicketData,
+    SearchfetchMovieList:movies.SearchfetchMovieList,
+    SearchfetchEventList:movies.SearchfetchEventList,
+    FetchMovieGenre:movies.FetchMovieGenre,
+    PostMovieContent:movies.PostMovieContent,
+    SubmitMovieData:movies.SubmitMovieData,
+    SubmitEventData:movies.SubmitEventData
+
+})
             
  const FlexGoalReducer =combineReducers({
 
@@ -311,6 +344,8 @@ const appReducer = combineReducers({
     acceptndrp_request: onboarding.acceptNDRpReducer,
     sendemailfor_forgotpw_request: onboarding.sendEmailForgotPasswordReducer,
     sendanswerfor_forgotpw_request: onboarding.sendAnswerForgotPasswordReducer,
+    send_customertoken_request: onboarding.sendTokenResetPasswordRequest,
+    send_newcustomerpassword_request: onboarding.sendNewPasswordDetailsRequest,
     dashboard_accounts: dashboard.accountFetch,
     dashboard_accounts_history: dashboard.accountHistoryReducer,
     dashboard_userGoals: dashboard.userGoalsReducer,
@@ -332,6 +367,7 @@ const appReducer = combineReducers({
     FlexGoalReducerPile,
     CreateGoalReducerPile,
     CustomerGoalReducerPile,
+    LifestyleReducerPile,
     // storage_reducer
     // storage_reducer
 
@@ -390,33 +426,14 @@ const appReducer = combineReducers({
     deleteGroupEsusu: rotatingSavings.deleteGroupEsusu,
     joinGroupEsusu: rotatingSavings.joinGroupEsusu,
     refferalCode: rotatingSavings.refferalCode,
+    ActivateGroup: rotatingSavings.ActivateGroup,
     // pauseGroupEsusu: rotatingSavings.pauseGroupEsusu
 
 
-     //MOVIES
-     getCinemaList:movies.getCinemaList,
-     getSingleMovie:movies.getSingleMovie,
-     buyMovieTicket:movies.buyMovieTicket,
-     ShowTime:movies.ShowTime,
-     SubmitTicketData:movies.SubmitTicketData,
-     SubmitEventTicketData:movies.SubmitEventTicketData,
-     SearchfetchMovieList:movies.SearchfetchMovieList,
-     SearchfetchEventList:movies.SearchfetchEventList,
-     FetchMovieGenre:movies.FetchMovieGenre,
-     PostMovieContent:movies.PostMovieContent,
-     SubmitMovieData:movies.SubmitMovieData,
+     
 
  
-     //EVENTS
-     getEvents: movies.getEvents,
-     getSingleEvent: movies.getSingleEvent,
-     purchaseEventTicket: movies.purchaseEventTicket,
-     getMovieList:movies.fetchMovieList,
- 
-     getAllEngagements: preferences.getAllEngagements,
-     getCustomersEngagements: preferences.getCustomersEngagements,
- 
-     movieDetails: movies.movieDetails,
+     
 
     //profile reducer
     linkBVN:profile.linkBVN,

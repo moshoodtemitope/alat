@@ -10,6 +10,8 @@ import {connect} from 'react-redux';
 import {profile} from '../../redux/constants/profile/profile-constants';
 import moment from 'moment';
 import {history} from '../../_helpers/history';
+import CompletedprofileImage from '../../assets/img/selected.svg';
+import NotCompletedprofileImage from '../../assets/img/unsuccessfull.svg'
 
 
 var profileMenuStore = {}
@@ -31,7 +33,14 @@ class IdentityCardUpload extends Component {
           idFrontFace: false, 
           idCardValidity: false,
           isImageUploaded: false,
-          residentialAddress: false
+          residentialAddress: false,
+
+          isBvNLinked: false, navToNextOfKin: false,
+          isProfileInformation: false, 
+          isContactDetails: false, 
+        //   isToNextOfKin: false,
+          isDocument: false, 
+          isToNextOfKin: false,
        }
 
        this.GetResidentialAddress();
@@ -300,7 +309,7 @@ ChangeResidentialStatus = () => {
 
 
    render(){
-      const {residentialAddress, isImageUploaded, isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, birthDate, birthDateValidity, idTypeValidity, idFrontFace, idCardValidity, idCardNumberValidity} = this.state;
+      const {residentialAddress, isImageUploaded, isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, isToNextOfKin, birthDate, birthDateValidity, idTypeValidity, idFrontFace, idCardValidity, idCardNumberValidity} = this.state;
        
       if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
            this.ChangeResidentialStatus();
@@ -339,27 +348,29 @@ ChangeResidentialStatus = () => {
                                                     <hr />
     
                                                     <div className="tickItems" onClick={this.NavigateToBVN}>
-                                                        {isBvNLinked === true ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                        {isBvNLinked ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>}
                                                         <p className="pSubs">Link BVN</p>
                                                     </div>
+                                                    
                                                     <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
-                                                        {isProfileInformation ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                        {isProfileInformation ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>}
                                                         <p className="pSubs">Personal Information</p>
                                                     </div>
                                                     <div className="tickItems" onClick={this.NavigateToContact}>
-                                                        {isContactDetails ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>}
+                                                        {isContactDetails ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage}  alt="" className="largeVectorI"/>}
                                                         <p className="pSubs">Contact Details</p>
                                                     </div>
                                                     <div className="tickItems" onClick={this.NavigateToDocuments}>
-                                                        {isDocument ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt=""  className="largeVectorI" />}
+                                                        {isDocument ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt=""  className="largeVectorI" />}
                                                         <p className="pSubs">Document Upload</p>
                                                     </div>
                                                     <div className="tickItems" onClick={this.NavigateToNextOfKin}>
-                                                        {navToNextOfKin ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                        {/* {typeof isToNextOfKin} */}
+                                                        {isToNextOfKin ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>} 
                                                         <p className="pSubs">Next of Kin</p>
                                                     </div>
                                                     <div className="tickItems" onClick={this.NavigateResidentialAddress}>
-                                                        {residentialAddress ? <img className="improveImgSize" src="/src/assets/img/Vector.svg" alt="" /> : <img src="/src/assets/img/Vector2.png" alt="" className="largeVectorI"/>} 
+                                                        {residentialAddress ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>} 
                                                         <p className="pSubs">Residential Address</p>
                                                     </div>
                                             </div>

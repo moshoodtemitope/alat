@@ -26,6 +26,9 @@ class RequestCardSuccess extends React.Component{
 
 
     componentDidMount() {
+        if(this.state.user.isWemaMobileUser===true){
+            this.props.history.push("/cards-control");
+        }
         this.verifyTransferStage();
     }
 

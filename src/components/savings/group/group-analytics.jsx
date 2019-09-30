@@ -54,7 +54,7 @@ class GroupAnalytics extends React.Component {
             Store.setItem('groupSavingsId', this.props.groupDetails.data.response.id);
             
             let isAdmin = this.props.groupDetails.data.response.isAdmin;
-            console.log(isAdmin);
+            // console.log(isAdmin);
             this.setState({
                 'isAdmin': isAdmin
             })
@@ -65,7 +65,7 @@ class GroupAnalytics extends React.Component {
 
 
     HandleNavigation = () => {
-        console.log('was fired');
+        // console.log('was fired');
         //return <Redirect to="/savings/group/group-analytics2" />
         this.props.history.push("/savings/group/group-analytics2");
     };
@@ -171,7 +171,7 @@ class GroupAnalytics extends React.Component {
     };
 
     GoToContributionPage = () => {
-        console.log('uuuuuuu')
+        // console.log('uuuuuuu')
         history.push('/savings/contribute-to-group');
     }
 
@@ -188,7 +188,7 @@ class GroupAnalytics extends React.Component {
             groupId: Store.getItem('groupSavingsId')
         }
         this.props.dispatch(actions.groupDetails(this.state.user.token, data));
-        console.log('WAS FIRED FFFFFFFFFFFFFF')
+        // console.log('WAS FIRED FFFFFFFFFFFFFF')
     }
     
     render() {

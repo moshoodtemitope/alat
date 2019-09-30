@@ -122,13 +122,15 @@ class GroupAnalyticsMini extends React.Component {
 
 
     NavigateToGroupSavings = () => {
-        // let groupSavings = this.props.groups.response; //returns an array
-        // let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
-        // if(groupSavings.length != 0 || rotatingSavings.length != 0){
-            history.push('/savings/activityDashBoard');
-        //     return;
-        // }
-        // history.push('/savings/goal/group-savings-selection');
+        history.push('/savings/activityDashBoard');
+    }
+
+    ActivateGroup = () => {
+        let data = {
+            groupId: parseInt(this.props.groupDetails.response.id)
+        }
+
+        this.props.dispatch(actions.ActivateGroup(this.state.user.token, data));
     }
 
 
@@ -230,9 +232,10 @@ class GroupAnalyticsMini extends React.Component {
     
                                                         <Buttons
                                                             buttonType={this.state.buttonType}
-                                                            buttonName="Start"          
+                                                            buttonName="Start"
+                                                            buttonClicked = {this.ActivateGroup}     
                                                             />
-                                                        
+                                                            
                                                         {isAdmin ? this.GetSmallNavs() : ""}
     
                                                         {adminValidity ? <div></div> : <div className={"setPadBottom"}></div> }
@@ -416,7 +419,7 @@ class GroupAnalyticsMini extends React.Component {
                                                             rightContent={this.GetReferalCode()}
                                                             rightContentBottom="Group Code"
                                                             />
-        
+                                       
                                                             <Buttons
                                                                 buttonType={this.state.buttonType}
                                                                 buttonName="Start"          

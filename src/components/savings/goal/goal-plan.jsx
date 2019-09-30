@@ -76,7 +76,6 @@ class GoalPlan extends React.Component {
         this.setState({visible: false})
     };
     handleSubmit=(event)=>{
-        // event.target.id
         console.log(JSON.parse(event.target.id));
         this.props.dispatch(SubmitDashBoardGoalData(event.target.id))
 

@@ -31,18 +31,18 @@ class RotatingGroupCreated extends React.Component {
                 groupId: this.props.createdGroupSavings.data.response.id
             }
 
-            console.log(data);
+            // console.log(data);
 
             let Storage = window.localStorage;
             Storage.setItem('rotatingGpId', this.props.createdGroupSavings.data.response.id);
-            console.log(Storage.getItem('rotatingGpId'));
-            console.log('condition never went through!  0000');
+            // console.log(Storage.getItem('rotatingGpId'));
+            // console.log('condition never went through!  0000');
             this.props.dispatch(actions.rotatingGroupDetails(this.state.user.token, data));
        }
 
        if(this.props.createdGroupSavings.data == undefined){
              this.FetchRotatingSavings(); 
-             console.log('condition never went through!');
+            //  console.log('condition never went through!');
        }
     }
 
@@ -68,10 +68,10 @@ class RotatingGroupCreated extends React.Component {
 
 
     CopyCode = (event) => {
-        console.log(this.textInputHidden);
+        // console.log(this.textInputHidden);
         this.textInputHidden.select();
         document.execCommand("copy");
-        console.log('its here now');
+        // console.log('its here now');
     }
 
     LogOutUser = () => {

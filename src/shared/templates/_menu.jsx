@@ -14,8 +14,11 @@ class MenuContainer extends React.Component{
     constructor(props){
        super(props);
        this.state = {
+          user: JSON.parse(localStorage.getItem("user")),
           toggleModal: 'toggleModal'
        }
+
+       console.log('user data is', this.state.user);
     }
 
     // closeModal = (event) => {
@@ -61,7 +64,7 @@ class MenuContainer extends React.Component{
                                             </li>
                                             <li><NavLink to="/cardless-withdrawal">ATM Cardless Withdrawal</NavLink></li>
                                             <li><NavLink to="/fx-transfer">Fx Transfer</NavLink></li>
-                                            <li><a href="#">To Email / Phone No</a></li>
+                                            {/* <li><a href="#">To Email / Phone No</a></li> */}
                                         </ul>
                                     </li>
                                    
@@ -77,15 +80,22 @@ class MenuContainer extends React.Component{
                                     {/* <li><NavLink to="/account" className="clearfix"><i className="fa fa-institution" aria-hidden="true"></i> <span>Accounts</span></NavLink></li> */}
                                     
                                     
-                                    <li><NavLink to="/cards" className="clearfix"><i className="demo-icon icon-card" aria-hidden="true"></i>
+                                    <li>
+                                        <NavLink to={this.state.user.isWemaMobileUser===false?'/cards':'/cards-control'} className="clearfix"><i className="demo-icon icon-card" aria-hidden="true"></i>
                                         <span>Cards</span></NavLink>
                                         <ul>
-                                            <li>
-                                                <NavLink to="/cards">Request card</NavLink>
-                                            </li>
+                                            {this.state.user.isWemaMobileUser===false &&
+                                                <li>
+                                                    <NavLink to="/cards">Request card</NavLink>
+                                                </li>
+                                            }
                                             <li><NavLink to="/cards-control">Card Control</NavLink></li>
-                                            <li><NavLink to="/setcard-pin">Set Card Pin</NavLink></li>
-                                            <li><NavLink to="/hotlist">Hotlist Card</NavLink></li>
+                                            {this.state.user.isWemaMobileUser===false &&
+                                                <li><NavLink to="/setcard-pin">Set Card Pin</NavLink></li>
+                                            }
+                                            {this.state.user.isWemaMobileUser===false &&
+                                                <li><NavLink to="/hotlist">Hotlist Card</NavLink></li>
+                                            }
                                             <li><NavLink to="/virtual-cards"> Alat Dollar Card </NavLink></li>
                                         </ul>
                                     </li>

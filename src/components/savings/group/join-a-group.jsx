@@ -59,7 +59,7 @@ class JoinAGroup extends React.Component {
     FindAGroup = () => {
        if(this.state.warning != 'valid')
            return;
-       console.log(this.state.warning);
+    //    console.log(this.state.warning);
        const data = {
            referralCode: this.state.referralCode
        }
@@ -68,8 +68,8 @@ class JoinAGroup extends React.Component {
            data: this.state.referralCode,
            type: 'refferalCode'
        }
-       console.log(data2)
-       console.log(data);
+    //    console.log(data2)
+    //    console.log(data);
        //return;
        this.props.dispatch(actions.refferalCode(data2))
        this.props.dispatch(action.findGroup(this.state.user.token, data));
@@ -77,7 +77,7 @@ class JoinAGroup extends React.Component {
     }
 
     NavigateToSummary = () => {
-        console.log(this.state.referralCode);
+        // console.log(this.state.referralCode);
         if(this.state.referralCode.split('').length != 10)
              this.setState({'warningStyle': 'notValid'});   // display warning sign
         if(this.state.warning == 'notValid')

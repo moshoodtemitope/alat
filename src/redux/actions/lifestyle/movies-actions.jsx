@@ -252,6 +252,18 @@ export const SubmitMoviesData =(data) =>{
         }
     }
 }
+export const SubmitEventData =(data) =>{
+    return(dispatch)=>{
+        dispatch(success(data))
+
+    }
+    function success(data){
+        return{
+            type:listStyleConstants.SUBMIT_EVENT_DATA_SUCCESS,
+            data:data
+        }
+    }
+}
 
 export const SubmitEventTicketData =(data) =>{
     return(dispatch)=>{

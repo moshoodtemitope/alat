@@ -69,6 +69,9 @@ class SetCardPin extends React.Component {
 
     componentDidMount() {
         // this.props.dispatch(clearCardsStore());
+        if(this.state.user.isWemaMobileUser===true){
+            this.props.history.push("/cards-control");
+        }
         this.makeInitialRequest();
         // this.getRandomQuestion();
         // this.getHotlistReasonsForCustomer();

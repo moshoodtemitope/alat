@@ -43,7 +43,7 @@ class CreateATargetGoal extends React.Component {
     }
 
     handleSelectDebitableAccounts = (account) => {
-        console.log('dss', account);
+        // console.log('dss', account);
         this.setState({ selectedAccount: account })
     }
     
@@ -60,43 +60,43 @@ class CreateATargetGoal extends React.Component {
             switch(x){
                 case 'groupName':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }     
                 case 'groupPurpose':
                    if(this.state[x] == null || this.state[x] == ""){
-                       console.log(x)
+                    //    console.log(x)
                        result = null;
                        break;
                    }
                 case 'targetAmount':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }
                 case 'minimumIndividualAmount':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }
                 case 'targetDate':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }
                 case 'selectedAccount':
                       if(this.state[x] == null || this.state[x] == ""){
-                        console.log(x)
+                        // console.log(x)
                         result = null;
                         break;
                       }
             }
         }
-        console.log(result);
+        // console.log(result);
         return result;
     }
 
@@ -175,7 +175,7 @@ class CreateATargetGoal extends React.Component {
     }
 
     checkMinimumAccountToContribute = () => {
-        console.log(this.state.minimumIndividualAmount);
+        // console.log(this.state.minimumIndividualAmount);
         if(this.state.minimumIndividualAmount == null || this.state.minimumIndividualAmount == ""){
             this.setState({AmountToContribute: true});
             return false;
@@ -194,7 +194,7 @@ class CreateATargetGoal extends React.Component {
             DebitAccount: this.state.selectedAccount,
             Purpose: this.state.groupPurpose, 
         }
-        console.log(data)
+        // console.log(data)
         // return;
         this.props.dispatch(actions.groupSavingsTargetGoal(this.state.user.token, data));
     }
@@ -212,20 +212,20 @@ class CreateATargetGoal extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        console.log("handleSubmit was triggered");
+        // console.log("handleSubmit was triggered");
         if(this.checkMinimumAccountToContribute() || this.checkTheSelectedAccount()||this.checkTheEndDate()||this.checkGroupPurpose()||this.checkGroupName()||this.checkTheTargetAmount()){
-            console.log(this.checkMinimumAccountToContribute())
+            // console.log(this.checkMinimumAccountToContribute())
         } 
         //this.SubmitTargetGoal();
         // console.log('did the code ever got here')
         // console.log(this.state)
         switch(this.checkingUserInputs()){
             case null:
-               console.log('empty feild found');
+            //    console.log('empty feild found');
                break;
             case "valid":
                 this.SubmitTargetGoal();
-                console.log("no empty feilds found")
+                // console.log("no empty feilds found")
                 break;
         }
     }

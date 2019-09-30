@@ -84,7 +84,7 @@ const selectedTime = [
         this.setState({ TransactionDate: TransactionDate });
     };
     checkAmount = () => {
-        if (this.state.Amount == null || this.state.Amount) {
+        if (this.state.Amount == null || this.state.Amount == "") {
             this.setState({ AmountInvalid: true });
         }else{
             this.setState({ AmountInvalid: false });

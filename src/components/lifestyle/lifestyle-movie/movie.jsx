@@ -8,7 +8,7 @@ import * as actions from '../../../redux/actions/lifestyle/movies-actions';
 import clock from '../../../assets/img/clock-circular-outline.svg';
 import {listStyleConstants} from '../../../redux/constants/lifestyle/lifestyle-constants';
 import { FetchMovie,getCinemaList,fetchMovieGenre,SubmitMoviesData } from "../../../redux/actions/lifestyle/movies-actions";
-
+import unescape from 'lodash/unescape';
 import FilterSearch from './filter-result';
 
 class Movie extends React.Component {
@@ -28,8 +28,9 @@ class Movie extends React.Component {
             display: "block"
 
         };
-        // this.handleSubmit =this.handleSubmit.bind(this)
         this.showMovies = true;
+        this.moviesDetails =this.moviesDetails.bind(this)
+
        
     }
 
@@ -68,15 +69,22 @@ class Movie extends React.Component {
     };
     filterGenreOnchangeHandler(e){
         let {value} = e.target
+        if(value!=="ShowResultBy") {
+            this.setState({doFilter: true, genreType: value }, () => { 
+                this.renderFilter(this.state.genreType);
+                this.setState({display: "none"})
+            })
+        }
         // this.filterGenre(e.target.value);
-        this.setState({doFilter: true, genreType: value }, () =>{ 
-            this.renderFilter(this.state.genreType);
-            this.setState({display: "none"})
-        })
+        
         // return 
         // console.log("values",e.target.value)
 
     }
+    
+    // componentWillMount(){
+    //     this.moviesDetails()
+    // }
     
     
     onChangeHandler = async e => {
@@ -88,7 +96,7 @@ class Movie extends React.Component {
 
     moviesDetails=(event)=>{
         let movies = event.target.id
-        console.log(movies)
+        console.log('======',movies)
         this.props.dispatch(SubmitMoviesData(event.target.id))
 
         
@@ -100,6 +108,7 @@ class Movie extends React.Component {
         let user = this.state.user;
         let props = this.props;
         let getMovieList = props.getMovieList;
+        let that =this
 
         if(getMovieList.message === listStyleConstants.GET_MOVIE_LIST_PENDING){
             return  <h4 style={{marginTop:100}} className="text-center">Loading Movies...</h4>;
@@ -119,18 +128,21 @@ class Movie extends React.Component {
                                 <div  className="eventCards" key={index}>
                                     <Link to={{
                                         pathname:"/lifestyle/movie-details",
-                                        state:{
-                                            details:film
-                                        }
-                                    
+                                        
+                                        
+                                                                         
                                     }}>
-                                        <div   className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
+                                        <div id={JSON.stringify(film)} onClick={that.moviesDetails} className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")',}}>
+                                          
                                         </div>
                                         
+                                        
                                     </Link>
+                                   
 
-                                    <div className="boldHeader">{film.title.toString().length > 15 ? film.title.toString().substring(0, 15)+"...": film.title.toString()}</div>
-                                        <div id="disc">{ film.description.toString().length > 30 ? film.description.toString().substring(0, 30)+"...": film.description.toString() }</div>
+
+                                    <div className="boldHeader">{unescape(film.title.toString().length > 15 ? film.title.toString().substring(0, 15)+"...": film.title.toString())}</div>
+                                        <div id="disc">{unescape(film.description.toString().length > 30 ? film.description.toString().substring(0, 30)+"...": film.description.toString()) }</div>
                                         <div className="details">
                                             <div className="left">
                                                 <img
@@ -156,6 +168,8 @@ class Movie extends React.Component {
         let user = this.state.user;
         let props = this.props;
         let SearchfetchMovieList = props.SearchfetchMovieList;
+        let that =this
+
 
         if(SearchfetchMovieList.message === listStyleConstants.SEARCH_FETCH_MOVIE_PENDING){
             return  <h4 style={{marginTop:"60px"}} className="text-center">Loading Movies...</h4>;
@@ -176,11 +190,9 @@ class Movie extends React.Component {
                                 <div className="eventCards" key={index}>
                                     <Link to={{
                                         pathname:"/lifestyle/movie-details",
-                                        state:{
-                                            details:film
-                                        }
+                                      
                                     }}>
-                                        <div className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
+                                        <div id={JSON.stringify(film)} onClick={that.moviesDetails} className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")'}}>
                                         </div>
                                     </Link>
 
@@ -418,7 +430,7 @@ class Movie extends React.Component {
                                     <li style={{float:"right", marginTop: -31}} >
                                         <label style={{ marginBottom: 0, color: "#666666", fontSize: 14}}>Filter</label>
                                         <select style={{width:"100%",height:"40px", marginTop:8, margin:4, float:'right', borderRadius:"3px !important", border: "1px solid lightgray"}} onChange={e=>this.filterGenreOnchangeHandler(e)}>
-                                            <option>Show Result By</option>
+                                            <option key="ShowResultBy" value="ShowResultBy">Show Result By</option>
                                             {                                      
                                                 this.props.FetchMovieGenre.message == listStyleConstants.FETCH_MOVIE_GENRE_SUCCESS && 
                                                 this.props.FetchMovieGenre.data.response.map(genre=> {
@@ -455,10 +467,10 @@ class Movie extends React.Component {
 }
     function mapStateToProps(state){
     return {
-        getMovieList: state.getMovieList,
-        getCinemaList: state.getCinemaList.data,
-        SearchfetchMovieList:state.SearchfetchMovieList,
-        FetchMovieGenre:state.FetchMovieGenre
+        getMovieList: state.LifestyleReducerPile.getMovieList,
+        getCinemaList: state.LifestyleReducerPile.getCinemaList.data,
+        SearchfetchMovieList:state.LifestyleReducerPile.SearchfetchMovieList,
+        FetchMovieGenre:state.LifestyleReducerPile.FetchMovieGenre
         
 
     };

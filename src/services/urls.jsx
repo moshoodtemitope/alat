@@ -1,6 +1,6 @@
-const URL = 'https://api.alat.ng';
-// const URL = 'https://196.43.215.170';
-// const URL = 'https://196.43.215.157';
+// const URL = 'https://api.alat.ng';
+const URL = 'https://196.43.215.170';
+ //onst URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
 
@@ -93,6 +93,8 @@ export const routes = {
    
     GET_CARD_CONTROL_SETTINGS: BASEURL + '/CardMaintenanceApi/api/v1/CardControl/CardSettingFromCardControl',
     GET_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getpans',
+    // GET_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getallpans',
+    // GET_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getactivepans',
     ACTIVATE_CARD: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/activatecard',
     GET_ACTIVE_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getactivepans',
     GET_CARD_EXISTING_SETTINGS: BASEURL + '/CardMaintenanceApi/api/v1/CardControl/CustomerCardsFromCardControl',
@@ -271,6 +273,7 @@ export const routes = {
     JOIN_GROUP_ESUSU: BASEURL + '/Savings.WebApi/api/EsusuSaving/JoinGroup',
     GET_ALL_SECURITY_QUESTIONS : BASEURL + '/AccountSetting/api/securityquestion',
     SAVE_SECURITY_QUESTION : BASEURL + '/AccountSetting/api/securityquestion/saveorupdate',
+    ACTIVATE_GROUP: BASEURL + '/Savings.WebApi/Api/EsusuSaving/Activate',
 
     //EVENTS
     GET_EVENTS: BASEURL + '/LifeStylePaymentMoviesApi/api/events/getevents?pageNum=',
