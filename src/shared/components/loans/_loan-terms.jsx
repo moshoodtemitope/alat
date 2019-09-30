@@ -90,13 +90,13 @@ class LoanTermsComponent extends React.Component {
                
                 <div className="row">
                     <div className="col-sm-12">
-                        <div className="max-460">
+                        <div className="max-600">
                             <div className="loan-header-text text-center">
                                 {/* <h4 className="text-black">Terms and Conditions</h4> */}
 
                             </div>
                             <div className="al-card no-pad">
-                                <div className="transfer-ctn">
+                                <div className="transfer-ctn" align="justify">
                                     {/* <span>
                                         Loan terms can also be the characteristics of your loan, which are described
                                         in your
