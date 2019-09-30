@@ -324,7 +324,7 @@ class GoalPlan extends React.Component {
                                         </NavLink> */}
                                         {
                                             this.state.visible ?
-                                            <li style={{float:'right',color:'white',fontSize:'16px, font-family:"proxima_novaregular'}}> <a onClick={this.togglePage} className="btn-alat">Create a Savings Goal</a> </li> : null
+                                            <li style={{float:'right',color:'white',fontSize:'16px'}}> <a onClick={this.togglePage} className="btn-alat">Create a Savings Goal</a> </li> : null
                                         }
                                     </ul>
                                 </div>
