@@ -12,7 +12,13 @@ import {USER_REGISTER_SAVE, USER_REGISTER_FETCH, BVN_VERIFICATION_SUCCESS,
     SENDANSWERFOR_FORGOTPW_FAILURE,
     SENDEMAILFOR_FORGOTPW_SUCCESS,
     SENDEMAILFOR_FORGOTPW_PENDING,
-    SENDEMAILFOR_FORGOTPW_FAILURE} from "../constants/onboarding/user.constants"
+    SENDEMAILFOR_FORGOTPW_FAILURE,
+    SEND_CUSTOMERTOKEN_SUCCESS,
+    SEND_CUSTOMERTOKEN_PENDING,
+    SEND_CUSTOMERTOKEN_FAILURE,
+    SEND_NEWPASSWORDINFO_SUCCESS,
+    SEND_NEWPASSWORDINFO_PENDING,
+    SEND_NEWPASSWORDINFO_FAILURE} from "../constants/onboarding/user.constants"
 
 export function userRegistrationRequest(state={}, action) {
     switch (action.type) {
@@ -165,6 +171,59 @@ export function sendAnswerForgotPasswordReducer(state=[], action){
 
 }
 
+export function sendTokenResetPasswordRequest(state=[], action){
+    switch (action.type) {
+        case SEND_CUSTOMERTOKEN_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: SEND_CUSTOMERTOKEN_PENDING,
+                sendtoken_data: action
+            };
+        case SEND_CUSTOMERTOKEN_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: SEND_CUSTOMERTOKEN_SUCCESS,
+                sendtoken_data: action
+            };
+        case SEND_CUSTOMERTOKEN_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: SEND_CUSTOMERTOKEN_FAILURE,
+                sendtoken_data: action
+            };
+
+        default:
+            return { ...state }
+    }
+
+}
+
+export function sendNewPasswordDetailsRequest(state=[], action){
+    switch (action.type) {
+        case SEND_NEWPASSWORDINFO_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: SEND_NEWPASSWORDINFO_PENDING,
+                sendnewpassword_data: action
+            };
+        case SEND_NEWPASSWORDINFO_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: SEND_NEWPASSWORDINFO_SUCCESS,
+                sendnewpassword_data: action
+            };
+        case SEND_NEWPASSWORDINFO_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: SEND_NEWPASSWORDINFO_FAILURE,
+                sendnewpassword_data: action
+            };
+
+        default:
+            return { ...state }
+    }
+
+}
 
 export function getNDPRStatusReducer(state=[], action){
     switch (action.type) {

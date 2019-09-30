@@ -344,6 +344,8 @@ const appReducer = combineReducers({
     acceptndrp_request: onboarding.acceptNDRpReducer,
     sendemailfor_forgotpw_request: onboarding.sendEmailForgotPasswordReducer,
     sendanswerfor_forgotpw_request: onboarding.sendAnswerForgotPasswordReducer,
+    send_customertoken_request: onboarding.sendTokenResetPasswordRequest,
+    send_newcustomerpassword_request: onboarding.sendNewPasswordDetailsRequest,
     dashboard_accounts: dashboard.accountFetch,
     dashboard_accounts_history: dashboard.accountHistoryReducer,
     dashboard_userGoals: dashboard.userGoalsReducer,
