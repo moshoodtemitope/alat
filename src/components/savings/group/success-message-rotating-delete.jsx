@@ -37,9 +37,7 @@ class RotatingSavingsEditedSuccessfullyDeleted extends React.Component {
     }
 
     NavigateToGroupSavings = () => {
-        
             history.push('/savings/activityDashBoard');
-        
     }
 
 
