@@ -52,7 +52,7 @@ class ResetPassword extends React.Component{
 
     sendToken(){
         const { dispatch } = this.props;
-        let locationHasheed = location.hash,
+        let locationHasheed = window.location.hash,
             token = locationHasheed.split('#/')[1];
 
         // console.log('location hash is', locationHasheed)
@@ -115,7 +115,7 @@ class ResetPassword extends React.Component{
         if(this.checkPwd()){
             if (newPassword!=='' && confirmPassword!=='' && newPassword===confirmPassword) {
                 this.setState({ submitted: true });
-                let locationHasheed = location.hash,
+                let locationHasheed = window.location.hash,
                 token = locationHasheed.split('#/')[1];
 
                 let payload = {
