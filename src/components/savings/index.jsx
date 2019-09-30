@@ -121,8 +121,8 @@ class SavingsContainer extends Component {
                             <Route path="/savings/group-started-successfully" component={GroupStartedSuccessfully} />
                         </div>
                     </div>
-                    </InnerContainer>
-                </Fragment>
+                </InnerContainer>
+            </Fragment>
         );
     }
 }

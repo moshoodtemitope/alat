@@ -12,6 +12,10 @@
     color: #AB2656 !important;
 }
 
+#justForPadding {
+    padding-bottom: 50px;
+}
+
 .accountSelection p {
     margin-bottom: 0px;
     padding-bottom: 0px;

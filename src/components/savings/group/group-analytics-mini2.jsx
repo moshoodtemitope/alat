@@ -52,6 +52,13 @@ class GroupAnalyticsMini2 extends React.Component {
         this.props.dispatch(actions.rotatingGroupDetails(this.state.user.token, data));
     }
 
+    SetAdminStatus = () => {
+        let isAdmin = this.props.groupDetails.response.isAdmin;
+        setTimeout(() => {
+            this.setState({isAdmin: isAdmin});
+        }, 1000);
+    }
+
     ShowMembers = () => {
         this.props.history.push("/savings/group-mini2");
     }
@@ -96,7 +103,7 @@ class GroupAnalyticsMini2 extends React.Component {
                                             {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                 <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
                                             {/* </NavLink> */}
-                                                <li><a href="#">Investments</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
                                             </ul>
                                         </div>
                                     </div>
@@ -109,9 +116,9 @@ class GroupAnalyticsMini2 extends React.Component {
             );
         }
         if(this.props.rotatingGroupDetails.message === GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS_SUCCESS){
+            this.SetAdminStatus();
             return (
                 <Fragment>
-                    
                             <div className="row">
                                 <div className="col-sm-12">
                                     <p className="page-title">Savings & Goals</p>
@@ -126,7 +133,7 @@ class GroupAnalyticsMini2 extends React.Component {
                                             {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                 <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
                                             {/* </NavLink> */}
-                                                <li><a href="#">Investments</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
                                             </ul>
                                         </div>
                                     </div>
@@ -216,7 +223,7 @@ class GroupAnalyticsMini2 extends React.Component {
                                             {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                 <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
                                             {/* </NavLink> */}
-                                                <li><a href="#">Investments</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
                                             </ul>
                                         </div>
                                     </div>
@@ -246,7 +253,7 @@ class GroupAnalyticsMini2 extends React.Component {
                                             {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                 <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
                                             {/* </NavLink> */}
-                                                <li><a href="#">Investments</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
                                             </ul>
                                         </div>
                                     </div>
@@ -277,7 +284,7 @@ class GroupAnalyticsMini2 extends React.Component {
                                                 {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                     <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
                                                 {/* </NavLink> */}
-                                                    <li><a href="#">Investments</a></li>
+                                                    {/* <li><a href="#">Investments</a></li> */}
                                                 </ul>
                                             </div>
                                         </div>
@@ -306,7 +313,7 @@ class GroupAnalyticsMini2 extends React.Component {
                                                 {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                     <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
                                                 {/* </NavLink> */}
-                                                    <li><a href="#">Investments</a></li>
+                                                    {/* <li><a href="#">Investments</a></li> */}
                                                 </ul>
                                             </div>
                                         </div>

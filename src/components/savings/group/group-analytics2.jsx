@@ -80,12 +80,6 @@ class GroupAnalytics2 extends React.Component {
         return <p id="manageButton">Manage</p>
     }
 
-    SetAdminStatus = () => {
-        let isAdmin = this.props.groupDetails.data.response.isAdmin;
-        setTimeout(() => {
-            this.setState({isAdmin: isAdmin});
-        }, 1000);
-    }
 
     FetchGroupDetails = () => {
         // this.props.dispatch(action.groupDetails())
@@ -206,7 +200,7 @@ class GroupAnalytics2 extends React.Component {
         }
 
         if(this.props.groupDetails.message === GROUPSAVINGSCONSTANT.GROUPDETAILS_SUCCESS){
-            this.SetAdminStatus();
+            // this.SetAdminStatus();
             return (
                 <Fragment>
                     
@@ -276,9 +270,9 @@ class GroupAnalytics2 extends React.Component {
                                                               }
                                                           })}
                                                        </div>
-                                                       <div></div>
-                                                       {isAdmin ? this.ShowManageButton() : ""}
-                                                       {adminValidity ? <div></div> : <div className={"setPadBottom"}></div> }
+                                                       <div id="justForPadding"></div>
+                                                       {/* {isAdmin ? this.ShowManageButton() : ""}
+                                                       {adminValidity ? <div></div> : <div className={"setPadBottom"}></div> } */}
                                                  </div>
                                             </div>
     
@@ -369,8 +363,8 @@ class GroupAnalytics2 extends React.Component {
                                                               })}
                                                            </div>
                                                            <div></div>
-                                                           {isAdmin ? this.ShowManageButton() : ""}
-                                                           {adminValidity ? <div></div> : <div className={"setPadBottom"}></div> }
+                                                           {/* {isAdmin ? this.ShowManageButton() : ""}
+                                                           {adminValidity ? <div></div> : <div className={"setPadBottom"}></div> } */}
                                                      </div>
                                                 </div>
         
