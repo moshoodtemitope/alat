@@ -24,7 +24,7 @@ import {FETCH_BANK_PENDING,
     DELETE_TRANSFER_BENEFICIARY_FAILURE,
     FETCH_BANK_FAILURE} from "../../../redux/constants/transfer.constants";
 
-    const options = [
+    let options = [
     ];
     let timerCount;
 

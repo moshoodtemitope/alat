@@ -404,7 +404,27 @@ export function PostMovieContent(state=[], action){
 
 
 
-
+export function SubmitEventData(state=[], action){
+    switch(action.type){
+        case listStyleConstants.SUBMIT_EVENT_DATA_PENDING: 
+           return {
+               message: listStyleConstants.SUBMIT_EVENT_DATA_PENDING,
+               data: action
+           }
+        case listStyleConstants.SUBMIT_EVENT_DATA_SUCCESS:
+           return {
+               message: listStyleConstants.SUBMIT_EVENT_DATA_SUCCESS,
+               data: action
+           }
+        case listStyleConstants.SUBMIT_EVENT_DATA_FAILURE:
+           return {
+               message: listStyleConstants.SUBMIT_EVENT_DATA_FAILURE,
+               data: action
+           }
+        default: 
+           return {... state}
+    }
+}
 
 
 

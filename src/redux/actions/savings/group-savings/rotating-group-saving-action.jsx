@@ -95,6 +95,27 @@ export const EditSlots = (token, data) => {
     function failure(error) { return {type:GROUPSAVINGSCONSTANT.EDIT_SLOTS_ERROR, error} }
 };
 
+export const ActivateGroup = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.ACTIVATE_GROUP, "POST", data, SystemConstant.HEADER, false);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+            }) 
+            .catch(error => {
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
+            });
+    };
+    
+    function request(request) { return {type:GROUPSAVINGSCONSTANT.ACTIVATE_ROTATING_GROUP_PENDING, request} }
+    function success(response) { return {type:GROUPSAVINGSCONSTANT.ACTIVATE_ROTATING_GROUP_SUCCESS, response} }
+    function failure(error) { return {type:GROUPSAVINGSCONSTANT.ACTIVATE_ROTATING_GROUP_FAILURE, error} }
+};
+
 export const GetGroupsEsusu = (token, data = null) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {

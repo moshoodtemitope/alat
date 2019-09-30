@@ -100,7 +100,7 @@ class SuccessMessage extends React.Component {
     }
 }
 const mapStateToProps = state => ({
-    create_stash_goal:state.create_stash_goal,
-    create_stash_goal_step1:state.create_stash_step1
+    create_stash_goal:state.CustomerGoalReducerPile.create_stash_goal,
+    create_stash_goal_step1:state.CustomerGoalReducerPile.create_stash_step1
 });
 export default connect(mapStateToProps)(SuccessMessage);

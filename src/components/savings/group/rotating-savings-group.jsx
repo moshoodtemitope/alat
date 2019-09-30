@@ -1,7 +1,5 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import {Switch} from "react-router";
 import Select from 'react-select';
@@ -11,6 +9,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import {history} from '../../../_helpers/history';
+import {GROUPSAVINGSCONSTANT} from "../../../redux/constants/savings/group/index";
+
 
 const quantityOfMembers = [
     { value: '1' ,label:"1" },
@@ -37,10 +37,7 @@ class RotatingGroup extends React.Component {
             accountNumber: null,
             selectedAccount: null,
             startDate: null,
-            Frequency:"",
-
-            // Form Validity  !!
-            
+            Frequency:"",            
             startDateValidity: false,
             NoOfMembers: false,
             monthlyContributionValidity: false,
@@ -62,37 +59,37 @@ class RotatingGroup extends React.Component {
             switch(x){
                 case 'groupName':
                    if(this.state[x] == null || this.state[x] == ""){
-                       console.log(x)
+                    //    console.log(x)
                        result = null;
                        break;
                    }
                 case 'monthlyContribution':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }
                 case 'startDate':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }
                 case 'numberOfMembers':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }
                 case 'selectedAccount':
                    if(this.state[x] == null || this.state[x] == ""){
-                      console.log(x)
+                    //   console.log(x)
                       result = null;
                       break;
                    }
             }
         }
-        console.log(result);
+        // console.log(result);
         return result;
     }
 
@@ -154,7 +151,7 @@ class RotatingGroup extends React.Component {
     }
 
     handleSelectDebitableAccounts = (account) => {
-        console.log('dss', account);
+        // console.log('dss', account);
         this.setState({ selectedAccount: account });
         if (this.state.isSubmitted) { 
             if(account.length == 10)
@@ -208,7 +205,7 @@ class RotatingGroup extends React.Component {
             DebitAccount: this.state.selectedAccount
         }
 
-        console.log(data);
+        // console.log(data);
         //return
         this.props.dispatch(actions.createRotatingSavings(this.state.user.token, data));
     }
@@ -224,7 +221,7 @@ class RotatingGroup extends React.Component {
         
         switch(this.checkingUserInputs()){
             case null:
-                console.log('contains a lot of empty fields');
+                // console.log('contains a lot of empty fields');
                 break;
             case 'valid': 
                 this.SubmitAutomatedGroupSavings();
@@ -232,13 +229,9 @@ class RotatingGroup extends React.Component {
     }
 
     NavigateToGroupSavings = () => {
-        // let groupSavings = this.props.groups.response; //returns an array
-        // let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
-        // if(groupSavings.length != 0 || rotatingSavings.length != 0){
+        
             history.push('/savings/activityDashBoard');
-        //     return;
-        // }
-        // history.push('/savings/goal/group-savings-selection');
+        
     }
 
     
@@ -261,16 +254,17 @@ class RotatingGroup extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a href="#">Goals</a></li>
                                         </NavLink>
-                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                             <li onClick={this.NavigateToGroupSavings}><a href="#">Group Savings</a></li>
-                                        {/* </NavLink> */}
                                             
-                                        <li><a href="#">Investments</a></li>
+                                        {/* <li><a href="#">Investments</a></li> */}
 
                                         </ul>
                                     </div>
                                 </div>
                             </div>
+                            {this.props.alert && this.props.alert.message &&
+                                <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                                } 
                             <div className="col-sm-12">
                                 <div className="row">
                                     <div className="col-sm-12">
@@ -331,7 +325,9 @@ class RotatingGroup extends React.Component {
                                                     <div className="col-sm-12">
                                                         <center>
                                                            
-                                                                  <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Create Group</button>
+                                                                  <button disabled={this.props.createRotatingGroupSavings.message ===GROUPSAVINGSCONSTANT.CREATE_ROTATING_GROUP} type="submit" className="btn-alat m-t-10 m-b-20 text-center">{
+                                                                     this.props.createRotatingGroupSavings.message ===GROUPSAVINGSCONSTANT.CREATE_ROTATING_GROUP ? 'Processing...':'Create Group'
+                                                                  }</button>
                                                         
                                                         </center>
                                                     </div>
@@ -362,7 +358,9 @@ function mapStateToProps(state){
     return {
         createGroupSavings: state.createRotatingGroupSavings,
         groupSavingsEsusu: state.getGroupSavingsEsusu.data,
-        groups: state.customerGroup.data
+        groups: state.customerGroup.data,
+        createRotatingGroupSavings:state.createRotatingGroupSavings,
+        alert:state.alert
     }
 }
 export default connect(mapStateToProps)(RotatingGroup);
