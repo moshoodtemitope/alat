@@ -343,7 +343,7 @@ class MemberSlots extends React.Component{
                                                 <li><a href="#">Goals</a></li>
                                             </NavLink>
                                                 <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                                <li><a href="#">Investments</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
                                             </ul>
                                         </div>
                                     </div>
@@ -468,7 +468,7 @@ class MemberSlots extends React.Component{
                                                 <li><a href="#">Goals</a></li>
                                             </NavLink>
                                                 <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                                <li><a href="#">Investments</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
                                             </ul>
                                         </div>
                                     </div>
