@@ -34,6 +34,11 @@ class Login extends React.Component{
           this.handleChange = this.handleChange.bind(this);
           this.handleSubmit = this.handleSubmit.bind(this);
       }
+      
+      componentDidMount=()=>{
+        const { dispatch } = this.props;
+          dispatch(userActions.initStore());
+      }
 
       handleChange(e) {
           const { name, value } = e.target;
@@ -135,7 +140,7 @@ class Login extends React.Component{
                             </div>
                             <button type="submit" disabled={loggingIn} className="btn-alat btn-block">{ loggingIn ? "Processing..." : "Login" }</button>
                         </form>
-                        <p className="text-center">Don't have an account? <NavLink to="/signup-landing">Sign up</NavLink></p>
+                        <p className="text-center">Don't have an account? <NavLink to="/signup-landing">Get Loan/Sign Up</NavLink></p>
                         <p className="text-center m-t-20">Need help? <a target="_blank" href="http://www.alat.ng/contact-us">We are here for you</a></p>
                     </div>
                 </div>

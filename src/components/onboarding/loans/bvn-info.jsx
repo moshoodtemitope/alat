@@ -64,7 +64,9 @@ class LoanOnboardingBVNInfo extends React.Component {
             deviceName: 'string-5',
             deviceOs: 'string-6',
             gcmRegId: 'string-8',
-            deviceCode: 'string-10'
+            deviceCode: 'string-10',
+            securityQuestion : data.request.securityQuestion,
+            securityAnswer : data.request.securityAnswer 
         }));
     }
 

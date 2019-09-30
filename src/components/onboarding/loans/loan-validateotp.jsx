@@ -53,7 +53,7 @@ class LoanOnboardingValidateOTP extends React.Component {
     }
 
     onReSubmit=()=> {
-        this.props.dispatch(actions.ReSendOtp(this.state.bvn));
+        this.props.dispatch(actions.ReSendOtp({bvn : this.state.bvn}));
         // this.props.dispatch(airtimeWebPinpayment(this.state.user.token, bill));
     }
 

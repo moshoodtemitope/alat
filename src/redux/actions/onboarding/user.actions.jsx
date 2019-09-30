@@ -1,10 +1,11 @@
-import {ApiService} from "../../../services/apiService";
-import {routes} from "../../../services/urls";
-import {alertActions} from "../alert.actions";
-import {SystemConstant} from "../../../shared/constants";
-import {history} from './../../../_helpers/history';
-import {handleError, modelStateErrorHandler} from './../../../shared/utils';
-import {USER_REGISTER_FETCH, USER_REGISTER_SAVE, userConstants, BVN_VERIFICATION_PENDING, 
+import { ApiService } from "../../../services/apiService";
+import { routes } from "../../../services/urls";
+import { alertActions } from "../alert.actions";
+import { SystemConstant } from "../../../shared/constants";
+import { history } from './../../../_helpers/history';
+import { handleError, modelStateErrorHandler } from './../../../shared/utils';
+import {
+    USER_REGISTER_FETCH, USER_REGISTER_SAVE, userConstants, BVN_VERIFICATION_PENDING,
     BVN_VERIFICATION_SUCCESS, BVN_VERIFICATION_FAILURE, SKIP_BVN_PENDING, SKIP_BVN_SUCCESS,
     OTP_VERIFICATION_PENDING, OTP_VERIFICATION_FAILURE, DATA_FROM_BVN, SAVE_BVN_INFO,
     GET_PROFILE_IMAGE_SUCCESS,
@@ -40,6 +41,8 @@ export const userActions = {
     saveBvnData,
     getCustomerProfileImage,
     loginAfterOnboarding,
+    reissueToken,
+    initStore,
     checkNDPRStatus,
     acceptNDPR,
     sendForgotPwEmail,
@@ -56,8 +59,8 @@ function reissueToken(payload) {
         let consume = ApiService.request(routes.REISSUE_TOKEN, "GET", payload, SystemConstant.HEADER);
         return consume
             .then(response => {
-                
-                if(userDetails){
+
+                if (userDetails) {
                     userDetails.token = response.data.token;
                     localStorage.setItem("user", JSON.stringify(userDetails));
                     console.log("reissuired token---------")
@@ -85,7 +88,7 @@ function login(email, password) {
 
         let consume = ApiService.request(routes.LOGIN, "POST", data);
         return consume
-            .then(function (response){
+            .then(function (response) {
                 // console.log(response.data);
                 localStorage.setItem("user", JSON.stringify(response.data));
                 // console.log(user);
@@ -98,7 +101,7 @@ function login(email, password) {
 
                 history.push('/dashboard');
             }).catch(error => {
-                
+
                 // console.log(err.response.data.message);
                 // console.log("---------error at login");
                 // console.log(error);
@@ -117,8 +120,8 @@ function login(email, password) {
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
-function loginAfterOnboarding(loginData){
-    return dispatch =>{
+function loginAfterOnboarding(loginData) {
+    return dispatch => {
         localStorage.setItem("user", JSON.stringify(loginData));
 
         dispatch(success(loginData));
@@ -226,22 +229,30 @@ function logout(type) {
     localStorage.clear();
     history.push('/');
     // window.location.reload();
-    return (dispatch)=>{
-    dispatch(logout());
+    return (dispatch) => {
+        dispatch(logout());
     }
-    function logout() {return { type: userConstants.LOGOUT }}
+    function logout() { return { type: userConstants.LOGOUT } }
 }
 
-function skipBvn(bvnDetails){
-    return dispatch =>{
+function initStore() {
+    localStorage.clear();
+    return (dispatch) => {
+        dispatch(logout());
+    }
+    function logout() { return { type: userConstants.LOGOUT } }
+}
+
+function skipBvn(bvnDetails) {
+    return dispatch => {
         let data = {
             imei: "354553073954109",
-            phoneNo : bvnDetails.phone,
-          };
-        let consume= ApiService.request(routes.SKIPBVNOTP, "POST", data);
-        dispatch (request(consume));
+            phoneNo: bvnDetails.phone,
+        };
+        let consume = ApiService.request(routes.SKIPBVNOTP, "POST", data);
+        dispatch(request(consume));
         return consume
-            .then(response =>{
+            .then(response => {
                 data.maskedPhoneNo = response.data.phoneNo;
                 dispatch(success(data));
                 history.push('/register/verify-bvn');
@@ -249,9 +260,9 @@ function skipBvn(bvnDetails){
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
-    function request(request) { return { type:SKIP_BVN_PENDING, request} }
-    function success(response) { return {type:SKIP_BVN_SUCCESS, response} }
-    function failure(error) { return {type:BVN_VERIFICATION_FAILURE, error} }
+    function request(request) { return { type: SKIP_BVN_PENDING, request } }
+    function success(response) { return { type: SKIP_BVN_SUCCESS, response } }
+    function failure(error) { return { type: BVN_VERIFICATION_FAILURE, error } }
 }
 
 function checkNDPRStatus(token){
@@ -305,46 +316,46 @@ function bvnVerify (bvnDetails){
         //     isOnboarding: true,
         //     channelId: 2
         //   };
-        let consume= ApiService.request(routes.BVN_VERIFICATION, "POST", bvnDetails);
-        dispatch (request(consume));
+        let consume = ApiService.request(routes.BVN_VERIFICATION, "POST", bvnDetails);
+        dispatch(request(consume));
         return consume
-            .then(response =>{
+            .then(response => {
                 dispatch(success(response.data));
                 // this.props.history.push('/register/verify-bvn');
-                
-                history.push('/register/verify-bvn', {userPhone: bvnDetails.phoneNo});
+
+                history.push('/register/verify-bvn', { userPhone: bvnDetails.phoneNo });
             }).catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
-    function request(request) { return { type:BVN_VERIFICATION_PENDING, request} }
-    function success(response) { return {type:BVN_VERIFICATION_SUCCESS, response} }
-    function failure(error) { return {type:BVN_VERIFICATION_FAILURE, error} }
+    function request(request) { return { type: BVN_VERIFICATION_PENDING, request } }
+    function success(response) { return { type: BVN_VERIFICATION_SUCCESS, response } }
+    function failure(error) { return { type: BVN_VERIFICATION_FAILURE, error } }
 }
 
-function saveBvnInfo(otpData){
-    return dispatch =>{
+function saveBvnInfo(otpData) {
+    return dispatch => {
         let consume = ApiService.request(routes.VERIFYBVNOTP, "POST", otpData);
         dispatch(request(consume));
         return consume
-            .then(response =>{
+            .then(response => {
                 dispatch(success(response.data));
                 history.push('/register/confirm-bvndetails')
-            }).catch(error =>{
+            }).catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
-        
+
     }
 
-    function request(request) { return { type:OTP_VERIFICATION_PENDING, request} }
-    function success(response) { return {type:DATA_FROM_BVN, response} }
-    function failure(error) { return {type:OTP_VERIFICATION_FAILURE, error} }
+    function request(request) { return { type: OTP_VERIFICATION_PENDING, request } }
+    function success(response) { return { type: DATA_FROM_BVN, response } }
+    function failure(error) { return { type: OTP_VERIFICATION_FAILURE, error } }
 }
 
-function saveBvnData(otpData, action){
-    switch(action){
+function saveBvnData(otpData, action) {
+    switch (action) {
         case SAVE_BVN_INFO:
             return dispatch => {
                 dispatch(save(otpData));
@@ -386,7 +397,7 @@ function getCustomerProfileImage(token, image){
 
 
 function register(user, action) {
-    switch(action){
+    switch (action) {
         case USER_REGISTER_FETCH:
             return dispatch => {
                 dispatch(fetch(user));
@@ -406,37 +417,35 @@ function register(user, action) {
     function save(user) { return { type: USER_REGISTER_SAVE, user } }
 }
 
-
-export const uploadDocument =(token, data, action)=>{
-    const requestHeaders =  Object.assign({},SystemConstant.HEADER);
-    delete  requestHeaders['Content-Type'];
-    delete requestHeaders['Accept'];  
-    requestHeaders['alat-token'] =  token;
-    requestHeaders['Content-Type'] =  false;
-      return (dispatch) => {
-          let consume = ApiService.request(routes.DOCUMENT_UPLOAD,
-               "POST", data, requestHeaders);
-          dispatch(request(consume));
-          return consume
-              .then(response => {
-                  //TODO: edit localDB accounts object
+export const uploadDocument = (token, data, action, type) => {
+    const requestHeaders = Object.assign({}, SystemConstant.HEADER);
+    delete requestHeaders['Content-Type'];
+    delete requestHeaders['Accept'];
+    requestHeaders['alat-token'] = token;
+    requestHeaders['Content-Type'] = false;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.DOCUMENT_UPLOAD,
+            "POST", data, requestHeaders);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                //TODO: edit localDB accounts object
                 //   dispatch(success(response.data, data));
                 dispatch(success(response.data));
-              })
-              .catch(error => {
-                 // console.log("error in here");
-                 // dispatch(success(response.data, request));
-                   dispatch(failure(modelStateErrorHandler(error)));
-                   dispatch(alertActions.error(modelStateErrorHandler(error)));
-                  // throw(error);
-              });
-      };
-  
-      function request(request) { return { type: action.pending, request } }
+                if(type === true) history.push('/loans/salary/dashboard');
+            })
+            .catch(error => {
+                // console.log("error in here");
+                // dispatch(success(response.data, request));
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // throw(error);
+            });
+    };
+
+    function request(request) { return { type: action.pending, request } }
     //   function success(response, request) { return { type: loanOnboardingConstants.LOAN_SALARYTRANSACTION_SUCCESS, data: { response : response, request: request } }}
-      function success(response) { return { type: action.success, data: { response : response } }}
-      function failure(error) { return { type: action.failure, error } }
-  }
-
-
+    function success(response) { return { type: action.success, data: { response: response } } }
+    function failure(error) { return { type: action.failure, error } }
+}
 

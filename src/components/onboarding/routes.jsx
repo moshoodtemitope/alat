@@ -96,8 +96,8 @@ class OnboardingRoute extends React.Component {
                 <Route path="/maintenance/reset-password/success" component={ResetSuccessMessage} />
                 {/* <PrivateRoute fakeAuth={fakeAuth} exact path='/dashboard' component={Dashboard} />*/}
                 {/*<Route component={Error404} />*/}
-                <Route path="/signup-landing" component={OnboardingLandingPage} />
-                <Route path="/loan/step-1" component={LoanOnboardingStep1} />
+                 <Route path="/signup-landing" component={OnboardingLandingPage} />
+               <Route path="/loan/step-1" component={LoanOnboardingStep1} />
                 <Route path="/loan/step-2" component={LoanOnboardingStep2} />
                 <Route path="/loan/step-3" component={LoanOnboardingStep3} />
                 <Route path="/loan/validateotp" component={LoanOnboardingValidateOTP} />

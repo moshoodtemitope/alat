@@ -49,7 +49,7 @@ class OnboardingContainer extends React.Component {
 
 
 function mapStateToProps(state){
-    console.log(state);
+    //console.log(state);
     return state.onboarding_user_details;
 }
 

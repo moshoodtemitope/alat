@@ -10,7 +10,8 @@ export function alert(state = {}, action) {
     case alertConstants.ERROR:
       return {
         type: 'info-label error',
-        message: action.message
+        message: action.message,
+        status_code: action.status_code
       };
     case alertConstants.CLEAR:
       return { };

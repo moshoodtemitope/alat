@@ -18,7 +18,7 @@ class MenuContainer extends React.Component{
           toggleModal: 'toggleModal'
        }
 
-       console.log('user data is', this.state.user);
+       //console.log('user data is', this.state.user);
     }
 
     // closeModal = (event) => {
@@ -55,6 +55,9 @@ class MenuContainer extends React.Component{
                                 <ul>
                                     <li>
                                         <NavLink to="/dashboard" className="clearfix"><i className="demo-icon icon-home" aria-hidden="true"></i><span>Dashboard</span></NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="/account" className="clearfix"><i className="demo-icon icon-loans" aria-hidden="true"></i><span>My accounts</span></NavLink>
                                     </li>
                                     <li><NavLink to="/transfer" className="clearfix"><i className="demo-icon icon-send-money" aria-hidden="true"></i>
                                         <span>Transfer</span></NavLink>
@@ -101,7 +104,7 @@ class MenuContainer extends React.Component{
                                     </li>
                                     {/* <li><NavLink to="/settings" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i> <span>Settings</span></NavLink></li> */}
                                     <li><NavLink to="/insurance" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i> <span>Insurance</span></NavLink></li>
-                                    <li><NavLink to="/receive-money" className="clearfix"><i className="demo-icon icon-western-union" aria-hidden="true"></i><span> Remittance</span></NavLink></li>
+                                    {/* <li><NavLink to="/receive-money" className="clearfix"><i className="demo-icon icon-western-union" aria-hidden="true"></i><span> Remittance</span></NavLink></li> */}
                                     {/* <li><NavLink to="/settings" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i> <span>Settings</span></NavLink></li> */}
                                 </ul>
                             </div>
