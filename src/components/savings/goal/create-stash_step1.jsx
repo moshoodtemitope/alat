@@ -44,6 +44,8 @@ class CreateStash extends React.Component {
             FrequencyId: 8,
             FrequencyDurationId: 1,
             isAccountInvalid:false,
+            displayState: "block",
+            showLimitLevel: false
         };
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -83,11 +85,23 @@ class CreateStash extends React.Component {
          if (/^\d+(\.\d+)?$/g.test(intVal)) {
              // if (parseInt(intVal, 10) <= 2000000) {
              this.setState({ targetAmount: intVal, targetAmount: this.toCurrency(intVal) },
-                 () => this.setFregValue());
+                 () => {
+                     this.setFregValue();
+                     if (parseInt(intVal) > parseInt(999999999)) {
+                        this.setState({displayState: "none", showLimitLevel: true})
+                         console.log("Emmanuel")
+                     }
+                     else {
+                        this.setState({displayState: "block", showLimitLevel: false}) 
+                     }
+                });
              // }
          } else if (e.target.value === "") {
              this.setState({ targetAmount: "", targetAmount: "" },
-                 () => this.setFregValue());
+                 () => {
+                     this.setFregValue();
+                     
+                    });
          }
  
          if(this.state.isSubmitted === true)
@@ -258,9 +272,15 @@ class CreateStash extends React.Component {
                                                             <div className="text-danger">Enter the amount you want to save</div>}
                                                             {
                                                             this.state.showMessage ? 
-                                                              <div className="text-purple"><h3 className="text-purple"> You will earn approximately  
+                                                              <div className="text-purple" style={{display: this.state.displayState}}><h3 className="text-purple"> You will earn approximately  
                                                               ₦ {util.formatAmount(this.state.payOutInterest)} in interest daily. Your stash will need to exist for a minimum of 30 days to qualify for interest </h3></div> 
                                                               : null
+                                                            }
+                                                            {
+                                                            this.state.showLimitLevel ? 
+                                                              <div className="text-purple"><h3 className="text-purple "> Please amounts above 999,999,999 cannot be accepted on goals</h3></div> 
+                                                              : null
+
                                                             }
                                                         </div>
                                                     
@@ -287,14 +307,22 @@ class CreateStash extends React.Component {
                                                     <div className="col-sm-12">
                                                         <center>
 
-
-                                                            <button 
-                                                            disabled={this.props.create_stash_goal_step1.stash_goal_step1_status === createGoalConstants.CREATE_STASH_GOAL_PENDING_STEP1}
-
-                                                            type="submit" className="btn-alat m-t-10 m-b-20 text-center">
-                                                            {this.props.create_stash_goal_step1.stash_goal_step1_status === createGoalConstants.CREATE_STASH_GOAL_PENDING_STEP1 ? "Processing..." :"Next"}
-
+                                                            {
+                                                                this.state.displayState === "block" ?
+                                                                <button 
+                                                                disabled={this.props.create_stash_goal_step1.stash_goal_step1_status === createGoalConstants.CREATE_STASH_GOAL_PENDING_STEP1}
+    
+                                                                type="submit" className="btn-alat m-t-10 m-b-20 text-center">
+                                                                {this.props.create_stash_goal_step1.stash_goal_step1_status === createGoalConstants.CREATE_STASH_GOAL_PENDING_STEP1 ? "Processing..." :"Next"}
+    
+                                                                </button>: 
+                                                                <button 
+                                                                
+                                                                disabled={true}
+                                                                type="submit" className="btn-alat m-t-10 m-b-20 text-center"> Next
                                                             </button>
+                                                            }
+                                                           
                                                         </center>
                                                     </div>
                                                 </div>

@@ -22,7 +22,9 @@ class WithdrawFromGoal extends Component {
             formattedValue: "",
             Amount:null,
             showMessage:false,
-            payOutInterest:""
+            payOutInterest:"",
+            displayState: "block",
+            showLimitLevel: false
 
 
         };
@@ -80,7 +82,14 @@ class WithdrawFromGoal extends Component {
         let intVal = event.target.value.replace(/,/g, '');
         if (/^\d+(\.\d+)?$/g.test(intVal)) {
             // if (parseInt(intVal, 10) <= 2000000) {
-            this.setState({ Amount: intVal, Amount: this.toCurrency(intVal) });
+            this.setState({ Amount: intVal, Amount: this.toCurrency(intVal) }, () => {
+                if (parseInt(intVal) > parseInt(999999999)) {
+                    this.setState({displayState: "none", showLimitLevel: true})
+                 }
+                 else {
+                    this.setState({displayState: "block", showLimitLevel: false}) 
+                 }
+            });
             // }
         } else if (event.target.value === "") {
             this.setState({ Amount: "", Amount: "" });
@@ -190,7 +199,16 @@ class WithdrawFromGoal extends Component {
                                                     {AmountInvalid &&
                                                     <div className="text-danger">Enter the amount you want to withdraw</div>}
 
-                                                </div>                                                {
+                                                </div>  
+                                                <div className="form-group">
+                                                    {
+                                                        this.state.showLimitLevel ? 
+                                                        <div className="text-purple"><h3 className="text-purple "> Please amounts above 999,999,999 cannot be accepted on goals</h3></div> 
+                                                        : null
+
+                                                    }
+                                                </div>
+                                                                                                  {
 
                                             }
                                                 <div className="form-group">
@@ -206,9 +224,17 @@ class WithdrawFromGoal extends Component {
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <center>
-                                                            <button type="submit" value="Fund Account" className="btn-alat m-t-10 m-b-20 text-center">
+                                                            { this.state.displayState === "block" ?
+                                                                <button type="submit" value="Fund Account" className="btn-alat m-t-10 m-b-20 text-center">
                                                                 {this.props.withdraw_from_goal_step1.withdraw_from_goal_status_step1 === customerGoalConstants.WITHDRAW_FROM_GOAL_PENDING_STEP1 ? "Processing..." : "WithDraw"}
+                                                            </button>:
+                                                            <button 
+                                                                
+                                                                disabled={true}
+                                                                type="submit" className="btn-alat m-t-10 m-b-20 text-center"> Next
                                                             </button>
+                                                            }
+                                                            
                                                         </center>
                                                     </div>
                                                 </div>

@@ -41,6 +41,8 @@ class FlexGoal extends React.Component {
             showTotalAmount: "",
             selectItems: "",
             goalFrequencyInvalid:false,
+            displayState: "block",
+            showLimitLevel: false
 
 
         };
@@ -114,6 +116,13 @@ class FlexGoal extends React.Component {
                 () => {
                 this.calculationForTotalAmount();
                     this.calculateInterestRate();
+                    if (parseInt(intVal) > parseInt(999999999)) {
+                        this.setState({displayState: "none", showLimitLevel: true})
+                     }
+                     else {
+                        this.setState({displayState: "block", showLimitLevel: false}) 
+                     }
+
                 });
             // }
         } else if (e.target.value == "") {
@@ -121,6 +130,7 @@ class FlexGoal extends React.Component {
                 () => {
                     this.calculationForTotalAmount();
                     this.calculateInterestRate();
+                    
                 });
         }
 
@@ -435,8 +445,14 @@ class FlexGoal extends React.Component {
                                                             <div className="text-danger">Enter the amount you want to save ?</div>}
                                                             {
                                                                 this.state.showMessage ?
-                                                                    <div className="text-purple"><h3 className="text-purple"> You will have  saved ₦ {this.state.showTotalAmount} at the end of this goal.</h3></div>
+                                                                    <div className="text-purple" style={{display: this.state.displayState}}><h3 className="text-purple"> You will have  saved ₦ {this.state.showTotalAmount} at the end of this goal.</h3></div>
                                                                     : null
+
+                                                            }
+                                                            {
+                                                            this.state.showLimitLevel ? 
+                                                              <div className="text-purple"><h3 className="text-purple "> Please amounts above 999,999,999 cannot be accepted on goals</h3></div> 
+                                                              : null
 
                                                             }
 
@@ -508,13 +524,20 @@ class FlexGoal extends React.Component {
                                                     <div className="row">
                                                         <div className="col-sm-12">
                                                             <center>
-                                                                <button
+                                                                { this.state.displayState === "block" ?
+                                                                    <button
                                                                     disabled={this.props.flex_goal_step1.flex_step1_status === flexGoalConstants.FETCH_FLEX_GOAL_PENDING}
 
                                                                     type="submit" className="btn-alat m-t-10 m-b-20 text-center">
                                                                     {this.props.flex_goal_step1.flex_step1_status === flexGoalConstants.FETCH_FLEX_GOAL_PENDING ? "Processing..." :"Next"}
 
-                                                                </button>
+                                                                </button>: <button 
+                                                                
+                                                                disabled={true}
+                                                                type="submit" className="btn-alat m-t-10 m-b-20 text-center"> Next
+                                                            </button>
+                                                                }
+                                                                
                                                             </center>
                                                         </div>
                                                     </div>
