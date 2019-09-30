@@ -208,7 +208,7 @@ class WithdrawFromGoal extends Component {
 
                                                     }
                                                 </div>
-                                                                                                  {
+                                                    {
 
                                             }
                                                 <div className="form-group">
