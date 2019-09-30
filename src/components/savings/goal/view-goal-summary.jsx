@@ -350,6 +350,7 @@ class ViewGroupSummary extends React.Component {
 
 
                                     </div>
+                                   
 
                                 </div>
 
