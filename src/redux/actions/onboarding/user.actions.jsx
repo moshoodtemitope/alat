@@ -22,7 +22,13 @@ import {
     SENDANSWERFOR_FORGOTPW_FAILURE,
     SENDEMAILFOR_FORGOTPW_SUCCESS,
     SENDEMAILFOR_FORGOTPW_PENDING,
-    SENDEMAILFOR_FORGOTPW_FAILURE} from "../../constants/onboarding/user.constants";
+    SENDEMAILFOR_FORGOTPW_FAILURE,
+    SEND_CUSTOMERTOKEN_SUCCESS,
+    SEND_CUSTOMERTOKEN_PENDING,
+    SEND_CUSTOMERTOKEN_FAILURE,
+    SEND_NEWPASSWORDINFO_SUCCESS,
+    SEND_NEWPASSWORDINFO_PENDING,
+    SEND_NEWPASSWORDINFO_FAILURE} from "../../constants/onboarding/user.constants";
 import { dispatch } from "rxjs/internal/observable/pairs";
 
 export const userActions = {
@@ -41,6 +47,8 @@ export const userActions = {
     acceptNDPR,
     sendForgotPwEmail,
     sendForgotPwAnswer,
+    sendTokenResetPassword,
+    sendNewPasswordDetails,
     reissueToken
 };
 
@@ -162,6 +170,57 @@ function sendForgotPwAnswer(payload){
     function failure(error) { return { type: SENDANSWERFOR_FORGOTPW_FAILURE, error } }
 }
 
+function sendTokenResetPassword(token){
+    return dispatch =>{
+        let customerToken = encodeURIComponent(token)
+        let consume = ApiService.request(routes.GET_QUESTIONBY_TOKEN+customerToken, "GET", null,  SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response));
+            }).catch(error =>{
+                if(token===undefined){
+                    dispatch(failure('Please click the link in the email we sent to you'));
+                }else{
+                    dispatch(failure(modelStateErrorHandler(error)));
+                    // dispatch(alertActions.error(modelStateErrorHandler(error)));
+                }
+                
+            });
+        
+    }
+    function request(user) { return { type: SEND_CUSTOMERTOKEN_PENDING, user } }
+    function success(response) { return { type: SEND_CUSTOMERTOKEN_SUCCESS, response } }
+    function failure(error) { return { type: SEND_CUSTOMERTOKEN_FAILURE, error } }
+}
+
+function sendNewPasswordDetails(payload){
+    return dispatch =>{
+        let consume = ApiService.request(routes.RESET_PASSWORD_WITHPIN, "POST", payload,  SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response));
+                history.push('/maintenance/reset-password/success');
+            }).catch(error =>{
+                if(error.message && error.message.indexOf('This token has expired')){
+                    dispatch(failure('This reset password link has expired.'));
+                    setTimeout(() => {
+                        history.push('/forgot-password');
+                    }, 3500);
+                }
+                else{
+                    dispatch(failure(modelStateErrorHandler(error)));
+                    // dispatch(alertActions.error(modelStateErrorHandler(error)));
+                }
+                
+            });
+        
+    }
+    function request(user) { return { type: SEND_NEWPASSWORDINFO_PENDING, user } }
+    function success(response) { return { type: SEND_NEWPASSWORDINFO_SUCCESS, response } }
+    function failure(error) { return { type: SEND_NEWPASSWORDINFO_FAILURE, error } }
+}
 
 
 function logout(type) {
