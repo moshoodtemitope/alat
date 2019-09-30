@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import {Fragment} from "react";
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -10,11 +8,7 @@ import {createGoalConstants} from '../../../redux/constants/goal/create-stash.co
 import * as actions from '../../../redux/actions/savings/goal/create-stash-goal.actions'
  
 
-
-
- 
-
- class StashSummmary extends Component {
+class StashSummmary extends Component {
      constructor(props){
          super(props);
 

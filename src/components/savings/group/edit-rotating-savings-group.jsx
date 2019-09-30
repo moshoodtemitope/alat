@@ -35,7 +35,6 @@ class EditRotatingGroup extends React.Component {
             selectedAccount: null,
             numberOfMembers: "",
             Frequency:"",
-
             howMuchValidity: false,
             startDateValidity: false,
             accountSelectedValidity: false,
@@ -48,7 +47,7 @@ class EditRotatingGroup extends React.Component {
             numberOfMembers: "",
         }
     }
-    
+
     validateStartDate=()=>{
         if(this.state.startDate == null || this.state.startDate == ""){
             this.setState({startDateValidity: true});
@@ -80,7 +79,6 @@ class EditRotatingGroup extends React.Component {
             return false;
         }
     }
-
 
     validateGroupName=()=>{
         if(this.state.groupName == null || this.state.groupName == ""){
@@ -212,9 +210,6 @@ class EditRotatingGroup extends React.Component {
             NumberOfMembers: parseInt(this.state.numberOfMembers),
             StartDate: this.state.startDate,
         }
-
-        // console.log(data);
-        // return;
 
         this.props.dispatch(actions.editGroupEsusu(this.state.user.token, data));
     }
