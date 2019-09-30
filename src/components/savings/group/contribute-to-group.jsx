@@ -131,7 +131,7 @@ class ContributeToGroup extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a href="#">Goals</a></li>
                                         </NavLink>
-                                            <li onClick={this.NavigateToGroupSavings}><a href="#">Group Savings</a></li>
+                                            <li onClick={this.NavigateToGroupSavings}><a href="#" class="active">Group Savings</a></li>
                                             
                                         {/* <li><a href="#">Investments</a></li> */}
 
