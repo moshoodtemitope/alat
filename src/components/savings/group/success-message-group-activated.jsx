@@ -1,7 +1,5 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import {Switch} from "react-router";
 import Members from './list-item';
@@ -11,7 +9,7 @@ import * as actions from '../../../redux/actions/savings/group-savings/group-sav
 import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 
 
-class RotatingSavingsEditedSuccessfullyDeleted extends React.Component {
+class GroupStartedSuccessfully extends React.Component {
     constructor(props){
         super(props);
         this.state={
@@ -25,7 +23,7 @@ class RotatingSavingsEditedSuccessfullyDeleted extends React.Component {
 
         setTimeout(() => {
             history.push('/savings/activityDashBoard');
-        }, 5000);
+        }, 3000);
     }
 
     CheckRotatingSavingsAvailability = () => {
@@ -54,11 +52,10 @@ class RotatingSavingsEditedSuccessfullyDeleted extends React.Component {
                                 <div className="tab-overflow">
                                     <div className="sub-tab-nav">
                                         <ul>
-                                            <NavLink to='/savings/choose-goal-plan'>
-                                                <li><a href="#">Goals</a></li>
-                                            </NavLink>
+                                        <NavLink to='/savings/choose-goal-plan'>
+                                            <li><a href="#">Goals</a></li>
+                                        </NavLink>
                                             <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-
                                         </ul>
                                     </div>
                                 </div>
@@ -74,24 +71,16 @@ class RotatingSavingsEditedSuccessfullyDeleted extends React.Component {
                                             <form className=''>
                                                 <img src="/src/assets/img/success.svg" className="succefullMessage" alt=""/>
                                                 <div className="form-group">
-                                                    <label id="sucMessage" className="sucMg">Group Deleted Successfully!</label>
+                                                    <label id="sucMessage" className="sucMg">Group Started Successfully!</label>
                                                 </div>
-                                                <div className="form-row">
                                                 
-                                                </div>
                                             </form>
 
                                         </div>
-
-
                                        </div>
-
                                       </div>
-
                                 </div>
-
                             </div>
-
                         </div>
 
             </Fragment>
@@ -101,12 +90,9 @@ class RotatingSavingsEditedSuccessfullyDeleted extends React.Component {
 
 function mapStateToProps(state){
     return {
-        setAmountToWithDraw: state.setAmountToWithDraw.data,
-        setFrequency: state.setFrequency.data,
-        groupSavingsEsusu: state.getGroupSavingsEsusu.data,
+        groupSavingsEsusu:state.getGroupSavingsEsusu.data,
         groups:state.customerGroup.data,
-        alert:state.alert,
-
+        alert:state.alert
     }
 }
-export default connect(mapStateToProps)(RotatingSavingsEditedSuccessfullyDeleted);
+export default connect(mapStateToProps)(GroupStartedSuccessfully);

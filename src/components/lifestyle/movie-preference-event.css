@@ -21,7 +21,6 @@
 }
 
 .eventTrays #disc {
-  font-family:"proxima_novaregular" !important;
   color: #9C9C9C;
   font-size: 12px;
 }
@@ -40,12 +39,10 @@
 .eventTrays .boldHeader {
    color: #444444;
    font-size: 13px;
-   font-family:"proxima_novasemibold" !important;
    margin-bottom: 2px;
 }
 
 .eventCards .details .right p {
-   font-family:"proxima_novaregular" !important;
    color: #9C9C9C;
    font-size: 12px;
 }
@@ -67,7 +64,6 @@
 }
 .movie-duration{
   font-size: 12px;
-  font-family:"proxima_novasemibold" !important;
   margin-top: 1.8px;
 
 
@@ -88,7 +84,6 @@
      margin-right: 10px;
      color: #FFFFFF;
      font-size: 16px;
-     font-family:"proxima_novasemibold" !important;
      background-color: #AB2656;
      border: none;
 }
@@ -97,7 +92,6 @@
     color: white;
     font-size: 16px;
     border: 1px solid #AB2656;
-    font-family:"proxima_novasemibold" !important;
     margin-bottom: 30px;
 }
 
@@ -111,7 +105,6 @@
      color: #AB2656;
      font-size: 16px;
      border: 1px solid #AB2656;
-     font-family:"proxima_novasemibold" !important;
      margin-bottom: 30px;
 }
 
@@ -133,7 +126,6 @@
     text-align: right;
     padding-right: 20px;
     font-weight: bold !important;
-    font-family:'proxima_novaregular'
     
 }
 
@@ -152,7 +144,6 @@
 .eventPreferences .buttons1:hover {
       color: #FFFFFF;
       font-size: 16px;
-      font-family:"proxima_novasemibold" !important;
       background-color: #AB2656;
       border: none;
 }
