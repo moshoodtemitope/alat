@@ -39,6 +39,7 @@ class HeaderContainer extends React.Component{
         this.toggleMiniNav = this.toggleMiniNav.bind(this);
         this.getNDPRStatus = this.getNDPRStatus.bind(this);
         this.acceptNDRP    = this.acceptNDRP.bind(this); 
+        this.openMobileMenu    = this.openMobileMenu.bind(this); 
     }
 
 
@@ -51,6 +52,9 @@ class HeaderContainer extends React.Component{
 
     toggleMiniNav(){
         this.setState({ miniNavToggle: !this.state.miniNavToggle })
+    }
+    openMobileMenu(){
+        this.setState({showMenu:true})
     }
 
     renderMiniNav(){
@@ -224,12 +228,12 @@ class HeaderContainer extends React.Component{
                     <div className="container">
                         <div className="row">
                             <div className="col-xs-4 col-sm-4">
-                                <div id="nav-icon1" className="">
+                                {/* <div id="nav-icon1" className="" onClick={ this.openMobileMenu }>
                                     <span></span>
                                     <span></span>
                                     <span></span>
-                                </div>
-                                <a href="/">
+                                </div> */}
+                                <a href="/" className="menulogo-wrap">
                                     <img src={whitelogo} />
                                 </a>
                             </div>
@@ -248,7 +252,7 @@ class HeaderContainer extends React.Component{
 
                                    </NavLink>
                                 </div>
-                                <span className="notification-top"><i className="demo-icon icon-alert-active"></i></span>
+                                {/* <span className="notification-top"><i className="demo-icon icon-alert-active"></i></span> */}
                               
                             </div>
 
