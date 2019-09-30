@@ -5,7 +5,9 @@ import {userRegistrationRequest,
     getNDPRStatusReducer,
     acceptNDRpReducer,
     sendEmailForgotPasswordReducer,
-    sendAnswerForgotPasswordReducer} from "./onboarding.reducer";
+    sendAnswerForgotPasswordReducer,
+    sendTokenResetPasswordRequest,
+    sendNewPasswordDetailsRequest} from "./onboarding.reducer";
 import {getCinemaList, 
     getSingleMovie, 
     buyMovieTicket,
@@ -122,7 +124,9 @@ export const onboarding = {
     getNDPRStatusReducer,
     acceptNDRpReducer,
     sendEmailForgotPasswordReducer,
-    sendAnswerForgotPasswordReducer
+    sendAnswerForgotPasswordReducer,
+    sendTokenResetPasswordRequest,
+    sendNewPasswordDetailsRequest
 };
 
 export const loans = {
