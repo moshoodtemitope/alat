@@ -278,15 +278,15 @@ class Dashboard extends React.Component{
                                     <div className="col-sm-12 col-md-8">
                                         <OnboardingPriority/>
 
-                                        <div className="al-card transact-history">
-                                            <h4 className="m-b-20">Transaction History <span>
+                                        {/* <div className="al-card transact-history"> */}
+                                            {/* <h4 className="m-b-20">Transaction History <span>
                                                 <NavLink to="/account/account-history">
                                                     View All
                                                 </NavLink>
-                                            </span></h4>
+                                            </span></h4> */}
 
-                                            <div className="history-table clearfix">
-                                                { this.renderHistory() }
+                                            {/* <div className="history-table clearfix"> */}
+                                                {/* { this.renderHistory() } */}
                                                 {/*<div className="history-ctn">*/}
                                                     {/*<div className="history-list clearfix">*/}
                                                         {/*<img src={hstransfer} />*/}
@@ -336,10 +336,10 @@ class Dashboard extends React.Component{
                                                             {/*<p className="balance credit">USD 200</p>*/}
                                                     {/*</div>*/}
                                                 {/*</div>*/}
-                                            </div>
-                                        </div>
+                                            {/* </div> */}
+                                        {/* </div> */}
                                     </div>
-                                    <div className="col-sm-12 col-md-4">
+                                    {/* <div className="col-sm-12 col-md-4"> */}
                                         {/* <div className="al-card">
                                             <div className="reminder-card">
                                                 <div className="text-center">
@@ -349,8 +349,8 @@ class Dashboard extends React.Component{
                                                 </div>
                                             </div>
                                         </div> */}
-                                        <AnnouncementCard />
-                                    </div>
+                                        {/* <AnnouncementCard /> */}
+                                    {/* </div> */}
                                 </div>
                             </div>
                         </div>

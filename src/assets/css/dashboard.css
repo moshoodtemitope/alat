@@ -2511,6 +2511,20 @@ ul.menu-side {
   .acct-card-pad {
     padding-bottom: 40px !important;
     min-height: 345px; }
+  .acct-card-pad .slide.current {
+    left: 24px;
+    width: 85%;
+    margin: 0 auto;
+  }
+  .acct-card-pad .previousButton svg, .acct-card-pad .nextButton svg{
+    width: 15px;
+  }
+  .acct-card-pad .slider a.previousButton {
+    left: -6px;
+  }
+  .acct-card-pad .slider a.nextButton {
+    right: -8px;
+  }
   .bx-controls-direction {
     display: none; }
   .reminder-card {
