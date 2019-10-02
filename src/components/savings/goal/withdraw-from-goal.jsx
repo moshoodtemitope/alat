@@ -150,7 +150,7 @@ class WithdrawFromGoal extends Component {
                                             <NavLink to='/savings/activityDashBoard'>
                                                 <li><a href="statement.html">Group Savings</a></li>
                                             </NavLink>
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
 
                                         </ul>
                                     </div>
