@@ -278,79 +278,23 @@ class Dashboard extends React.Component{
                                     <div className="col-sm-12 col-md-8">
                                         <OnboardingPriority/>
 
-                                        {/* <div className="al-card transact-history"> */}
-                                            {/* <h4 className="m-b-20">Transaction History <span>
+                                        {/* <div className="al-card transact-history">
+                                             <h4 className="m-b-20">Transaction History <span>
                                                 <NavLink to="/account/account-history">
                                                     View All
                                                 </NavLink>
-                                            </span></h4> */}
+                                            </span></h4>
 
-                                            {/* <div className="history-table clearfix"> */}
-                                                {/* { this.renderHistory() } */}
-                                                {/*<div className="history-ctn">*/}
-                                                    {/*<div className="history-list clearfix">*/}
-                                                        {/*<img src={hstransfer} />*/}
-                                                            {/*<p className="desc">Funded Apple Virtual Card with USD 200*/}
-                                                                {/*for NGN 80,000<span className="date">Feb 9, 2017</span>*/}
-                                                            {/*</p>*/}
-                                                            {/*<p className="balance credit">USD 200</p>*/}
-                                                    {/*</div>*/}
-                                                {/*</div>*/}
-
-                                                {/*<div className="history-ctn">*/}
-                                                    {/*<div className="history-list clearfix">*/}
-                                                        {/*<img src={hsatm} />*/}
-                                                            {/*<p className="desc">Funded Apple Virtual Card with USD 200*/}
-                                                                {/*for NGN 80,000<span className="date">Feb 9, 2017</span>*/}
-                                                            {/*</p>*/}
-                                                            {/*<p className="balance debit">USD 200</p>*/}
-                                                    {/*</div>*/}
-                                                {/*</div>*/}
-
-                                                {/*<div className="history-ctn">*/}
-                                                    {/*<div className="history-list clearfix">*/}
-                                                        {/*<img src={hspos} />*/}
-                                                            {/*<p className="desc">Funded Apple Virtual Card with USD 200*/}
-                                                                {/*for NGN 80,000<span className="date">Feb 9, 2017</span>*/}
-                                                            {/*</p>*/}
-                                                            {/*<p className="balance credit">USD 200</p>*/}
-                                                    {/*</div>*/}
-                                                {/*</div>*/}
-
-                                                {/*<div className="history-ctn">*/}
-                                                    {/*<div className="history-list clearfix">*/}
-                                                        {/*<img src={hsfund} />*/}
-                                                            {/*<p className="desc">Funded Apple Virtual Card with USD 200*/}
-                                                                {/*for NGN 80,000<span className="date">Feb 9, 2017</span>*/}
-                                                            {/*</p>*/}
-                                                            {/*<p className="balance credit">USD 200</p>*/}
-                                                    {/*</div>*/}
-                                                {/*</div>*/}
-
-                                                {/*<div className="history-ctn">*/}
-                                                    {/*<div className="history-list clearfix">*/}
-                                                        {/*<img src={hstransfer} />*/}
-                                                            {/*<p className="desc">Funded Apple Virtual Card with USD 200*/}
-                                                                {/*for NGN 80,000<span className="date">Feb 9, 2017</span>*/}
-                                                            {/*</p>*/}
-                                                            {/*<p className="balance credit">USD 200</p>*/}
-                                                    {/*</div>*/}
-                                                {/*</div>*/}
-                                            {/* </div> */}
-                                        {/* </div> */}
-                                    </div>
-                                    {/* <div className="col-sm-12 col-md-4"> */}
-                                        {/* <div className="al-card">
-                                            <div className="reminder-card">
-                                                <div className="text-center">
-                                                    <img src={calendar} />
-                                                        <p>You currently do not have any pending reminders</p>
-                                                        <a href="" className="btn-alat m-t-20">Setup a reminder</a>
-                                                </div>
+                                            <div className="history-table clearfix">
+                                                { this.renderHistory() }
+                                             
                                             </div>
-                                        </div> */}
-                                        {/* <AnnouncementCard /> */}
-                                    {/* </div> */}
+                                        </div>  */}
+                                    </div>
+                                    {/* <div className="col-sm-12 col-md-4">
+                                      
+                                        <AnnouncementCard />
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
