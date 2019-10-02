@@ -147,6 +147,7 @@ class AuthenticatedRoutes extends React.Component {
     logout() {
         this.destroy();
         this.props.logout();
+        this.closeModal();
     }
 
     logoutButton(event) {

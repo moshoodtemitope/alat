@@ -293,7 +293,7 @@ class FixedGoal extends Component {
                                             </NavLink>
 
                                             <NavLink to="/savings/activityDashBoard">
-                                            <li><a href="statement.html">Group Savings</a></li>
+                                            <li><a href="/savings/activityDashBoard">Group Savings</a></li>
                                             </NavLink>
                                             <li><a href="#">Investments</a></li>
                                         

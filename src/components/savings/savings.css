@@ -191,6 +191,7 @@
    font-size: 16px;
    /* font-family: "proxima_novasemibold", sans-serif !important; */
    padding-bottom: 20px;
+   word-break: break-all;
 
 }
 .coverForSummary .GoalText {
@@ -299,4 +300,33 @@
     margin-top: 40px;
 
 
+}
+@media screen and (max-width: 1023px){
+    .checkSome>.row>.row{
+        margin-right: 0;
+        margin-left: 0;
+        display: block;
+    }
+    .fixed-goal, .flex-goal, .stash-goal{
+        width: 75%;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        height: unset;
+    }
+    .coverForSummary .boldedText{
+        font-size: 14px;
+        padding-right: 10px;
+    }
+    .coverForSummary .left{
+        padding-left: 5%;
+    }
+}
+
+@media screen and (max-width: 1023px){
+    .header-info, .form-row, .form-group{
+        padding: 0 25px;
+    }
+    .form-row{
+        margin: 0;
+    }
 }

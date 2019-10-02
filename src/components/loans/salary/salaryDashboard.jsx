@@ -298,14 +298,14 @@ class LoansDashboard extends React.Component {
                             {this.state.pendingLoanApplication != null && <Fragment>
                                 <input type="button" value="Proceed" disabled={!this.state.pendingLoanApplication.ProceedActive} onClick={this.continueApplication} className="btn-alat btn-block" />
                                 <input type="button" disabled={!this.state.pendingLoanApplication.RejectLoanActive} value={this.props.loan_reject.loan_reject_status == loanConstants.LOAN_REJECT_PENDING ? "Processing..." : "Discard Loan Application"} onClick={this.controlModal}
-                                    className={this.state.pendingLoanApplication.RejectLoanActive == false ? "btn-alat btn-block btn-disabled" : "btn-alat btn-block btn-alat-outline"} />
+                                    className={this.state.pendingLoanApplication.RejectLoanActive == false ? "btn-alat btn-disabled" : "btn-alat btn-alat-outline"} />
                             </Fragment>
                             }
                             {/* && currentLoan.Response != null */}
                             {currentLoan != null  && <Fragment>
                                 {/* <input type="button" disabled={currentLoan == null} value="Liquidate Current Loan" className="btn-alat btn-block" /> */}
                                 <input type="button" disabled={currentLoan.Status == 'Active'} value="Apply For Loan" onClick={() => this.props.history.push("/loans/salary/calc")}
-                                    className={currentLoan.Status == 'Active' ? "btn-alat btn-block btn-disabled" : "btn-alat btn-block btn-alat-outline"} />
+                                    className={currentLoan.Status == 'Active' ? "btn-alat btn-disabled" : "btn-alat btn-alat-outline"} />
                             </Fragment>
                             }
 
