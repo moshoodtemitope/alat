@@ -1571,7 +1571,7 @@ ul.menu-side {
 .sub-tab-nav {
   margin-bottom: 50px;
   width: 100%;
-  min-width: 480px;
+  /* min-width: 480px; */
   overflow-x: visible; }
   .sub-tab-nav ul {
     margin: 0;
@@ -2437,6 +2437,14 @@ ul.menu-side {
   .hr-nav-header {
     /* display: none;  */
   }
+  .div-modal.m-modal{
+    padding: 24px 19px;
+  }
+  .m-modal .btn-opt button{
+    display: block;
+    margin: 0 auto 20px;
+    width: unset;
+  }
   .menulogo-wrap{
     display: block;
     position: relative;
@@ -2543,7 +2551,14 @@ ul.menu-side {
       font-size: 12px; }
       .page-title span a {
         padding: 10px 15px; } }
+@media (max-width: 767px){
+  /* .sub-tab-nav ul{
 
+  } */
+  .sub-tab-nav ul li{
+    display: block;
+  }
+}
 @media screen and (max-width: 600px) {
   .db2-fixed-header .col-sm-4 {
     width: 50%; }

@@ -7,6 +7,7 @@ import {Fragment} from "react";
 import {userActions} from "../../redux/actions/onboarding/user.actions";
 import whitelogo from "../../assets/img/white-logo.svg";
 import selfCareImage from '../../assets/img/contact-centers.svg'
+import DpHolder from '../../assets/img/user.svg'
 import profileImage from "../../assets/img/10.jpg";
 import {
     GET_NDPRSTATUS_SUCCESS,
@@ -233,14 +234,18 @@ class HeaderContainer extends React.Component{
                                     <span></span>
                                     <span></span>
                                 </div> */}
-                                <a href="/" className="menulogo-wrap">
+                                <NavLink to="/dashboard" className="menulogo-wrap">
                                     <img src={whitelogo} />
-                                </a>
+                                </NavLink>
+                                {/* <a href="/dasboard" className="menulogo-wrap">
+                                    <img src={whitelogo} />
+                                </a> */}
                             </div>
                             <div className="col-xs-8 col-sm-8">
                                 <div className="user-name-circle clearfix" onClick={ this.toggleMiniNav }>
                                     <div className="circle-image">
-                                        <img src="../../assets/img/10.jpg" />
+                                        {/* <img src="../../assets/img/10.jpg" /> */}
+                                        <img src={DpHolder} alt=""/>
                                     </div>
                                     <p className="name">{user.fullName}</p>
                                 </div>

@@ -188,7 +188,7 @@ class AuthenticatedRoutes extends React.Component {
         return (
             <Fragment>
                 <Modal open={this.state.openModal} onClose={this.closeModal} center>
-                    <div className="div-modal">
+                    <div className="div-modal m-modal">
 
                         <h3>You will be logged out in <strong>{this.state.countDownSeconds} seconds</strong></h3>
 

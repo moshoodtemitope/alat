@@ -166,9 +166,9 @@ class NewTransfer extends React.Component {
 
                                 <Fragment>
                                     <div className={(key>=1)?"col-sm-12 col-md-10 offset-md-1 each-beneficiary hide": "col-sm-12 col-md-10 each-beneficiary offset-md-1"} key={key} id={"beneficiary-"+key}>
-                                        <div className="al-card beneficiary-card" onClick={()=>this.proceedWithSelectBeneficary(ben, false)}>
+                                        <div className="al-card beneficiary-card transfer-beneficiary" onClick={()=>this.proceedWithSelectBeneficary(ben, false)}>
                                             <div className="clearfix">
-                                                <div className="network-img">
+                                                <div className="bankicon-img">
                                                     {/* <img src="img/airtel.png" srcset="img/airtel@2x.png 2x"/> */}
                                                     <i className="demo-icon icon-bank-building" aria-hidden="true"></i>
                                                 </div>

@@ -439,7 +439,7 @@ class RequestCard extends React.Component {
             cardDesignUrl = `${BASEURL}/${cardDesignUrl}`;
             let cardStyle= {
                 backgroundImage: `url('${cardDesignUrl}')`,
-                backgroundSize: 'cover',
+                backgroundSize: 'contain',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center center'
             };
