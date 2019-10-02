@@ -41,6 +41,7 @@ class HeaderContainer extends React.Component{
         this.getNDPRStatus = this.getNDPRStatus.bind(this);
         this.acceptNDRP    = this.acceptNDRP.bind(this); 
         this.openMobileMenu    = this.openMobileMenu.bind(this); 
+       
     }
 
 
@@ -122,6 +123,7 @@ class HeaderContainer extends React.Component{
         // this.props.dispatch(userActions.getAll());
         this.getProfileImage();
         this.getNDPRStatus();
+        // console.log('name is dssd');
     }
 
     getProfileImage(){
@@ -222,6 +224,7 @@ class HeaderContainer extends React.Component{
     render() {
         const user = JSON.parse(localStorage.getItem("user"));
           
+        
         return (
             <Fragment>
                 {this.showNDRPMessage()}
