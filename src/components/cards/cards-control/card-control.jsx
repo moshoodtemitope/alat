@@ -58,7 +58,7 @@ class CardsControl extends React.Component {
         this.handleIsCardLocked            = this.handleIsCardLocked.bind(this);
         this.handleChange                  = this.handleChange.bind(this);
         
-        console.log('logged user info', this.state.user);
+        // console.log('logged user info', this.state.user);
     }
 
     componentDidMount() {
@@ -240,12 +240,12 @@ class CardsControl extends React.Component {
         delete this.state.defaultStartDate;
         delete this.state.defaultEndDate;
         
-        console.log('after trim state is', this.state);
+        // console.log('after trim state is', this.state);
 
         // this.state= Object.assign({}, existingState)
         const { dispatch } = this.props;
         this.setState({panIndex: event.slideIndex},()=>{
-            console.log('states after deletion', this.state)
+            // console.log('states after deletion', this.state)
             dispatch(getALATCardSettings(this.state.user.token, selectedCard.pan, this.state.user.isWemaMobileUser));
             // this.setState({panIndex: event.slideIndex});
         })
@@ -483,7 +483,7 @@ class CardsControl extends React.Component {
                                     <div className="input-ctn inputWrap">
                                         <center>
                                             <button type="button" onClick={()=>{
-                                                                                console.log('state is ', this.state);
+                                                                                // console.log('state is ', this.state);
                                                                                 if((this.state.ForeignTravelStatusField===true 
                                                                                     && this.state.StartDateField!==''
                                                                                     && this.state.EndDateField!==''
@@ -611,7 +611,7 @@ class CardsControl extends React.Component {
                                 
                             }
 
-                            console.log('new state items', this.state);
+                            // console.log('new state items', this.state);
                             return(
                                 <div className="design-options-wrap width-unset">
                                     <Slider duration="500" slideIndex={loadSettings.alatcardsettings_info.pan===null?0:this.state.panIndex}  infinite="true" emulateTouch="true" onSlideChange={event => this.handleSlideChange(event)}>
@@ -755,7 +755,7 @@ class CardsControl extends React.Component {
                                         <div className="input-ctn inputWrap">
                                             <center>
                                                 <button type="button" onClick={()=>{
-                                                                                    console.log('state is ', this.state);
+                                                                                    // console.log('state is ', this.state);
                                                                                     if((this.state.ForeignTravelStatusField===true 
                                                                                         && this.state.StartDateField!==''
                                                                                         && this.state.EndDateField!==''

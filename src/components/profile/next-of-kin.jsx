@@ -170,7 +170,7 @@ class NextOfKin extends Component {
     }
  
     SetBVNValidityStatus = () => {
-       console.log();
+    //    console.log();
        if(this.state.bvnNumber == null || this.state.bvnNumber  == "" || this.state.bvnNumber.toString().length < 11){
            this.setState({BVNValidity: true});
        }else{
@@ -192,181 +192,181 @@ class NextOfKin extends Component {
              switch(x){
                  case 'bvnNumber':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
  
                  case 'birthDate':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
                  case 'Occupation':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
  
                  case 'Pin':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
                  case 'Sector':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
  
                  case 'phoneNumber':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
                 case 'relationship':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
                  case 'SurName':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
  
                  case 'EmailAddress':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
                  case 'FirstName':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
  
                  case 'OtherName':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
                  case 'EmployerName':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
                   
                  case 'EmploymentStatus':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
                  case 'Gender':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
                  case 'mothersMaidenName':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
                  case 'LocalGv':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
                  case 'StateOfOrigin':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
                  case 'Nationality':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
                  case 'city':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
                  case 'maritalStatus':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
                  case 'title':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
  
                  case 'houseNumber':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
                  case 'apartment': 
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
                  
                  case 'personalAddress':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
                  case 'street':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
                  case 'address':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
                  case 'busStop': 
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
              }
  
-             console.log(result)
+            //  console.log(result)
              return result;
          }
  
-        console.log(result);
+        // console.log(result);
         return result;
     }
 
@@ -376,88 +376,88 @@ class NextOfKin extends Component {
              switch(x){
                  case 'bvnNumber':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
  
                  case 'birthDate':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
 
                  case 'Pin':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
  
                  case 'phoneNumber':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
 
                 case 'relationship':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
 
                  case 'SurName':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
 
                  case 'EmailAddress':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
 
                  case 'FirstName':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
  
                  case 'OtherName':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
 
                  case 'Gender':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
             
                  case 'title':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
              
              }
 
-             console.log(result)
+            //  console.log(result)
              return result;
          }
  
-        console.log(result);
+        // console.log(result);
         return result;
     }
  
@@ -512,10 +512,10 @@ class NextOfKin extends Component {
         this.checkYourAddressValidity();
  
 
-        console.log('code got here');
+        // console.log('code got here');
         // const checkStatus = this.state.checkBoxStatus;
         // return; 
-        console.log('was fired');
+        // console.log('was fired');
         // this.InitiateNetworkCall();
         // return;
 
@@ -554,12 +554,12 @@ class NextOfKin extends Component {
                     address: this.state.address
                 }
           
-                console.log(data);
+                // console.log(data);
                 // return;
                 this.props.dispatch(actions.addNextOfKin(this.state.user.token, data));
                 break;
             case null:
-                console.log('Network was not called');
+                // console.log('Network was not called');
         }
     }
 
@@ -587,19 +587,19 @@ class NextOfKin extends Component {
                     address: residentialAddress.address
                 }
 
-                console.log(data);
+                // console.log(data);
                 // return;
                 this.props.dispatch(actions.addNextOfKin(this.state.user.token, data));
                 break;
             case null:
-                console.log('network was not called');
+                // console.log('network was not called');
         }
     }
     
     SetInputValue = (event) => {
         let name = event.target.name;
         this.setState({[name] : event.target.value});
-        console.log("  was just invoked");
+        // console.log("  was just invoked");
     } 
     handleAlatPinChange(pin) {
         this.setState({ Pin: pin })
@@ -937,8 +937,8 @@ class NextOfKin extends Component {
 
     StoreResidentialDetails = () => {
         residentialAddress = this.props.getResidential.data.response.residentialAddress;
-        console.log(residentialAddress);
-        console.log('Residential Address');
+        // console.log(residentialAddress);
+        // console.log('Residential Address');
     }
 
     StoreLocationInformation = () => {
@@ -957,7 +957,7 @@ class NextOfKin extends Component {
     }
 
     StoreInforMation = () => {
-        console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
+        // console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
         profileMenuStore = this.props.profileMenu.data.response;
      
         let localStore = window.localStorage;

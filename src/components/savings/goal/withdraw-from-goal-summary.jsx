@@ -35,7 +35,7 @@ class WithDrawFromGoalSummmary extends Component {
             let data = {
                 ...this.props.withdraw_from_goal_step1.withdraw_from_goal_data_step1.data
             };
-            console.log('tag', data);
+            // console.log('tag', data);
 
             this.setState({
                 Amount:data.amount,
@@ -79,7 +79,7 @@ class WithDrawFromGoalSummmary extends Component {
             "goalId":this.state.goalId,
             "accountNumber":this.state.debitAccount,
             "amount":this.state.Amount,
-            // "partialWithdrawal":true
+            "partialWithdrawal":true
 
         }));
 
@@ -105,7 +105,7 @@ class WithDrawFromGoalSummmary extends Component {
                                             <NavLink to='/savings/activityDashBoard'>
                                                 <li><a href="statement.html">Group Savings</a></li>
                                             </NavLink>
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
 
                                         </ul>
                                     </div>
@@ -118,7 +118,7 @@ class WithDrawFromGoalSummmary extends Component {
                             }
 
                             <h1 style={{margin:'auto', width:"100%", textAlign:"center",
-                                color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>WithDrawal Summary</h1>
+                                color:"#AB2656", fontSize:'18px'}}>WithDrawal Summary</h1>
                             <div style={{margin:"30px", marginLeft:"120px",marginRight:"120px"}}></div>
 
                             <div className="col-sm-12">
@@ -173,6 +173,10 @@ class WithDrawFromGoalSummmary extends Component {
 
 
                                         </div>
+                                        <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
+                                                this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
+                                                Go back
+                                        </a>
 
 
                                     </div>

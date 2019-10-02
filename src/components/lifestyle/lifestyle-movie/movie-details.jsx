@@ -134,13 +134,13 @@ class Moviedetails extends React.Component {
                  
                  case 'CinemaLocation':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
                 case 'showTime':
                         if(this.state[x] == null || this.state[x] ==""){
-                                 console.log(x)
+                                //  console.log(x)
                                  result =null;
                                  break;
                              }
@@ -149,7 +149,7 @@ class Moviedetails extends React.Component {
              }
          }
  
-        console.log(result);
+        // console.log(result);
         return result;
     }
  
@@ -244,7 +244,7 @@ class Moviedetails extends React.Component {
             ticketType:this.state.ticketType,
             title:this.state.title
         }
-        console.log(data)
+        // console.log(data)
         this.props.dispatch(actions.SubmitTicketData(data));
 
 
@@ -258,10 +258,10 @@ class Moviedetails extends React.Component {
 
         switch(this.checkValidity()){
             case null:
-              console.log('Empty value was found');
+            //   console.log('Empty value was found');
               break;
             case 'valid': 
-              console.log("No Empty Value Found");
+            //   console.log("No Empty Value Found");
               this.InitiateNetworkCall();
               break;
         }
@@ -310,7 +310,7 @@ class Moviedetails extends React.Component {
         let selectedItem = event.target.value;
         let name = event.target.name;
 
-        console.log(selectedItem);
+        // console.log(selectedItem);
         
         
         let data = {
@@ -322,7 +322,7 @@ class Moviedetails extends React.Component {
         this.setState({cinemaId:gottenValue[0]})
         this.setState({[name] : event.target.value});
 
-        console.log(data);
+        // console.log(data);
         this.props.dispatch(actions.ShowTime(this.state.user.token, data))
     }
 
@@ -436,7 +436,6 @@ class Moviedetails extends React.Component {
                             textAlign: "center",
                             fontSize: 18,
                             marginBottom: 16,
-                            fontFamily: "proxima_novasemibold",
                             color: "#4D4D4D"
                         }}
                     >
@@ -469,12 +468,11 @@ class Moviedetails extends React.Component {
                             className="col-sm-9"
                             style={{ fontSize: 26, color: "#444444", paddingLeft: 55 }}
                         >
-                            <div style={{ fontFamily:"proxima_novasemibold", marginBottom: 21 }}>
+                            <div style={{ marginBottom: 21 }}>
                                 {this.state.title}
                             </div>
                             <div
                                 style={{
-                                    fontFamily:"proxima_novaregular",
                                     fontSize:"12px",
                                     color: "#9C9C9C",
                                     marginTop: "21px"
@@ -484,11 +482,9 @@ class Moviedetails extends React.Component {
                             </div>
                             <div
                                 style={{
-                                    fontFamily: "proxima_novaregular",
                                     fontSize:"12px",
                                     color: "#9C9C9C",
                                     marginTop:"8px",
-                                    // fontFamily: "Proxima Nova"
                                 }}
                             >
                                 {unescape(this.state.description)}
@@ -508,7 +504,6 @@ class Moviedetails extends React.Component {
                                 </i>
                                 <span
                                     style={{
-                                        fontFamily: "proxima_novaregular",
                                         fontSize: 12,
                                         color: "#9C9C9C"
                                     }}
@@ -626,7 +621,6 @@ class Moviedetails extends React.Component {
                                             textAlign: "center",
                                             marginTop: 10,
                                             color: "#000000",
-                                            fontFamily: "proxima_novaregular",
                                             fontWeight: "bold",
                                             fontSize: 14
                                         }}
@@ -696,7 +690,6 @@ class Moviedetails extends React.Component {
                                             textAlign: "center",
                                             marginTop: 10,
                                             color: "#000000",
-                                            fontFamily: "proxima_novaregular",
                                             fontWeight: "bold",
                                             fontSize: 14
                                         }}
@@ -766,7 +759,6 @@ class Moviedetails extends React.Component {
                                             textAlign: "center",
                                             marginTop: 10,
                                             color: "#000000",
-                                            fontFamily: "proxima_novaregular",
                                             fontWeight: "bold",
                                             fontSize: 14
                                         }}

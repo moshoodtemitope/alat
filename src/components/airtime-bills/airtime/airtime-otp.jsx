@@ -23,7 +23,7 @@ class AirtimeOtp extends React.Component {
             var bill = {
                 ...this.props.airtime.airtime_buydata_data.obj.request
             };
-            this.setState({ bill: bill }, () => console.log(this.state.bill));
+            this.setState({ bill: bill });
 
         } else {
             //commented for test purposes
@@ -32,7 +32,7 @@ class AirtimeOtp extends React.Component {
     }
 
     returnOtpValidationMsg() {
-        console.log(this.props.airtime.airtime_buydata_data);
+        // console.log(this.props.airtime.airtime_buydata_data);
         if (this.props.airtime.airtime_buydata_data) {
                 if (this.props.airtime.airtime_buydata_data.obj) {
                     return this.props.airtime.airtime_buydata_data.obj.response.ValidationMsg;

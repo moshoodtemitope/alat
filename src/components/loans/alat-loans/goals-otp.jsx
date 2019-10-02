@@ -35,7 +35,7 @@ class GoalOtp extends Component {
 
 
     componentDidMount() {
-        console.log(this.props.dataInfo);
+        // console.log(this.props.dataInfo);
     }
 
     validateInputedOTP = (value) => {
@@ -49,7 +49,7 @@ class GoalOtp extends Component {
         if (this.validateInputedOTP(this.state.otpFormData.otp.value)) {
             let payload = { ...this.props.loanDetail, OTP: this.state.otpFormData.otp.value };
 
-            console.log(payload);
+            // console.log(payload);
             this.props.sendLoanWithOtp(this.state.user.token, payload);
         } else {
             this.setState({ hasError: true });

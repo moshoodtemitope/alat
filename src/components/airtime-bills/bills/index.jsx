@@ -41,7 +41,7 @@ class Index extends Component {
     }
 
     onDeleteBeneficiary = () => {
-        console.log(this.state.selectedBeneficiary);
+        // console.log(this.state.selectedBeneficiary);
         this.props.deleteBeneficiary(this.state.user.token, {BeneficiaryId: this.state.selectedBeneficiary});
         this.onCloseModal();
     }
@@ -52,7 +52,7 @@ class Index extends Component {
     }
 
     render() {
-        console.log("in bils index")
+        // console.log("in bils index")
         var index = (
             <div className="col-sm-12">
                 <div className="max-600 m-t-40">

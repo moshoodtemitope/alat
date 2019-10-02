@@ -1,13 +1,10 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import successLogo from '../../../assets/img/success.svg';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import Members from '../group/list-item';
 import { connect } from "react-redux";
 import * as actions from '../../../redux/actions/savings/goal/create-stash-goal.actions'
-
 import {createGoalConstants} from '../../../redux/constants/goal/create-stash.constant'
 
 
@@ -31,7 +28,7 @@ class SuccessMessage extends React.Component {
 
     render() {
         const details =this.props.location.state.details;
-        console.log("===================",details);
+        // console.log("===================",details);
 
         return (
             <Fragment>

@@ -111,8 +111,8 @@ class LoansDashboard extends React.Component {
                     ];
                     if (this.state.setPendingLoanApplication == false) {
                         var loanApplication = this.props.loan_history.loan_history_data.response.Response.find(x => x.PendingApplication === true);
-                        this.setState({ pendingLoanApplication: loanApplication, setPendingLoanApplication: true }, () =>
-                            console.log(this.state.pendingLoanApplication));
+                        this.setState({ pendingLoanApplication: loanApplication, setPendingLoanApplication: true }
+                            );
                     }
 
                     if (data.length >= 1) {

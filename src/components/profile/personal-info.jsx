@@ -175,14 +175,14 @@ CheckIfStoreInformationIsSet = () => {
             employmentStatus: this.state.EmploymentStatus
         }
 
-        console.log(data);
+        // console.log(data);
     
         this.props.dispatch(actions.capturePersonalInformation(this.state.user.token, data));
    }
    
 
    SetBVNValidityStatus = () => {
-      console.log();
+    //   console.log();
       if(this.state.bvnNumber == null || this.state.bvnNumber  == "" || this.state.bvnNumber.toString().length < 11){
           this.setState({BVNValidity: true});
       }else{
@@ -205,139 +205,139 @@ CheckIfStoreInformationIsSet = () => {
             switch(x){
                 case 'bvnNumber':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }else{
                             if(this.state[x].toString().length < 11){
-                                console.log(this.state[x]);
+                                // console.log(this.state[x]);
                                 result = null;
                                 break;
                             }
                         }
                 case 'birthDate':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }
                 case 'Occupation':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }
 
                 case 'Pin':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }
                 case 'Sector':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }
 
                 case 'EmployerPhoneNumber':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }
                 case 'SurName':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }
 
                 case 'EmployersAddress':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }
                 case 'FirstName':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }
 
                 case 'OtherName':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }
                 case 'EmployerName':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }
 
                 case 'EmploymentStatus':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }
                 case 'Gender':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }
                 case 'mothersMaidenName':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }
                 case 'LocalGv':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }
                 case 'StateOfOrigin':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }
                 case 'Nationality':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }
                 case 'PlaceOfBirth':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }
                 case 'maritalStatus':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }
                 case 'title':
                         if(this.state[x] == null || this.state[x] == ""){
-                            console.log(x)
+                            // console.log(x)
                             result = null;
                             break;
                         }
             }
         }
 
-       console.log(result);
+    //    console.log(result);
        return result;
    }
 
@@ -379,16 +379,16 @@ CheckIfStoreInformationIsSet = () => {
        this.checkEmploymentValidity();
        this.checkOtherNameValidity();
        this.checkMothersMaidenNameValidity();
-       console.log('code got here');
+    //    console.log('code got here');
 
-       console.log('was fired');
+    //    console.log('was fired');
 
        switch(this.checkValidity()){
            case null:
-             console.log('Empty value was found');
+            //  console.log('Empty value was found');
              break;
            case 'valid': 
-             console.log("No Empty Value Found");
+            //  console.log("No Empty Value Found");
              this.InitiateNetworkCall();
              break;
        }
@@ -397,7 +397,7 @@ CheckIfStoreInformationIsSet = () => {
    SetInputValue = (event) => {
        let name = event.target.name;
        this.setState({[name] : event.target.value});
-       console.log("was just invoked");
+    //    console.log("was just invoked");
    } 
    
    checkTitleValidity = () => {
@@ -614,7 +614,7 @@ GetUserProfileMenu = () => {
  }
 
  StoreInforMation = () => {
-    console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
+    // console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
     profileMenuStore = this.props.profileMenu.data.response;
  
     let localStore = window.localStorage;
@@ -635,7 +635,7 @@ ChangeResidentialStatus = () => {
        const {residentialAddress, isToNextOfKin, isImageUploaded, isBvNLinked, isProfileInformation, isContactDetails, isDocument, navToNextOfKin, BVNValidity, birthDate, PinValidity, SectorValidity, EmployerPhoneNumberValidity,EmploymentValidity, AddressValidity, EmployersNameValidity, LocalGovValidity, PlaceOfBirthValidity, NationalityValidity, StateOfOriginValidity,
         SurnameValidity, EmailAddressValidity, FirstNameValidity, MaritalStatusValidity, TitleValidity, OccupationValidity,GenderValidity, DateOfBirthValidity, OtherNameValidity, MothersMaidenNameValidity} = this.state;
         const {GetResidentialAddress, profileMenu, occupationAndSector, getContactDetail} = this.props
-        console.log('=======',occupationAndSector)
+        // console.log('=======',occupationAndSector)
 
     //    if(this.props.capturePersonalInformation.response != undefined){
     //        this.PersonalInfomationHasBeenLinked();

@@ -39,7 +39,7 @@ import * as actions from '../../../redux/actions/savings/goal/fixed-goal.actions
             var data = {
                 ...this.props.fixed_goal_step2.fixed_step2_data.data
             };
-            console.log('tag', data);
+            // console.log('tag', data);
 
             this.setState({
                 targetAmount:data.targetAmount,
@@ -93,7 +93,7 @@ import * as actions from '../../../redux/actions/savings/goal/fixed-goal.actions
                                 <ul>
                                     <li><a href="accounts.html" className="active">Goals</a></li>
                                     <li><a href="statement.html">Group Savings</a></li>
-                                    <li><a href="#">Investments</a></li>
+                                    {/* <li><a href="#">Investments</a></li> */}
                                 
                                 </ul>
                             </div>
@@ -104,7 +104,7 @@ import * as actions from '../../../redux/actions/savings/goal/fixed-goal.actions
                         {this.props.alert && this.props.alert.message &&
                             <div style={{width: "100%", marginRight:"120px",marginLeft:"120px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                         }
-                    <h1 style={{margin:"auto", color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>Fixed Goal Summary</h1>
+                    <h1 style={{margin:"auto", color:"#AB2656", fontSize:'18px'}}>Fixed Goal Summary</h1>
                         <div style={{margin:"30px"}}></div>
 
                     <div className="col-sm-12">
