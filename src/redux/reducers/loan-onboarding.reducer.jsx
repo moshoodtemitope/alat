@@ -45,6 +45,11 @@ export function loanOnboardingStep2Reducer(state = {}, action) {
                 loan_step2_status: loanOnboardingConstants.LOAN_STEP2_FAILURE,
                 loan_step2_data: action,
             };
+            case loanOnboardingConstants.LOAN_STEP2_CLEAR:
+                    return {
+                        loan_step2_status: loanOnboardingConstants.LOAN_STEP2_CLEAR,
+                        loan_step2_data: {},
+                    };
         default:
             return {
                 ...state,
@@ -298,6 +303,30 @@ export function resendOTPReducer(state = {}, action) {
             return {
                 resendotp_status: loanOnboardingConstants.LOAN_RESENTOTP_FAILURE,
                 resendotp_data: action,
+            };
+        default:
+            return {
+                ...state,
+            };
+    }
+}
+
+export function securityQuestionReducer(state = {}, action) {
+    switch (action.type) {
+        case loanOnboardingConstants.SECURITY_QUESTION_SUCCESS:
+            return {
+                sec_que_status: loanOnboardingConstants.SECURITY_QUESTION_SUCCESS,
+                sec_que_data: action,
+            };
+        case loanOnboardingConstants.SECURITY_QUESTION_PENDING:
+            return {
+                sec_que_status: loanOnboardingConstants.SECURITY_QUESTION_PENDING,
+                sec_que_data: action,
+            };
+        case loanOnboardingConstants.SECURITY_QUESTION_FAILURE:
+            return {
+                sec_que_status: loanOnboardingConstants.SECURITY_QUESTION_FAILURE,
+                sec_que_data: action,
             };
         default:
             return {

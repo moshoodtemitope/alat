@@ -88,8 +88,6 @@ class JoinGroupSuccessMessage extends React.Component {
                                 </div>
                             </div>
                         </div>
-
-                  
             </Fragment>
         );
     }

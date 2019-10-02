@@ -176,9 +176,7 @@ class GroupAnalytics extends React.Component {
     }
 
     NavigateToGroupSavings = () => {
-       
             history.push('/savings/activityDashBoard');
-        
     }
  
     FetchGroupDetails = () => {
@@ -580,6 +578,39 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(GroupAnalytics);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

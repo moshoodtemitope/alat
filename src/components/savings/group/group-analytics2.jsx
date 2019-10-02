@@ -80,6 +80,7 @@ class GroupAnalytics2 extends React.Component {
         return <p id="manageButton">Manage</p>
     }
 
+
     FetchGroupDetails = () => {
         // this.props.dispatch(action.groupDetails())
         let Store = window.localStorage;
@@ -183,7 +184,7 @@ class GroupAnalytics2 extends React.Component {
                                             {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                 <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
                                             {/* </NavLink> */}
-                                                <li><a href="#">Investments</a></li>
+                                               
     
                                             </ul>
                                         </div>
@@ -199,6 +200,7 @@ class GroupAnalytics2 extends React.Component {
         }
 
         if(this.props.groupDetails.message === GROUPSAVINGSCONSTANT.GROUPDETAILS_SUCCESS){
+            // this.SetAdminStatus();
             return (
                 <Fragment>
                     
@@ -268,9 +270,9 @@ class GroupAnalytics2 extends React.Component {
                                                               }
                                                           })}
                                                        </div>
-                                                       <div></div>
-                                                       {isAdmin ? this.ShowManageButton() : ""}
-                                                       {adminValidity ? <div></div> : <div className={"setPadBottom"}></div> }
+                                                       <div id="justForPadding"></div>
+                                                       {/* {isAdmin ? this.ShowManageButton() : ""}
+                                                       {adminValidity ? <div></div> : <div className={"setPadBottom"}></div> } */}
                                                  </div>
                                             </div>
     
@@ -361,8 +363,8 @@ class GroupAnalytics2 extends React.Component {
                                                               })}
                                                            </div>
                                                            <div></div>
-                                                           {isAdmin ? this.ShowManageButton() : ""}
-                                                           {adminValidity ? <div></div> : <div className={"setPadBottom"}></div> }
+                                                           {/* {isAdmin ? this.ShowManageButton() : ""}
+                                                           {adminValidity ? <div></div> : <div className={"setPadBottom"}></div> } */}
                                                      </div>
                                                 </div>
         

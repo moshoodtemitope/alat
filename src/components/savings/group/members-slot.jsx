@@ -8,7 +8,6 @@ import {history} from '../../../_helpers/history';
 import { GROUPSAVINGSCONSTANT } from '../../../redux/constants/savings/group';
 import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 
-
 var theMembers = [];
 var element = {};
 var arraysOfSlot = [];
@@ -16,7 +15,8 @@ var membersAccordingToSlot = []; // accending order
 var slot = [];
 var groupMembers;
 var selectCounter = 0;
-
+var interval = null;
+var setIntCounter = 0;
 
 class MemberSlots extends React.Component{
     constructor(props){
@@ -41,7 +41,8 @@ class MemberSlots extends React.Component{
             aMember12: '',
             counter: 10,
             sortedMembers: '',
-            renderCalled: false
+            renderCalled: false,
+            checkRenStatus: null
         }
 
         this.GenerateOptions = this.GenerateOptions.bind(this);
@@ -91,13 +92,69 @@ class MemberSlots extends React.Component{
                 this.setState({'members': theMembers})
                 this.MembersInitialValues();
                 // console.log('Rotating Group Returned Undefined 99999999999')
-            
         }
+        
+        if(this.props.groupDetails == undefined)
+            interval = setInterval(() => {
+                            if(this.props.groupDetails != undefined){
 
-        if(this.props.groupDetails == undefined){
+                                if(this.state.checkRenStatus == 1){
+                                    clearInterval(interval);
+                                    this.InitiateRerendering();
+                                }
 
-        }
+                                setIntCounter++;
+                                this.setState({checkRenStatus: setIntCounter});
+                            }
+                    }, 500);
     }
+
+    InitiateRerendering = () => {
+        let storageL = window.localStorage;
+        storageL.setItem('rotatingGroupId', this.props.groupDetails.response.id);
+                
+        const members = this.props.groupDetails.response.members; // an array
+        for(var i=0; i<members.length; i++){
+            arraysOfSlot.push(members[i]['slot']);
+        }
+
+        arraysOfSlot.sort((a, b) => {
+            return a - b;
+        });
+
+        const setMember = (aMember) => {
+            for(var i=0; i<members.length; i++){
+                if(aMember == members[i]['slot'])
+                        membersAccordingToSlot.push(members[i]);
+                        groupMembers = membersAccordingToSlot;
+            }
+        }
+
+        for(var i=0; i<arraysOfSlot.length; i++){
+            setMember(arraysOfSlot[i]);
+        }
+
+        const setOptions = (members) => {  
+            for(var i=0; i<members.length; i++){
+                element.value = members[i].firstName + " " + members[i].lastName;
+                element.label = members[i].firstName + " " + members[i].lastName;
+                theMembers.push(element);
+                element = {};
+            }
+        }
+
+        this.setState({'sortedMembers': groupMembers}, () => {
+            // console.log(this.state.sortedMembers);
+        });
+        this.setState({'renderCalled': true});
+        setOptions(membersAccordingToSlot);
+        // console.log(members);
+        this.setState({'members': theMembers})
+        this.MembersInitialValues();
+        // console.log('Rotating Group Returned Undefined 99999999999')
+    }
+
+
 
     FetchRotatingGroupDetails = () => {
         let storage = window.localStorage;
@@ -106,6 +163,12 @@ class MemberSlots extends React.Component{
         }
         // console.log('DEW SOME ONE IS GOING TO REALLY LIKE THIS')
         this.props.dispatch(actions.rotatingGroupDetails(this.state.user.token, data));
+    }
+
+    OnReaload = () => {
+        setTimeout(() => {
+            this.setState({'renderCalled': true});
+        }, 2000);
     }
 
 
@@ -264,6 +327,7 @@ class MemberSlots extends React.Component{
             );
         }
         if(this.props.rotatingGroupDetails.message === GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS_SUCCESS){
+            this.OnReaload();
             return (
                 <Fragment>
                     
@@ -377,7 +441,7 @@ class MemberSlots extends React.Component{
                                             {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                 <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
                                             {/* </NavLink> */}
-                                                <li><a href="#">Investments</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
                                             </ul>
                                         </div>
                                     </div>
@@ -404,7 +468,7 @@ class MemberSlots extends React.Component{
                                                 <li><a href="#">Goals</a></li>
                                             </NavLink>
                                                 <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                                <li><a href="#">Investments</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
                                             </ul>
                                         </div>
                                     </div>

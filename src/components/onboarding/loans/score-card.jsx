@@ -6,87 +6,28 @@ import { Redirect } from 'react-router-dom';
 import * as actions from '../../../redux/actions/onboarding/loan.actions';
 import { loanOnboardingConstants } from '../../../redux/constants/onboarding/loan.constants';
 import LoanOnboardingContainer from './loanOnboarding-container';
+import ExtendModal from '../../../shared/components/_modal';
 
 class LoanOnboardingScoreCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             user: JSON.parse(localStorage.getItem("user")),
-            // EducationQualifications : [],
-            // YearsOfExperience: [],
-            // NumberOfDependants: [],
-            EducationQualifications: [
-                // {
-                //     "Id": 1,
-                //     "Text": "Primary School"
-                // },
-                // {
-                //     "Id": 2,
-                //     "Text": "Secondary School"
-                // },
-                // {
-                //     "Id": 3,
-                //     "Text": "Diploma"
-                // },
-                // {
-                //     "Id": 4,
-                //     "Text": "Graduate"
-                // },
-                // {
-                //     "Id": 5,
-                //     "Text": "Post Graduate"
-                // },
-                // {
-                //     "Id": 6,
-                //     "Text": "Professional/Technhnical Degree"
-                // }
-            ],
-            YearsOfExperience: [
-                // {
-                //     "Id": 1,
-                //     "Text": "< 2 Years"
-                // },
-                // {
-                //     "Id": 2,
-                //     "Text": "2 - 5 Years"
-                // },
-                // {
-                //     "Id": 3,
-                //     "Text": "5 - 10 Years"
-                // },
-                // {
-                //     "Id": 4,
-                //     "Text": "10 - 15 Years"
-                // },
-                // {
-                //     "Id": 5,
-                //     "Text": "> 15 Years"
-                // }
-            ],
-            NumberOfDependants: [
-                // {
-                //     "Id": 1,
-                //     "Text": "No Dependants"
-                // },
-                // {
-                //     "Id": 2,
-                //     "Text": "1-2 Dependants"
-                // },
-                // {
-                //     "Id": 3,
-                //     "Text": "3-4 Dependants"
-                // },
-                // {
-                //     "Id": 4,
-                //     "Text": "> 4 Dependants"
-                // }
-            ],
 
+            EducationQualifications: [
+            ],
+            YearsOfExperience: [],
+            NumberOfDependants: [],
 
             selectedDependant: null,
             selectedYOE: null,
             selectedQualification: null,
-            isPopulated: false
+            isPopulated: false,
+            ///////////////////Modal prperties
+            openModal: false,
+            IsSuccess: false,
+            modalMessage: "",
+            modalFired: false,
         }
         //this.submitScoreCardAnswer = this.submitScoreCardAnswer.bind(this);
     }
@@ -94,6 +35,31 @@ class LoanOnboardingScoreCard extends React.Component {
     componentDidMount = () => {
         this.init();
     }
+
+    //Modal Methods
+    PopupModal = () => {
+        if (this.props.alert) {
+            if (this.props.alert.status_code && !this.state.modalFired) {
+                // console.log(this.props.alert);
+                // console.log(this.props.alert.status_code);
+                if (this.props.alert.status_code == 400)
+                    this.controlModal();
+                this.setState({ modalFired: true })
+            }
+        }
+    }
+
+    //Modal Methods
+    controlModal = () => {
+        this.setState({ openModal: !this.state.openModal });
+    }
+
+    SubmitModal = () => {
+        this.props.dispatch(actions.clearLoanOnboardingStore());
+        this.NavigateToLoanDashBoard();
+    }
+
+    //Modal Methods ends
 
     init = () => {
         if (this.props.salary_entry)
@@ -117,7 +83,7 @@ class LoanOnboardingScoreCard extends React.Component {
                         EducationQualifications: data.EducationQualifications,
                         YearsOfExperience: data.YearsOfExperience,
                         NumberOfDependants: data.NumberOfDependants,
-                        isPopulated : true
+                        isPopulated: true
                     })
                 }
         }
@@ -142,10 +108,10 @@ class LoanOnboardingScoreCard extends React.Component {
             else return false;
     }
 
-    getScoreCardAnswerPendingStatus =()=>{
+    getScoreCardAnswerPendingStatus = () => {
         if (this.props.score_card_A)  //loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS
             if (this.props.score_card_A.loan_scoreA_status == loanOnboardingConstants.LOAN_SCORECARD_ANSWER_PENDING)
-            return true;
+                return true;
             else return false
     }
 
@@ -170,10 +136,15 @@ class LoanOnboardingScoreCard extends React.Component {
         }));
     }
 
+    NavigateToLoanDashBoard = () => {
+        this.props.history.push('/loans/salary/dashboard');
+    }
+
     gotoNextPage = () => {
         if (this.props.score_card_A)  //loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS
             if (this.props.score_card_A.loan_scoreA_status == loanOnboardingConstants.LOAN_SCORECARD_ANSWER_SUCCESS
-                ||  this.props.score_card_A.loan_scoreA_status == loanOnboardingConstants.LOAN_SCORECARD_ANSWER_FAILURE) {
+                // || this.props.score_card_A.loan_scoreA_status == loanOnboardingConstants.LOAN_SCORECARD_ANSWER_FAILURE
+                ) {
                 this.props.history.push("/loan/card-result");
             }
     }
@@ -188,7 +159,7 @@ class LoanOnboardingScoreCard extends React.Component {
                     <div className="max-500">
                         <div className="loan-header-text text-center">
                             <h4 className="text-black">Score Card</h4>
-                            <p>Kindly select the answer that best describes you.</p>
+                            <p>You're almost there, Tell us a bit more about you.</p>
                         </div>
                         <div className="al-card no-pad">
                             {this.props.alert && this.props.alert.message &&
@@ -245,6 +216,9 @@ class LoanOnboardingScoreCard extends React.Component {
                         </center> */}
                     </div>
                 </div>
+                <ExtendModal openModal={this.state.openModal} onCloseModal={this.controlModal} showCloseIcon={false}
+                    IsSuccess={this.state.IsSuccess} message={this.props.alert.message} SubmitAction={this.SubmitModal}
+                />
             </LoanOnboardingContainer>
         );
     }

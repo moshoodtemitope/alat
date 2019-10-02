@@ -88,7 +88,7 @@ class TopUPGoalSummmary extends Component {
                             <div style={{width: "100%",}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                             }
 
-                            <h1 style={{textAlign:"center", width:"100%", color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>Top Up Goal Summary</h1>
+                            <h1 style={{textAlign:"center", width:"100%", color:"#AB2656", fontSize:'18px'}}>Top Up Goal Summary</h1>
                             <div style={{margin:"30px", marginLeft:"120px",marginRight:"120px"}}></div>
 
                             <div className="col-sm-12">

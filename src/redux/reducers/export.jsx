@@ -5,7 +5,9 @@ import {userRegistrationRequest,
     getNDPRStatusReducer,
     acceptNDRpReducer,
     sendEmailForgotPasswordReducer,
-    sendAnswerForgotPasswordReducer} from "./onboarding.reducer";
+    sendAnswerForgotPasswordReducer,
+    sendTokenResetPasswordRequest,
+    sendNewPasswordDetailsRequest} from "./onboarding.reducer";
 import {getCinemaList, 
     getSingleMovie, 
     buyMovieTicket,
@@ -57,7 +59,7 @@ import { fundAccountReducer, getTokenizedCardsReducer,
 import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingVerifyBVNReducer,
      loanOnboardingStep3Reducer, loanOnboardingValidateOTPReducer, generateStatementReducer,
       requestStatementReducer,salaryTransactionReducer, salaryEntryReducer, saveUserDetailsReducer, getScoreCardQuestionReducer,
-      postScoreCardAnswerReducer, resendOTPReducer} from './loan-onboarding.reducer';
+      postScoreCardAnswerReducer, resendOTPReducer, securityQuestionReducer} from './loan-onboarding.reducer';
 
 import { loanCalcDataReducer, loanApplyReducer, GetIndustriesReducer, GetEmployerReducer, CurrentLoanReducer, 
         LoanHistoryReducer, WorkIdFrontReducer, WorkIdBackReducer, loanRejectReducer, loanStandingOrderReducer,
@@ -122,7 +124,9 @@ export const onboarding = {
     getNDPRStatusReducer,
     acceptNDRpReducer,
     sendEmailForgotPasswordReducer,
-    sendAnswerForgotPasswordReducer
+    sendAnswerForgotPasswordReducer,
+    sendTokenResetPasswordRequest,
+    sendNewPasswordDetailsRequest
 };
 
 export const loans = {
@@ -159,7 +163,8 @@ export const loanOnboarding = {
     getScoreCardQuestionReducer,
     postScoreCardAnswerReducer,
     saveUserDetailsReducer,
-    resendOTPReducer
+    resendOTPReducer,
+    securityQuestionReducer
 }
 
 export const dashboard = {

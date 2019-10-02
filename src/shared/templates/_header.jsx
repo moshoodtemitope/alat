@@ -27,18 +27,19 @@ class HeaderContainer extends React.Component{
         const { dispatch } = this.props;
 
         $('#nav-icon1').click(function(){
-            console.error("clicked");
+            //console.error("clicked");
             $(this).toggleClass('open');
             $('.hr-nav-header').fadeToggle();
         });
 
         $('.user-name-circle').click(function(){
-            console.log("Image clicked");
+            //console.log("Image clicked");
             $('.mini-nav').fadeToggle(300);
         });
         this.toggleMiniNav = this.toggleMiniNav.bind(this);
         this.getNDPRStatus = this.getNDPRStatus.bind(this);
         this.acceptNDRP    = this.acceptNDRP.bind(this); 
+        this.openMobileMenu    = this.openMobileMenu.bind(this); 
     }
 
 
@@ -52,6 +53,9 @@ class HeaderContainer extends React.Component{
     toggleMiniNav(){
         this.setState({ miniNavToggle: !this.state.miniNavToggle })
     }
+    openMobileMenu(){
+        this.setState({showMenu:true})
+    }
 
     renderMiniNav(){
         if(this.state.miniNavToggle){
@@ -59,7 +63,7 @@ class HeaderContainer extends React.Component{
                 <div className="mini-nav" style={{display: 'block'}}>
                     <ul>
                         
-                        <li><NavLink to="/account">My accounts</NavLink></li>
+                        <li><NavLink to="/receive-money">Western Union</NavLink></li>
                         <li><NavLink to="/profile">Profile</NavLink></li>
                         <li><NavLink to="/settings">Settings</NavLink></li>
                         {/* <li><NavLink to="/talk-to-us">Talk to us</NavLink></li>
@@ -224,12 +228,12 @@ class HeaderContainer extends React.Component{
                     <div className="container">
                         <div className="row">
                             <div className="col-xs-4 col-sm-4">
-                                <div id="nav-icon1" className="">
+                                {/* <div id="nav-icon1" className="" onClick={ this.openMobileMenu }>
                                     <span></span>
                                     <span></span>
                                     <span></span>
-                                </div>
-                                <a href="/">
+                                </div> */}
+                                <a href="/" className="menulogo-wrap">
                                     <img src={whitelogo} />
                                 </a>
                             </div>
@@ -248,7 +252,7 @@ class HeaderContainer extends React.Component{
 
                                    </NavLink>
                                 </div>
-                                <span className="notification-top"><i className="demo-icon icon-alert-active"></i></span>
+                                {/* <span className="notification-top"><i className="demo-icon icon-alert-active"></i></span> */}
                               
                             </div>
 
@@ -263,7 +267,7 @@ class HeaderContainer extends React.Component{
 
 
 function mapStateToProps(state) {
-    console.log(state);
+    //console.log(state);
     const { user } = state;
     return {
         user,

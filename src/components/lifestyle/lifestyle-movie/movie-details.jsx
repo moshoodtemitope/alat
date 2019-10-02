@@ -436,7 +436,6 @@ class Moviedetails extends React.Component {
                             textAlign: "center",
                             fontSize: 18,
                             marginBottom: 16,
-                            fontFamily: "proxima_novasemibold",
                             color: "#4D4D4D"
                         }}
                     >
@@ -469,12 +468,11 @@ class Moviedetails extends React.Component {
                             className="col-sm-9"
                             style={{ fontSize: 26, color: "#444444", paddingLeft: 55 }}
                         >
-                            <div style={{ fontFamily:"proxima_novasemibold", marginBottom: 21 }}>
+                            <div style={{ marginBottom: 21 }}>
                                 {this.state.title}
                             </div>
                             <div
                                 style={{
-                                    fontFamily:"proxima_novaregular",
                                     fontSize:"12px",
                                     color: "#9C9C9C",
                                     marginTop: "21px"
@@ -484,11 +482,9 @@ class Moviedetails extends React.Component {
                             </div>
                             <div
                                 style={{
-                                    fontFamily: "proxima_novaregular",
                                     fontSize:"12px",
                                     color: "#9C9C9C",
                                     marginTop:"8px",
-                                    // fontFamily: "Proxima Nova"
                                 }}
                             >
                                 {unescape(this.state.description)}
@@ -508,7 +504,6 @@ class Moviedetails extends React.Component {
                                 </i>
                                 <span
                                     style={{
-                                        fontFamily: "proxima_novaregular",
                                         fontSize: 12,
                                         color: "#9C9C9C"
                                     }}
@@ -626,7 +621,6 @@ class Moviedetails extends React.Component {
                                             textAlign: "center",
                                             marginTop: 10,
                                             color: "#000000",
-                                            fontFamily: "proxima_novaregular",
                                             fontWeight: "bold",
                                             fontSize: 14
                                         }}
@@ -696,7 +690,6 @@ class Moviedetails extends React.Component {
                                             textAlign: "center",
                                             marginTop: 10,
                                             color: "#000000",
-                                            fontFamily: "proxima_novaregular",
                                             fontWeight: "bold",
                                             fontSize: 14
                                         }}
@@ -766,7 +759,6 @@ class Moviedetails extends React.Component {
                                             textAlign: "center",
                                             marginTop: 10,
                                             color: "#000000",
-                                            fontFamily: "proxima_novaregular",
                                             fontWeight: "bold",
                                             fontSize: 14
                                         }}

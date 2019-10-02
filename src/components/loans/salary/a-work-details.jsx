@@ -23,6 +23,10 @@ class LoanEmployerDetail extends React.Component {
     OnSubmit = () => {
         //this.props.dispatch(OnbaordingActions.requestStatement(this.state.user.token));
     }
+    
+    goBack=()=>{
+        this.props.history.push('/loans/salary/calc'); 
+    }
 
     init = () => {
         if (this.props.loan_apply) {
@@ -48,6 +52,8 @@ class LoanEmployerDetail extends React.Component {
                 token={this.state.user.token}
                 forwardUrl={'/loans/salary/detail'}
                 backwardUrl={'/loans/salary/calc'}
+                previousPage={this.goBack}
+                showBackButton={true}
             />
         );
     }

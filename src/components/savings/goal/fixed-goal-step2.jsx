@@ -1,7 +1,5 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import Select from 'react-select';
 import { connect } from 'react-redux';
 import { Redirect,Link,NavLink } from 'react-router-dom';

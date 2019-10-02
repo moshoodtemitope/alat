@@ -10,8 +10,9 @@ function success(message) {
     return { type: alertConstants.SUCCESS, message };
 }
 
-function error(message) {
-    return { type: alertConstants.ERROR, message };
+function error(message, code=null) {
+    console.log(code);
+    return { type: alertConstants.ERROR, message, status_code : code };
 }
 
 function clear() {

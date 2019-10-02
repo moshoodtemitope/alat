@@ -242,7 +242,7 @@ class Event extends Component {
         let classes = this.state.current_page === number ? styles.pagination : '';
 
         return (
-          <span  key={number} className={classes} onClick={() => this.fetchEventList(number)}>{this.props.getEvents.message ===listStyleConstants.GET_EVENTS_SUCCESS ? <p style={{color:"#43063C", fontSize:16, fontFamily:'proxima_novaregular', position:"relative", cursor:"pointer"}}>Load More</p>:null }</span>
+          <span  key={number} className={classes} onClick={() => this.fetchEventList(number)}>{this.props.getEvents.message ===listStyleConstants.GET_EVENTS_SUCCESS ? <p style={{color:"#43063C", fontSize:16, position:"relative", cursor:"pointer"}}>Load More</p>:null }</span>
         );
       });
 

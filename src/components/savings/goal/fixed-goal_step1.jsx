@@ -45,7 +45,9 @@ class FixedGoal extends Component {
             goalFrequencyInvalid:false,
             showInterests:"",
             showMessage: false,
-            frequencyAmount:""
+            frequencyAmount:"",
+            showLimitLevel: false,
+            displayState: "block"
 
 
         };
@@ -113,7 +115,17 @@ class FixedGoal extends Component {
          if (/^\d+(\.\d+)?$/g.test(intVal)) {
              // if (parseInt(intVal, 10) <= 2000000) {
              this.setState({ targetAmount: intVal, targetAmount: this.toCurrency(intVal) },
-                 () => this.setFregValue());
+                 () => {
+                     console.log("=====", intVal)
+                     this.setFregValue();
+                     if (parseInt(intVal) > parseInt(999999999)) {
+                        this.setState({displayState: "none", showLimitLevel: true})
+                         console.log("Emmanuel")
+                     }
+                     else {
+                        this.setState({displayState: "block", showLimitLevel: false}) 
+                     }
+                });
              // }
          } else if (e.target.value == "") {
              this.setState({ targetAmount: "", targetAmount: "" },
@@ -384,14 +396,26 @@ class FixedGoal extends Component {
 
                                                           
                                                          />
-                                                         {targetAmountInvalid && 
-                                                            <div className="text-danger">Enter the amount you want to save ?</div>}
+                                                            {
+                                                             targetAmountInvalid && 
+                                                            <div className="text-danger">Enter the amount you want to save ?</div>
+                                                            }
+                                                            
                                                             {
                                                             this.state.showMessage ? 
-                                                              <div className="text-purple m-b-55"><h3 className="text-purple m-b-55"> You will earn approximately ₦ {util.formatAmount(this.state.showInterests)} in interest.</h3></div> 
+                                                              <div className="text-purple" style={{display: this.state.displayState}}><h3 className="text-purple"> You will earn approximately ₦ {util.formatAmount(this.state.showInterests)} in interest.</h3></div> 
                                                               : null
 
                                                             }
+
+                                                            {
+                                                            this.state.showLimitLevel ? 
+                                                              <div className="text-purple"><h3 className="text-purple "> Please amounts above 999,999,999 cannot be accepted on goals</h3></div> 
+                                                              : null
+
+                                                            }
+
+                                                            
      
                                                     </div>
                                                     
@@ -412,14 +436,23 @@ class FixedGoal extends Component {
                                                     <div className="col-sm-12">
                                                         <center>
 
-
-                                                            <button 
+                                                            {
+                                                                this.state.displayState === "block" ? 
+                                                                <button 
                                                             disabled={this.props.fixed_goal_step1.fixed_step1_status === fixedGoalConstants.FETCH_FIXED_GOAL_PENDING}
 
                                                             type="submit" className="btn-alat m-t-10 m-b-20 text-center">
                                                             {this.props.fixed_goal_step1.fixed_step1_status === fixedGoalConstants.FETCH_FIXED_GOAL_PENDING ? "Processing..." :"Next"}
 
+                                                            </button> : <button 
+                                                                
+                                                                disabled={true}
+                                                                type="submit" className="btn-alat m-t-10 m-b-20 text-center"> Next
                                                             </button>
+                                                            }
+
+
+                                                            
                                                         </center>
                                                     </div>
                                                 </div>

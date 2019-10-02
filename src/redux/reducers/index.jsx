@@ -50,7 +50,7 @@ import {listStyleConstants} from '../constants/lifestyle/lifestyle-constants'
 // import { * as dashboard_reducer } from './dashboard.reducer';
 
 const rootReducer = (state, action)=>{
-    console.log(action);
+    //console.log(action);
     if(action.type === userConstants.LOGOUT)
         { 
               state = undefined;   
@@ -217,6 +217,7 @@ const loanOnboardingReducer = combineReducers({
     loanPostScoreCardAnswer : loanOnboarding.postScoreCardAnswerReducer,
     loanUserDetails: loanOnboarding.saveUserDetailsReducer,
     loanResendOTP: loanOnboarding.resendOTPReducer,
+    sec_question: loanOnboarding.securityQuestionReducer
 })
 
 const loansReducer = combineReducers({
@@ -344,6 +345,8 @@ const appReducer = combineReducers({
     acceptndrp_request: onboarding.acceptNDRpReducer,
     sendemailfor_forgotpw_request: onboarding.sendEmailForgotPasswordReducer,
     sendanswerfor_forgotpw_request: onboarding.sendAnswerForgotPasswordReducer,
+    send_customertoken_request: onboarding.sendTokenResetPasswordRequest,
+    send_newcustomerpassword_request: onboarding.sendNewPasswordDetailsRequest,
     dashboard_accounts: dashboard.accountFetch,
     dashboard_accounts_history: dashboard.accountHistoryReducer,
     dashboard_userGoals: dashboard.userGoalsReducer,

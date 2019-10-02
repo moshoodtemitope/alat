@@ -119,7 +119,7 @@ class CashoutStashGoal extends Component {
                             }
 
                             <h1 style={{margin:'auto', width:"100%", textAlign:"center",
-                                color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>WithDrawal Summary</h1>
+                                color:"#AB2656", fontSize:'18px'}}>WithDrawal Summary</h1>
                             <div style={{margin:"30px", marginLeft:"120px",marginRight:"120px"}}></div>
 
                             <div className="col-sm-12">

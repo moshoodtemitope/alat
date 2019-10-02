@@ -284,7 +284,7 @@ class ProvideDetails extends React.Component{
                                                         <div className="inputctn-wrap">
                                                             <SelectDebitableAccounts
                                                                 value={this.state.accountNumber}
-                                                                // currency={currencySelected}
+                                                                currency={currencySelected===null?'NGN':currencySelected}
                                                                 // requestType = "forBankTransfer"
                                                                 accountInvalid={this.state.isAccountInvalid}
                                                                 onChange={this.handleSelectDebitableAccounts} />

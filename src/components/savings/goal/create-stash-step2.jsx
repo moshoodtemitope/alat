@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import {Fragment} from "react";
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -10,11 +8,7 @@ import {createGoalConstants} from '../../../redux/constants/goal/create-stash.co
 import * as actions from '../../../redux/actions/savings/goal/create-stash-goal.actions'
  
 
-
-
- 
-
- class StashSummmary extends Component {
+class StashSummmary extends Component {
      constructor(props){
          super(props);
 
@@ -100,7 +94,7 @@ import * as actions from '../../../redux/actions/savings/goal/create-stash-goal.
                             <div style={{width: "100%",}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                         }
 
-                    <h1 style={{width:"100%", textAlign:"center", color:"#AB2656", paddingLeft:"15px", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>Stash Goal Summary</h1>
+                    <h1 style={{width:"100%", textAlign:"center", color:"#AB2656", paddingLeft:"15px", fontSize:'18px'}}>Stash Goal Summary</h1>
                         <div style={{margin:"30px", marginLeft:"120px",marginRight:"120px"}}></div>
 
                     <div className="col-sm-12">

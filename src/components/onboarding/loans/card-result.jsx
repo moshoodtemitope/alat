@@ -41,12 +41,12 @@ class LoanOnboardingScoreResult extends React.Component {
 
 	doneClick = () => {
 		this.props.dispatch(actions.clearLoanOnboardingStore());
-		this.props.history.push("/loan");
+		this.props.history.push("/loans/salary/dashboard");
 	}
 
 	abortClick=()=>{
         this.props.dispatch(actions.clearLoanOnboardingStore());
-        this.props.history.push('/loan');
+        this.props.history.push('/loans/salary/dashboard');
      }
 
 	goBackWard=()=>{

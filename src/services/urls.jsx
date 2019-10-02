@@ -1,6 +1,6 @@
-//const URL = 'https://api.alat.ng';
-const URL = 'https://196.43.215.170';
- //const URL = 'https://196.43.215.157';
+const URL = 'https://api.alat.ng';
+//const URL = 'https://196.43.215.170';
+// const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
 
@@ -147,7 +147,7 @@ export const routes = {
     LOANS_STEP_3 :BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/CustomerProfile',
     LOAN_VERIFY_BVN : BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/CallBvnService',
     LOAN_VALIDATE_OTP: BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/VerifyOtpForBvn',
-    LOAN_RESEND_OTP: BASEURL + 'DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/ResendOtp',
+    LOAN_RESEND_OTP: BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/ResendOtp',
     LOAN_REQUEST_STATEMENT: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/RequestBankStatement', // request param
     LOAN_GENERATE_STATEMENT: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GenerateBankStatement', //request params
     LOAN_SELECTED_ENTRIES : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/SelectedSalaryEntries',

@@ -138,11 +138,9 @@ class LoanOboardingStep2 extends React.Component {
             <div className="col-sm-12">
                 <div className="max-750">
                     <div className="loan-header-text">
-                        <h4 className="text-black">Try our loan calculator to see</h4>
-                        <h4 className="text-black">What your payments could be</h4>
-                        <p className="m-t-20 text-black">This gives you an estimate of what your monthly
-                            repayment
-										could be</p>
+                        <h4 className="text-black">Start by calculating your loan.</h4>
+                        {/* <h4 className="text-black">What your payments could be</h4> */}
+                        <p className="m-t-20 text-black">The offer below is an estimate of what your loan could be.</p>
                     </div>
                     <div className="al-card loan-al-card row">
                         <div className="col-7">
@@ -173,9 +171,11 @@ class LoanOboardingStep2 extends React.Component {
                             <div className="inner-div m-b-20">
                                 <p className="m-b-0">Estimated monthly repayment</p>
                                 <h3 className="text-white m-b-55">{util.mapCurrency('NGN')}{util.formatAmount(this.state.repaymentAmount)}</h3>
-                                <span className="al-text">Please note that the loan is granted based on your
+                                <span className="al-text">Please note that the salary based loan is granted based on your
                                     credit score rating.
-                                    Other relivant information can be provided here.
+                                    Other relivant information will be required.
+                                     {/* can be provided here. */}
+                                    
 											</span>
                             </div>
                             <div className="row loan-btn">

@@ -1,8 +1,3 @@
-/* 
-form {
-    
-} */
-
 
 
 .profileWrapper {
@@ -14,8 +9,6 @@ form {
 }
 
 .packageContent input {
-    /* width: 86.5%; */
-    font-family: sans-serif;
     font-size: 14px;
     line-height: 17px;
     color: #666666;
@@ -58,7 +51,6 @@ form {
     float: left;
     width: 100%;
     margin-left: 0% !important;
-    font-family: sans-serif;
 }
 
 .packageContent select {
@@ -136,7 +128,6 @@ form {
 .tickItems p {
     margin-left: 15px;
     padding-bottom: 10px;
-    font-family: sans-serif;
     font-size: 14px;
     line-height: 17px;
     color: #4D4D4D;
@@ -175,7 +166,6 @@ form {
 }
 
 .forProfilePicture .detials {
-    font-family: sans-serif;
     font-size: 14px;
     line-height: 17px;
     text-align: center;
@@ -183,7 +173,6 @@ form {
 }
 
 .forProfilePicture .personsName {
-    font-family: sans-serif;
     font-size: 18px;
     line-height: 22px;
     color: #4D4D4D;
@@ -257,21 +246,18 @@ form {
   .text-format {
     color: #4d4d4d;
     font-size: 18px;
-    font-family: sans-serif;
   }
   
   .text-format-2 {
     color: #666666;
     font-size: 14px;
     margin-top: 5px;
-    font-family: sans-serif;
   }
   
   .text-format-3 {
     color: #666666;
     font-size: 18px;
     margin-top: 6px;
-    font-family: sans-serif;
   }
   
   .imag-size {
@@ -300,7 +286,6 @@ form {
   }
   
   .list-item-action {
-    font-family: sans-serif;
     font-size: 17px;
     line-height: 17px;
     color: #4d4d4d;
@@ -385,7 +370,6 @@ form {
 .hdStyle {
     padding-bottom: 0px;
     margin-bottom: 0px;
-    font-family: sans-serif;
     font-size: 14px;
     line-height: 17px;  
     color: #7C7C7C;
@@ -434,7 +418,6 @@ form {
 
 .sucMssgOfProfile {
     /* padding-left: 20%; */
-    font-family: sans-serif;
     font-size: 18px;
     line-height: 21px;
    /* identical to box height */
