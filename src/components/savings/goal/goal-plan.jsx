@@ -303,7 +303,7 @@ class GoalPlan extends React.Component {
     render() {
         const GoalTransHistory = this.props.customerGoalTransHistory;
 
-        console.log("goal-history ",GoalTransHistory.customer_goal_data);
+        // console.log("goal-history ",GoalTransHistory.customer_goal_data);
 
 
         return (

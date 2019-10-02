@@ -57,7 +57,7 @@ class FixedGoal extends Component {
         this.handleEndDatePicker = this.handleEndDatePicker.bind(this)
     }
     componentDidMount(){
-        console.log('interest loan rate',this.state.targetAmount)
+        // console.log('interest loan rate',this.state.targetAmount)
     };
     valStartDate = () => {
         if (this.state.startDate == null) {
@@ -116,11 +116,11 @@ class FixedGoal extends Component {
              // if (parseInt(intVal, 10) <= 2000000) {
              this.setState({ targetAmount: intVal, targetAmount: this.toCurrency(intVal) },
                  () => {
-                     console.log("=====", intVal)
+                    //  console.log("=====", intVal)
                      this.setFregValue();
                      if (parseInt(intVal) > parseInt(999999999)) {
                         this.setState({displayState: "none", showLimitLevel: true})
-                         console.log("Emmanuel")
+                        //  console.log("Emmanuel")
                      }
                      else {
                         this.setState({displayState: "block", showLimitLevel: false}) 
@@ -250,7 +250,7 @@ class FixedGoal extends Component {
                 "goalFrequency":this.state.goalFrequency,
                 "showInterests":this.state.showInterests
             }));
-            console.log('tag', '')
+            // console.log('tag', '')
         }
         
        

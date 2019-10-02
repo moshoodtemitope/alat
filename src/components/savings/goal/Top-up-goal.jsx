@@ -133,8 +133,8 @@ class TopUPGoal extends Component {
             let res;
             if(this.state.Amount){
                 let amount = parseFloat(this.removeComma(this.state.Amount)) + this.state.amountSaved;
-                console.log(amount)
-                console.log(this.state.amountSaved)
+                // console.log(amount)
+                // console.log(this.state.amountSaved)
                 let ia = ((amount / 365) * 0.10 );
                 let interest = (ia - (parseFloat(0.10) * ia)).toFixed(2);
                 this.interest =  interest;

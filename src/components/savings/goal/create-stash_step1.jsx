@@ -52,7 +52,7 @@ class CreateStash extends React.Component {
         this.handleSelectDebitableAccounts = this.handleSelectDebitableAccounts.bind(this);
     }
     componentDidMount(){
-        console.log('interest loan rate',this.state.targetAmount)
+        // console.log('interest loan rate',this.state.targetAmount)
     }
     
     handleChange = (e) => {

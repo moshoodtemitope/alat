@@ -56,7 +56,7 @@ class EditGoal extends React.Component {
         this.handleEndDatePicker = this.handleEndDatePicker.bind(this)
     }
     componentDidMount(){
-        console.log('interest loan rate',this.state.targetAmount)
+        // console.log('interest loan rate',this.state.targetAmount)
     };
     valStartDate = () => {
         if (this.state.startDate == null) {
@@ -242,7 +242,7 @@ class EditGoal extends React.Component {
                 "goalTypeId":parseInt(this.state.goal.GoalTypeId),
                 "frequencyId":parseInt(this.state.goalFrequency)
             }));
-            console.log('tag', '')
+            // console.log('tag', '')
         }
 
 

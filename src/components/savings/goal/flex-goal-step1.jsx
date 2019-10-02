@@ -46,7 +46,7 @@ class FlexGoal extends React.Component {
 
 
         };
-        console.log('',this.state);
+        // console.log('',this.state);
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleStartDatePicker = this.handleStartDatePicker.bind(this);
@@ -214,7 +214,7 @@ class FlexGoal extends React.Component {
      calculationForTotalAmount = () => {
          let amount= parseFloat(this.removeComma(this.state.targetAmount));
          let days = this.state.goalFrequencyValue.split(" ", 1);
-         console.log("l;llll", days)
+        //  console.log("l;llll", days)
          // days = days.split(" ", 1);
          let totalAmount = amount * days;
 
@@ -232,7 +232,7 @@ class FlexGoal extends React.Component {
         let amount= parseFloat(this.removeComma(this.state.targetAmount));
         let selectedFrequency = this.state.goalFrequencyValue.split(" ",1);
 
-        console.log("monthly", this.state.goalFrequencyName);
+        // console.log("monthly", this.state.goalFrequencyName);
         if (this.state.targetAmount ==="") {
             this.setState({interest: 0});
         }
@@ -253,11 +253,11 @@ class FlexGoal extends React.Component {
 
             }else{
                 res = this.state.goalFrequencyValue.split(" ",1) * 1;
-                console.log('iduma',res);
+                // console.log('iduma',res);
 
                 this.interest = this.GetDailyFutureValue(amount, 0.10, res) - (amount * res);
                 this.interest = this.toCurrency(this.interest.toFixed(2));
-                console.log('abraham',this.interest);
+                // console.log('abraham',this.interest);
                 this.setState({interest: this.interest});
 
             }

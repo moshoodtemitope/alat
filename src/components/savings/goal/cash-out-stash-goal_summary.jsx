@@ -37,7 +37,7 @@ class CashoutStashGoal extends Component {
             let data = {
                 ...this.props.stashGoal_step1.stashout_goal_data_step1.data
             };
-            console.log('tag', data);
+            // console.log('tag', data);
 
             this.setState({
                 goalName:data.goalName,

@@ -37,7 +37,7 @@ class StashSummmary extends Component {
             let data = {
                 ...this.props.create_stash_goal_step1.stash_goal_step1_data.data
             };
-            console.log('tag', data);
+            // console.log('tag', data);
 
             this.setState({
                 targetAmount:data.targetAmount,

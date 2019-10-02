@@ -35,7 +35,7 @@ class WithDrawFromGoalSummmary extends Component {
             let data = {
                 ...this.props.withdraw_from_goal_step1.withdraw_from_goal_data_step1.data
             };
-            console.log('tag', data);
+            // console.log('tag', data);
 
             this.setState({
                 Amount:data.amount,

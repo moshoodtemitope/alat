@@ -39,7 +39,7 @@ import * as actions from '../../../redux/actions/savings/goal/fixed-goal.actions
             var data = {
                 ...this.props.fixed_goal_step2.fixed_step2_data.data
             };
-            console.log('tag', data);
+            // console.log('tag', data);
 
             this.setState({
                 targetAmount:data.targetAmount,

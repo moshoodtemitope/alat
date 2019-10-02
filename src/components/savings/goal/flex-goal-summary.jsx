@@ -42,7 +42,7 @@ import * as actions from '../../../redux/actions/savings/goal/flex-goal.actions'
             var data = {
                 ...this.props.flex_goal_step2.flex_step2_data.data
             };
-            console.log('tag', data);
+            // console.log('tag', data);
 
             this.setState({
                 targetAmount:data.targetAmount,

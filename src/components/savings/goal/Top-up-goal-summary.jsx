@@ -36,7 +36,7 @@ class TopUPGoalSummmary extends Component {
             let data = {
                 ...this.props.top_up_goal_step1.top_up_goal_data_step1.data
             };
-            console.log('tag', data);
+            // console.log('tag', data);
 
             this.setState({
                 Amount:data.amount,
