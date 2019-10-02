@@ -33,7 +33,7 @@ class VerifyOtp extends Component {
 
 
     componentDidMount() {
-        console.log(this.props.cwInfo);
+        // console.log(this.props.cwInfo);
         this.props.resetPageState();
     }
 

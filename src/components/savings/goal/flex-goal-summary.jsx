@@ -42,7 +42,7 @@ import * as actions from '../../../redux/actions/savings/goal/flex-goal.actions'
             var data = {
                 ...this.props.flex_goal_step2.flex_step2_data.data
             };
-            console.log('tag', data);
+            // console.log('tag', data);
 
             this.setState({
                 targetAmount:data.targetAmount,
@@ -86,7 +86,7 @@ import * as actions from '../../../redux/actions/savings/goal/flex-goal.actions'
                                     <NavLink to="/savings/goal/group-savings-selection">
                                     <li><a href="/savings/goal/group-savings-selection">Group Savings</a></li>
                                     </NavLink>                                    
-                                    <li><a href="#">Investments</a></li>
+                                    {/* <li><a href="#">Investments</a></li> */}
                                 
                                 </ul>
                             </div>
@@ -95,7 +95,7 @@ import * as actions from '../../../redux/actions/savings/goal/flex-goal.actions'
                     {this.props.alert && this.props.alert.message &&
                         <div style={{width: "100%", marginLeft:"150px",marginRight:"150px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                     }
-                    <h1 style={{margin:"auto", color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>Flexi Goal Summary</h1>
+                    <h1 style={{margin:"auto", color:"#AB2656", fontSize:'18px'}}>Flexi Goal Summary</h1>
                         <div style={{margin:"30px"}}></div>
 
                     <div className="col-sm-12">

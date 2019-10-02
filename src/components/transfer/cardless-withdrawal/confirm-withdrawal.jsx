@@ -67,15 +67,15 @@ class ConfirmWithdrawal extends Component {
 
     sortAccountsForSelect = () => {
         var arrayToDisplay = [];
-        console.log(this.props.accounts);
-        console.log("this.props.accounts");
+        // console.log(this.props.accounts);
+        // console.log("this.props.accounts");
 
         if (this.props.accounts.length >= 1) {
             this.props.accounts.map((data => arrayToDisplay.push({ value: data.AccountNumber, label: data.AccountDescription + " - N" + formatAmount(data.AvailableBalance) })));
         } else {
             arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account Available' }];
         }
-        console.log(arrayToDisplay)
+        // console.log(arrayToDisplay)
 
         const updatedSelectOption = {
             ...this.state.confirmDataForm
@@ -89,7 +89,7 @@ class ConfirmWithdrawal extends Component {
         var validation = { ...this.state.validation };
         validation.accountError.hasError = false;
         this.setState({ selectedAccount, validation });
-        console.log(`Option selected:`, selectedAccount);
+        // console.log(`Option selected:`, selectedAccount);
     }
 
 
@@ -145,7 +145,7 @@ class ConfirmWithdrawal extends Component {
                 AccountNumber: (this.state.selectedAccounts ? this.state.selectedAccounts.value : this.state.confirmDataForm.activeAccount.elementConfig.options[0].value),
             }
             this.props.setCardlessInfo(updatedCwInfo);
-            console.log(payload);
+            // console.log(payload);
             this.props.fetchOtp(this.state.user.token, payload);
         }
     }
@@ -154,7 +154,7 @@ class ConfirmWithdrawal extends Component {
 
 
     render() {
-        console.log("render method")
+        // console.log("render method")
         let confirmWithdrawal;
         if (this.props.cwInfo != null && this.props.pageState == 2) {
             const formElementArray = [];
@@ -254,12 +254,12 @@ class ConfirmWithdrawal extends Component {
 
             );
             if(this.props.pageState == 0) {
-                console.log("otp sent redirecting")
+                // console.log("otp sent redirecting")
                 this.props.resetPageState();
                 confirmWithdrawal = <Redirect to="/cardless-withdrawal/verify" />
             }
         }else if(this.props.pageState == 0) {
-            console.log("otp sent redirecting")
+            // console.log("otp sent redirecting")
             this.props.resetPageState();
             confirmWithdrawal = <Redirect to="/cardless-withdrawal/verify" />
         }else{

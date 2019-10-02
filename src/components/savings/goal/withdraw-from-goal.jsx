@@ -159,7 +159,7 @@ class WithdrawFromGoal extends Component {
                                             <NavLink to='/savings/activityDashBoard'>
                                                 <li><a href="/savings/activityDashBoard">Group Savings</a></li>
                                             </NavLink>
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
 
                                         </ul>
                                     </div>
@@ -203,12 +203,12 @@ class WithdrawFromGoal extends Component {
                                                 <div className="form-group">
                                                     {
                                                         this.state.showLimitLevel ? 
-                                                        <div className="text-purple"><h3 className="text-purple "> Please amounts above 999,999,999 cannot be accepted on goals</h3></div> 
+                                                        <div className="text-purple"><h3 className="text-purple">Woah! 999,999,999 is enough for us</h3></div> 
                                                         : null
 
                                                     }
                                                 </div>
-                                                                                                  {
+                                                    {
 
                                             }
                                                 <div className="form-group">
@@ -244,6 +244,10 @@ class WithdrawFromGoal extends Component {
 
                                         </div>
                                     </div>
+                                    <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
+                                                this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
+                                                Go back
+                                        </a>
 
                                 </div>
                             </div>

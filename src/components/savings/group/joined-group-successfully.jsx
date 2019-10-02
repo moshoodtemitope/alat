@@ -52,7 +52,7 @@ class JoinedGroupSuccessfully extends React.Component {
                                             <li><a href="#">Goals</a></li>
                                         </NavLink>
                                         
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
                                         </ul>
                                     </div>
                                 </div>

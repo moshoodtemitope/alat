@@ -157,7 +157,7 @@ class StashCashout extends Component {
                                             <NavLink to='/savings/goal/group-savings-selection'>
                                                 <li><a href="/savings/goal/group-savings-selection">Group Savings</a></li>
                                             </NavLink>
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
 
                                         </ul>
                                     </div>

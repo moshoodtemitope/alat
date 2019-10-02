@@ -115,15 +115,15 @@ class Apply extends Component {
 
     sortAccountsForSelect = () => {
         let arrayToDisplay = [];
-        console.log(this.props.accounts);
-        console.log("this.props.accounts");
+        // console.log(this.props.accounts);
+        // console.log("this.props.accounts");
 
         if (this.props.accounts.length >= 1) {
             this.props.accounts.map((data => arrayToDisplay.push({ value: data.AccountNumber, label: data.AccountDescription + " - ₦" + formatAmount(data.AvailableBalance) })));
         } else {
             arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account Available' }];
         }
-        console.log(arrayToDisplay)
+        // console.log(arrayToDisplay)
 
         const updatedSelectOption = {
             ...this.state.applyForm
@@ -137,14 +137,14 @@ class Apply extends Component {
         var validation = { ...this.state.validation };
         validation.accountError.hasError = false;
         this.setState({ selectedAccount, validation });
-        console.log(`Option selected:`, selectedAccount);
+        // console.log(`Option selected:`, selectedAccount);
     }
 
 
     sortOffersForSelect = () => {
         let arrayToDisplay = [];
-        console.log(this.props.loanOffers);
-        console.log("this.props.offer");
+        // console.log(this.props.loanOffers);
+        // console.log("this.props.offer");
 
         if (this.props.loanOffers.length >= 1) {
             this.props.loanOffers.map((data => arrayToDisplay.push({
@@ -160,7 +160,7 @@ class Apply extends Component {
         } else {
             arrayToDisplay = [{ value: '', displayValue: 'No offers Available' }];
         }
-        console.log(arrayToDisplay)
+        // console.log(arrayToDisplay)
 
         const updatedSelectOption = {
             ...this.state.applyForm
@@ -174,7 +174,7 @@ class Apply extends Component {
         var validation = { ...this.state.validation };
         if (validation.offerError == true) validation.offerError = false;
         this.setState({ selectedOffer, validation, terms: selectedOffer.term });
-        console.log(`Option selected:`, selectedOffer);
+        // console.log(`Option selected:`, selectedOffer);
     }
 
     handleClick = () => {
@@ -207,8 +207,8 @@ class Apply extends Component {
 
         if (inputIdentifier == "expiryDate") {
             updatedFormElement.value = event.target.value;
-            console.log(event.target.value)
-            console.log(updatedFormElement.value)
+            // console.log(event.target.value)
+            // console.log(updatedFormElement.value)
             if (updatedFormElement.value.length >= 1) {
                 if (updatedFormElement.value.length > 5) return;
 
@@ -299,7 +299,7 @@ class Apply extends Component {
                 CardExpiryDate: this.state.applyForm.expiryDate.value.replace(/\//g, ''),
                 CardPan: this.state.applyForm.pan.value
             }
-            console.log("all good", payload);
+            // console.log("all good", payload);
             this.props.acceptLoanOffer(this.state.user.token, payload);
         }
     }
@@ -460,7 +460,7 @@ class Apply extends Component {
             )
         }
         if (this.props.pageState == 0) {
-            console.log("sucess already...in apply others")
+            // console.log("sucess already...in apply others")
             // this.props.resetPageState(2);
             let updatedApplyForm = {
                 ...this.state.applyForm

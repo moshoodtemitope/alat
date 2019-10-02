@@ -133,83 +133,83 @@ CheckIfStoreInformationIsSet = () => {
                 switch(x){
                     case 'LocalGv':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     case 'StateOfOrigin':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x);
+                                // console.log(x);
                                 result = null;
                                 break;
                             }
                     case 'Nationality':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     case 'houseNumber':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     case 'apartment': 
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     
                     case 'personalAddress':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     case 'street':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     case 'busStop': 
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
 
                     case 'StateOfOrigin2': 
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x);
+                                // console.log(x);
                                 result = null;
                                 break;
                             }
                 
                     case 'Nationality2':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     case 'LocalGv2':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                     case 'personalAddress2':
                             if(this.state[x] == null || this.state[x] == ""){
-                                console.log(x)
+                                // console.log(x)
                                 result = null;
                                 break;
                             }
                 }
             }
             
-            console.log(result);
+            // console.log(result);
             return result;
    }
 
@@ -227,7 +227,7 @@ CheckIfStoreInformationIsSet = () => {
                     "isReactivation": false,
                     "address": this.state.personalAddress
                  }
-                 console.log(data);
+                //  console.log(data);
                 //  return;
       this.props.dispatch(actions.addResidentialAddress(this.state.user.token, data));
    }
@@ -264,10 +264,10 @@ CheckIfStoreInformationIsSet = () => {
 
        switch(this.checkIfUserInputsAreValid()){
            case null:
-             console.log('Empty value was found');
+            //  console.log('Empty value was found');
              break;
            case 'valid': 
-             console.log("No Empty Value Found");
+            //  console.log("No Empty Value Found");
              this.InitiateNetworkCall();
              break;
        }
@@ -300,12 +300,12 @@ CheckIfStoreInformationIsSet = () => {
 
     SetInputValue2 = (event) => {
        let name = event.target.name;
-       console.log(event.target.value);
+    //    console.log(event.target.value);
        
        this.setState({[name] : event.target.value});
        allCityData.map(element => {
            if(event.target.value == element.name){
-                console.log(element.name);
+                // console.log(element.name);
                 this.setState({localGvId2: element.cityId})
                 this.setState({stateGvId2: element.stateId});
            }
@@ -399,7 +399,7 @@ CheckIfStoreInformationIsSet = () => {
         }else{
             this.setState({personalAddressValidity: false});
         }
-        console.log('was invoked  iiiiiiii');
+        // console.log('was invoked  iiiiiiii');
     }
 
    NavigateToSuccessPage = () => {
@@ -418,7 +418,7 @@ CheckIfStoreInformationIsSet = () => {
    }
 
    allStatesTrigger = () => {
-       console.log('DEBUGGING CODE');
+    //    console.log('DEBUGGING CODE');
     //    console.log(allStatesInfo);
    }
 
@@ -429,8 +429,8 @@ CheckIfStoreInformationIsSet = () => {
        allStatesInfo = stateData;
        allCityData = cityData;
 
-       console.log(stateData);
-       console.log(cityData);
+    //    console.log(stateData);
+    //    console.log(cityData);
    }
 
    NavigateToBVN = () => {
@@ -488,7 +488,7 @@ GetUserProfileMenu = () => {
  }
 
  StoreInforMation = () => {
-    console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
+    // console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
     profileMenuStore = this.props.profileMenu.data.response;
  
     let localStore = window.localStorage;
@@ -515,7 +515,7 @@ ChangeResidentialStatus = () => {
              this.ChangeResidentialStatus();
 
         if(getContactDetail.message === profile.GET_CONTACT_DETAILS_PENDING){
-            console.log('NOTHING EVER HAPPENED HERE')
+            // console.log('NOTHING EVER HAPPENED HERE')
             return(
                 <Fragment>
                     {/* <InnerContainer> */}
@@ -839,7 +839,7 @@ ChangeResidentialStatus = () => {
         }
 
         if(profileMenu.data == undefined){
-            console.log('NOTHING EVER HAPPENED HERE')
+            // console.log('NOTHING EVER HAPPENED HERE')
             this.GetUserProfileMenu();
             return(
                 <Fragment>

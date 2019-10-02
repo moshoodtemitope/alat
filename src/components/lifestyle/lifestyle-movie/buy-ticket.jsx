@@ -76,7 +76,7 @@ class BuyTicket extends Component {
             let data = {
                 ...this.props.SubmitTicketData.data.data
             };
-            console.log('tag', data);
+            // console.log('tag', data);
 
             this.setState({
                 TicketAmount:data.initialAdultAmount,
@@ -166,8 +166,8 @@ class BuyTicket extends Component {
                                                 <div className="form-group">
                                                        <div className="puchaseSumTickets">
                                                            <div className="left">
-                                                                <p style={{fontSize:12,fontFamily:"proxima_novasemibold"}}>{this.state.title }</p>
-                                                                <p style={{fontSize:12, fontFamily:'proxima_novaregular'}}>{this.state.ticketType}</p>
+                                                                <p style={{fontSize:12}}>{this.state.title }</p>
+                                                                <p style={{fontSize:12}}>{this.state.ticketType}</p>
                                                            </div>
                                                            <div className="right">
                                                                <p>N{this.formatAmountNoDecimal(this.state.TicketAmount)}</p>

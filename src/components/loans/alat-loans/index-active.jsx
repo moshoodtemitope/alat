@@ -27,7 +27,7 @@ class Index extends Component {
     }
 
     onShowModal = (event) => {
-        console.log("dot here")
+        // console.log("dot here")
         event.preventDefault();
         this.props.clearError();
         this.setState({ showModal: true });
@@ -51,7 +51,7 @@ class Index extends Component {
     }
 
     render() {
-        console.log("in loan index");
+        // console.log("in loan index");
         let index = (
             <AlatLoanContainer>
                 <Modal open={this.state.showModal} onClose={this.onCloseModal} center>

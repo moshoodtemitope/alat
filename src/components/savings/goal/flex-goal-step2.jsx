@@ -47,7 +47,7 @@ import React from 'react'
 
 
      handleSelectDebitableAccounts(account) {
-         console.log('dss', account);
+        //  console.log('dss', account);
          this.setState({ debitAccount: account })
          if (this.state.isSubmitted) {
              if(account.length == 10)
@@ -72,7 +72,7 @@ import React from 'react'
              var data = {
                  ...this.props.flex_goal_step1.flex_step1_data.data
              };
-             console.log('tag', data)
+            //  console.log('tag', data)
 
              this.setState({
                  targetAmount:data.targetAmount,

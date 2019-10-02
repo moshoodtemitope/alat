@@ -27,14 +27,14 @@ export const fetchAllUnexpiredPaycodes = (token, data) => {
         let consume = ApiService.request(routes.FETCH_UNEXPIRED_PAYCODES, "POST", data, SystemConstant.HEADER);
         return consume
             .then(response => {
-                console.log(response.data);
-                console.log("response.data");
+                // console.log(response.data);
+                // console.log("response.data");
                 dispatch(success(response.data));
             })
             .catch(error => {
                 
                 dispatch(isFetchingFalse());
-                console.log(error);
+                // console.log(error);
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
@@ -63,15 +63,15 @@ export const getOtpForCustomer = (token, data, isResending = false) => {
         return consume
             .then(response => {
                 dispatch(isFetchingFalse());
-                console.log(response.data);
-                console.log("response.data");
+                // console.log(response.data);
+                // console.log("response.data");
                 if(isResending == false){
                     dispatch(success(response.data));
                 }
             })
             .catch(error => {
                 dispatch(isFetchingFalse());
-                console.log(error);
+                // console.log(error);
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
@@ -88,11 +88,11 @@ export const resetPageState = () => {
 }
 
 export const cardlessOtpVerification = (token, data) => {
-    console.log("is verifying otp");
+    // console.log("is verifying otp");
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
         dispatch(isFetchingTrue());
-        console.log("is treuly fetching pin");
+        // console.log("is treuly fetching pin");
         let consume = ApiService.request(routes.CARDLESS_OTP_PIN_VERIFICATION, "POST", data, SystemConstant.HEADER);
         return consume
             .then(response => {
@@ -103,7 +103,7 @@ export const cardlessOtpVerification = (token, data) => {
             })
             .catch(error => {
                 dispatch(isFetchingFalse());
-                console.log(error);
+                // console.log(error);
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };

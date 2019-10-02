@@ -34,7 +34,7 @@ class VerifyOtp extends Component {
 
 
     componentDidMount() {
-        console.log(this.props.dataInfo);
+        // console.log(this.props.dataInfo);
         this.props.resetPinState();
     }
 

@@ -11,7 +11,7 @@ function success(message) {
 }
 
 function error(message, code=null) {
-    console.log(code);
+    // console.log(code);
     return { type: alertConstants.ERROR, message, status_code : code };
 }
 

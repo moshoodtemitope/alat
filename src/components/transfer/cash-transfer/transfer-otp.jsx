@@ -41,7 +41,7 @@ class TransferOtp extends React.Component{
 
     verifyTransferStage(){
         let props = this.props
-        console.log('stauts is', this.props.transfer_processsend_money.fetchStatus);
+        // console.log('stauts is', this.props.transfer_processsend_money.fetchStatus);
         // props.transfer_money.sendmoney_status !==SENDBANK_TRANSFER_SUCCESS
         if (!props.transfersender.transfer_info && props.transfersender.transfer_info !== SENDER__BANK_DETAILS) {
             this.props.history.push("/transfer");
@@ -69,7 +69,7 @@ class TransferOtp extends React.Component{
                 ...transferDetails
             }
             this.setState({accountData:transferDetails}, ()=>{
-                console.log('state is', this.state.accountData);
+                // console.log('state is', this.state.accountData);
             })
             // 
         }
@@ -97,7 +97,7 @@ class TransferOtp extends React.Component{
 
             
             
-        console.log('Payload for payment is', payload);
+        // console.log('Payload for payment is', payload);
     }
     
     makeTransfer(e){
@@ -122,7 +122,7 @@ class TransferOtp extends React.Component{
 
             
             
-        console.log('Payload for payment is', payload);
+        // console.log('Payload for payment is', payload);
     }
     
 

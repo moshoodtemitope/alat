@@ -195,7 +195,7 @@ class ViewGroupSummary extends React.Component {
                                             <NavLink to="/savings/activityDashBoard">
                                                 <li><a href="#" >Group Savings</a></li>
                                             </NavLink>
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
                                         </ul>
                                     </div>
                                 </div>
@@ -350,6 +350,7 @@ class ViewGroupSummary extends React.Component {
 
 
                                     </div>
+                                   
 
                                 </div>
 

@@ -191,7 +191,7 @@ export const returnStatusCode =(error) =>{
            statusCode = error.response.status;
         } 
     }
-    console.log(statusCode);
+    // console.log(statusCode);
    return statusCode;
 };
 

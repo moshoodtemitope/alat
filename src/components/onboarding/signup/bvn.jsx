@@ -229,7 +229,7 @@ class Bvn extends React.Component{
 
 function mapStateToProps(state){
     //console.error(state);
-    console.log('bvn state', state);
+    // console.log('bvn state', state);
     return {
         user_details: state.onboarding_user_details,
         bvn_details: state.onboarding_bvn_details,

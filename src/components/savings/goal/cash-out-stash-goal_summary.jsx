@@ -37,7 +37,7 @@ class CashoutStashGoal extends Component {
             let data = {
                 ...this.props.stashGoal_step1.stashout_goal_data_step1.data
             };
-            console.log('tag', data);
+            // console.log('tag', data);
 
             this.setState({
                 goalName:data.goalName,
@@ -106,7 +106,7 @@ class CashoutStashGoal extends Component {
                                             <NavLink to='/savings/activityDashBoard'>
                                                 <li><a href="/savings/activityDashBoard">Group Savings</a></li>
                                             </NavLink>
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
 
                                         </ul>
                                     </div>
@@ -119,7 +119,7 @@ class CashoutStashGoal extends Component {
                             }
 
                             <h1 style={{margin:'auto', width:"100%", textAlign:"center",
-                                color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>WithDrawal Summary</h1>
+                                color:"#AB2656", fontSize:'18px'}}>WithDrawal Summary</h1>
                             <div style={{margin:"30px", marginLeft:"120px",marginRight:"120px"}}></div>
 
                             <div className="col-sm-12">

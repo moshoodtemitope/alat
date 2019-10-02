@@ -46,7 +46,7 @@ class VerifyOtp extends Component {
                 otp: this.state.otpFormData.otp.value
             };
 
-            console.log(payload);
+            // console.log(payload);
             this.props.verifyOtpInputed(this.state.user.token, payload);
         } else {
             this.setState({ hasError: true });

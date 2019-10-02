@@ -81,7 +81,7 @@ class SetLimit extends Component {
         } else {
             arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account Available' }];
         }
-        console.log(arrayToDisplay);
+        // console.log(arrayToDisplay);
 
         const updatedSelectOption = {
             ...this.state.limitDataForm
@@ -94,7 +94,7 @@ class SetLimit extends Component {
     accountChangedHandler = (selectedAccount) => {
         this.setState({ selectedAccount });
         this.props.getAccountLimits(this.state.user.token, { AccountNumber: selectedAccount.value })
-        console.log(`Option selected:`, selectedAccount);
+        // console.log(`Option selected:`, selectedAccount);
     }
 
     inputChangedHandler = (event, inputIdentifier) => {
@@ -265,7 +265,7 @@ class SetLimit extends Component {
             </Fragment>
         );
         if(this.props.pageState == 0) {
-            console.log("limit is redirecting")
+            // console.log("limit is redirecting")
             this.props.resetPageState();
             transLimit = <Redirect to="/account/account-limit/verify" />
         }

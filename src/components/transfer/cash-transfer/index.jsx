@@ -20,7 +20,7 @@ class Cashtransfer extends Component {
     }
 
     componentDidMount() {
-      console.log("index is mounted");
+    //   console.log("index is mounted");
     }
    render() {
        return(
