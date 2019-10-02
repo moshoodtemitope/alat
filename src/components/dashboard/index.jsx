@@ -279,7 +279,7 @@ class Dashboard extends React.Component{
                                         <OnboardingPriority/>
 
                                         {/* <div className="al-card transact-history">
-                                            <h4 className="m-b-20">Transaction History <span>
+                                             <h4 className="m-b-20">Transaction History <span>
                                                 <NavLink to="/account/account-history">
                                                     View All
                                                 </NavLink>
@@ -289,12 +289,12 @@ class Dashboard extends React.Component{
                                                 { this.renderHistory() }
                                              
                                             </div>
-                                        </div> */}
+                                        </div>  */}
                                     </div>
-                                    <div className="col-sm-12 col-md-4">
+                                    {/* <div className="col-sm-12 col-md-4">
                                       
                                         <AnnouncementCard />
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
