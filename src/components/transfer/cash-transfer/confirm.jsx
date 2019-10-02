@@ -34,7 +34,7 @@ class ConFirmTransfer extends React.Component{
     }
 
     verifyTransferStage(){
-        console.log('charegs', this.props.transfer_charges);
+        // console.log('charegs', this.props.transfer_charges);
         let props = this.props
         if (!props.transfersender.transfer_info && props.transfersender.transfer_info !== SENDER__BANK_DETAILS) {
             this.props.history.push("/transfer");
@@ -62,7 +62,7 @@ class ConFirmTransfer extends React.Component{
                 ...transferDetails
             }
             this.setState({accountData:transferDetails}, ()=>{
-                console.log('state is', this.state.accountData);
+                // console.log('state is', this.state.accountData);
             })
             // 
         }
@@ -89,7 +89,7 @@ class ConFirmTransfer extends React.Component{
 
             
             
-        console.log('Payload for payment is', payload);
+        // console.log('Payload for payment is', payload);
     }
     handleAlatPinChange(pin) {
         this.setState({ Pin: pin })

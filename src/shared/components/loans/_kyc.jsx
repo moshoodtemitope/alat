@@ -61,7 +61,7 @@ class LoanKycComponent extends React.Component {
          e.preventDefault();
        // this.props.goForward();
         if (this.validateImages() != false) {
-            console.log("after validate image");
+            // console.log("after validate image");
             this.uploadImage(this.getImageToUpload('Signature', this.state.Signature), {
                 pending: userConstants.SIGNATURE_UPLOAD_PENDING,
                 success: userConstants.SIGNATURE_UPLOAD_SUCCESS,
@@ -78,8 +78,8 @@ class LoanKycComponent extends React.Component {
 
 
     onImageUpload = (picture, e) => {
-        console.log(picture);
-        console.log(e);
+        // console.log(picture);
+        // console.log(e);
         if (picture.length >= 1) {
             util.getBase64(picture[picture.length - 1], (result) => {
                 this.setState({ [e]: { file: result, name: picture[picture.length - 1].name } }, () => {

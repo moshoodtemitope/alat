@@ -46,7 +46,7 @@ class BuyTicket extends Component {
             let data =this.props.SubmitEventTicketData.data.data
         
             
-            console.log('tag', data);
+            // console.log('tag', data);
 
             this.setState({
                 TicketAmount:data.TicketAmount,
@@ -106,7 +106,7 @@ class BuyTicket extends Component {
                 "TicketAmount":this.state.TicketAmount,
                 "TicketNo":this.state.TicketNo,
             };
-            console.log(data)
+            // console.log(data)
         
             this.props.dispatch(actions.purchaseEventTicket(this.state.user.token, data));
 

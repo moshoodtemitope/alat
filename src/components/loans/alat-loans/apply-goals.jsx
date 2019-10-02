@@ -82,7 +82,7 @@ class ApplyGoals extends Component {
 
 
     componentDidMount() {
-        console.log("liquidate loan reached")
+        // console.log("liquidate loan reached")
         this.props.fetchDebitableAccounts(this.state.user.token);
     }
 
@@ -92,15 +92,15 @@ class ApplyGoals extends Component {
 
     sortAccountsForSelect = () => {
         var arrayToDisplay = [];
-        console.log(this.props.accounts);
-        console.log("this.props.accounts");
+        // console.log(this.props.accounts);
+        // console.log("this.props.accounts");
 
         if (this.props.accounts.length >= 1) {
             this.props.accounts.map((data => arrayToDisplay.push({ value: data.AccountNumber, label: data.AccountDescription + " - ₦" + formatAmount(data.AvailableBalance) })));
         } else {
             arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account Available' }];
         }
-        console.log(arrayToDisplay)
+        // console.log(arrayToDisplay)
 
         const updatedSelectOption = {
             ...this.state.applyForm
@@ -114,7 +114,7 @@ class ApplyGoals extends Component {
         var validation = { ...this.state.validation };
         validation.accountError.hasError = false;
         this.setState({ selectedAccount, validation });
-        console.log(`Option selected:`, selectedAccount);
+        // console.log(`Option selected:`, selectedAccount);
     }
 
 
@@ -142,7 +142,7 @@ class ApplyGoals extends Component {
                 }
                 updatedFormElement.valueToDisplay = formatAmountNoDecimal(parseInt(updatedFormElement.value));
                 // }
-                console.log(updatedFormElement)
+                // console.log(updatedFormElement)
             }
         }
         if (inputIdentifier == "pin") {
@@ -203,7 +203,7 @@ class ApplyGoals extends Component {
                 CreditAccount: (this.state.selectedAccounts ? this.state.selectedAccounts.value : this.state.applyForm.activeAccount.elementConfig.options[0].value),
                 Amount: this.state.applyForm.amount.value,
             }
-            console.log("all good", payload);
+            // console.log("all good", payload);
             this.props.sendLoanDetail(this.state.user.token, payload);
         }
     }

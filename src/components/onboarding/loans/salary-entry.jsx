@@ -59,7 +59,7 @@ class LoanOnboardingSalaryEntry extends React.Component {
     }
 
     postSalarEntries = () => {
-        console.log(this.state.selectedEntryList.length);
+        // console.log(this.state.selectedEntryList.length);
         if (this.state.selectedEntryList.length > 0) { this.props.dispatch(actions.salaryEntry(this.state.user.token, this.state.selectedEntryList)); }
         else {
             this.props.dispatch(alertActions.error("you need to select atleast an entry"));

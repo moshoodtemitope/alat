@@ -21,7 +21,7 @@ class Dashboard extends Component{
     }
 
     componentDidMount() {
-        console.log("in data liquid now")
+        // console.log("in data liquid now")
         this.props.resetPinState();
         if(this.props.beneficiaries < 1){
             this.props.fetchBeneficiaries(this.state.user.token);
@@ -35,7 +35,7 @@ class Dashboard extends Component{
 
 
    render() {
-    console.log("in dashboard now- render method");
+    // console.log("in dashboard now- render method");
        return(
            
            <Fragment>

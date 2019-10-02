@@ -89,7 +89,7 @@ class CreateStash extends React.Component {
                      this.setFregValue();
                      if (parseInt(intVal) > parseInt(999999999)) {
                         this.setState({displayState: "none", showLimitLevel: true})
-                         console.log("Emmanuel")
+                        //  console.log("Emmanuel")
                      }
                      else {
                         this.setState({displayState: "block", showLimitLevel: false}) 
@@ -156,7 +156,7 @@ class CreateStash extends React.Component {
     }
     
     handleSelectDebitableAccounts(account) {
-        console.log('dss', account);
+        // console.log('dss', account);
         this.setState({ debitAccount: account });
         if (this.state.isSubmitted) { 
             if(account.length === 10)
@@ -184,7 +184,7 @@ class CreateStash extends React.Component {
 
                
             }));
-            console.log('tag', '')
+            // console.log('tag', '')
         }
         
        

@@ -28,7 +28,7 @@ class RemitaOtpSetupComponent extends React.Component {
     init = () => {
         if (this.props.standing_order)
          if (this.props.standing_order.loan_standOrder_status == loanConstants.LOAN_STAND_ORDER_SUCCESS) {
-             console.log("in successful standing order");
+            //  console.log("in successful standing order");
         // var test = {
         //     GetCollectionScreenOption: 0,
         //     DebitBankActionRequired: true,
@@ -52,7 +52,7 @@ class RemitaOtpSetupComponent extends React.Component {
             ...this.props.standing_order.loan_standOrder_data.response.Response
             //...test
         };
-        console.log(data);
+        // console.log(data);
         let _formsFieldModel = data;//{ ...this.state.formFieldsModel }
         data.MandateValidationDetails.map((value, index) => {
             _formsFieldModel[value.ParamId] = {
@@ -106,7 +106,7 @@ class RemitaOtpSetupComponent extends React.Component {
     render() {
         var form = <h1>loading</h1>;
         if (this.state.formFieldsModel) {
-            console.log(this.state.formFieldsModel);
+            // console.log(this.state.formFieldsModel);
             const formElementArray = [];
             for (let key in this.state.formFieldsModel) {
                 formElementArray.push(this.state.formFieldsModel[key])

@@ -53,7 +53,7 @@ class EventDetails extends React.Component {
         else {
             
             let data = JSON.parse(this.props.SubmitEventData.data.data);
-            console.log('======',data)
+            // console.log('======',data)
             
           
             this.setState({
@@ -95,7 +95,7 @@ class EventDetails extends React.Component {
                  
                  case 'ticketClass':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
@@ -159,7 +159,7 @@ class EventDetails extends React.Component {
             eventId:this.state.eventId,
             source:this.state.source
         }
-        console.log("=========",data)
+        // console.log("=========",data)
 
         
         this.props.dispatch(actions.SubmitEventTicketData(data));
@@ -175,10 +175,10 @@ class EventDetails extends React.Component {
         
         switch(this.checkValidity()){
             case null:
-              console.log('Empty value was found');
+            //   console.log('Empty value was found');
               break;
             case 'valid': 
-              console.log("No Empty Value Found");
+            //   console.log("No Empty Value Found");
               this.InitiateNetworkCall();
               break;
         }
@@ -213,7 +213,7 @@ class EventDetails extends React.Component {
         this.setState({eventId:gottenValue[3]});
         this.setState({[name] : event.target.value});
 
-        console.log(data);
+        // console.log(data);
         this.props.dispatch(actions.ShowTime(this.state.user.token, data))
     }
 
@@ -252,6 +252,7 @@ class EventDetails extends React.Component {
                             textAlign: "center",
                             fontSize: 18,
                             marginBottom: 16,
+                            fontFamily: "proxima_novasemibold",
                             color: "#4D4D4D"
                         }}
                     >
@@ -287,11 +288,12 @@ class EventDetails extends React.Component {
                             className="col-sm-9"
                             style={{ fontSize: 26, color: "#444444", paddingLeft: 55 }}
                         >
-                            <div style={{ marginBottom: 21 }}>
+                            <div style={{ fontFamily: "proxima_novasemibold", marginBottom: 21 }}>
                                 {this.state.title}
                             </div>
                             <div
                                 style={{
+                                    fontFamily: "proxima_novaregular",
                                     fontSize: 12,
                                     color: "#9C9C9C",
                                     marginTop: 21
@@ -301,9 +303,11 @@ class EventDetails extends React.Component {
                             </div>
                             <div
                                 style={{
+                                    fontFamily: "proxima_novaregular",
                                     fontSize: 12,
                                     color: "#9C9C9C",
                                     marginTop: 8,
+                                    // fontFamily: "Proxima Nova"
                                 }}
                             >
                                 {unescape(this.state.description.toString().length > 30 ? this.state.description.toString().substring(0, 60)+"...": this.state.description.toString())}
@@ -444,6 +448,7 @@ class EventDetails extends React.Component {
                                             textAlign: "center",
                                             marginTop: 10,
                                             color: "#000000",
+                                            // fontFamily: "proxima_novaregular",
                                             fontWeight: "bold",
                                             fontSize: 14
                                         }}

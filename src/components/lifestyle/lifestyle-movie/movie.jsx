@@ -49,7 +49,7 @@ class Movie extends React.Component {
     fetchCinemaList(){
         const { dispatch } = this.props;
         dispatch(getCinemaList(this.state.user.token));
-        console.log(this.props.getCinemaList)
+        // console.log(this.props.getCinemaList)
 
     };
     fetchGenre(){
@@ -96,7 +96,7 @@ class Movie extends React.Component {
 
     moviesDetails=(event)=>{
         let movies = event.target.id
-        console.log('======',movies)
+        // console.log('======',movies)
         this.props.dispatch(SubmitMoviesData(event.target.id))
 
         
@@ -221,7 +221,7 @@ class Movie extends React.Component {
              
         if(data == "ACTION"){
             let userMovies = getMovieList.data.response;
-            console.log(data, "==================", userMovies)   
+            // console.log(data, "==================", userMovies)   
             
             return  (<div className="eventTrays">
                 
@@ -234,7 +234,7 @@ class Movie extends React.Component {
         }
         else if(data === "DRAMA"){
             let userMovies = getMovieList.data.response;
-            console.log(data, "==================", userMovies)   
+            // console.log(data, "==================", userMovies)   
             
             return  (<div className="eventTrays">
                 
@@ -246,7 +246,7 @@ class Movie extends React.Component {
         }
         else if (data === "ADVENTURE"){
             let userMovies = getMovieList.data.response;
-            console.log(data, "==================", userMovies)   
+            // console.log(data, "==================", userMovies)   
             
             return  (<div className="eventTrays">
                 
@@ -257,7 +257,7 @@ class Movie extends React.Component {
         }
         else if (data === "FANTASY"){
             let userMovies = getMovieList.data.response;
-            console.log(data, "==================", userMovies)   
+            // console.log(data, "==================", userMovies)   
             
             return  (<div className="eventTrays">
                 
@@ -269,7 +269,7 @@ class Movie extends React.Component {
         else if (data === "ANIMATION"){
 
             let userMovies = getMovieList.data.response;
-            console.log(data, "==================", userMovies)   
+            // console.log(data, "==================", userMovies)   
             
             return  (<div className="eventTrays">
                 
@@ -280,7 +280,7 @@ class Movie extends React.Component {
         }
         else if (data === "CRIME"){
             let userMovies = getMovieList.data.response;
-            console.log(data, "==================", userMovies)   
+            // console.log(data, "==================", userMovies)   
             
             return  (<div className="eventTrays">
                 
@@ -291,7 +291,7 @@ class Movie extends React.Component {
         }
         else if (data === "COMEDY"){
             let userMovies = getMovieList.data.response;
-            console.log(data, "==================", userMovies)   
+            // console.log(data, "==================", userMovies)   
             
             return  (<div className="eventTrays">
                 
@@ -302,7 +302,7 @@ class Movie extends React.Component {
         }
         else if (data === "NOLLYWOOD"){
             let userMovies = getMovieList.data.response;
-            console.log(data, "==================", userMovies)   
+            // console.log(data, "==================", userMovies)   
             
             return  (<div className="eventTrays">
                 
@@ -313,7 +313,7 @@ class Movie extends React.Component {
         }
         else if (data === "FAMILY"){
             let userMovies = getMovieList.data.response;
-            console.log(data, "==================", userMovies)   
+            // console.log(data, "==================", userMovies)   
             
             return  (<div className="eventTrays">
                 
@@ -324,7 +324,7 @@ class Movie extends React.Component {
         }
         else if (data === "ROMANCE"){
             let userMovies = getMovieList.data.response;
-            console.log(data, "==================", userMovies)   
+            // console.log(data, "==================", userMovies)   
             
             return  (<div className="eventTrays">
                 
@@ -335,7 +335,7 @@ class Movie extends React.Component {
         }
         else if (data === "HORROR"){
             let userMovies = getMovieList.data.response;
-            console.log(data, "==================", userMovies)   
+            // console.log(data, "==================", userMovies)   
             
             return  (<div className="eventTrays">
                 
@@ -346,7 +346,7 @@ class Movie extends React.Component {
         }
         else if (data === "SCI-FI"){
             let userMovies = getMovieList.data.response;
-            console.log(data, "==================", userMovies)   
+            // console.log(data, "==================", userMovies)   
             
             return  (<div className="eventTrays">
                 
@@ -357,7 +357,7 @@ class Movie extends React.Component {
         }
         else if (data === "SLIDER"){
             let userMovies = getMovieList.data.response;
-            console.log(data, "==================", userMovies)   
+            // console.log(data, "==================", userMovies)   
             
             return  (<div className="eventTrays">
                 

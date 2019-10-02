@@ -164,7 +164,7 @@ class ProvideDetails extends React.Component{
                 ...transferDetails
             }
             this.setState({accountData:transferDetails})
-            console.log('state is', this.state.accountData);
+            // console.log('state is', this.state.accountData);
         }
     }
 

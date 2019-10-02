@@ -109,7 +109,7 @@ class Index extends Component {
         }
 
         if (this.props.pageState == 0) {
-            console.log("reached")
+            // console.log("reached")
             if (this.state.clicked == "change") {
                 view = <Redirect to="/settings/pin-management/change/security-question" />
             } else if(this.state.clicked == "forgot") {

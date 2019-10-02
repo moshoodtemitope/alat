@@ -32,7 +32,7 @@ class Success extends Component {
 
 
     componentDidMount() {
-        console.log("isfromBene" + this.props.isFromBeneficiary);
+        // console.log("isfromBene" + this.props.isFromBeneficiary);
         // this.props.fetchDebitableAccounts(this.state.user.token);
     }
 
@@ -66,7 +66,7 @@ class Success extends Component {
             SubscriberID: this.props.billsInfo.subscriberId,
             TransactionPin: this.props.billsInfo.TransactionPin,
         };
-        console.log("saving benficiary");
+        // console.log("saving benficiary");
         this.props.onSaveBeneficiary(this.state.user.token, payload);
     }
 
@@ -161,17 +161,17 @@ class Success extends Component {
                 </div>
             );
         } else if (this.props.pageState == 3) {
-            console.log("going to dashboard no post");
+            // console.log("going to dashboard no post");
             this.props.resetPageState(2);
             this.props.clearBillsInfo();
             success = <Redirect to="/dashboard" />
         } else if (this.props.pageState == 0) {
             this.props.resetPageState(2);
             this.props.clearBillsInfo();
-            console.log("going to dashboard post");
+            // console.log("going to dashboard post");
             success = <Redirect to="/dashboard" />
         } else {
-            console.log("success to not allowed ");
+            // console.log("success to not allowed ");
             success = <Redirect to="/bills/paybills/biller" />
         }
 

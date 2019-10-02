@@ -295,7 +295,7 @@ class NewTransfer extends React.Component {
             existingBeneficiary = beneficiaryList.find((beneficiary)=>{
                 return beneficiary.AccountNumber === this.state.accountNumber;
             })
-            console.log('existing is', typeof existingBeneficiary);
+            // console.log('existing is', typeof existingBeneficiary);
             if(typeof existingBeneficiary==="undefined"){
                 this.setState({existingBeneficiaryError: false});
                 dispatch(cashTransferData({
@@ -367,7 +367,7 @@ class NewTransfer extends React.Component {
                 this.setState({ submitted: false, submitButtonState: false, inputState: false });
             }
 
-            console.log('account details will be', accountInfo);
+            // console.log('account details will be', accountInfo);
 
 
         }

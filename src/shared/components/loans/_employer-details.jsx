@@ -67,7 +67,7 @@ class EmployerDetails extends React.Component {
         if (picture.length >= 1) {
             util.getBase64(picture[picture.length - 1], (result) => {
                 this.setState({ [e]: { file: result, name: picture[picture.length - 1].name } }, () => {
-                    console.log(this.state[e]);
+                    // console.log(this.state[e]);
                     this.uploadImage(this.getImageToUpload(e, this.state[e]));
                 });
             });

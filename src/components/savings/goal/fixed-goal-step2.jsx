@@ -139,7 +139,7 @@ class FixedGoal extends React.Component {
     }
 
     handleSelectChange = (frequency) => {
-        console.log(frequency);
+        // console.log(frequency);
         // let label = frequency.id.split("/")[0]
         this.setState({ "goalFrequencyType": frequency.value,
             "goalFrequencyLabel" : frequency.label,

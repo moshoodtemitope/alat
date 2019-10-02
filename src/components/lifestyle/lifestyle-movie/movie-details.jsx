@@ -134,13 +134,13 @@ class Moviedetails extends React.Component {
                  
                  case 'CinemaLocation':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
                 case 'showTime':
                         if(this.state[x] == null || this.state[x] ==""){
-                                 console.log(x)
+                                //  console.log(x)
                                  result =null;
                                  break;
                              }
@@ -149,7 +149,7 @@ class Moviedetails extends React.Component {
              }
          }
  
-        console.log(result);
+        // console.log(result);
         return result;
     }
  
@@ -244,7 +244,7 @@ class Moviedetails extends React.Component {
             ticketType:this.state.ticketType,
             title:this.state.title
         }
-        console.log(data)
+        // console.log(data)
         this.props.dispatch(actions.SubmitTicketData(data));
 
 
@@ -258,10 +258,10 @@ class Moviedetails extends React.Component {
 
         switch(this.checkValidity()){
             case null:
-              console.log('Empty value was found');
+            //   console.log('Empty value was found');
               break;
             case 'valid': 
-              console.log("No Empty Value Found");
+            //   console.log("No Empty Value Found");
               this.InitiateNetworkCall();
               break;
         }
@@ -310,7 +310,7 @@ class Moviedetails extends React.Component {
         let selectedItem = event.target.value;
         let name = event.target.name;
 
-        console.log(selectedItem);
+        // console.log(selectedItem);
         
         
         let data = {
@@ -322,7 +322,7 @@ class Moviedetails extends React.Component {
         this.setState({cinemaId:gottenValue[0]})
         this.setState({[name] : event.target.value});
 
-        console.log(data);
+        // console.log(data);
         this.props.dispatch(actions.ShowTime(this.state.user.token, data))
     }
 

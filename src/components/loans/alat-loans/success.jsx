@@ -66,7 +66,7 @@ class Success extends Component {
             TransactionPin: this.props.dataInfo.TransactionPin,
             NetworkCode : this.props.dataInfo.NetworkCode
         };
-        console.log("saving benficiary");
+        // console.log("saving benficiary");
         this.props.onSaveBeneficiary(this.state.user.token, payload);
     }
 

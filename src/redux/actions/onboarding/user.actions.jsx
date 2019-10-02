@@ -63,11 +63,11 @@ function reissueToken(payload) {
                 if (userDetails) {
                     userDetails.token = response.data.token;
                     localStorage.setItem("user", JSON.stringify(userDetails));
-                    console.log("reissuired token---------")
+                    // console.log("reissuired token---------")
                 }
             })
             .catch(error => {
-                console.log("reissue token failed", error)
+                // console.log("reissue token failed", error)
             });
     };
 }

@@ -35,7 +35,7 @@ class OtpValidation extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Handle Submit fired");
+        // console.log("Handle Submit fired");
         if (this.validatePin()) {
         }
         else {
@@ -45,7 +45,7 @@ class OtpValidation extends React.Component {
     }
 
     handleRetry =()=>{
-        console.log("handle retry fired");
+        // console.log("handle retry fired");
         this.props.retryAction();
     }
 

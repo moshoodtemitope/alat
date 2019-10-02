@@ -130,7 +130,7 @@ DispatchSuccessMessage = (data) => {
 }
 
 StoreInforMation = () => {
-    console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
+    // console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
     profileMenuStore = this.props.profileMenu.data.response;
  
     let localStore = window.localStorage;

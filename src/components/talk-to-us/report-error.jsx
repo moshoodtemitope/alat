@@ -125,25 +125,25 @@ const selectedTime = [
                  
                  case 'channelFrequency':
                          if(this.state[x] == null || this.state[x] == ""){
-                             console.log(x)
+                            //  console.log(x)
                              result = null;
                              break;
                          }
                 case 'TransactionType':
                         if(this.state[x] == null || this.state[x] ==""){
-                                 console.log(x)
+                                //  console.log(x)
                                  result =null;
                                  break;
                              }
                  case 'BankName':
                         if(this.state[x] == null || this.state[x] ==""){
-                                console.log(x)
+                                // console.log(x)
                                 result =null;
                                 break;
                              }
                 case 'SourceType':
                         if(this.state[x] == null || this.state[x] ==""){
-                             console.log(x)
+                            //  console.log(x)
                             result =null;
                             break;
                         }
@@ -152,13 +152,13 @@ const selectedTime = [
              }
          }
  
-        console.log(result);
+        // console.log(result);
         return result;
     }
  
 
     handleSelectDebitableAccounts(account) {
-        console.log('dss', account);
+        // console.log('dss', account);
         this.setState({ debitAccount: account })
         if (this.state.isSubmitted) {
             if(account.length == 10)
@@ -205,7 +205,7 @@ const selectedTime = [
         let channelId = event.target.value;
         let name = event.target.name;
 
-        console.log(channelId)
+        // console.log(channelId)
         this.setState({ChannelId:channelId });
         this.setState({[name] : event.target.value})
 
@@ -216,7 +216,7 @@ const selectedTime = [
         let name = event.target.name;
 
 
-        console.log(transactionTypeId)
+        // console.log(transactionTypeId)
         this.setState({TransactionTypeId:transactionTypeId})
         this.setState({[name] : event.target.value})
 
@@ -229,7 +229,7 @@ const selectedTime = [
     handleBank=(event)=>{
         let Bank = event.target.value;
         let name = event.target.name;
-        console.log(Bank)
+        // console.log(Bank)
 
         this.setState({Bank:Bank})
         this.setState({[name] : event.target.value})
@@ -253,7 +253,7 @@ const selectedTime = [
             "Description":this.state.Description
 
         }
-        console.log(data)
+        // console.log(data)
         this.props.dispatch(actions.ReportErrorMessage(data))
     }
 
@@ -269,10 +269,10 @@ const selectedTime = [
 
             switch(this.checkValidity()){
                 case null:
-                  console.log('Empty value was found');
+                //   console.log('Empty value was found');
                   break;
                 case 'valid': 
-                  console.log("No Empty Value Found");
+                //   console.log("No Empty Value Found");
                   this.InitiateNetworkCall();
                   break;
             }
