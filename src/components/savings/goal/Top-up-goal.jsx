@@ -133,8 +133,8 @@ class TopUPGoal extends Component {
             let res;
             if(this.state.Amount){
                 let amount = parseFloat(this.removeComma(this.state.Amount)) + this.state.amountSaved;
-                console.log(amount)
-                console.log(this.state.amountSaved)
+                // console.log(amount)
+                // console.log(this.state.amountSaved)
                 let ia = ((amount / 365) * 0.10 );
                 let interest = (ia - (parseFloat(0.10) * ia)).toFixed(2);
                 this.interest =  interest;
@@ -192,7 +192,7 @@ class TopUPGoal extends Component {
                                             <NavLink to='/savings/activityDashBoard'>
                                                 <li><a href="statement.html">Group Savings</a></li>
                                             </NavLink>
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
 
                                         </ul>
                                     </div>
@@ -241,7 +241,7 @@ class TopUPGoal extends Component {
 
 {
                                                             this.state.showLimitLevel ? 
-                                                              <div className="text-purple"><h3 className="text-purple "> Please amounts above 999,999,999 cannot be accepted on goals</h3></div> 
+                                                              <div className="text-purple"><h3 className="text-purple">Woah! 999,999,999 is enough for us</h3></div> 
                                                               : null
 
                                                             }

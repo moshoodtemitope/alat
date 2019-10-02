@@ -30,7 +30,7 @@ class EventDashBoard extends React.Component {
                                        
                                             <li><a className="active">Group Savings</a></li>
                                       
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
 
                                         </ul>
                                     </div>

@@ -52,7 +52,7 @@ class CreateStash extends React.Component {
         this.handleSelectDebitableAccounts = this.handleSelectDebitableAccounts.bind(this);
     }
     componentDidMount(){
-        console.log('interest loan rate',this.state.targetAmount)
+        // console.log('interest loan rate',this.state.targetAmount)
     }
     
     handleChange = (e) => {
@@ -222,7 +222,7 @@ class CreateStash extends React.Component {
                                             <NavLink to="/savings/activityDashBoard">
                                             <li><a>Group Savings</a></li>
                                             </NavLink>
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
                                         
                                         </ul>
                                     </div>
@@ -278,7 +278,7 @@ class CreateStash extends React.Component {
                                                             }
                                                             {
                                                             this.state.showLimitLevel ? 
-                                                              <div className="text-purple"><h3 className="text-purple"> Woah N999,999,999 is enough for us...</h3></div> 
+                                                              <div className="text-purple"><h3 className="text-purple">Woah! 999,999,999 is enough for us</h3></div> 
                                                               : null
 
                                                             }

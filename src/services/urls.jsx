@@ -1,5 +1,5 @@
-// const URL = 'https://api.alat.ng';
-const URL = 'https://196.43.215.170';
+const URL = 'https://api.alat.ng';
+//const URL = 'https://196.43.215.170';
 // const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
@@ -93,8 +93,6 @@ export const routes = {
    
     GET_CARD_CONTROL_SETTINGS: BASEURL + '/CardMaintenanceApi/api/v1/CardControl/CardSettingFromCardControl',
     GET_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getpans',
-    // GET_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getallpans',
-    // GET_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getactivepans',
     ACTIVATE_CARD: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/activatecard',
     GET_ACTIVE_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getactivepans',
     GET_CARD_EXISTING_SETTINGS: BASEURL + '/CardMaintenanceApi/api/v1/CardControl/CustomerCardsFromCardControl',
@@ -174,13 +172,6 @@ export const routes = {
 
     //ALat-Loans
     GET_ACTIVE_LOANS : BASEURL + '/Lending.API/api/loan/GetCustomerStatus',
-    LIQUIDATE_LOAN : BASEURL + '/Lending.API/Api/Loan/RepayLoan',
-    LIQUIDATE_ALAT_LOAN: BASEURL + '/Lending.API/Api/AlatLoan/RepayLoan',
-    GET_LOAN_STATE : BASEURL + '/Lending.API/Api/AlatLoan/GetDashboardData',
-    GET_LOAN_OFFERS : BASEURL + '/Lending.API/Api/Loan/GetOffers',
-    SEND_ACCEPT_LOAN : BASEURL + '/Lending.API/api/AlatLoan/SendAcceptLoanOtp',
-    SEND_ACCEPT_LOAN_WITH_OTP : BASEURL + '/Lending.API/api/AlatLoan/AcceptLoanWithOtp',
-    ACCEPT_INTERSWITCH_LOAN :BASEURL + '/Lending.API/Api/Loan/AcceptOfferV2',
 
     //WesternUnion
     WESTERNUNION_COUNTRIES: BASEURL + '/PaymentApi/api/WesternunionCountries',

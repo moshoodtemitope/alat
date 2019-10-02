@@ -100,7 +100,6 @@ class GroupAnalyticsMini2 extends React.Component {
                                             <NavLink to='/savings/choose-goal-plan'>
                                                 <li><a href="#">Goals</a></li>
                                             </NavLink>
-                                            {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                 <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
                                             {/* </NavLink> */}
                                                 {/* <li><a href="#">Investments</a></li> */}
