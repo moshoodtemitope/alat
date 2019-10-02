@@ -43,7 +43,7 @@ class Billers extends Component {
     }
 
     updateItems = () => {
-        console.log("setting first item here")
+        // console.log("setting first item here")
         this.setState({selectedItem : this.props.billerItems[0]})
     }
     
@@ -51,7 +51,7 @@ class Billers extends Component {
         this.setState({isValid :true})
         if(this.state.selectedBiller == null){
             this.setState({ selectedCategory }, () => {this.setBillers(selectedCategory.value)});
-            console.log(`Option selected:`, selectedCategory);
+            // console.log(`Option selected:`, selectedCategory);
         }else{
             this.setState({ selectedBiller : null }, () => {this.categoryChangedHandlerALT(selectedCategory)} )
         }
@@ -59,7 +59,7 @@ class Billers extends Component {
 
     categoryChangedHandlerALT = (selectedCategory) => {
         this.setState({ selectedCategory, selectedItem: null }, () => {this.setBillers(selectedCategory.value)});
-        console.log(`Option selected:`, selectedCategory);
+        // console.log(`Option selected:`, selectedCategory);
      }
 
     billerChangedHandler = (selectedBiller) => {
@@ -90,8 +90,8 @@ class Billers extends Component {
             item : this.state.selectedItem,
             hasAmount: this.state.selectedItem.hasAmount
         }
-        console.log("billsData")
-        console.log(billsData)
+        // console.log("billsData")
+        // console.log(billsData)
         this.props.setBillInfo(billsData);
         this.props.history.push('/bills/paybills/subscriber');
     }

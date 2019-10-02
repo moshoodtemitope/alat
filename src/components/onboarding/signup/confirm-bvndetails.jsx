@@ -42,7 +42,7 @@ class ConfirmBvnDetails extends React.Component{
             userData =  props.registration_data.user;
             this.setState({userData: userData});
             this.setState({phone: userData.phone});
-            console.log('user data is ---', userData);
+            // console.log('user data is ---', userData);
         }
     }
 

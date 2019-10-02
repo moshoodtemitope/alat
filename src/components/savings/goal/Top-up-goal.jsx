@@ -25,6 +25,8 @@ class TopUPGoal extends Component {
             amountSaved:null,
             goalId:null,
             goalTypeName:null,
+            displayState: "block",
+            showLimitLevel: false
 
 
         };
@@ -89,7 +91,15 @@ class TopUPGoal extends Component {
             if (/^\d+(\.\d+)?$/g.test(intVal)) {
                 // if (parseInt(intVal, 10) <= 2000000) {
                 this.setState({ Amount: intVal, Amount: this.toCurrency(intVal) },
-                    () => this.setFregValue());
+                    () => {
+                        this.setFregValue();
+                        if (parseInt(intVal) > parseInt(999999999)) {
+                            this.setState({displayState: "none", showLimitLevel: true})
+                         }
+                         else {
+                            this.setState({displayState: "block", showLimitLevel: false}) 
+                         }
+                    });
                 // }
             } else if (event.target.value === "") {
                 this.setState({ Amount: "", Amount: "" },
@@ -123,8 +133,8 @@ class TopUPGoal extends Component {
             let res;
             if(this.state.Amount){
                 let amount = parseFloat(this.removeComma(this.state.Amount)) + this.state.amountSaved;
-                console.log(amount)
-                console.log(this.state.amountSaved)
+                // console.log(amount)
+                // console.log(this.state.amountSaved)
                 let ia = ((amount / 365) * 0.10 );
                 let interest = (ia - (parseFloat(0.10) * ia)).toFixed(2);
                 this.interest =  interest;
@@ -182,7 +192,7 @@ class TopUPGoal extends Component {
                                             <NavLink to='/savings/activityDashBoard'>
                                                 <li><a href="statement.html">Group Savings</a></li>
                                             </NavLink>
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
 
                                         </ul>
                                     </div>
@@ -222,12 +232,19 @@ class TopUPGoal extends Component {
 
                                                         {
                                                             this.state.showMessage ?
-                                                                <div className="text-purple"><h3 className="text-purple"> Base on your previous savings you will earn
+                                                                <div className="text-purple" style={{display: this.state.displayState}}><h3 className="text-purple"> Base on your previous savings you will earn
                                                                     ₦ {util.formatAmount(this.state.payOutInterest)} in interest daily. Your stash will need to exist for a minimum of 30 days to qualify for interest </h3></div>
                                                                 : null
                                                         }
                                                         </div>:null
                                                     }
+
+{
+                                                            this.state.showLimitLevel ? 
+                                                              <div className="text-purple"><h3 className="text-purple">Woah! 999,999,999 is enough for us</h3></div> 
+                                                              : null
+
+                                                            }
                                                     
                                                 </div>                                                {
 
@@ -245,9 +262,14 @@ class TopUPGoal extends Component {
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <center>
+                                                        {this.state.displayState === "block" ?
                                                             <button type="submit" value="Fund Account" className="btn-alat m-t-10 m-b-20 text-center">
                                                                 {this.props.top_up_goal_step1.top_up_goal_status_step1 === customerGoalConstants.TOP_UP_GOAL_PENDING_STEP1 ? "Processing..." : "Top Up Goal"}
-                                                            </button>
+                                                            </button>:<button 
+                                                                
+                                                                disabled={true}
+                                                                type="submit" className="btn-alat m-t-10 m-b-20 text-center"> Next
+                                                            </button>}
                                                         </center>
                                                     </div>
                                                 </div>

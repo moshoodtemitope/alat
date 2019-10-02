@@ -38,7 +38,7 @@ class Index extends Component {
     }
 
     onDeleteBeneficiary = (beneficiaryData) => {
-        console.log(beneficiaryData);
+        // console.log(beneficiaryData);
         this.props.onDeleteBeneficiary(this.state.user.token, beneficiaryData);
         this.onCloseModal();
     }

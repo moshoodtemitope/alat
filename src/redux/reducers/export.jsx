@@ -59,7 +59,7 @@ import { fundAccountReducer, getTokenizedCardsReducer,
 import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingVerifyBVNReducer,
      loanOnboardingStep3Reducer, loanOnboardingValidateOTPReducer, generateStatementReducer,
       requestStatementReducer,salaryTransactionReducer, salaryEntryReducer, saveUserDetailsReducer, getScoreCardQuestionReducer,
-      postScoreCardAnswerReducer, resendOTPReducer} from './loan-onboarding.reducer';
+      postScoreCardAnswerReducer, resendOTPReducer, securityQuestionReducer} from './loan-onboarding.reducer';
 
 import { loanCalcDataReducer, loanApplyReducer, GetIndustriesReducer, GetEmployerReducer, CurrentLoanReducer, 
         LoanHistoryReducer, WorkIdFrontReducer, WorkIdBackReducer, loanRejectReducer, loanStandingOrderReducer,
@@ -163,7 +163,8 @@ export const loanOnboarding = {
     getScoreCardQuestionReducer,
     postScoreCardAnswerReducer,
     saveUserDetailsReducer,
-    resendOTPReducer
+    resendOTPReducer,
+    securityQuestionReducer
 }
 
 export const dashboard = {

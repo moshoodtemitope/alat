@@ -49,10 +49,7 @@ import GroupDelete from './group/confirm-group-savings-delete';
 import SavingsGroupDeleted from './group/success-deleted-group-savings';
 import ContributeToGroup from './group/contribute-to-group';
 import CashOutGoalSuccess from "./goal/cash-out-success-message"
-
-
-
-
+import GroupStartedSuccessfully from "./group/success-message-group-activated";
 
 class SavingsContainer extends Component {
 
@@ -121,12 +118,11 @@ class SavingsContainer extends Component {
                             <Route path="/savings/delete-group-savings-mod" component={SavingsGroupDeleted} />
                             <Route path="/savings/contribute-to-group" component={ContributeToGroup} />
                             <Route path="/savings/cash-out-success-message" component={CashOutGoalSuccess}/>
-
-                            
+                            <Route path="/savings/group-started-successfully" component={GroupStartedSuccessfully} />
                         </div>
                     </div>
-                    </InnerContainer>
-                </Fragment>
+                </InnerContainer>
+            </Fragment>
         );
     }
 }

@@ -95,14 +95,14 @@ CheckIfStoreInformationIsSet = () => {
            switch(x){
                case 'file3':
                     if(this.state[x] == null || this.state[x] == ""){
-                        console.log(this.state[x]);
+                        // console.log(this.state[x]);
                         result = null;
                         break;
                     }
            }
        }
 
-       console.log(result);
+    //    console.log(result);
        return result;
    }
 
@@ -112,8 +112,8 @@ CheckIfStoreInformationIsSet = () => {
 
    HandleFileUpLoad = (event) => {
        let name = event.target.name;
-       console.log(name);
-       console.log(event.target.files[0]);
+    //    console.log(name);
+    //    console.log(event.target.files[0]);
     //    return;
        this.setState({file3: event.target.files[0]});
    }
@@ -131,7 +131,7 @@ CheckIfStoreInformationIsSet = () => {
         const formData = new FormData()
         formData.append('DocumentType', "Passport")
         formData.append('File', this.state.file3,this.state.file3.name)
-        console.log(formData);
+        // console.log(formData);
        this.props.dispatch(actions.addDocuments(this.state.user.token, formData));
    }
 
@@ -140,14 +140,14 @@ CheckIfStoreInformationIsSet = () => {
         event.preventDefault();
 
         
-        console.log("code Got here");
+        // console.log("code Got here");
 
         switch(this.checkValidity()){
             case null: 
-                console.log('Empty Field Found');
+                // console.log('Empty Field Found');
                 break;
             case 'valid': 
-                console.log('No Empty Field Found');
+                // console.log('No Empty Field Found');
                 this.SubmitDocuments();
         }
    }
@@ -211,7 +211,7 @@ GetUserProfileMenu = () => {
  }
 
  StoreInforMation = () => {
-    console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
+    // console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
     profileMenuStore = this.props.profileMenu.data.response;
  
     let localStore = window.localStorage;

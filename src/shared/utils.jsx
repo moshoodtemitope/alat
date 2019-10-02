@@ -1,6 +1,6 @@
 
 export const formatAmount = (amount) => {
-    return amount.toLocaleString(navigator.language, { minimumFractionDigits: 2 });
+    return amount.toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 };
 
 export const formatAmountNoDecimal = (amount) => {
@@ -156,7 +156,7 @@ export const modelStateErrorHandler = (error, field) => {
 };
 
 export const handleError = (error) => {
-    console.log("-----in handle error")
+    //console.log("-----in handle error")
     var message = '';
     if (error.response) {
         // The request was made and the server responded with a status code
@@ -182,6 +182,17 @@ export const handleError = (error) => {
         message = error.message;
     }
     return message;
+};
+
+export const returnStatusCode =(error) =>{
+    var statusCode = '';
+    if (error.response) {
+        if (error.response.status) {
+           statusCode = error.response.status;
+        } 
+    }
+    // console.log(statusCode);
+   return statusCode;
 };
 
 export const FormartDate = (date) => {

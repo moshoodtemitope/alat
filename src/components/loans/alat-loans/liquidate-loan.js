@@ -76,22 +76,22 @@ class LiquidateLoan extends Component {
 
 
     componentDidMount() {
-        console.log("liquidate loan reached")
+        // console.log("liquidate loan reached")
         this.props.fetchDebitableAccounts(this.state.user.token);
     }
 
 
     sortAccountsForSelect = () => {
         var arrayToDisplay = [];
-        console.log(this.props.accounts);
-        console.log("this.props.accounts");
+        // console.log(this.props.accounts);
+        // console.log("this.props.accounts");
 
         if (this.props.accounts.length >= 1) {
             this.props.accounts.map((data => arrayToDisplay.push({ value: data.AccountNumber, label: data.AccountDescription + " - ₦" + formatAmount(data.AvailableBalance) })));
         } else {
             arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account Available' }];
         }
-        console.log(arrayToDisplay)
+        // console.log(arrayToDisplay)
 
         const updatedSelectOption = {
             ...this.state.liquidateLoanForm
@@ -105,7 +105,7 @@ class LiquidateLoan extends Component {
         var validation = { ...this.state.validation };
         validation.accountError.hasError = false;
         this.setState({ selectedAccount, validation });
-        console.log(`Option selected:`, selectedAccount);
+        // console.log(`Option selected:`, selectedAccount);
     }
 
 
@@ -133,7 +133,7 @@ class LiquidateLoan extends Component {
                 }
                 updatedFormElement.valueToDisplay = formatAmountNoDecimal(parseInt(updatedFormElement.value));
                 // }
-                console.log(updatedFormElement)
+                // console.log(updatedFormElement)
             }
         }
         if (inputIdentifier == "pin") {
@@ -188,7 +188,7 @@ class LiquidateLoan extends Component {
                 Amount: parseFloat(this.state.liquidateLoanForm.amount.value),
                 ProviderCode: this.props.loanInfo.providerCode
             }
-            console.log("all good", payload);
+            // console.log("all good", payload);
             if(this.props.loanInfo.isGoalLoan){
                 delete payload.ProviderCode;
                 this.props.onRepayAlatLoan(this.state.user.token, payload)

@@ -1,7 +1,7 @@
 // timecounter
 
 export function days(param1, param2){
-  console.log(param1.split('-'));
+//   console.log(param1.split('-'));
   var DateDiff = {
       inDays: function(d1, d2) {
           var t2 = d2.getTime();

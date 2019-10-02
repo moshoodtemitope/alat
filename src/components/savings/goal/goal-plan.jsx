@@ -76,7 +76,7 @@ class GoalPlan extends React.Component {
         this.setState({visible: false})
     };
     handleSubmit=(event)=>{
-        console.log(JSON.parse(event.target.id));
+        // console.log(JSON.parse(event.target.id));
         this.props.dispatch(SubmitDashBoardGoalData(event.target.id))
 
     }
@@ -216,7 +216,7 @@ class GoalPlan extends React.Component {
                                                                 pathname:'/savings/top-up-goal-step1',
                                                                
                                                             } }>
-                                                                <span style={{ fontFamily:"proxima_novaregular",fontSize:"12px"
+                                                                <span style={{fontSize:"12px"
                                                                 }} id={JSON.stringify(hist)} onClick={this.handleSubmit}>Top Up Stash</span>
                                                             </Link>
 
@@ -225,7 +225,7 @@ class GoalPlan extends React.Component {
                                                                 pathname:'/savings/stash-cashout',
                                                                 
                                                             } }>
-                                                                <span style={{fontFamily:"proxima_novaregular",fontSize:"12px"
+                                                                <span style={{fontSize:"12px"
                                                                 }} id={JSON.stringify(hist)} onClick={this.handleSubmit}>Cashout Stash</span>
                                                             </Link>
                                                             </div>
@@ -243,7 +243,7 @@ class GoalPlan extends React.Component {
                                                     pathname:'/savings/view-goal-summary',
                                                     
                                                 } }>
-                                                <span style={{ fontFamily:"proxima_novaregular"
+                                                <span style={{
                                                 }} id={JSON.stringify(hist)} onClick={this.handleSubmit}>View Details</span>
                                                 </Link>
 
@@ -303,7 +303,7 @@ class GoalPlan extends React.Component {
     render() {
         const GoalTransHistory = this.props.customerGoalTransHistory;
 
-        console.log("goal-history ",GoalTransHistory.customer_goal_data);
+        // console.log("goal-history ",GoalTransHistory.customer_goal_data);
 
 
         return (
@@ -324,7 +324,7 @@ class GoalPlan extends React.Component {
                                         </NavLink> */}
                                         {
                                             this.state.visible ?
-                                            <li style={{float:'right',color:'white',fontSize:'16px, font-family:"proxima_novaregular'}}> <a onClick={this.togglePage} className="btn-alat">Create a Savings Goal</a> </li> : null
+                                            <li style={{float:'right',color:'white',fontSize:'16px'}}> <a onClick={this.togglePage} className="btn-alat">Create a Savings Goal</a> </li> : null
                                         }
                                     </ul>
                                 </div>

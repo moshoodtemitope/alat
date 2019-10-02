@@ -247,7 +247,7 @@ class ProvideDetails extends React.Component{
         
             
         this.setState({ selectedAccount: account, selectedDebitableAccount, isSelectChanged:true, transferLimit}, ()=>{
-            console.log("selected account is", selectedDebitableAccount);
+            // console.log("selected account is", selectedDebitableAccount);
         });
         
         const {dispatch} = this.props;

@@ -21,7 +21,8 @@ class LoanKycComponent extends React.Component {
         this.state = {
             user: JSON.parse(localStorage.getItem("user")),
             Passport: { name: "" },
-            Signature: { name: "" }
+            Signature: { name: "" },
+            disableButton: false
         }
     }
 
@@ -56,27 +57,29 @@ class LoanKycComponent extends React.Component {
     }
 
     formSubmit = (e) => {
-        e.preventDefault();
+        //this.props.goForward();
+         e.preventDefault();
+       // this.props.goForward();
         if (this.validateImages() != false) {
-            console.log("after validate image");
+            // console.log("after validate image");
             this.uploadImage(this.getImageToUpload('Signature', this.state.Signature), {
                 pending: userConstants.SIGNATURE_UPLOAD_PENDING,
                 success: userConstants.SIGNATURE_UPLOAD_SUCCESS,
                 failure: userConstants.SIGNATURE_UPLOAD_FAILURE
             });
-            this.uploadImage(this.getImageToUpload('Passport', this.state.Passport), {
-                pending: userConstants.PASSPORT_UPLOAD_PENDING,
-                success: userConstants.PASSPORT_UPLOAD_SUCCESS,
-                failure: userConstants.PASSPORT_UPLOAD_FAILURE
-            });
+            // this.uploadImage(this.getImageToUpload('Passport', this.state.Passport), {
+            //     pending: userConstants.PASSPORT_UPLOAD_PENDING,
+            //     success: userConstants.PASSPORT_UPLOAD_SUCCESS,
+            //     failure: userConstants.PASSPORT_UPLOAD_FAILURE
+            // });
         }
     }
 
 
 
     onImageUpload = (picture, e) => {
-        console.log(picture);
-        console.log(e);
+        // console.log(picture);
+        // console.log(e);
         if (picture.length >= 1) {
             util.getBase64(picture[picture.length - 1], (result) => {
                 this.setState({ [e]: { file: result, name: picture[picture.length - 1].name } }, () => {
@@ -109,15 +112,37 @@ class LoanKycComponent extends React.Component {
     }
 
     uploadImage = (data, action) => {
-        this.props.dispatch(userActions.uploadDocument(this.state.user.token, data, action))
+        //this.props.goForward();
+         this.props.dispatch(userActions.uploadDocument(this.state.user.token, data, action, true))
     }
 
     gotoNextPage = () => {
-    
+        //this.props.goForward();
         if (this.props.passport && this.props.signature)
             if (this.props.passport.passport_status == userConstants.PASSPORT_UPLOAD_SUCCESS && this.props.signature.sign_status == userConstants.SIGNATURE_UPLOAD_SUCCESS) {
-                this.props.goForward();
+                this.props.dispatch(actions.clearLoanOnboardingStore());
+                //setTimeout(()=>{ this.props.goForward(); }, 3000);
+                // return (<Redirect to="/loans/dashboard/salary" />);
+                //this.props.goForward();
             }
+    }
+    disbaleButton =()=>{
+        if(this.props.passport.paspport_status == userConstants.PASSPORT_UPLOAD_PENDING || 
+            this.props.signature.sign_status == userConstants.SIGNATURE_UPLOAD_PENDING){
+                this.setState({disbaleButton : true});
+                return true;
+            }
+    }
+
+    buttonText=()=>{
+        var text = "Upload Documents";
+        if(this.props.passport.paspport_status == userConstants.PASSPORT_UPLOAD_PENDING || this.props.signature.sign_status == userConstants.SIGNATURE_UPLOAD_PENDING){
+            text = "Processing...";
+        }
+        if(this.state.disbaleButton == true){
+            text = "Upload Successful";
+        }
+        return text;
     }
 
 
@@ -187,9 +212,9 @@ class LoanKycComponent extends React.Component {
                                     </div>
                                     {/* (this.props.passport.paspport_status == userConstants.PASSPORT_UPLOAD_PENDING || */}
                                     {/* ( */}
-                                    <input type="submit" value={ this.props.passport.paspport_status == userConstants.PASSPORT_UPLOAD_PENDING || this.props.signature.sign_status == userConstants.SIGNATURE_UPLOAD_PENDING ? "Processing..." : "Upload Documents"}
-                                        disabled={ this.props.passport.paspport_status == userConstants.PASSPORT_UPLOAD_PENDING || this.props.signature.sign_status == userConstants.SIGNATURE_UPLOAD_PENDING}
-                                        className="btn-alat btn-block" />
+                                    <button type="submit"
+                                        disabled={this.state.disableButton}
+                                        className="btn-alat btn-block">{this.buttonText()}</button>
                                 </form>
                             </div>
                         </div>

@@ -41,10 +41,12 @@ class FlexGoal extends React.Component {
             showTotalAmount: "",
             selectItems: "",
             goalFrequencyInvalid:false,
+            displayState: "block",
+            showLimitLevel: false
 
 
         };
-        console.log('',this.state);
+        // console.log('',this.state);
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleStartDatePicker = this.handleStartDatePicker.bind(this);
@@ -114,6 +116,13 @@ class FlexGoal extends React.Component {
                 () => {
                 this.calculationForTotalAmount();
                     this.calculateInterestRate();
+                    if (parseInt(intVal) > parseInt(999999999)) {
+                        this.setState({displayState: "none", showLimitLevel: true})
+                     }
+                     else {
+                        this.setState({displayState: "block", showLimitLevel: false}) 
+                     }
+
                 });
             // }
         } else if (e.target.value == "") {
@@ -121,6 +130,7 @@ class FlexGoal extends React.Component {
                 () => {
                     this.calculationForTotalAmount();
                     this.calculateInterestRate();
+                    
                 });
         }
 
@@ -204,7 +214,7 @@ class FlexGoal extends React.Component {
      calculationForTotalAmount = () => {
          let amount= parseFloat(this.removeComma(this.state.targetAmount));
          let days = this.state.goalFrequencyValue.split(" ", 1);
-         console.log("l;llll", days)
+        //  console.log("l;llll", days)
          // days = days.split(" ", 1);
          let totalAmount = amount * days;
 
@@ -222,7 +232,7 @@ class FlexGoal extends React.Component {
         let amount= parseFloat(this.removeComma(this.state.targetAmount));
         let selectedFrequency = this.state.goalFrequencyValue.split(" ",1);
 
-        console.log("monthly", this.state.goalFrequencyName);
+        // console.log("monthly", this.state.goalFrequencyName);
         if (this.state.targetAmount ==="") {
             this.setState({interest: 0});
         }
@@ -243,11 +253,11 @@ class FlexGoal extends React.Component {
 
             }else{
                 res = this.state.goalFrequencyValue.split(" ",1) * 1;
-                console.log('iduma',res);
+                // console.log('iduma',res);
 
                 this.interest = this.GetDailyFutureValue(amount, 0.10, res) - (amount * res);
                 this.interest = this.toCurrency(this.interest.toFixed(2));
-                console.log('abraham',this.interest);
+                // console.log('abraham',this.interest);
                 this.setState({interest: this.interest});
 
             }
@@ -387,7 +397,7 @@ class FlexGoal extends React.Component {
                                         <NavLink to="/savings/activityDashBoard">
                                             <li><a>Group Savings</a></li>
                                         </NavLink>                                            
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
 
                                         </ul>
                                     </div>
@@ -435,8 +445,14 @@ class FlexGoal extends React.Component {
                                                             <div className="text-danger">Enter the amount you want to save ?</div>}
                                                             {
                                                                 this.state.showMessage ?
-                                                                    <div className="text-purple"><h3 className="text-purple"> You will have  saved ₦ {this.state.showTotalAmount} at the end of this goal.</h3></div>
+                                                                    <div className="text-purple" style={{display: this.state.displayState}}><h3 className="text-purple"> You will have  saved ₦ {this.state.showTotalAmount} at the end of this goal.</h3></div>
                                                                     : null
+
+                                                            }
+                                                            {
+                                                            this.state.showLimitLevel ? 
+                                                              <div className="text-purple"><h3 className="text-purple"> Woah! 999,999,999 is enough for us</h3></div> 
+                                                              : null
 
                                                             }
 
@@ -508,13 +524,20 @@ class FlexGoal extends React.Component {
                                                     <div className="row">
                                                         <div className="col-sm-12">
                                                             <center>
-                                                                <button
+                                                                { this.state.displayState === "block" ?
+                                                                    <button
                                                                     disabled={this.props.flex_goal_step1.flex_step1_status === flexGoalConstants.FETCH_FLEX_GOAL_PENDING}
 
                                                                     type="submit" className="btn-alat m-t-10 m-b-20 text-center">
                                                                     {this.props.flex_goal_step1.flex_step1_status === flexGoalConstants.FETCH_FLEX_GOAL_PENDING ? "Processing..." :"Next"}
 
-                                                                </button>
+                                                                </button>: <button 
+                                                                
+                                                                disabled={true}
+                                                                type="submit" className="btn-alat m-t-10 m-b-20 text-center"> Next
+                                                            </button>
+                                                                }
+                                                                
                                                             </center>
                                                         </div>
                                                     </div>

@@ -67,7 +67,7 @@ class EmployerDetails extends React.Component {
         if (picture.length >= 1) {
             util.getBase64(picture[picture.length - 1], (result) => {
                 this.setState({ [e]: { file: result, name: picture[picture.length - 1].name } }, () => {
-                    console.log(this.state[e]);
+                    // console.log(this.state[e]);
                     this.uploadImage(this.getImageToUpload(e, this.state[e]));
                 });
             });
@@ -361,6 +361,12 @@ class EmployerDetails extends React.Component {
             }
     }
 
+    goBack=(e)=>{
+        e.preventDefault();
+        this.props.dispatch(loanActions.goBackStoreClear(loanConstants.LOAN_APPLY_CLEAR))
+        this.props.previousPage();
+    }
+
     testSelectedEmployer = () => {
         if (this.state.selectedEmployer == null) {
             return false
@@ -382,8 +388,8 @@ class EmployerDetails extends React.Component {
                 <div className="col-sm-12">
                     <div className="max-500">
                         <div className="loan-header-text text-center">
-                            <h4 className="text-black">Input your salary account details</h4>
-                            <p>Your loan will be disbursed into this account</p>
+                            <h4 className="text-black">We'd love to know your employment details</h4>
+                            {/* <p>Your loan will be disbursed into this account</p> */}
                         </div>
                         <div className="al-card no-pad">
                             <div className="transfer-ctn">
@@ -465,9 +471,9 @@ class EmployerDetails extends React.Component {
                                 </form>
                             </div>
                         </div>
-                        {/* <center>
-                            <Link to={'/loan/bvn-info'} className="add-bene m-t-50">Go Back</Link>
-                        </center> */}
+                        {this.props.showBackButton && <center>
+                            <a style={{ cursor: "pointer"}} onClick={this.goBack} className="add-bene m-t-50">Go Back</a>
+                        </center>}
                     </div>
                 </div>
             </Fragment>

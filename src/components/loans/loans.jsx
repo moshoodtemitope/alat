@@ -40,13 +40,13 @@ class Loans extends React.Component {
 											  </p>
                         </div>
 
-                        {/* <div className="fund-option loan" onClick={() => { this.props.history.push("/loans/salary/dashboard") }}>
+                        <div className="fund-option loan" onClick={() => { this.props.history.push("/loans/salary/dashboard") }}>
                             <i className="toshow"><img src={salaryLoan} /></i>
                             <i className="hoveraction"><img src={salaryLoanHover} /></i>
                             <p>Salary Based Lending</p>
                             <p>Loans Description should look great here. You know What i mean?
 												Loans Description should look great here. You know What i mean?</p>
-                        </div> */}
+                        </div>
                     </div>
                 </div>
 

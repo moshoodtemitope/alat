@@ -139,11 +139,11 @@ class VerifyOtp extends Component {
                 </div>
             );
         }else if (this.props.otpConfirmed == 0) {
-            console.log("redirected on otpC 0");
+            // console.log("redirected on otpC 0");
             this.props.resetPageState(2);
             verify = <Redirect to="/bills/paybills/success" />
         }else{
-            console.log("got nothing n redi");
+            // console.log("got nothing n redi");
             verify = <Redirect to="/bills/paybills/biller" />
         }
 

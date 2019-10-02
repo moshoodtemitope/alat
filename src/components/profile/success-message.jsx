@@ -49,14 +49,25 @@ CheckIfStoreInformationIsSet = () => {
           history.push('/profile');
        }, 2000);
 
-       console.log(this.props.profileSuccessMessage.data);
-
+    //    console.log(this.props.profileSuccessMessage.data);
        this.setProfile();
+
+       if(this.props.profileSuccessMessage != undefined)
+           window.localStorage.setItem('storedMsg', this.props.profileSuccessMessage.data);
+   }
+
+   getSuccessMessage = () => {
+       return window.localStorage.getItem('storedMsg');
+   }
+
+   GetProfileMenu = () => {
+    //    console.log('pspspspspspsps');
+       this.props.dispatch(actions.profileMenu(this.state.user.token));
    }
 
    GetResidentialAddress = () => {
     this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
-}
+   }
 
 
    setProfile = () => {
@@ -131,7 +142,7 @@ DispatchSuccessMessage = (data) => {
 }
 
 StoreInforMation = () => {
-    console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
+    // console.log('INFO SOMETHING WAS FIRED LET SEE WHATS IT IS');
     profileMenuStore = this.props.profileMenu.data.response;
  
     let localStore = window.localStorage;
@@ -153,82 +164,255 @@ ChangeResidentialStatus = () => {
 
       if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
              this.ChangeResidentialStatus();
+    
+      if(this.props.profileMenu.data == undefined)
+           this.GetProfileMenu();
 
-       return(
-        <Fragment>
-           
-                    <div className="">
-                         <div className="container">
-                                <div className="coverPropertiesofComponent">
-                                    <div className="col-sm-12">
-                                        <p className="page-title">Account Setting</p>
-                                    </div>
-
-                                    <div className="col-sm-12">
-                                        <div>
-                                            <div className="sub-tab-nav" style={{marginBottom: 10}}>
-                                                <ul>
-                                                    <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                                   
-                                                </ul>
+      if(this.props.profileMenu.message === profile.GET_PROFILE_MENU_PENDING){
+        return(
+            <Fragment>
+                
+                        <div className="">
+                                <div className="container">
+                                    <div className="coverPropertiesofComponent">
+                                        <div className="col-sm-12">
+                                            <p className="page-title">Account Setting</p>
+                                        </div>
+    
+                                        <div className="col-sm-12">
+                                            <div>
+                                                <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                                    <ul>
+                                                        <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                                        
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                
-                                <div className="row packageContent">
-                                    <div className="col-sm-4">
-                                        <div className="forProfilePicture">
-                                                <div className="profilePixCircle">
-
-                                                </div>
-                                                <p className="personsName">{this.props.profileMenu.data.response.fullName}</p>
-                                                <p className="details">{this.props.profileMenu.data.response.username}</p>
-                                                <p className="details">{moment(this.props.profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>
-                                                <hr />
-
-                                                <div className="tickItems" onClick={this.NavigateToBVN}>
-                                                        {isBvNLinked ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>}
-                                                        <p className="pSubs">Link BVN</p>
-                                                    </div>
-                                                    
-                                                    <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
-                                                        {isProfileInformation ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>}
-                                                        <p className="pSubs">Personal Information</p>
-                                                    </div>
-                                                    <div className="tickItems" onClick={this.NavigateToContact}>
-                                                        {isContactDetails ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage}  alt="" className="largeVectorI"/>}
-                                                        <p className="pSubs">Contact Details</p>
-                                                    </div>
-                                                    <div className="tickItems" onClick={this.NavigateToDocuments}>
-                                                        {isDocument ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt=""  className="largeVectorI" />}
-                                                        <p className="pSubs">Document Upload</p>
-                                                    </div>
-                                                    <div className="tickItems" onClick={this.NavigateToNextOfKin}>
-                                                        {/* {typeof isToNextOfKin} */}
-                                                        {isToNextOfKin ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>} 
-                                                        <p className="pSubs">Next of Kin</p>
-                                                    </div>
-                                                    <div className="tickItems" onClick={this.NavigateResidentialAddress}>
-                                                        {residentialAddress ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>} 
-                                                        <p className="pSubs">Residential Address</p>
-                                                    </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-6">
-                                    <div className="parentForm sucMsg">
-                                           <img src="/src/assets/img/check.svg" alt="" className="imgShape" />
-                                           <p className="sucMssgOfProfile">{this.props.profileSuccessMessage.data}</p>
-                                           
-                                    </div>
                                     
+                                        <p>Loading Data ...</p>
                                     </div>
-                                </div>
                                 </div>
                             </div>
-                        </div>
+                    
+            </Fragment>
+            )
+      }
+
+      if(this.props.profileMenu.message === profile.GET_PROFILE_MENU_SUCCESS){
+        return(
+            <Fragment>
                 
-        </Fragment>
-       )
+                        <div className="">
+                                <div className="container">
+                                    <div className="coverPropertiesofComponent">
+                                        <div className="col-sm-12">
+                                            <p className="page-title">Account Setting</p>
+                                        </div>
+    
+                                        <div className="col-sm-12">
+                                            <div>
+                                                <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                                    <ul>
+                                                        <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                                        
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+                                    <div className="row packageContent">
+                                        <div className="col-sm-4">
+                                            <div className="forProfilePicture">
+                                                    <div className="profilePixCircle">
+    
+                                                    </div>
+                                                    <p className="personsName">{this.props.profileMenu.data.response.fullName}</p>
+                                                    <p className="details">{this.props.profileMenu.data.response.username}</p>
+                                                    <p className="details">{moment(this.props.profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>
+                                                    <hr />
+    
+                                                    <div className="tickItems" onClick={this.NavigateToBVN}>
+                                                            {isBvNLinked ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>}
+                                                            <p className="pSubs">Link BVN</p>
+                                                        </div>
+                                                        
+                                                        <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
+                                                            {isProfileInformation ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>}
+                                                            <p className="pSubs">Personal Information</p>
+                                                        </div>
+                                                        <div className="tickItems" onClick={this.NavigateToContact}>
+                                                            {isContactDetails ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage}  alt="" className="largeVectorI"/>}
+                                                            <p className="pSubs">Contact Details</p>
+                                                        </div>
+                                                        <div className="tickItems" onClick={this.NavigateToDocuments}>
+                                                            {isDocument ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt=""  className="largeVectorI" />}
+                                                            <p className="pSubs">Document Upload</p>
+                                                        </div>
+                                                        <div className="tickItems" onClick={this.NavigateToNextOfKin}>
+                                                            {/* {typeof isToNextOfKin} */}
+                                                            {isToNextOfKin ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>} 
+                                                            <p className="pSubs">Next of Kin</p>
+                                                        </div>
+                                                        <div className="tickItems" onClick={this.NavigateResidentialAddress}>
+                                                            {residentialAddress ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>} 
+                                                            <p className="pSubs">Residential Address</p>
+                                                        </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-sm-6">
+                                        <div className="parentForm sucMsg">
+                                                <img src="/src/assets/img/check.svg" alt="" className="imgShape" />
+                                                <p className="sucMssgOfProfile">{this.getSuccessMessage()}</p>
+                                                
+                                        </div>
+                                        
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                    
+            </Fragment>
+            )
+      }
+
+      if(this.props.profileMenu.message === profile.GET_PROFILE_MENU_FAILURE){
+        return(
+            <Fragment>
+                
+                        <div className="">
+                                <div className="container">
+                                    <div className="coverPropertiesofComponent">
+                                        <div className="col-sm-12">
+                                            <p className="page-title">Account Setting</p>
+                                        </div>
+    
+                                        <div className="col-sm-12">
+                                            <div>
+                                                <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                                    <ul>
+                                                        <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                                        
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+                                        <p>Network Error ...</p>
+                                    </div>
+                                </div>
+                            </div>
+                    
+            </Fragment>
+            )
+      }
+             
+      if(this.props.profileSuccessMessage == undefined){
+        return(
+            <Fragment>
+                
+                        <div className="">
+                                <div className="container">
+                                    <div className="coverPropertiesofComponent">
+                                        <div className="col-sm-12">
+                                            <p className="page-title">Account Setting</p>
+                                        </div>
+    
+                                        <div className="col-sm-12">
+                                            <div>
+                                                <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                                    <ul>
+                                                        <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                                        
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+                                        <p>Loading Data ...</p>
+                                    </div>
+                                </div>
+                            </div>
+                    
+            </Fragment>
+            )
+      }
+    // return(
+    // <Fragment>
+        
+    //             <div className="">
+    //                     <div className="container">
+    //                         <div className="coverPropertiesofComponent">
+    //                             <div className="col-sm-12">
+    //                                 <p className="page-title">Account Setting</p>
+    //                             </div>
+
+    //                             <div className="col-sm-12">
+    //                                 <div>
+    //                                     <div className="sub-tab-nav" style={{marginBottom: 10}}>
+    //                                         <ul>
+    //                                             <li><NavLink to={'/profile'} >Profile</NavLink></li>
+                                                
+    //                                         </ul>
+    //                                     </div>
+    //                                 </div>
+    //                             </div>
+                            
+    //                         <div className="row packageContent">
+    //                             <div className="col-sm-4">
+    //                                 <div className="forProfilePicture">
+    //                                         <div className="profilePixCircle">
+
+    //                                         </div>
+    //                                         <p className="personsName">{this.props.profileMenu.data.response.fullName}</p>
+    //                                         <p className="details">{this.props.profileMenu.data.response.username}</p>
+    //                                         <p className="details">{moment(this.props.profileMenu.data.response.lastLoginDate).format("MMMM Do YYYY, h:mm:ss a")}</p>
+    //                                         <hr />
+
+    //                                         <div className="tickItems" onClick={this.NavigateToBVN}>
+    //                                                 {isBvNLinked ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>}
+    //                                                 <p className="pSubs">Link BVN</p>
+    //                                             </div>
+                                                
+    //                                             <div className="tickItems" onClick={this.NavigateToPersonalInfo}>
+    //                                                 {isProfileInformation ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>}
+    //                                                 <p className="pSubs">Personal Information</p>
+    //                                             </div>
+    //                                             <div className="tickItems" onClick={this.NavigateToContact}>
+    //                                                 {isContactDetails ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage}  alt="" className="largeVectorI"/>}
+    //                                                 <p className="pSubs">Contact Details</p>
+    //                                             </div>
+    //                                             <div className="tickItems" onClick={this.NavigateToDocuments}>
+    //                                                 {isDocument ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt=""  className="largeVectorI" />}
+    //                                                 <p className="pSubs">Document Upload</p>
+    //                                             </div>
+    //                                             <div className="tickItems" onClick={this.NavigateToNextOfKin}>
+    //                                                 {/* {typeof isToNextOfKin} */}
+    //                                                 {isToNextOfKin ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>} 
+    //                                                 <p className="pSubs">Next of Kin</p>
+    //                                             </div>
+    //                                             <div className="tickItems" onClick={this.NavigateResidentialAddress}>
+    //                                                 {residentialAddress ? <img className="improveImgSize" src={CompletedprofileImage} alt="" /> : <img src={NotCompletedprofileImage} alt="" className="largeVectorI"/>} 
+    //                                                 <p className="pSubs">Residential Address</p>
+    //                                             </div>
+    //                                 </div>
+    //                             </div>
+    //                             <div className="col-sm-6">
+    //                             <div className="parentForm sucMsg">
+    //                                     <img src="/src/assets/img/check.svg" alt="" className="imgShape" />
+    //                                     <p className="sucMssgOfProfile">{this.props.profileSuccessMessage.data}</p>
+                                        
+    //                             </div>
+                                
+    //                             </div>
+    //                         </div>
+    //                         </div>
+    //                     </div>
+    //                 </div>
+            
+    // </Fragment>
+    // )
    }
 }
 

@@ -19,7 +19,7 @@ class UserAccounts extends React.Component{
     fetchAccounts(){
         const { dispatch } = this.props;
         // console.log(this.props);
-        console.log(this.state.user.token);
+        // console.log(this.state.user.token);
         dispatch(getAccounts(this.state.user.token));
     };
 
@@ -70,14 +70,14 @@ class UserAccounts extends React.Component{
     }
 
     getAccountHistory(accountIndex){
-        console.log(accountIndex.slideIndex);
-        console.log(this.props);
+        // console.log(accountIndex.slideIndex);
+        // console.log(this.props);
         const { dispatch } = this.props;
         let props = this.props;
         let accounts = props.accounts;
         let userAccounts = accounts.user_account_data.response.Accounts;
         let selectedAccount = userAccounts[accountIndex.slideIndex];
-        console.log(selectedAccount);
+        // console.log(selectedAccount);
         let payload = {
             Take: 10,
             Skip: 0,

@@ -65,20 +65,20 @@ class ConfirmData extends Component {
 
     componentDidMount() {
         this.props.fetchDebitableAccounts(this.state.user.token);
-        console.log(this.props.dataInfo)
+        // console.log(this.props.dataInfo)
     }
 
     sortAccountsForSelect = () => {
         var arrayToDisplay = [];
-        console.log(this.props.accounts);
-        console.log("this.props.accounts");
+        // console.log(this.props.accounts);
+        // console.log("this.props.accounts");
 
         if (this.props.accounts.length >= 1) {
             this.props.accounts.map((data => arrayToDisplay.push({ value: data.AccountNumber, label: data.AccountDescription + " - ₦" + formatAmount(data.AvailableBalance) })));
         } else {
             arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account Available' }];
         }
-        console.log(arrayToDisplay)
+        // console.log(arrayToDisplay)
 
         const updatedSelectOption = {
             ...this.state.confirmDataForm
@@ -92,7 +92,7 @@ class ConfirmData extends Component {
         var validation = { ...this.state.validation };
         validation.accountError.hasError = false;
         this.setState({ selectedAccount, validation });
-        console.log(`Option selected:`, selectedAccount);
+        // console.log(`Option selected:`, selectedAccount);
     }
 
 

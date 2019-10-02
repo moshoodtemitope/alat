@@ -222,7 +222,7 @@ export const sendNewVirtualCardInfo = (newVirtualCardInfo, token, hasOtp)=>{
                 
             })
             .catch(error =>{
-                console.log('Error name is', error.response);
+                // console.log('Error name is', error.response);
                 if(error.response && typeof(error.response.message) !=="undefined"){
                     dispatch(failure(error.response.message.toString()));
                 }
@@ -278,7 +278,7 @@ export const topUpVirtualCard = (cardTopUpDetails, token, hasOtp)=>{
                 }
             })
             .catch(error =>{
-                console.log('log is', error.response);
+                // console.log('log is', error.response);
                 if(error.response && typeof(error.response.message) !=="undefined"){
                     dispatch(failure(error.response.message.toString()));
                 }
@@ -500,7 +500,7 @@ export const getCurrentATMCard = (token)=>{
                     }
                 }
                 else{
-                    console.log('error', error.response);
+                    // console.log('error', error.response);
                     dispatch(failure('An error occured. Please try again '));
                 }
             })

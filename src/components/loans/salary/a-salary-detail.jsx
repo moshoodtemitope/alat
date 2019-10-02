@@ -32,6 +32,10 @@ class LoanSalaryDetail extends React.Component{
         }
     }
 
+    NavigateToLoanDashBoard=()=>{
+        this.props.history.push('/loans/salary/dashboard');
+    }
+
     render(){
         return(
             <SalaryDetail
@@ -39,6 +43,7 @@ class LoanSalaryDetail extends React.Component{
              ticketUrl={'/loans/salary/ticket'}
              salaryEntryUrl={'/loans/salary/entry'}
              statementUploadUrl={'/loans/salary/statement-upload'}
+             gotoDashBoard={this.NavigateToLoanDashBoard}
             />
         );
     }
@@ -46,7 +51,7 @@ class LoanSalaryDetail extends React.Component{
 
 function mapStateToProps(state) {
     return {
-        alert: state.alert,
+        //alert: state.alert,
         loan_apply: state.loanReducerPile.loanApply,
         industries: state.loanReducerPile.loanIndustries,
     }

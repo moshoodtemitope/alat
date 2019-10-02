@@ -85,7 +85,7 @@ class BuyData extends Component {
 
     dataPlanChangedHandler = (selectedDataPlan) => {
         this.setState({ selectedDataPlan }, () => {this.updateAmount(selectedDataPlan.amount)});
-        console.log(`Option selected:`, selectedDataPlan);
+        // console.log(`Option selected:`, selectedDataPlan);
     }
     
     networkChangedHandler = (selectedNetwork) => {
@@ -93,7 +93,7 @@ class BuyData extends Component {
         validation.networkSelector.hasError = false;
         if(this.state.selectedDataPlan == null){
             this.setState({ selectedNetwork, validation }, () => {this.setDataPlans(selectedNetwork.value)});
-            console.log(`Option selected:`, selectedNetwork);
+            // console.log(`Option selected:`, selectedNetwork);
         }else{
             this.setState({ selectedDataPlan : null }, () => {this.networkChangedHandlerALT(selectedNetwork)} )
         }
@@ -102,7 +102,7 @@ class BuyData extends Component {
 
     networkChangedHandlerALT = (selectedNetwork) => {
         this.setState({ selectedNetwork }, () => {this.setDataPlans(selectedNetwork.value)});
-        console.log(`Option selected:`, selectedNetwork);
+        // console.log(`Option selected:`, selectedNetwork);
     }
 
     setDataPlans = (value) => {
@@ -134,7 +134,7 @@ class BuyData extends Component {
                 SubscriberId: this.state.buyDataForm.phone.value,
             }
             this.props.setDataToBuyDetails(dataToBuy, this.state.selectedNetwork ? this.state.selectedNetwork.value : "MTN");
-            console.log(dataToBuy);
+            // console.log(dataToBuy);
             this.props.history.push('/bills/data/buy/confirm');
         }else{
             let validation = {...this.state.validation} 
@@ -180,7 +180,7 @@ class BuyData extends Component {
         for (let inputIdentifier in updatedBuyDataForm) {
             formIsValid = updatedBuyDataForm[inputIdentifier].valid && formIsValid;
         }
-        console.log(formIsValid);
+        // console.log(formIsValid);
         
         this.setState({ buyDataForm: updatedBuyDataForm, formIsValid, validation });
     }

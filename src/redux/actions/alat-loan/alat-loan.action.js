@@ -71,11 +71,14 @@ export const GetActiveLoans = (token, data) => {
         let consume = ApiService.request(routes.GET_ACTIVE_LOANS, "GET", data, SystemConstant.HEADER);
         return consume
             .then(response => {
+                // console.log(response.data);
+                // console.log("response.data");
                 dispatch(success(response.data));
             })
             .catch(error => {
 
                 dispatch(isFetchingLoanFalse());
+                // console.log(error);
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };

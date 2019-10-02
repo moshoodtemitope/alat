@@ -19,12 +19,17 @@ class LoanSalaryEntry extends React.Component{
         this.props.history.push('/loans/salary/detail');
     }
 
+    NavigateToLoanDashBoard=()=>{
+        this.props.history.push('/loans/salary/dashboard');
+    }
+
     render(){
         return(<SalaryEntry
               forwardUrl = {'/loan/salary/score-card'}
               backwardUrl= {'/loan/salary/detail'}
               NextPageMethod={this.gotoNextPage}
               PreviousPageMethod={this.PreviousPageMethod}
+              gotoDashBoard={this.NavigateToLoanDashBoard}
             />);
     }
 }

@@ -70,11 +70,11 @@ class FxSaveBeneficiary extends React.Component {
        let dataObj = this.props.account_details;
        const {dispatch} =  this.props;
        dispatch(saveBankTransferBeneficiary(this.state.user.token, {}))
-       console.log('in here');
+    //    console.log('in here');
        if(!this.props.account_details.transfer_info_data || !this.props.account_details.transfer_info || (this.props.account_details.transfer_info !==TRANSFER__BANK_DETAILS) ){
-            this.props.history.push("/fx-transfer");
+            // this.props.history.push("/fx-transfer");
        }else{
-           console.log('at all');
+        //    console.log('at all');
        }
    }
     

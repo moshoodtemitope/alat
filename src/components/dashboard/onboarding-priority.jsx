@@ -28,7 +28,7 @@ class OnboardingPriority extends React.Component{
     }
 
     getCorrespondingMessage(object){
-        console.log(object);
+        //console.log(object);
         let prorityViewModel = { message:'', link:'', linkText:''};
         switch (object.onboarding_priority_data.response.validationError) {
             case 'Completed':

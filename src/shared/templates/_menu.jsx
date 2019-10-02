@@ -15,10 +15,13 @@ class MenuContainer extends React.Component{
        super(props);
        this.state = {
           user: JSON.parse(localStorage.getItem("user")),
-          toggleModal: 'toggleModal'
+          toggleModal: 'toggleModal',
+          showMenu: false
        }
 
-       console.log('user data is', this.state.user);
+       this.closeMobileMenu = this.closeMobileMenu.bind(this);
+       this.openMobileMenu    = this.openMobileMenu.bind(this); 
+       //console.log('user data is', this.state.user);
     }
 
     // closeModal = (event) => {
@@ -44,17 +47,42 @@ class MenuContainer extends React.Component{
     //     console.log('Function Ran')
     // }
 
+    closeMobileMenu(){
+        this.setState({showMenu:false})
+    }
+
+    openMobileMenu(){
+        let {showMenu} = this.state;
+        if(showMenu ===true){
+            this.setState({showMenu:false})
+        }
+        
+        if(showMenu ===false){
+            this.setState({showMenu:true})
+        }
+    }
+    
+
     render() {
-        const {toggleModal} = this.state;
+        let {toggleModal, showMenu} = this.state;
         return (
             <Fragment>
-                <div className="hr-nav-header">
+                <div id="nav-icon1" className="" onClick={ this.openMobileMenu }>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div className={showMenu?"hr-nav-header open-fullmenu":"hr-nav-header"}>
+                    <div className="mobile-menu-bottomlayer" onClick={this.closeMobileMenu}></div>
                     <div className="container">
                         <div className="row">
                             <div className="col-sm-12 remove-padding">
                                 <ul>
                                     <li>
                                         <NavLink to="/dashboard" className="clearfix"><i className="demo-icon icon-home" aria-hidden="true"></i><span>Dashboard</span></NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="/account" className="clearfix"><i className="demo-icon icon-loans" aria-hidden="true"></i><span>My accounts</span></NavLink>
                                     </li>
                                     <li><NavLink to="/transfer" className="clearfix"><i className="demo-icon icon-send-money" aria-hidden="true"></i>
                                         <span>Transfer</span></NavLink>
@@ -101,7 +129,7 @@ class MenuContainer extends React.Component{
                                     </li>
                                     {/* <li><NavLink to="/settings" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i> <span>Settings</span></NavLink></li> */}
                                     <li><NavLink to="/insurance" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i> <span>Insurance</span></NavLink></li>
-                                    <li><NavLink to="/receive-money" className="clearfix"><i className="demo-icon icon-western-union" aria-hidden="true"></i><span> Remittance</span></NavLink></li>
+                                    {/* <li><NavLink to="/receive-money" className="clearfix"><i className="demo-icon icon-western-union" aria-hidden="true"></i><span> Remittance</span></NavLink></li> */}
                                     {/* <li><NavLink to="/settings" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i> <span>Settings</span></NavLink></li> */}
                                 </ul>
                             </div>

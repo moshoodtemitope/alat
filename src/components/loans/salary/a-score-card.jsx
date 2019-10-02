@@ -19,12 +19,17 @@ class LoanScoreCard extends React.Component{
         this.props.history.push('/loans/salary/entry');
     }
 
+    NavigateToLoanDashBoard=()=>{
+        this.props.history.push('/loans/salary/dashboard');
+    }
+
     render(){
         return(<ScoreCard 
                 forwardUrl={'/loan/salary/card-result'}
                 backwardUrl={'/loan/salary/entry'}
                 gotoNextPageMethod={this.goForward}
                 gotoPreviosuPageMethod={this.goBackward}
+                gotoDashBoard={this.NavigateToLoanDashBoard}
         />);
     }
 }

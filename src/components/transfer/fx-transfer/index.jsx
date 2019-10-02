@@ -75,7 +75,7 @@ class Index extends Component{
     }
 
     proceedWithSelectBeneficary(beneficiary){
-        console.log("selected ben is", beneficiary);
+        // console.log("selected ben is", beneficiary);
         const {dispatch} = this.props;
         // this.setState({})
         dispatch(cashTransferData({
@@ -103,7 +103,7 @@ class Index extends Component{
             existingBeneficiary = beneficiaryList.find((beneficiary)=>{
                 return beneficiary.AccountNumber === this.state.accountNumber;
             })
-            console.log('existing is', typeof existingBeneficiary);
+            // console.log('existing is', typeof existingBeneficiary);
             if(typeof existingBeneficiary==="undefined"){
                 this.setState({existingBeneficiaryError: false});
                 dispatch(cashTransferData({
@@ -124,11 +124,11 @@ class Index extends Component{
                 // recipientCurrency = "USD";
 
            
-            console.log('currency is', this.state.recipientCurrencyText);
+            // console.log('currency is', this.state.recipientCurrencyText);
 
             accountsMatchingCurrency = allAccounts.filter(account=>account.Currency===recipientCurrency);
             
-            console.log('all accounts',accountsMatchingCurrency );
+            // console.log('all accounts',accountsMatchingCurrency );
             
             if(accountsMatchingCurrency.length>=1){
                 dispatch(cashTransferData({
@@ -290,7 +290,7 @@ class Index extends Component{
                 this.setState({ submitted: false, submitButtonState: false, inputState: false });
             }
 
-            console.log('account details will be', accountInfo);
+            // console.log('account details will be', accountInfo);
             
             
         }

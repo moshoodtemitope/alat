@@ -1,7 +1,5 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import Select from 'react-select';
 import { connect } from 'react-redux';
 import { Redirect,Link,NavLink } from 'react-router-dom';
@@ -55,7 +53,7 @@ class FixedGoal extends React.Component {
     }
 
     handleSelectDebitableAccounts(account) {
-        console.log('dss', account);
+        // console.log('dss', account);
         this.setState({ debitAccount: account });
         if (this.state.isSubmitted) {
             if(account.length == 10)
@@ -87,7 +85,7 @@ class FixedGoal extends React.Component {
             var data = {
                 ...this.props.fixed_goal_step1.fixed_step1_data.data
             };
-            console.log('tag', data);
+            // console.log('tag', data);
 
             this.setState({
                 targetAmount:util.formatAmount(data.targetAmount),
@@ -111,7 +109,7 @@ class FixedGoal extends React.Component {
         if (frequency == "daily")
         {
             timeBetween = enddate.diff(startDate,'days') + 1;
-            console.log(timeBetween)
+            // console.log(timeBetween)
 
         }
 
@@ -141,7 +139,7 @@ class FixedGoal extends React.Component {
     }
 
     handleSelectChange = (frequency) => {
-        console.log(frequency);
+        // console.log(frequency);
         // let label = frequency.id.split("/")[0]
         this.setState({ "goalFrequencyType": frequency.value,
             "goalFrequencyLabel" : frequency.label,
@@ -223,7 +221,7 @@ class FixedGoal extends React.Component {
                                             <NavLink to="/savings/activityDashBoard">
                                                 <li><a href="statement.html">Group Savings</a></li>
                                             </NavLink>
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
 
                                         </ul>
                                     </div>

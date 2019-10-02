@@ -45,6 +45,11 @@ export function loanApplyReducer(state = {}, action) {
                 loan_apply_status: loanConstants.LOAN_APPLY_FAILURE,
                 loan_apply_data: action,
             };
+        case loanConstants.LOAN_APPLY_CLEAR:
+            return{
+                loan_apply_status: loanConstants.LOAN_APPLY_CLEAR,
+                loan_apply_data: {},
+            };
         default:
             return {
                 ...state,

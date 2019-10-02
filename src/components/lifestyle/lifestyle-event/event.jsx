@@ -25,7 +25,7 @@ class Event extends Component {
             searchItem: ""
 
         };
-        console.log("state",this.state);
+        // console.log("state",this.state);
     }
     componentDidMount(){
         this.fetchEventList(1)
@@ -45,7 +45,7 @@ class Event extends Component {
 
     EventDetails=(event)=>{
         let events = event.target.id
-        console.log('======',events)
+        // console.log('======',events)
         this.props.dispatch(SubmitEventData(event.target.id))
 
         
@@ -176,7 +176,7 @@ class Event extends Component {
                     <div className="eventTrays">
                         {userEvents.map(function(event, index){
                             if ((event.title).toLowerCase().toString().includes(searchItem)) {
-                                {console.log("======", event.title)}
+                                // {console.log("======", event.title)}
                                return(
                                 <div className="eventCards" key={index}>
                                     <Link to={{
@@ -242,7 +242,7 @@ class Event extends Component {
         let classes = this.state.current_page === number ? styles.pagination : '';
 
         return (
-          <span  key={number} className={classes} onClick={() => this.fetchEventList(number)}>{this.props.getEvents.message ===listStyleConstants.GET_EVENTS_SUCCESS ? <p style={{color:"#43063C", fontSize:16, fontFamily:'proxima_novaregular', position:"relative", cursor:"pointer"}}>Load More</p>:null }</span>
+          <span  key={number} className={classes} onClick={() => this.fetchEventList(number)}>{this.props.getEvents.message ===listStyleConstants.GET_EVENTS_SUCCESS ? <p style={{color:"#43063C", fontSize:16, position:"relative", cursor:"pointer"}}>Load More</p>:null }</span>
         );
       });
 

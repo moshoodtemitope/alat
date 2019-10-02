@@ -113,8 +113,8 @@ class CreateWithdrawal extends Component {
             SelectedCardlessPayOutChannel: 1
         }
         this.props.setCardlessInfo(cardlessWithdrawal);
-        console.log(cardlessWithdrawal);
-        console.log(this.props.phoneNumber);
+        // console.log(cardlessWithdrawal);
+        // console.log(this.props.phoneNumber);
         this.props.history.push('/cardless-withdrawal/confirm');
     }
 
@@ -164,7 +164,7 @@ class CreateWithdrawal extends Component {
             }
         }
 
-        console.log(updatedFormElement.value)
+        // console.log(updatedFormElement.value)
         updatedCwDataForm[inputIdentifier] = updatedFormElement;
         this.setState({ cwDataForm: updatedCwDataForm, validation });
     }
