@@ -1,5 +1,5 @@
-// const URL = 'https://api.alat.ng';
-const URL = 'https://196.43.215.170';
+const URL = 'https://api.alat.ng';
+// const URL = 'https://196.43.215.170';
  //onst URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
@@ -7,7 +7,7 @@ const BASEURL = URL;
 export const routes = {
     BASEURL: BASEURL,
 
-    //registration   
+    //registration
     SIGNUP_IMAGES: BASEURL + '/RegistrationApi',
     SIGNUP_PHONE: BASEURL + '/RegistrationApi/api/registration/SavePhoneNumber',
     BVN_VERIFICATION: BASEURL + '/RegistrationApi/api/registration/CallBvnService',
@@ -181,6 +181,9 @@ export const routes = {
     SEND_ACCEPT_LOAN : BASEURL + '/Lending.API/api/AlatLoan/SendAcceptLoanOtp',
     SEND_ACCEPT_LOAN_WITH_OTP : BASEURL + '/Lending.API/api/AlatLoan/AcceptLoanWithOtp',
     ACCEPT_INTERSWITCH_LOAN :BASEURL + '/Lending.API/Api/Loan/AcceptOfferV2',
+    GET_PAST_LOANS : function (pageNumber, startDate =null, endDate=null){
+        return `${BASEURL}/Lending.API/Api/Loan/GetCustomerHistory?pageNumber=${pageNumber}&startDate=${startDate}&endDate=${endDate}`;    
+    },
 
     //WesternUnion
     WESTERNUNION_COUNTRIES: BASEURL + '/PaymentApi/api/WesternunionCountries',

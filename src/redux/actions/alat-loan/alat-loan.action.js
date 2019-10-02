@@ -71,14 +71,11 @@ export const GetActiveLoans = (token, data) => {
         let consume = ApiService.request(routes.GET_ACTIVE_LOANS, "GET", data, SystemConstant.HEADER);
         return consume
             .then(response => {
-                console.log(response.data);
-                console.log("response.data");
                 dispatch(success(response.data));
             })
             .catch(error => {
 
                 dispatch(isFetchingLoanFalse());
-                console.log(error);
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
@@ -98,14 +95,11 @@ export const liquidateLoan = (token, data) => {
         let consume = ApiService.request(routes.LIQUIDATE_LOAN, "POST", data, SystemConstant.HEADER);
         return consume
             .then(response => {
-                console.log(response.data);
-                console.log("response.data");
                 dispatch(success(response.data));
             })
             .catch(error => {
 
                 dispatch(isFetchingFalse());
-                console.log(error);
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
@@ -124,14 +118,11 @@ export const liquidateAlatLoan = (token, data) => {
         let consume = ApiService.request(routes.LIQUIDATE_ALAT_LOAN, "POST", data, SystemConstant.HEADER);
         return consume
             .then(response => {
-                console.log(response.data);
-                console.log("response.data");
                 dispatch(success(response.data));
             })
             .catch(error => {
 
                 dispatch(isFetchingFalse());
-                console.log(error);
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
@@ -150,14 +141,12 @@ export const getLoanState = (token, data) => {
         let consume = ApiService.request(routes.GET_LOAN_STATE, "GET", data, SystemConstant.HEADER);
         return consume
             .then(response => {
-                console.log(response.data);
-                console.log("--------///response.data");
+                
                 dispatch(success(response.data));
             })
             .catch(error => {
 
                 dispatch(isFetchingFalse());
-                console.log(error);
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
@@ -177,14 +166,11 @@ export const getLoanOffers = (token, data) => {
         let consume = ApiService.request(routes.GET_LOAN_OFFERS, "GET", data, SystemConstant.HEADER);
         return consume
             .then(response => {
-                console.log(response.data);
-                console.log("response.data");
                 dispatch(success(response.data));
             })
             .catch(error => {
 
                 dispatch(isFetchingFalse());
-                console.log(error);
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
@@ -214,7 +200,6 @@ export const sendLoan = (token, data, isResending = false) => {
             .catch(error => {
 
                 dispatch(isFetchingFalse());
-                console.log(error);
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
@@ -238,7 +223,6 @@ export const sendLoanWithOtp = (token, data) => {
             .catch(error => {
 
                 dispatch(isFetchingFalse());
-                console.log(error);
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
@@ -257,14 +241,13 @@ export const acceptInterswitchLoan = (token, data) => {
         let consume = ApiService.request(routes.ACCEPT_INTERSWITCH_LOAN, "POST", data, SystemConstant.HEADER);
         return consume
             .then(response => {
-                console.log(response.data);
-                console.log("response.data");
+                
+                
                 dispatch(success(response.data));
             })
             .catch(error => {
 
                 dispatch(isFetchingFalse());
-                console.log(error);
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
@@ -272,6 +255,30 @@ export const acceptInterswitchLoan = (token, data) => {
     function success() {
         return {
             type: actionTypes.ACCEPT_INTERSWITCH_LOAN_SUCCESS,
+        }
+    }
+};
+
+export const fetchPastLoans = (token, payload, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        dispatch(isFetchingTrue());
+        let consume = ApiService.request(routes.GET_PAST_LOANS(payload.pageNumber, payload.startDate, payload.endDate), "GET", data, SystemConstant.HEADER);
+        return consume
+            .then(response => {
+                dispatch(isFetchingFalse());
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                dispatch(isFetchingFalse());
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function success(data) {
+        return {
+            type: actionTypes.FETCH_PAST_LOAN_SUCCESS,
+            data: data
         }
     }
 };
