@@ -494,7 +494,7 @@ class EventDetails extends React.Component {
                 </div>
                 <center>
                         <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(listStyleConstants.MOVIE_REDUCER_CLEAR));
-                                this.props.history.push('/lifestyle/event-details') }} className="add-bene m-t-50">
+                                this.props.history.push('/lifestyle/event') }} className="add-bene m-t-50">
                                 Go back
                         </a>
                  </center>

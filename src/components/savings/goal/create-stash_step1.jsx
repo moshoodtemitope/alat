@@ -278,7 +278,7 @@ class CreateStash extends React.Component {
                                                             }
                                                             {
                                                             this.state.showLimitLevel ? 
-                                                              <div className="text-purple"><h3 className="text-purple "> Please amounts above 999,999,999 cannot be accepted on goals</h3></div> 
+                                                              <div className="text-purple"><h3 className="text-purple"> Woah N999,999,999 is enough for us...</h3></div> 
                                                               : null
 
                                                             }
