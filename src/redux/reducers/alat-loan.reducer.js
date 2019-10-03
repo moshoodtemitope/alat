@@ -59,6 +59,8 @@ const reducer = (state = initialState, action) => {
             return updateObject(state, { isFetching: false, loanDetail: action.data });
         case actionTypes.ACCEPT_INTERSWITCH_LOAN_SUCCESS:
             return updateObject(state, { isFetching: false, pageState: 0 });
+        case actionTypes.FETCH_PAST_LOAN_SUCCESS:
+            return updateObject(state, { isFetching: false, pastLoans: action.data });
 
         default: return state;
     }
