@@ -270,7 +270,7 @@ export const sendTransactionLimit = (token, data) => {
             })
             .catch(error => {
                 dispatch(isFetchingFalse());
-                console.log(error);
+                // console.log(error);
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
 
@@ -296,15 +296,15 @@ export const getOtpForCustomer = (token, data, isResending = false) => {
         return consume
             .then(response => {
                 dispatch(isFetchingFalse());
-                console.log(response.data);
-                console.log("response.data");
+                // console.log(response.data);
+                // console.log("response.data");
                 if (isResending == false) {
                     dispatch(success(response.data));
                 }
             })
             .catch(error => {
                 dispatch(isFetchingFalse());
-                console.log(error);
+                // console.log(error);
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };

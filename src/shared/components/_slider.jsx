@@ -265,7 +265,7 @@ export function TooltipRail({activeHandleID, getRailProps, getEventData })  {
     };
   
     let onMouseMove = (e) => {
-        console.log(e);
+        // console.log(e);
       const { activeHandleID, getEventData } = this.props;
   
       if (activeHandleID) {

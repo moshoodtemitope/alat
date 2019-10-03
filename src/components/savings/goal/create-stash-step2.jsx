@@ -37,7 +37,7 @@ class StashSummmary extends Component {
             let data = {
                 ...this.props.create_stash_goal_step1.stash_goal_step1_data.data
             };
-            console.log('tag', data);
+            // console.log('tag', data);
 
             this.setState({
                 targetAmount:data.targetAmount,
@@ -81,9 +81,9 @@ class StashSummmary extends Component {
                                 <ul>
                                     <li><a href="accounts.html" className="active">Goals</a></li>
                                     <NavLink to="/savings/activityDashBoard">
-                                    <li><a href="statement.html">Group Savings</a></li>
+                                    <li><a href="/savings/activityDashBoard">Group Savings</a></li>
                                     </NavLink>
-                                    <li><a href="#">Investments</a></li>
+                                    {/* <li><a href="#">Investments</a></li> */}
                                 
                                 </ul>
                             </div>
@@ -94,7 +94,7 @@ class StashSummmary extends Component {
                             <div style={{width: "100%",}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                         }
 
-                    <h1 style={{width:"100%", textAlign:"center", color:"#AB2656", paddingLeft:"15px", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>Stash Goal Summary</h1>
+                    <h1 style={{width:"100%", textAlign:"center", color:"#AB2656", paddingLeft:"15px", fontSize:'18px'}}>Stash Goal Summary</h1>
                         <div style={{margin:"30px", marginLeft:"120px",marginRight:"120px"}}></div>
 
                     <div className="col-sm-12">

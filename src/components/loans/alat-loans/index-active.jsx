@@ -18,6 +18,7 @@ class Index extends Component {
         this.state = {
             user: JSON.parse(localStorage.getItem("user")),
             showModal: false,
+            clicked: false
         };
     }
 
@@ -27,7 +28,7 @@ class Index extends Component {
     }
 
     onShowModal = (event) => {
-        console.log("dot here")
+        // console.log("dot here")
         event.preventDefault();
         this.props.clearError();
         this.setState({ showModal: true });
@@ -46,12 +47,13 @@ class Index extends Component {
 
     goToApplyPage = (event) => {
         if(event)event.preventDefault();
+        this.setState({clicked : true}); //
         this.props.clearError();
         this.props.getloanState(this.state.user.token);
     }
 
     render() {
-        console.log("in loan index");
+        // console.log("in loan index");
         let index = (
             <AlatLoanContainer>
                 <Modal open={this.state.showModal} onClose={this.onCloseModal} center>
@@ -131,10 +133,13 @@ class Index extends Component {
                                                             <h5 style={{ color: "#4D4D4D", fontWeight: "bold" }}>₦{formatAmountNoDecimal(((loan.AmountOffered * (loan.Interest/100)) / 365).toFixed(2))}</h5>
                                                             <small style={{ fontSize: 10, color: "#717171", paddingTop: -30 }}>Daily Interest</small>
                                                         </div>
-                                                        <div style={{ padding: "0", float: "right" }}>
+                                                        {loan.IsGoalLoan ? null : (
+                                                            <div style={{ padding: "0", float: "right" }}>
                                                             <h5 style={{ color: "#4D4D4D", fontWeight: "bold" }}>₦{formatAmountNoDecimal(loan.AmountPayable - loan.RemainingAmount)}</h5>
                                                             <small style={{ fontSize: 10, color: "#717171", paddingTop: -30 }}>Amount Repaid</small>
                                                         </div>
+                                                        )}
+                                                        
                                                     </div>
                                                     <div className="clearfix"></div>
 
@@ -175,8 +180,15 @@ class Index extends Component {
                 </AlatLoanContainer>
             )
         }
-        if (this.props.loanState) {
-            index = this.props.loanState.CanRequest ? <Redirect to="/loans/alat-loans/apply-goals" /> : <Redirect to="/loans/alat-loans/apply-others" />;
+        // if (this.props.loanState) {
+        //     index = this.props.loanState.CanRequest ? <Redirect to="/loans/alat-loans/apply-goals" /> : <Redirect to="/loans/alat-loans/apply-others" />;
+        // }
+        if (this.props.loanState && this.props.loanState.CanRequest) {
+            index = <Redirect to="/loans/alat-loans/apply-goals" />;
+        }
+        if (this.props.loanState && !this.props.loanState.CanRequest && this.state.clicked) {
+            alert(this.props.loanState.EligiblityMessage ? this.props.loanState.EligiblityMessage : "Please save upto ₦100,000 to qualify for ALAT goal loan. ")
+            this.setState({clicked: false});
         }
 
 

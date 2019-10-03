@@ -66,7 +66,7 @@ class Success extends Component {
             TransactionPin: this.props.dataInfo.TransactionPin,
             NetworkCode : this.props.dataInfo.NetworkCode
         };
-        console.log("saving benficiary");
+        // console.log("saving benficiary");
         this.props.onSaveBeneficiary(this.state.user.token, payload);
     }
 
@@ -107,7 +107,7 @@ class Success extends Component {
                                             </div>
                                         </div> */}
 
-                                        {<div className="clearfix save-purchase">
+                                        {/* {<div className="clearfix save-purchase">
                                             <p>Setup a repayment schedule for this loan</p>
                                             <div className="">
                                                 <div className="clearfix">
@@ -116,7 +116,7 @@ class Success extends Component {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>}
+                                        </div>} */}
                                         {
                                             this.state.setAutomation ? (
                         //                         <div className="save-purchase-frm">

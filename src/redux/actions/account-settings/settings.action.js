@@ -51,7 +51,7 @@ export const changePassword = (token, payload, callback) => {
         dispatch(isFetchingTrue());
         return consume
             .then(response => {
-                console.log(response.data);
+                // console.log(response.data);
                 callback();
                 dispatch(success(response.data));
 
@@ -101,7 +101,7 @@ export const getSecurityQuestion = (token, payload) => {
         dispatch(isFetchingTrue());
         return consume
             .then(response => {
-                console.log(response.data);
+                // console.log(response.data);
                 dispatch(success(response.data));
             })
             .catch(error => {
@@ -125,7 +125,7 @@ export const getSecurityQuestionForgot = (token, payload) => {
         dispatch(isFetchingTrue());
         return consume
             .then(response => {
-                console.log(response.data);
+                // console.log(response.data);
                 dispatch(success(response.data));
             })
             .catch(error => {
@@ -243,7 +243,7 @@ export const getAllSecurityQuestions = (token, payload) => {
         dispatch(isFetchingTrue());
         return consume
             .then(response => {
-                console.log(response.data);
+                // console.log(response.data);
                 dispatch(success(response.data));
             })
             .catch(error => {

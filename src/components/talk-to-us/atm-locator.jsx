@@ -70,7 +70,7 @@ class AtmLocator extends Component{
 
     renderSearch = (data) => {
         if (data !== []) {
-            console.log("Emmanuel")
+            // console.log("Emmanuel")
             return (
                 <div className="location">
                     { data.map((atm) => {
@@ -104,7 +104,7 @@ class AtmLocator extends Component{
                 </div>)
         }
         else {
-            console.log("John Doe")
+            // console.log("John Doe")
         }
         
     }
@@ -231,7 +231,7 @@ class AtmLocator extends Component{
         }
         else if(get_bank_branch.message === talktoUsConstant.GET_BANK_BRANCHES_SUCCESS){
                 let atmlocations = get_bank_branch.data.response.Branches;
-                        console.log('=========',atmlocations)
+                        // console.log('=========',atmlocations)
                 return(
                     <div className="location">
 

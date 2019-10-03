@@ -69,7 +69,7 @@ class History extends Component {
         } else {
             arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account Available' }];
         }
-        console.log(arrayToDisplay)
+        // console.log(arrayToDisplay)
         let payload = {
             Take: this.state.take,
             Skip: this.state.skip,
@@ -91,7 +91,7 @@ class History extends Component {
                 KeyWord: this.state.isBackendSearch ? this.state.keyword : null,
             };
         }
-        console.log("payload", payload)
+        // console.log("payload", payload)
         this.props.fetchHistory(this.state.user.token, payload, this.state.currentTransactions);
     }
 
@@ -109,7 +109,7 @@ class History extends Component {
         }
         this.setState({ selectedAccount, skip: 0, take: 10, isBackendSearch: false, currentTransactions: "All", currency : selectedAccount.currency }, () => this.fetchTransactionHistory(null, selectedAccount.value));
 
-        console.log(`Option selected:`, selectedAccount);
+        // console.log(`Option selected:`, selectedAccount);
     }
 
     viewMoreTransactions = () => {
@@ -136,14 +136,14 @@ class History extends Component {
     handleStartDatePicker = (startDate) => {
         this.checkInfoState();
         startDate.setHours(startDate.getHours() + 1);
-        console.log(startDate)
+        // console.log(startDate)
         this.setState({ startDate });
     }
 
     handleEndDatePicker = (endDate) => {
         this.checkInfoState();
         endDate.setHours(endDate.getHours() + 1);
-        console.log(endDate)
+        // console.log(endDate)
         this.setState({ endDate });
     }
 

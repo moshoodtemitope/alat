@@ -138,7 +138,7 @@ class ChangePassword extends Component {
                 } else validation.notSame = false;
             }
         }
-        console.log(updatedChangeForm.verifyNewPassword.touched);
+        // console.log(updatedChangeForm.verifyNewPassword.touched);
         validation.format = format;
         updatedChangeForm[inputIdentifier] = updatedFormElement;
         this.setState({ changeForm: updatedChangeForm, validation });
@@ -232,7 +232,7 @@ class ChangePassword extends Component {
             NewPassword: this.state.changeForm.newPassword.value,
             Pin: this.state.changeForm.pin.value
         }
-        console.log("submited", payload)
+        // console.log("submited", payload)
         this.props.onChangePassword(this.state.user.token, payload, this.resetState);
     }
 

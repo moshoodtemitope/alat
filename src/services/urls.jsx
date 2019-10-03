@@ -1,5 +1,5 @@
-const URL = 'https://api.alat.ng';
-//const URL = 'https://196.43.215.170';
+// const URL = 'https://api.alat.ng';
+ const URL = 'https://196.43.215.170';
 // const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
@@ -7,7 +7,7 @@ const BASEURL = URL;
 export const routes = {
     BASEURL: BASEURL,
 
-    //registration   
+    //registration
     SIGNUP_IMAGES: BASEURL + '/RegistrationApi',
     SIGNUP_PHONE: BASEURL + '/RegistrationApi/api/registration/SavePhoneNumber',
     BVN_VERIFICATION: BASEURL + '/RegistrationApi/api/registration/CallBvnService',
@@ -93,8 +93,6 @@ export const routes = {
    
     GET_CARD_CONTROL_SETTINGS: BASEURL + '/CardMaintenanceApi/api/v1/CardControl/CardSettingFromCardControl',
     GET_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getpans',
-    // GET_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getallpans',
-    // GET_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getactivepans',
     ACTIVATE_CARD: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/activatecard',
     GET_ACTIVE_PANS: BASEURL + '/CardMaintenanceApi/api/v1/CardMaintenance/getactivepans',
     GET_CARD_EXISTING_SETTINGS: BASEURL + '/CardMaintenanceApi/api/v1/CardControl/CustomerCardsFromCardControl',
@@ -181,6 +179,9 @@ export const routes = {
     SEND_ACCEPT_LOAN : BASEURL + '/Lending.API/api/AlatLoan/SendAcceptLoanOtp',
     SEND_ACCEPT_LOAN_WITH_OTP : BASEURL + '/Lending.API/api/AlatLoan/AcceptLoanWithOtp',
     ACCEPT_INTERSWITCH_LOAN :BASEURL + '/Lending.API/Api/Loan/AcceptOfferV2',
+    GET_PAST_LOANS : function (pageNumber, startDate =null, endDate=null){
+        return `${BASEURL}/Lending.API/Api/Loan/GetCustomerHistory?pageNumber=${pageNumber}&startDate=${startDate}&endDate=${endDate}`;    
+    },
 
     //WesternUnion
     WESTERNUNION_COUNTRIES: BASEURL + '/PaymentApi/api/WesternunionCountries',
@@ -215,7 +216,7 @@ export const routes = {
     //Insurance
      FETCH_EXISTING_POLICIES: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceTransactionHistory',
      FETCH_ACCIDENT_SCHEDULE: BASEURL + '/PaymentApi/api/Insurance/PersonalAccidentSchedule',
-     FETCH_BILLS_BENEFICIARIES: BASEURL + '/PaymentApi/api/Insurance/TravelSchedule',
+    //  FETCH_BILLS_BENEFICIARIES: BASEURL + '/PaymentApi/api/Insurance/TravelSchedule',
      FETCH_INSURANCE_PRODUCTS: BASEURL + '/PaymentApi/api/Insurance/GetProduct',
      FETCH_INSURANCE_COUNTRIES: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceCountries',
      FETCH_INSURANCE_COLORLIST: BASEURL + '/PaymentApi/api/Insurance/GetColorList',

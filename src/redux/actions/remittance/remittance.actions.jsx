@@ -90,7 +90,7 @@ export const receiveWUMoney = (payload, token)=>{
                 dispatch(success(response));
             })
             .catch(error =>{
-                console.log('Error name is', error.response);
+                // console.log('Error name is', error.response);
                 
                 if(error.response.data.ModelState){
                     dispatch(failure(modelStateErrorHandler(error)));

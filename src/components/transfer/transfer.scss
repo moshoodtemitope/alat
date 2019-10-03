@@ -201,7 +201,7 @@ a:not([href]):not([tabindex]).cta-link{
   
     }
   
-    .network-img {
+    .network-img, .bankicon-img {
       float: left;
       width: 15%;
       i{
@@ -259,3 +259,44 @@ a:not([href]):not([tabindex]).cta-link{
       }
     }
   }
+  @media (max-width: 768px){
+    .info-label.error{
+      margin: 0 10px;
+    }
+  }
+  @media (max-width: 768px){
+    .beneficiary-card .all-info p span.nickname-text {
+      max-width: 235px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: inline-block;
+    }
+  }
+  @media (max-width: 767px){
+    .al-card.transfer-beneficiary{
+      padding: 27px 15px;
+    }
+    
+  }
+  @media (max-width: 374px){
+    .al-card.transfer-beneficiary .bankicon-img{
+      display: none;
+    }
+    .beneficiary-card .account-info .bank-name{
+      float: unset;
+      display: block;  
+    }
+    .beneficiary-card .all-info{
+      width: 100%;
+    }
+
+    .beneficiary-card .all-info p span.nickname-text {
+      max-width: 205px;
+    }
+    .m-padding-10{
+      padding: 0 20px;
+    }
+    
+  }
+  

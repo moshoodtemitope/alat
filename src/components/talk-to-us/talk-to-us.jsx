@@ -91,7 +91,7 @@ import {profile} from '../../redux/constants/profile/profile-constants';
     render(){
         const { MessageInvalid, EmailAddressInvalid } = this.state
         const {profileMenu}= this.props
-        console.log(profileMenu)
+        // console.log(profileMenu)
         return(
             <div className="row">
                 <div className="col-sm-12">

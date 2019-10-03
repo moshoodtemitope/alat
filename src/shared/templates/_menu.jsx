@@ -85,7 +85,7 @@ class MenuContainer extends React.Component{
                                         <NavLink to="/account" className="clearfix"><i className="demo-icon icon-loans" aria-hidden="true"></i><span>My accounts</span></NavLink>
                                     </li>
                                     <li><NavLink to="/transfer" className="clearfix"><i className="demo-icon icon-send-money" aria-hidden="true"></i>
-                                        <span>Transfer</span></NavLink>
+                                        <span>Transfers</span></NavLink>
                                         <ul>
                                             <li>
                                                 <NavLink to="/transfer">Bank Transfer</NavLink>
@@ -129,7 +129,7 @@ class MenuContainer extends React.Component{
                                     </li>
                                     {/* <li><NavLink to="/settings" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i> <span>Settings</span></NavLink></li> */}
                                     <li><NavLink to="/insurance" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i> <span>Insurance</span></NavLink></li>
-                                    {/* <li><NavLink to="/receive-money" className="clearfix"><i className="demo-icon icon-western-union" aria-hidden="true"></i><span> Remittance</span></NavLink></li> */}
+                                    <li><NavLink to="/receive-money" className="clearfix"><i className="demo-icon icon-western-union" aria-hidden="true"></i><span> Western Union</span></NavLink></li>
                                     {/* <li><NavLink to="/settings" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i> <span>Settings</span></NavLink></li> */}
                                 </ul>
                             </div>

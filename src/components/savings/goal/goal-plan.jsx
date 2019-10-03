@@ -76,7 +76,7 @@ class GoalPlan extends React.Component {
         this.setState({visible: false})
     };
     handleSubmit=(event)=>{
-        console.log(JSON.parse(event.target.id));
+        // console.log(JSON.parse(event.target.id));
         this.props.dispatch(SubmitDashBoardGoalData(event.target.id))
 
     }
@@ -216,7 +216,7 @@ class GoalPlan extends React.Component {
                                                                 pathname:'/savings/top-up-goal-step1',
                                                                
                                                             } }>
-                                                                <span style={{ fontFamily:"proxima_novaregular",fontSize:"12px"
+                                                                <span style={{fontSize:"12px"
                                                                 }} id={JSON.stringify(hist)} onClick={this.handleSubmit}>Top Up Stash</span>
                                                             </Link>
 
@@ -225,7 +225,7 @@ class GoalPlan extends React.Component {
                                                                 pathname:'/savings/stash-cashout',
                                                                 
                                                             } }>
-                                                                <span style={{fontFamily:"proxima_novaregular",fontSize:"12px"
+                                                                <span style={{fontSize:"12px"
                                                                 }} id={JSON.stringify(hist)} onClick={this.handleSubmit}>Cashout Stash</span>
                                                             </Link>
                                                             </div>
@@ -243,7 +243,7 @@ class GoalPlan extends React.Component {
                                                     pathname:'/savings/view-goal-summary',
                                                     
                                                 } }>
-                                                <span style={{ fontFamily:"proxima_novaregular"
+                                                <span style={{
                                                 }} id={JSON.stringify(hist)} onClick={this.handleSubmit}>View Details</span>
                                                 </Link>
 
@@ -272,8 +272,7 @@ class GoalPlan extends React.Component {
                             <div className="fixed-goal">
                                 <img className="goal-icon" src={calender} alt=''/>
                                 <p className="flex-text">Fixed Goal</p>
-                                <p className="info-text3">Save daily, weekly or monthly towards
-                                    a target amount, earn 10% interest. No withdrawals allowed and you will lose your interest if you don't meet your target.
+                                <p className="info-text3">Save money daily, weekly or monthly towards a target for a fixed period and earn 10% interest per annum. No withdrawals allowed and you will lose your interest if you do not meet your target amount.
                                 </p>
                             </div>
                         </NavLink>
@@ -281,15 +280,14 @@ class GoalPlan extends React.Component {
                             <div className="flex-goal">
                                 <img className="goal-icon" src={graph} alt=''/>
                                 <p className="plan-text">Flexi Goal</p>
-                                <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days
-                                    but you will lose your interest if you don't meet your target</p>
+                                <p className="info-text2">Save daily, weekly or monthly towards a target and earn 10% interest per annum. You can withdraw up to 50% of your savings once every 30 days. You will lose your interest if you do not meet your target amount.</p>
                             </div>
                         </NavLink>
                         <NavLink to="/savings/create-stash_step1">
                             <div className="stash-goal">
                                 <img className="goal-icon" src={stash} alt=''/>
                                 <p className="plan-text">Stash</p>
-                                <p className="info-text2">Save whatever you want whenever you want and earn 10% interest with cashout interest every month but you will lose your interest if you don't save for a minimum of 30 days</p>
+                                <p className="info-text2"> Put extra cash away whenever you want and earn 10% per annum with an option to cashout interest monthly. Your Stash will need to exist for a minimum of 30 days to qualify for interest.</p>
                             </div>
                         </NavLink>
                     </div>
@@ -303,7 +301,7 @@ class GoalPlan extends React.Component {
     render() {
         const GoalTransHistory = this.props.customerGoalTransHistory;
 
-        console.log("goal-history ",GoalTransHistory.customer_goal_data);
+        // console.log("goal-history ",GoalTransHistory.customer_goal_data);
 
 
         return (

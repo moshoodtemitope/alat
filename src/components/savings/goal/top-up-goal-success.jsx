@@ -34,7 +34,7 @@ class TopUpGoalSuccess extends React.Component {
                                             <NavLink to="/savings/goal/group-savings-selection">
                                                 <li><a>Group Savings</a></li>
                                             </NavLink>
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
 
                                         </ul>
                                     </div>
@@ -62,7 +62,7 @@ class TopUpGoalSuccess extends React.Component {
                                             </center>
 
                                         </div>
-                                     
+                                       
 
                                     </div>
                                 </div>

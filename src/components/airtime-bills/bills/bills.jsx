@@ -31,7 +31,7 @@ class PayBills extends Component{
 
 
    render() {
-    console.log("in billllllssss now- render method")
+    // console.log("in billllllssss now- render method")
        return(
            
            <Fragment>

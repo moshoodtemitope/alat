@@ -45,7 +45,7 @@ class TransferHome extends React.Component {
 
     handleChange = (selectedOption) => {
         this.setState({ selectedOption });
-        console.log(`Option selected:`, selectedOption);
+        // console.log(`Option selected:`, selectedOption);
     }
 
     renderBeneficiaries(){
@@ -62,12 +62,12 @@ class TransferHome extends React.Component {
                 );
             case FETCH_TRANSFER_BENEFICIARY_SUCCESS:
                 let beneficiaries = props.beneficiaries.beneficiaries_data.response.data;
-                console.log(beneficiaries);
+                // console.log(beneficiaries);
                 for(var ben in beneficiaries){
-                    console.log(beneficiaries[ben].AccountNumber);
+                    // console.log(beneficiaries[ben].AccountNumber);
                     options.push({value: beneficiaries[ben].AccountNumber, label: beneficiaries[ben].Nickname});
                 }
-                console.log(options);
+                // console.log(options);
                 const { selectedOption } = this.state;
 
                 return(
@@ -104,7 +104,7 @@ class TransferHome extends React.Component {
         // const {loggingIn, alert} = this.props;
         let props = this.props;
         // let banks = props.bankList;
-        console.log(props);
+        // console.log(props);
 
         // this.fetchBanks(banks);
         return (
