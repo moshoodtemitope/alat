@@ -275,7 +275,7 @@ class EditGoal extends React.Component {
                                         <ul>
                                             <li><a href="accounts.html" className="active">Goals</a></li>
                                             <NavLink to="/savings/activityDashBoard">
-                                                <li><a href="statement.html">Group Savings</a></li>
+                                                <li><a href="/savings/activityDashBoard">Group Savings</a></li>
                                             </NavLink>
                                             {/* <li><a href="#">Investments</a></li> */}
 

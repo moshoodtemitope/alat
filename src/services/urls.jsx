@@ -1,4 +1,4 @@
-//const URL = 'https://api.alat.ng';
+// const URL = 'https://api.alat.ng';
  const URL = 'https://196.43.215.170';
 // const URL = 'https://196.43.215.157';
 
@@ -216,7 +216,7 @@ export const routes = {
     //Insurance
      FETCH_EXISTING_POLICIES: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceTransactionHistory',
      FETCH_ACCIDENT_SCHEDULE: BASEURL + '/PaymentApi/api/Insurance/PersonalAccidentSchedule',
-     FETCH_BILLS_BENEFICIARIES: BASEURL + '/PaymentApi/api/Insurance/TravelSchedule',
+    //  FETCH_BILLS_BENEFICIARIES: BASEURL + '/PaymentApi/api/Insurance/TravelSchedule',
      FETCH_INSURANCE_PRODUCTS: BASEURL + '/PaymentApi/api/Insurance/GetProduct',
      FETCH_INSURANCE_COUNTRIES: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceCountries',
      FETCH_INSURANCE_COLORLIST: BASEURL + '/PaymentApi/api/Insurance/GetColorList',

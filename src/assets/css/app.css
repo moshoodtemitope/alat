@@ -1315,3 +1315,15 @@ body {
   -webkit-transform: translateX(0.33rem);
           transform: translateX(0.33rem);
 }
+@media screen and (max-width: 768px){
+  .loan-al-card .col-7, .loan-al-card .col-5{
+    width: 100%;
+    flex: 100%;
+    max-width: unset;
+  }
+  .al-card > .al-card-left{
+    border-bottom-right-radius: unset;
+    border-top-right-radius: unset;
+    margin-top: 20px;
+  }
+}
