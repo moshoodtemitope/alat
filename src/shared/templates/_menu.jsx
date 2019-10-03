@@ -85,7 +85,7 @@ class MenuContainer extends React.Component{
                                         <NavLink to="/account" className="clearfix"><i className="demo-icon icon-loans" aria-hidden="true"></i><span>My accounts</span></NavLink>
                                     </li>
                                     <li><NavLink to="/transfer" className="clearfix"><i className="demo-icon icon-send-money" aria-hidden="true"></i>
-                                        <span>Transfer</span></NavLink>
+                                        <span>Transfers</span></NavLink>
                                         <ul>
                                             <li>
                                                 <NavLink to="/transfer">Bank Transfer</NavLink>
