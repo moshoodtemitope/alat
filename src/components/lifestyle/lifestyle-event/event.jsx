@@ -121,7 +121,7 @@ class Event extends Component {
         let getEvents = props.getEvents;
         let that =this
         if(getEvents.message === listStyleConstants.GET_EVENTS_PENDING){
-            return  <h4 className="text-center">Loading Event...</h4>;
+            return  <h4 style={{marginTop:'10%'}} className="text-center">Loading Event...</h4>;
         }
         else if(getEvents.message === listStyleConstants.GET_EVENTS_ERROR){
             return(

@@ -115,7 +115,7 @@ class CashoutStashGoal extends Component {
 
 
                             {this.props.alert && this.props.alert.message &&
-                            <div style={{width: "100%",}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                            <div style={{width: "100%", marginRight:"120px",marginLeft:"279px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                             }
 
                             <h1 style={{margin:'auto', width:"100%", textAlign:"center",
