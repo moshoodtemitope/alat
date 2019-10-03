@@ -65,7 +65,7 @@ class HeaderContainer extends React.Component{
                 <div className="mini-nav" style={{display: 'block'}}>
                     <ul>
                         
-                        <li><NavLink to="/receive-money">Western Union</NavLink></li>
+                        {/* <li><NavLink to="/receive-money">Western Union</NavLink></li> */}
                         <li><NavLink to="/profile">Profile</NavLink></li>
                         <li><NavLink to="/settings">Settings</NavLink></li>
                         {/* <li><NavLink to="/talk-to-us">Talk to us</NavLink></li>
