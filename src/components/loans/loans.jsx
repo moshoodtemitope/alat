@@ -44,8 +44,8 @@ class Loans extends React.Component {
                             <i className="toshow"><img src={salaryLoan} /></i>
                             <i className="hoveraction"><img src={salaryLoanHover} /></i>
                             <p>Salary Based Lending</p>
-                            <p>Loans Description should look great here. You know What i mean?
-												Loans Description should look great here. You know What i mean?</p>
+                            <p>This service is term loan facility available to employed (salaried) individuals who meets 
+                                WEMA Bank’s retail lending parameters, whose salary is domiciled with any commercial Nigerian Bank and whose employer is deemed acceptable to WEMA Bank PLC.</p>
                         </div>
                     </div>
                 </div>
