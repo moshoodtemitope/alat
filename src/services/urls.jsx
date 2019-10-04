@@ -1,5 +1,5 @@
-const URL = 'https://api.alat.ng';
- //const URL = 'https://196.43.215.170';
+//const URL = 'https://api.alat.ng';
+ const URL = 'https://196.43.215.170';
 // const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;
@@ -269,7 +269,8 @@ export const routes = {
     //EVENTS
     GET_EVENTS: BASEURL + '/LifeStylePaymentMoviesApi/api/events/getevents?pageNum=',
     GET_SINGLE_EVENT: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetSingleEvent',
-    BUY_EVENT_TICKET: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/BuyEventTicket',
+    BUY_EVENT_TICKET: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Events/BuyEventTicketV2',
+    BUY_EVENT_TICKETV2:BASEURL +'/LifeStylePaymentMoviesApi/api/payment/MakePaymentWithBiometric',
 
     //PREFERENCES
     GET_PREFENCE: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Account/GetAllEngagements',
