@@ -820,7 +820,7 @@ class CardsControl extends React.Component {
                 case GETALAT_CARDSETTINGS_FAILURE:
                     let loadCardSettingError = loadSettings.alatcardsettings_info.error;
                     return(
-                        <div className="text-center">
+                        <div className="text-center m-padding-10">
                             <div>{loadCardSettingError}</div>
                             {loadCardSettingError!=='You are currently have no ATM card' && 
                                 <a className="cta-link" onClick={this.getCustomerAtmCardSettings}> Retry</a> 
