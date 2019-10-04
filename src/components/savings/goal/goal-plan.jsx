@@ -186,13 +186,25 @@ class GoalPlan extends React.Component {
                                             </div>
                                         </div>
                                         <div id="progressBarDashBoard">
-                                            <ProgressBar
+                                        {
+                                             hist.goalTypeName === "Stash" ?
+                                             <ProgressBar
                                                 percentage={hist.percentageCompleted}
-                                                discBottom={"₦" + this.toCurrency(hist.amountSaved) + " " + "of"}
-                                                discSpan={" " + "₦" + this.toCurrency(hist.targetAmount)}
+                                                discBottom={"₦" + this.toCurrency(hist.amountSaved)}
+                                                // discSpan={" " + "₦" + this.toCurrency(hist.targetAmount)}
                                                 discBottomSib='Amount Saved'
                                                 discBottomRight={hist.percentageCompleted.toFixed(1) + "%"}
-                                            />
+                                            />:
+                                            <ProgressBar
+                                            percentage={hist.percentageCompleted}
+                                            discBottom={"₦" + this.toCurrency(hist.amountSaved) + " " + "of"}
+                                            discSpan={" " + "₦" + this.toCurrency(hist.targetAmount)}
+                                            discBottomSib='Amount Saved'
+                                            discBottomRight={hist.percentageCompleted.toFixed(1) + "%"}
+                                        />
+
+                                        }
+                                            
                                         </div>
                                         <div className='row forDetailsComp'>
                                             <div className="col-xs-4">

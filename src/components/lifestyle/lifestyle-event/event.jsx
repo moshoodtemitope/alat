@@ -12,10 +12,6 @@ import location from '../../../assets/img/Facebook.svg'
 import dummyImage from '../../../assets/img/dummyImage.svg'
 
 
-
-
-var dateHolder = [];
-var finalPlaceHolder = [];
 class Event extends Component {
     constructor(props){
         super(props);
@@ -61,27 +57,7 @@ class Event extends Component {
         
     }
 
-    SortDates = () => {
-       let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-       let containerOne = this.props.getEvents.data.response.eventList;  //returns an array
-       let holder = [];
-       let useMonths = (month) => {
-         containerOne.map((element, index) => {
-            let data = moment(element.date).format('MMMM DD, h:mm:ss a').split(' ')[0];
-            let searchParam = data.split(' ')[0].split('')[0] + data.split(' ')[0].split('')[1] + data.split(' ')[0].split('')[2];
-            
-            if(month == searchParam){
-                holder.push(element);
-            }
-         });
-       }
-
-       for(let i=0; i<months.length; i++){
-          useMonths(months[i]);
-       }
-
-       return holder;
-    }
+   
 
     renderEventSeach = () => {
         let user = this.state.user;
@@ -158,13 +134,24 @@ class Event extends Component {
 
         else if (getEvents.message === listStyleConstants.GET_EVENTS_SUCCESS){
             let userEvents =this.props.getEvents.data.response.eventList
+            
 
             console.log('=========',userEvents)
 
             if(this.state.searchItem == "") {
+            let result
+            for(var x of userEvents){
+                x.date = new Date(x.date).getTime()
+              }
+              result = userEvents.sort(function(a, b) {
+                  return a.date - b.date;
+
+
+
+              });
             return(
                 <div className="eventTrays">
-                    {this.SortDates().map(function(event, index){
+                    {result.map(function(event, index){
                         return(
                             <div className="eventCards" key={index}>
                                 <Link to={{
@@ -189,7 +176,7 @@ class Event extends Component {
                                    
                                 </Link>
 
-                                <div className="boldHeader">{event.title.toString().length > 15 ? event.title.toString().substring(0, 15)+"...": event.title.toString()}</div>
+                                <div className="boldHeader">{event.title.toString().length > 40 ? event.title.toString().substring(0, 40)+"...": event.title.toString()}</div>
                                 <div className="details">
                                     <div className="left">
                                         <img src={clock} alt=""/> 
@@ -276,8 +263,7 @@ class Event extends Component {
           <span  key={number} className={classes} onClick={() => this.fetchEventList(number)}>{this.props.getEvents.message ===listStyleConstants.GET_EVENTS_SUCCESS ? <p style={{color:"#43063C", fontSize:16, position:"relative", cursor:"pointer"}}>Load More</p>:null }</span>
         );
     });
-        if(this.props.getEvents.data != undefined){
-            if(this.props.getEvents.data.response != undefined){
+       
                 return(
                     <Fragment>
         
@@ -292,8 +278,6 @@ class Event extends Component {
                                             <ul>
                                                 <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
                                                 <li><NavLink to={'/lifestyle/event'}>Event</NavLink></li>
-                                                <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li>
-                                                
                                                 <li style={{float:"right", marginTop: -31, width: 181}}><label style={{ marginBottom: 0, color: "#666666", fontSize: 14}}>Search by keyword</label><input style={{width:"100%",height:"40px", marginTop:4, float:'right',}} type="text" placeholder="search ..." value={this.state.value} onChange={ e => this.onChangeHandler(e)}/></li>
         
                                             </ul>
@@ -309,19 +293,8 @@ class Event extends Component {
         
                     </Fragment>
                 )
-            }else{
-                return(<div>
-                    <p>Loanding ... 1</p>
-                </div>) 
-            }
         }
-
-        return(<div>
-            <p>Loading page ...</p>
-        </div>)
-
     }
-}
 
 function mapStateToProps(state){
     return {
