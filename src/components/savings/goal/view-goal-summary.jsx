@@ -224,12 +224,13 @@ class ViewGroupSummary extends React.Component {
                                                     <div className='statContainer'>
                                                         <p className="information">You have saved <span style={{color:"#AB2656"}}> N{this.toCurrency(this.state.Amount)}</span> and have earned <span style={{color:"#AB2656"}}>N{this.toCurrency(this.state.interestEarned)}</span> in Interest</p>
 
+                        
                                                         <ProgressBar
                                                             discTopSpan="Goal Progress"
                                                             discTopRight={this.state.percentageCompleted + "%" + " Completed"}
                                                             percentage={this.state.percentageCompleted}
                                                             discBottom={"₦" + this.toCurrency(this.state.Amount) + " "}
-                                                            discSpan={"  " + "of" + "  " + "₦" + this.toCurrency(this.state.targetAmount)}
+                                                            // discSpan={"  " + "of" + "  " + "₦" + this.toCurrency(this.state.targetAmount)}
                                                             discBottomSib="Amount Saved"
                                                         /><br /><br/>
                                                         <div className="btn-position" style={{paddingBottom:"50px"}} >
