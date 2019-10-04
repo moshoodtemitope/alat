@@ -124,7 +124,7 @@ class MenuContainer extends React.Component{
                                             {this.state.user.isWemaMobileUser===false &&
                                                 <li><NavLink to="/hotlist">Hotlist Card</NavLink></li>
                                             }
-                                            <li><NavLink to="/virtual-cards"> Alat Dollar Card </NavLink></li>
+                                            <li><NavLink to="/virtual-cards"> Virtual Dollar Card </NavLink></li>
                                         </ul>
                                     </li>
                                     {/* <li><NavLink to="/settings" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i> <span>Settings</span></NavLink></li> */}
