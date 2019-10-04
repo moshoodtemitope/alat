@@ -158,7 +158,12 @@ class Signup extends React.Component{
         //     ' selected country is: ',
         //     selectedCountry
         // );
-        this.setState({phone: telNumber});
+        // if(){
+
+        // }
+
+        // let tempNum = telNumber.split()
+        this.setState({phone: telNumber}, ()=>console.log('number is',telNumber));
     }
 
     render(){
