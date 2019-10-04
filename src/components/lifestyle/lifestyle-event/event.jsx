@@ -7,7 +7,9 @@ import moment from 'moment';
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
 import {listStyleConstants} from '../../../redux/constants/lifestyle/lifestyle-constants';
 import {getEvents,SubmitEventData} from "../../../redux/actions/lifestyle/movies-actions";
-import clock from '../../../assets/img/clock-circular-outline.svg'
+import clock from '../../../assets/img/date.svg'
+import location from '../../../assets/img/Facebook.svg'
+import dummyImage from '../../../assets/img/dummyImage.svg'
 
 
 
@@ -60,7 +62,6 @@ class Event extends Component {
     }
 
     SortDates = () => {
-    
        let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
        let containerOne = this.props.getEvents.data.response.eventList;  //returns an array
        let holder = [];
@@ -70,31 +71,16 @@ class Event extends Component {
             let searchParam = data.split(' ')[0].split('')[0] + data.split(' ')[0].split('')[1] + data.split(' ')[0].split('')[2];
             
             if(month == searchParam){
-                console.log(searchParam);
-                console.log(element);
                 holder.push(element);
-                //  console.log(containerOne[index]);
-                // checkDate(element);
             }
          });
        }
 
-    
-       
-       let count = 0;
        for(let i=0; i<months.length; i++){
-          count++;
           useMonths(months[i]);
-          if(count == months.length ){
-            console.log(holder)
-            // gottenData();
-          } 
        }
-       console.log(holder)
+
        return holder;
-
-
-    //    console.log(finalPlaceHolder);
     }
 
     renderEventSeach = () => {
@@ -190,28 +176,38 @@ class Event extends Component {
                                   
                                 }}>
                                 
-                                       
+                                       {
+                                           event.thumbnailImage === null ? <img className="picCard" src={dummyImage}/>:
                                         <div 
                                         id={JSON.stringify(event)} onClick={that.EventDetails} className="picCard" style={{backgroundImage: 'url("'+event.thumbnailImage+'")'}}>
                                             
                                        </div>
 
+                                       }
+                                        
                                 
                                    
                                 </Link>
 
                                 <div className="boldHeader">{event.title.toString().length > 15 ? event.title.toString().substring(0, 15)+"...": event.title.toString()}</div>
-                                <div id="disc">{ event.location.toString().length > 30 ? event.location.toString().substring(0, 30)+"...": event.location.toString() }</div>
                                 <div className="details">
                                     <div className="left">
-                                    <img src={clock} alt=""/> 
-                                                
+                                        <img src={clock} alt=""/> 
                                     </div>
                                     <div className="right">
-                                        <div style={{fontSize: 12, marginTop:3}}> {moment(event.date).format('MMMM DD, h:mm:ss a')}</div>
+                                        <div style={{fontSize: 12, marginTop:3}}> {moment(event.date).format('llll')}</div>
                                     </div>
-                                    {/* {that.SortDates()} */}
                                 </div>
+                                <div className="details">
+                                    <div className="left">
+                                        <img src={location} alt=""/> 
+                                    </div>
+                                    <div className="right">
+                                        <div style={{fontSize:12, marginTop:3}} id="disc">{ event.location.toString().length > 30 ? event.location.toString().substring(0, 30)+"...": event.location.toString() }</div>
+                                    </div>
+
+                                </div>
+                                
                             </div>
                         );
                     })}
