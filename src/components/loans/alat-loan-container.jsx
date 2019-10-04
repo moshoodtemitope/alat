@@ -24,8 +24,8 @@ class AlatLoanContainer extends Component {
                     <div>
                         <div className="sub-tab-nav">
                             <ul>
-                                <li><NavLink to={'/loans/alat-loans/liquidate'}>Active Loans</NavLink></li>
-                                <li><NavLink to={'/loans/alat-loans/past-loans'}>Past Loans</NavLink></li>
+                                <li><NavLink to={'/loans/alat-loans'}>Active Loans</NavLink></li>
+                                <li><NavLink to={'/loans/past-loans'}>Past Loans</NavLink></li>
                             </ul>
                         </div>
                     </div>

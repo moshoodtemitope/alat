@@ -318,7 +318,7 @@ class VirtualCards extends React.Component {
                                                             <div className="transfer-ctn text-center">
                                                                 <center>
                                                                 <img className="nocards-icon" src={emptyVC} />
-                                                                    <p> You do not have an active card</p>
+                                                                    <p> You do not have an active Virtual card</p>
                                                                     <button type="submit" onClick={()=>this.setState({showNewCard: true, nameOnCard: virtualCardsList.AccountName})}   
                                                                         className="btn-alat m-t-10 m-b-20 text-center">Create Card</button>
                                                                 </center>

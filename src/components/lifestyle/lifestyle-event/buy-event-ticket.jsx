@@ -99,13 +99,15 @@ class BuyTicket extends Component {
             //not valid
         }else {
             let data={
-                'Email':this.state.user.email,
+                // 'Email':this.state.user.email,
+                "customerId":"90539",
                 'accountNo':this.state.accountToDebit,
                 "ClassId":this.state.ticketId,	
                 "EventId":this.state.eventId,
                 "Source":this.state.source,
                 "TicketAmount":this.state.TicketAmount,
-                "TicketNo":this.state.ticketId,
+                "TicketNo":this.state.quantity,
+                "Pin":this.state.Pin
             };
             // console.log(data)
         
