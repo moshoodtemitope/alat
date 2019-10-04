@@ -12,7 +12,8 @@ import clock from '../../../assets/img/clock-circular-outline.svg'
 
 
 
-
+var dateHolder = [];
+var finalPlaceHolder = [];
 class Event extends Component {
     constructor(props){
         super(props);
@@ -47,9 +48,6 @@ class Event extends Component {
         let events = event.target.id
         // console.log('======',events)
         this.props.dispatch(SubmitEventData(event.target.id))
-
-        
-
     }
    
     
@@ -59,12 +57,51 @@ class Event extends Component {
         this.setState({ value: e.target.value });
 
         
-    };
-    renderEventSeach(){
+    }
+
+    SortDates = () => {
+    
+       let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+       let containerOne = this.props.getEvents.data.response.eventList;  //returns an array
+       let holder = [];
+       let useMonths = (month) => {
+         containerOne.map((element, index) => {
+            let data = moment(element.date).format('MMMM DD, h:mm:ss a').split(' ')[0];
+            let searchParam = data.split(' ')[0].split('')[0] + data.split(' ')[0].split('')[1] + data.split(' ')[0].split('')[2];
+            
+            if(month == searchParam){
+                console.log(searchParam);
+                console.log(element);
+                holder.push(element);
+                //  console.log(containerOne[index]);
+                // checkDate(element);
+            }
+         });
+       }
+
+    
+       
+       let count = 0;
+       for(let i=0; i<months.length; i++){
+          count++;
+          useMonths(months[i]);
+          if(count == months.length ){
+            console.log(holder)
+            // gottenData();
+          } 
+       }
+       console.log(holder)
+       return holder;
+
+
+    //    console.log(finalPlaceHolder);
+    }
+
+    renderEventSeach = () => {
         let user = this.state.user;
         let props = this.props;
         let SearchfetchEventList = props.SearchfetchEventList;
-        let that =this
+        let that = this
 
         if(SearchfetchEventList.message === listStyleConstants.SEARCH_FETCH_EVENT_PENDING){
             return  <h4  style={{marginTop:"60px"}} className="text-center">Loading Event...</h4>;
@@ -79,7 +116,6 @@ class Event extends Component {
             // let userMovies = this.state.filtered;
 
             return(
-
                 <div className="eventTrays">
                     {userEvents.map(function(event, index){
                         return(
@@ -100,6 +136,7 @@ class Event extends Component {
                                     </div>
                                     <div className="right">
                                         <div style={{fontSize: 12}}> {moment(event.date).format('MMMM DD, h:mm:ss a')}</div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -112,28 +149,36 @@ class Event extends Component {
         }
 
     }
+    
+    
+    
 
-    renderEvent(){
+
+    renderEvent = () => {
         let user = this.state.user;
         let props = this.props;
         let getEvents = props.getEvents;
-        let that =this
+        let that = this;
+        
         if(getEvents.message === listStyleConstants.GET_EVENTS_PENDING){
-            return  <h4 className="text-center">Loading Event...</h4>;
+            return  <h4 style={{marginTop:'10%'}} className="text-center">Loading Event...</h4>;
         }
+
         else if(getEvents.message === listStyleConstants.GET_EVENTS_ERROR){
             return(
                 <h4 className="text-center" style={{ marginTop: '65px'}}>No Event Found</h4>
             );
         }
+
         else if (getEvents.message === listStyleConstants.GET_EVENTS_SUCCESS){
-            let userEvents = getEvents.data.response.eventList;
+            let userEvents =this.props.getEvents.data.response.eventList
+
+            console.log('=========',userEvents)
 
             if(this.state.searchItem == "") {
             return(
-
                 <div className="eventTrays">
-                    {userEvents.map(function(event, index){
+                    {this.SortDates().map(function(event, index){
                         return(
                             <div className="eventCards" key={index}>
                                 <Link to={{
@@ -144,8 +189,15 @@ class Event extends Component {
 
                                   
                                 }}>
-                                    <div id={JSON.stringify(event)} onClick={that.EventDetails} className="picCard" style={{backgroundImage: 'url("'+event.thumbnailImage+'")'}}>
-                                    </div>
+                                
+                                       
+                                        <div 
+                                        id={JSON.stringify(event)} onClick={that.EventDetails} className="picCard" style={{backgroundImage: 'url("'+event.thumbnailImage+'")'}}>
+                                            
+                                       </div>
+
+                                
+                                   
                                 </Link>
 
                                 <div className="boldHeader">{event.title.toString().length > 15 ? event.title.toString().substring(0, 15)+"...": event.title.toString()}</div>
@@ -158,9 +210,9 @@ class Event extends Component {
                                     <div className="right">
                                         <div style={{fontSize: 12, marginTop:3}}> {moment(event.date).format('MMMM DD, h:mm:ss a')}</div>
                                     </div>
+                                    {/* {that.SortDates()} */}
                                 </div>
                             </div>
-
                         );
                     })}
                 </div>
@@ -182,7 +234,6 @@ class Event extends Component {
                                         state:{
                                             details:event
                                         }
-                                       
                                     }}>
                                         <div  id={JSON.stringify(event)} onClick={that.EventDetails}  className="picCard" style={{backgroundImage: 'url("'+event.thumbnailImage+'")'}}>
                                         </div>
@@ -212,24 +263,10 @@ class Event extends Component {
         }
     }
     
-    // resultu = () => {
-    //     if (this.state.event !== null && this.state.event !== "") {
-    //         return this.renderEventSeach();
-    //     }
-    //     else {
-    //         return this.renderEvent(); 
-    //     }
-        
 
-    // }
-
-
-
-    render(){
+    render = () => {
         let userEvent = this.props.getEvents;
         let  renderPageNumbers;
-
-
         const pageNumbers = [];
         if (this.state.total !== null) {
         for (let i = 2; i <= Math.ceil(this.state.total / this.state.per_page); i++){
@@ -242,53 +279,60 @@ class Event extends Component {
         return (
           <span  key={number} className={classes} onClick={() => this.fetchEventList(number)}>{this.props.getEvents.message ===listStyleConstants.GET_EVENTS_SUCCESS ? <p style={{color:"#43063C", fontSize:16, position:"relative", cursor:"pointer"}}>Load More</p>:null }</span>
         );
-      });
-
-        return(
-            <Fragment>
-
-                    <div className="row" style={{justifyContent: "center"}}>
-                        <div className="col-sm-12">
-                            <p className="page-title">LifeStyle</p>
-                        </div>
-
-                        <div className="col-sm-12">
-                            <div>
-                                <div className="sub-tab-nav" style={{marginBottom: 10}}>
-                                    <ul>
-                                        <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
-                                        <li><NavLink to={'/lifestyle/event'}>Event</NavLink></li>
-                                        <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li>
-                                        
-                                        <li style={{float:"right", marginTop: -31, width: 181}}><label style={{ marginBottom: 0, color: "#666666", fontSize: 14}}>Search by keyword</label><input style={{width:"100%",height:"40px", marginTop:4, float:'right',}} type="text" placeholder="search ..." value={this.state.value} onChange={ e => this.onChangeHandler(e)}/></li>
-
-                                    </ul>
+    });
+        if(this.props.getEvents.data != undefined){
+            if(this.props.getEvents.data.response != undefined){
+                return(
+                    <Fragment>
+        
+                            <div className="row" style={{justifyContent: "center"}}>
+                                <div className="col-sm-12">
+                                    <p className="page-title">LifeStyle</p>
                                 </div>
+        
+                                <div className="col-sm-12">
+                                    <div>
+                                        <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                                            <ul>
+                                                <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
+                                                <li><NavLink to={'/lifestyle/event'}>Event</NavLink></li>
+                                                <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li>
+                                                
+                                                <li style={{float:"right", marginTop: -31, width: 181}}><label style={{ marginBottom: 0, color: "#666666", fontSize: 14}}>Search by keyword</label><input style={{width:"100%",height:"40px", marginTop:4, float:'right',}} type="text" placeholder="search ..." value={this.state.value} onChange={ e => this.onChangeHandler(e)}/></li>
+        
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                {this.renderEvent()}
+                                <span onClick={() => this.fetchEventList(1)}></span> 
+                                    {renderPageNumbers}
+                                <span onClick={() => this.fetchEventList(1)}></span> 
+                           
                             </div>
-                        </div>
-                        {this.renderEvent()}
-                        <span onClick={() => this.fetchEventList(1)}></span> 
-                            {renderPageNumbers}
-                        <span onClick={() => this.fetchEventList(1)}></span> 
-                   
+        
+                    </Fragment>
+                )
+            }else{
+                return(<div>
+                    <p>Loanding ... 1</p>
+                </div>) 
+            }
+        }
 
-                    </div>
-
-            </Fragment>
-
-
-        )
+        return(<div>
+            <p>Loading page ...</p>
+        </div>)
 
     }
 }
+
 function mapStateToProps(state){
     return {
-        getEvents: state.LifestyleReducerPile.getEvents,
+        getEvents:state.LifestyleReducerPile.getEvents,
         SearchfetchEventList:state.LifestyleReducerPile.SearchfetchEventList,
         SubmitEventData:state.LifestyleReducerPile.SubmitEventData,
     };
 }
-
-
 
 export default connect(mapStateToProps)(Event);
