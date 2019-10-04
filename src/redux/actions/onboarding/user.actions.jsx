@@ -28,7 +28,20 @@ import {
     SEND_CUSTOMERTOKEN_FAILURE,
     SEND_NEWPASSWORDINFO_SUCCESS,
     SEND_NEWPASSWORDINFO_PENDING,
-    SEND_NEWPASSWORDINFO_FAILURE} from "../../constants/onboarding/user.constants";
+    SEND_NEWPASSWORDINFO_FAILURE,
+    GET_QUESTION_FORPINRESET_SUCCESS,
+    GET_QUESTION_FORPINRESET_PENDING,
+    GET_QUESTION_FORPINRESET_FAILURE,
+    SEND_ANSWER_FORPINRESET_SUCCESS,
+    SEND_ANSWER_FORPINRESET_PENDING,
+    SEND_ANSWER_FORPINRESET_FAILURE,
+    SEND_OTP_OR_TOKEN_FORPINRESET_SUCCESS,
+    SEND_OTP_OR_TOKEN_FORPINRESET_PENDING,
+    SEND_OTP_OR_TOKEN_FORPINRESET_FAILURE,
+    SEND_NEWPIN_FORPINRESET_SUCCESS,
+    SEND_NEWPIN_FORPINRESET_PENDING,
+    SEND_NEWPIN_FORPINRESET_FAILURE,
+} from "../../constants/onboarding/user.constants";
 import { dispatch } from "rxjs/internal/observable/pairs";
 
 export const userActions = {
@@ -49,6 +62,10 @@ export const userActions = {
     sendForgotPwAnswer,
     sendTokenResetPassword,
     sendNewPasswordDetails,
+    getQuestionForPinReset,
+    sendAnswerForPinReset,
+    sendOtpOrTokenForPinReset,
+    sendNewPinForPinReset,
     reissueToken
 };
 
@@ -172,8 +189,14 @@ function sendForgotPwAnswer(payload){
 
 function sendTokenResetPassword(token){
     return dispatch =>{
-        let customerToken = encodeURIComponent(token)
-        let consume = ApiService.request(routes.GET_QUESTIONBY_TOKEN+customerToken, "GET", null,  SystemConstant.HEADER);
+        let customerToken = encodeURIComponent(token);
+        let consume;
+        if(token===undefined){
+            return dispatch(failure('Please click the link in the email we sent to you'));
+        }else{
+            consume = ApiService.request(routes.GET_QUESTIONBY_TOKEN+customerToken, "GET", null,  SystemConstant.HEADER);
+        }
+         
         dispatch(request(consume));
         return consume
             .then(response =>{
@@ -221,6 +244,127 @@ function sendNewPasswordDetails(payload){
     function success(response) { return { type: SEND_NEWPASSWORDINFO_SUCCESS, response } }
     function failure(error) { return { type: SEND_NEWPASSWORDINFO_FAILURE, error } }
 }
+
+
+function getQuestionForPinReset(token){
+    return dispatch =>{
+        let customerToken = encodeURIComponent(token);
+
+        let consume;
+        if(token===undefined){
+            return dispatch(failure('Please click the link in the email we sent to you'));
+        }else{
+            consume = ApiService.request(routes.GETPINRESETQUESTION+customerToken, "GET", null,  SystemConstant.HEADER);
+        }
+
+        dispatch(request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response));
+            }).catch(error =>{
+                if(error.message && error.message.indexOf('Request has expired')){
+                    dispatch(failure('This reset pin link has expired.'));
+                    
+                } else{
+                    dispatch(failure(modelStateErrorHandler(error)));
+                    // dispatch(alertActions.error(modelStateErrorHandler(error)));
+                }
+                
+            });
+        
+    }
+    function request(user) { return { type: GET_QUESTION_FORPINRESET_PENDING, user } }
+    function success(response) { return { type: GET_QUESTION_FORPINRESET_SUCCESS, response } }
+    function failure(error) { return { type: GET_QUESTION_FORPINRESET_FAILURE, error } }
+}
+
+function sendAnswerForPinReset(payload, token){
+    return dispatch =>{
+        let customerToken = encodeURIComponent(token);
+
+        let consume;
+        if(token===undefined){
+            return dispatch(failure('Please click the link in the email we sent to you'));
+        }else{
+            consume = ApiService.request(routes.VALIDATEQUESTIONANDSENDOTP+customerToken, "POST", payload,  SystemConstant.HEADER);
+        }
+
+         
+        dispatch(request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response));
+            }).catch(error =>{
+                if(error.message && error.message.indexOf('Invalid answer')){
+                    dispatch(failure('The answer you provided is wrong.'));
+                    
+                } else{
+                    dispatch(failure(modelStateErrorHandler(error)));
+                    // dispatch(alertActions.error(modelStateErrorHandler(error)));
+                }
+            });
+        
+    }
+    function request(user) { return { type: SEND_ANSWER_FORPINRESET_PENDING, user } }
+    function success(response) { return { type: SEND_ANSWER_FORPINRESET_SUCCESS, response } }
+    function failure(error) { return { type: SEND_ANSWER_FORPINRESET_FAILURE, error } }
+}
+
+function sendOtpOrTokenForPinReset(payload, token){
+    return dispatch =>{
+        let customerToken = encodeURIComponent(token);
+
+        let consume;
+        if(token===undefined){
+            return dispatch(failure('Please click the link in the email we sent to you'));
+        }else{
+            consume = ApiService.request(routes.VERIFYRESETOTP+customerToken, "POST", payload,  SystemConstant.HEADER);
+        }
+
+        // let consume = ApiService.request(routes.VERIFYRESETOTP, "POST", payload,  SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response));
+            }).catch(error =>{
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+        
+    }
+    function request(user) { return { type: SEND_OTP_OR_TOKEN_FORPINRESET_PENDING, user } }
+    function success(response) { return { type: SEND_OTP_OR_TOKEN_FORPINRESET_SUCCESS, response } }
+    function failure(error) { return { type: SEND_OTP_OR_TOKEN_FORPINRESET_FAILURE, error } }
+}
+
+function sendNewPinForPinReset(payload, token){
+    return dispatch =>{
+        let customerToken = encodeURIComponent(token);
+
+        let consume;
+        if(token===undefined){
+            return dispatch(failure('Please click the link in the email we sent to you'));
+        }else{
+            consume = ApiService.request(routes.CHANGEPIN+customerToken, "POST", payload,  SystemConstant.HEADER);
+        }
+        // let consume = ApiService.request(routes.CHANGEPIN, "POST", payload,  SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response));
+                history.push('/maintenance/reset-pin/success');
+            }).catch(error =>{
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+        
+    }
+    function request(user) { return { type: SEND_NEWPIN_FORPINRESET_PENDING, user } }
+    function success(response) { return { type: SEND_NEWPIN_FORPINRESET_SUCCESS, response } }
+    function failure(error) { return { type: SEND_NEWPIN_FORPINRESET_FAILURE, error } }
+}
+
+
 
 
 function logout(type) {
