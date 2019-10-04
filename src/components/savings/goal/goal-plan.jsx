@@ -93,7 +93,7 @@ class GoalPlan extends React.Component {
     renderGoalsElement(customerGoalTransHistory){
         if(!customerGoalTransHistory){
             return(
-                <div className="row">
+                <div className="row choosegoalwrap">
                     <NavLink to="/savings/fixed-goal">
                            <div className="fixed-goal">
                                 <img className="goal-icon" src={calender} alt=''/>
@@ -134,7 +134,7 @@ class GoalPlan extends React.Component {
                 if(goals.length === 0 ){
                     this.setState({visible: false})
                     return(
-                        <div className="row">
+                        <div className="row choosegoalwrap">
 
                                 <NavLink to={"/savings/fixed-goal"}>
 
@@ -279,7 +279,7 @@ class GoalPlan extends React.Component {
             }
             else{
                 return(
-                    <div className="row">
+                    <div className="row choosegoalwrap">
                         <NavLink to="/savings/fixed-goal">
                             <div className="fixed-goal">
                                 <img className="goal-icon" src={calender} alt=''/>
