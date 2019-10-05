@@ -67,7 +67,8 @@ class HeaderContainer extends React.Component{
                         
                         {/* <li><NavLink to="/receive-money">Western Union</NavLink></li> */}
                         <li><NavLink to="/profile">Profile</NavLink></li>
-                        <li><NavLink to="/settings">Settings</NavLink></li>
+                        {/* <li><NavLink to="/settings">Settings</NavLink></li> */}
+                        <li><NavLink to="/settings/change-password">Settings</NavLink></li>
                         {/* <li><NavLink to="/talk-to-us">Talk to us</NavLink></li>
                         <li><NavLink to="/talk-to-us/report-error">Report an error</NavLink></li>
                         <li><NavLink to="/talk-to-us/atm-locator">Locate ATM</NavLink> </li> */}
