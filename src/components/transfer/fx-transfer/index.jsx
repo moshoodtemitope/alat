@@ -24,8 +24,8 @@ import {FETCH_BANK_PENDING,
     DELETE_TRANSFER_BENEFICIARY_FAILURE,
     FETCH_BANK_FAILURE} from "../../../redux/constants/transfer.constants";
 
-    let options = [
-    ];
+    // let options = [
+    // ];
     let timerCount;
 
 class Index extends Component{
@@ -178,17 +178,29 @@ class Index extends Component{
                 );
             case FETCH_BANK_SUCCESS:
                 let banksList = props.bankList.banks_data.response;
+                let options = [
+                ];
                 for(var bank in banksList){
                     // console.log('Bank is', banksList[bank]);
                     if(banksList[bank].BankName.toLowerCase()==='wema bank'){
                          options.push({value: banksList[bank].BankCode, label: banksList[bank].BankName});
                     }
+
+                    
                    
                 }
+                const allBanks = options.reduce((acc, current) => {
+                    const x = acc.find(item => item.label === current.label);
+                    if (!x) {
+                      return acc.concat([current]);
+                    } else {
+                      return acc;
+                    }
+                }, []);
                 const { selectedBank } = this.state;
                 return(
                     <Select
-                        options={options}
+                        options={allBanks}
                         // isDisabled={this.state.submitButtonState}
                         isDisabled={props.account_details.fetchStatus}
                         // onInputChange={this.handleChange}

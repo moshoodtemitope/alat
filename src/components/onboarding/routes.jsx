@@ -5,6 +5,8 @@ import ProvideSecurityAnswer from "./forgot-password/security-answer";
 import SuccessMessage from "./forgot-password/success";
 import ResetPassword from "./reset-password/reset-password";
 import ResetSuccessMessage from "./reset-password/success";
+import ResetCustomerPin from "./reset-pin/reset-pin";
+import ResetPinSuccessMessage from "./reset-pin/success";
 import Signup from "./signup";
 import Bvn from "./signup/bvn";
 import VerifyBvn from "./signup/verify-bvn";
@@ -94,6 +96,9 @@ class OnboardingRoute extends React.Component {
 
                 <Route exact path="/maintenance/reset-password/" component={ResetPassword} />
                 <Route path="/maintenance/reset-password/success" component={ResetSuccessMessage} />
+
+                <Route exact path="/maintenance/reset-pin/" component={ResetCustomerPin} />
+                <Route path="/maintenance/reset-pin/success" component={ResetPinSuccessMessage} />
                 {/* <PrivateRoute fakeAuth={fakeAuth} exact path='/dashboard' component={Dashboard} />*/}
                 {/*<Route component={Error404} />*/}
                  <Route path="/signup-landing" component={OnboardingLandingPage} />

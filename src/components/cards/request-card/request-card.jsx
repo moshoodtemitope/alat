@@ -583,7 +583,8 @@ class RequestCard extends React.Component {
                         <div className="col-sm-12">
                             <div className="max-600">
                                 <div className="al-card no-pad">
-                                    <h4 className="m-b-10 center-text hd-underline">Request an ALAT ATM Card</h4>
+                                    {/* <h4 className="m-b-10 center-text hd-underline">Request an ALAT ATM Card</h4> */}
+                                    <h4 className="m-b-10 center-text hd-underline">Our debit cards make payments simpler. Request one now.</h4>
                                     {/* <div className="transfer-ctn"> */}
                                             {this.renderRequestNewCardScreen1()}
                                     {/* </div> */}

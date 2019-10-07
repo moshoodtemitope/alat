@@ -187,7 +187,7 @@ export const getSingleEvent = (token, data) => {
 export const purchaseEventTicket = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.BUY_EVENT_TICKET, "POST", data, SystemConstant.HEADER, false);
+        let consume = ApiService.request(routes.BUY_EVENT_TICKETV2, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {

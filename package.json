@@ -51,8 +51,10 @@
     "start": "webpack-dev-server --open",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postbuild": "rimraf build/**/*.map"
   },
+
   "devDependencies": {
     "@babel/core": "^7.3.4",
     "babel-loader": "^7.1.5",
@@ -66,7 +68,7 @@
     "style-loader": "^0.23.1",
     "svg-inline-loader": "^0.8.0",
     "webpack": "^4.15.0",
-    "webpack-cli": "^3.0.8",
+    "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.8.1"
   },
   "eslintConfig": {

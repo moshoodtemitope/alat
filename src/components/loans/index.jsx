@@ -26,6 +26,7 @@ import AlatLoansApplyOthers from './alat-loans/apply-others';
 import AlatLoansApplyGoal from './alat-loans/apply-goals';
 import AlatLoanGoalOtp from './alat-loans/goals-otp';
 import AlatLoanSuccess from './alat-loans/success';
+import AlatLoansPast from './alat-loans/index-past';
 
 class LoansIndex extends React.Component {
     constructor(props) {
@@ -81,6 +82,8 @@ class LoansIndex extends React.Component {
                                     <Route path={'/loans/alat-loans/apply-goals'} component={AlatLoansApplyGoal} />
                                     <Route path={'/loans/alat-loans/goals-otp'} component={AlatLoanGoalOtp} />
                                     <Route path={'/loans/alat-loans/success'} component={AlatLoanSuccess} />
+                                    <Route exact path={'/loans/past-loans'} component={AlatLoansPast} />
+                                    
                                 </div>
 
                             </div>
