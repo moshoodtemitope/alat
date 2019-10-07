@@ -10,7 +10,9 @@ class InnerContainer extends React.Component{
             <Router history={history}>
                 <div className="dashboard-main">
                     <HeaderContainer />
-                    <MenuContainer />
+                    {history.location.pathname!=='/home'&&
+                        <MenuContainer />
+                    }
                     {this.props.children}
                 </div>
             </Router>

@@ -67,11 +67,11 @@ class MenuContainer extends React.Component{
         let {toggleModal, showMenu} = this.state;
         return (
             <Fragment>
-                <div id="nav-icon1" className="" onClick={ this.openMobileMenu }>
+                {/* <div id="nav-icon1" className="" onClick={ this.openMobileMenu }>
                     <span></span>
                     <span></span>
                     <span></span>
-                </div>
+                </div> */}
                 <div className={showMenu?"hr-nav-header open-fullmenu":"hr-nav-header"}>
                     <div className="mobile-menu-bottomlayer" onClick={this.closeMobileMenu}></div>
                     <div className="container">

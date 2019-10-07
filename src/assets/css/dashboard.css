@@ -2428,7 +2428,7 @@ ul.menu-side {
 
 .lcard-form {
   display: none; }
-
+  
 @media screen and (min-width: 1030px) {
   .hr-nav-header {
     display: block !important; } }
@@ -2553,9 +2553,20 @@ ul.menu-side {
   .account-setup ul li {
     display: none; }
     .account-setup ul li.next {
-      display: block; } }
+      display: block; } 
+      .menulogo-wrap.logo-middle{
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+}
 
 @media (max-width: 768px) {
+  .menulogo-wrap{
+    display: block;
+    /* position: relative;
+    left: 20px; */
+  }
   .container {
     max-width: 768px; }
   .page-title {
