@@ -116,7 +116,8 @@ function login(email, password) {
                 // dispatch(storageActions.saveStorage(response.data));
                 dispatch(success(response.data));
 
-                history.push('/dashboard');
+                // history.push('/dashboard');
+                history.push('/home');
             }).catch(error => {
 
                 // console.log(err.response.data.message);
