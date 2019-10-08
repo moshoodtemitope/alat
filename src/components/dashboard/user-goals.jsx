@@ -54,7 +54,7 @@ class UserGoals extends React.Component{
                             <img src={savemoney} />
                             <h3>Start saving, earn <span
                                 className="red-text">10%</span> interest</h3>
-                            <p>Create goals to meet your targtes and earn interest while doing
+                            <p>Create goals to meet your targets and earn interest while doing
                                 so.</p>
                             <NavLink to="/savings/choose-goal-plan">
 
@@ -107,7 +107,7 @@ class UserGoals extends React.Component{
                         <img src={savemoney} />
                         <h3>Start saving, earn <span
                             className="red-text">10%</span> interest</h3>
-                        <p>Create goals to meet your targtes and earn interest while doing
+                        <p>Create goals to meet your targets and earn interest while doing
                             so.</p>
                         <a href="" className="btn-alat m-b-10 m-t-20">Discover More</a>
                     </div>

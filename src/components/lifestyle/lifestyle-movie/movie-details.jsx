@@ -7,6 +7,7 @@ import {getCinemaList, getSingleMovie} from '../../../redux/actions/lifestyle/mo
 import clock from '../../../assets/img/clock-circular-outline.svg';
 import moment from 'moment';
 import unescape from 'lodash/unescape';
+import '../movie-preference-event.css';
 
 
 
@@ -404,23 +405,17 @@ class Moviedetails extends React.Component {
                     </div> */}
                 <div
                     className="video"
-                    // style={{
-                    //     position: "relative",
-                    //     paddingBottom: "30.25%",
-                    //     paddingTop: 25,
-                    //     height: 0,
-                    //     marginLeft:"22%"
+                
+                        // position: "relative",
+                        // paddingBottom: "30.25%",
+                        // paddingTop: 25,
+                        // height: 0,
+                        // marginLeft:"22%"
 
-                    // }}
+                    
                     >
-                <iframe
-                    style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: 640,
-                    height: 360
-                    }}
+                <iframe className="iframe"
+                  
                     src={`https://www.youtube.com/embed/${this.state.youtubeId}`}
                     frameBorder='0'
 
@@ -430,15 +425,7 @@ class Moviedetails extends React.Component {
                     
             <div className="max-750">
                 <div className="al-card fund-al-card no-pad" style={{marginTop: 10}}>
-                    <div
-                        style={{
-                            marginTop: 18,
-                            textAlign: "center",
-                            fontSize: 18,
-                            marginBottom: 16,
-                            color: "#4D4D4D"
-                        }}
-                    >
+                    <div className="buy-movies">
                         Buy Movie Ticket
                     </div>
                     <div style={{ border: "1px solid rgba(205, 205, 205, 0.32)" }} />
@@ -454,13 +441,9 @@ class Moviedetails extends React.Component {
                         <div className="col-sm-3">
                             <i className="toshow">
                                 <img
+                                className="img"
                                     src={this.state.artworkThumbnail}
-                                    style={{
-                                        width: 168,
-                                        height: 226,
-                                        borderRadius:"3px"
-
-                                    }}
+                                   
                                 />
                             </i>
                         </div>
@@ -471,43 +454,22 @@ class Moviedetails extends React.Component {
                             <div style={{ marginBottom: 21 }}>
                                 {this.state.title}
                             </div>
-                            <div
-                                style={{
-                                    fontSize:"12px",
-                                    color: "#9C9C9C",
-                                    marginTop: "21px"
-                                }}
-                            >
+                            <div className="title">
                                 Synopsis:
                             </div>
-                            <div
-                                style={{
-                                    fontSize:"12px",
-                                    color: "#9C9C9C",
-                                    marginTop:"8px",
-                                }}
+                            <div className="description"
+                              
                             >
                                 {unescape(this.state.description)}
                             </div>
                             <div>
                                 <i className="toshow">
-                                    <img
+                                    <img className="clockImage"
                                          src={clock}
-                                        style={{
-                                            width: 20,
-                                            height: 20,
-                                            marginTop: 5,
-                                            borderRadius: 50,
-                                            paddingRight: 9
-                                        }}
+                                        
                                     />
                                 </i>
-                                <span
-                                    style={{
-                                        fontSize: 12,
-                                        color: "#9C9C9C"
-                                    }}
-                                >
+                                <span className="duration">
                                     {this.state.duration}
                 </span>
                             </div>
@@ -573,30 +535,12 @@ class Moviedetails extends React.Component {
                                     >
                                         <div
                                             onClick={this.decreaseAdult}
-                                            style={{
-                                                width: 60,
-                                                height: 46,
-                                                cursor: "pointer",
-                                                backgroundColor: "#F5F5F5",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                fontSize: 30
-                                            }}
+                                            className="decreaseAdult"
+                                           
                                         >
                                             -
                                         </div>
-                                        <div
-                                            style={{
-                                                width: 60,
-                                                height: 46,
-                                                backgroundColor: "white",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                paddingTop: 14
-                                            }}
-                                        >
+                                        <div className="adultNumber">
                                             {adultNumber}
                                         </div>
                                         <div

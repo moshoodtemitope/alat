@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import { Redirect, Router } from "react-router";
 import { history } from "../_helpers/history";
 import Dashboard from "../components/dashboard";
+import LandingPage from "../components/dashboard/home";
 import TransferRoute from "./transfer/routes";
 import { Fragment } from "react";
 import Login from "./onboarding/login";
@@ -203,6 +204,7 @@ class AuthenticatedRoutes extends React.Component {
                 <Switch>
                    
                     <PrivateRoute path='/dashboard' authed={this.props.user} component={Dashboard} />
+                    <PrivateRoute path='/home' authed={this.props.user} component={LandingPage} />
                     <PrivateRoute path='/fund' authed={this.props.user} component={FundAccountIndex} />
                     
                     <PrivateRoute path='/bills/airtime' authed={this.props.user} component={Bills}/>

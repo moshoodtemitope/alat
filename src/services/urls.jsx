@@ -32,7 +32,10 @@ export const routes = {
     VERIFYUSER_FOR_FORGETPASSWORD: BASEURL + '/UserSecurityApi/api/v1/Account/VerifyUserForForgetPassword',
     RESET_PASSWORD_WITHPIN: BASEURL + '/UserSecurityApi/api/v1/Account/CallResetPasswordWithPin',
     GET_QUESTIONBY_TOKEN: BASEURL + '/UserSecurityApi/api/v1/Account/GetUserQuestionByToken?token=',
-
+    GETPINRESETQUESTION: BASEURL + '/UserSecurityApi/api/v1/account/GetUserQuestionByTokenForPinReset?token=',
+    VALIDATEQUESTIONANDSENDOTP: BASEURL + '/UserSecurityApi/api/v1/account/ValidateQuestionAndSendOtp?token=',
+    VERIFYRESETOTP: BASEURL + '/UserSecurityApi/api/v1/account/ValidateOtp?token=',
+    CHANGEPIN: BASEURL + '/UserSecurityApi/api/v1/account/ResetPin?token=',
     //account maintanance
     CUSTOMERACCOUNTS_ACCOUNT_MAINTANANCE: BASEURL + '/AccountMaintenance/api/account/customeraccounts',
     GETACCOUNTHISTORY: BASEURL + '/AccountMaintenance/api/transactions',
