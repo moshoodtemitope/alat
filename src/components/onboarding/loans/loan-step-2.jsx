@@ -98,7 +98,7 @@ class LoanOboardingStep2 extends React.Component {
               this.setState({ LoanAmountInvalid : true})
             }
         }else {
-            this.props.dispatch(alertActions.error("You select more than a month on the slider"));
+            this.props.dispatch(alertActions.error("You need to select more at least a month on the slider"));
         }
 
 
@@ -156,7 +156,7 @@ class LoanOboardingStep2 extends React.Component {
                                         maxLength={10}
                                         type="text" />
                                         {this.state.LoanAmountInvalid &&
-                                    <div className="text-danger">{`Amount to borrow must be greater than ${0} and not more than ${util.formatAmount(this.state.MaxAmount)}`} </div>
+                                    <div className="text-danger">{`Amount to borrow must be greater than ${util.formatAmount(this.state.minAmount)} and not more than ${util.formatAmount(this.state.MaxAmount)}`} </div>
                                 }
                                 </div>
                                 <p>Payment Terms(months) <span>{this.state.Term}</span></p>

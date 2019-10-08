@@ -87,7 +87,7 @@ class LoanEstimator extends React.Component {
                 this.setState({ LoanAmountInvalid: true })
             }
         } else {
-            this.props.dispatch(alertActions.error("You select more than a month on the slider"));
+            this.props.dispatch(alertActions.error("You need to select at least a month on the slider"));
         }
 
 
