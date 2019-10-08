@@ -58,16 +58,13 @@ class CashOutGoalSuccess extends React.Component {
                                             </div>
                                             <center>
                                                 <a onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
-                                                    this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">Go to Dashboard</a>
+                                                    this.props.history.push('/savings/choose-goal-plan') }} style={{cursor:"pointer"}} className="add-bene m-t-50">Go to Dashboard</a>
                                             </center>
 
                                         </div>
 
                                     </div>
-                                    <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
-                                                this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
-                                                Go back
-                                    </a>
+                                 
                                 </div>
 
                             </div>

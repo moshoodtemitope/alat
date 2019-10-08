@@ -1,8 +1,8 @@
-// const URL = 'https://api.alat.ng';
+const URL = 'https://api.alat.ng';
 //const URL = 'https://196.43.215.170';
-const URL = 'https://196.43.215.157';
+//const URL = 'https://196.43.215.157';
 
-const BASEURL = URL;
+const BASEURL = URL;    
 
 export const routes = {
     BASEURL: BASEURL,
@@ -32,7 +32,10 @@ export const routes = {
     VERIFYUSER_FOR_FORGETPASSWORD: BASEURL + '/UserSecurityApi/api/v1/Account/VerifyUserForForgetPassword',
     RESET_PASSWORD_WITHPIN: BASEURL + '/UserSecurityApi/api/v1/Account/CallResetPasswordWithPin',
     GET_QUESTIONBY_TOKEN: BASEURL + '/UserSecurityApi/api/v1/Account/GetUserQuestionByToken?token=',
-
+    GETPINRESETQUESTION: BASEURL + '/UserSecurityApi/api/v1/account/GetUserQuestionByTokenForPinReset?token=',
+    VALIDATEQUESTIONANDSENDOTP: BASEURL + '/UserSecurityApi/api/v1/account/ValidateQuestionAndSendOtp?token=',
+    VERIFYRESETOTP: BASEURL + '/UserSecurityApi/api/v1/account/ValidateOtp?token=',
+    CHANGEPIN: BASEURL + '/UserSecurityApi/api/v1/account/ResetPin?token=',
     //account maintanance
     CUSTOMERACCOUNTS_ACCOUNT_MAINTANANCE: BASEURL + '/AccountMaintenance/api/account/customeraccounts',
     GETACCOUNTHISTORY: BASEURL + '/AccountMaintenance/api/transactions',
@@ -40,12 +43,12 @@ export const routes = {
     GET_RECEIPT_TRANSACTIONS : function (accountNumber, take, skip, startDate =null, endDate=null){
         return `${BASEURL}/AccountMaintenance/api/transactions/getreciepts?accountNumber=${accountNumber}&take=${take}&skip=${skip}&startDate=${startDate}&endDate=${endDate}`;    
     },
+    
     SEND_STATEMENT: BASEURL + '/AccountMaintenance/api/transactions/statementsV2',
     GET_TRANSACTION_LIMIT: BASEURL + '/AccountMaintenance/api/transactions/getTransactionlimit',
     SET_TRANSACTION_LIMIT: BASEURL + '/AccountMaintenance/api/transactions/setTransactionlimit',
     GETSTATES: BASEURL + '/AccountMaintenance/api/account/GetStatesAndLgas',
     
-
     //goals and savings
     CUSTOMERGOALS: BASEURL + '/Savings.WebApi/api/Savings/CustomergoalsV2',
 
@@ -279,7 +282,8 @@ export const routes = {
     //EVENTS
     GET_EVENTS: BASEURL + '/LifeStylePaymentMoviesApi/api/events/getevents?pageNum=',
     GET_SINGLE_EVENT: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/GetSingleEvent',
-    BUY_EVENT_TICKET: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Movies/BuyEventTicket',
+    BUY_EVENT_TICKET: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Events/BuyEventTicketV2',
+    BUY_EVENT_TICKETV2:BASEURL +'/LifeStylePaymentMoviesApi/api/payment/MakePaymentWithBiometric',
 
     //PREFERENCES
     GET_PREFENCE: BASEURL + '/LifeStylePaymentMoviesApi/api/v1/Account/GetAllEngagements',

@@ -202,9 +202,14 @@ class LoanOnboardingStep3 extends React.Component {
     validateEmail = () => {
         let re = /^[a-zA-Z][a-zA-Z0-9_\-.]*(\.[a-zA-Z][a-zA-Z0-9_\-.]*)?@[a-zA-Z][a-zA-Z-0-9]*\.[a-zA-Z]+(\.[a-zA-Z]+)?$/;
         let result = re.test(this.state.email.toLowerCase());
-        if (!result) {
+        if (result == false) {
+            //return true if the email is invalid
             this.setState({ emailInvalid: true });
-        } else this.setState({ emailInvalid: false });
+            return true;
+        } else if(result == true) {
+            this.setState({ emailInvalid: false });
+            return false
+        }
     }
 
     valConfirmPasswordValid = () => {

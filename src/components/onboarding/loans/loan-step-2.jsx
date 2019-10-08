@@ -18,6 +18,7 @@ class LoanOboardingStep2 extends React.Component {
             LoanAmountText: "",
             repaymentAmount: "",
             MaxAmount: "",
+            minAmount: "",
             PhoneNumber: "",
             InterestRate: "",
             LoanAmountInvalid: false,
@@ -42,7 +43,7 @@ class LoanOboardingStep2 extends React.Component {
                 MaxAmount: data.response.maxAmount,
                 InterestRate: data.response.interestRate,
                 PhoneNumber: data.request.PhoneNumber,
-                minimumAmount: data.response.minAmount
+                minAmount: data.response.minAmount
             });
         }
     }
@@ -86,9 +87,10 @@ class LoanOboardingStep2 extends React.Component {
     }
 
     LoanAplyClick = () => {
+        console.log(this.state.minimumAmount);
      this.setState({isSubmitted : true});
         if (this.state.Term >= 1) {
-            if (this.state.LoanAmount >= this.state.minimumAmount && this.state.LoanAmount<= this.state.MaxAmount) {
+            if (this.state.LoanAmount >= this.state.minAmount && this.state.LoanAmount<= this.state.MaxAmount) {
                 this.props.dispatch(actions.loanOnbaordingStep2({
                     "LoanAmount": this.state.LoanAmount,
                     "Term": this.state.Term,
@@ -98,7 +100,7 @@ class LoanOboardingStep2 extends React.Component {
               this.setState({ LoanAmountInvalid : true})
             }
         }else {
-            this.props.dispatch(alertActions.error("You need to select more at least a month on the slider"));
+            this.props.dispatch(alertActions.error("You need to select at least a month on the slider"));
         }
 
 

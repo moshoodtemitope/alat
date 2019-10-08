@@ -7,7 +7,12 @@ import {userRegistrationRequest,
     sendEmailForgotPasswordReducer,
     sendAnswerForgotPasswordReducer,
     sendTokenResetPasswordRequest,
-    sendNewPasswordDetailsRequest} from "./onboarding.reducer";
+    sendNewPasswordDetailsRequest,
+    getQuestionForPinResetRequest,
+    sendAnswerForPinResetRequest,
+    sendOtpOrTokenForPinResetRequest,
+    sendNewPinForPinResetRequest
+} from "./onboarding.reducer";
 import {getCinemaList, 
     getSingleMovie, 
     buyMovieTicket,
@@ -126,7 +131,11 @@ export const onboarding = {
     sendEmailForgotPasswordReducer,
     sendAnswerForgotPasswordReducer,
     sendTokenResetPasswordRequest,
-    sendNewPasswordDetailsRequest
+    sendNewPasswordDetailsRequest,
+    getQuestionForPinResetRequest,
+    sendAnswerForPinResetRequest,
+    sendOtpOrTokenForPinResetRequest,
+    sendNewPinForPinResetRequest
 };
 
 export const loans = {

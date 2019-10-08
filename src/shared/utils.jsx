@@ -151,6 +151,7 @@ export const modelStateErrorHandler = (error, field) => {
         else
             return handleError(error);  //Check for the exact error code to know what to return
     } catch (err) {
+        console.log(err);
         return "Error : Something went wrong";
     }
 };
