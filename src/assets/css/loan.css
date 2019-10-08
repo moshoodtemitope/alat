@@ -2,6 +2,7 @@
 
 .fund-option-ctn.loan{
     display: flex !important;
+    /* flex-wrap: wrap; */
 }
 
 .fund-option.loan{
@@ -117,6 +118,12 @@ max-width: 40%;
   .dsh-left {
     width: 40%;
   }
+  .dsh-left .btn-alat{
+    width: 100%;
+  }
+  .dsh-left .btn-alat, .dsh-left input[type="submit"].btn-block, .dsh-left input[type="reset"].btn-block, .dsh-left input[type="button"].btn-block{
+    margin-bottom: 10px;
+  }
 
   .dsh-right{
       width : 60%;
@@ -185,4 +192,46 @@ background-color: #D8D8D8;
   background-color: #9F083E;
   min-height: 10px;
   border-radius: 5px;
+}
+@media screen and (max-width: 767px) {
+  .fund-option.loan{
+    flex: 0 0 100%;
+    margin: 0;
+    margin-bottom: 20px;
+  }
+  .fund-option-ctn.loan{
+    flex-wrap: wrap;
+    padding: 50px 30px;
+  }
+  
+  
+}
+@media screen and (max-width: 768px){
+  .loan-dsh-ctn{
+    flex-wrap: wrap;
+  }
+  .dsh-left input[type="submit"].btn-block, .dsh-left input[type="reset"].btn-block, .dsh-left input[type="button"].btn-block{
+    width: unset;
+  }
+  .dsh-right, .dsh-left{
+    width: 100%;
+  }
+  .dsh-left .btn-alat{
+    width: unset;
+    margin: 0 auto;
+    display: block;
+  }
+}
+@media screen and (max-width: 374px){
+  .shd-amt{
+    display: block;
+    border-bottom: 0.8px solid rgb(241, 241, 241);
+  }
+  .shd-box.seg > .shd-amt>div{
+    margin-bottom: 10px;
+  }
+  .shd-box.seg > .shd-amt>div:first-of-type{
+    padding-bottom: 10px;
+    border-bottom: 0.8px solid rgb(241, 241, 241);
+  }
 }

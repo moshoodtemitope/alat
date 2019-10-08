@@ -84,7 +84,7 @@ import * as actions from '../../../redux/actions/savings/goal/flex-goal.actions'
                                 <ul>
                                     <li><a href="accounts.html" className="active">Goals</a></li>
                                     <NavLink to="/savings/goal/group-savings-selection">
-                                    <li><a href="statement.html">Group Savings</a></li>
+                                    <li><a href="/savings/goal/group-savings-selection">Group Savings</a></li>
                                     </NavLink>                                    
                                     {/* <li><a href="#">Investments</a></li> */}
                                 

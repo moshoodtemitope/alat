@@ -2,12 +2,12 @@ const URL = 'https://api.alat.ng';
  //const URL = 'https://196.43.215.170';
 // const URL = 'https://196.43.215.157';
 
-const BASEURL = URL;
+const BASEURL = URL;    
 
 export const routes = {
     BASEURL: BASEURL,
 
-    //registration   
+    //registration
     SIGNUP_IMAGES: BASEURL + '/RegistrationApi',
     SIGNUP_PHONE: BASEURL + '/RegistrationApi/api/registration/SavePhoneNumber',
     BVN_VERIFICATION: BASEURL + '/RegistrationApi/api/registration/CallBvnService',
@@ -40,12 +40,12 @@ export const routes = {
     GET_RECEIPT_TRANSACTIONS : function (accountNumber, take, skip, startDate =null, endDate=null){
         return `${BASEURL}/AccountMaintenance/api/transactions/getreciepts?accountNumber=${accountNumber}&take=${take}&skip=${skip}&startDate=${startDate}&endDate=${endDate}`;    
     },
+    
     SEND_STATEMENT: BASEURL + '/AccountMaintenance/api/transactions/statementsV2',
     GET_TRANSACTION_LIMIT: BASEURL + '/AccountMaintenance/api/transactions/getTransactionlimit',
     SET_TRANSACTION_LIMIT: BASEURL + '/AccountMaintenance/api/transactions/setTransactionlimit',
     GETSTATES: BASEURL + '/AccountMaintenance/api/account/GetStatesAndLgas',
     
-
     //goals and savings
     CUSTOMERGOALS: BASEURL + '/Savings.WebApi/api/Savings/CustomergoalsV2',
 
@@ -172,6 +172,16 @@ export const routes = {
 
     //ALat-Loans
     GET_ACTIVE_LOANS : BASEURL + '/Lending.API/api/loan/GetCustomerStatus',
+    LIQUIDATE_LOAN : BASEURL + '/Lending.API/Api/Loan/RepayLoan',
+    LIQUIDATE_ALAT_LOAN: BASEURL + '/Lending.API/Api/AlatLoan/RepayLoan',
+    GET_LOAN_STATE : BASEURL + '/Lending.API/Api/AlatLoan/GetDashboardData',
+    GET_LOAN_OFFERS : BASEURL + '/Lending.API/Api/Loan/GetOffers',
+    SEND_ACCEPT_LOAN : BASEURL + '/Lending.API/api/AlatLoan/SendAcceptLoanOtp',
+    SEND_ACCEPT_LOAN_WITH_OTP : BASEURL + '/Lending.API/api/AlatLoan/AcceptLoanWithOtp',
+    ACCEPT_INTERSWITCH_LOAN :BASEURL + '/Lending.API/Api/Loan/AcceptOfferV2',
+    GET_PAST_LOANS : function (pageNumber, startDate =null, endDate=null){
+        return `${BASEURL}/Lending.API/Api/Loan/GetCustomerHistory?pageNumber=${pageNumber}&startDate=${startDate}&endDate=${endDate}`;    
+    },
 
     //WesternUnion
     WESTERNUNION_COUNTRIES: BASEURL + '/PaymentApi/api/WesternunionCountries',
@@ -206,7 +216,7 @@ export const routes = {
     //Insurance
      FETCH_EXISTING_POLICIES: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceTransactionHistory',
      FETCH_ACCIDENT_SCHEDULE: BASEURL + '/PaymentApi/api/Insurance/PersonalAccidentSchedule',
-     FETCH_BILLS_BENEFICIARIES: BASEURL + '/PaymentApi/api/Insurance/TravelSchedule',
+    //  FETCH_BILLS_BENEFICIARIES: BASEURL + '/PaymentApi/api/Insurance/TravelSchedule',
      FETCH_INSURANCE_PRODUCTS: BASEURL + '/PaymentApi/api/Insurance/GetProduct',
      FETCH_INSURANCE_COUNTRIES: BASEURL + '/PaymentApi/api/Insurance/GetInsuranceCountries',
      FETCH_INSURANCE_COLORLIST: BASEURL + '/PaymentApi/api/Insurance/GetColorList',

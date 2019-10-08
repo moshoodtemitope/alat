@@ -7,6 +7,7 @@ import {Fragment} from "react";
 import {userActions} from "../../redux/actions/onboarding/user.actions";
 import whitelogo from "../../assets/img/white-logo.svg";
 import selfCareImage from '../../assets/img/contact-centers.svg'
+import DpHolder from '../../assets/img/user.svg'
 import profileImage from "../../assets/img/10.jpg";
 import {
     GET_NDPRSTATUS_SUCCESS,
@@ -40,6 +41,7 @@ class HeaderContainer extends React.Component{
         this.getNDPRStatus = this.getNDPRStatus.bind(this);
         this.acceptNDRP    = this.acceptNDRP.bind(this); 
         this.openMobileMenu    = this.openMobileMenu.bind(this); 
+       
     }
 
 
@@ -63,7 +65,7 @@ class HeaderContainer extends React.Component{
                 <div className="mini-nav" style={{display: 'block'}}>
                     <ul>
                         
-                        <li><NavLink to="/receive-money">Western Union</NavLink></li>
+                        {/* <li><NavLink to="/receive-money">Western Union</NavLink></li> */}
                         <li><NavLink to="/profile">Profile</NavLink></li>
                         <li><NavLink to="/settings">Settings</NavLink></li>
                         {/* <li><NavLink to="/talk-to-us">Talk to us</NavLink></li>
@@ -121,6 +123,7 @@ class HeaderContainer extends React.Component{
         // this.props.dispatch(userActions.getAll());
         this.getProfileImage();
         this.getNDPRStatus();
+        // console.log('name is dssd');
     }
 
     getProfileImage(){
@@ -221,6 +224,7 @@ class HeaderContainer extends React.Component{
     render() {
         const user = JSON.parse(localStorage.getItem("user"));
           
+        
         return (
             <Fragment>
                 {this.showNDRPMessage()}
@@ -233,14 +237,18 @@ class HeaderContainer extends React.Component{
                                     <span></span>
                                     <span></span>
                                 </div> */}
-                                <a href="/" className="menulogo-wrap">
+                                <NavLink to="/dashboard" className="menulogo-wrap">
                                     <img src={whitelogo} />
-                                </a>
+                                </NavLink>
+                                {/* <a href="/dasboard" className="menulogo-wrap">
+                                    <img src={whitelogo} />
+                                </a> */}
                             </div>
                             <div className="col-xs-8 col-sm-8">
                                 <div className="user-name-circle clearfix" onClick={ this.toggleMiniNav }>
                                     <div className="circle-image">
-                                        <img src="../../assets/img/10.jpg" />
+                                        {/* <img src="../../assets/img/10.jpg" /> */}
+                                        <img src={DpHolder} alt=""/>
                                     </div>
                                     <p className="name">{user.fullName}</p>
                                 </div>

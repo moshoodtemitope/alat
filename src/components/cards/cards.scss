@@ -285,7 +285,7 @@ span.close-btn {
         max-width: 420px;
         margin: 0 auto;
         border-radius: 6px;
-        background-size: cover;
+        background-size: contain;
         background-repeat: no-repeat;
         background-position: center center;
         &:hover{
@@ -432,3 +432,18 @@ input{
     }
 }
 
+@media screen and (max-width: 1024px) {
+    .design-options-wrap{
+        width: 95%;
+    }
+    .m-padding-10{
+        padding: 0 20px;
+    }
+    .atmcard-wrap.slide.current{
+        width: 85%;
+        left: 24px;
+    }
+    .design-options-wrap .previousButton svg, .design-options-wrap .nextButton svg {
+        width: 15px;
+    }
+}

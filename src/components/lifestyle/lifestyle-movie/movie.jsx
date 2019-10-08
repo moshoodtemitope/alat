@@ -214,6 +214,7 @@ class Movie extends React.Component {
             );
         }
     }
+
     renderFilter(data){
         let user = this.state.user;
         let props = this.props;
@@ -222,7 +223,6 @@ class Movie extends React.Component {
         if(data == "ACTION"){
             let userMovies = getMovieList.data.response;
             // console.log(data, "==================", userMovies)   
-            
             return  (<div className="eventTrays">
                 
             {userMovies.map(function(film, index){
@@ -425,7 +425,7 @@ class Movie extends React.Component {
                                 <ul>
                                     <li className="active" onClick={()=> this.setState({display: "block"})}><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
                                     <li><NavLink to={'/lifestyle/event'}>Event</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li>
+                                    {/* <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li> */}
                                     <li style={{float:"right", marginTop: -31, width: 181}}><label style={{ marginBottom: 0, color: "#666666", fontSize: 14}}>Search by keyword</label><input style={{width:"100%",height:"40px", marginTop:4, float:'right',}} type="text" placeholder="search ..." value={this.state.value} onChange={ e => this.onChangeHandler(e)}/></li>
                                     <li style={{float:"right", marginTop: -31}} >
                                         <label style={{ marginBottom: 0, color: "#666666", fontSize: 14}}>Filter</label>

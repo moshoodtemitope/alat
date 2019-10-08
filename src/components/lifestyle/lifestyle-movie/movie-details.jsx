@@ -404,14 +404,14 @@ class Moviedetails extends React.Component {
                     </div> */}
                 <div
                     className="video"
-                    style={{
-                        position: "relative",
-                        paddingBottom: "30.25%",
-                        paddingTop: 25,
-                        height: 0,
-                        marginLeft:"22%"
+                    // style={{
+                    //     position: "relative",
+                    //     paddingBottom: "30.25%",
+                    //     paddingTop: 25,
+                    //     height: 0,
+                    //     marginLeft:"22%"
 
-                    }}
+                    // }}
                     >
                 <iframe
                     style={{

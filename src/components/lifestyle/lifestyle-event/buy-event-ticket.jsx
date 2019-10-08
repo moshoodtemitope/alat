@@ -43,7 +43,7 @@ class BuyTicket extends Component {
         if (this.props.SubmitEventTicketData.message !== listStyleConstants.SUBMIT_EVENT_TICKET_SUCCESS)
             this.props.history.push("/lifestyle/event-details");
         else {
-            let data =this.props.SubmitEventTicketData.data.data
+            let data = this.props.SubmitEventTicketData.data.data
         
             
             console.log('tag', data);
@@ -56,7 +56,8 @@ class BuyTicket extends Component {
                 ticketClassses:data.ticketClassses,
                 quantity:data.quantity,
                 source:data.source,
-                eventId:data.eventId
+                eventId:data.eventId,
+                ticketId:data.ticketId
                 
             });
         }
@@ -98,13 +99,15 @@ class BuyTicket extends Component {
             //not valid
         }else {
             let data={
-                'Email':this.state.user.email,
+                // 'Email':this.state.user.email,
+                "customerId":"90539",
                 'accountNo':this.state.accountToDebit,
-                "ClassId":this.state.ShowTimeId,	
-                "EventId":this.state.cinemaId,
+                "ClassId":this.state.ticketId,	
+                "EventId":this.state.eventId,
                 "Source":this.state.source,
                 "TicketAmount":this.state.TicketAmount,
-                "TicketNo":this.state.TicketNo,
+                "TicketNo":this.state.quantity,
+                "Pin":this.state.Pin
             };
             // console.log(data)
         
@@ -136,7 +139,7 @@ class BuyTicket extends Component {
                                 <ul>
                                     <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
                                     <li><NavLink to={'/lifestyle/event'}>Event</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li>
+                                    {/* <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li> */}
                                 </ul>
                             </div>
                         </div>
