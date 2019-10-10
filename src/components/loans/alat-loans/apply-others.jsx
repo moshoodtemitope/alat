@@ -7,6 +7,7 @@ import { alertActions } from "../../../redux/actions/alert.actions";
 import { formatAmountNoDecimal, formatAmount } from '../../../shared/utils';
 import { connect } from 'react-redux';
 
+import {cc_format, formatCardExpiryDate, checkValue} from '../../../shared/utils';
 import * as dataActions from '../../../redux/actions/dataActions/export';
 import * as actions from '../../../redux/actions/alat-loan/export';
 import Modal from 'react-responsive-modal';
@@ -289,7 +290,8 @@ class Apply extends Component {
 
             this.setState({ validation });
         } else {
-
+            var formartCardNumber = cc_format(this.state.applyForm.pan.value);
+            console.log("formartCardNumber", formartCardNumber)
             const payload = {
                 ProviderCode: this.state.selectedOffer.providerCode,
                 AccountNumber: (this.state.selectedAccount ? this.state.selectedAccount.value : this.state.applyForm.activeAccount.elementConfig.options[0].value),
@@ -297,10 +299,10 @@ class Apply extends Component {
                 CardCvv: this.state.applyForm.cvv.value,
                 CardPin: this.state.applyForm.pin.value,
                 CardExpiryDate: this.state.applyForm.expiryDate.value.replace(/\//g, ''),
-                CardPan: this.state.applyForm.pan.value
+                CardPan: formartCardNumber.replace(/\s/g, '')
             }
-            // console.log("all good", payload);
-            this.props.acceptLoanOffer(this.state.user.token, payload);
+            console.log("all good", payload);
+            // this.props.acceptLoanOffer(this.state.user.token, payload);
         }
     }
 
@@ -469,9 +471,9 @@ class Apply extends Component {
             updatedApplyForm.pan.value = '';
             updatedApplyForm.pin.value = '';
             updatedApplyForm.cvv.value = '';
-            this.setState({applyForm : updatedApplyForm, selectedOffer : null});
+            this.setState({ applyForm: updatedApplyForm, selectedOffer: null });
             form = <Success
-                message={"Your ₦" +formatAmount(parseInt(this.state.selectedOffer.amountOffered))+ " Loan is Aprroved"}
+                message={"Your ₦" + formatAmount(parseInt(this.state.selectedOffer.amountOffered)) + " Loan is Aprroved"}
                 homeUrl="/loans/alat-loans"
                 isActionButton={false}
             />
