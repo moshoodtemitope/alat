@@ -18,7 +18,19 @@ import {USER_REGISTER_SAVE, USER_REGISTER_FETCH, BVN_VERIFICATION_SUCCESS,
     SEND_CUSTOMERTOKEN_FAILURE,
     SEND_NEWPASSWORDINFO_SUCCESS,
     SEND_NEWPASSWORDINFO_PENDING,
-    SEND_NEWPASSWORDINFO_FAILURE} from "../constants/onboarding/user.constants"
+    SEND_NEWPASSWORDINFO_FAILURE,
+    GET_QUESTION_FORPINRESET_SUCCESS,
+    GET_QUESTION_FORPINRESET_PENDING,
+    GET_QUESTION_FORPINRESET_FAILURE,
+    SEND_ANSWER_FORPINRESET_SUCCESS,
+    SEND_ANSWER_FORPINRESET_PENDING,
+    SEND_ANSWER_FORPINRESET_FAILURE,
+    SEND_OTP_OR_TOKEN_FORPINRESET_SUCCESS,
+    SEND_OTP_OR_TOKEN_FORPINRESET_PENDING,
+    SEND_OTP_OR_TOKEN_FORPINRESET_FAILURE,
+    SEND_NEWPIN_FORPINRESET_SUCCESS,
+    SEND_NEWPIN_FORPINRESET_PENDING,
+    SEND_NEWPIN_FORPINRESET_FAILURE,} from "../constants/onboarding/user.constants"
 
 export function userRegistrationRequest(state={}, action) {
     switch (action.type) {
@@ -217,6 +229,114 @@ export function sendNewPasswordDetailsRequest(state=[], action){
                 is_processing: false,
                 fetch_status: SEND_NEWPASSWORDINFO_FAILURE,
                 sendnewpassword_data: action
+            };
+
+        default:
+            return { ...state }
+    }
+
+}
+
+export function getQuestionForPinResetRequest(state=[], action){
+    switch (action.type) {
+        case GET_QUESTION_FORPINRESET_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: GET_QUESTION_FORPINRESET_PENDING,
+                getquestion_data: action
+            };
+        case GET_QUESTION_FORPINRESET_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: GET_QUESTION_FORPINRESET_SUCCESS,
+                getquestion_data: action
+            };
+        case GET_QUESTION_FORPINRESET_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: GET_QUESTION_FORPINRESET_FAILURE,
+                getquestion_data: action
+            };
+
+        default:
+            return { ...state }
+    }
+
+}
+
+export function sendAnswerForPinResetRequest(state=[], action){
+    switch (action.type) {
+        case SEND_ANSWER_FORPINRESET_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: SEND_ANSWER_FORPINRESET_PENDING,
+                otpinfo_data: action
+            };
+        case SEND_ANSWER_FORPINRESET_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: SEND_ANSWER_FORPINRESET_SUCCESS,
+                otpinfo_data: action
+            };
+        case SEND_ANSWER_FORPINRESET_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: SEND_ANSWER_FORPINRESET_FAILURE,
+                otpinfo_data: action
+            };
+
+        default:
+            return { ...state }
+    }
+
+}
+
+export function sendOtpOrTokenForPinResetRequest(state=[], action){
+    switch (action.type) {
+        case SEND_OTP_OR_TOKEN_FORPINRESET_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: SEND_OTP_OR_TOKEN_FORPINRESET_PENDING,
+                sentotpinfo_data: action
+            };
+        case SEND_OTP_OR_TOKEN_FORPINRESET_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: SEND_OTP_OR_TOKEN_FORPINRESET_SUCCESS,
+                sentotpinfo_data: action
+            };
+        case SEND_OTP_OR_TOKEN_FORPINRESET_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: SEND_OTP_OR_TOKEN_FORPINRESET_FAILURE,
+                sentotpinfo_data: action
+            };
+
+        default:
+            return { ...state }
+    }
+
+}
+
+export function sendNewPinForPinResetRequest(state=[], action){
+    switch (action.type) {
+        case SEND_NEWPIN_FORPINRESET_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: SEND_NEWPIN_FORPINRESET_PENDING,
+                sendnewpin_data: action
+            };
+        case SEND_NEWPIN_FORPINRESET_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: SEND_NEWPIN_FORPINRESET_SUCCESS,
+                sendnewpin_data: action
+            };
+        case SEND_NEWPIN_FORPINRESET_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: SEND_NEWPIN_FORPINRESET_FAILURE,
+                sendnewpin_data: action
             };
 
         default:

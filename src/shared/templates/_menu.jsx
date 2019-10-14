@@ -67,11 +67,11 @@ class MenuContainer extends React.Component{
         let {toggleModal, showMenu} = this.state;
         return (
             <Fragment>
-                <div id="nav-icon1" className="" onClick={ this.openMobileMenu }>
+                {/* <div id="nav-icon1" className="" onClick={ this.openMobileMenu }>
                     <span></span>
                     <span></span>
                     <span></span>
-                </div>
+                </div> */}
                 <div className={showMenu?"hr-nav-header open-fullmenu":"hr-nav-header"}>
                     <div className="mobile-menu-bottomlayer" onClick={this.closeMobileMenu}></div>
                     <div className="container">
@@ -85,7 +85,7 @@ class MenuContainer extends React.Component{
                                         <NavLink to="/account" className="clearfix"><i className="demo-icon icon-loans" aria-hidden="true"></i><span>My accounts</span></NavLink>
                                     </li>
                                     <li><NavLink to="/transfer" className="clearfix"><i className="demo-icon icon-send-money" aria-hidden="true"></i>
-                                        <span>Transfer</span></NavLink>
+                                        <span>Transfers</span></NavLink>
                                         <ul>
                                             <li>
                                                 <NavLink to="/transfer">Bank Transfer</NavLink>
@@ -124,12 +124,12 @@ class MenuContainer extends React.Component{
                                             {this.state.user.isWemaMobileUser===false &&
                                                 <li><NavLink to="/hotlist">Hotlist Card</NavLink></li>
                                             }
-                                            <li><NavLink to="/virtual-cards"> Alat Dollar Card </NavLink></li>
+                                            <li><NavLink to="/virtual-cards"> Virtual Dollar Card </NavLink></li>
                                         </ul>
                                     </li>
                                     {/* <li><NavLink to="/settings" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i> <span>Settings</span></NavLink></li> */}
                                     <li><NavLink to="/insurance" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i> <span>Insurance</span></NavLink></li>
-                                    {/* <li><NavLink to="/receive-money" className="clearfix"><i className="demo-icon icon-western-union" aria-hidden="true"></i><span> Remittance</span></NavLink></li> */}
+                                    <li><NavLink to="/receive-money" className="clearfix"><i className="demo-icon icon-western-union" aria-hidden="true"></i><span> Western Union</span></NavLink></li>
                                     {/* <li><NavLink to="/settings" className="clearfix"><i className="demo-icon icon-setting-icon" aria-hidden="true"></i> <span>Settings</span></NavLink></li> */}
                                 </ul>
                             </div>

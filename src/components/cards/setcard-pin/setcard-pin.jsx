@@ -395,6 +395,14 @@ class SetCardPin extends React.Component {
                                                 </center>
                                     }
 
+                                    {(currentCardRequest.is_processing === false &&
+                                            currentCardRequest.fetch_status === GETCURRENT_ATMCARD_FAILURE) &&
+                                                <center>
+                                                    {currentCardRequest.atmcards_info.error}
+                                                    <a className="cta-link tobottom text-center" onClick={this.makeInitialRequest}>Try again</a>
+                                                </center>
+                                    }
+
                                     {/* Show acceptance message */}
                                     {showAcceptTerms && 
                                         (randomQuestion.fetch_status===GETRANDOM_SECURITYQUESTION_SUCCESS &&

@@ -30,7 +30,7 @@ class LifestyleIndex extends Component {
                                 <Route path={'/lifestyle'} exact component={LifeStyle} />
                                 <Route path={'/lifestyle/movie'} exact component={LifeStyle} />
                                 <Route path={'/lifestyle/event'} component={LifeStyleEvent} />
-                                <Route path={'/lifestyle/preference'} component={LifestylePreference} />
+                                {/* <Route path={'/lifestyle/preference'} component={LifestylePreference} /> */}
                                 <Route path={'/lifestyle/movie-details'} component={MovieDetail} />
                                 <Route path={'/lifestyle/buy-ticket-details'} component={BuyTicketData}/>
                                 <Route path={'/lifestyle/event-details'} component={EventDetails}/>

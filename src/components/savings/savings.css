@@ -11,8 +11,8 @@
    background: #9D0F3E;
    border: 0.95px solid #FFF4F4;
    box-sizing: border-box;
-   width: 300px;
-   height: 250px;
+   /* width: 300px;
+   height: 250px; */
    margin-left:10px;
    margin-right:10px;
 }
@@ -44,6 +44,13 @@
 
 .checkSome{
  justify-content: center;
+}
+.checkSome>.row>.choosegoalwrap{
+    width: 90%;
+    margin: 0 auto;
+}
+.checkSome>.row>.choosegoalwrap>a{
+    flex: 1 1 0;
 }
 .flex-text{
    font-weight: bold;
@@ -94,8 +101,8 @@
    background: #ffffff;
    border: 0.95px solid #FFF4F4;
    box-sizing: border-box;
-   width: 300px;
-   height: 250px;
+   /* width: 300px;
+   height: 250px; */
    margin-left:10px;
    margin-right:10px;
 }
@@ -118,8 +125,8 @@
    box-shadow: 0px 8px 24px rgba(185, 185, 185, 0.162138);
    border: 0.95px solid #FFF4F4;
    box-sizing: border-box;
-   width: 300px;
-   height: 250px;
+   /* width: 300px;
+   height: 250px; */
    margin-left:10px;
    margin-right:10px;
 }
@@ -192,6 +199,7 @@
    font-size: 16px;
    /* font-family: "proxima_novasemibold", sans-serif !important; */
    padding-bottom: 20px;
+   word-break: break-all;
 
 }
 .coverForSummary .GoalText {
@@ -300,4 +308,33 @@
     margin-top: 40px;
 
 
+}
+@media screen and (max-width: 1023px){
+    .checkSome>.row>.row{
+        margin-right: 0;
+        margin-left: 0;
+        display: block;
+    }
+    .fixed-goal, .flex-goal, .stash-goal{
+        width: 75%;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        height: unset;
+    }
+    .coverForSummary .boldedText{
+        font-size: 14px;
+        padding-right: 10px;
+    }
+    .coverForSummary .left{
+        padding-left: 5%;
+    }
+}
+
+@media screen and (max-width: 1023px){
+    .header-info, .form-row, .form-group{
+        padding: 0 25px;
+    }
+    .form-row{
+        margin: 0;
+    }
 }

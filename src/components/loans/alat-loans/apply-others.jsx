@@ -7,9 +7,10 @@ import { alertActions } from "../../../redux/actions/alert.actions";
 import { formatAmountNoDecimal, formatAmount } from '../../../shared/utils';
 import { connect } from 'react-redux';
 
-import {cc_format, formatCardExpiryDate, checkValue} from '../../../shared/utils';
+import {encryptTransactionData, formatCardExpiryDate, checkValue} from '../../../shared/utils';
 import * as dataActions from '../../../redux/actions/dataActions/export';
 import * as actions from '../../../redux/actions/alat-loan/export';
+import * as encryptActions from '../../../redux/actions/fund-account/fund-acount.action';
 import Modal from 'react-responsive-modal';
 import Success from '../../account-settings/shared/success';
 import AlatLoanContainer from '../alat-loan-container';
@@ -111,6 +112,7 @@ class Apply extends Component {
 
     componentDidMount() {
         this.props.getLoanOffers(this.state.user.token);
+        this.props.getEncryptionRule(this.state.user.token);
         this.props.fetchDebitableAccounts(this.state.user.token)
     }
 
@@ -270,40 +272,46 @@ class Apply extends Component {
     onSubmitForm = (event) => {
         var validation = { ...this.state.validation };
         event.preventDefault();
-        if (this.props.alert.message) this.props.clearError();
-        if (
-            (this.state.applyForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedOffer) ||
-            !this.state.selectedOffer ||
-            !this.pinInputValidation(this.state.applyForm.pin.value) ||
-            this.state.applyForm.expiryDate.value.length < 5 ||
-            this.state.applyForm.cvv.value.length < 3 ||
-            this.state.applyForm.pan.value.length < 16 ||
-            !this.state.isChecked
-        ) {
-            if (this.state.applyForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedAccount) validation.accountError.hasError = true;
-            if (!this.state.selectedOffer) validation.offerError = true;
-            if (!this.state.isChecked) validation.termsError = true;
-            if (!this.pinInputValidation(this.state.applyForm.pin.value)) validation.pinError.hasError = true;
-            if (this.state.applyForm.expiryDate.value.length < 5 || this.state.applyForm.expiryDate.value.replace(/[^/]/g, '').length > 1) validation.expiryDateError = true;
-            if (this.state.applyForm.cvv.value < 3) validation.cvvError = true;
-            if (this.state.applyForm.pan.value.length < 16) validation.panError = true;
+        // if (this.props.alert.message) this.props.clearError();
+        // if (
+        //     (this.state.applyForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedOffer) ||
+        //     !this.state.selectedOffer ||
+        //     !this.pinInputValidation(this.state.applyForm.pin.value) ||
+        //     this.state.applyForm.expiryDate.value.length < 5 ||
+        //     this.state.applyForm.cvv.value.length < 3 ||
+        //     this.state.applyForm.pan.value.length < 16 ||
+        //     !this.state.isChecked
+        // ) {
+        //     if (this.state.applyForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedAccount) validation.accountError.hasError = true;
+        //     if (!this.state.selectedOffer) validation.offerError = true;
+        //     if (!this.state.isChecked) validation.termsError = true;
+        //     if (!this.pinInputValidation(this.state.applyForm.pin.value)) validation.pinError.hasError = true;
+        //     if (this.state.applyForm.expiryDate.value.length < 5 || this.state.applyForm.expiryDate.value.replace(/[^/]/g, '').length > 1) validation.expiryDateError = true;
+        //     if (this.state.applyForm.cvv.value < 3) validation.cvvError = true;
+        //     if (this.state.applyForm.pan.value.length < 16) validation.panError = true;
 
-            this.setState({ validation });
-        } else {
-            var formartCardNumber = cc_format(this.state.applyForm.pan.value);
-            console.log("formartCardNumber", formartCardNumber)
+        //     this.setState({ validation });
+        // } else {
+            var eRule = this.props.encryption_rule.encryption_rule_data.response;
+            var formatCardNumber = encryptTransactionData(this.state.applyForm.pan.value, eRule);
+            var formatCvv = encryptTransactionData(this.state.applyForm.cvv.value, eRule);
+            var formatPin = encryptTransactionData(this.state.applyForm.pin.value, eRule);
+            var formatDate = encryptTransactionData(this.state.applyForm.expiryDate.value.replace(/\//g, ''), eRule)
+
+            console.log("formartCardNumber", formatCardNumber)
             const payload = {
                 ProviderCode: this.state.selectedOffer.providerCode,
                 AccountNumber: (this.state.selectedAccount ? this.state.selectedAccount.value : this.state.applyForm.activeAccount.elementConfig.options[0].value),
                 OfferId: this.state.selectedOffer.offerId,
-                CardCvv: this.state.applyForm.cvv.value,
-                CardPin: this.state.applyForm.pin.value,
-                CardExpiryDate: this.state.applyForm.expiryDate.value.replace(/\//g, ''),
-                CardPan: formartCardNumber.replace(/\s/g, '')
+                CardCvv: formatCvv,
+                CardPin: formatPin,
+                CardExpiryDate: formatDate,
+                CardPan: formatCardNumber
             }
+            console.log(this.state.applyForm.expiryDate.value.replace(/\//g, ''));
             console.log("all good", payload);
-            // this.props.acceptLoanOffer(this.state.user.token, payload);
-        }
+            this.props.acceptLoanOffer(this.state.user.token, payload);
+        // }
     }
 
 
@@ -491,6 +499,7 @@ const mapStateToProps = state => {
         pageState: state.alat_loan_reducer.pageState,
         alert: state.alert,
         isSuccess: state.alat_loan_reducer.isSuccess,
+        encryption_rule: state.encrypt_rule,
     }
 }
 
@@ -501,6 +510,7 @@ const mapDispatchToProps = dispatch => {
         clearError: () => dispatch(alertActions.clear()),
         acceptLoanOffer: (token, data) => dispatch(actions.acceptInterswitchLoan(token, data)),
         resetPageState: (code) => dispatch(actions.resetPageState(code)),
+        getEncryptionRule: (token) => dispatch(encryptActions.getEncryptionRule(token))
         // clearLoanInfo: () => dispatch(actions.clearLoanInfo())
     }
 }

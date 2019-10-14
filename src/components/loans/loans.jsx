@@ -35,8 +35,7 @@ class Loans extends React.Component {
                             <i className="toshow"><img src={alatLoan} /></i>
                             <i className="hoveraction"><img src={alatLoanHover} /></i>
                             <p>ALAT Loans</p>
-                            <p>Loans Description should look great here. You know What i mean?
-                              Loans Description should look great here. You know What i mean?
+                            <p>You don’t need to stress over meeting any need. Get a loan here now.
 											  </p>
                         </div>
 
@@ -44,8 +43,7 @@ class Loans extends React.Component {
                             <i className="toshow"><img src={salaryLoan} /></i>
                             <i className="hoveraction"><img src={salaryLoanHover} /></i>
                             <p>Salary Based Lending</p>
-                            <p>Loans Description should look great here. You know What i mean?
-												Loans Description should look great here. You know What i mean?</p>
+                            <p>You can get the money you need right now and payback from your salary over 3 to 24 months.</p>
                         </div>
                     </div>
                 </div>

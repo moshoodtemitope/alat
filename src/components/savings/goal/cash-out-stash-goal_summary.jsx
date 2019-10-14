@@ -104,7 +104,7 @@ class CashoutStashGoal extends Component {
                                                 <li><a href="accounts.html" className="active">Goals</a></li>
                                             </NavLink>
                                             <NavLink to='/savings/activityDashBoard'>
-                                                <li><a href="statement.html">Group Savings</a></li>
+                                                <li><a href="/savings/activityDashBoard">Group Savings</a></li>
                                             </NavLink>
                                             {/* <li><a href="#">Investments</a></li> */}
 
@@ -115,7 +115,7 @@ class CashoutStashGoal extends Component {
 
 
                             {this.props.alert && this.props.alert.message &&
-                            <div style={{width: "100%",}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                            <div style={{width: "100%", marginRight:"120px",marginLeft:"279px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                             }
 
                             <h1 style={{margin:'auto', width:"100%", textAlign:"center",
@@ -174,13 +174,14 @@ class CashoutStashGoal extends Component {
 
 
                                         </div>
-
-
-                                    </div>
-                                    <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
+                                        <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
                                                 this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
                                                 Go back
                                         </a>
+
+
+                                    </div>
+                                   
 
 
 

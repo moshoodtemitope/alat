@@ -93,7 +93,7 @@ class GoalPlan extends React.Component {
     renderGoalsElement(customerGoalTransHistory){
         if(!customerGoalTransHistory){
             return(
-                <div className="row">
+                <div className="row choosegoalwrap">
                     <NavLink to="/savings/fixed-goal">
                            <div className="fixed-goal">
                                 <img className="goal-icon" src={calender} alt=''/>
@@ -134,7 +134,7 @@ class GoalPlan extends React.Component {
                 if(goals.length === 0 ){
                     this.setState({visible: false})
                     return(
-                        <div className="row">
+                        <div className="row choosegoalwrap">
 
                                 <NavLink to={"/savings/fixed-goal"}>
 
@@ -186,13 +186,25 @@ class GoalPlan extends React.Component {
                                             </div>
                                         </div>
                                         <div id="progressBarDashBoard">
-                                            <ProgressBar
+                                        {
+                                             hist.goalTypeName === "Stash" ?
+                                             <ProgressBar
                                                 percentage={hist.percentageCompleted}
-                                                discBottom={"₦" + this.toCurrency(hist.amountSaved) + " " + "of"}
-                                                discSpan={" " + "₦" + this.toCurrency(hist.targetAmount)}
+                                                discBottom={"₦" + this.toCurrency(hist.amountSaved)}
+                                                // discSpan={" " + "₦" + this.toCurrency(hist.targetAmount)}
                                                 discBottomSib='Amount Saved'
                                                 discBottomRight={hist.percentageCompleted.toFixed(1) + "%"}
-                                            />
+                                            />:
+                                            <ProgressBar
+                                            percentage={hist.percentageCompleted}
+                                            discBottom={"₦" + this.toCurrency(hist.amountSaved) + " " + "of"}
+                                            discSpan={" " + "₦" + this.toCurrency(hist.targetAmount)}
+                                            discBottomSib='Amount Saved'
+                                            discBottomRight={hist.percentageCompleted.toFixed(1) + "%"}
+                                        />
+
+                                        }
+                                            
                                         </div>
                                         <div className='row forDetailsComp'>
                                             <div className="col-xs-4">
@@ -267,13 +279,12 @@ class GoalPlan extends React.Component {
             }
             else{
                 return(
-                    <div className="row">
+                    <div className="row choosegoalwrap">
                         <NavLink to="/savings/fixed-goal">
                             <div className="fixed-goal">
                                 <img className="goal-icon" src={calender} alt=''/>
                                 <p className="flex-text">Fixed Goal</p>
-                                <p className="info-text3">Save daily, weekly or monthly towards
-                                    a target amount, earn 10% interest. No withdrawals allowed and you will lose your interest if you don't meet your target.
+                                <p className="info-text3">Save money daily, weekly or monthly towards a target for a fixed period and earn 10% interest per annum. No withdrawals allowed and you will lose your interest if you do not meet your target amount.
                                 </p>
                             </div>
                         </NavLink>
@@ -281,15 +292,14 @@ class GoalPlan extends React.Component {
                             <div className="flex-goal">
                                 <img className="goal-icon" src={graph} alt=''/>
                                 <p className="plan-text">Flexi Goal</p>
-                                <p className="info-text2">Save daily, weekly or monthly towards a target amount, earn 10% interest. Withdrawal up to <span style={{color:'#AB2656'}}> 50% </span> of your  savings once every 30 days
-                                    but you will lose your interest if you don't meet your target</p>
+                                <p className="info-text2">Save daily, weekly or monthly towards a target and earn 10% interest per annum. You can withdraw up to 50% of your savings once every 30 days. You will lose your interest if you do not meet your target amount.</p>
                             </div>
                         </NavLink>
                         <NavLink to="/savings/create-stash_step1">
                             <div className="stash-goal">
                                 <img className="goal-icon" src={stash} alt=''/>
                                 <p className="plan-text">Stash</p>
-                                <p className="info-text2">Save whatever you want whenever you want and earn 10% interest with cashout interest every month but you will lose your interest if you don't save for a minimum of 30 days</p>
+                                <p className="info-text2"> Put extra cash away whenever you want and earn 10% per annum with an option to cashout interest monthly. Your Stash will need to exist for a minimum of 30 days to qualify for interest.</p>
                             </div>
                         </NavLink>
                     </div>
