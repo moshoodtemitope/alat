@@ -185,6 +185,7 @@ export const routes = {
     GET_PAST_LOANS : function (pageNumber, startDate =null, endDate=null){
         return `${BASEURL}/Lending.API/Api/Loan/GetCustomerHistory?pageNumber=${pageNumber}&startDate=${startDate}&endDate=${endDate}`;    
     },
+    AUTOMATE_REPAYMENT : BASEURL+ '/Lending.API/api/AlatLoan/AutomateRepayment',
 
     //WesternUnion
     WESTERNUNION_COUNTRIES: BASEURL + '/PaymentApi/api/WesternunionCountries',
