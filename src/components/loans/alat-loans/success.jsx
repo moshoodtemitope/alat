@@ -217,16 +217,15 @@ class Success extends Component {
         } else {
             var payload = {
                 AlatPin: this.state.setAutomationForm.pin.value,
-                Amount: (this.state.selectedAccount ? this.state.selectedAccount.value : this.state.setAutomationForm.activeAccount.elementConfig.options[0].value),
+                Amount: this.props.loanDetail.Amount,
                 CreditAccount: this.props.loanDetail.Account,
-                DebitAccount: this.state.selectedAccount.value,
+                DebitAccount: (this.state.selectedAccount ? this.state.selectedAccount.value : this.state.setAutomationForm.activeAccount.elementConfig.options[0].value),
                 StartDate: this.state.startDate,
                 EndDate: this.state.endDate,
                 Frequency: this.state.selectedFrequency.value,
                 LoanId: this.props.loanDetail.loanId,
                 Name: "",
             };
-            console.log(payload);
             this.props.automateRepayment(this.state.user.token, payload);
         }
 
