@@ -130,6 +130,7 @@ export const canvasToFile = (dataURL) => {
 
 export const modelStateErrorHandler = (error, field) => {
     //console.log("in model state");
+    //console.log(error);
     try {
         if (error.response) {
             if ("modelState" in error.response.data && error.response.data.message.toLowerCase().indexOf('the request is invalid.') > -1) {
@@ -151,12 +152,14 @@ export const modelStateErrorHandler = (error, field) => {
         else
             return handleError(error);  //Check for the exact error code to know what to return
     } catch (err) {
+       // console.log(err);
         return "Error : Something went wrong";
     }
 };
 
 export const handleError = (error) => {
     //console.log("-----in handle error")
+    //console.log(error);
     var message = '';
     if (error.response) {
         // The request was made and the server responded with a status code
