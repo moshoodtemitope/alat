@@ -69,15 +69,8 @@ class Signup extends React.Component{
     }
 
     formatPhone(phone){
-        let ph = phone.replace(/[^a-zA-Z0-9]/g, '');
-        let countryCode = ph.substring(0,3);
-        if(countryCode === '234'){
-            // console.log(ph.substr(3));
-            return '0' + ph.substr(3);
-        }
-        else{
-            return phone;//.replace(/[^a-zA-Z0-9]/g, '');
-        }
+        var slashFrom = phone.length - 10;
+        return "234" + phone.substring(slashFrom);
     }
 
     handleSubmit(e) {
@@ -88,7 +81,7 @@ class Signup extends React.Component{
         phone = this.formatPhone(phone);
         // console.log(phone.length);
 
-        if(!phone || phone.length < 10 || phone.length > 20){
+        if(!phone || phone.length < 13 || phone.length > 20){
             this.setState({ formError: true });
             // this.setState({ submitted: false });
             return;
