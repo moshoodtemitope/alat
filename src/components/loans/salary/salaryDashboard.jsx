@@ -184,13 +184,14 @@ class LoansDashboard extends React.Component {
                             <div className="shd-amt">
                                 <div>
                                     <img src={loanIcon} />
-                                    <p>{util.formatAmount(loan.AmountOffered)}
+                                    <p>{util.mapCurrency("NGN")}{util.formatAmount(loan.AmountOffered)}
                                         <span>Loan Amount</span>
                                     </p>
                                 </div>
                                 <div>
                                     <img src={loanIcon} />
-                                    <p>--
+                                    <p>{util.mapCurrency("NGN")}{util.formatAmount(loan.AmountOffered)}  
+                                    {/* to be changed */}
                                                    <span>Total Repayment</span>
                                     </p>
                                 </div>
@@ -251,7 +252,7 @@ class LoansDashboard extends React.Component {
                                 <div className="shd-amt">
                                     <div>
                                         <img src={loanIcon} />
-                                        <p>{util.FormartDate(currentLoan.AmountPaid)}
+                                        <p>{util.mapCurrency("NGN")}{util.formatAmount(currentLoan.AmountPaid)}
 													<span>Total Repayment</span>
                                         </p>
                                     </div>

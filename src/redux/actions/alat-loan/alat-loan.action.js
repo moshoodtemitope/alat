@@ -221,7 +221,7 @@ export const sendLoanWithOtp = (token, data) => {
         let consume = ApiService.request(routes.SEND_ACCEPT_LOAN_WITH_OTP, "POST", data, SystemConstant.HEADER);
         return consume
             .then(response => {
-                dispatch(success());
+                dispatch(success(response.data));
             })
             .catch(error => {
 
@@ -230,9 +230,10 @@ export const sendLoanWithOtp = (token, data) => {
             });
     };
 
-    function success() {
+    function success(data) {
         return {
             type: actionTypes.SEND_LOAN_WITH_OTP_SUCCESS,
+            data: data
         }
     }
 };
@@ -282,6 +283,29 @@ export const fetchPastLoans = (token, payload, data) => {
         return {
             type: actionTypes.FETCH_PAST_LOAN_SUCCESS,
             data: data
+        }
+    }
+};
+
+export const automateRepayment = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        dispatch(isFetchingTrue());
+        let consume = ApiService.request(routes.AUTOMATE_REPAYMENT, "POST", data, SystemConstant.HEADER);
+        return consume
+            .then(response => {
+                dispatch(success());
+            })
+            .catch(error => {
+
+                dispatch(isFetchingFalse());
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function success() {
+        return {
+            type: actionTypes.AUTOMATE_REPAYMENT_SUCCESS,
         }
     }
 };

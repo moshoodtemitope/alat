@@ -94,7 +94,7 @@ class Index extends Component {
                                         <div className="transfer-ctn" style={{ margin: "0 100px 0 100px" }}>
                                             <div className="col-sm-12 m-b-20" >
                                                 {/* <center> */}
-                                                <button disabled={this.props.fetching} style={{ minWidth: 190 }} onClick={this.onCreatePin} className="btn-alat mx-2 text center">{this.props.fetching ? "Processing..." : "Create ALAT PIN"}</button>
+                                                <button disabled={this.props.fetching} style={{ minWidth: 190 }} onClick={this.onCreatePin} className="btn-alat mx-2 text center">{this.props.fetching ? "Please wait..." : "Create ALAT PIN"}</button>
                                                 {/* </center> */}
                                             </div>
                                         </div>

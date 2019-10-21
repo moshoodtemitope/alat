@@ -7,8 +7,10 @@ import { alertActions } from "../../../redux/actions/alert.actions";
 import { formatAmountNoDecimal, formatAmount } from '../../../shared/utils';
 import { connect } from 'react-redux';
 
+import { encryptTransactionData, formatCardExpiryDate, checkValue } from '../../../shared/utils';
 import * as dataActions from '../../../redux/actions/dataActions/export';
 import * as actions from '../../../redux/actions/alat-loan/export';
+import * as encryptActions from '../../../redux/actions/fund-account/fund-acount.action';
 import Modal from 'react-responsive-modal';
 import Success from '../../account-settings/shared/success';
 import AlatLoanContainer from '../alat-loan-container';
@@ -40,7 +42,7 @@ class Apply extends Component {
                 expiryDateError: false,
                 termsError: false
             },
-            applyForm: {
+            applyForm: {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
                 activeOffer: {
                     elementType: 'select',
                     elementConfig: {
@@ -110,6 +112,7 @@ class Apply extends Component {
 
     componentDidMount() {
         this.props.getLoanOffers(this.state.user.token);
+        this.props.getEncryptionRule(this.state.user.token);
         this.props.fetchDebitableAccounts(this.state.user.token)
     }
 
@@ -289,18 +292,29 @@ class Apply extends Component {
 
             this.setState({ validation });
         } else {
+        var eRule = this.props.encryption_rule.encryption_rule_data.response;
+        var formatCardNumber = encryptTransactionData(this.state.applyForm.pan.value, eRule);
+        var formatCvv = encryptTransactionData(this.state.applyForm.cvv.value, eRule);
+        var formatPin = encryptTransactionData(this.state.applyForm.pin.value, eRule);
+        var d = this.state.applyForm.expiryDate.value.split('/');
+        var newD = d[1] + d[0]
+        var formatDate = encryptTransactionData(newD, eRule)
 
-            const payload = {
-                ProviderCode: this.state.selectedOffer.providerCode,
-                AccountNumber: (this.state.selectedAccount ? this.state.selectedAccount.value : this.state.applyForm.activeAccount.elementConfig.options[0].value),
-                OfferId: this.state.selectedOffer.offerId,
-                CardCvv: this.state.applyForm.cvv.value,
-                CardPin: this.state.applyForm.pin.value,
-                CardExpiryDate: this.state.applyForm.expiryDate.value.replace(/\//g, ''),
-                CardPan: this.state.applyForm.pan.value
-            }
-            // console.log("all good", payload);
-            this.props.acceptLoanOffer(this.state.user.token, payload);
+        const payload = {
+            ProviderCode: this.state.selectedOffer.providerCode,
+            AccountNumber: (this.state.selectedAccount ? this.state.selectedAccount.value : this.state.applyForm.activeAccount.elementConfig.options[0].value),
+            OfferId: this.state.selectedOffer.offerId,
+            CardCvv: formatCvv,
+            CardPin: formatPin,
+            CardExpiryDate: formatDate,
+            CardPan: formatCardNumber
+        }
+        const loanDetails = {
+            Amount: this.state.selectedOffer.AmountOffered,
+            Account: payload.AccountNumber
+        }
+        this.props.setLoanDetail(loanDetails);
+        this.props.acceptLoanOffer(this.state.user.token, payload);
         }
     }
 
@@ -439,7 +453,7 @@ class Apply extends Component {
                                                         </div>
                                                         <div className="col-sm-12">
                                                             <center>
-                                                                <button onClick={this.onSubmitForm} className="btn-alat m-t-10 m-b-20 text-center">Submit</button>
+                                                                <button disabled={this.props.fetching} onClick={this.onSubmitForm} className="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Submit"}</button>
                                                             </center>
                                                         </div>
                                                     </div>
@@ -469,12 +483,8 @@ class Apply extends Component {
             updatedApplyForm.pan.value = '';
             updatedApplyForm.pin.value = '';
             updatedApplyForm.cvv.value = '';
-            this.setState({applyForm : updatedApplyForm, selectedOffer : null});
-            form = <Success
-                message={"Your ₦" +formatAmount(parseInt(this.state.selectedOffer.amountOffered))+ " Loan is Aprroved"}
-                homeUrl="/loans/alat-loans"
-                isActionButton={false}
-            />
+            this.props.resetPageState(2);
+            form = <Redirect to="/loans/alat-loans/success" />
         }
 
         return form;
@@ -489,6 +499,8 @@ const mapStateToProps = state => {
         pageState: state.alat_loan_reducer.pageState,
         alert: state.alert,
         isSuccess: state.alat_loan_reducer.isSuccess,
+        encryption_rule: state.encrypt_rule,
+        fetching: state.alat_loan_reducer.isFetching,
     }
 }
 
@@ -499,6 +511,8 @@ const mapDispatchToProps = dispatch => {
         clearError: () => dispatch(alertActions.clear()),
         acceptLoanOffer: (token, data) => dispatch(actions.acceptInterswitchLoan(token, data)),
         resetPageState: (code) => dispatch(actions.resetPageState(code)),
+        getEncryptionRule: (token) => dispatch(encryptActions.getEncryptionRule(token)),
+        setLoanDetail: (data) => dispatch(actions.setLoanDetail(data)),
         // clearLoanInfo: () => dispatch(actions.clearLoanInfo())
     }
 }

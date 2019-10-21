@@ -54,13 +54,15 @@ const reducer = (state = initialState, action) => {
         case actionTypes.SEND_LOAN_FOR_OTP_SUCCESS:
             return updateObject(state, { isFetching: false, pageState: 0 });
         case actionTypes.SEND_LOAN_WITH_OTP_SUCCESS:
-            return updateObject(state, { isFetching: false, pageState: 0 });
+            return updateObject(state, { isFetching: false, pageState: 0, loanDetail : {...state.loanDetail, loanId : action.data.Id}});
         case actionTypes.SET_LOAN_DETAIL:
             return updateObject(state, { isFetching: false, loanDetail: action.data });
         case actionTypes.ACCEPT_INTERSWITCH_LOAN_SUCCESS:
             return updateObject(state, { isFetching: false, pageState: 0 });
         case actionTypes.FETCH_PAST_LOAN_SUCCESS:
             return updateObject(state, { isFetching: false, pastLoans: action.data });
+        case actionTypes.AUTOMATE_REPAYMENT_SUCCESS:
+            return updateObject(state, { isFetching: false, pageState: 0 });
 
         default: return state;
     }
