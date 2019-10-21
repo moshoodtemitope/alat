@@ -225,10 +225,12 @@ class History extends Component {
     searchFromBackend = (event) => {
         event.preventDefault();
         this.checkInfoState();
-        if (this.state.startDate && this.state.endDate) {
-            if (Date.parse(this.state.startDate) > Date.parse(this.state.endDate)) {
-                this.setState({ invalidInterval: true });
-                return;
+        if(this.state.startDate != this.state.endDate){
+            if (this.state.startDate && this.state.endDate) {
+                if (Date.parse(this.state.startDate) > Date.parse(this.state.endDate)) {
+                    this.setState({ invalidInterval: true });
+                    return;
+                }
             }
         }
         this.setState({ invalidInterval: false }, () => this.props.clearHistory());
