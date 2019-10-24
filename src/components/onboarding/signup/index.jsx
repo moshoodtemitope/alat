@@ -69,10 +69,16 @@ class Signup extends React.Component{
     }
 
     formatPhone(phone){
-        // console.log('unformatted phone is', phone);
-        let temmPhone = phone.replace('-','')
-        var slashFrom = temmPhone.length - 10;
-        return "234" + temmPhone.substring(slashFrom);
+        let {numPrefix} = this.state;
+        // console.log('phone is', phone);
+        let tempPhone = phone.replace(/-/g,'');
+        if(tempPhone.indexOf('(')>-1){
+            tempPhone = tempPhone.replace(/\(/g,'');
+            tempPhone = tempPhone.replace(/\)/g,'');
+        }
+        // console.log('unformatted phone is', tempPhone);
+        var slashFrom = tempPhone.length - 10;
+        return numPrefix + tempPhone.substring(slashFrom);
     }
 
     handleSubmit(e) {
@@ -83,7 +89,7 @@ class Signup extends React.Component{
         phone = this.formatPhone(phone);
         
 
-        if(!phone || phone.length < 13 || phone.length > 20){
+        if(!phone || phone.length < 11 || phone.length > 20){
             this.setState({ formError: true });
             // this.setState({ submitted: false });
             return;
@@ -153,17 +159,21 @@ class Signup extends React.Component{
         //     ' selected country is: ',
         //     selectedCountry
         // );
-        let tempNum
+        let tempNum, numPrefix, phoneNum;
         if(telNumber.indexOf('-')>-1){
             tempNum = telNumber.split(/-(.+)/)[1];
+            numPrefix = telNumber.split(/-(.+)/)[0];
                 if (tempNum.charAt(0)==='0'){
                     tempNum = tempNum.replace('0','')
                 }
-            console.log('temp num is', tempNum);
+            
+            // phoneNum = numPrefix+tempNum;
+            // console.log('temp num is', phoneNum);
         }
 
         // let tempNum = telNumber.split()
-        this.setState({phone: tempNum}, ()=>console.log('number is',this.state.phone));
+        this.setState({phone: tempNum, numPrefix}, ()=>console.log('number is',this.state.phone));
+        // this.setState({phone: phoneNum}, ()=>console.log('number is',this.state.phone));
     }
 
     render(){
