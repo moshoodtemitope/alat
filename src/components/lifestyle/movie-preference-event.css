@@ -372,5 +372,14 @@ border: 1px solid #ddd;
     cursor:pointer
 
 }
+@media screen and (max-width: 1023px){
+  .header-info, .form-row, .form-group{
+      padding: 0 25px;
+  }
+  .form-row{
+      margin: 0;
+  }
+}
+
 
 
