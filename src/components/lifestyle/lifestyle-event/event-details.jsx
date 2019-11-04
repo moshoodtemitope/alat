@@ -239,11 +239,7 @@ class EventDetails extends React.Component {
                         <div style={{ border: "1px solid rgba(205, 205, 205, 0.32)" }} />
                         <div
                             className="row"
-                            style={{
-                                marginLeft: 50,
-                                marginTop: 20,
-                                marginRight: 50
-                            }}>
+                            style={{marginLeft: 50,marginTop: 20,marginRight: 50}}>
                             {this.gotobuyEventTicket()}
                             <div className="col-sm-3">
                                 <i className="toshow">
@@ -276,11 +272,7 @@ class EventDetails extends React.Component {
                                     </i>
                                     
                                     <span
-                                        style={{
-                                            fontSize: 12,
-                                            color: "#9C9C9C"
-                                        }}
-                                    >
+                                        style={{fontSize: 12,color: "#9C9C9C"}}>
                                         {this.state.location}
                     </span>
                                 </div>
@@ -289,10 +281,7 @@ class EventDetails extends React.Component {
     
                         <div
                             className="row"
-                            style={{
-                                marginRight: 69,
-                                marginLeft: 69,
-                                // marginTop: 20,
+                            style={{marginRight: 69,marginLeft: 69,// marginTop: 20,
                                 marginTop: 37
                             }}>
                         
@@ -327,8 +316,7 @@ class EventDetails extends React.Component {
                                     className="col-md-6"
                                     style={{
                                         marginTop: 23,
-                                        // marginLeft: 0,
-                                        // justifyContent: "space-between"
+                                        
                                     }}
                                 >
                                     
@@ -336,12 +324,7 @@ class EventDetails extends React.Component {
                                         <div style={{ marginLeft: -13 }}>Quantity</div>
                                         <div
                                             className="row"
-                                            style={{
-                                                border: "1px solid #CCCCCC",
-                                                borderRadius: 3,
-                                                flexDirection: "row",
-                                                justifyContent: "space-between"
-                                            }}>
+                                            style={{border: "1px solid #CCCCCC",borderRadius: 3,flexDirection: "row",justifyContent: "space-between"}}>
                                             <div className="decreaseChild"
                                                 onClick={this.decreaseChild}>
                                                 -
@@ -374,12 +357,7 @@ class EventDetails extends React.Component {
                                 
                                 <div
                                     className="row"
-                                    style={{
-                                        justifyContent: "center",
-                                        marginTop: 23,
-                                        marginBottom: 39
-                                    }}
-                                >
+                                    style={{justifyContent: "center",marginTop: 23,marginBottom: 39}}>
                                     <button className="next-btn"
                                         
                                     >
