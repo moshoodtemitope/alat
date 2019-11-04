@@ -17,13 +17,13 @@ class BuyTicket extends Component {
             accountToDebitInValid: false,
             accountToDebit:null,
             isSubmit: false,
-            formattedValue:"",
-            TicketAmount:"",
-            ShowTimeId:"",
-            cinemaId:"",
-            title:"",
-            Pin:"",
-            source:"",
+            formattedValue: "",
+            TicketAmount: "",
+            ShowTimeId: "",
+            cinemaId: "",
+            title: "",
+            Pin: "",
+            source: "",
             isPinInvalid: false,
 
 
@@ -57,7 +57,8 @@ class BuyTicket extends Component {
                 quantity:data.quantity,
                 source:data.source,
                 eventId:data.eventId,
-                ticketId:data.ticketId
+                ticketId:data.ticketId,
+                id:data.id
                 
             });
         }
@@ -100,13 +101,13 @@ class BuyTicket extends Component {
         }else {
             let data={
                 // 'Email':this.state.user.email,
-                "customerId":"90539",
-                'accountNo':this.state.accountToDebit,
+                "customerId":this.state.id,
+                'accountNumber':this.state.accountToDebit,
                 "ClassId":this.state.ticketId,	
                 "EventId":this.state.eventId,
                 "Source":this.state.source,
-                "TicketAmount":this.state.TicketAmount,
-                "TicketNo":this.state.quantity,
+                "TicketAmount":this.state.TicketAmount.toString(),
+                "TicketNo":this.state.quantity.toString(),
                 "Pin":this.state.Pin
             };
             // console.log(data)
@@ -137,7 +138,7 @@ class BuyTicket extends Component {
                         <div>
                             <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                 <ul>
-                                    <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
+                                    <li><NavLink className="active" to={'/lifestyle/movie'}>Movies</NavLink></li>
                                     <li><NavLink to={'/lifestyle/event'}>Event</NavLink></li>
                                     {/* <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li> */}
                                 </ul>
@@ -233,3 +234,53 @@ const mapStateToProps = state => ({
 
 
 export default connect(mapStateToProps)(BuyTicket);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -478,11 +478,7 @@ class Moviedetails extends React.Component {
 
                     <div
                         className="row"
-                        style={{
-                            marginRight: 69,
-                            marginLeft: 69,
-                            marginTop: 37
-                        }}>
+                        style={{marginRight: 69,marginLeft: 69,marginTop: 37}}>
                         <form onSubmit={this.ShowBuyTicketData} style={{ width: "100%" }}>
                             <div  className={CinemaLocationValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                             <label>Select Location</label>
@@ -516,23 +512,12 @@ class Moviedetails extends React.Component {
 
                             <div
                                 className="row"
-                                style={{
-                                    marginTop: 23,
-                                    marginLeft: 0,
-                                    justifyContent: "space-between"
-                                }}
-                            >
+                                style={{marginTop:23,marginLeft:0,justifyContent:"space-between"}}>
                                 <div className="col-sm-4" style={{ paddingRight: 30 }}>
                                     <div style={{ marginLeft: -13 }}>Adult</div>
                                     <div
                                         className="row"
-                                        style={{
-                                            border: "1px solid #CCCCCC",
-                                            borderRadius: 3,
-                                            flexDirection: "row",
-                                            justifyContent: "space-between"
-                                        }}
-                                    >
+                                        style={{border: "1px solid #CCCCCC",borderRadius: 3,flexDirection: "row",justifyContent: "space-between"}}>
                                         <div
                                             onClick={this.decreaseAdult}
                                             className="decreaseAdult"
@@ -543,32 +528,14 @@ class Moviedetails extends React.Component {
                                         <div className="adultNumber">
                                             {adultNumber}
                                         </div>
-                                        <div
+                                        <div className="increaseAdult"
                                             onClick={this.increaseAdult}
-                                            style={{
-                                                width: 60,
-                                                height: 46,
-                                                cursor: "pointer",
-                                                backgroundColor: "#F5F5F5",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                paddingTop: 8,
-                                                fontSize: 20
-                                            }}
+                                            
                                         >
                                             +
                                         </div>
                                     </div>
-                                    <div
-                                        style={{
-                                            textAlign: "center",
-                                            marginTop: 10,
-                                            color: "#000000",
-                                            fontWeight: "bold",
-                                            fontSize: 14
-                                        }}
-                                    >
+                                    <div className="studentAmount">
                                         {this.formatAmountNoDecimal(this.state.adultAmount)}
                                     </div>
                                 </div>
@@ -577,161 +544,50 @@ class Moviedetails extends React.Component {
                                     <div style={{ marginLeft: -13 }}>Student</div>
                                     <div
                                         className="row"
-                                        style={{
-                                            border: "1px solid #CCCCCC",
-                                            borderRadius: 3,
-                                            flexDirection: "row",
-                                            justifyContent: "space-between"
-                                        }}
-                                    >
-                                        <div
-                                            onClick={this.decreaseStudent}
-                                            style={{
-                                                cursor: "pointer",
-                                                width: 60,
-                                                height: 46,
-                                                backgroundColor: "#F5F5F5",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                fontSize: 30
-                                            }}
-                                        >
+                                        style={{border: "1px solid #CCCCCC",borderRadius: 3,flexDirection: "row",justifyContent: "space-between"}}>
+                                        <div className="decreaseStudent"
+                                            onClick={this.decreaseStudent}>
                                             -
                                         </div>
-                                        <div
-                                            style={{
-                                                width: 60,
-                                                height: 46,
-                                                backgroundColor: "white",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                paddingTop: 14
-                                            }}
-                                        >
+                                        <div className="studentNumber">
                                             {studentNumber}
                                         </div>
-                                        <div
-                                            onClick={this.increaseStudent}
-                                            style={{
-                                                width: 60,
-                                                height: 46,
-                                                cursor: "pointer",
-                                                backgroundColor: "#F5F5F5",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                paddingTop: 8,
-                                                fontSize: 20
-                                            }}
-                                        >
+                                        <div className="increaseStudent"
+                                            onClick={this.increaseStudent}>
                                             +
                                         </div>
                                     </div>
-                                    <div
-                                        style={{
-                                            textAlign: "center",
-                                            marginTop: 10,
-                                            color: "#000000",
-                                            fontWeight: "bold",
-                                            fontSize: 14
-                                        }}
-                                    >
+                                    <div className="studentAmount">
                                         {this.formatAmountNoDecimal(this.state.studentAmount)}
                                     </div>
                                 </div>
-                                {/* child */}
                                 <div className="col-sm-4" style={{ paddingRight: 30 }}>
                                     <div style={{ marginLeft: -13 }}>Child</div>
                                     <div
                                         className="row"
-                                        style={{
-                                            border: "1px solid #CCCCCC",
-                                            borderRadius: 3,
-                                            flexDirection: "row",
-                                            justifyContent: "space-between"
-                                        }}
-                                    >
-                                        <div
-                                            onClick={this.decreaseChild}
-                                            style={{
-                                                width: 60,
-                                                height: 46,
-                                                cursor: "pointer",
-                                                backgroundColor: "#F5F5F5",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                fontSize: 30
-                                            }}
-                                        >
+                                        style={{border: "1px solid #CCCCCC",borderRadius: 3,flexDirection: "row",justifyContent: "space-between"}}>
+                                        <div className="decreaseChild"
+                                            onClick={this.decreaseChild}>
                                             -
                                         </div>
-                                        <div
-                                            style={{
-                                                width: 60,
-                                                height: 46,
-                                                backgroundColor: "white",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                paddingTop: 14
-                                            }}
-                                        >
+                                        <div className="childNumber">
                                             {childNumber}
                                         </div>
-                                        <div
-                                            onClick={this.increaseChild}
-                                            style = {{
-                                                width: 60,
-                                                height: 46,
-                                                cursor: "pointer",
-                                                backgroundColor: "#F5F5F5",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                paddingTop: 8,
-                                                fontSize: 20
-                                            }}
-                                        >
+                                        <div className="increaseChild"
+                                            onClick={this.increaseChild}>
                                             +
                                         </div>
                                     </div>
-                                    <div
-                                        style={{
-                                            textAlign: "center",
-                                            marginTop: 10,
-                                            color: "#000000",
-                                            fontWeight: "bold",
-                                            fontSize: 14
-                                        }}
-                                    >
+                                    <div className="studentAmount">
                                         {this.formatAmountNoDecimal(this.state.childrenAmount)}
                                     </div>
                                 </div>
                             </div>
                             <div
                                 className="row"
-                                style={{
-                                    justifyContent: "center",
-                                    marginTop: 23,
-                                    marginBottom: 39
-                                }}
-                            >
-                                <button
-                                    style={{
-                                        border: "0px solid #AB2656",
-                                        height: 45,
-                                        width: 200,
-                                        backgroundColor: "#AB2656",
-                                        color: "white",
-                                        borderRadius: 3,
-                                        cursor: "pointer"
-                                    }}
-                                >
+                                style={{justifyContent:"center",marginTop: 23,marginBottom: 39}}>
+                                <button className="next-btn">
                                     Next
-                                
                                 </button>
                             </div>
                         </form>

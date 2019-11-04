@@ -274,5 +274,103 @@ border: 1px solid #ddd;
 
 
 }
+.increaseAdult{
+    width:60px;
+    height:46px;
+    cursor:pointer;
+    background-color:#F5F5F5;
+    color:#AB2656;
+    font-weight:bold;
+    text-align:center;
+    padding-top:8px;
+    font-size:20px
+
+}
+.decreaseStudent{
+    cursor:pointer;
+    width:60px;
+    height: 46px;
+    background-color:#F5F5F5;
+    color:#AB2656;
+    font-weight:bold;
+    text-align:center;
+    font-size: 30px
+
+}
+.studentNumber{
+    width:60px;
+    height:46px;
+    background-color: white;
+    color:#AB2656;
+    font-weight:bold;
+    text-align:center;
+    padding-top: 14px
+
+
+}
+.increaseStudent{
+    width:60px;
+    height:46px;
+    cursor:pointer;
+    background-color:#F5F5F5;
+    color: #AB2656;
+    font-weight:bold;
+    text-align:center;
+    padding-top: 8px;
+    font-size: 20px;
+
+}
+.studentAmount{
+    text-align:center;
+    margin-top: 10px;
+    color:#000000;
+    font-weight:bold;
+    font-size: 14px
+
+}
+.decreaseChild{
+    width: 60px;
+    height: 46px;
+    cursor:pointer;
+    background-color:#F5F5F5;
+    color:#AB2656;
+    font-weight:bold;
+    text-align:center;
+    font-size: 30px
+
+}
+.childNumber{
+
+    width: 60px;
+    height: 46px;
+    background-color:white;
+    color:#AB2656;
+    font-weight:bold;
+    text-align:center;
+    padding-top: 14px
+
+}
+.increaseChild{
+    width: 60px;
+    height: 46px;
+    cursor:pointer;
+    background-color:#F5F5F5;
+    color:#AB2656;
+    font-weight:bold;
+    text-align:center;
+    padding-top: 8px;
+    font-size: 20px;
+
+}
+.next-btn{
+    border:0px solid #AB2656;
+    height: 45px;
+    width: 200px;
+    background-color:#AB2656;
+    color:white;
+    border-radius: 3px;
+    cursor:pointer
+
+}
 
 

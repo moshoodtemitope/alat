@@ -37,7 +37,8 @@ class EventDetails extends React.Component {
             description:"",
             originalImage:"",
             source:"",
-            ticketId:""
+            ticketId:"",
+            id:"",
         };
         this.fetchCinemaList();
         console.log('',this.state.eventId)
@@ -146,7 +147,8 @@ class EventDetails extends React.Component {
             studentQuantity:this.state.studentNumber,
             eventId:this.state.eventId,
             source:this.state.source,
-            ticketId:this.state.ticketId
+            ticketId:this.state.ticketId,
+            id:this.state.id
         }
          console.log("=========",data)
         this.props.dispatch(actions.SubmitEventTicketData(data));
@@ -184,7 +186,7 @@ class EventDetails extends React.Component {
         
         let data = {
             item: gottenValue[0],
-            id: gottenValue[1],
+            // id: gottenValue[1],
             // eventId:gottenValue[2],
             ticketId:gottenValue[0]
 
@@ -231,16 +233,7 @@ class EventDetails extends React.Component {
            
                 <div className="max-750">
                     <div className="al-card fund-al-card no-pad">
-                        <div
-                            style={{
-                                marginTop: 18,
-                                textAlign: "center",
-                                fontSize: 18,
-                                marginBottom: 16,
-                                fontFamily: "proxima_novasemibold",
-                                color: "#4D4D4D"
-                            }}
-                        >
+                        <div className="buy-movies">
                             Buy Event Ticket
                         </div>
                         <div style={{ border: "1px solid rgba(205, 205, 205, 0.32)" }} />
@@ -254,18 +247,9 @@ class EventDetails extends React.Component {
                             {this.gotobuyEventTicket()}
                             <div className="col-sm-3">
                                 <i className="toshow">
-                                    <img
+                                    <img className="img"
                                         src={this.state.thumbnailImage}
-                                        style={{
-                                            width: 168,
-                                            height: 226,
-                                            boxShadow:" 0px 4px 4px rgba(0, 0, 0, 0.15)",
-                                            borderRadius:"3px"
-    
-    
-                                           
-    
-                                        }}
+                                        
                                     />
                                 </i>
                             </div>
@@ -273,41 +257,21 @@ class EventDetails extends React.Component {
                                 className="col-sm-9"
                                 style={{ fontSize: 26, color: "#444444", paddingLeft: 55 }}
                             >
-                                <div style={{ fontFamily: "proxima_novasemibold", marginBottom: 21 }}>
+                                <div style={{ marginBottom: 21 }}>
                                     {this.state.title}
                                 </div>
-                                <div
-                                    style={{
-                                        fontFamily: "proxima_novaregular",
-                                        fontSize: 12,
-                                        color: "#9C9C9C",
-                                        marginTop: 21
-                                    }}
-                                >
+                                <div className="title">
                                     Synopsis:
                                 </div>
-                                <div
-                                    style={{
-                                        fontFamily: "proxima_novaregular",
-                                        fontSize: 12,
-                                        color: "#9C9C9C",
-                                        marginTop: 8,
-                                        // fontFamily: "Proxima Nova"
-                                    }}
+                                <div className="description"
                                 >
                                     {unescape(this.state.description.toString().length > 15 ? this.state.description.toString().substring(0, 80)+"...": this.state.description.toString())}
                                 </div>
                                 <div>
                                     <i className="toshow">
-                                        <img
+                                        <img className="clockImage"
                                             src={location}
-                                            style={{
-                                                width: 20,
-                                                height: 20,
-                                                marginTop: 5,
-                                                borderRadius: 50,
-                                                paddingRight: 9
-                                            }}
+                                            
                                         />
                                     </i>
                                     
@@ -341,8 +305,7 @@ class EventDetails extends React.Component {
     
                                                 {
                                                     this.props.SubmitEventData.message == listStyleConstants.SUBMIT_EVENT_DATA_SUCCESS && 
-                                                    // SubmitEventTicketData.message === listStyleConstants.G &&
-                                                   /// console.log(this.state.ticketClassses)
+                                                 
                                                     ticketClassses.map(event => {
                                                         return <option key={event.title} value={event.ticketId + " " + "000" + event.price + " " + event.title + " " + event.eventId + " " + event.ticketId}>{unescape(event.title)}</option>
                                                     })
@@ -357,12 +320,7 @@ class EventDetails extends React.Component {
                                                     <label style={{ marginTop: 16 }}>Select Day</label>
                                                     <select onChange={this.UseSelectedTime}>
                                                         <option key={this.state.date}>{moment(this.state.date).format("LLLL")}</option>
-                                                        {/* {                                      
-                                                            ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
-                                                            ShowTime.data.response.map(event=> {
-                                                                return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children}>{event.date}</option>
-                                                            })
-                                                        }  */}
+                                                      
                                                     </select>
                                                 </div>
                                                 <div
@@ -383,62 +341,25 @@ class EventDetails extends React.Component {
                                                 borderRadius: 3,
                                                 flexDirection: "row",
                                                 justifyContent: "space-between"
-                                            }}
-                                        >
-                                            <div
-                                                onClick={this.decreaseChild}
-                                                style={{
-                                                    width: 60,
-                                                    height: 46,
-                                                    cursor: "pointer",
-                                                    backgroundColor: "#F5F5F5",
-                                                    color: "#AB2656",
-                                                    fontWeight: "bold",
-                                                    textAlign: "center",
-                                                    fontSize: 30
-                                                }}
-                                            >
+                                            }}>
+                                            <div className="decreaseChild"
+                                                onClick={this.decreaseChild}>
                                                 -
                                             </div>
-                                            <div
-                                                style={{
-                                                    // width: 60,
-                                                    // height: 46,
-                                                    backgroundColor: "white",
-                                                    color: "#AB2656",
-                                                    fontWeight: "bold",
-                                                    textAlign: "center",
-                                                    paddingTop: 14
-                                                }}
+                                            <div className="childNumber"
+                                                
                                             >
                                                 {childNumber}
                                             </div>
-                                            <div
+                                            <div className="increaseChild"
                                                 onClick={this.increaseChild}
-                                                style = {{
-                                                    width: 60,
-                                                    height: 46,
-                                                    cursor: "pointer",
-                                                    backgroundColor: "#F5F5F5",
-                                                    color: "#AB2656",
-                                                    fontWeight: "bold",
-                                                    textAlign: "center",
-                                                    paddingTop: 8,
-                                                    fontSize: 20
-                                                }}
+                                                
                                             >
                                                 +
                                             </div>
                                         </div>
-                                        <div
-                                            style={{
-                                                textAlign: "center",
-                                                marginTop: 10,
-                                                color: "#000000",
-                                                // fontFamily: "proxima_novaregular",
-                                                fontWeight: "bold",
-                                                fontSize: 14
-                                            }}
+                                        <div className="studentAmount"
+                                        
                                         >
                                         {
                                             (this.state.childAmount).toString().includes("-") ? "0" : `₦${this.formatAmountNoDecimal(this.state.childAmount)}`
@@ -459,16 +380,8 @@ class EventDetails extends React.Component {
                                         marginBottom: 39
                                     }}
                                 >
-                                    <button
-                                        style={{
-                                            border: "0px solid #AB2656",
-                                            height: 45,
-                                            width: 200,
-                                            backgroundColor: "#AB2656",
-                                            color: "white",
-                                            borderRadius: 3,
-                                            cursor: "pointer"
-                                        }}
+                                    <button className="next-btn"
+                                        
                                     >
                                         Next
                                     
