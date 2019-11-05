@@ -1,6 +1,6 @@
-const URL = 'https://api.alat.ng';
- //const URL = 'https://196.43.215.170';
-// const URL = 'https://196.43.215.157';
+ const URL = 'https://api.alat.ng';
+//const URL = 'https://196.43.215.170';
+//const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;    
 
@@ -185,6 +185,7 @@ export const routes = {
     GET_PAST_LOANS : function (pageNumber, startDate =null, endDate=null){
         return `${BASEURL}/Lending.API/Api/Loan/GetCustomerHistory?pageNumber=${pageNumber}&startDate=${startDate}&endDate=${endDate}`;    
     },
+    AUTOMATE_REPAYMENT : BASEURL+ '/Lending.API/api/AlatLoan/AutomateRepayment',
 
     //WesternUnion
     WESTERNUNION_COUNTRIES: BASEURL + '/PaymentApi/api/WesternunionCountries',

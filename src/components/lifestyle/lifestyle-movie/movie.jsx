@@ -128,9 +128,6 @@ class Movie extends React.Component {
                                 <div  className="eventCards" key={index}>
                                     <Link to={{
                                         pathname:"/lifestyle/movie-details",
-                                        
-                                        
-                                                                         
                                     }}>
                                         <div id={JSON.stringify(film)} onClick={that.moviesDetails} className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")',}}>
                                           

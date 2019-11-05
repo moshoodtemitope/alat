@@ -9,7 +9,7 @@ class LoanOnboardingContainer extends React.Component {
 
     render() {
         const user = JSON.parse(localStorage.getItem("user"));
-        console.log('user name is', (user===null));
+        //console.log('user name is', (user===null));
       return( <Fragment>
             <div className="db2-fixed-header">
                 <div className="container">

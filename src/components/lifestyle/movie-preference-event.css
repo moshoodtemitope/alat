@@ -372,6 +372,13 @@ border: 1px solid #ddd;
     cursor:pointer
 
 }
+.count-border{
+    border: "1px solid #CCCCCC";
+    border-radius: 3px;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
 @media screen and (max-width: 1023px){
   .header-info, .form-row, .form-group{
       padding: 0 25px;

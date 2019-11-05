@@ -180,16 +180,16 @@ class Index extends Component {
                 </AlatLoanContainer>
             )
         }
-        // if (this.props.loanState) {
-        //     index = this.props.loanState.CanRequest ? <Redirect to="/loans/alat-loans/apply-goals" /> : <Redirect to="/loans/alat-loans/apply-others" />;
+        if (this.props.loanState) {
+            index = this.props.loanState.CanRequest ? <Redirect to="/loans/alat-loans/apply-goals" /> : <Redirect to="/loans/alat-loans/apply-others" />;
+        }
+        // if (this.props.loanState && this.props.loanState.CanRequest) {
+        //     index = <Redirect to="/loans/alat-loans/apply-goals" />;
         // }
-        if (this.props.loanState && this.props.loanState.CanRequest) {
-            index = <Redirect to="/loans/alat-loans/apply-goals" />;
-        }
-        if (this.props.loanState && !this.props.loanState.CanRequest && this.state.clicked) {
-            alert(this.props.loanState.EligiblityMessage ? this.props.loanState.EligiblityMessage : "Please save upto ₦100,000 to qualify for ALAT goal loan. ")
-            this.setState({clicked: false});
-        }
+        // if (this.props.loanState && !this.props.loanState.CanRequest && this.state.clicked) {
+        //     alert(this.props.loanState.EligiblityMessage ? this.props.loanState.EligiblityMessage : "Please save upto ₦100,000 to qualify for ALAT goal loan. ")
+        //     this.setState({clicked: false});
+        // }
 
 
         return index;

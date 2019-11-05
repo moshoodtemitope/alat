@@ -202,9 +202,14 @@ class LoanOnboardingStep3 extends React.Component {
     validateEmail = () => {
         let re = /^[a-zA-Z][a-zA-Z0-9_\-.]*(\.[a-zA-Z][a-zA-Z0-9_\-.]*)?@[a-zA-Z][a-zA-Z-0-9]*\.[a-zA-Z]+(\.[a-zA-Z]+)?$/;
         let result = re.test(this.state.email.toLowerCase());
-        if (!result) {
+        if (result == false) {
+            //return true if the email is invalid
             this.setState({ emailInvalid: true });
-        } else this.setState({ emailInvalid: false });
+            return true;
+        } else if(result == true) {
+            this.setState({ emailInvalid: false });
+            return false
+        }
     }
 
     valConfirmPasswordValid = () => {
@@ -265,6 +270,10 @@ class LoanOnboardingStep3 extends React.Component {
         }
     }
 
+    handlePaste =(e)=>{
+        e.preventDefault();
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({isSubmitted : true});
@@ -279,7 +288,7 @@ class LoanOnboardingStep3 extends React.Component {
             "isOnboarding": true,
             "channelId": 2,  //channelID tobe confirmed for web
             "dateOfBirth": this.state.dob,
-            "email" : this.state.email,
+            "email" : this.state.email.toLowerCase(),
             "password" : this.state.password,
             loanAmount: this.state.LoanAmount,
             tenure: this.state.Tenure,
@@ -341,7 +350,7 @@ class LoanOnboardingStep3 extends React.Component {
                             </div>
                             <div className={verifyEmailInvalid ? "input-ctn form-error" : "input-ctn"}>
                                 <label>Confirm Email Address</label>
-                                <input onChange={this.handleInputChange} type="email" onBlur={this.ValConfirmEmail} name="verifyEmail" value={verifyEmail} />
+                                <input onChange={this.handleInputChange} onPaste={this.handlePaste} id="confirmemail" type="email" onBlur={this.ValConfirmEmail} name="verifyEmail" value={verifyEmail} />
                                 {verifyEmailInvalid &&
                                     <div className="text-danger">email mis-match</div>
                                 }
@@ -357,7 +366,7 @@ class LoanOnboardingStep3 extends React.Component {
                             </div>
                             <div className={verifyPasswordInvalid ? "input-ctn form-error" : "input-ctn"}>
                                 <label>Confirm Password</label>
-                                <input onChange={this.handleInputChange} type="password" onBlur={this.valConfirmPasswordValid} name="verifyPassword" value={verifyPassword} />
+                                <input onChange={this.handleInputChange} onPaste={this.handlePaste} type="password" onBlur={this.valConfirmPasswordValid} name="verifyPassword" value={verifyPassword} />
                                 {verifyPasswordInvalid &&
                                     <div className="text-danger">password mis-match</div>
                                 }

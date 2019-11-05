@@ -335,6 +335,7 @@ const mapStateToProps = state => {
         pageState: state.alat_loan_reducer.pageState,
         alert: state.alert,
         isSuccess: state.alat_loan_reducer.isSuccess,
+        fetching: state.alat_loan_reducer.isFetching,
     }
 }
 

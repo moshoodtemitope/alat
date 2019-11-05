@@ -31,7 +31,7 @@ class Accounts extends Component {
                                             <ul>
                                                 <li><NavLink to={'/account/account-history'}>History</NavLink></li>
                                                 <li><NavLink to={'/account/account-statement'}>Get Statement</NavLink></li>
-                                                <li><NavLink to={'/account/account-limit'}>Account LImit</NavLink></li>
+                                                <li><NavLink to={'/account/account-limit'}>Account Limit</NavLink></li>
                                             </ul>
                                         </div>
                                     </div>

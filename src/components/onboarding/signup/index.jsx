@@ -69,15 +69,16 @@ class Signup extends React.Component{
     }
 
     formatPhone(phone){
-        let ph = phone.replace(/[^a-zA-Z0-9]/g, '');
-        let countryCode = ph.substring(0,3);
-        if(countryCode === '234'){
-            // console.log(ph.substr(3));
-            return '0' + ph.substr(3);
+        let {numPrefix} = this.state;
+        // console.log('phone is', phone);
+        let tempPhone = phone.replace(/-/g,'');
+        if(tempPhone.indexOf('(')>-1){
+            tempPhone = tempPhone.replace(/\(/g,'');
+            tempPhone = tempPhone.replace(/\)/g,'');
         }
-        else{
-            return phone;//.replace(/[^a-zA-Z0-9]/g, '');
-        }
+        // console.log('unformatted phone is', tempPhone);
+        var slashFrom = tempPhone.length - 10;
+        return numPrefix + tempPhone.substring(slashFrom);
     }
 
     handleSubmit(e) {
@@ -86,9 +87,9 @@ class Signup extends React.Component{
         let { phone, error, formError } = this.state;
         const { dispatch } = this.props;
         phone = this.formatPhone(phone);
-        // console.log(phone.length);
+        
 
-        if(!phone || phone.length < 10 || phone.length > 20){
+        if(!phone || phone.length < 11 || phone.length > 20){
             this.setState({ formError: true });
             // this.setState({ submitted: false });
             return;
@@ -158,17 +159,21 @@ class Signup extends React.Component{
         //     ' selected country is: ',
         //     selectedCountry
         // );
-        let tempNum
+        let tempNum, numPrefix, phoneNum;
         if(telNumber.indexOf('-')>-1){
             tempNum = telNumber.split(/-(.+)/)[1];
+            numPrefix = telNumber.split(/-(.+)/)[0];
                 if (tempNum.charAt(0)==='0'){
                     tempNum = tempNum.replace('0','')
                 }
-            console.log('temp num is', tempNum);
+            
+            // phoneNum = numPrefix+tempNum;
+            // console.log('temp num is', phoneNum);
         }
 
         // let tempNum = telNumber.split()
-        this.setState({phone: tempNum}, ()=>console.log('number is',this.state.phone));
+        this.setState({phone: tempNum, numPrefix}, ()=>console.log('number is',this.state.phone));
+        // this.setState({phone: phoneNum}, ()=>console.log('number is',this.state.phone));
     }
 
     render(){
