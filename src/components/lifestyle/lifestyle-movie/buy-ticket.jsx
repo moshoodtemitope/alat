@@ -166,8 +166,8 @@ class BuyTicket extends Component {
                                                 <div className="form-group">
                                                        <div className="puchaseSumTickets">
                                                            <div className="left">
-                                                                <p style={{fontSize:12}}>{this.state.title }</p>
-                                                                <p style={{fontSize:12}}>{this.state.ticketType}</p>
+                                                                <p className="ticket-title">{this.state.title }</p>
+                                                                <p className="ticket-title">{this.state.ticketType}</p>
                                                            </div>
                                                            <div className="right">
                                                                <p>N{this.formatAmountNoDecimal(this.state.TicketAmount)}</p>

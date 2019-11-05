@@ -320,11 +320,10 @@ class EventDetails extends React.Component {
                                     }}
                                 >
                                     
-                                   <div style={{ paddingRight: 30 }}>
+                                   <div id="selectionCover">
                                         <div style={{ marginLeft: -13 }}>Quantity</div>
                                         <div
-                                            className="row"
-                                            style={{border: "1px solid #CCCCCC",borderRadius: 3,flexDirection: "row",justifyContent: "space-between"}}>
+                                            className="row adultDiscription">
                                             <div className="decreaseChild"
                                                 onClick={this.decreaseChild}>
                                                 -
@@ -356,13 +355,9 @@ class EventDetails extends React.Component {
     
                                 
                                 <div
-                                    className="row"
-                                    style={{justifyContent: "center",marginTop: 23,marginBottom: 39}}>
-                                    <button className="next-btn"
-                                        
-                                    >
+                                    className="row adultDiscription">
+                                    <button className="next-btn">
                                         Next
-                                    
                                     </button>
                                 </div>
                             </form>

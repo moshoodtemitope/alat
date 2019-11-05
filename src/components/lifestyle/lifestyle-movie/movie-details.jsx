@@ -509,12 +509,12 @@ class Moviedetails extends React.Component {
                             
                             {showTimeValidity && <div className='text-danger'>Select cinema show time </div>}
                             </div>
-
+        
                             <div
-                                className="row"
+                                className="row selectionCover"
                                 style={{marginTop:23,marginLeft:0,justifyContent:"space-between"}}>
-                                <div className="col-sm-4" style={{ paddingRight: 30 }}>
-                                    <div style={{ marginLeft: -13 }}>Adult</div>
+                                <div className="col-sm-4 innerCover" style={{ paddingRight: 30 }}>
+                                    <div id="adultTag" style={{ marginLeft: -13 }}>Adult</div>
                                     <div
                                         className="row"
                                         style={{border: "1px solid #CCCCCC",borderRadius: 3,flexDirection: "row",justifyContent: "space-between"}}>
@@ -529,10 +529,8 @@ class Moviedetails extends React.Component {
                                             {adultNumber}
                                         </div>
                                         <div className="increaseAdult"
-                                            onClick={this.increaseAdult}
-                                            
-                                        >
-                                            +
+                                            onClick={this.increaseAdult}>
+                                            +    
                                         </div>
                                     </div>
                                     <div className="studentAmount">

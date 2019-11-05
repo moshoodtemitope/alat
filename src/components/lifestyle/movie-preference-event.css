@@ -11,6 +11,7 @@
   justify-content: space-between
 }
 
+
 .eventTrays .eventCards {
     /* width: 168px; */
     /* margin-right: 15px; */
@@ -372,13 +373,9 @@ border: 1px solid #ddd;
     cursor:pointer
 
 }
-.count-border{
-    border: "1px solid #CCCCCC";
-    border-radius: 3px;
-    flex-direction: row;
-    justify-content: space-between;
 
-}
+
+
 @media screen and (max-width: 1023px){
   .header-info, .form-row, .form-group{
       padding: 0 25px;
@@ -387,6 +384,60 @@ border: 1px solid #ddd;
       margin: 0;
   }
 }
+
+#selectionCover {
+    margin-top:23;
+    margin-left:0;
+    justify-content:space-between;
+    /* border: "1px solid #CCCCCC" !important; */
+}
+
+#selectionCover .innerCover {
+    padding-right: 30;
+}
+
+#selectionCover #adultTag {
+    margin-left: -13
+}
+
+#selectionCover .adultDiscription {
+    border:1px solid #CCCCCC;
+    border-radius: 3;
+    flex-direction: row;
+    justify-content:space-between;
+} 
+.showTicket{
+    margin-right: 69px;
+    margin-left: 69px;
+    margin-top: 37px
+
+}
+.student{
+    margin-left: -13px
+
+}
+.ticket-title{
+    font-size:12px
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
