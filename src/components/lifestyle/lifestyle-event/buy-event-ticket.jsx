@@ -166,7 +166,7 @@ class BuyTicket extends Component {
                                                            </div>
                                                            <div className="right">
                                                                <p>N{this.state.TicketAmount}</p>
-                                                               <p style={{fontSize:12}}>Quantity {this.state.quantity}</p>
+                                                               <p className="qty">Quantity {this.state.quantity}</p>
 
                                                            </div>
                                                        </div>

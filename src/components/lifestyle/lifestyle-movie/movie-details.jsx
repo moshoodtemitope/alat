@@ -329,16 +329,16 @@ class Moviedetails extends React.Component {
 
     gotobuyTicket=()=>{
         if(this.props.SubmitTicketData)
-        if(this.props.SubmitTicketData.message == listStyleConstants.SUBMIT_MOVIE_TICKET_SUCCESS){
+        if(this.props.SubmitTicketData.message === listStyleConstants.SUBMIT_MOVIE_TICKET_SUCCESS){
             return<Redirect to="/lifestyle/buy-ticket-details"/>
         }
     }
-     formatAmountNoDecimal = (amount) => {
-        return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+    formatAmountNoDecimal = (amount) => {
+        return amount.toLocaleString(navigator.language,{minimumFractionDigits:0});
     };
 
     rendershowTime = () => {
-    if (this.props.ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_PENDING) {
+    if (this.props.ShowTime.message === listStyleConstants.GET_MOVIE_SHOWTIME_PENDING) {
 
         return <select name="showTime">
         <option>Loading Movie Showtime...</option>;
@@ -400,37 +400,20 @@ class Moviedetails extends React.Component {
 
         return (
             <div>
-                    {/* <div className="row" style={{justifyContent: "center", margin:5}}>
-                        <img src={details.bannerImage} class="img-responsive"/>
-                    </div> */}
-                <div
-                    className="video"
-                
-                        // position: "relative",
-                        // paddingBottom: "30.25%",
-                        // paddingTop: 25,
-                        // height: 0,
-                        // marginLeft:"22%"
-
-                    
-                    >
-                <iframe className="iframe"
-                  
-                    src={`https://www.youtube.com/embed/${this.state.youtubeId}`}
-                    frameBorder='0'
-
-                />
+                 <div className="video">
+                <iframe className="iframe" src={`https://www.youtube.com/embed/${this.state.youtubeId}`}
+                    frameBorder='0'/>
                 </div>
 
                     
             <div className="max-750">
-                <div className="al-card fund-al-card no-pad" style={{marginTop: 10}}>
+                <div className="al-card fund-al-card no-pad" id="pad">
                     <div className="buy-movies">
                         Buy Movie Ticket
                     </div>
                     <div style={{ border: "1px solid rgba(205, 205, 205, 0.32)" }} />
                     <div
-                        className="row"
+                        className="row" id="goto"
                         style={{
                             marginLeft: 50,
                             marginTop: 20,
@@ -440,18 +423,14 @@ class Moviedetails extends React.Component {
                         {this.gotobuyTicket()}
                         <div className="col-sm-3">
                             <i className="toshow">
-                                <img
+                                <img alt=""
                                 className="img"
-                                    src={this.state.artworkThumbnail}
-                                   
-                                />
+                                    src={this.state.artworkThumbnail}/>
                             </i>
                         </div>
                         <div
-                            className="col-sm-9"
-                            style={{ fontSize: 26, color: "#444444", paddingLeft: 55 }}
-                        >
-                            <div style={{ marginBottom: 21 }}>
+                            className="col-sm-9" id="tickettext">
+                            <div class="ticket-title">
                                 {this.state.title}
                             </div>
                             <div className="title">
@@ -464,7 +443,7 @@ class Moviedetails extends React.Component {
                             </div>
                             <div>
                                 <i className="toshow">
-                                    <img className="clockImage"
+                                    <img alt="" className="clockImage"
                                          src={clock}
                                         
                                     />
@@ -477,8 +456,8 @@ class Moviedetails extends React.Component {
                     </div>
 
                     <div
-                        className="row"
-                        style={{marginRight: 69,marginLeft: 69,marginTop: 37}}>
+                        className="row" id="showTicket"
+                        >
                         <form onSubmit={this.ShowBuyTicketData} style={{ width: "100%" }}>
                             <div  className={CinemaLocationValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                             <label>Select Location</label>
@@ -487,7 +466,7 @@ class Moviedetails extends React.Component {
                                     <option>Select Cinema Location</option>
                                 
                                     {
-                                        getCinemaList.message == listStyleConstants.GET_CINEMA_LIST_SUCCESS && 
+                                        getCinemaList.message === listStyleConstants.GET_CINEMA_LIST_SUCCESS && 
                                         getCinemaList.data.response.map(event => {
                                             return (<option key={event.cinemaUid} value={event.cinemaUid + " " + "000" + this.state.id }>{event.name}</option>)
                                         })
@@ -511,18 +490,14 @@ class Moviedetails extends React.Component {
                             </div>
         
                             <div
-                                className="row selectionCover"
-                                style={{marginTop:23,marginLeft:0,justifyContent:"space-between"}}>
-                                <div className="col-sm-4 innerCover" style={{ paddingRight: 30 }}>
-                                    <div id="adultTag" style={{ marginLeft: -13 }}>Adult</div>
+                                className="row selectionCover">
+                                    <div className="col-sm-4" id="padding-left">
+                                        <div class="child-text">Adult</div>
                                     <div
-                                        className="row"
-                                        style={{border: "1px solid #CCCCCC",borderRadius: 3,flexDirection: "row",justifyContent: "space-between"}}>
+                                        className="row count-border">
                                         <div
                                             onClick={this.decreaseAdult}
-                                            className="decreaseAdult"
-                                           
-                                        >
+                                            className="decreaseAdult">
                                             -
                                         </div>
                                         <div className="adultNumber">
@@ -538,11 +513,10 @@ class Moviedetails extends React.Component {
                                     </div>
                                 </div>
                                 {/* student */}
-                                <div className="col-sm-4" style={{ paddingRight: 30 }}>
-                                    <div style={{ marginLeft: -13 }}>Student</div>
+                                    <div className="col-sm-4" id="padding-left" >
+                                        <div class="child-text">Student</div>
                                     <div
-                                        className="row"
-                                        style={{border: "1px solid #CCCCCC",borderRadius: 3,flexDirection: "row",justifyContent: "space-between"}}>
+                                        className="row count-border">
                                         <div className="decreaseStudent"
                                             onClick={this.decreaseStudent}>
                                             -
@@ -559,11 +533,10 @@ class Moviedetails extends React.Component {
                                         {this.formatAmountNoDecimal(this.state.studentAmount)}
                                     </div>
                                 </div>
-                                <div className="col-sm-4" style={{ paddingRight: 30 }}>
-                                    <div style={{ marginLeft: -13 }}>Child</div>
+                                    <div className="col-sm-4" id="padding-left">
+                                    <div class="child-text">Child</div>
                                     <div
-                                        className="row"
-                                        style={{border: "1px solid #CCCCCC",borderRadius: 3,flexDirection: "row",justifyContent: "space-between"}}>
+                                        className="row count-border">
                                         <div className="decreaseChild"
                                             onClick={this.decreaseChild}>
                                             -
@@ -582,8 +555,7 @@ class Moviedetails extends React.Component {
                                 </div>
                             </div>
                             <div
-                                className="row"
-                                style={{justifyContent:"center",marginTop: 23,marginBottom: 39}}>
+                                className="row btn-corner">
                                 <button className="next-btn">
                                     Next
                                 </button>
@@ -593,12 +565,12 @@ class Moviedetails extends React.Component {
                     </div>
                                         
                 </div>
-                                         <center>
-                                            <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(listStyleConstants.MOVIE_REDUCER_CLEAR));
-                                                this.props.history.push('/lifestyle/movie') }} className="add-bene m-t-50">
+                    <center>
+                        <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(listStyleConstants.MOVIE_REDUCER_CLEAR));
+                            this.props.history.push('/lifestyle/movie') }} className="add-bene m-t-50">
                                                 Go back
-                                            </a>
-                                        </center>
+                        </a>
+                    </center>
             </div>
             </div>
         );

@@ -221,14 +221,13 @@ class EventDetails extends React.Component {
             TicketClassValidity,
             ticketClassses
         } = this.state;
-        console.log("00000000000000000",this.state.ticketClassses)
          const{ getCinemaList,getEvents,ShowTime,buyMovieTicket,SubmitEventData }=this.props
          
 
             return (
                 <div>
-                <div className="row" style={{justifyContent: "center", marginBottom:"15px"}}>
-                <img src={this.state.originalImage} class="img-responsive"/>
+                    <div className="row"  id="image">
+                    <img alt="" src={this.state.originalImage} class="img-responsive"/>
                 </div>
            
                 <div className="max-750">
@@ -238,21 +237,18 @@ class EventDetails extends React.Component {
                         </div>
                         <div style={{ border: "1px solid rgba(205, 205, 205, 0.32)" }} />
                         <div
-                            className="row"
-                            style={{marginLeft: 50,marginTop: 20,marginRight: 50}}>
+                            className="row" id="eventticket">
                             {this.gotobuyEventTicket()}
                             <div className="col-sm-3">
                                 <i className="toshow">
-                                    <img className="img"
+                                    <img alt="" className="img"
                                         src={this.state.thumbnailImage}
                                         
                                     />
                                 </i>
                             </div>
                             <div
-                                className="col-sm-9"
-                                style={{ fontSize: 26, color: "#444444", paddingLeft: 55 }}
-                            >
+                                className="col-sm-9" id="title">
                                 <div style={{ marginBottom: 21 }}>
                                     {this.state.title}
                                 </div>
@@ -265,14 +261,13 @@ class EventDetails extends React.Component {
                                 </div>
                                 <div>
                                     <i className="toshow">
-                                        <img className="clockImage"
+                                        <img alt="" className="clockImage"
                                             src={location}
                                             
                                         />
                                     </i>
                                     
-                                    <span
-                                        style={{fontSize: 12,color: "#9C9C9C"}}>
+                                    <span className="locationText">
                                         {this.state.location}
                     </span>
                                 </div>
@@ -280,12 +275,9 @@ class EventDetails extends React.Component {
                         </div>
     
                         <div
-                            className="row"
-                            style={{marginRight: 69,marginLeft: 69,// marginTop: 20,
-                                marginTop: 37
-                            }}>
+                                className="row" id="showTicket">
                         
-                          <form onSubmit={this.ShowBuyTicketData  } style={{ width: "100%" }}>
+                          <form onSubmit={this.ShowBuyTicketData} style={{ width: "100%" }}>
                                <div  className={TicketClassValidity ? "form-group form-error col-md-12" : "form-group col-md-12"} style={{paddingLeft: 0}}>
                                         <label>Select Ticket Class</label>
     
@@ -293,7 +285,7 @@ class EventDetails extends React.Component {
                                             <option>Select Ticket Type</option>
     
                                                 {
-                                                    this.props.SubmitEventData.message == listStyleConstants.SUBMIT_EVENT_DATA_SUCCESS && 
+                                                    this.props.SubmitEventData.message === listStyleConstants.SUBMIT_EVENT_DATA_SUCCESS && 
                                                  
                                                     ticketClassses.map(event => {
                                                         return <option key={event.title} value={event.ticketId + " " + "000" + event.price + " " + event.title + " " + event.eventId + " " + event.ticketId}>{unescape(event.title)}</option>
@@ -306,24 +298,19 @@ class EventDetails extends React.Component {
                                             </div>
                                             <div className="row">
                                                 <div className="form-group col-md-6">
-                                                    <label style={{ marginTop: 16 }}>Select Day</label>
+                                                    <label id="select-day">Select Day</label>
                                                     <select onChange={this.UseSelectedTime}>
                                                         <option key={this.state.date}>{moment(this.state.date).format("LLLL")}</option>
                                                       
                                                     </select>
                                                 </div>
                                                 <div
-                                    className="col-md-6"
-                                    style={{
-                                        marginTop: 23,
-                                        
-                                    }}
-                                >
+                                    className="col-md-6" id="col">
                                     
                                    <div id="selectionCover">
-                                        <div style={{ marginLeft: -13 }}>Quantity</div>
+                                        <div class="child-text">Quantity</div>
                                         <div
-                                            className="row adultDiscription">
+                                            className="row count-border">
                                             <div className="decreaseChild"
                                                 onClick={this.decreaseChild}>
                                                 -
@@ -355,7 +342,7 @@ class EventDetails extends React.Component {
     
                                 
                                 <div
-                                    className="row adultDiscription">
+                                    className="row btn-corner">
                                     <button className="next-btn">
                                         Next
                                     </button>
