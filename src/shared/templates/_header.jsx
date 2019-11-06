@@ -155,6 +155,10 @@ class HeaderContainer extends React.Component{
         dispatch(userActions.acceptNDPR(user.token));
     }
 
+    getCMDMPriority(){
+
+    }
+
     showNDRPMessage(){
         const user = JSON.parse(localStorage.getItem("user"));
         let ndprRequest = this.props.loadCountries;
