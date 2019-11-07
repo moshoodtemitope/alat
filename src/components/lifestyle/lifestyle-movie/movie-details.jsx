@@ -7,6 +7,7 @@ import {getCinemaList, getSingleMovie} from '../../../redux/actions/lifestyle/mo
 import clock from '../../../assets/img/clock-circular-outline.svg';
 import moment from 'moment';
 import unescape from 'lodash/unescape';
+import '../movie-preference-event.css';
 
 
 
@@ -328,16 +329,16 @@ class Moviedetails extends React.Component {
 
     gotobuyTicket=()=>{
         if(this.props.SubmitTicketData)
-        if(this.props.SubmitTicketData.message == listStyleConstants.SUBMIT_MOVIE_TICKET_SUCCESS){
+        if(this.props.SubmitTicketData.message === listStyleConstants.SUBMIT_MOVIE_TICKET_SUCCESS){
             return<Redirect to="/lifestyle/buy-ticket-details"/>
         }
     }
-     formatAmountNoDecimal = (amount) => {
-        return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+    formatAmountNoDecimal = (amount) => {
+        return amount.toLocaleString(navigator.language,{minimumFractionDigits:0});
     };
 
     rendershowTime = () => {
-    if (this.props.ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_PENDING) {
+    if (this.props.ShowTime.message === listStyleConstants.GET_MOVIE_SHOWTIME_PENDING) {
 
         return <select name="showTime">
         <option>Loading Movie Showtime...</option>;
@@ -399,115 +400,49 @@ class Moviedetails extends React.Component {
 
         return (
             <div>
-                    {/* <div className="row" style={{justifyContent: "center", margin:5}}>
-                        <img src={details.bannerImage} class="img-responsive"/>
-                    </div> */}
-                <div
-                    className="video"
-                    style={{
-                        position: "relative",
-                        paddingBottom: "30.25%",
-                        paddingTop: 25,
-                        height: 0,
-                        marginLeft:"22%"
-
-                    }}
-                    >
-                <iframe
-                    style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: 640,
-                    height: 360
-                    }}
-                    src={`https://www.youtube.com/embed/${this.state.youtubeId}`}
-                    frameBorder='0'
-
-                />
+                 <div className="video">
+                <iframe className="iframe" src={`https://www.youtube.com/embed/${this.state.youtubeId}`}
+                    frameBorder='0'/>
                 </div>
 
                     
             <div className="max-750">
-                <div className="al-card fund-al-card no-pad" style={{marginTop: 10}}>
-                    <div
-                        style={{
-                            marginTop: 18,
-                            textAlign: "center",
-                            fontSize: 18,
-                            marginBottom: 16,
-                            color: "#4D4D4D"
-                        }}
-                    >
+                <div className="al-card fund-al-card no-pad" id="pad">
+                    <div className="buy-movies">
                         Buy Movie Ticket
                     </div>
-                    <div style={{ border: "1px solid rgba(205, 205, 205, 0.32)" }} />
+                        <div className="event-border" />
                     <div
-                        className="row"
-                        style={{
-                            marginLeft: 50,
-                            marginTop: 20,
-                            // justifyContent: "center",
-                            marginRight: 50
-                        }}>
+                            className="row" id="eventticket">
                         {this.gotobuyTicket()}
                         <div className="col-sm-3">
                             <i className="toshow">
-                                <img
-                                    src={this.state.artworkThumbnail}
-                                    style={{
-                                        width: 168,
-                                        height: 226,
-                                        borderRadius:"3px"
-
-                                    }}
-                                />
+                                <img alt=""
+                                className="img"
+                                    src={this.state.artworkThumbnail}/>
                             </i>
                         </div>
                         <div
-                            className="col-sm-9"
-                            style={{ fontSize: 26, color: "#444444", paddingLeft: 55 }}
-                        >
-                            <div style={{ marginBottom: 21 }}>
+                            className="col-sm-9" id="tickettext">
+                            <div class="ticket-title">
                                 {this.state.title}
                             </div>
-                            <div
-                                style={{
-                                    fontSize:"12px",
-                                    color: "#9C9C9C",
-                                    marginTop: "21px"
-                                }}
-                            >
+                            <div className="title">
                                 Synopsis:
                             </div>
-                            <div
-                                style={{
-                                    fontSize:"12px",
-                                    color: "#9C9C9C",
-                                    marginTop:"8px",
-                                }}
+                            <div className="description"
+                              
                             >
                                 {unescape(this.state.description)}
                             </div>
                             <div>
                                 <i className="toshow">
-                                    <img
+                                    <img alt="" className="clockImage"
                                          src={clock}
-                                        style={{
-                                            width: 20,
-                                            height: 20,
-                                            marginTop: 5,
-                                            borderRadius: 50,
-                                            paddingRight: 9
-                                        }}
+                                        
                                     />
                                 </i>
-                                <span
-                                    style={{
-                                        fontSize: 12,
-                                        color: "#9C9C9C"
-                                    }}
-                                >
+                                <span className="duration">
                                     {this.state.duration}
                 </span>
                             </div>
@@ -515,13 +450,9 @@ class Moviedetails extends React.Component {
                     </div>
 
                     <div
-                        className="row"
-                        style={{
-                            marginRight: 69,
-                            marginLeft: 69,
-                            marginTop: 37
-                        }}>
-                        <form onSubmit={this.ShowBuyTicketData} style={{ width: "100%" }}>
+                        className="row" id="showTicket"
+                        >
+                            <form onSubmit={this.ShowBuyTicketData} className="ShowBuyTicketData">
                             <div  className={CinemaLocationValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                             <label>Select Location</label>
 
@@ -529,7 +460,7 @@ class Moviedetails extends React.Component {
                                     <option>Select Cinema Location</option>
                                 
                                     {
-                                        getCinemaList.message == listStyleConstants.GET_CINEMA_LIST_SUCCESS && 
+                                        getCinemaList.message === listStyleConstants.GET_CINEMA_LIST_SUCCESS && 
                                         getCinemaList.data.response.map(event => {
                                             return (<option key={event.cinemaUid} value={event.cinemaUid + " " + "000" + this.state.id }>{event.name}</option>)
                                         })
@@ -551,243 +482,76 @@ class Moviedetails extends React.Component {
                             
                             {showTimeValidity && <div className='text-danger'>Select cinema show time </div>}
                             </div>
-
+        
                             <div
-                                className="row"
-                                style={{
-                                    marginTop: 23,
-                                    marginLeft: 0,
-                                    justifyContent: "space-between"
-                                }}
-                            >
-                                <div className="col-sm-4" style={{ paddingRight: 30 }}>
-                                    <div style={{ marginLeft: -13 }}>Adult</div>
+                                className="row selectionCover">
+                                    <div className="col-sm-4" id="padding-left">
+                                        <div class="child-text">Adult</div>
                                     <div
-                                        className="row"
-                                        style={{
-                                            border: "1px solid #CCCCCC",
-                                            borderRadius: 3,
-                                            flexDirection: "row",
-                                            justifyContent: "space-between"
-                                        }}
-                                    >
+                                        className="row count-border">
                                         <div
                                             onClick={this.decreaseAdult}
-                                            style={{
-                                                width: 60,
-                                                height: 46,
-                                                cursor: "pointer",
-                                                backgroundColor: "#F5F5F5",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                fontSize: 30
-                                            }}
-                                        >
+                                            className="decreaseAdult">
                                             -
                                         </div>
-                                        <div
-                                            style={{
-                                                width: 60,
-                                                height: 46,
-                                                backgroundColor: "white",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                paddingTop: 14
-                                            }}
-                                        >
+                                        <div className="adultNumber">
                                             {adultNumber}
                                         </div>
-                                        <div
-                                            onClick={this.increaseAdult}
-                                            style={{
-                                                width: 60,
-                                                height: 46,
-                                                cursor: "pointer",
-                                                backgroundColor: "#F5F5F5",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                paddingTop: 8,
-                                                fontSize: 20
-                                            }}
-                                        >
-                                            +
+                                        <div className="increaseAdult"
+                                            onClick={this.increaseAdult}>
+                                            +    
                                         </div>
                                     </div>
-                                    <div
-                                        style={{
-                                            textAlign: "center",
-                                            marginTop: 10,
-                                            color: "#000000",
-                                            fontWeight: "bold",
-                                            fontSize: 14
-                                        }}
-                                    >
+                                    <div className="studentAmount">
                                         {this.formatAmountNoDecimal(this.state.adultAmount)}
                                     </div>
                                 </div>
                                 {/* student */}
-                                <div className="col-sm-4" style={{ paddingRight: 30 }}>
-                                    <div style={{ marginLeft: -13 }}>Student</div>
+                                    <div className="col-sm-4" id="padding-left" >
+                                        <div class="child-text">Student</div>
                                     <div
-                                        className="row"
-                                        style={{
-                                            border: "1px solid #CCCCCC",
-                                            borderRadius: 3,
-                                            flexDirection: "row",
-                                            justifyContent: "space-between"
-                                        }}
-                                    >
-                                        <div
-                                            onClick={this.decreaseStudent}
-                                            style={{
-                                                cursor: "pointer",
-                                                width: 60,
-                                                height: 46,
-                                                backgroundColor: "#F5F5F5",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                fontSize: 30
-                                            }}
-                                        >
+                                        className="row count-border">
+                                        <div className="decreaseStudent"
+                                            onClick={this.decreaseStudent}>
                                             -
                                         </div>
-                                        <div
-                                            style={{
-                                                width: 60,
-                                                height: 46,
-                                                backgroundColor: "white",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                paddingTop: 14
-                                            }}
-                                        >
+                                        <div className="studentNumber">
                                             {studentNumber}
                                         </div>
-                                        <div
-                                            onClick={this.increaseStudent}
-                                            style={{
-                                                width: 60,
-                                                height: 46,
-                                                cursor: "pointer",
-                                                backgroundColor: "#F5F5F5",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                paddingTop: 8,
-                                                fontSize: 20
-                                            }}
-                                        >
+                                        <div className="increaseStudent"
+                                            onClick={this.increaseStudent}>
                                             +
                                         </div>
                                     </div>
-                                    <div
-                                        style={{
-                                            textAlign: "center",
-                                            marginTop: 10,
-                                            color: "#000000",
-                                            fontWeight: "bold",
-                                            fontSize: 14
-                                        }}
-                                    >
+                                    <div className="studentAmount">
                                         {this.formatAmountNoDecimal(this.state.studentAmount)}
                                     </div>
                                 </div>
-                                {/* child */}
-                                <div className="col-sm-4" style={{ paddingRight: 30 }}>
-                                    <div style={{ marginLeft: -13 }}>Child</div>
+                                    <div className="col-sm-4" id="padding-left">
+                                    <div class="child-text">Child</div>
                                     <div
-                                        className="row"
-                                        style={{
-                                            border: "1px solid #CCCCCC",
-                                            borderRadius: 3,
-                                            flexDirection: "row",
-                                            justifyContent: "space-between"
-                                        }}
-                                    >
-                                        <div
-                                            onClick={this.decreaseChild}
-                                            style={{
-                                                width: 60,
-                                                height: 46,
-                                                cursor: "pointer",
-                                                backgroundColor: "#F5F5F5",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                fontSize: 30
-                                            }}
-                                        >
+                                        className="row count-border">
+                                        <div className="decreaseChild"
+                                            onClick={this.decreaseChild}>
                                             -
                                         </div>
-                                        <div
-                                            style={{
-                                                width: 60,
-                                                height: 46,
-                                                backgroundColor: "white",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                paddingTop: 14
-                                            }}
-                                        >
+                                        <div className="childNumber">
                                             {childNumber}
                                         </div>
-                                        <div
-                                            onClick={this.increaseChild}
-                                            style = {{
-                                                width: 60,
-                                                height: 46,
-                                                cursor: "pointer",
-                                                backgroundColor: "#F5F5F5",
-                                                color: "#AB2656",
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                                paddingTop: 8,
-                                                fontSize: 20
-                                            }}
-                                        >
+                                        <div className="increaseChild"
+                                            onClick={this.increaseChild}>
                                             +
                                         </div>
                                     </div>
-                                    <div
-                                        style={{
-                                            textAlign: "center",
-                                            marginTop: 10,
-                                            color: "#000000",
-                                            fontWeight: "bold",
-                                            fontSize: 14
-                                        }}
-                                    >
+                                    <div className="studentAmount">
                                         {this.formatAmountNoDecimal(this.state.childrenAmount)}
                                     </div>
                                 </div>
                             </div>
                             <div
-                                className="row"
-                                style={{
-                                    justifyContent: "center",
-                                    marginTop: 23,
-                                    marginBottom: 39
-                                }}
-                            >
-                                <button
-                                    style={{
-                                        border: "0px solid #AB2656",
-                                        height: 45,
-                                        width: 200,
-                                        backgroundColor: "#AB2656",
-                                        color: "white",
-                                        borderRadius: 3,
-                                        cursor: "pointer"
-                                    }}
-                                >
+                                className="row btn-corner">
+                                <button className="next-btn">
                                     Next
-                                
                                 </button>
                             </div>
                         </form>
@@ -795,12 +559,12 @@ class Moviedetails extends React.Component {
                     </div>
                                         
                 </div>
-                                         <center>
-                                            <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(listStyleConstants.MOVIE_REDUCER_CLEAR));
-                                                this.props.history.push('/lifestyle/movie') }} className="add-bene m-t-50">
+                    <center>
+                        <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(listStyleConstants.MOVIE_REDUCER_CLEAR));
+                            this.props.history.push('/lifestyle/movie') }} className="add-bene m-t-50">
                                                 Go back
-                                            </a>
-                                        </center>
+                        </a>
+                    </center>
             </div>
             </div>
         );
