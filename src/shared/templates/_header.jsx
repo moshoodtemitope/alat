@@ -8,6 +8,7 @@ import {userActions} from "../../redux/actions/onboarding/user.actions";
 import whitelogo from "../../assets/img/white-logo.svg";
 import selfCareImage from '../../assets/img/contact-centers.svg'
 import DpHolder from '../../assets/img/user.svg'
+import Modal from 'react-responsive-modal';
 import profileImage from "../../assets/img/10.jpg";
 import {
     GET_NDPRSTATUS_SUCCESS,
@@ -15,7 +16,13 @@ import {
     GET_NDPRSTATUS_FAILURE,
     ACCEPT_NDRP_SUCCESS,
     ACCEPT_NDRP_PENDING,
-    ACCEPT_NDRP_FAILURE
+    ACCEPT_NDRP_FAILURE,
+    GET_CMDMPRIORITY_SUCCESS,
+    GET_CMDMPRIORITY_PENDING,
+    GET_CMDMPRIORITY_FAILURE,
+    UPDATE_CMDMPRIORITY_SUCCESS,
+    UPDATE_CMDMPRIORITY_PENDING,
+    UPDATE_CMDMPRIORITY_FAILURE,
 } from "../../redux/constants/onboarding/user.constants";
 
 class HeaderContainer extends React.Component{
@@ -23,7 +30,8 @@ class HeaderContainer extends React.Component{
         super(props);
         this.state = {
             miniNavToggle: false,
-            displayNdpr: true
+            displayNdpr: true,
+            openModal: true,
         };
         const { dispatch } = this.props;
         
@@ -37,10 +45,11 @@ class HeaderContainer extends React.Component{
             //console.log("Image clicked");
             $('.mini-nav').fadeToggle(300);
         });
-        this.toggleMiniNav = this.toggleMiniNav.bind(this);
-        this.getNDPRStatus = this.getNDPRStatus.bind(this);
-        this.acceptNDRP    = this.acceptNDRP.bind(this); 
-        this.openMobileMenu    = this.openMobileMenu.bind(this); 
+        this.toggleMiniNav   = this.toggleMiniNav.bind(this);
+        this.getNDPRStatus   = this.getNDPRStatus.bind(this);
+        this.getCMDMPriority = this.getCMDMPriority.bind(this);
+        this.acceptNDRP      = this.acceptNDRP.bind(this); 
+        this.openMobileMenu  = this.openMobileMenu.bind(this); 
        
     }
 
@@ -99,6 +108,15 @@ class HeaderContainer extends React.Component{
 
     }
 
+    onOpenModal = () => {
+        this.setState({ openModal: true });
+    };
+
+    onCloseModal = () => {
+        this.setState({ submitted: false });
+        this.setState({ openModal: false });
+    };
+
     
 
     //   acceptNdpr(isAccepted){
@@ -124,6 +142,7 @@ class HeaderContainer extends React.Component{
         // this.props.dispatch(userActions.getAll());
         this.getProfileImage();
         this.getNDPRStatus();
+        this.getCMDMPriority();
         // console.log('name is dssd');
     }
 
@@ -156,12 +175,44 @@ class HeaderContainer extends React.Component{
     }
 
     getCMDMPriority(){
+        const user = JSON.parse(localStorage.getItem("user"));
 
+        const { dispatch } = this.props;
+        dispatch(userActions.fetchCMDMPriority(user.token));
+    }
+
+    showCMDMPriorityMessage(){
+        
+        const user = JSON.parse(localStorage.getItem("user"));
+        const { openModal } = this.state;
+        let cmdmRequest = this.props.loadCMDMPriorityRequest;
+        
+        switch (cmdmRequest.fetch_status){
+            case GET_CMDMPRIORITY_SUCCESS:
+                    let cmdmData = cmdmRequest.cmdm_priority.response.data;
+                    console.log('cmdm data is', cmdmData);
+                return(
+                    <Modal open={openModal} onClose={this.onCloseModal}>
+                        <div className="div-modal">
+                            
+
+                            <div>{cmdmData.Message}</div>
+
+                        <div className="btn-opt">
+                            {/* <button onClick={this.onCloseModal} className="border-btn">Back</button>
+                            <button onClick={this.submitData} disabled={submitted}
+                            className="btn-alat">{ submitted ? "Processing..." : "Proceed"}</button> */}
+                        </div>
+                        </div>
+                    </Modal>
+                )
+                
+        }
     }
 
     showNDRPMessage(){
         const user = JSON.parse(localStorage.getItem("user"));
-        let ndprRequest = this.props.loadCountries;
+        let ndprRequest = this.props.loadNDRPstatus;
 
         switch (ndprRequest.fetch_status){
             case GET_NDPRSTATUS_PENDING:
@@ -239,6 +290,7 @@ class HeaderContainer extends React.Component{
         return (
             <Fragment>
                 {this.showNDRPMessage()}
+                {this.showCMDMPriorityMessage()}
                 <div className="db2-fixed-header">
                     <div className="container">
                         <div className="row">
@@ -293,8 +345,9 @@ function mapStateToProps(state) {
     const { user } = state;
     return {
         user,
-        loadCountries : state.ndpr_status_request,
+        loadNDRPstatus : state.ndpr_status_request,
         acceptndrprequest : state.acceptndrp_request,
+        loadCMDMPriorityRequest : state.cmdmpriority_request
     };
 }
 
