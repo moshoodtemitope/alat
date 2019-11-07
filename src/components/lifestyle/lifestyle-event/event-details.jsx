@@ -235,7 +235,7 @@ class EventDetails extends React.Component {
                         <div className="buy-movies">
                             Buy Event Ticket
                         </div>
-                        <div style={{ border: "1px solid rgba(205, 205, 205, 0.32)" }} />
+                        <div className="event-border" />
                         <div
                             className="row" id="eventticket">
                             {this.gotobuyEventTicket()}
@@ -249,7 +249,7 @@ class EventDetails extends React.Component {
                             </div>
                             <div
                                 className="col-sm-9" id="title">
-                                <div style={{ marginBottom: 21 }}>
+                                <div className="margin-bottom">
                                     {this.state.title}
                                 </div>
                                 <div className="title">
@@ -277,7 +277,7 @@ class EventDetails extends React.Component {
                         <div
                                 className="row" id="showTicket">
                         
-                          <form onSubmit={this.ShowBuyTicketData} style={{ width: "100%" }}>
+                                <form onSubmit={this.ShowBuyTicketData} className="ShowBuyTicketData">
                                <div  className={TicketClassValidity ? "form-group form-error col-md-12" : "form-group col-md-12"} style={{paddingLeft: 0}}>
                                         <label>Select Ticket Class</label>
     

@@ -141,7 +141,7 @@ class BuyTicket extends Component {
 
                     <div className="col-sm-12">
                         <div>
-                            <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                            <div className="sub-tab-nav" id="movie-tab">
                                 <ul>
                                     <li><NavLink className="active" to={'/lifestyle/movie'}>Movies</NavLink></li>
                                     <li><NavLink to={'/lifestyle/event'}>Event</NavLink></li>

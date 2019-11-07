@@ -411,15 +411,9 @@ class Moviedetails extends React.Component {
                     <div className="buy-movies">
                         Buy Movie Ticket
                     </div>
-                    <div style={{ border: "1px solid rgba(205, 205, 205, 0.32)" }} />
+                        <div className="event-border" />
                     <div
-                        className="row" id="goto"
-                        style={{
-                            marginLeft: 50,
-                            marginTop: 20,
-                            // justifyContent: "center",
-                            marginRight: 50
-                        }}>
+                            className="row" id="eventticket">
                         {this.gotobuyTicket()}
                         <div className="col-sm-3">
                             <i className="toshow">
@@ -458,7 +452,7 @@ class Moviedetails extends React.Component {
                     <div
                         className="row" id="showTicket"
                         >
-                        <form onSubmit={this.ShowBuyTicketData} style={{ width: "100%" }}>
+                            <form onSubmit={this.ShowBuyTicketData} className="ShowBuyTicketData">
                             <div  className={CinemaLocationValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                             <label>Select Location</label>
 
