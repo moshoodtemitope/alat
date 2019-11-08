@@ -196,7 +196,7 @@ class HeaderContainer extends React.Component{
                         <div className="div-modal">
                             
 
-                            <div>{cmdmData.Message}</div>
+                            <div className="cmdm-message">{cmdmData.Message}</div>
 
                         <div className="btn-opt">
                             {/* <button onClick={this.onCloseModal} className="border-btn">Back</button>

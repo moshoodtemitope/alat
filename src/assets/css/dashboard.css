@@ -2788,3 +2788,7 @@ p.acc-view-more {
 }
 
 /* End react date picker css */
+
+.cmdm-message{
+  word-break: break-word;
+}
