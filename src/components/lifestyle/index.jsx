@@ -12,8 +12,12 @@ import BuyEventTicket from '../lifestyle/lifestyle-event/buy-event-ticket'
 
 
 class LifestyleIndex extends Component {
-
-
+    constructor(props){
+        super(props);
+        this.state={
+            display: 'block',
+        }
+    }
 
     componentDidMount() {
 
@@ -24,8 +28,22 @@ class LifestyleIndex extends Component {
             <Fragment>
                 <InnerContainer>
                     <div className="dashboard-wrapper">
-                        <div className="container" >
-
+                        <div className="container">
+                            <div className="row eventWrap">
+                                <div className="col-sm-12">
+                                    <p className="page-title">LifeStyle</p>
+                                </div>
+                                <div className="col-sm-12">
+                                    <div>
+                                        <div className="sub-tab-nav">
+                                            <ul>
+                                                <li onClick={() => this.setState({ display: "block" })}><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
+                                                <li> <NavLink to={'/lifestyle/event'}>Event</NavLink></li>
+                    
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                                 {this.props.children}
                                 <Route path={'/lifestyle'} exact component={LifeStyle} />
                                 <Route path={'/lifestyle/movie'} exact component={LifeStyle} />
@@ -36,6 +54,7 @@ class LifestyleIndex extends Component {
                                 <Route path={'/lifestyle/event-details'} component={EventDetails}/>
                                 <Route path={'/lifestyle/buy-event-ticket'} component={BuyEventTicket}/>
                                 <Route path={'/lifestyle/movie-success'} component={MovieSuccess}/>
+                            </div>
                         </div>
                     </div>
                 </InnerContainer>
