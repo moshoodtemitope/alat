@@ -1,0 +1,143 @@
+body{
+    margin: 0;
+    background: #FBFCFC;
+}
+.rating-wrap{
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05);
+    padding: 30px 30px;
+    background: #fff;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    hr {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.3);
+    }
+    .headingtext{
+        margin-top: 50px;
+        font-size: 23px;
+    }
+}
+.alat-rating-wrap {
+    width: 40%;
+    margin: 0 auto;
+}
+.heading-icon {
+    text-align: center;
+    position: relative;
+    top: 52px;
+}
+.heading-icon img{
+    width:35%;
+}
+.each-rating-wrap {
+    margin: 20px 0;
+    h4{
+        font-size: 14px;
+    }
+}
+.rating {
+    // unicode-bidi: bidi-override;
+    // direction: rtl;
+    // text-align: left;
+    // margin-left: 15px;
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    text-align: left;
+    border: 0;
+    font-size: 0;
+    margin-top: 20px;
+    margin-left: 17px;
+    input {
+        position:absolute;
+        top: -2em;
+        clip:rect(0,0,0,0);
+    }
+  }
+  
+  
+  .rating legend {
+    overflow: hidden;
+    height: 0;
+  }
+  .rating label {
+    font-size: 32px; font-size: 2rem;
+    line-height: 32px; line-height: 2rem;
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    width: 1.2em;
+    height: 1em;
+    overflow: hidden;
+    text-indent: 100%;
+  }
+  .rating label:before {
+     content:"\2605";
+     position: absolute;
+     top: 0; left: 0; right: 0; bottom: 0;
+     text-indent: 0;
+     line-height: 1em;
+     color: #C4C4C4;
+  }
+  .rating label:hover:before,
+  .rating label:hover ~ label:before,
+  .rating input:checked ~ label:before {
+     content: "\2605";
+     color: #880830;
+  }
+  .rating label:active {
+    position: relative;
+    top: 1px;
+  }
+//   .rating > span {
+//     display: inline-block;
+//     position: relative;
+//     width: 1.1em;
+//     font-size: 30px;
+//   }
+//   .rating > *:hover,
+//   .rating > *:hover ~ span,
+//   .rating:not(:hover) > input:checked ~ span {
+//     color: transparent;
+//   }
+//   .rating > *:hover:before,
+//   .rating > *:hover ~ span:before,
+//   .rating:not(:hover) > input:checked ~ span:before {
+//      content: "\2605";
+//      position: absolute;
+//      left: 0; 
+//      color: #880830;
+//   }
+  
+//   .rating > input {
+//      margin-left:-1.1em;
+//      margin-right:0;
+//      top:9px;
+//      width:1.1em;
+//      height:1.1em;
+//      position:relative;
+//      z-index:2;
+//      opacity:0;
+//      display: unset;
+//   }
+.each-option{
+    margin-bottom: 10px;
+    input[type=radio]{
+        position: unset;
+        opacity: 1;
+        display: unset;
+        min-height: unset;
+        position: relative;
+        top: 3px;
+    }
+    label{
+        margin-left: 6px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+}
+.referal-options {
+    margin-top: 15px;
+    margin-left: 15px;
+}
