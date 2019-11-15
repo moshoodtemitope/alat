@@ -20,7 +20,7 @@ class Movie extends React.Component {
             genre:null,
             movies:null,
             values:"",
-            total:5,
+            total: 5,
             per_page: 4,
             current_page: 1,
             genreType: "",
@@ -385,7 +385,7 @@ class Movie extends React.Component {
         const {getMovieList} = this.props;
         const pageNumbers = [];
         if (this.state.total !== null) {
-        for (let i = 2; i <= Math.ceil(this.state.total / this.state.per_page); i++){
+        for (let i = 1; i <= Math.ceil(this.state.total / this.state.per_page); i++){
         pageNumbers.push(i);
       }
     }
