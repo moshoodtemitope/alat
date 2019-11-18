@@ -280,6 +280,7 @@ class Moviedetails extends React.Component {
         let fee = amounts.split(" ")[5];
         let ticketType = amounts.split(" ")[6];
         let name = event.target.name;
+        console.log("*******", childrenAmount, studentAmount, adultAmount, fee)
 
        
         
@@ -356,7 +357,7 @@ class Moviedetails extends React.Component {
             <option>Select ShowTime</option>
             {                            
                         
-                this.props.ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
+                this.props.ShowTime.message === listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
                 this.props.ShowTime.data.response.map(event=> {
                     return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children  + " " + event.id + " " + event.ticketId + " " + event.fee + " " + event.ticketTypes[0].ticketName}>
                     {moment(event.date).format('LLLL')}</option>

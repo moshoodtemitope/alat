@@ -55,7 +55,7 @@ class EventDetails extends React.Component {
         else {
             
             let data = JSON.parse(this.props.SubmitEventData.data.data);
-            console.log('======',data)
+            console.log('======', data.ticketClassses)
 
             this.setState({
                 description:data.description,
@@ -178,19 +178,26 @@ class EventDetails extends React.Component {
     
 
     UseSelectedItem = (event) => {
-        let gottenValue = event.target.value.split("000");
+        let gottenValue = event.target.value.split("000r");
         let name = event.target.name;
+        let childAmount = gottenValue[1]
+        console.log("*************",childAmount)
 
 
        
         
         let data = {
             item: gottenValue[0],
-            // id: gottenValue[1],
+            childAmount: gottenValue[1],
             // eventId:gottenValue[2],
             ticketId:gottenValue[0]
 
         }
+        this.setState({ initialChildAmount: childAmount,childAmount }, () => {
+            if (this.state.childAmount !== 0) {
+                this.setState({ childNumber: this.state.childNumber + 1 })
+            }
+        });
   
         // this.setState({initialChildAmount:gottenValue[0]}, () => {
         //     this.setState({childNumber: 1})
@@ -198,9 +205,10 @@ class EventDetails extends React.Component {
         // this.setState({childAmount:gottenValue[0]});
         //  this.setState({eventId:gottenValue[2]});
         this.setState({[name] : event.target.value});
-        this.setState({ticketId:gottenValue[0]})
+        this.setState({ticketId:gottenValue[0]});
+        this.setState({childAmount:gottenValue[1]})
 
-        console.log("=========",data);
+        console.log("********",data);
         this.props.dispatch(actions.ShowTime(this.state.user.token, data))
     }
 
@@ -281,14 +289,14 @@ class EventDetails extends React.Component {
                                <div  className={TicketClassValidity ? "form-group form-error col-md-12" : "form-group col-md-12"} style={{paddingLeft: 0}}>
                                         <label>Select Ticket Class</label>
     
-                                            <select onChange={this.UseSelectedItem } name="ticketClass">
+                                            <select onChange={this.UseSelectedItem} name="ticketClass">
                                             <option>Select Ticket Type</option>
     
                                                 {
                                                     this.props.SubmitEventData.message === listStyleConstants.SUBMIT_EVENT_DATA_SUCCESS && 
                                                  
                                                     ticketClassses.map(event => {
-                                                        return <option key={event.title} value={event.ticketId + " " + "000" + event.price + " " + event.title + " " + event.eventId + " " + event.ticketId}>{unescape(event.title)}</option>
+                                                        return <option key={event.title} value={event.ticketId + " " + "000r" + " " + event.price + " " + "000r" + " " + event.title + " " + "000r" + " " + event.eventId + " " + "000r" + " " + event.ticketId}>{unescape(event.title)}</option>
                                                     })
                                                 }
                                             

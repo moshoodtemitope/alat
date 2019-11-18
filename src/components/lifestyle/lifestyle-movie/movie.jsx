@@ -20,7 +20,7 @@ class Movie extends React.Component {
             genre:null,
             movies:null,
             values:"",
-            total:5,
+            total: 5,
             per_page: 4,
             current_page: 1,
             genreType: "",
@@ -122,7 +122,7 @@ class Movie extends React.Component {
             let userMovies = getMovieList.data.response;
 
             return(
-                <div className="eventTrays">
+                <div className="eventTrays col-sm-12">
                     {userMovies.map(function(film, index){
                         return(
                                 <div  className="eventCards" key={index}>
@@ -181,7 +181,7 @@ class Movie extends React.Component {
             let userMovies = SearchfetchMovieList.data.response;
 
             return(
-                <div className="eventTrays">
+                <div className="eventTrays col-sm-12">
                     {userMovies.map(function(film, index){
                         return(
                                 <div className="eventCards" key={index}>
@@ -382,10 +382,10 @@ class Movie extends React.Component {
 
     render(){
         let  renderPageNumbers;
-        const {getMovieList} =this.props;
+        const {getMovieList} = this.props;
         const pageNumbers = [];
         if (this.state.total !== null) {
-        for (let i = 2; i <= Math.ceil(this.state.total / this.state.per_page); i++){
+        for (let i = 1; i <= Math.ceil(this.state.total / this.state.per_page); i++){
         pageNumbers.push(i);
       }
     }
@@ -403,42 +403,31 @@ class Movie extends React.Component {
         
         return(
             <Fragment>
+                <div className="eventWrapper">
+                    <div className="">
+                        <ul>
+                            <li className="inputList"><label className="inputLabel">Search by keyword</label>
+                                <input className="SearchInput" type="text" placeholder="search ..." value={this.state.value} onChange={e => this.onChangeHandler(e)} />
+                            </li>
+                            <li className="listInput">
+                                <label className="inputLabel">Filter</label>
+                                <select className="ResultInput" onChange={e => this.filterGenreOnchangeHandler(e)}>
+                                    <option key="ShowResultBy" value="ShowResultBy">Show Result By</option>
+                                    {
+                                        this.props.FetchMovieGenre.message === listStyleConstants.FETCH_MOVIE_GENRE_SUCCESS &&
+                                        this.props.FetchMovieGenre.data.response.map(genre => {
+                                            return <option key={genre} value={genre}>{genre}</option>
+                                        })
+                                    }
+                                </select>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
 
                 <div className="row" style={{justifyContent: "center"}}>
-                    <div className="col-sm-12">
-                        <p className="page-title">LifeStyle</p>
-                    </div>
-
-                    <div className="col-sm-12">
-                        <div className="">
-                            <div className="sub-tab-nav" style={{marginBottom: 10}}>
-                                <ul>
-                                    <li  onClick={()=> this.setState({display: "block"})}><NavLink className="active" to={'/lifestyle/movie'}>Movies</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/event'}>Event</NavLink></li>
-                                    {/* <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li> */}
-                                    <li style={{float:"right", marginTop: -31, width: 181}}><label style={{ marginBottom: 0, color: "#666666", fontSize: 14}}>Search by keyword</label><input style={{width:"100%",height:"40px", marginTop:4, float:'right',}} type="text" placeholder="search ..." value={this.state.value} onChange={ e => this.onChangeHandler(e)}/></li>
-                                    <li style={{float:"right", marginTop: -31}} >
-                                        <label style={{ marginBottom: 0, color: "#666666", fontSize: 14}}>Filter</label>
-                                        <select style={{width:"100%",height:"40px", marginTop:8, margin:4, float:'right', borderRadius:"3px !important", border: "1px solid lightgray"}} onChange={e=>this.filterGenreOnchangeHandler(e)}>
-                                            <option key="ShowResultBy" value="ShowResultBy">Show Result By</option>
-                                            {                                      
-                                                this.props.FetchMovieGenre.message == listStyleConstants.FETCH_MOVIE_GENRE_SUCCESS && 
-                                                this.props.FetchMovieGenre.data.response.map(genre=> {
-                                                    return <option key={genre} value={genre}>{genre}</option>
-                                                })
-                                            } 
-                                        </select>
-                                    </li>
-
-                                </ul>
-                               
-                                
-                            </div>
-                            
-                        </div>
-                    </div>
-                   
-                   {
+                    {
                        !this.state.doFilter ? this.resultu() : this.renderFilter(this.state.genreType)
                    }
 

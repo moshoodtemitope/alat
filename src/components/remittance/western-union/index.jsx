@@ -15,7 +15,7 @@ class WesternUnionContainer extends Component {
 
     componentDidMount() {
     }
-   render() {
+    render() {
        return(
            <Fragment>
                 {this.props.children}
