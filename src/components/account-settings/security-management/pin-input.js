@@ -18,7 +18,7 @@ class PinInput extends Component {
                     placeholder: 'xxxx'
                 },
                 value: '',
-                label: 'Enter ypur ALAT PIN'
+                label: 'Enter your ALAT PIN'
             },
         },
         validation: {

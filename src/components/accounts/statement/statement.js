@@ -40,7 +40,7 @@ class Statement extends Component {
         } else {
             arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account Available' }];
         }
-        console.log(arrayToDisplay);
+        // console.log(arrayToDisplay);
 
         this.setState({ accounts: arrayToDisplay, accountsLoaded: true });
     }
@@ -48,18 +48,18 @@ class Statement extends Component {
     accountChangedHandler = (selectedAccount) => {
         this.setState({ selectedAccount });
 
-        console.log(`Option selected:`, selectedAccount);
+        // console.log(`Option selected:`, selectedAccount);
     }
 
     handleStartDatePicker = (startDate) => {
         startDate.setHours(startDate.getHours() + 1);
-        console.log(startDate)
+        // console.log(startDate)
         this.setState({ startDate });
     }
 
     handleEndDatePicker = (endDate) => {
         endDate.setHours(endDate.getHours() + 1);
-        console.log(endDate)
+        // console.log(endDate)
         this.setState({ endDate });
     }
 
@@ -82,7 +82,7 @@ class Statement extends Component {
             EndDate: this.state.endDate,
         }
 
-        console.log(payload);
+        // console.log(payload);
         this.props.sendStatement(this.state.user.token, payload);
     }
 

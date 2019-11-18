@@ -37,14 +37,14 @@ export const fetchDataBeneficiaries = (token, data) => {
         let consume = ApiService.request(routes.FETCH_DATA_BENEFICIARIES, "POST", data, SystemConstant.HEADER);
         return consume
             .then(response => {
-                console.log(response.data);
-                console.log("response.data");
+                // console.log(response.data);
+                // console.log("response.data");
                 dispatch(success(response.data));
             })
             .catch(error => {
                 
                 dispatch(isFetchingFalse());
-                console.log(error);
+                // console.log(error);
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
@@ -65,8 +65,8 @@ export const deleteDataBeneficiary =  (token, data) => {
         let consume = ApiService.request(routes.DELETE_DATA_BENEFICIARY, "POST", data, SystemConstant.HEADER);
         return consume
             .then(response => {
-                console.log(response.data);
-                console.log("response.data");
+                // console.log(response.data);
+                // console.log("response.data");
                 dispatch(fetchDataBeneficiaries(token));
             })
             .catch(error => {
@@ -74,7 +74,7 @@ export const deleteDataBeneficiary =  (token, data) => {
                 
                 dispatch(isFetchingFalse());
                 
-                console.log(error);
+                // console.log(error);
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
@@ -94,8 +94,8 @@ export const fetchDataPlans = (token, data) => {
         let consume = ApiService.request(routes.FETCH_DATA_PLANS, "POST", data, SystemConstant.HEADER);
         return consume
             .then(response => {
-                console.log(response.data);
-                console.log("response.data");
+                // console.log(response.data);
+                // console.log("response.data");
                 dispatch(success(response.data));
                 dispatch(status())
             })
@@ -103,7 +103,7 @@ export const fetchDataPlans = (token, data) => {
                 
                 dispatch(isFetchingFalse());
                 dispatch(status());
-                console.log(error);
+                // console.log(error);
                 
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
@@ -136,14 +136,14 @@ export const fetchDebitableAccounts = (token, data) => {
         let consume = ApiService.request(routes.FETCH_DEBITABLE_ACCOUNTS, "POST", data, SystemConstant.HEADER);
         return consume
             .then(response => {
-                console.log(response.data);
-                console.log("response.data");
+                // console.log(response.data);
+                // console.log("response.data");
                 dispatch(success(response.data));
             })
             .catch(error => {
                 
                 dispatch(isFetchingFalse());
-                console.log(error);
+                // console.log(error);
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
@@ -155,11 +155,11 @@ export const fetchDebitableAccounts = (token, data) => {
 }
 
 export const pinVerificationStart = (token, data, isResending = false) => {
-    console.log("is verifying pin");
+    // console.log("is verifying pin");
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
         dispatch(isFetchingTrue());
-        console.log("is treuly fetching pin");
+        // console.log("is treuly fetching pin");
         let consume = ApiService.request(routes.PIN_VERIFICATION, "POST", data, SystemConstant.HEADER);
         return consume
             .then(response => {
@@ -173,7 +173,7 @@ export const pinVerificationStart = (token, data, isResending = false) => {
             .catch(error => {
                 
                 dispatch(isFetchingFalse());
-                console.log(error);
+                // console.log(error);
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
 
@@ -188,11 +188,11 @@ export const pinVerificationTryAgain = () => {
 }
 
 export const otpVerificationStart = (token, data) => {
-    console.log("is verifying otp");
+    // console.log("is verifying otp");
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
         dispatch(isFetchingTrue());
-        console.log("is treuly fetching pin");
+        // console.log("is treuly fetching pin");
         let consume = ApiService.request(routes.DATA_OTP_VERIFICATION, "POST", data, SystemConstant.HEADER);
         return consume
             .then(response => {
@@ -203,7 +203,7 @@ export const otpVerificationStart = (token, data) => {
             })
             .catch(error => {
                 dispatch(isFetchingFalse());
-                console.log(error);
+                // console.log(error);
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
 
@@ -212,11 +212,11 @@ export const otpVerificationStart = (token, data) => {
 }
 
 export const saveBeneficiary = (token, data) => {
-    console.log("is saving  beneficiary");
+    // console.log("is saving  beneficiary");
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
         dispatch(isFetchingTrue());
-        console.log("is treuly saving  beneficiary");
+        // console.log("is treuly saving  beneficiary");
         let consume = ApiService.request(routes.SAVE_DATA_BENEFICIARY, "POST", data, SystemConstant.HEADER);
         return consume
             .then(response => {
@@ -227,7 +227,7 @@ export const saveBeneficiary = (token, data) => {
             })
             .catch(error => {
                 dispatch(isFetchingFalse());
-                console.log(error);
+                // console.log(error);
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
 

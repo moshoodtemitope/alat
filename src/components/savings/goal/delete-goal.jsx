@@ -21,13 +21,35 @@ class DeleteGoal extends Component {
             reason:3,
             isSubmit: false,
             formattedValue: "",
-            goal:JSON.parse(localStorage.getItem('goal')) || [],
+            amountSaved:null,
 
 
         };
         this.handleDebit = this.handleDebit.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+    componentDidMount = () => {
+        this.init();
+    };
+
+    init = () => {
+        if (this.props.submitDashboardData.message !== customerGoalConstants.SUBMIT_DASHBOARD_DATA_SUCCESS)
+            this.props.history.push("/savings/choose-goal-plan");
+        else {
+            
+            let data = JSON.parse(this.props.submitDashboardData.data.data);
+            
+          
+            this.setState({
+                goalName:data.goalName,
+                goalId:data.id,
+                debitAccount:data.DebitAccount,
+                amountSaved:data.amountSaved,
+                goalTypeName:data.goalTypeName,
+                partialWithdrawal:true
+            });
+        }
+    };
 
     handleDebit = (account) => {
         //console.log(account);
@@ -53,7 +75,7 @@ class DeleteGoal extends Component {
             //not valid
         }else {
             let data={
-                'goalId': parseInt(this.state.goal.id),
+                'goalId': parseInt(this.state.goalId),
                 'accountNumber':this.state.accountToDebit,
                 'reason':this.state.reason
             };
@@ -79,9 +101,9 @@ class DeleteGoal extends Component {
                                                 <li><a href="accounts.html" className="active">Goals</a></li>
                                             </NavLink>
                                             <NavLink to='/savings/activityDashBoard'>
-                                                <li><a href="statement.html">Group Savings</a></li>
+                                                <li><a href="/savings/activityDashBoard">Group Savings</a></li>
                                             </NavLink>
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
 
                                         </ul>
                                     </div>
@@ -104,9 +126,9 @@ class DeleteGoal extends Component {
                                                 <div className="form-group">
                                                        {/* <div className="form-row"> */}
                                                             <Description 
-                                                                    leftHeader={this.state.goal.goalName}
-                                                                    leftDescription={'You have ₦'+this.state.goal.amountSaved+' in your goal account and you need to transfer it to another account before you can delete it.'}
-                                                                    rightHeader={'₦'+this.state.goal.amountSaved}
+                                                                    leftHeader={this.state.goalName}
+                                                                    leftDescription={'You have ₦'+this.state.amountSaved+' in your goal account and you need to transfer it to another account before you can delete it.'}
+                                                                    rightHeader={'₦'+this.state.amountSaved}
                                                                     rightDiscription="Amount Saved"
                                                                     />
                                                        {/* </div> */}
@@ -116,7 +138,7 @@ class DeleteGoal extends Component {
                                                     <SelectDebitableAccounts
                                                         accountInvalid={this.state.accountToDebitInValid}
                                                         onChange={this.handleDebit}
-                                                        labelText={"Select Account to debit"}
+                                                        labelText={"Select Account to credit"}
                                                     />
                                                 </div>
 
@@ -133,6 +155,10 @@ class DeleteGoal extends Component {
                                                 </div>
                                             </form>
                                         </div>
+                                        <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
+                                                this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
+                                                Go back
+                                        </a>
                                     </div>
 
                                 </div>
@@ -149,8 +175,9 @@ class DeleteGoal extends Component {
     }
 }
 const mapStateToProps = state => ({
-    delete_goal:state.delete_goal,
-    alert:state.alert
+    delete_goal:state.CustomerGoalReducerPile.delete_goal,
+    alert:state.alert,
+    submitDashboardData:state.CustomerGoalReducerPile.submitDashboardData
 });
 
 

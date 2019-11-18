@@ -39,7 +39,7 @@ import * as actions from '../../../redux/actions/savings/goal/fixed-goal.actions
             var data = {
                 ...this.props.fixed_goal_step2.fixed_step2_data.data
             };
-            console.log('tag', data);
+            // console.log('tag', data);
 
             this.setState({
                 targetAmount:data.targetAmount,
@@ -60,12 +60,14 @@ import * as actions from '../../../redux/actions/savings/goal/fixed-goal.actions
             "goalName":this.state.goalName,
             "startDate":this.state.startDate,
             "targetDate":this.state.endDate,
-            "targetAmount":parseFloat(this.state.targetAmount),
+            "targetAmount":this.state.targetAmount,
             "debitAccount":this.state.debitAccount,
             "debitAmount":parseFloat(this.state.showInterests),
             "goalTypeId":parseInt(this.state.GoalTypeId),
             "frequencyId":parseInt(this.state.goalFrequency)
         }));
+       
+
 
     };
 
@@ -91,7 +93,7 @@ import * as actions from '../../../redux/actions/savings/goal/fixed-goal.actions
                                 <ul>
                                     <li><a href="accounts.html" className="active">Goals</a></li>
                                     <li><a href="statement.html">Group Savings</a></li>
-                                    <li><a href="#">Investments</a></li>
+                                    {/* <li><a href="#">Investments</a></li> */}
                                 
                                 </ul>
                             </div>
@@ -102,7 +104,7 @@ import * as actions from '../../../redux/actions/savings/goal/fixed-goal.actions
                         {this.props.alert && this.props.alert.message &&
                             <div style={{width: "100%", marginRight:"120px",marginLeft:"120px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                         }
-                    <h1 style={{margin:"auto", color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>Fixed Goal Summary</h1>
+                    <h1 style={{margin:"auto", color:"#AB2656", fontSize:'18px'}}>Fixed Goal Summary</h1>
                         <div style={{margin:"30px"}}></div>
 
                     <div className="col-sm-12">
@@ -163,8 +165,8 @@ import * as actions from '../../../redux/actions/savings/goal/fixed-goal.actions
                                 </div>
                                 <center>
                                     <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(fixedGoalConstants.FIXED_GOAL_REDUCER_CLEAR));
-                                        this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
-                                        Go to Dashboard
+                                        this.props.history.push('/savings/fixed-goal-complete') }} className="add-bene m-t-50">
+                                        Go back
                                     </a>
                                 </center>
 
@@ -188,10 +190,10 @@ import * as actions from '../../../redux/actions/savings/goal/fixed-goal.actions
     }
 }
 const mapStateToProps = state => ({
-    fixed_goal_step1: state.fixed_goal_step1,
-    fixed_goal_step2:state.fixed_goal_step2,
-    add_fixed_goal:state.add_goal_reducer,
-    alert: state.alert,
+    fixed_goal_step1: state.GoalReducerPile.fixed_goal_step1,
+    fixed_goal_step2:state.GoalReducerPile.fixed_goal_step2,
+    add_fixed_goal:state.GoalReducerPile.add_goal_reducer,
+    alert:state.alert,
 
 });
 export default connect(mapStateToProps)(submitFixedGoal);

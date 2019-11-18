@@ -16,11 +16,19 @@
   // }
   
 }
+.loading-txt{
+  font-size: 16px;
+}
 .grayed-cta-link{
   color: #9c9c9c;
   cursor: not-allowed;
 }
-
+.forgotpw-link{
+  &:hover{
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
 
 .btn-alat.disabled-btn, button:disabled { 
   // background: #DADADA;

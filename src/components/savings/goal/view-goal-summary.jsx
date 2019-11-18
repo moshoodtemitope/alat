@@ -1,7 +1,5 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import {NavLink, Link, Route, Redirect} from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
@@ -10,6 +8,7 @@ import ProgressBar from '../../savings/group/progress-bar';
 import moment from 'moment'
 import { NavButtons } from '../../savings/group/component';
 import MoreDetails from '../../savings/group/details';
+import * as util from "../../../shared/utils";
 import {customerGoalConstants} from '../../../redux/constants/goal/get-customer-trans-history.constant'
 import * as actions from "../../../redux/actions/savings/goal/get-customer-transaction-history.actions";
 
@@ -24,7 +23,21 @@ class ViewGroupSummary extends React.Component {
             buttonType: "smallButton",
             discTopSpan: 'something',
             customerGoalTransHistory: null,
-            goal:JSON.parse(localStorage.getItem('goal')) || [],
+            goalName:null,
+            goalId:null,
+            debitAccount:null,
+            Amount:null,
+            targetDate:null,
+            startDate:null,
+            goalTypeId:null,
+            percentageCompleted:null,
+            targetAmount:null,
+            interestAccrued:null,
+            interestEarned:null,
+            frequencyId:null,
+            debitAccount:null,
+            nextstandingDate:null,
+            goalTypeName:null,
 
 
 
@@ -33,6 +46,48 @@ class ViewGroupSummary extends React.Component {
 
 
     }
+    toCurrency(number) {
+        // console.log(number);
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: "decimal",
+            currency: "USD",
+            maximumFractionDigits: 2
+        });
+
+        return formatter.format(number);
+    }
+    componentDidMount = () => {
+        this.init();
+    };
+
+    init = () => {
+        if (this.props.submitDashboardData.message !== customerGoalConstants.SUBMIT_DASHBOARD_DATA_SUCCESS)
+            this.props.history.push("/savings/choose-goal-plan");
+        else {
+            
+            let data = JSON.parse(this.props.submitDashboardData.data.data);
+            
+          
+            this.setState({
+                goalName:data.goalName,
+                goalId:data.id,
+                debitAccount:data.debitAccount,
+                Amount:data.amountSaved,
+                targetDate:data.targetDate,
+                startDate:data.startDate,
+                goalTypeId:data.goalTypeId,
+                percentageCompleted:data.percentageCompleted,
+                targetAmount:data.targetAmount,
+                interestAccrued:data.interestAccrued,
+                interestEarned:data.interestEarned,
+                frequencyId:data.frequencyId,
+                debitAccount:data.debitAccount,
+                nextstandingDate:data.nextstandingDate,
+                goalTypeName:data.goalTypeName
+            });
+        }
+    };
+
     toCurrency =(currency) =>{
         if (currency) {
             currency = typeof currency !== 'string' ? currency.toString() : currency;
@@ -48,15 +103,15 @@ class ViewGroupSummary extends React.Component {
     }
     PauseCustomerGoal= () => {
         let data = {
-            goalName:this.state.goal.goalName,
-            targetDate:this.state.goal.targetDate,
-            startDate:this.state.goal.startDate,
-            targetAmount:parseFloat(this.state.goal.targetAmount),
-            goalTypeId:parseInt(this.state.goal.goalTypeId),
-            id:parseInt(this.state.goal.id),
-            debitAmount:parseFloat(this.state.goal.debitAmount),
-            frequencyId:parseInt(this.state.goal.frequencyId),
-            debitAccount:this.state.goal.debitAccount
+            goalName:this.state.goalName,
+            targetDate:this.state.targetDate,
+            startDate:this.state.startDate,
+            targetAmount:parseFloat(this.state.targetAmount),
+            goalTypeId:parseInt(this.state.goalTypeId),
+            id:parseInt(this.state.goalId),
+            debitAmount:parseFloat(this.state.debitAmount),
+            frequencyId:parseInt(this.state.frequencyId),
+            debitAccount:this.state.debitAccount
         };
         this.props.dispatch(actions.PauseCustomerGoal(this.state.user.token, data));
 
@@ -83,15 +138,9 @@ class ViewGroupSummary extends React.Component {
     };
 
 
-    componentDidMount(){
-        const details = this.props.location.state.name;
-        this.setState({
-            customerGoalTransHistory: details,
 
-        },()=>{  localStorage.setItem('goal', JSON.stringify(details))
-        });
 
-    }
+   
 
 
 
@@ -129,8 +178,6 @@ class ViewGroupSummary extends React.Component {
 
     render() {
 
-        const details = this.props.location.state.name;
-        console.log(details);
 
         return (
             <Fragment>
@@ -148,7 +195,7 @@ class ViewGroupSummary extends React.Component {
                                             <NavLink to="/savings/activityDashBoard">
                                                 <li><a href="#" >Group Savings</a></li>
                                             </NavLink>
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
                                         </ul>
                                     </div>
                                 </div>
@@ -156,7 +203,7 @@ class ViewGroupSummary extends React.Component {
                             {this.props.alert && this.props.alert.message &&
                             <div style={{width: "100%", marginRight:"120px",marginLeft:"120px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                             }
-                            {details.goalTypeName === "Stash" ? (
+                            {this.state.goalTypeName === "Stash" ? (
                                 <div className="col-sm-12">
                                     <div className="row">
                                         <div className="col-sm-12">
@@ -164,8 +211,8 @@ class ViewGroupSummary extends React.Component {
                                                 <div className="al-card no-pad">
 
                                                     <div className='firstSubHead'>
-                                                        <p>{details.goalTypeName}</p>
-                                                        <p>{details.goalName}</p>
+                                                        <p>{this.state.goalTypeName}</p>
+                                                        <p>{this.state.goalName}</p>
                                                     </div>
                                                     <SubHead
                                                         type={this.state.type}
@@ -175,19 +222,20 @@ class ViewGroupSummary extends React.Component {
                                                     />
 
                                                     <div className='statContainer'>
-                                                        <p className="information">You have saved <span style={{color:"#AB2656"}}> N{details.amountSaved}</span> and have earned <span style={{color:"#AB2656"}}>N{details.interestEarned}</span> in Interest</p>
+                                                        <p className="information">You have saved <span style={{color:"#AB2656"}}> N{this.toCurrency(this.state.Amount)}</span> and have earned <span style={{color:"#AB2656"}}>N{this.toCurrency(this.state.interestEarned)}</span> in Interest</p>
 
+                        
                                                         <ProgressBar
                                                             discTopSpan="Goal Progress"
-                                                            discTopRight={details.percentageCompleted.toFixed(1) + "%" + " Completed"}
-                                                            percentage={details.percentageCompleted}
-                                                            discBottom={"₦" + details.amountSaved + " "}
-                                                            discSpan={"  " + "of" + "  " + "₦" + details.targetAmount}
+                                                            discTopRight={this.state.percentageCompleted + "%" + " Completed"}
+                                                            percentage={this.state.percentageCompleted}
+                                                            discBottom={"₦" + this.toCurrency(this.state.Amount) + " "}
+                                                            // discSpan={"  " + "of" + "  " + "₦" + this.toCurrency(this.state.targetAmount)}
                                                             discBottomSib="Amount Saved"
                                                         /><br /><br/>
                                                         <div className="btn-position" style={{paddingBottom:"50px"}} >
                                                             {
-                                                                details.percentageCompleted ===100 ?
+                                                                this.state.percentageCompleted ===100 ?
                                                                     <NavLink to="/savings/stash-cashout">
                                                                         <span href="#"
                                                                               className="btn-withdraw-goal btn-sm border-btn">Cash Out</span>
@@ -195,16 +243,13 @@ class ViewGroupSummary extends React.Component {
 
                                                             }
 
-                                                            <Link to={{
+                                                            <NavLink to={{
                                                                 pathname: "/savings/top-up-goal-step1",
-                                                                state: {
-                                                                    name: details,
-
-                                                                }
+                                                                
                                                             }}>
                                                                 <span href="#"
                                                                       className="btn-top-up-goal btn-sm border-btn">Top Up Stash</span>
-                                                            </Link>
+                                                            </NavLink>
 
                                                         </div>
 
@@ -227,8 +272,8 @@ class ViewGroupSummary extends React.Component {
                                             <div className="al-card no-pad">
 
                                                 <div class='firstSubHead'>
-                                                    <p>{details.goalTypeName}</p>
-                                                    <p>{details.goalName}</p>
+                                                    <p>{this.state.goalTypeName}</p>
+                                                    <p>{this.state.goalName}</p>
                                                 </div>
                                                 <SubHead
                                                     type={this.state.type}
@@ -238,38 +283,35 @@ class ViewGroupSummary extends React.Component {
                                                 />
 
                                                 <div className='statContainer'>
-                                                    <p className="information">You have saved <span style={{color:"#AB2656"}}> N{details.amountSaved}</span> of your <span style={{color:"#AB2656"}}>N{details.targetAmount}</span> goal saving <span style={{color:"#AB2656"}}>N{details.amountSaved}</span> monthly </p>
+                                                    <p className="information">You have saved <span style={{color:"#AB2656"}}> N{this.toCurrency(this.state.Amount)}</span> of your <span style={{color:"#AB2656"}}>N{this.toCurrency(this.state.targetAmount)}</span> goal by saving <span style={{color:"#AB2656"}}>N{this.toCurrency(this.state.Amount)}</span> monthly </p>
 
                                                     <ProgressBar
                                                         discTopSpan="Goal Progress"
-                                                        discTopRight={details.percentageCompleted.toFixed(1) +"%"+" Completed"}
-                                                        percentage={details.percentageCompleted}
-                                                        discBottom={"₦"+details.amountSaved}
-                                                        discSpan={"  " + "of" + "  " +  "₦"+details.targetAmount}
+                                                        discTopRight={this.state.percentageCompleted +"%"+" Completed"}
+                                                        percentage={this.state.percentageCompleted}
+                                                        discBottom={"₦"+this.toCurrency(this.state.Amount)}
+                                                        discSpan={"  " + "of" + "  " +  "₦"+ this.toCurrency(this.state.targetAmount)}
                                                         discBottomSib="Amount Saved"
                                                     />
                                                     <MoreDetails
-                                                        lefthead={"₦"+details.interestAccrued}
+                                                        lefthead={"₦"+this.state.interestAccrued}
                                                         leftBottom="Interest Accrued"
-                                                        middleTop={"₦"+ details.interestEarned}
+                                                        middleTop={"₦"+ this.state.interestEarned}
                                                         middleBottom="Interest Earned"
-                                                         rightContent={moment(details.nextstandingDate).format("L")}
+                                                         rightContent={moment(this.state.nextstandingDate).format("L")}
                                                          rightContentBottom="Next Payment"/>
                                                     <div className="btn-position">
                                                         {
-                                                            details.percentageCompleted ===100 ?
+                                                            this.state.percentageCompleted ===100 ?
                                                                 <NavLink to="/savings/withdraw-from-goal_step1">
                                                                     <span href="#" className="btn-withdraw-goal btn-sm border-btn">Withdraw</span>
                                                                 </NavLink>:null
 
                                                         }
-                                                        { details.percentageCompleted === 100 ? null :
+                                                        { this.state.percentageCompleted === 100 ? null :
                                                             <Link to={{
                                                                 pathname:"/savings/top-up-goal-step1",
-                                                                state:{
-                                                                    name:details,
-
-                                                                }
+                                                                
                                                             }}>
                                                                 <span href="#"  className="btn-top-up-goal btn-sm border-btn">Top Up Goal</span>
                                                             </Link>
@@ -286,9 +328,9 @@ class ViewGroupSummary extends React.Component {
                                                         leftName={this.props.pause_goal.pause_customer_goal_status === customerGoalConstants.PAUSE_CUSTOMER_GOAL_SUCCESS?'Continue':'Pause'}
                                                         // middleName='Pause'
                                                         rightName='Delete'
-                                                       edit={details.id}
-                                                       delete={details.id}
-                                                       unpause={details.id}
+                                                       edit={this.state.goalId}
+                                                       delete={this.state.goalId}
+                                                       unpause={this.state.goalId}
                                                        DeleteGroup={this.DeleteCustomerGoal}
                                                         PauseGroup={this.UnpauseCustomerGoal}
                                                        EditGroup={this.PauseCustomerGoal}
@@ -302,8 +344,14 @@ class ViewGroupSummary extends React.Component {
 
 
                                         </div>
+                                        <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
+                                                this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
+                                                Go back
+                                        </a>
+
 
                                     </div>
+                                   
 
                                 </div>
 
@@ -320,9 +368,10 @@ class ViewGroupSummary extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        customerGoalTransHistory:state.customerGoalTransHistory,
+        customerGoalTransHistory:state.CustomerGoalReducerPile.customerGoalTransHistory,
         alert:state.alert,
-        pause_goal:state.pause_goal
+        pause_goal:state.CustomerGoalReducerPile.pause_goal,
+        submitDashboardData:state.CustomerGoalReducerPile.submitDashboardData
 
     }
 }

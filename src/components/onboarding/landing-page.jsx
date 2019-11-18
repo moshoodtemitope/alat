@@ -23,9 +23,9 @@ class OnboardingLandingPage extends React.Component {
                     <div className="col-12">
                         <div className="onboard-form">
 
-                            <input onClick={()=>this.props.history.push("/loan/step-1")} type="button" value="Get a Loan" className="btn-alat btn-block btn-alat-outline" />
+                            <input onClick={()=>this.props.history.push("/loan/step-1")} type="button" value="Get a Loan" className="btn-alat btn-block"/>
 
-                            <input onClick={()=>this.props.history.push("/register")} type="button" value="Get an Account" className="btn-alat btn-block" />
+                            <input onClick={()=>this.props.history.push("/register")} type="button" value="Get an Account" className="btn-alat btn-block btn-alat-outline" />
 
                         </div>
 

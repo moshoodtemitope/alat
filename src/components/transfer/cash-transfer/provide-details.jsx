@@ -164,7 +164,7 @@ class ProvideDetails extends React.Component{
                 ...transferDetails
             }
             this.setState({accountData:transferDetails})
-            console.log('state is', this.state.accountData);
+            // console.log('state is', this.state.accountData);
         }
     }
 
@@ -232,9 +232,7 @@ class ProvideDetails extends React.Component{
                 transferLimit =selectedDebitableAccount[0].MaxInterBankTransferLimit;
             }
             
-        this.setState({ selectedAccount: account, selectedDebitableAccount, isSelectChanged:true, transferLimit}, ()=>{
-            console.log("selected account is", selectedDebitableAccount);
-        });
+        this.setState({ selectedAccount: account, selectedDebitableAccount, isSelectChanged:true, transferLimit});
 
         const {dispatch} = this.props;
         dispatch(getTransactionLimit(this.state.user.token, account))
@@ -280,13 +278,13 @@ class ProvideDetails extends React.Component{
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                            {this.renderBankFee()}
+                                                            {/* {this.renderBankFee()} */}
 
                                                        
                                                         <div className="inputctn-wrap">
                                                             <SelectDebitableAccounts
                                                                 value={this.state.accountNumber}
-                                                                // currency={currencySelected}
+                                                                currency={currencySelected===null?'NGN':currencySelected}
                                                                 // requestType = "forBankTransfer"
                                                                 accountInvalid={this.state.isAccountInvalid}
                                                                 onChange={this.handleSelectDebitableAccounts} />

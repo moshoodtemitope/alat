@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, } from "react-router-dom";
 import Loans from './loans';
 import LoansDashboard from './salary/salaryDashboard';
 import LoanCalculator from './salary/calc';
@@ -19,6 +19,14 @@ import LoanStatementUploadDone from './salary/a-statement-done';
 
 
 import InnerContainer from '../../shared/templates/inner-container';
+//Alatloans
+import AlatLoansIndex from './alat-loans/index-active';
+import AlatLoansLiquidate from './alat-loans/liquidate-loan';
+import AlatLoansApplyOthers from './alat-loans/apply-others';
+import AlatLoansApplyGoal from './alat-loans/apply-goals';
+import AlatLoanGoalOtp from './alat-loans/goals-otp';
+import AlatLoanSuccess from './alat-loans/success';
+import AlatLoansPast from './alat-loans/index-past';
 
 class LoansIndex extends React.Component {
     constructor(props) {
@@ -64,6 +72,18 @@ class LoansIndex extends React.Component {
                                     <Route path={'/loans/salary/kyc'} component={LoansKYC} />
                                     <Route path={'/loans/salary/statement-upload'} component={LoanStatementUpload} />
                                     <Route path={'/loans/salary/upload-done'} component={LoanStatementUploadDone} />
+
+
+                                    {/* Alat loans */}
+
+                                    <Route exact path={'/loans/alat-loans'} component={AlatLoansIndex} />
+                                    <Route path={'/loans/alat-loans/liquidate'} component={AlatLoansLiquidate} />
+                                    <Route path={'/loans/alat-loans/apply-others'} component={AlatLoansApplyOthers} />
+                                    <Route path={'/loans/alat-loans/apply-goals'} component={AlatLoansApplyGoal} />
+                                    <Route path={'/loans/alat-loans/goals-otp'} component={AlatLoanGoalOtp} />
+                                    <Route path={'/loans/alat-loans/success'} component={AlatLoanSuccess} />
+                                    <Route exact path={'/loans/past-loans'} component={AlatLoansPast} />
+                                    
                                 </div>
 
                             </div>

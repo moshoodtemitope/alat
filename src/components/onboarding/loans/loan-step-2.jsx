@@ -18,6 +18,7 @@ class LoanOboardingStep2 extends React.Component {
             LoanAmountText: "",
             repaymentAmount: "",
             MaxAmount: "",
+            minAmount: "",
             PhoneNumber: "",
             InterestRate: "",
             LoanAmountInvalid: false,
@@ -42,7 +43,7 @@ class LoanOboardingStep2 extends React.Component {
                 MaxAmount: data.response.maxAmount,
                 InterestRate: data.response.interestRate,
                 PhoneNumber: data.request.PhoneNumber,
-                minimumAmount: data.response.minAmount
+                minAmount: data.response.minAmount
             });
         }
     }
@@ -86,9 +87,10 @@ class LoanOboardingStep2 extends React.Component {
     }
 
     LoanAplyClick = () => {
+        console.log(this.state.minimumAmount);
      this.setState({isSubmitted : true});
         if (this.state.Term >= 1) {
-            if (this.state.LoanAmount >= this.state.minimumAmount && this.state.LoanAmount<= this.state.MaxAmount) {
+            if (this.state.LoanAmount >= this.state.minAmount && this.state.LoanAmount<= this.state.MaxAmount) {
                 this.props.dispatch(actions.loanOnbaordingStep2({
                     "LoanAmount": this.state.LoanAmount,
                     "Term": this.state.Term,
@@ -98,7 +100,7 @@ class LoanOboardingStep2 extends React.Component {
               this.setState({ LoanAmountInvalid : true})
             }
         }else {
-            this.props.dispatch(alertActions.error("You select more than a month on the slider"));
+            this.props.dispatch(alertActions.error("You need to select at least a month on the slider"));
         }
 
 
@@ -138,11 +140,9 @@ class LoanOboardingStep2 extends React.Component {
             <div className="col-sm-12">
                 <div className="max-750">
                     <div className="loan-header-text">
-                        <h4 className="text-black">Try our loan calculator to see</h4>
-                        <h4 className="text-black">What your payments could be</h4>
-                        <p className="m-t-20 text-black">This gives you an estimate of what your monthly
-                            repayment
-										could be</p>
+                        <h4 className="text-black">Start by calculating your loan.</h4>
+                        {/* <h4 className="text-black">What your payments could be</h4> */}
+                        <p className="m-t-20 text-black">The offer below is an estimate of what your loan could be.</p>
                     </div>
                     <div className="al-card loan-al-card row">
                         <div className="col-7">
@@ -158,7 +158,7 @@ class LoanOboardingStep2 extends React.Component {
                                         maxLength={10}
                                         type="text" />
                                         {this.state.LoanAmountInvalid &&
-                                    <div className="text-danger">{`Amount to borrow must be greater than ${0} and not more than ${util.formatAmount(this.state.MaxAmount)}`} </div>
+                                    <div className="text-danger">{`Amount to borrow must be greater than ${util.formatAmount(this.state.minAmount)} and not more than ${util.formatAmount(this.state.MaxAmount)}`} </div>
                                 }
                                 </div>
                                 <p>Payment Terms(months) <span>{this.state.Term}</span></p>
@@ -173,9 +173,11 @@ class LoanOboardingStep2 extends React.Component {
                             <div className="inner-div m-b-20">
                                 <p className="m-b-0">Estimated monthly repayment</p>
                                 <h3 className="text-white m-b-55">{util.mapCurrency('NGN')}{util.formatAmount(this.state.repaymentAmount)}</h3>
-                                <span className="al-text">Please note that the loan is granted based on your
+                                <span className="al-text">Please note that the salary based loan is granted based on your
                                     credit score rating.
-                                    Other relivant information can be provided here.
+                                    Other relevant information will be required.
+                                     {/* can be provided here. */}
+                                    
 											</span>
                             </div>
                             <div className="row loan-btn">

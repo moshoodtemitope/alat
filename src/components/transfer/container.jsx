@@ -30,9 +30,10 @@ class TransferContainer extends React.Component {
                                         <div className="sub-tab-nav">
                                             <ul>
                                                 <li><NavLink to={'/transfer'}>Bank Transfer</NavLink></li>
-                                                <li><a>Send To Contacts</a></li>
+                                                {/* <li><a>Send To Contacts</a></li> */}
                                                 <li><NavLink to={'/cardless-withdrawal'}>Cardless Withdrawal</NavLink></li>
                                                 <li><NavLink to={'/fx-transfer'}>FX Transfer</NavLink></li>
+                                                <li><NavLink to={'fund'}>Fund my account</NavLink></li>
                                             </ul>
                                         </div>
                                     </div>

@@ -1,5 +1,12 @@
 import * as React from 'react';
 import Login from "./login";
+import ProvideEmail from "./forgot-password/provide-email";
+import ProvideSecurityAnswer from "./forgot-password/security-answer";
+import SuccessMessage from "./forgot-password/success";
+import ResetPassword from "./reset-password/reset-password";
+import ResetSuccessMessage from "./reset-password/success";
+import ResetCustomerPin from "./reset-pin/reset-pin";
+import ResetPinSuccessMessage from "./reset-pin/success";
 import Signup from "./signup";
 import Bvn from "./signup/bvn";
 import VerifyBvn from "./signup/verify-bvn";
@@ -29,7 +36,8 @@ import LoanOnboardingTerms from './loans/terms';
 import LoanOnboardingWemaSetup from './loans/wema-setup'; 
 import LoanOnboardingRemitaOtpSetUp from './loans/remita-otp'; 
 import LoanOnbaordingKyc from './loans/kyc'; 
-
+import LoanOnboardingStatementUpload from './loans/statement-upload'; 
+import LoanOnboardingRemitaMandateSetup from './loans/remita-mandate';
 
 export const fakeAuth = {
     isAuthenticated: false,
@@ -81,22 +89,34 @@ class OnboardingRoute extends React.Component {
                 <Route path="/register/confirm-bvndetails" component={ConfirmBvnDetails} />
                 <Route path="/register/security-questions" component={SecurityQuestions} />
                 <Route path="/register/doc-upload" component={DocumentUplaod} />
+
+                <Route exact path="/forgot-password" component={ProvideEmail} />
+                <Route path="/forgot-password/security-question" component={ProvideSecurityAnswer} />
+                <Route path="/forgot-password/success" component={SuccessMessage} />
+
+                <Route exact path="/maintenance/reset-password/" component={ResetPassword} />
+                <Route path="/maintenance/reset-password/success" component={ResetSuccessMessage} />
+
+                <Route exact path="/maintenance/reset-pin/" component={ResetCustomerPin} />
+                <Route path="/maintenance/reset-pin/success" component={ResetPinSuccessMessage} />
                 {/* <PrivateRoute fakeAuth={fakeAuth} exact path='/dashboard' component={Dashboard} />*/}
                 {/*<Route component={Error404} />*/}
-                <Route path="/signup-landing" component={OnboardingLandingPage} />
-                <Route path="/loan/step-1" component={LoanOnboardingStep1} />
+                 <Route path="/signup-landing" component={OnboardingLandingPage} />
+               <Route path="/loan/step-1" component={LoanOnboardingStep1} />
                 <Route path="/loan/step-2" component={LoanOnboardingStep2} />
                 <Route path="/loan/step-3" component={LoanOnboardingStep3} />
                 <Route path="/loan/validateotp" component={LoanOnboardingValidateOTP} />
                 <Route path="/loan/bvn-info" component={LoanOnboardingBVNInfo} />
                 <Route path="/loan/work-detail" component={LoanOnboardingWorkDetail}/>
                 <Route path="/loan/salary-detail" component={LoanOnbaordingSalaryDetails} />
+                <Route path="/loan/statement-upload" component={LoanOnboardingStatementUpload} />
                 <Route path="/loan/ticket" component={LoanOnboardingTicket} />
                 <Route path="/loan/salary-entry" component={LoanOnboardingSalaryEntry} />
                 <Route path="/loan/score-card" component={LoanOnboardingScoreCard} />
                 <Route path="/loan/card-result" component={LoanOnboardingScoreResult}/>
                 <Route path="/loan/terms" component={LoanOnboardingTerms} />
                 <Route path="/loan/wema-setup" component={LoanOnboardingWemaSetup} /> 
+                <Route path="/loan/remita-mandate" component={LoanOnboardingRemitaMandateSetup}/>
                 <Route path="/loan/remita-otp" component={LoanOnboardingRemitaOtpSetUp} /> 
                 <Route path="/loan/kyc" component={LoanOnbaordingKyc} /> 
 

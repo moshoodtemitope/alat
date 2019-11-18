@@ -1,7 +1,5 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import Select from 'react-select';
 import { connect } from 'react-redux';
 import { Redirect,Link,NavLink } from 'react-router-dom';
@@ -55,7 +53,7 @@ class FixedGoal extends React.Component {
     }
 
     handleSelectDebitableAccounts(account) {
-        console.log('dss', account);
+        // console.log('dss', account);
         this.setState({ debitAccount: account });
         if (this.state.isSubmitted) {
             if(account.length == 10)
@@ -87,7 +85,7 @@ class FixedGoal extends React.Component {
             var data = {
                 ...this.props.fixed_goal_step1.fixed_step1_data.data
             };
-            console.log('tag', data);
+            // console.log('tag', data);
 
             this.setState({
                 targetAmount:util.formatAmount(data.targetAmount),
@@ -111,7 +109,7 @@ class FixedGoal extends React.Component {
         if (frequency == "daily")
         {
             timeBetween = enddate.diff(startDate,'days') + 1;
-            console.log(timeBetween)
+            // console.log(timeBetween)
 
         }
 
@@ -141,7 +139,7 @@ class FixedGoal extends React.Component {
     }
 
     handleSelectChange = (frequency) => {
-        console.log(frequency);
+        // console.log(frequency);
         // let label = frequency.id.split("/")[0]
         this.setState({ "goalFrequencyType": frequency.value,
             "goalFrequencyLabel" : frequency.label,
@@ -221,9 +219,9 @@ class FixedGoal extends React.Component {
                                         <ul>
                                             <li><a href="accounts.html" className="active">Goals</a></li>
                                             <NavLink to="/savings/activityDashBoard">
-                                                <li><a href="statement.html">Group Savings</a></li>
+                                                <li><a href="/savings/activityDashBoard">Group Savings</a></li>
                                             </NavLink>
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
 
                                         </ul>
                                     </div>
@@ -291,8 +289,10 @@ class FixedGoal extends React.Component {
 
                                         </div>
                                         <center>
-                                            <a style={{ cursor: "pointer" }} onClick={this.OnBackClick} className="add-bene m-t-50">Go Back</a>
-                                        </center>
+                                        <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(fixedGoalConstants.FIXED_GOAL_REDUCER_CLEAR));
+                                                this.props.history.push('/savings/fixed-goal') }} className="add-bene m-t-50">
+                                                Go back
+                                        </a>                                        </center>
 
                                     </div>
 
@@ -310,7 +310,12 @@ class FixedGoal extends React.Component {
     }
 }
 const mapStateToProps = state => ({
-    fixed_goal_step1: state.fixed_goal_step1,
-    fixed_goal_step2:state.fixed_goal_step2
+    fixed_goal_step1: state.GoalReducerPile.fixed_goal_step1,
+    fixed_goal_step2:state.GoalReducerPile.fixed_goal_step2
 });
 export default connect(mapStateToProps)(FixedGoal);
+
+
+
+
+

@@ -42,8 +42,8 @@ class TransferSuccess extends React.Component{
                 return beneficiary.AccountNumber === transfer_info.transfer_info_data.data.AccountNumber;
             })
 
-            console.log('existing is', beneficiaryList);
-            console.log('stateaccountnum', transfer_info.transfer_info_data.data.AccountNumber);
+            // console.log('existing is', beneficiaryList);
+            // console.log('stateaccountnum', transfer_info.transfer_info_data.data.AccountNumber);
             if(typeof existingBeneficiary ==="undefined"){
                 this.setState({existingBeneficiaryError: false});
                 // dispatch(cashTransferData({

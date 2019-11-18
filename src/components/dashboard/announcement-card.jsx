@@ -37,7 +37,7 @@ class AnnouncementCard extends React.Component {
             let feedUrl = routes.BASEURL + '/UserSecurityApi/';
             return(
                 <div className="al-card no-pad">
-                    <div className="info-card">
+                    {/* <div className="info-card">
                         <div className="post-img">
                             <img src={feedUrl + response.imageUrl} />
                         </div>
@@ -46,7 +46,7 @@ class AnnouncementCard extends React.Component {
                             <p>{response.description} <a href={"http://" +response.url} target="_blank">Read more..</a></p>
                         </div>
 
-                    </div>
+                    </div> */}
                 </div>
             );
         }

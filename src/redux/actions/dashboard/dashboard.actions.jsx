@@ -79,7 +79,7 @@ export const getAccounts = (token, callHistory) => {
 
 
 export const getAccountHistory = (token, data) => {
-    console.log("in here");
+    // console.log("in here");
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
         let consume = ApiService.request(routes.GETACCOUNTHISTORY, "POST", data, SystemConstant.HEADER);

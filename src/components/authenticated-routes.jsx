@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import { Redirect, Router } from "react-router";
 import { history } from "../_helpers/history";
 import Dashboard from "../components/dashboard";
+import LandingPage from "../components/dashboard/home";
 import TransferRoute from "./transfer/routes";
 import { Fragment } from "react";
 import Login from "./onboarding/login";
@@ -20,11 +21,15 @@ import TransferHome from "./transfer/transfer-home";
 import FundAccountIndex from './fund-account/index';
 import AccountSettings from './account-settings/container';
 import LoansIndex from './loans';
+import InsuranceContainer from './insurance/insurance-container';
 import CardsContainer from './cards/cards-container';
 import RemittanceContainer from './remittance/remittance-container';
 import LifestyleIndex from './lifestyle/index'
 import SavingsContainer from './savings/index'
 import { userActions } from "../redux/actions/onboarding/user.actions";
+import ProfileIndex from './profile';
+import TalkToUsIndex from './talk-to-us/index'
+
 
 
 
@@ -37,7 +42,7 @@ import { userActions } from "../redux/actions/onboarding/user.actions";
 
 var timer = 60
 var user = JSON.parse(localStorage.getItem("user"));
-console.log("ouside", user);
+//console.log("ouside", user);
 function PrivateRoute({ component: Component, authed, ...rest }) {
     return (
         <Route
@@ -129,7 +134,7 @@ class AuthenticatedRoutes extends React.Component {
     }
 
     resetTimeout() {
-        console.log("you are active")
+        //console.log("you are active")
         this.clearTimeout();
         this.setTimeout();
     }
@@ -143,11 +148,13 @@ class AuthenticatedRoutes extends React.Component {
     logout() {
         this.destroy();
         this.props.logout();
+        this.closeModal();
     }
 
     logoutButton(event) {
         event.preventDefault();
         this.destroy();
+        this.closeModal();
         this.props.logout();
     }
 
@@ -160,7 +167,7 @@ class AuthenticatedRoutes extends React.Component {
     }
 
     closeModal = (event) => {
-        event.preventDefault();
+       if (event) event.preventDefault();
         timer = 60;
         this.setState({ openModal: false, countDownTimeOn: false }, clearInterval(this.countDown))
 
@@ -182,10 +189,23 @@ class AuthenticatedRoutes extends React.Component {
             this.props.logout();
         }
         return (
+            <Fragment>
+                <Modal open={this.state.openModal} onClose={this.closeModal} center>
+                    <div className="div-modal m-modal">
+
+                        <h3>You will be logged out in <strong>{this.state.countDownSeconds} seconds</strong></h3>
+
+                        <div className="btn-opt">
+                            <button onClick={this.logoutButton} className="border-btn">Log out</button>
+                            <button onClick={this.closeModal} className="btn-alat">Continue</button>
+                        </div>
+                    </div>
+                </Modal>
             <Router history={history}>
                 <Switch>
                    
                     <PrivateRoute path='/dashboard' authed={this.props.user} component={Dashboard} />
+                    <PrivateRoute path='/home' authed={this.props.user} component={LandingPage} />
                     <PrivateRoute path='/fund' authed={this.props.user} component={FundAccountIndex} />
                     
                     <PrivateRoute path='/bills/airtime' authed={this.props.user} component={Bills}/>
@@ -197,6 +217,8 @@ class AuthenticatedRoutes extends React.Component {
                     <PrivateRoute path='/loans' authed={this.props.user} component={LoansIndex}/>
                     <PrivateRoute path='/account' authed={this.props.user} component={Accounts}/>
                     <PrivateRoute path='/settings' authed={this.props.user} component={AccountSettings}/>
+                    <PrivateRoute path='/profile' authed={this.props.user} component={ProfileIndex} />
+                    <PrivateRoute path='/insurance' authed={this.props.user} component={InsuranceContainer}/>
                     <PrivateRoute path='/cards' authed={this.props.user} component={CardsContainer}/>
                     <PrivateRoute path='/hotlist' authed={this.props.user} component={CardsContainer}/>
                     <PrivateRoute path='/setcard-pin' authed={this.props.user} component={CardsContainer}/>
@@ -205,12 +227,14 @@ class AuthenticatedRoutes extends React.Component {
                     <PrivateRoute path='/receive-money' authed={this.props.user} component={RemittanceContainer}/>
                     <PrivateRoute path='/lifestyle' authed={this.props.user} component={LifestyleIndex}/>
                     <PrivateRoute path='/savings' authed={this.props.user} component={SavingsContainer}/>
+                    <PrivateRoute path='/talk-to-us' authed={this.props.user} component={TalkToUsIndex}/>
 
 
                     
 
                 </Switch>
             </Router>
+            </Fragment>
 
             // <Router history={history}>
             //     <Switch>

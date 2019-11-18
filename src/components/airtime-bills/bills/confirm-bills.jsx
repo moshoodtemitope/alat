@@ -67,15 +67,15 @@ class ConfirmBills extends Component {
 
     sortAccountsForSelect = () => {
         var arrayToDisplay = [];
-        console.log(this.props.accounts);
-        console.log("this.props.accounts");
+        // console.log(this.props.accounts);
+        // console.log("this.props.accounts");
 
         if (this.props.accounts.length >= 1) {
             this.props.accounts.map((data => arrayToDisplay.push({ value: data.AccountNumber, label: data.AccountDescription + " - ₦" + formatAmount(data.AvailableBalance) })));
         } else {
             arrayToDisplay = [{ value: '', displayValue: 'No Debitable Account Available' }];
         }
-        console.log(arrayToDisplay)
+        // console.log(arrayToDisplay)
 
         const updatedSelectOption = {
             ...this.state.confirmDataForm
@@ -89,7 +89,7 @@ class ConfirmBills extends Component {
         var validation = { ...this.state.validation };
         validation.accountError.hasError = false;
         this.setState({ selectedAccount, validation });
-        console.log(`Option selected:`, selectedAccount);
+        // console.log(`Option selected:`, selectedAccount);
     }
 
 
@@ -152,8 +152,8 @@ class ConfirmBills extends Component {
                 AccountNumber: (this.state.selectedAccounts ? this.state.selectedAccounts.value : this.state.confirmDataForm.activeAccount.elementConfig.options[0].value),
             }
             this.props.setBillInfo(updatedBillInfo, payload);
-            console.log(payload);
-            console.log(updatedBillInfo);
+            // console.log(payload);
+            // console.log(updatedBillInfo);
             this.props.fetchOtp(this.state.user.token, payload);
         }
     }
@@ -162,7 +162,7 @@ class ConfirmBills extends Component {
 
 
     render() {
-        console.log("render method")
+        // console.log("render method")
         let confirmWithdrawal;
         if (this.props.billsInfo != null && this.props.pageState == 2) {
             const formElementArray = [];
@@ -267,12 +267,12 @@ class ConfirmBills extends Component {
         
             );
             if (this.props.pageState == 0) {
-                console.log("otp sent redirecting1")
+                // console.log("otp sent redirecting1")
                 this.props.resetPageState(2);
                 confirmWithdrawal = <Redirect to="/bills/paybills/verify" />
             }
         } else if (this.props.pageState == 0) {
-            console.log("otp sent redirecting")
+            // console.log("otp sent redirecting")
             this.props.resetPageState(2);
             confirmWithdrawal = <Redirect to="/bills/paybills/verify" />
         } else {

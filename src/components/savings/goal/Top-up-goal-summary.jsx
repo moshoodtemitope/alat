@@ -36,7 +36,7 @@ class TopUPGoalSummmary extends Component {
             let data = {
                 ...this.props.top_up_goal_step1.top_up_goal_data_step1.data
             };
-            console.log('tag', data);
+            // console.log('tag', data);
 
             this.setState({
                 Amount:data.amount,
@@ -74,9 +74,9 @@ class TopUPGoalSummmary extends Component {
                                             <li><a href="accounts.html" className="active">Goals</a></li>
                                             </NavLink>
                                             <NavLink to='/savings/activityDashBoard'>
-                                                <li><a href="statement.html">Group Savings</a></li>
+                                                <li><a href="/savings/activityDashBoard">Group Savings</a></li>
                                             </NavLink>
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
 
                                         </ul>
                                     </div>
@@ -88,7 +88,7 @@ class TopUPGoalSummmary extends Component {
                             <div style={{width: "100%",}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                             }
 
-                            <h1 style={{textAlign:"center", width:"100%", color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>Top Up Goal Summary</h1>
+                            <h1 style={{textAlign:"center", width:"100%", color:"#AB2656", fontSize:'18px'}}>Top Up Goal Summary</h1>
                             <div style={{margin:"30px", marginLeft:"120px",marginRight:"120px"}}></div>
 
                             <div className="col-sm-12">
@@ -143,6 +143,10 @@ class TopUPGoalSummmary extends Component {
 
 
                                         </div>
+                                        <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
+                                                this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
+                                                Go back
+                                        </a>
 
 
                                     </div>
@@ -163,9 +167,8 @@ class TopUPGoalSummmary extends Component {
     }
 }
 const mapStateToProps = state => ({
-    top_up_goal_step1:state.top_up_goal_step1,
-    top_up_goal:state.top_up_goal,
-    create_stash_goal:state.create_stash_goal,
+    top_up_goal_step1:state.CustomerGoalReducerPile.top_up_goal_step1,
+    top_up_goal:state.CustomerGoalReducerPile.top_up_goal,
     alert: state.alert,
     accounts: state.dashboard_accounts
 

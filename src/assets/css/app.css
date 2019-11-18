@@ -1049,6 +1049,13 @@ a:hover {
     border: 1px solid #9B9B9B !important;
   }
 
+  .btn-disabled{
+    background: #DADADA !important;
+      color: #9c9c9c !important;
+      border: 1px solid #9D0F3E !important;
+      cursor: not-allowed;
+  }
+
 .btn-alat {
   background: #AB2656;
   color: #FFFFFF;
@@ -1307,4 +1314,16 @@ body {
 .toggle-button_position-right {
   -webkit-transform: translateX(0.33rem);
           transform: translateX(0.33rem);
+}
+@media screen and (max-width: 768px){
+  .loan-al-card .col-7, .loan-al-card .col-5{
+    width: 100%;
+    flex: 100%;
+    max-width: unset;
+  }
+  .al-card > .al-card-left{
+    border-bottom-right-radius: unset;
+    border-top-right-radius: unset;
+    margin-top: 20px;
+  }
 }

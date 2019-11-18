@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import {Fragment} from "react";
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -44,11 +42,11 @@ import * as actions from '../../../redux/actions/savings/goal/flex-goal.actions'
             var data = {
                 ...this.props.flex_goal_step2.flex_step2_data.data
             };
-            console.log('tag', data);
+            // console.log('tag', data);
 
             this.setState({
                 targetAmount:data.targetAmount,
-                startDate: data.startDate,
+                startDate:data.startDate,
                 goalName:data.goalName,
                 goalFrequency:data.goalFrequency,
                 debitAccount:data.debitAccount,
@@ -86,9 +84,9 @@ import * as actions from '../../../redux/actions/savings/goal/flex-goal.actions'
                                 <ul>
                                     <li><a href="accounts.html" className="active">Goals</a></li>
                                     <NavLink to="/savings/goal/group-savings-selection">
-                                    <li><a href="statement.html">Group Savings</a></li>
+                                    <li><a href="/savings/goal/group-savings-selection">Group Savings</a></li>
                                     </NavLink>                                    
-                                    <li><a href="#">Investments</a></li>
+                                    {/* <li><a href="#">Investments</a></li> */}
                                 
                                 </ul>
                             </div>
@@ -97,7 +95,7 @@ import * as actions from '../../../redux/actions/savings/goal/flex-goal.actions'
                     {this.props.alert && this.props.alert.message &&
                         <div style={{width: "100%", marginLeft:"150px",marginRight:"150px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                     }
-                    <h1 style={{margin:"auto", color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>Flexi Goal Summary</h1>
+                    <h1 style={{margin:"auto", color:"#AB2656", fontSize:'18px'}}>Flexi Goal Summary</h1>
                         <div style={{margin:"30px"}}></div>
 
                     <div className="col-sm-12">
@@ -162,6 +160,10 @@ import * as actions from '../../../redux/actions/savings/goal/flex-goal.actions'
 
                             
                             </div>
+                            <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(flexGoalConstants.FLEX_GOAL_REDUCER_CLEAR));
+                                                this.props.history.push('/savings/flex-goal-step2') }} className="add-bene m-t-50">
+                                                Go back
+                            </a>
 
                         
                         
@@ -180,10 +182,10 @@ import * as actions from '../../../redux/actions/savings/goal/flex-goal.actions'
     }
 }
 const mapStateToProps = state => ({
-    flex_goal_step1: state.flex_goal_step1,
-    flex_goal_step2:state.flex_goal_step2,
+    flex_goal_step1: state.FlexGoalReducerPile.flex_goal_step1,
+    flex_goal_step2:state.FlexGoalReducerPile.flex_goal_step2,
     alert: state.alert,
-    add_flex_goal:state.add_flex_goal
+    add_flex_goal:state.FlexGoalReducerPile.add_flex_goal
 
 });
 export default connect(mapStateToProps)(FlexGoalSummary);

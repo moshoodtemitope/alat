@@ -33,7 +33,7 @@ class VerifyOtp extends Component {
 
 
     componentDidMount() {
-        console.log(this.props.cwInfo);
+        // console.log(this.props.cwInfo);
         this.props.resetPageState();
     }
 
@@ -98,7 +98,7 @@ class VerifyOtp extends Component {
                                     <h4 className="m-b-10 center-text hd-underline">OTP Verification</h4>
                                     
                                     
-                                    <div className="m-t-30 width-300">
+                                    <div className="m-t-30 width-300 m-padding-10">
                                     
                                     <img src={verifyOtp} className="m-t-20 m-b-20" alt="Verify OTP" />
                                     {(this.props.alert.message) ?

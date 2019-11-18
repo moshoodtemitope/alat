@@ -61,7 +61,7 @@ class RequestCard extends React.Component {
             // isCardSelected: false,
         };
 
-        console.log('user is', this.state.user);
+        // console.log('user is', this.state.user);
         
         this.getCustomerATMCardsData            = this.getCustomerATMCardsData.bind(this);
         this.selectADesign                      = this.selectADesign.bind(this);
@@ -72,6 +72,9 @@ class RequestCard extends React.Component {
     }
 
     componentDidMount() {
+        if(this.state.user.isWemaMobileUser===true){
+            this.props.history.push("/cards-control");
+        }
         this.getCustomerATMCardsData()
     }
 
@@ -436,7 +439,7 @@ class RequestCard extends React.Component {
             cardDesignUrl = `${BASEURL}/${cardDesignUrl}`;
             let cardStyle= {
                 backgroundImage: `url('${cardDesignUrl}')`,
-                backgroundSize: 'cover',
+                backgroundSize: 'contain',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center center'
             };
@@ -531,8 +534,8 @@ class RequestCard extends React.Component {
 
                 case LOADING_INFOFOR_CARDREQUEST_SUCCESS:
                     let cardInfoFromRequest = loadCardsInfo.atmcard_info.response;
-                    
-                        if(cardInfoFromRequest.cardDesignId.length===0){
+                        // console.log('cards is', cardInfoFromRequest)
+                        if(cardInfoFromRequest.cardsList.length===0){
                             return(
                                 <div>
                                     {this.renderNoAlatCard()}
@@ -580,7 +583,8 @@ class RequestCard extends React.Component {
                         <div className="col-sm-12">
                             <div className="max-600">
                                 <div className="al-card no-pad">
-                                    <h4 className="m-b-10 center-text hd-underline">Request an ALAT ATM Card</h4>
+                                    {/* <h4 className="m-b-10 center-text hd-underline">Request an ALAT ATM Card</h4> */}
+                                    <h4 className="m-b-10 center-text hd-underline">Our debit cards make payments simpler. Request one now.</h4>
                                     {/* <div className="transfer-ctn"> */}
                                             {this.renderRequestNewCardScreen1()}
                                     {/* </div> */}

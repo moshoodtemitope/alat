@@ -77,7 +77,7 @@ class Subscriber extends Component {
                 updatedFormElement.valueToDisplay = formatAmountNoDecimal(parseInt(updatedFormElement.value));
             }
         }
-        console.log(updatedFormElement.value)
+        // console.log(updatedFormElement.value)
         updatedinputSubscriberForm[inputIdentifier] = updatedFormElement;
         this.setState({ inputSubscriberForm: updatedinputSubscriberForm, validation });
     }

@@ -76,9 +76,9 @@ class SelectAcount extends React.Component {
                                 <h4 className="m-b-10 center-text hd-underline">{this.props.bill.ActionText}</h4>
 
                                 <div className="transfer-ctn">
-                                    {this.props.alert && this.props.alert.message &&
+                                    {/* {this.props.alert && this.props.alert.message &&
                                         <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
-                                    }
+                                    } */}
                                     <form onSubmit={this.handleSubmit}>
                                         <div className="al-card no-pad">
                                             <div className="trans-summary-card">
@@ -91,6 +91,7 @@ class SelectAcount extends React.Component {
 
                                         <SelectDebitableAccounts
                                             value={this.state.accountNumber}
+                                            currency="NGN"
                                             accountInvalid={this.state.isAccountInvalid}
                                             onChange={this.handleSelectDebitableAccounts} 
                                             labelText={"Select an account to debit"}/>
@@ -106,7 +107,9 @@ class SelectAcount extends React.Component {
                                                 <center>
                                                     <button type="submit" disabled={this.props.submitBusy} className="btn-alat m-t-10 m-b-20 text-center">{this.props.submitBusy ? "Processing..." : this.props.bill.ActionText}</button>
                                                 </center>
-
+                                                {this.props.alert && this.props.alert.message &&
+                                                    <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                                                }
                                             </div>
                                         </div>
                                     </form>

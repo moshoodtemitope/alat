@@ -24,11 +24,11 @@ class LoanOnboardingRemitaOtpSetUp extends React.Component {
       }
   
       goBack=()=>{
-          this.props.history.push('/loans/terms');
+          this.props.history.push('/loan/terms');
       }
   
       NavigateToKyc=()=>{
-          this.props.history.push('/loans/kyc');
+          this.props.history.push('/loan/kyc');
       }
 
     render() {

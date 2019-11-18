@@ -19,11 +19,15 @@ class OtpValidation extends React.Component {
     }
     
     componentDidMount=()=>{
-        if(this.props.retryAction != null){
-           this.setState({buttonText: "Complete Transfer"});
-        }else {  
+        // if(this.props.retryAction != null){
+        //    this.setState({buttonText: "Complete Transfer"});
+        // }else {  
+        //     this.setState({buttonText: "Validate"});
+        // }
+        if(this.props.ActionText){
             this.setState({buttonText: "Validate"});
         }
+        else { this.setState({buttonText: "Complete Transfer"});  }
     }
     // handleChange=(e)=>{
     //     this.props.
@@ -31,6 +35,7 @@ class OtpValidation extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
+        // console.log("Handle Submit fired");
         if (this.validatePin()) {
         }
         else {
@@ -40,6 +45,7 @@ class OtpValidation extends React.Component {
     }
 
     handleRetry =()=>{
+        // console.log("handle retry fired");
         this.props.retryAction();
     }
 

@@ -17,7 +17,7 @@ export const getAirtimeBeneficiaries = (token) => {
         return consume
             .then(response => {
                 //TODO: edit localDB accounts object
-                console.log(response);
+                // console.log(response);
                 dispatch(success(response.data));
             })
             .catch(error => {
@@ -65,7 +65,7 @@ export const fetchDebitableAccounts = (token, requestType, data) => {
             let consume = ApiService.request(routes.GetAllCustomerAccountsWithLimitsV2, "POST", {}, SystemConstant.HEADER);
             return consume
                 .then(response => {
-                    console.log(response);
+                    // console.log(response);
                     dispatch(success(response.data));
                 })
                 .catch(error => {
@@ -84,7 +84,7 @@ export const fetchDebitableAccounts = (token, requestType, data) => {
             let consume = ApiService.request(routes.FETCH_DEBITABLE_ACCOUNTS, "POST", data, SystemConstant.HEADER);
             return consume
                 .then(response => {
-                    console.log(response);
+                    // console.log(response);
                     dispatch(success(response.data));
                 })
                 .catch(error => {

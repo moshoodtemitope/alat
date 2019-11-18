@@ -24,8 +24,8 @@ import {FETCH_BANK_PENDING,
     DELETE_TRANSFER_BENEFICIARY_FAILURE,
     FETCH_BANK_FAILURE} from "../../../redux/constants/transfer.constants";
 
-    const options = [
-    ];
+    // let options = [
+    // ];
     let timerCount;
 
 class Index extends Component{
@@ -75,7 +75,7 @@ class Index extends Component{
     }
 
     proceedWithSelectBeneficary(beneficiary){
-        console.log("selected ben is", beneficiary);
+        // console.log("selected ben is", beneficiary);
         const {dispatch} = this.props;
         // this.setState({})
         dispatch(cashTransferData({
@@ -103,7 +103,7 @@ class Index extends Component{
             existingBeneficiary = beneficiaryList.find((beneficiary)=>{
                 return beneficiary.AccountNumber === this.state.accountNumber;
             })
-            console.log('existing is', typeof existingBeneficiary);
+            // console.log('existing is', typeof existingBeneficiary);
             if(typeof existingBeneficiary==="undefined"){
                 this.setState({existingBeneficiaryError: false});
                 dispatch(cashTransferData({
@@ -124,11 +124,11 @@ class Index extends Component{
                 // recipientCurrency = "USD";
 
            
-            console.log('currency is', this.state.recipientCurrencyText);
+            // console.log('currency is', this.state.recipientCurrencyText);
 
             accountsMatchingCurrency = allAccounts.filter(account=>account.Currency===recipientCurrency);
             
-            console.log('all accounts',accountsMatchingCurrency );
+            // console.log('all accounts',accountsMatchingCurrency );
             
             if(accountsMatchingCurrency.length>=1){
                 dispatch(cashTransferData({
@@ -178,17 +178,29 @@ class Index extends Component{
                 );
             case FETCH_BANK_SUCCESS:
                 let banksList = props.bankList.banks_data.response;
+                let options = [
+                ];
                 for(var bank in banksList){
                     // console.log('Bank is', banksList[bank]);
                     if(banksList[bank].BankName.toLowerCase()==='wema bank'){
                          options.push({value: banksList[bank].BankCode, label: banksList[bank].BankName});
                     }
+
+                    
                    
                 }
+                const allBanks = options.reduce((acc, current) => {
+                    const x = acc.find(item => item.label === current.label);
+                    if (!x) {
+                      return acc.concat([current]);
+                    } else {
+                      return acc;
+                    }
+                }, []);
                 const { selectedBank } = this.state;
                 return(
                     <Select
-                        options={options}
+                        options={allBanks}
                         // isDisabled={this.state.submitButtonState}
                         isDisabled={props.account_details.fetchStatus}
                         // onInputChange={this.handleChange}
@@ -290,7 +302,7 @@ class Index extends Component{
                 this.setState({ submitted: false, submitButtonState: false, inputState: false });
             }
 
-            console.log('account details will be', accountInfo);
+            // console.log('account details will be', accountInfo);
             
             
         }
@@ -353,9 +365,9 @@ class Index extends Component{
                                 
                                 <Fragment>
                                     <div className={(key>=1)?"col-sm-12 col-md-10 offset-md-1 each-beneficiary hide": "col-sm-12 col-md-10 each-beneficiary offset-md-1"} key={key} id={"beneficiary-"+key}>
-                                        <div className="al-card beneficiary-card" onClick={()=>this.proceedWithSelectBeneficary(ben)}>
+                                        <div className="al-card beneficiary-card transfer-beneficiary" onClick={()=>this.proceedWithSelectBeneficary(ben)}>
                                             <div className="clearfix">
-                                                <div className="network-img">
+                                                <div className="bankicon-img">
                                                     {/* <img src="img/airtel.png" srcset="img/airtel@2x.png 2x"/> */}
                                                     <i className="demo-icon icon-bank-building" aria-hidden="true"></i>
                                                 </div>

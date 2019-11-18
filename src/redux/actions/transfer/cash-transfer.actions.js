@@ -124,10 +124,10 @@ export const cashTransferData = (transferDetails,isFxTransfer,token) =>{
     return(dispatch)=>{
         dispatch(request(transferDetails));
         if(isFxTransfer ===false){
-            console.log('bank transfer');
+            // console.log('bank transfer');
             history.push("/transfer/provide-details");
         }else{
-            console.log('FX transfer');
+            // console.log('FX transfer');
             history.push("/fx-transfer/provide-details");
         }
        
@@ -259,7 +259,7 @@ export const accountEnquiry = (token, data) => {
                             if(error.response && error.response.data && error.response.data.Message){
                                 dispatch(failure(error.response.data.Message.toString()));
                             }else{
-                                console.log('bank error is', error.response);
+                                // console.log('bank error is', error.response);
                                 dispatch(failure('We are unable to get recipient details.'));
                             }
                         })
@@ -269,7 +269,7 @@ export const accountEnquiry = (token, data) => {
                 if(error.response.data.Message){
                     dispatch(failure(error.response.data.Message.toString()));
                 }else{
-                    console.log('bank error is', error.response);
+                    // console.log('bank error is', error.response);
                     dispatch(failure('We are unable to get recipient details.'));
                 }
             });
@@ -390,7 +390,7 @@ export const processMoneyTransfer = (token, transferPayload ,isFxTransfer) => {
                 dispatch(success(response));
             })
             .catch(error => {
-                console.log("error is", error.response);
+                // console.log("error is", error.response);
                 if((error.response.data.Message)){
                     dispatch(failure(error.response.data.Message.toString()));
                 }

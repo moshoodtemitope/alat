@@ -20,7 +20,7 @@ class Data extends Component{
     }
 
     componentDidMount() {
-        console.log("in data now")
+        // console.log("in data now")
         this.props.resetPinState();
         if(this.props.beneficiaries < 1){
             this.props.fetchBeneficiaries(this.state.user.token);
@@ -34,7 +34,7 @@ class Data extends Component{
 
 
    render() {
-    console.log("in data now- render method")
+    // console.log("in data now- render method")
        return(
            
            <Fragment>

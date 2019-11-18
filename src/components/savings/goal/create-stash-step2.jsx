@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import {Fragment} from "react";
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -10,11 +8,7 @@ import {createGoalConstants} from '../../../redux/constants/goal/create-stash.co
 import * as actions from '../../../redux/actions/savings/goal/create-stash-goal.actions'
  
 
-
-
- 
-
- class StashSummmary extends Component {
+class StashSummmary extends Component {
      constructor(props){
          super(props);
 
@@ -43,7 +37,7 @@ import * as actions from '../../../redux/actions/savings/goal/create-stash-goal.
             let data = {
                 ...this.props.create_stash_goal_step1.stash_goal_step1_data.data
             };
-            console.log('tag', data);
+            // console.log('tag', data);
 
             this.setState({
                 targetAmount:data.targetAmount,
@@ -87,9 +81,9 @@ import * as actions from '../../../redux/actions/savings/goal/create-stash-goal.
                                 <ul>
                                     <li><a href="accounts.html" className="active">Goals</a></li>
                                     <NavLink to="/savings/activityDashBoard">
-                                    <li><a href="statement.html">Group Savings</a></li>
+                                    <li><a href="/savings/activityDashBoard">Group Savings</a></li>
                                     </NavLink>
-                                    <li><a href="#">Investments</a></li>
+                                    {/* <li><a href="#">Investments</a></li> */}
                                 
                                 </ul>
                             </div>
@@ -100,7 +94,7 @@ import * as actions from '../../../redux/actions/savings/goal/create-stash-goal.
                             <div style={{width: "100%",}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                         }
 
-                    <h1 style={{width:"100%", textAlign:"center", color:"#AB2656", paddingLeft:"15px", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>Stash Goal Summary</h1>
+                    <h1 style={{width:"100%", textAlign:"center", color:"#AB2656", paddingLeft:"15px", fontSize:'18px'}}>Stash Goal Summary</h1>
                         <div style={{margin:"30px", marginLeft:"120px",marginRight:"120px"}}></div>
 
                     <div className="col-sm-12">
@@ -158,6 +152,10 @@ import * as actions from '../../../redux/actions/savings/goal/create-stash-goal.
 
                                 
                                 </div>
+                                <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(createGoalConstants.STASH_GOAL_REDUCER_CLEAR));
+                                                this.props.history.push('/savings/create-stash_step1') }} className="add-bene m-t-50">
+                                                Go back
+                                        </a>
 
                             
                             </div>
@@ -173,8 +171,8 @@ import * as actions from '../../../redux/actions/savings/goal/create-stash-goal.
     }
 }
 const mapStateToProps = state => ({
-    create_stash_goal_step1:state.create_stash_step1,
-    create_stash_goal:state.create_stash_goal,
+    create_stash_goal_step1:state.CreateGoalReducerPile.create_stash_step1,
+    create_stash_goal:state.CreateGoalReducerPile.create_stash_goal,
     alert: state.alert,
 
 });

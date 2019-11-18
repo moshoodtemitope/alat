@@ -12,20 +12,37 @@ import  LoanKycComponent  from '../../../shared/components/loans/_kyc';
 
 class LoanOnbaordingKyc extends React.Component{
     constructor(props){
-        super(props)
+        super(props);
+        this.state = {
+            user: JSON.parse(localStorage.getItem("user")),
+        }
     }
     goToNextPage=()=>{
-        this.props.dispatch(LoanActions.clearLoanOnboardingStore());
+        //this.props.dispatch(LoanActions.clearLoanOnboardingStore());
+       // this.props.history.push('/loans/salary/dashboard');
+       this.props.history.push('/bills/airtime');
+    }
+
+    NavigateToLoanDashBoard=()=>{
         this.props.history.push('/loans/salary/dashboard');
     }
+
 
     render(){
         return(<LoanOnboardingContainer>
             <LoanKycComponent
              goForward={this.goToNextPage}
+             gotoDashBoard={this.NavigateToLoanDashBoard}
             />
         </LoanOnboardingContainer>)
     }
 }
 
-export default LoanOnbaordingKyc;
+function mapStateToProps(state) {
+    return {
+        alert: state.alert,
+       // standing_order: state.loanOnboardingReducerPile.loanStandingOrder,
+    }
+}
+
+export default connect(mapStateToProps)(LoanOnbaordingKyc);

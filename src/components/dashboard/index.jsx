@@ -18,6 +18,7 @@ import {getAccountHistory, getAccounts} from "../../redux/actions/dashboard/dash
 import {dashboardConstants as userConstants} from "../../redux/constants/dashboard/dashboard.constants";
 import Slider from "react-animated-slider";
 import * as utils from "../../shared/utils";
+import { profileMenu } from "../../redux/actions/profile/profile-action";
 
 class Dashboard extends React.Component{
     constructor(props) {
@@ -28,15 +29,20 @@ class Dashboard extends React.Component{
         };
     }
 
+    GetUserProfileMenu = () => {
+        this.props.dispatch(profileMenu(this.state.user.token));
+    }
+
     fetchAccounts(){
         const { dispatch } = this.props;
         // console.log(this.props);
-        console.log(this.state.user.token);
+        //console.log(this.state.user.token);
         dispatch(getAccounts(this.state.user.token, true));
     }
 
     componentDidMount() {
         this.fetchAccounts();
+        this.GetUserProfileMenu();
     }
 
     renderAccounts(){
@@ -94,6 +100,7 @@ class Dashboard extends React.Component{
                 return(
                     <Slider duration="500" infinite="true" emulateTouch="true" onSlideChange={event => this.getAccountHistory(event)}>
                         {userAccounts.map(function(acct, key){
+                            
                             return(
     
                                 <div className="account-card m-b-50" key={key}>
@@ -109,7 +116,12 @@ class Dashboard extends React.Component{
                                     </div>
     
                                     <div className="account-balance clearfix">
-                                        <p className="balance">₦{utils.formatAmount(acct.AvailableBalance)}</p>
+                                        <p className="balance">
+                                        {acct.Currency==="NGN" && <span>&#8358;</span> } 
+                                        {acct.Currency==="GBP" && <span>&#x00A3;</span> }
+                                        {acct.Currency==="USD" && <span>&#x24;</span> }
+                                        {(acct.Currency!=="USD" && acct.Currency!=="GBP" && acct.Currency!=="NGN") && <span>{acct.Currency}</span> }
+                                        {utils.formatAmount(acct.AvailableBalance)}</p>
                                         {acct.IsDebitable && <NavLink to={"/fund"} className="btn-alat btn-white m-t-10 btn-sm">Fund Account</NavLink>}
                                     </div>
                                 </div>
@@ -122,15 +134,15 @@ class Dashboard extends React.Component{
     }
 
     getAccountHistory(accountIndex){
-        console.log(accountIndex.slideIndex);
-        console.log(this.props);
+        //console.log(accountIndex.slideIndex);
+       // console.log(this.props);
 
         const { dispatch } = this.props;
         let props = this.props;
         let accounts = props.accounts;
         let userAccounts = accounts.user_account_data.response.Accounts;
         let selectedAccount = userAccounts[accountIndex.slideIndex];
-        console.log(selectedAccount);
+       // console.log(selectedAccount);
         let payload = {
             Take: 10,
             Skip: 0,
@@ -181,7 +193,7 @@ class Dashboard extends React.Component{
     renderHistory(){
         let props = this.props;
         let accountsHistory = props.accounts_history;
-        console.error(accountsHistory);
+        //console.error(accountsHistory);
         if(accountsHistory.account_history === userConstants.DASHBOARD_ACCOUNT_FETCH_HISTORY_PENDING){
             return  <h4 className="text-center" style={{ marginTop: '65px'}}>Loading account history...</h4>;
         }
@@ -244,12 +256,11 @@ class Dashboard extends React.Component{
 
                             <div className="col-sm-12">
                                 <div className="row">
-
                                     <div className="col-sm-12 col-md-6">
                                         <div className="al-card no-pad acct-card-pad acct-match">
                                             <div className="account-slide">
                                                 <h4>My Accounts <span>
-                                                <NavLink to="/accounts/accounts-history">
+                                                <NavLink to="/account/account-history">
                                                     {/* View All */}
                                                 </NavLink>
                                                 </span></h4>
@@ -267,79 +278,23 @@ class Dashboard extends React.Component{
                                     <div className="col-sm-12 col-md-8">
                                         <OnboardingPriority/>
 
-                                        <div className="al-card transact-history">
-                                            <h4 className="m-b-20">Transaction History <span>
-                                                <NavLink to="/accounts/accounts-history">
+                                        {/* <div className="al-card transact-history">
+                                             <h4 className="m-b-20">Transaction History <span>
+                                                <NavLink to="/account/account-history">
                                                     View All
                                                 </NavLink>
                                             </span></h4>
 
                                             <div className="history-table clearfix">
                                                 { this.renderHistory() }
-                                                {/*<div className="history-ctn">*/}
-                                                    {/*<div className="history-list clearfix">*/}
-                                                        {/*<img src={hstransfer} />*/}
-                                                            {/*<p className="desc">Funded Apple Virtual Card with USD 200*/}
-                                                                {/*for NGN 80,000<span className="date">Feb 9, 2017</span>*/}
-                                                            {/*</p>*/}
-                                                            {/*<p className="balance credit">USD 200</p>*/}
-                                                    {/*</div>*/}
-                                                {/*</div>*/}
-
-                                                {/*<div className="history-ctn">*/}
-                                                    {/*<div className="history-list clearfix">*/}
-                                                        {/*<img src={hsatm} />*/}
-                                                            {/*<p className="desc">Funded Apple Virtual Card with USD 200*/}
-                                                                {/*for NGN 80,000<span className="date">Feb 9, 2017</span>*/}
-                                                            {/*</p>*/}
-                                                            {/*<p className="balance debit">USD 200</p>*/}
-                                                    {/*</div>*/}
-                                                {/*</div>*/}
-
-                                                {/*<div className="history-ctn">*/}
-                                                    {/*<div className="history-list clearfix">*/}
-                                                        {/*<img src={hspos} />*/}
-                                                            {/*<p className="desc">Funded Apple Virtual Card with USD 200*/}
-                                                                {/*for NGN 80,000<span className="date">Feb 9, 2017</span>*/}
-                                                            {/*</p>*/}
-                                                            {/*<p className="balance credit">USD 200</p>*/}
-                                                    {/*</div>*/}
-                                                {/*</div>*/}
-
-                                                {/*<div className="history-ctn">*/}
-                                                    {/*<div className="history-list clearfix">*/}
-                                                        {/*<img src={hsfund} />*/}
-                                                            {/*<p className="desc">Funded Apple Virtual Card with USD 200*/}
-                                                                {/*for NGN 80,000<span className="date">Feb 9, 2017</span>*/}
-                                                            {/*</p>*/}
-                                                            {/*<p className="balance credit">USD 200</p>*/}
-                                                    {/*</div>*/}
-                                                {/*</div>*/}
-
-                                                {/*<div className="history-ctn">*/}
-                                                    {/*<div className="history-list clearfix">*/}
-                                                        {/*<img src={hstransfer} />*/}
-                                                            {/*<p className="desc">Funded Apple Virtual Card with USD 200*/}
-                                                                {/*for NGN 80,000<span className="date">Feb 9, 2017</span>*/}
-                                                            {/*</p>*/}
-                                                            {/*<p className="balance credit">USD 200</p>*/}
-                                                    {/*</div>*/}
-                                                {/*</div>*/}
+                                             
                                             </div>
-                                        </div>
+                                        </div>  */}
                                     </div>
-                                    <div className="col-sm-12 col-md-4">
-                                        <div className="al-card">
-                                            <div className="reminder-card">
-                                                <div className="text-center">
-                                                    <img src={calendar} />
-                                                        <p>You currently do not have any pending reminders</p>
-                                                        <a href="" className="btn-alat m-t-20">Setup a reminder</a>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    {/* <div className="col-sm-12 col-md-4">
+                                      
                                         <AnnouncementCard />
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
@@ -352,7 +307,7 @@ class Dashboard extends React.Component{
 }
 
 function mapStateToProps(state) {
-    console.log(state);
+    //console.log(state);
     const { authentication } = state;
     const { user } = authentication;
     return {

@@ -1,6 +1,6 @@
 
 export const formatAmount = (amount) => {
-    return amount.toLocaleString(navigator.language, { minimumFractionDigits: 2 });
+    return amount.toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 };
 
 export const formatAmountNoDecimal = (amount) => {
@@ -130,6 +130,7 @@ export const canvasToFile = (dataURL) => {
 
 export const modelStateErrorHandler = (error, field) => {
     //console.log("in model state");
+    //console.log(error);
     try {
         if (error.response) {
             if ("modelState" in error.response.data && error.response.data.message.toLowerCase().indexOf('the request is invalid.') > -1) {
@@ -151,12 +152,14 @@ export const modelStateErrorHandler = (error, field) => {
         else
             return handleError(error);  //Check for the exact error code to know what to return
     } catch (err) {
+       // console.log(err);
         return "Error : Something went wrong";
     }
 };
 
 export const handleError = (error) => {
-    console.log("-----in handle error")
+    //console.log("-----in handle error")
+    //console.log(error);
     var message = '';
     if (error.response) {
         // The request was made and the server responded with a status code
@@ -182,6 +185,17 @@ export const handleError = (error) => {
         message = error.message;
     }
     return message;
+};
+
+export const returnStatusCode =(error) =>{
+    var statusCode = '';
+    if (error.response) {
+        if (error.response.status) {
+           statusCode = error.response.status;
+        } 
+    }
+    // console.log(statusCode);
+   return statusCode;
 };
 
 export const FormartDate = (date) => {

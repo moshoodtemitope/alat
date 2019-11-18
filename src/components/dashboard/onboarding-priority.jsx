@@ -1,5 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import { Link } from 'react-router-dom';
 // import {history} from "../_helpers";
 import {Router} from "react-router";
 // import {getOnboardingPriority} from "./actions";
@@ -27,7 +28,7 @@ class OnboardingPriority extends React.Component{
     }
 
     getCorrespondingMessage(object){
-        console.log(object);
+        //console.log(object);
         let prorityViewModel = { message:'', link:'', linkText:''};
         switch (object.onboarding_priority_data.response.validationError) {
             case 'Completed':
@@ -41,27 +42,27 @@ class OnboardingPriority extends React.Component{
                  break;
             case 'LinkBvn':
                     prorityViewModel = { message:"Link your BVN and get your account",
-                                         link:'#',
+                                         link:'/profile/linkBVN',
                                           linkText:'Link BVN'};
                 break;
             case 'SetALATPin': 
                     prorityViewModel = { message:"Set your ALAT Pin",
-                    link:'#',
+                    link:'/settings/pin-management/create/create-pin',
                      linkText:'Set PIN'};
                 break;
             case 'UploadSelfie':
                     prorityViewModel = { message:"Upload your passport(selfie) and signature.",
-                    link:'#',
-                     linkText:'Update Profile'};
+                    link:'/profile/profile-upload-photograph',
+                     linkText:'Upload Passport'};
                 break;
             case 'UploadId':
                     prorityViewModel = { message:"Upload identification/utility documents",
-                    link:'#',
+                    link:'/profile/profile-documents',
                      linkText:'Upload Document'};
                 break;
             case 'FundAccount':
                     prorityViewModel = { message:"Fund your ALAT Account",
-                    link:'#',
+                    link:'/fund',
                     linkText:'Fund Account'};
                 break;
             case 'AccountReactivation' : 
@@ -162,7 +163,8 @@ class OnboardingPriority extends React.Component{
                             else if(priorityObject.onboarding_priority_data.response.score >= 100)
                             {<a href="#">Fund Account</a>}
                             ); */}
-                            <a href={prorityViewModel.link}>{prorityViewModel.linkText}</a>
+                            <Link to={prorityViewModel.link}>{prorityViewModel.linkText}</Link>
+                            {/* <a href={prorityViewModel.link}>{prorityViewModel.linkText}</a> */}
                         </div>
                     </div>
 

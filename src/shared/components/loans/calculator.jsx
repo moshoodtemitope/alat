@@ -87,7 +87,7 @@ class LoanEstimator extends React.Component {
                 this.setState({ LoanAmountInvalid: true })
             }
         } else {
-            this.props.dispatch(alertActions.error("You select more than a month on the slider"));
+            this.props.dispatch(alertActions.error("You need to select at least a month on the slider"));
         }
 
 
@@ -171,9 +171,10 @@ class LoanEstimator extends React.Component {
                                 <div className="inner-div m-b-20">
                                     <p className="m-b-0">Estimated monthly repayment</p>
                                     <h3 className="text-white m-b-55">{util.mapCurrency('NGN')}{util.formatAmount(this.state.repaymentAmount)}</h3>
-                                    <span className="al-text">Please note that the loan is granted based on your
+                                    <span className="al-text">Please note that the salary based loan is granted based on your
                                         credit score rating.
-                                        Other relivant information can be provided here.
+                                        Other relevant information will be required. 
+                                        {/* can be provided */}
 											</span>
                                 </div>
                                 <div className="row loan-btn">

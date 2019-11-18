@@ -1,7 +1,5 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import {NavLink, Route, Redirect} from "react-router-dom";
 import {Switch} from "react-router";
 import Members from './list-item';
@@ -64,10 +62,7 @@ class RotatingSavingsEditedSuccessfully extends React.Component {
                                         <NavLink to='/savings/choose-goal-plan'>
                                             <li><a href="#">Goals</a></li>
                                         </NavLink>
-                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                             <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                        {/* </NavLink> */}
-                                            <li><a href="#">Investments</a></li>
 
                                         </ul>
                                     </div>

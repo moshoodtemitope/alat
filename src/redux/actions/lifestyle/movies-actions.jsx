@@ -187,7 +187,7 @@ export const getSingleEvent = (token, data) => {
 export const purchaseEventTicket = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.BUY_EVENT_TICKET, "POST", data, SystemConstant.HEADER, false);
+        let consume = ApiService.request(routes.BUY_EVENT_TICKETV2, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
@@ -240,6 +240,31 @@ export const SubmitTicketData =(data) =>{
         }
     }
 }
+export const SubmitMoviesData =(data) =>{
+    return(dispatch)=>{
+        dispatch(success(data))
+
+    }
+    function success(data){
+        return{
+            type:listStyleConstants.SUBMIT_MOVIE_DATA_SUCCESS,
+            data:data
+        }
+    }
+}
+export const SubmitEventData =(data) =>{
+    return(dispatch)=>{
+        dispatch(success(data))
+
+    }
+    function success(data){
+        return{
+            type:listStyleConstants.SUBMIT_EVENT_DATA_SUCCESS,
+            data:data
+        }
+    }
+}
+
 export const SubmitEventTicketData =(data) =>{
     return(dispatch)=>{
         dispatch(success(data))

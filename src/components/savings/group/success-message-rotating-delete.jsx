@@ -37,13 +37,7 @@ class RotatingSavingsEditedSuccessfullyDeleted extends React.Component {
     }
 
     NavigateToGroupSavings = () => {
-        // let groupSavings = this.props.groups.response; //returns an array
-        // let rotatingSavings = this.props.groupSavingsEsusu.response; //returns an array
-        // if(groupSavings.length != 0 || rotatingSavings.length != 0){
             history.push('/savings/activityDashBoard');
-        //     return;
-        // }
-        // history.push('/savings/goal/group-savings-selection');
     }
 
 
@@ -60,13 +54,10 @@ class RotatingSavingsEditedSuccessfullyDeleted extends React.Component {
                                 <div className="tab-overflow">
                                     <div className="sub-tab-nav">
                                         <ul>
-                                        <NavLink to='/savings/choose-goal-plan'>
-                                            <li><a href="#">Goals</a></li>
-                                        </NavLink>
-                                        {/* <NavLink to="/savings/goal/group-savings-selection"> */}
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li><a href="#">Goals</a></li>
+                                            </NavLink>
                                             <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                        {/* </NavLink> */}
-                                            <li><a href="#">Investments</a></li>
 
                                         </ul>
                                     </div>
@@ -86,13 +77,7 @@ class RotatingSavingsEditedSuccessfullyDeleted extends React.Component {
                                                     <label id="sucMessage" className="sucMg">Group Deleted Successfully!</label>
                                                 </div>
                                                 <div className="form-row">
-                                                {/* <Members 
-                                                   userType="admin"
-                                                   name="Group Savings"
-                                                   position="Status: running"
-                                                   amount={this.props.setAmountToWithDraw}
-                                                   intent={this.props.setFrequency}
-                                                   id="autoSummary"/> */}
+                                                
                                                 </div>
                                             </form>
 

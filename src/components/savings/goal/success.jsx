@@ -1,17 +1,14 @@
 import * as React from "react";
 import {Fragment} from "react";
-import InnerContainer from '../../../shared/templates/inner-container';
-import SavingsContainer from '..';
 import successLogo from '../../../assets/img/success.svg';
 import {NavLink, Route, Redirect} from "react-router-dom";
-import Members from '../../savings/group/list-item';
+import Members from '../group/list-item';
 import { connect } from "react-redux";
 import * as actions from '../../../redux/actions/savings/goal/create-stash-goal.actions'
-
 import {createGoalConstants} from '../../../redux/constants/goal/create-stash.constant'
 
 
-class CreateStashSuccessMessage extends React.Component {
+class SuccessMessage extends React.Component {
     constructor(props){
         super(props);
         this.state={
@@ -27,11 +24,11 @@ class CreateStashSuccessMessage extends React.Component {
         });
 
     }
-
+   
 
     render() {
         const details =this.props.location.state.details;
-        console.log(details);
+        // console.log("===================",details);
 
         return (
             <Fragment>
@@ -66,7 +63,7 @@ class CreateStashSuccessMessage extends React.Component {
                                                     <center>
                                                     <img className="successIcon"    alt="" src={successLogo}/>
                                                     </center>
-                                                    <label id="sucMessage">Stash creation was successful</label>
+                                                    <label id="sucMessage">{details.goalTypeName} goal created successfully</label>
                                                 </div>
                                                 <div className="form-row">
                                                 <Members 
@@ -100,7 +97,7 @@ class CreateStashSuccessMessage extends React.Component {
     }
 }
 const mapStateToProps = state => ({
-    create_stash_goal:state.create_stash_goal,
-    create_stash_goal_step1:state.create_stash_step1
+    create_stash_goal:state.CustomerGoalReducerPile.create_stash_goal,
+    create_stash_goal_step1:state.CustomerGoalReducerPile.create_stash_step1
 });
-export default connect(mapStateToProps)(CreateStashSuccessMessage);
+export default connect(mapStateToProps)(SuccessMessage);

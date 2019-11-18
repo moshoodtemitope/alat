@@ -87,10 +87,10 @@ class ChangeQuestion extends Component {
 
     sortQuestionsForSelect = () => {
         var arrayToDisplay = [];
-        console.log(this.props.questionsData);
-        console.log("this.props.questionsData");
+        // console.log(this.props.questionsData);
+        // console.log("this.props.questionsData");
         this.props.questionsData.questions.map((data => arrayToDisplay.push({ value: data.question, label: data.question, id: data.id })));
-        console.log(arrayToDisplay)
+        // console.log(arrayToDisplay)
 
         const updatedSelectOption = {
             ...this.state.changeQuestionForm
@@ -113,7 +113,7 @@ class ChangeQuestion extends Component {
     }
 
     accountChangedHandler = (selectedOption, selectIndentifier) => {
-        console.log(`Option selected:`, selectedOption);
+        // console.log(`Option selected:`, selectedOption);
         const updatedQuestionDataForm = {
                 ...this.state.changeQuestionForm
             }
@@ -197,7 +197,7 @@ class ChangeQuestion extends Component {
             securityQuestion: data
         }
         this.props.saveSecurityQuestion(this.state.user.token, payload, this.props.clearQuestionData);
-        console.log(payload);
+        // console.log(payload);
     }
 
 

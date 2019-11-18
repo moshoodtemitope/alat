@@ -33,7 +33,7 @@ class FundCardSelectAccount extends React.Component {
     componentDidMount() {
         if (this.props.card_details)
             if (this.props.card_details.card_details_status === fundAccountConstants.FUNDCARD_DETAILS_SUCCESS) {
-                console.log(this.props.card_details.card_details_data.data);
+                // console.log(this.props.card_details.card_details_data.data);
             } else {
                 this.props.history.push("/fund/card")
             }
@@ -132,7 +132,7 @@ class FundCardSelectAccount extends React.Component {
     fundfromNewCard = () => {
         if (this.props.encryption_rule.encryption_rule_status == fundAccountConstants.ENCRYPTION_RULE_SUCCESS) {
             var eRule = this.props.encryption_rule.encryption_rule_data.response;
-            console.log(this.props.card_details.card_details_data);
+            // console.log(this.props.card_details.card_details_data);
             this.props.dispatch(actions.ClearAction(fundAccountConstants.ENCRYPTION_RULE_CLEAR));
             this.props.dispatch(actions.verifyPAN(this.state.user.token, { PAN: utils.encryptTransactionData(this.props.card_details.card_details_data.data.CardPan, eRule) }))
 

@@ -56,7 +56,7 @@ class EditGoal extends React.Component {
         this.handleEndDatePicker = this.handleEndDatePicker.bind(this)
     }
     componentDidMount(){
-        console.log('interest loan rate',this.state.targetAmount)
+        // console.log('interest loan rate',this.state.targetAmount)
     };
     valStartDate = () => {
         if (this.state.startDate == null) {
@@ -242,7 +242,7 @@ class EditGoal extends React.Component {
                 "goalTypeId":parseInt(this.state.goal.GoalTypeId),
                 "frequencyId":parseInt(this.state.goalFrequency)
             }));
-            console.log('tag', '')
+            // console.log('tag', '')
         }
 
 
@@ -275,9 +275,9 @@ class EditGoal extends React.Component {
                                         <ul>
                                             <li><a href="accounts.html" className="active">Goals</a></li>
                                             <NavLink to="/savings/activityDashBoard">
-                                                <li><a href="statement.html">Group Savings</a></li>
+                                                <li><a href="/savings/activityDashBoard">Group Savings</a></li>
                                             </NavLink>
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
 
                                         </ul>
                                     </div>
@@ -443,6 +443,6 @@ class EditGoal extends React.Component {
     }
 }
 const mapStateToProps = state => ({
-    edit_goal: state.edit_goal
+    edit_goal: state.CustomerGoalReducerPile.edit_goal
 });
 export default connect(mapStateToProps)(EditGoal);

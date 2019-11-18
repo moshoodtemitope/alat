@@ -45,6 +45,11 @@ export function loanOnboardingStep2Reducer(state = {}, action) {
                 loan_step2_status: loanOnboardingConstants.LOAN_STEP2_FAILURE,
                 loan_step2_data: action,
             };
+            case loanOnboardingConstants.LOAN_STEP2_CLEAR:
+                    return {
+                        loan_step2_status: loanOnboardingConstants.LOAN_STEP2_CLEAR,
+                        loan_step2_data: {},
+                    };
         default:
             return {
                 ...state,
@@ -274,6 +279,54 @@ export function postScoreCardAnswerReducer(state = {}, action) {
             return {
                 loan_scoreA_status: loanOnboardingConstants.LOAN_SCORECARD_ANSWER_FAILURE,
                 loan_scoreA_data: action,
+            };
+        default:
+            return {
+                ...state,
+            };
+    }
+}
+
+export function resendOTPReducer(state = {}, action) {
+    switch (action.type) {
+        case loanOnboardingConstants.LOAN_RESENTOTP_SUCCESS:
+            return {
+                resendotp_status: loanOnboardingConstants.LOAN_RESENTOTP_SUCCESS,
+                resendotp_data: action,
+            };
+        case loanOnboardingConstants.LOAN_RESENTOTP_PENDING:
+            return {
+                resendotp_status: loanOnboardingConstants.LOAN_RESENTOTP_PENDING,
+                resendotp_data: action,
+            };
+        case loanOnboardingConstants.LOAN_RESENTOTP_FAILURE:
+            return {
+                resendotp_status: loanOnboardingConstants.LOAN_RESENTOTP_FAILURE,
+                resendotp_data: action,
+            };
+        default:
+            return {
+                ...state,
+            };
+    }
+}
+
+export function securityQuestionReducer(state = {}, action) {
+    switch (action.type) {
+        case loanOnboardingConstants.SECURITY_QUESTION_SUCCESS:
+            return {
+                sec_que_status: loanOnboardingConstants.SECURITY_QUESTION_SUCCESS,
+                sec_que_data: action,
+            };
+        case loanOnboardingConstants.SECURITY_QUESTION_PENDING:
+            return {
+                sec_que_status: loanOnboardingConstants.SECURITY_QUESTION_PENDING,
+                sec_que_data: action,
+            };
+        case loanOnboardingConstants.SECURITY_QUESTION_FAILURE:
+            return {
+                sec_que_status: loanOnboardingConstants.SECURITY_QUESTION_FAILURE,
+                sec_que_data: action,
             };
         default:
             return {

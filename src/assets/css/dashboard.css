@@ -268,7 +268,7 @@ select {
   padding: 0;
   width: 6em;
   height: 6em;
-  background-color: #E2E2E2;
+  background-color: #9D0F3E;
   border-radius: 50%;
   line-height: 6em; }
 
@@ -319,7 +319,8 @@ select {
   width: 6em;
   height: 6em;
   border-radius: 50%;
-  border: 0.45em solid #9D0F3E;
+  /* border: 0.45em solid #9D0F3E; */
+  border: 0.45em solid #53777A;
   /*The border is 0.35 but making it larger removes visual artifacts */
   /*background-color: #4D642D;*/
   /* for debug */
@@ -333,6 +334,7 @@ select {
   /*needed for clipping*/
   clip: rect(0, 5em, 5em, 2.5em);
   background-color: #53777A;
+  /* background-color: #9D0F3E; */
   border-radius: 50%;
   width: 5em;
   height: 5em; }
@@ -1113,6 +1115,30 @@ ul.menu-side {
 .dashboard-main {
   background: #f8f8f8; }
 
+  .ndPrWrap {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    background: #fff;
+    z-index: 10;
+    overflow: auto;
+}
+.linkcta:hover{
+  cursor: pointer;
+  text-decoration: underline;
+}
+.ndprMsg {
+  position: relative;
+  top: 100px;
+  width: 50%;
+  margin: 0 auto;
+}
+.ndprMsg .username-heading{
+  font-size: 19px;
+  margin-bottom: 14px;
+}
+
 .db2-fixed-header {
   background: #AB2656;
   padding: 12px 0px;
@@ -1212,9 +1238,14 @@ ul.menu-side {
   -webkit-box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08);
   box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08);
   z-index: 8; }
+  .hr-nav-header ul{
+    display: flex;
+  }
   .hr-nav-header ul li {
     position: relative;
-    float: left; }
+    float: unset; 
+    flex-grow: 1;
+  }
     .hr-nav-header ul li:hover > ul {
       display: block;
       max-height: 480px; }
@@ -1251,11 +1282,13 @@ ul.menu-side {
       .hr-nav-header ul li a.active {
         background: #fff;
         color: #AB2656;
-        font-family: "proxima_novasemibold", sans-serif; }
+        font-family: "proxima_novabold", sans-serif; }
         .hr-nav-header ul li a.active i {
           color: #AB2656; }
       .hr-nav-header ul li a i {
-        margin-right: 10px; }
+        margin-right: 10px;
+        display: none;
+      }
 
 .dashboard-wrapper {
   position: relative;
@@ -1547,7 +1580,7 @@ ul.menu-side {
 .sub-tab-nav {
   margin-bottom: 50px;
   width: 100%;
-  min-width: 480px;
+  /* min-width: 480px; */
   overflow-x: visible; }
   .sub-tab-nav ul {
     margin: 0;
@@ -2065,7 +2098,7 @@ ul.menu-side {
             display: none; }
         .fund-option p {
           padding-top: 24px;
-          font-family: Proxima Nova;
+          /* font-family: Proxima Nova; */
           font-size: 14px;
           line-height: 17px; }
        
@@ -2395,7 +2428,7 @@ ul.menu-side {
 
 .lcard-form {
   display: none; }
-
+  
 @media screen and (min-width: 1030px) {
   .hr-nav-header {
     display: block !important; } }
@@ -2411,17 +2444,75 @@ ul.menu-side {
   .welcome-name {
     font-size: 1.71429em; }
   .hr-nav-header {
-    display: none; }
+    /* display: none;  */
+  }
+  .div-modal.m-modal{
+    padding: 24px 19px;
+  }
+  .m-modal .btn-opt button{
+    display: block;
+    margin: 0 auto 20px;
+    width: unset;
+  }
+  .menulogo-wrap{
+    display: block;
+    position: relative;
+    left: 40px;
+  }
   #nav-icon1 {
     display: block;
-    margin-left: -15px; }
+    /* margin-left: -15px;  */
+    position: fixed;
+    left: 15px;
+    top: 9px;
+  }
   .hr-nav-header {
     height: 100%;
     overflow: scroll;
-    display: none;
-    margin-top: 70px; }
+    /* display: none; */
+    background: rgba(0,0,0,0.5);
+    margin-top: 70px; 
+    width: 0;
+  }
+    .hr-nav-header .container{
+      /* background: #fff;
+      width: 80%;
+      position: fixed;
+      top: 70px;
+      bottom: 0;
+      overflow: auto; */
+      width: 0;
+    }
+    /* .mobile-menu-bottomlayer {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    } */
+    /* .hr-nav-header.open-fullmenu{
+      width: 0;
+    } */
+    .hr-nav-header.open-fullmenu .container{
+      background: #fff;
+      width: 80%;
+      position: fixed;
+      top: 70px;
+      bottom: 0;
+      overflow: auto;
+      transition: all .4s cubic-bezier(.25, .8, .25, 1);
+    }
+    .open-fullmenu  .mobile-menu-bottomlayer{
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      transition: all .4s cubic-bezier(.25, .8, .25, 1);
+    }
     .hr-nav-header ul {
-      padding: 10px 0; }
+      padding: 10px 0; 
+      display: block;
+    }
       .hr-nav-header ul li {
         display: block;
         float: none; }
@@ -2441,6 +2532,20 @@ ul.menu-side {
   .acct-card-pad {
     padding-bottom: 40px !important;
     min-height: 345px; }
+  .acct-card-pad .slide.current {
+    left: 24px;
+    width: 85%;
+    margin: 0 auto;
+  }
+  .acct-card-pad .previousButton svg, .acct-card-pad .nextButton svg{
+    width: 15px;
+  }
+  .acct-card-pad .slider a.previousButton {
+    left: -6px;
+  }
+  .acct-card-pad .slider a.nextButton {
+    right: -8px;
+  }
   .bx-controls-direction {
     display: none; }
   .reminder-card {
@@ -2448,9 +2553,20 @@ ul.menu-side {
   .account-setup ul li {
     display: none; }
     .account-setup ul li.next {
-      display: block; } }
+      display: block; } 
+      .menulogo-wrap.logo-middle{
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+}
 
 @media (max-width: 768px) {
+  .menulogo-wrap{
+    display: block;
+    /* position: relative;
+    left: 20px; */
+  }
   .container {
     max-width: 768px; }
   .page-title {
@@ -2459,7 +2575,14 @@ ul.menu-side {
       font-size: 12px; }
       .page-title span a {
         padding: 10px 15px; } }
+@media (max-width: 767px){
+  /* .sub-tab-nav ul{
 
+  } */
+  .sub-tab-nav ul li{
+    display: block;
+  }
+}
 @media screen and (max-width: 600px) {
   .db2-fixed-header .col-sm-4 {
     width: 50%; }

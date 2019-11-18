@@ -12,9 +12,13 @@ import { Switch } from '../../../shared/elements/_toggle';
 import "./../cards.scss";
 import * as utils from '../../../shared/utils';
 import whitelogo from "../../../assets/img/white-logo.svg"; 
+import alatcardBg from "../../../assets/img/alat_card_bg.svg"; 
+import wemacardBg from "../../../assets/img/wema_card_bg.svg"; 
+import mastercardBg from "../../../assets/img/master_card.svg"; 
 import  {routes} from '../../../services/urls';
 import emptyVC from "../../../assets/img/credit-card-2.svg"; 
 import successIcon from "../../../assets/img/success-tick.svg";
+import Slider from "react-animated-slider";
 import {
     getALATCardSettings,
     updateALATCardSettings,
@@ -40,8 +44,8 @@ class CardsControl extends React.Component {
         this.state = {
             user: JSON.parse(localStorage.getItem("user")),
             ForeignTravelCountriesField:'',
-            StartDateField:'',
-            EndDateField:'',
+            // StartDateField:'',
+            // EndDateField:'',
             invalidInterval: false,
             hasCountryChanged: false
         };
@@ -54,18 +58,19 @@ class CardsControl extends React.Component {
         this.handleIsCardLocked            = this.handleIsCardLocked.bind(this);
         this.handleChange                  = this.handleChange.bind(this);
         
-        
+        // console.log('logged user info', this.state.user);
     }
 
     componentDidMount() {
         this.getCustomerAtmCardSettings();
+        
         
     }
 
 
     getCustomerAtmCardSettings(){
         const { dispatch } = this.props;
-        dispatch(getALATCardSettings(this.state.user.token));
+        dispatch(getALATCardSettings(this.state.user.token, null,this.state.user.isWemaMobileUser));
 
     }
     updateCardSettings(){
@@ -118,9 +123,11 @@ class CardsControl extends React.Component {
                     }
                 }
             }
-            payload.pan = this.props.loadALATCardSetting.alatcardsettings_info.response.panDetails.maskedPan.replace(/\*/g, '');
+            // payload.pan = this.props.loadALATCardSetting.alatcardsettings_info.response.panDetails.maskedPan.replace(/\*/g, '');
+            payload.pan = this.props.loadALATCardSetting.alatcardsettings_info.pan;
 
-            // console.log('payload is', payload);
+           
+            
         
 
         dispatch(updateALATCardSettings(payload,this.state.user.token));
@@ -170,7 +177,7 @@ class CardsControl extends React.Component {
             let StartDateField = new Date(startDate).getUTCFullYear()+'-'+(new Date(startDate).getUTCMonth()+1)+'-'+(new Date(startDate).getUTCDate())+'T00:00:00';
             
             
-            this.setState({ startDate,StartDateField });
+            this.setState({ startDate,StartDateField, defaultStartDate:'' });
         }else{
             
             this.setState({ startDate:'',StartDateField:'' });
@@ -186,37 +193,102 @@ class CardsControl extends React.Component {
            
             
             
-            this.setState({ endDate,EndDateField, });
+            this.setState({ endDate,EndDateField, defaultEndDate:''});
         }else{
             
             this.setState({ endDate:'',EndDateField:'' });
         }
     }
 
+    setDefaultDate(){
+        document.querySelector('#startdate').value = this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField;
+    }
 
     handleChange(ForeignTravelCountriesField){
         this.setState({ ForeignTravelCountriesField: ForeignTravelCountriesField.value });
     }
 
+    
+
+    handleSlideChange(event){
+        let cardDetails = this.props.loadALATCardSetting.alatcardsettings_info.response.allCards,
+            selectedCard  = cardDetails.filter((eachCard, index)=>index===event.slideIndex)[0];
+
+        // let existingState = Object.assign({}, this.state);
+        // existingState.CashStatusField = null;
+        // existingState.WebStatusField = null;
+        // existingState.PosStatusField = null;
+        // existingState.ForeignTravelStatusField = null;
+        // existingState.MasterStatusField = null;
+        // existingState.isAllowedCountries = null;
+        // existingState.StartDateField = null;
+        // existingState.EndDateField = null;
+        // existingState.defaultStartDate = null;
+        // existingState.defaultEndDate = null;
+        // console.log('new state is', existingState);
+        
+
+
+        delete this.state.CashStatusField;
+        delete this.state.WebStatusField;
+        delete this.state.PosStatusField;
+        delete this.state.ForeignTravelStatusField;
+        delete this.state.MasterStatusField;
+        delete this.state.isAllowedCountries;
+        delete this.state.StartDateField;
+        delete this.state.EndDateField;
+        delete this.state.defaultStartDate;
+        delete this.state.defaultEndDate;
+        
+        // console.log('after trim state is', this.state);
+
+        // this.state= Object.assign({}, existingState)
+        const { dispatch } = this.props;
+        this.setState({panIndex: event.slideIndex},()=>{
+            // console.log('states after deletion', this.state)
+            dispatch(getALATCardSettings(this.state.user.token, selectedCard.pan, this.state.user.isWemaMobileUser));
+            // this.setState({panIndex: event.slideIndex});
+        })
+        
+        
+       
+        // let{selectedDesignId} = this.state;
+
+        // if(selectedDesignId!==''){
+        //     document.querySelectorAll('.choosecarddesign').forEach((eachDesign)=>{
+        //         if(eachDesign.getAttribute('data-designid')===selectedDesignId){
+        //             eachDesign.classList.add('selected-design');
+        //         }
+        //     })
+        // }
+
+    }
+
     renderALATCardSettings(){
         let props = this.props,
             loadSettings = props.loadALATCardSetting,
-            udpdateCard  = props.updateCustomerCardSettings;
+            updateCard  = props.updateCustomerCardSettings;
         let {startDate,
             endDate, invalidInterval} = this.state;
+
+           
 
             switch(loadSettings.fetch_status){
                 case GETALAT_CARDSETTINGS_PENDING:
                     return(
-                        <div className="text-center">
+                        <div className="transfer-ctn text-center">
                             Loading your card settings...
                         </div>
                     );
                 case GETALAT_CARDSETTINGS_SUCCESS:
                         let cardDetails = loadSettings.alatcardsettings_info.response,
-                            cardDataInfo, settingInfo, otherSettingsInfo;
-                        if(cardDetails.panDetails!==null){
-                            cardDataInfo        = cardDetails.panDetails; 
+                            cardDataInfo, settingInfo, otherSettingsInfo,
+                            defaultStartDate='',
+                            defaultEndDate='',
+                            StartDateField,
+                            EndDateField;
+                        if(cardDetails.allCards.length===1){
+                            cardDataInfo        = cardDetails.allCards[0]; 
                             settingInfo         = cardDetails.cardControlSettings;
                             otherSettingsInfo   = cardDetails.otherCardControlDetails;
                         let    options             =[];
@@ -227,11 +299,61 @@ class CardsControl extends React.Component {
                                     label: country.countryName
                                 })
                             })
+                            if(this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField!==undefined
+                                && this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField!==''){
+                                    // document.querySelector('#startdate').value = this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField;
+                                    defaultStartDate =  this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField;
+                                    defaultStartDate = new Date(defaultStartDate);
 
+                                    defaultEndDate = this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.endDateField
+                                    defaultEndDate = new Date(defaultEndDate);
+                                    
+
+                                    if(typeof defaultStartDate ==='object'){
+                                        defaultStartDate.setHours(defaultStartDate.getHours() + 1);
+                                        
+                                         StartDateField = new Date(defaultStartDate).getUTCFullYear()+'-'+(new Date(defaultStartDate).getUTCMonth()+1)+'-'+(new Date(defaultStartDate).getUTCDate())+'T00:00:00';
+                                        
+                                        
+                                        // this.setState({StartDateField});
+                                    }
+
+                                    if(typeof defaultEndDate ==='object'){
+                                        defaultEndDate.setHours(defaultEndDate.getHours() + 1);
                             
+                                        EndDateField = new Date(defaultEndDate).getUTCFullYear()+'-'+(new Date(defaultEndDate).getUTCMonth()+1)+'-'+(new Date(defaultEndDate).getUTCDate())+'T00:00:00';
+                                        
+                                      
+                                        
+                                        
+                                        // this.setState({ endDate,EndDateField, defaultEndDate:''});
+                                    }
+                                
+
+                                    this.state= Object.assign({},{
+                                        defaultEndDate,
+                                        defaultStartDate,
+                                        StartDateField,
+                                        EndDateField
+                                    }, this.state);
+
+                                    // this.setState({defaultEndDate,defaultStartDate});
+                            }else{
+                                this.state= Object.assign({},{
+                                    StartDateField:'',
+                                    EndDateField:''
+                                }, this.state);
+
+                            }
+                            let cardDesignUrl;
+                            if(cardDataInfo.isAlatCard===true){
+                                cardDesignUrl = `${alatcardBg}`;
+                            }else{
+                                cardDesignUrl = `${wemacardBg}`;
+                            }
                            
-                            let cardDesignUrl = `${BASEURL}/${cardDataInfo.design.url}`,
-                                cardStyle= {
+                            //  cardDesignUrl = `${BASEURL}/${cardDataInfo.design.url}`;
+                            let  cardStyle= {
                                     backgroundImage: `url('${cardDesignUrl}')`,
                                     backgroundSize: 'cover',
                                     backgroundRepeat: 'no-repeat',
@@ -257,14 +379,18 @@ class CardsControl extends React.Component {
                                     }
                                     
                             return(
-                                <div>
+                                <div className="transfer-ctn no-padding-t">
                                     
                                     <div className="atmcard-wrap nonvirtual" style={cardStyle}>
+                                        <div className="logos-wrap">
+                                            <img src={mastercardBg} alt=""/>
+                                           {cardDataInfo.isAlatCard===true &&  <img src={whitelogo} alt=""/>}
+                                        </div>
                                         <div className="cardnum-digits">
                                         {cardDataInfo.maskedPan}
                                         </div>
-                                        <div className="cardname">
-                                            {cardDataInfo.embossingName}
+                                        <div className="cardtype">
+                                            {cardDataInfo.cardType}
                                         </div>
                                         
                                     </div>
@@ -318,6 +444,7 @@ class CardsControl extends React.Component {
                                                             <label>Start Date</label>
                                                                 <DatePicker placeholderText="" selected={startDate}
                                                                     onChange={this.handleStartDatePicker}
+                                                                    selected={this.state.defaultStartDate!==''?this.state.defaultStartDate:this.state.startDate}
                                                                     dateFormat="d MMMM, yyyy"
                                                                     showMonthDropdown
                                                                     showYearDropdown
@@ -325,12 +452,18 @@ class CardsControl extends React.Component {
                                                                     minDate={new Date()}
                                                                     id="startdate"
                                                                 />
+                                                                {/* {(this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField!==undefined
+                                                                && this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField!=='') &&
+                                                                    // document.querySelector('#startdate').value = this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField;
+                                                                    this.setDefaultDate()
+                                                                } */}
                                                                 {/* {this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.startDateField||''} */}
                                                         </div>
                                                         <div className="eachdate-wrap">
                                                             <label>End Date</label>
-                                                            <DatePicker placeholderText="" selected={endDate}
+                                                            <DatePicker placeholderText=""
                                                                 onChange={this.handleEndDatePicker}
+                                                                selected={this.state.defaultEndDate!==''?this.state.defaultEndDate:this.state.endDate}
                                                                 dateFormat="d MMMM, yyyy"
                                                                 peekNextMonth
                                                                 showMonthDropdown
@@ -350,20 +483,21 @@ class CardsControl extends React.Component {
                                     <div className="input-ctn inputWrap">
                                         <center>
                                             <button type="button" onClick={()=>{
+                                                                                // console.log('state is ', this.state);
                                                                                 if((this.state.ForeignTravelStatusField===true 
                                                                                     && this.state.StartDateField!==''
                                                                                     && this.state.EndDateField!==''
                                                                                     && this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.foreignTravelCountriesField!==''
                                                                                 )){
                                                                                     if(this.state.hasCountryChanged===false){
-                                                                                        console.log('hereeeee', this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.foreignTravelCountriesField);
+                                                                                        
                                                                                         this.setState({
                                                                                             showForeignError: false,
                                                                                             ForeignTravelCountriesField:this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.foreignTravelCountriesField}
                                                                                             ,this.updateCardSettings());
                                                                                         
                                                                                     }else{
-                                                                                        console.log('crakcsdsd');
+                                                                                        
                                                                                         this.setState({showForeignError: false})
                                                                                         this.updateCardSettings();
                                                                                     }
@@ -386,11 +520,11 @@ class CardsControl extends React.Component {
                                                                                 }
                                                                         }}   
                                                 className="btn-alat m-t-10 m-b-20 text-center"
-                                                disabled={udpdateCard.is_processing}> {udpdateCard.is_processing? 'Updating...': 'Update'}</button>
+                                                disabled={updateCard.is_processing}> {updateCard.is_processing? 'Updating...': 'Update'}</button>
                                                 
                                                 {invalidInterval && <div className="error-msg">Start date cannot exceed End date</div>}
-                                                {(udpdateCard.is_processing===false && udpdateCard.fetch_status===UPDATEALAT_CARDSETTINGS_FAILURE)&&
-                                                    <div className="error-msg">{udpdateCard.updatealatcard_info.error}</div>
+                                                {(updateCard.is_processing===false && updateCard.fetch_status===UPDATEALAT_CARDSETTINGS_FAILURE)&&
+                                                    <div className="error-msg">{updateCard.updatealatcard_info.error}</div>
                                                 }
                                                 
                                                 {this.state.showForeignError===true && <div className="error-msg">Select the country where you want to use your card and dates your card should be active</div> }
@@ -398,6 +532,279 @@ class CardsControl extends React.Component {
                                     </div>
                                 </div>
                             );
+                        }else if(cardDetails.allCards.length>1){
+                            let cardDesignUrl, cardStyle, presSelectedCountry;
+                            // console.log('loaded settings', loadSettings);
+                            settingInfo         = cardDetails.cardControlSettings;
+                            otherSettingsInfo   = cardDetails.otherCardControlDetails;
+                            let    options             =[];
+
+                            settingInfo.countries.map(country=>{
+                                options.push({
+                                    value:country.iso,
+                                    label: country.countryName
+                                })
+                            })
+                            if(this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField!==undefined
+                                && this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField!==''){
+                                    // document.querySelector('#startdate').value = this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField;
+                                    defaultStartDate =  this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField;
+                                    defaultStartDate = new Date(defaultStartDate);
+
+                                    defaultEndDate = this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.endDateField
+                                    defaultEndDate = new Date(defaultEndDate);
+                                    
+
+                                    if(typeof defaultStartDate ==='object'){
+                                        defaultStartDate.setHours(defaultStartDate.getHours() + 1);
+                                        
+                                         StartDateField = new Date(defaultStartDate).getUTCFullYear()+'-'+(new Date(defaultStartDate).getUTCMonth()+1)+'-'+(new Date(defaultStartDate).getUTCDate())+'T00:00:00';
+                                        
+                                        
+                                        // this.setState({StartDateField});
+                                    }
+
+                                    if(typeof defaultEndDate ==='object'){
+                                        defaultEndDate.setHours(defaultEndDate.getHours() + 1);
+                            
+                                        EndDateField = new Date(defaultEndDate).getUTCFullYear()+'-'+(new Date(defaultEndDate).getUTCMonth()+1)+'-'+(new Date(defaultEndDate).getUTCDate())+'T00:00:00';
+                                        
+                                      
+                                        
+                                        
+                                        // this.setState({ endDate,EndDateField, defaultEndDate:''});
+                                    }
+                                
+
+                                    this.state= Object.assign({},{
+                                        defaultEndDate,
+                                        defaultStartDate,
+                                        StartDateField,
+                                        EndDateField
+                                    }, this.state);
+
+                                    // this.setState({defaultEndDate,defaultStartDate});
+                            }else{
+                                this.state= Object.assign({},{
+                                    StartDateField:'',
+                                    EndDateField:''
+                                }, this.state);
+
+                            }
+
+                           presSelectedCountry='';
+
+                        //    console.log('initial state list items', this.state);
+                            this.state= Object.assign({}, {
+                                CashStatusField:this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.cashStatusField,
+                                WebStatusField:this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.webStatusField,
+                                PosStatusField:this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.posStatusField,
+                                ForeignTravelStatusField: this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.foreignTravelCountriesField!==''?true:
+                                                            this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.foreignTravelStatusField,
+                                MasterStatusField:this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.masterStatusField,
+                                isAllowedCountries: this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.foreignTravelCountriesField||''
+                            }, this.state);
+
+                            if(this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.foreignTravelCountriesField!==''){
+                                
+                                presSelectedCountry = settingInfo.countries.filter(country=>country.iso===this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.foreignTravelCountriesField)[0].countryName;
+                                
+                            }
+
+                            // console.log('new state items', this.state);
+                            return(
+                                <div className="design-options-wrap width-unset">
+                                    <Slider duration="500" slideIndex={loadSettings.alatcardsettings_info.pan===null?0:this.state.panIndex}  infinite="true" emulateTouch="true" onSlideChange={event => this.handleSlideChange(event)}>
+                                        {cardDetails.allCards.map((eachCard, key)=>{
+                                            cardDataInfo        = eachCard; 
+
+                                           
+                                            if(cardDataInfo.isAlatCard===true){
+                                                cardDesignUrl = `${alatcardBg}`;
+                                            }else{
+                                                cardDesignUrl = `${wemacardBg}`;
+                                            }
+                                           
+                                            cardStyle= {
+                                                backgroundImage: `url('${cardDesignUrl}')`,
+                                                backgroundSize: 'cover',
+                                                backgroundRepeat: 'no-repeat',
+                                                backgroundPosition: 'center center'
+                                            };
+                                            // presSelectedCountry='';
+                                            
+                                            
+
+                                            return(
+                                                // cardStyle.backgroundImage = `url(${BASEURL}/${eachDesign.url})`,
+                                                <div className="atmcard-wrap nonvirtual atmdesign" style={cardStyle}  key={key}>
+                                                    <div className="logos-wrap">
+                                                    <img src="../../../src/assets/img/mastercard.png" alt=""/>
+                                                    {cardDataInfo.isAlatCard===true &&  <img src={whitelogo} alt=""/>}
+                                                    {cardDataInfo.isAlatCard===false && <img className="larger" src="../../../src/assets/img/wema-white.png" />}
+                                                    </div>
+                                                    <div className="cardnum-digits">
+                                                    {cardDataInfo.maskedPan}
+                                                    </div>
+                                                    
+                                                    {cardDataInfo.isAlatCard===true && 
+                                                        <div className="cardtype">
+                                                            {cardDataInfo.cardType}
+                                                        </div>
+                                                    }
+
+                                                    {cardDataInfo.isAlatCard===false && 
+                                                        <div className="cardtype nonalat-card">
+                                                            {cardDataInfo.cardType}
+                                                        </div>
+                                                    }
+                                                    
+                                                </div>
+                                                // <div className="atmcard-wrap nonvirtual " onClick={this.selectADesign} data-designid={eachDesign.id} style={{backgroundImage : `url(${BASEURL}/${eachDesign.url})`}} key={key}>
+                                                // </div>
+                                            )
+                                        })}
+                                    </Slider>
+                                    <div className="transfer-ctn no-padding-t">
+                                        <div className="setting-wrap lockwrap">
+                                            <div className="setting-title">Lock</div>
+                                            <div className="">
+                                                <div className="settings-control inlinelevel">
+                                                    <span>Lock my card</span> <Switch isChecked={this.state.MasterStatusField} handleToggle={this.handleIsCardLocked} />
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="setting-wrap">
+                                            <div className="setting-title">Active Channels</div>
+                                            <div className="blocklevel">
+                                                <div className="settings-control">
+                                                    <Switch isChecked={this.state.CashStatusField}  handleToggle={this.handleATMAllowedToggle} />
+                                                    <span>ATM</span>
+                                                </div>
+                                                <div className="settings-control">
+                                                    <Switch isChecked={this.state.PosStatusField}  handleToggle={this.handlePOSAllowedToggle} />
+                                                    <span>POS</span>
+                                                </div>
+                                                <div className="settings-control">
+                                                    <Switch isChecked={ this.state.WebStatusField}  handleToggle={this.handleWebAllowedToggle} />
+                                                    <span>Web</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="setting-wrap">
+                                            <div className="setting-title">Travel</div>
+                                            <div className="">
+                                                <div className="settings-control inlinelevel m-b-20">
+                                                    <span>Activate card for use abroad</span> <Switch isChecked={this.state.ForeignTravelStatusField} handleToggle={this.handleAllowedAbroad} />
+                                                </div>
+                                                {(this.state.ForeignTravelStatusField===true) &&
+                                                    <div className="country-and-dates">
+                                                        <Select
+                                                            options={options}
+                                                            // isDisabled={this.state.submitButtonState}
+                                                            defaultValue={{label: presSelectedCountry, value:
+                                                                this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.foreignTravelCountriesField!==''?
+                                                                this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.foreignTravelCountriesField!=='':''}}
+                                                            placeholder="Select country to use"
+                                                            onChange={this.handleChange}
+                                                        />
+
+                                                        <div className="daterange-options input-ctn inputWrap m-t-20">
+                                                            <div className="eachdate-wrap">
+                                                                
+                                                                <label>Start Date</label>
+                                                                    <DatePicker placeholderText="" selected={startDate}
+                                                                        onChange={this.handleStartDatePicker}
+                                                                        selected={this.state.defaultStartDate!==''?this.state.defaultStartDate:this.state.startDate}
+                                                                        dateFormat="d MMMM, yyyy"
+                                                                        showMonthDropdown
+                                                                        showYearDropdown
+                                                                        dropdownMode="select"
+                                                                        minDate={new Date()}
+                                                                        id="startdate"
+                                                                    />
+                                                                    {/* {(this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField!==undefined
+                                                                    && this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField!=='') &&
+                                                                        // document.querySelector('#startdate').value = this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.startDateField;
+                                                                        this.setDefaultDate()
+                                                                    } */}
+                                                                    {/* {this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.startDateField||''} */}
+                                                            </div>
+                                                            <div className="eachdate-wrap">
+                                                                <label>End Date</label>
+                                                                <DatePicker placeholderText=""
+                                                                    onChange={this.handleEndDatePicker}
+                                                                    selected={this.state.defaultEndDate!==''?this.state.defaultEndDate:this.state.endDate}
+                                                                    dateFormat="d MMMM, yyyy"
+                                                                    peekNextMonth
+                                                                    showMonthDropdown
+                                                                    showYearDropdown
+                                                                    dropdownMode="select"
+                                                                    minDate={new Date()}
+                                                                    id="enddate"
+                                                                />
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="input-ctn inputWrap">
+                                            <center>
+                                                <button type="button" onClick={()=>{
+                                                                                    // console.log('state is ', this.state);
+                                                                                    if((this.state.ForeignTravelStatusField===true 
+                                                                                        && this.state.StartDateField!==''
+                                                                                        && this.state.EndDateField!==''
+                                                                                        && this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.foreignTravelCountriesField!==''
+                                                                                    )){
+                                                                                        if(this.state.hasCountryChanged===false){
+                                                                                            
+                                                                                            this.setState({
+                                                                                                showForeignError: false,
+                                                                                                ForeignTravelCountriesField:this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.foreignTravelCountriesField}
+                                                                                                ,this.updateCardSettings());
+                                                                                            
+                                                                                        }else{
+                                                                                            
+                                                                                            this.setState({showForeignError: false})
+                                                                                            this.updateCardSettings();
+                                                                                        }
+                                                                                        
+                                                                                    }else if(this.state.ForeignTravelStatusField===true 
+                                                                                        && this.state.ForeignTravelCountriesField!==''
+                                                                                        && this.state.StartDateField!==''
+                                                                                        && this.state.EndDateField!==''
+                                                                                        && this.props.loadALATCardSetting.alatcardsettings_info.response.otherCardControlDetails.cardSetting.foreignTravelCountriesField===''){
+                                                                                            this.setState({showForeignError: false})
+                                                                                            this.updateCardSettings();
+                                                                                    }else{
+                                                                                        if(this.state.ForeignTravelStatusField===false){
+                                                                                            this.setState({showForeignError: false});
+                                                                                            this.updateCardSettings();
+                                                                                        }else{
+                                                                                            this.setState({showForeignError: true});
+                                                                                        }
+                                                                                        
+                                                                                    }
+                                                                            }}   
+                                                    className="btn-alat m-t-10 m-b-20 text-center"
+                                                    disabled={updateCard.is_processing}> {updateCard.is_processing? 'Updating...': 'Update'}</button>
+                                                    
+                                                    {invalidInterval && <div className="error-msg">Start date cannot exceed End date</div>}
+                                                    {(updateCard.is_processing===false && updateCard.fetch_status===UPDATEALAT_CARDSETTINGS_FAILURE)&&
+                                                        <div className="error-msg">{updateCard.updatealatcard_info.error}</div>
+                                                    }
+                                                    
+                                                    {this.state.showForeignError===true && <div className="error-msg">Select the country where you want to use your card and dates your card should be active</div> }
+                                            </center>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
                         }else{
                             return(
                                 <div>
@@ -413,9 +820,12 @@ class CardsControl extends React.Component {
                 case GETALAT_CARDSETTINGS_FAILURE:
                     let loadCardSettingError = loadSettings.alatcardsettings_info.error;
                     return(
-                        <div className="text-center">
+                        <div className="text-center m-padding-10">
                             <div>{loadCardSettingError}</div>
-                           <a className="cta-link" onClick={this.getCustomerAtmCardSettings}> Retry</a>
+                            {loadCardSettingError!=='You are currently have no ATM card' && 
+                                <a className="cta-link" onClick={this.getCustomerAtmCardSettings}> Retry</a> 
+                            }
+                           
                         </div>
                     );
             }
@@ -431,7 +841,7 @@ class CardsControl extends React.Component {
                                 <div className="max-600">
                                     <div className="al-card no-pad">
                                         <h4 className="m-b-10 center-text hd-underline">Manage how and where your card works</h4>
-                                        <div className="transfer-ctn">
+                                        <div className="">
                                                 {this.renderALATCardSettings()}
                                         </div>
                                         
@@ -480,7 +890,6 @@ class CardsControl extends React.Component {
 
 
 function mapStateToProps(state){
-    console.error(state);
     return {
         loadALATCardSetting   : state.alatCardReducersPile.loadALATCardSettingsRequest,
         updateCustomerCardSettings   : state.alatCardReducersPile.updateALATCardSettingsRequest,

@@ -1,9 +1,7 @@
 import React, { Component } from 'React';
 import { Link, Redirect } from 'react-router-dom';
-
 import successLogo from '../../../assets/img/success.svg';
 import { connect } from 'react-redux';
-
 import * as actions from '../../../redux/actions/cardless-withdrawal/export';
 
 class Success extends Component {
@@ -60,10 +58,10 @@ class Success extends Component {
             );
         }else if(this.props.pageState == 0) {
             this.props.resetPageState();
-            console.log("going to dashboard post");
+            // console.log("going to dashboard post");
             success = <Redirect to="/dashboard" />
         }else{
-            console.log("success to not allowed ");
+            // console.log("success to not allowed ");
             success = <Redirect to="/cardless-withdrawal/create" />
         }
 

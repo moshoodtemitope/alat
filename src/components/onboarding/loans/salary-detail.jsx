@@ -56,20 +56,26 @@ class LoanOnbaordingSalaryDetails extends React.Component {
         if(this.props.loan_step3_data)
         return this.props.loan_step3.loan_step3_data.data.response.token
     }
-
+    
+    NavigateToLoanDashBoard=()=>{
+        this.props.history.push('/loans/salary/dashboard');
+    }
 
     render() {
         const { employerName, accountNumber, employerNameInvalid, accountNumberInvalid,
             selectedBankInvalid } = this.state;
         let props = this.props;
+        
         return (
             <LoanOnboardingContainer UserName={this.state.user.firstname}>
-                {/* //{this.gotoNextPage()} */}
+                {/* //{this.gotoNextPage()}   */}
                 <SalaryDetail
                 token={this.returnToken()}
                 ticketUrl={"/loan/ticket"}
                 salaryEntryUrl={"/loan/salary-entry"}
+                statementUploadUrl={"/loan/statement-upload"}
                 backwardUrl={""}
+                gotoDashBoard={this.NavigateToLoanDashBoard}
                 />
             </LoanOnboardingContainer>
         );

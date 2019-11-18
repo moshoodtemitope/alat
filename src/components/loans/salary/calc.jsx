@@ -38,7 +38,7 @@ class LoanCalculator extends React.Component {
           var data= {
               ...this.props.loan_data.loan_calcData_data.response.Response
           };
-          console.log(data);
+        //   console.log(data);
           this.setState({ MaxAmount : data.MaximumLoanAmount, MinimumLoanAmount: data.MinimumLoanAmount, InterestRate : data.InterestRate, isDataInit : true },()=>{ return true; });
       }
     }

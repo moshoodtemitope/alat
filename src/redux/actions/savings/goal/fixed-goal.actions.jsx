@@ -43,8 +43,9 @@ export const addFixedGoal =(data)=>{
             .then(response => {
                 //TODO: edit localDB accounts object
                 dispatch(success(response.data, data));
+                // console.log("000000000000000",response.data)
                 history.push({
-                    pathname:"/savings/fixed-goal-success",
+                    pathname:"/savings/goal/success",
                     state:{details:response.data}
                 })
             })
@@ -63,5 +64,5 @@ export const ClearAction=(type)=>{
     return (dispatch) =>{
         dispatch(clear(type))
     };
-    function clear(type){return {type : type}}
+    function clear(type){return {type :fixedGoalConstants.FIXED_GOAL_REDUCER_CLEAR}}
 };

@@ -45,6 +45,11 @@ export function loanApplyReducer(state = {}, action) {
                 loan_apply_status: loanConstants.LOAN_APPLY_FAILURE,
                 loan_apply_data: action,
             };
+        case loanConstants.LOAN_APPLY_CLEAR:
+            return{
+                loan_apply_status: loanConstants.LOAN_APPLY_CLEAR,
+                loan_apply_data: {},
+            };
         default:
             return {
                 ...state,
@@ -377,3 +382,52 @@ export function SignatureReducer(state = {}, action) {
             };
     }
 }
+
+export function KycRequired(state = {}, action) {
+    switch (action.type) {
+        case loanConstants.LOAN_KYCREQUIRED_SUCCESS:
+            return {
+                kyc_required_status: loanConstants.LOAN_KYCREQUIRED_SUCCESS,
+                kyc_required_data: action
+            };
+        case loanConstants.LOAN_KYCREQUIRED_PENDING:
+            return {
+                kyc_required_status: loanConstants.LOAN_KYCREQUIRED_PENDING,
+                kyc_required_data: action
+            };
+        case loanConstants.LOAN_KYCREQUIRED_FAILURE:
+            return {
+                kyc_required_status: loanConstants.LOAN_KYCREQUIRED_FAILURE,
+                kyc_required_data: action
+            };
+        default:
+            return{
+                ...state,
+            };
+    }
+}
+
+export function termsReducer(state = {}, action) {
+    switch (action.type) {
+        case loanConstants.LOAN_TERMS_SUCCESS:
+            return {
+                terms_status: loanConstants.LOAN_TERMS_SUCCESS,
+                terms_data: action
+            };
+        case loanConstants.LOAN_TERMS_PENDING:
+            return {
+                terms_status: loanConstants.LOAN_TERMS_PENDING,
+                terms_data: action
+            };
+        case loanConstants.LOAN_TERMS_FAILURE:
+            return {
+                terms_status: loanConstants.LOAN_TERMS_FAILURE,
+                terms_data: action
+            };
+        default:
+            return{
+                ...state,
+            };
+    }
+}
+

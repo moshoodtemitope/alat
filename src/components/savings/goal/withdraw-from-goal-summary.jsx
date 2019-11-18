@@ -17,8 +17,7 @@ class WithDrawFromGoalSummmary extends Component {
             debitAmount:"",
             Amount:"",
             goalId:"",
-            amountSaved:"",
-            goal:JSON.parse(localStorage.getItem('goal')) || [],
+            amountSaved:null,
 
 
         }
@@ -36,14 +35,14 @@ class WithDrawFromGoalSummmary extends Component {
             let data = {
                 ...this.props.withdraw_from_goal_step1.withdraw_from_goal_data_step1.data
             };
-            console.log('tag', data);
+            // console.log('tag', data);
 
             this.setState({
                 Amount:data.amount,
-                 goalName:data.goalName,
+                goalName:data.goalName,
                 goalId:data.goalId,
                 debitAccount:data.accountNumber,
-                amountSaved:data.amountSaved,
+                Amount:data.amount,
                 partialWithdrawal:true
             });
         }
@@ -77,10 +76,9 @@ class WithDrawFromGoalSummmary extends Component {
 
         event.preventDefault();
         this.props.dispatch(actions.WithDrawFromGoal({
-            "goalId":parseInt(this.state.goal.id),
-            // "amount":parseFloat(this.state.Amount),
-            "amountNumber":this.state.debitAccount,
-            "amount":parseFloat(this.state.goal.amountSaved),
+            "goalId":this.state.goalId,
+            "accountNumber":this.state.debitAccount,
+            "amount":this.state.Amount,
             "partialWithdrawal":true
 
         }));
@@ -105,9 +103,9 @@ class WithDrawFromGoalSummmary extends Component {
                                                 <li><a href="accounts.html" className="active">Goals</a></li>
                                             </NavLink>
                                             <NavLink to='/savings/activityDashBoard'>
-                                                <li><a href="statement.html">Group Savings</a></li>
+                                                <li><a href="/savings/activityDashBoard">Group Savings</a></li>
                                             </NavLink>
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
 
                                         </ul>
                                     </div>
@@ -116,11 +114,11 @@ class WithDrawFromGoalSummmary extends Component {
 
 
                             {this.props.alert && this.props.alert.message &&
-                            <div style={{width: "100%",}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                            <div style={{width: "100%",marginRight:"120px",marginLeft:"279px"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                             }
 
                             <h1 style={{margin:'auto', width:"100%", textAlign:"center",
-                                color:"#AB2656", fontSize:'18px',fontFamily:"proxima_novasemibold"}}>WithDrawal Summary</h1>
+                                color:"#AB2656", fontSize:'18px'}}>WithDrawal Summary</h1>
                             <div style={{margin:"30px", marginLeft:"120px",marginRight:"120px"}}></div>
 
                             <div className="col-sm-12">
@@ -136,13 +134,13 @@ class WithDrawFromGoalSummmary extends Component {
                                                         </div>
                                                         <div className="right">
                                                             <p className='GoalText'>Amount</p>
-                                                            <p className='boldedText'>₦{this.state.goal.amountSaved}</p>
+                                                            <p className='boldedText'>₦{this.state.Amount}</p>
                                                         </div>
                                                     </div>
                                                     <div className="coverForSummary">
                                                         <div className="left">
                                                             <p className='GoalText'>Account Type</p>
-                                                            <p className='boldedText'>{this.state.user.accounts[0].accountType}</p>
+                                                            {/* <p className='boldedText'>{this.state.user.accounts[0].accountType}</p> */}
                                                         </div>
 
                                                     </div>
@@ -150,7 +148,7 @@ class WithDrawFromGoalSummmary extends Component {
                                                     <div className="coverForSummary">
                                                         <div className="left">
                                                             <p className='GoalText'>Account Balance</p>
-                                                            <p className='boldedText'>₦{this.state.user.accounts[0].availableBalance}</p>
+                                                            {/* <p className='boldedText'>₦{this.state.user.accounts[0].availableBalance}</p> */}
                                                         </div>
 
                                                         <div className="right">
@@ -175,6 +173,10 @@ class WithDrawFromGoalSummmary extends Component {
 
 
                                         </div>
+                                        <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
+                                                this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
+                                                Go back
+                                        </a>
 
 
                                     </div>
@@ -196,8 +198,8 @@ class WithDrawFromGoalSummmary extends Component {
 }
 const mapStateToProps = state => ({
     alert: state.alert,
-    withdraw_from_goal:state.withdraw_from_goal,
-    withdraw_from_goal_step1:state.withdraw_from_goal_step1,
+    withdraw_from_goal:state.CustomerGoalReducerPile.withdraw_from_goal,
+    withdraw_from_goal_step1:state.CustomerGoalReducerPile.withdraw_from_goal_step1,
     accounts: state.dashboard_accounts
 
 
