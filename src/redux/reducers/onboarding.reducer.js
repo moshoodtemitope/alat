@@ -36,7 +36,14 @@ import {USER_REGISTER_SAVE, USER_REGISTER_FETCH, BVN_VERIFICATION_SUCCESS,
     SEND_OTP_OR_TOKEN_FORPINRESET_FAILURE,
     SEND_NEWPIN_FORPINRESET_SUCCESS,
     SEND_NEWPIN_FORPINRESET_PENDING,
-    SEND_NEWPIN_FORPINRESET_FAILURE,} from "../constants/onboarding/user.constants"
+    SEND_NEWPIN_FORPINRESET_FAILURE,
+    SEND_CUSTOMERRATING_SUCCESS,
+    SEND_CUSTOMERRATING_PENDING,
+    SEND_CUSTOMERRATING_FAILURE,
+    SEND_WILLCUSTOMER_REFERALAT_SUCCESS,
+    SEND_WILLCUSTOMER_REFERALAT_PENDING,
+    SEND_WILLCUSTOMER_REFERALAT_FAILURE,
+} from "../constants/onboarding/user.constants"
 
 export function userRegistrationRequest(state={}, action) {
     switch (action.type) {
@@ -451,6 +458,60 @@ export function updateCMDMPriorityReducer(state=[], action){
                 is_processing: false,
                 fetch_status: UPDATE_CMDMPRIORITY_FAILURE,
                 cmdm_priority: action
+            };
+
+        default:
+            return { ...state }
+    }
+
+}
+
+export function sendCustomerRatingReducer(state=[], action){
+    switch (action.type) {
+        case SEND_CUSTOMERRATING_PENDING:
+            return {
+                is_processing: true,
+                postrating_status: SEND_CUSTOMERRATING_PENDING,
+                rating_data: action
+            };
+        case SEND_CUSTOMERRATING_SUCCESS:
+            return {
+                is_processing: false,
+                postrating_status: SEND_CUSTOMERRATING_SUCCESS,
+                rating_data: action
+            };
+        case SEND_CUSTOMERRATING_FAILURE:
+            return {
+                is_processing: false,
+                postrating_status: SEND_CUSTOMERRATING_FAILURE,
+                rating_data: action
+            };
+
+        default:
+            return { ...state }
+    }
+
+}
+
+export function sendCustomerWillReferAlatReducer(state=[], action){
+    switch (action.type) {
+        case SEND_WILLCUSTOMER_REFERALAT_PENDING:
+            return {
+                is_processing: true,
+                request_status: SEND_WILLCUSTOMER_REFERALAT_PENDING,
+                request_data: action
+            };
+        case SEND_WILLCUSTOMER_REFERALAT_SUCCESS:
+            return {
+                is_processing: false,
+                request_status: SEND_WILLCUSTOMER_REFERALAT_SUCCESS,
+                request_data: action
+            };
+        case SEND_WILLCUSTOMER_REFERALAT_FAILURE:
+            return {
+                is_processing: false,
+                request_status: SEND_WILLCUSTOMER_REFERALAT_FAILURE,
+                request_data: action
             };
 
         default:

@@ -54,6 +54,10 @@ export const routes = {
     //goals and savings
     CUSTOMERGOALS: BASEURL + '/Savings.WebApi/api/Savings/CustomergoalsV2',
 
+    //Ratings
+    WILL_CUSTOMER_REFER_ALAT: BASEURL + '/AccountSetting/api/Rating/NPS?answer=',
+    SEND_CUSTOMER_RATING: BASEURL + '/AccountSetting/api/Rating/CSAT?rating=',
+
     //Virtual Cards
     GET_VC_EXCHENGE_RATE: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/GetCurrentExchangeRateV2',
     CREAT_VIRTUAL_CARD_INITIAL: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/CreateVirtualCardInit',

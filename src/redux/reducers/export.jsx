@@ -13,8 +13,11 @@ import {userRegistrationRequest,
     sendOtpOrTokenForPinResetRequest,
     sendNewPinForPinResetRequest,
     getCMDMPriorityReducer,
-    updateCMDMPriorityReducer
+    updateCMDMPriorityReducer,
+    sendCustomerRatingReducer,
+    sendCustomerWillReferAlatReducer
 } from "./onboarding.reducer";
+
 import {getCinemaList, 
     getSingleMovie, 
     buyMovieTicket,
@@ -139,7 +142,9 @@ export const onboarding = {
     sendOtpOrTokenForPinResetRequest,
     sendNewPinForPinResetRequest,
     getCMDMPriorityReducer,
-    updateCMDMPriorityReducer
+    updateCMDMPriorityReducer,
+    sendCustomerRatingReducer,
+    sendCustomerWillReferAlatReducer
 };
 
 export const loans = {
