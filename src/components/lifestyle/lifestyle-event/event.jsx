@@ -43,8 +43,8 @@ class Event extends Component {
       };
 
     EventDetails=(event)=>{
-        let events = event.target.id
-        // console.log('======',events)
+        // let event = event.target.id
+        //console.log('======',events)
         this.props.dispatch(SubmitEventData(event.target.id))
     }
    
@@ -78,7 +78,7 @@ class Event extends Component {
             // let userMovies = this.state.filtered;
 
             return(
-                <div className="eventTrays">
+                <div className="eventTrays col-sm-12">
                     {userEvents.map(function(event, index){
                         return(
                             <div className="eventCards" key={index}>
@@ -150,7 +150,7 @@ class Event extends Component {
 
               });
             return(
-                <div className="eventTrays">
+                <div className="eventTrays col-sm-12">
                     {result.map(function(event, index){
                         return(
                             <div className="eventCards" key={index}>
@@ -245,8 +245,6 @@ class Event extends Component {
             }
         }
     }
-    
-
     render = () => {
         let userEvent = this.props.getEvents;
         let  renderPageNumbers;
@@ -267,29 +265,23 @@ class Event extends Component {
                 return(
                     <Fragment>
         
-                            <div className="row" style={{justifyContent: "center"}}>
-                                <div className="col-sm-12">
-                                    <p className="page-title">LifeStyle</p>
-                                </div>
-        
-                                <div className="col-sm-12">
-                                    <div>
-                                        <div className="sub-tab-nav" style={{marginBottom: 10}}>
-                                            <ul>
-                                                <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
-                                                <li><NavLink to={'/lifestyle/event'}>Event</NavLink></li>
-                                                <li style={{float:"right", marginTop: -31, width: 181}}><label style={{ marginBottom: 0, color: "#666666", fontSize: 14}}>Search by keyword</label><input style={{width:"100%",height:"40px", marginTop:4, float:'right',}} type="text" placeholder="search ..." value={this.state.value} onChange={ e => this.onChangeHandler(e)}/></li>
-        
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                {this.renderEvent()}
-                                <span onClick={() => this.fetchEventList(1)}></span> 
-                                    {renderPageNumbers}
-                                <span onClick={() => this.fetchEventList(1)}></span> 
-                           
+                        <div className="eventWrapper">
+                            <div className="">
+                                <ul>
+                                    <li className="inputList"><label className="inputLabel">Search by keyword</label><input className='SearchInput' type="text" placeholder="search ..." value={this.state.value} onChange={ e => this.onChangeHandler(e)}/></li>
+                                </ul>
+                                       
                             </div>
+                              
+                           
+                        </div>
+                        <div className="row" style={{ justifyContent: "center" }}>
+                            {this.renderEvent()}
+                            <span onClick={() => this.fetchEventList(1)}></span>
+                            {renderPageNumbers}
+                            <span onClick={() => this.fetchEventList(1)}></span> 
+
+                        </div>
         
                     </Fragment>
                 )

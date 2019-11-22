@@ -37,7 +37,8 @@ class EventDetails extends React.Component {
             description:"",
             originalImage:"",
             source:"",
-            ticketId:""
+            ticketId:"",
+            id:"",
         };
         this.fetchCinemaList();
         console.log('',this.state.eventId)
@@ -54,7 +55,7 @@ class EventDetails extends React.Component {
         else {
             
             let data = JSON.parse(this.props.SubmitEventData.data.data);
-            console.log('======',data)
+            console.log('======', data.ticketClassses)
 
             this.setState({
                 description:data.description,
@@ -146,7 +147,8 @@ class EventDetails extends React.Component {
             studentQuantity:this.state.studentNumber,
             eventId:this.state.eventId,
             source:this.state.source,
-            ticketId:this.state.ticketId
+            ticketId:this.state.ticketId,
+            id:this.state.id
         }
          console.log("=========",data)
         this.props.dispatch(actions.SubmitEventTicketData(data));
@@ -176,19 +178,26 @@ class EventDetails extends React.Component {
     
 
     UseSelectedItem = (event) => {
-        let gottenValue = event.target.value.split("000");
+        let gottenValue = event.target.value.split("000r");
         let name = event.target.name;
+        let childAmount = gottenValue[1]
+        console.log("*************",childAmount)
 
 
        
         
         let data = {
             item: gottenValue[0],
-            id: gottenValue[1],
+            childAmount: gottenValue[1],
             // eventId:gottenValue[2],
             ticketId:gottenValue[0]
 
         }
+        this.setState({ initialChildAmount: childAmount,childAmount }, () => {
+            if (this.state.childAmount !== 0) {
+                this.setState({ childNumber: this.state.childNumber + 1 })
+            }
+        });
   
         // this.setState({initialChildAmount:gottenValue[0]}, () => {
         //     this.setState({childNumber: 1})
@@ -196,9 +205,10 @@ class EventDetails extends React.Component {
         // this.setState({childAmount:gottenValue[0]});
         //  this.setState({eventId:gottenValue[2]});
         this.setState({[name] : event.target.value});
-        this.setState({ticketId:gottenValue[0]})
+        this.setState({ticketId:gottenValue[0]});
+        this.setState({childAmount:gottenValue[1]})
 
-        console.log("=========",data);
+        console.log("********",data);
         this.props.dispatch(actions.ShowTime(this.state.user.token, data))
     }
 
@@ -219,104 +229,53 @@ class EventDetails extends React.Component {
             TicketClassValidity,
             ticketClassses
         } = this.state;
-        console.log("00000000000000000",this.state.ticketClassses)
          const{ getCinemaList,getEvents,ShowTime,buyMovieTicket,SubmitEventData }=this.props
          
 
             return (
                 <div>
-                <div className="row" style={{justifyContent: "center", marginBottom:"15px"}}>
-                <img src={this.state.originalImage} class="img-responsive"/>
+                    <div className="row"  id="image">
+                    <img alt="" src={this.state.originalImage} class="img-responsive"/>
                 </div>
            
                 <div className="max-750">
                     <div className="al-card fund-al-card no-pad">
-                        <div
-                            style={{
-                                marginTop: 18,
-                                textAlign: "center",
-                                fontSize: 18,
-                                marginBottom: 16,
-                                fontFamily: "proxima_novasemibold",
-                                color: "#4D4D4D"
-                            }}
-                        >
+                        <div className="buy-movies">
                             Buy Event Ticket
                         </div>
-                        <div style={{ border: "1px solid rgba(205, 205, 205, 0.32)" }} />
+                        <div className="event-border" />
                         <div
-                            className="row"
-                            style={{
-                                marginLeft: 50,
-                                marginTop: 20,
-                                marginRight: 50
-                            }}>
+                            className="row" id="eventticket">
                             {this.gotobuyEventTicket()}
                             <div className="col-sm-3">
                                 <i className="toshow">
-                                    <img
+                                    <img alt="" className="img"
                                         src={this.state.thumbnailImage}
-                                        style={{
-                                            width: 168,
-                                            height: 226,
-                                            boxShadow:" 0px 4px 4px rgba(0, 0, 0, 0.15)",
-                                            borderRadius:"3px"
-    
-    
-                                           
-    
-                                        }}
+                                        
                                     />
                                 </i>
                             </div>
                             <div
-                                className="col-sm-9"
-                                style={{ fontSize: 26, color: "#444444", paddingLeft: 55 }}
-                            >
-                                <div style={{ fontFamily: "proxima_novasemibold", marginBottom: 21 }}>
+                                className="col-sm-9" id="title">
+                                <div className="margin-bottom">
                                     {this.state.title}
                                 </div>
-                                <div
-                                    style={{
-                                        fontFamily: "proxima_novaregular",
-                                        fontSize: 12,
-                                        color: "#9C9C9C",
-                                        marginTop: 21
-                                    }}
-                                >
+                                <div className="title">
                                     Synopsis:
                                 </div>
-                                <div
-                                    style={{
-                                        fontFamily: "proxima_novaregular",
-                                        fontSize: 12,
-                                        color: "#9C9C9C",
-                                        marginTop: 8,
-                                        // fontFamily: "Proxima Nova"
-                                    }}
+                                <div className="description"
                                 >
                                     {unescape(this.state.description.toString().length > 15 ? this.state.description.toString().substring(0, 80)+"...": this.state.description.toString())}
                                 </div>
                                 <div>
                                     <i className="toshow">
-                                        <img
+                                        <img alt="" className="clockImage"
                                             src={location}
-                                            style={{
-                                                width: 20,
-                                                height: 20,
-                                                marginTop: 5,
-                                                borderRadius: 50,
-                                                paddingRight: 9
-                                            }}
+                                            
                                         />
                                     </i>
                                     
-                                    <span
-                                        style={{
-                                            fontSize: 12,
-                                            color: "#9C9C9C"
-                                        }}
-                                    >
+                                    <span className="locationText">
                                         {this.state.location}
                     </span>
                                 </div>
@@ -324,27 +283,20 @@ class EventDetails extends React.Component {
                         </div>
     
                         <div
-                            className="row"
-                            style={{
-                                marginRight: 69,
-                                marginLeft: 69,
-                                // marginTop: 20,
-                                marginTop: 37
-                            }}>
+                                className="row" id="showTicket">
                         
-                          <form onSubmit={this.ShowBuyTicketData  } style={{ width: "100%" }}>
+                                <form onSubmit={this.ShowBuyTicketData} className="ShowBuyTicketData">
                                <div  className={TicketClassValidity ? "form-group form-error col-md-12" : "form-group col-md-12"} style={{paddingLeft: 0}}>
                                         <label>Select Ticket Class</label>
     
-                                            <select onChange={this.UseSelectedItem } name="ticketClass">
+                                            <select onChange={this.UseSelectedItem} name="ticketClass">
                                             <option>Select Ticket Type</option>
     
                                                 {
-                                                    this.props.SubmitEventData.message == listStyleConstants.SUBMIT_EVENT_DATA_SUCCESS && 
-                                                    // SubmitEventTicketData.message === listStyleConstants.G &&
-                                                   /// console.log(this.state.ticketClassses)
+                                                    this.props.SubmitEventData.message === listStyleConstants.SUBMIT_EVENT_DATA_SUCCESS && 
+                                                 
                                                     ticketClassses.map(event => {
-                                                        return <option key={event.title} value={event.ticketId + " " + "000" + event.price + " " + event.title + " " + event.eventId + " " + event.ticketId}>{unescape(event.title)}</option>
+                                                        return <option key={event.title} value={event.ticketId + " " + "000r" + " " + event.price + " " + "000r" + " " + event.title + " " + "000r" + " " + event.eventId + " " + "000r" + " " + event.ticketId}>{unescape(event.title)}</option>
                                                     })
                                                 }
                                             
@@ -354,91 +306,37 @@ class EventDetails extends React.Component {
                                             </div>
                                             <div className="row">
                                                 <div className="form-group col-md-6">
-                                                    <label style={{ marginTop: 16 }}>Select Day</label>
+                                                    <label id="select-day">Select Day</label>
                                                     <select onChange={this.UseSelectedTime}>
                                                         <option key={this.state.date}>{moment(this.state.date).format("LLLL")}</option>
-                                                        {/* {                                      
-                                                            ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
-                                                            ShowTime.data.response.map(event=> {
-                                                                return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children}>{event.date}</option>
-                                                            })
-                                                        }  */}
+                                                      
                                                     </select>
                                                 </div>
                                                 <div
-                                    className="col-md-6"
-                                    style={{
-                                        marginTop: 23,
-                                        // marginLeft: 0,
-                                        // justifyContent: "space-between"
-                                    }}
-                                >
+                                    className="col-md-6" id="col">
                                     
-                                   <div style={{ paddingRight: 30 }}>
-                                        <div style={{ marginLeft: -13 }}>Quantity</div>
+                                   <div id="selectionCover">
+                                        <div class="child-text">Quantity</div>
                                         <div
-                                            className="row"
-                                            style={{
-                                                border: "1px solid #CCCCCC",
-                                                borderRadius: 3,
-                                                flexDirection: "row",
-                                                justifyContent: "space-between"
-                                            }}
-                                        >
-                                            <div
-                                                onClick={this.decreaseChild}
-                                                style={{
-                                                    width: 60,
-                                                    height: 46,
-                                                    cursor: "pointer",
-                                                    backgroundColor: "#F5F5F5",
-                                                    color: "#AB2656",
-                                                    fontWeight: "bold",
-                                                    textAlign: "center",
-                                                    fontSize: 30
-                                                }}
-                                            >
+                                            className="row count-border">
+                                            <div className="decreaseChild"
+                                                onClick={this.decreaseChild}>
                                                 -
                                             </div>
-                                            <div
-                                                style={{
-                                                    // width: 60,
-                                                    // height: 46,
-                                                    backgroundColor: "white",
-                                                    color: "#AB2656",
-                                                    fontWeight: "bold",
-                                                    textAlign: "center",
-                                                    paddingTop: 14
-                                                }}
+                                            <div className="childNumber"
+                                                
                                             >
                                                 {childNumber}
                                             </div>
-                                            <div
+                                            <div className="increaseChild"
                                                 onClick={this.increaseChild}
-                                                style = {{
-                                                    width: 60,
-                                                    height: 46,
-                                                    cursor: "pointer",
-                                                    backgroundColor: "#F5F5F5",
-                                                    color: "#AB2656",
-                                                    fontWeight: "bold",
-                                                    textAlign: "center",
-                                                    paddingTop: 8,
-                                                    fontSize: 20
-                                                }}
+                                                
                                             >
                                                 +
                                             </div>
                                         </div>
-                                        <div
-                                            style={{
-                                                textAlign: "center",
-                                                marginTop: 10,
-                                                color: "#000000",
-                                                // fontFamily: "proxima_novaregular",
-                                                fontWeight: "bold",
-                                                fontSize: 14
-                                            }}
+                                        <div className="studentAmount"
+                                        
                                         >
                                         {
                                             (this.state.childAmount).toString().includes("-") ? "0" : `₦${this.formatAmountNoDecimal(this.state.childAmount)}`
@@ -452,26 +350,9 @@ class EventDetails extends React.Component {
     
                                 
                                 <div
-                                    className="row"
-                                    style={{
-                                        justifyContent: "center",
-                                        marginTop: 23,
-                                        marginBottom: 39
-                                    }}
-                                >
-                                    <button
-                                        style={{
-                                            border: "0px solid #AB2656",
-                                            height: 45,
-                                            width: 200,
-                                            backgroundColor: "#AB2656",
-                                            color: "white",
-                                            borderRadius: 3,
-                                            cursor: "pointer"
-                                        }}
-                                    >
+                                    className="row btn-corner">
+                                    <button className="next-btn">
                                         Next
-                                    
                                     </button>
                                 </div>
                             </form>

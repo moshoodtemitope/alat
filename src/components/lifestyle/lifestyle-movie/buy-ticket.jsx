@@ -76,7 +76,7 @@ class BuyTicket extends Component {
             let data = {
                 ...this.props.SubmitTicketData.data.data
             };
-            // console.log('tag', data);
+            console.log('tag', data);
 
             this.setState({
                 TicketAmount:data.initialAdultAmount,
@@ -141,11 +141,11 @@ class BuyTicket extends Component {
 
                     <div className="col-sm-12">
                         <div>
-                            <div className="sub-tab-nav" style={{marginBottom: 10}}>
+                            <div className="sub-tab-nav" id="movie-tab">
                                 <ul>
-                                    <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
+                                    <li><NavLink className="active" to={'/lifestyle/movie'}>Movies</NavLink></li>
                                     <li><NavLink to={'/lifestyle/event'}>Event</NavLink></li>
-                                    <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li>
+                                    {/* <li><NavLink to={'/lifestyle/preference'}>Preference</NavLink></li> */}
                                 </ul>
                             </div>
                         </div>
@@ -166,8 +166,8 @@ class BuyTicket extends Component {
                                                 <div className="form-group">
                                                        <div className="puchaseSumTickets">
                                                            <div className="left">
-                                                                <p style={{fontSize:12}}>{this.state.title }</p>
-                                                                <p style={{fontSize:12}}>{this.state.ticketType}</p>
+                                                                <p className="ticket-title">{this.state.title }</p>
+                                                                <p className="ticket-title">{this.state.ticketType}</p>
                                                            </div>
                                                            <div className="right">
                                                                <p>N{this.formatAmountNoDecimal(this.state.TicketAmount)}</p>

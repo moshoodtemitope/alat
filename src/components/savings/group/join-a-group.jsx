@@ -20,7 +20,8 @@ class JoinAGroup extends React.Component {
             user: JSON.parse(localStorage.getItem("user")),
             referralCode: null,
             warning: 'notValid',
-            warningStyle: 'notValid'
+            warningStyle: 'notValid',
+            enterCode: 'codeEntered'
         }
     }
 
@@ -57,9 +58,16 @@ class JoinAGroup extends React.Component {
     }
 
     FindAGroup = () => {
-       if(this.state.warning != 'valid')
-           return;
-    //    console.log(this.state.warning);
+         console.log('GOLA')
+       if(this.state.warning != 'valid'){
+            this.setState({enterCode: 'codeEnteredNotValid'})
+            setTimeout(() => {
+                this.setState({enterCode: 'codeEntered'});
+            }, 2000);
+            console.log('GOLA')
+            return;
+       }
+    
        const data = {
            referralCode: this.state.referralCode
        }
@@ -68,9 +76,7 @@ class JoinAGroup extends React.Component {
            data: this.state.referralCode,
            type: 'refferalCode'
        }
-    //    console.log(data2)
-    //    console.log(data);
-       //return;
+
        this.props.dispatch(actions.refferalCode(data2))
        this.props.dispatch(action.findGroup(this.state.user.token, data));
        
@@ -88,14 +94,11 @@ class JoinAGroup extends React.Component {
     handleSubmit = (event) => {
         event.preventDefault();
         this.FindAGroup();
-        //this.NavigateToSummary();
         return null;
     }
 
     NavigateToGroupSavings = () => {
-        
             history.push('/savings/activityDashBoard');
-        
     }
 
 
@@ -138,7 +141,7 @@ class JoinAGroup extends React.Component {
                                                 <div className='form-row'>
                                                     <div className='form-group col-md-12 joinGroup'>
                                                         <h6>Enter Group Code</h6>
-                                                        <input type="text" placeholder='GPEFA34UE' id='enterCode' onChange={this.handleReferralCode}/>
+                                                        <input type="text" placeholder='GPEFA34UE' id='enterCode' className={this.state.enterCode} onChange={this.handleReferralCode}/>
                                                         <p id={this.state.warningStyle}>9 Characters Only</p>
                                                     </div>
                                                 </div>

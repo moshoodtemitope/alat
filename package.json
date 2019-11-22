@@ -54,7 +54,6 @@
     "eject": "react-scripts eject",
     "postbuild": "rimraf build/**/*.map"
   },
-
   "devDependencies": {
     "@babel/core": "^7.3.4",
     "babel-loader": "^7.1.5",
