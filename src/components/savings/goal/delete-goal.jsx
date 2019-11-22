@@ -138,7 +138,7 @@ class DeleteGoal extends Component {
                                                     <SelectDebitableAccounts
                                                         accountInvalid={this.state.accountToDebitInValid}
                                                         onChange={this.handleDebit}
-                                                        labelText={"Select Account to debit"}
+                                                        labelText={"Select Account to credit"}
                                                     />
                                                 </div>
 
