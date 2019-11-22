@@ -17,6 +17,12 @@ import {
     ACCEPT_NDRP_SUCCESS,
     ACCEPT_NDRP_PENDING,
     ACCEPT_NDRP_FAILURE,
+    GET_CMDMPRIORITY_SUCCESS,
+    GET_CMDMPRIORITY_PENDING,
+    GET_CMDMPRIORITY_FAILURE,
+    UPDATE_CMDMPRIORITY_SUCCESS,
+    UPDATE_CMDMPRIORITY_PENDING,
+    UPDATE_CMDMPRIORITY_FAILURE,
     SENDANSWERFOR_FORGOTPW_SUCCESS,
     SENDANSWERFOR_FORGOTPW_PENDING,
     SENDANSWERFOR_FORGOTPW_FAILURE,
@@ -58,6 +64,7 @@ export const userActions = {
     initStore,
     checkNDPRStatus,
     acceptNDPR,
+    fetchCMDMPriority,
     sendForgotPwEmail,
     sendForgotPwAnswer,
     sendTokenResetPassword,
@@ -449,6 +456,26 @@ function acceptNDPR(token){
     function request(request) { return { type:ACCEPT_NDRP_PENDING, request} }
     function success(response) { return {type:ACCEPT_NDRP_SUCCESS, response} }
     function failure(error) { return {type:ACCEPT_NDRP_FAILURE, error} }
+}
+
+function fetchCMDMPriority(token){
+    SystemConstant.HEADER['alat-token'] = token; 
+    return dispatch =>{
+        let consume = ApiService.request(routes.CMDM_PRIORITY, "GET", null,  SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response));
+            }).catch(error =>{
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+        
+    }
+
+    function request(request) { return { type:GET_CMDMPRIORITY_PENDING, request} }
+    function success(response) { return {type:GET_CMDMPRIORITY_SUCCESS, response} }
+    function failure(error) { return {type:GET_CMDMPRIORITY_FAILURE, error} }
 }
 
 function bvnVerify (bvnDetails){

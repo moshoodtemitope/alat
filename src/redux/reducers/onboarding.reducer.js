@@ -7,6 +7,12 @@ import {USER_REGISTER_SAVE, USER_REGISTER_FETCH, BVN_VERIFICATION_SUCCESS,
     ACCEPT_NDRP_SUCCESS,
     ACCEPT_NDRP_PENDING,
     ACCEPT_NDRP_FAILURE,
+    GET_CMDMPRIORITY_SUCCESS,
+    GET_CMDMPRIORITY_PENDING,
+    GET_CMDMPRIORITY_FAILURE,
+    UPDATE_CMDMPRIORITY_SUCCESS,
+    UPDATE_CMDMPRIORITY_PENDING,
+    UPDATE_CMDMPRIORITY_FAILURE,
     SENDANSWERFOR_FORGOTPW_SUCCESS,
     SENDANSWERFOR_FORGOTPW_PENDING,
     SENDANSWERFOR_FORGOTPW_FAILURE,
@@ -391,6 +397,60 @@ export function acceptNDRpReducer(state=[], action){
                 is_processing: false,
                 fetch_status: ACCEPT_NDRP_FAILURE,
                 ndpr_status: action
+            };
+
+        default:
+            return { ...state }
+    }
+
+}
+
+export function getCMDMPriorityReducer(state=[], action){
+    switch (action.type) {
+        case GET_CMDMPRIORITY_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: GET_CMDMPRIORITY_PENDING,
+                cmdm_priority: action
+            };
+        case GET_CMDMPRIORITY_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: GET_CMDMPRIORITY_SUCCESS,
+                cmdm_priority: action
+            };
+        case GET_CMDMPRIORITY_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: GET_CMDMPRIORITY_FAILURE,
+                cmdm_priority: action
+            };
+
+        default:
+            return { ...state }
+    }
+
+}
+
+export function updateCMDMPriorityReducer(state=[], action){
+    switch (action.type) {
+        case UPDATE_CMDMPRIORITY_PENDING:
+            return {
+                is_processing: true,
+                fetch_status: UPDATE_CMDMPRIORITY_PENDING,
+                cmdm_priority: action
+            };
+        case UPDATE_CMDMPRIORITY_SUCCESS:
+            return {
+                is_processing: false,
+                fetch_status: UPDATE_CMDMPRIORITY_SUCCESS,
+                cmdm_priority: action
+            };
+        case UPDATE_CMDMPRIORITY_FAILURE:
+            return {
+                is_processing: false,
+                fetch_status: UPDATE_CMDMPRIORITY_FAILURE,
+                cmdm_priority: action
             };
 
         default:

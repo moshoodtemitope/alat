@@ -343,6 +343,8 @@ const appReducer = combineReducers({
     onboarding_dataFrom_bvn: onboarding.bvnCustomerDetailsReducer,
     ndpr_status_request: onboarding.getNDPRStatusReducer,
     acceptndrp_request: onboarding.acceptNDRpReducer,
+    cmdmpriority_request: onboarding.getCMDMPriorityReducer,
+    update_cmdmpriority_request: onboarding.updateCMDMPriorityReducer,
     sendemailfor_forgotpw_request: onboarding.sendEmailForgotPasswordReducer,
     sendanswerfor_forgotpw_request: onboarding.sendAnswerForgotPasswordReducer,
     send_customertoken_request: onboarding.sendTokenResetPasswordRequest,

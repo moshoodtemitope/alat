@@ -1,6 +1,6 @@
-//const URL = 'https://api.alat.ng';
-//const URL = 'https://196.43.215.170';
-const URL = 'https://196.43.215.157';
+// const URL = 'https://api.alat.ng';
+const URL = 'https://196.43.215.170';
+// const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;    
 
@@ -28,6 +28,8 @@ export const routes = {
     LOGIN: BASEURL + '/UserSecurityApi/api/v1/Account/LoginV2',
     ACCEPTNDRP: BASEURL + '/UserSecurityApi/api/v1/Account/AcceptNdrp?isNdrpAccepted=',
     CHECK_NDRP: BASEURL + '/UserSecurityApi/api/v1/Account/GetNDRPPriority',
+    CMDM_PRIORITY: BASEURL + '/AccountMaintenance/api/account/CMDMPriority',
+    CMDM_UPDATEFIELD: BASEURL + '/AccountMaintenance/api/account/UpdateField',
     EMAIL_FOR_FORGETPASSWORD: BASEURL + '/UserSecurityApi/api/v1/Account/EmailForForgetPassword',
     VERIFYUSER_FOR_FORGETPASSWORD: BASEURL + '/UserSecurityApi/api/v1/Account/VerifyUserForForgetPassword',
     RESET_PASSWORD_WITHPIN: BASEURL + '/UserSecurityApi/api/v1/Account/CallResetPasswordWithPin',
