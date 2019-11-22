@@ -81,7 +81,6 @@ class RequestCard extends React.Component {
     getCustomerATMCardsData(){
         const { dispatch } = this.props;
         dispatch(loadInfoForCardRequest(this.state.user.token));
-
     }
 
     getCustomerOTP(){
@@ -156,7 +155,7 @@ class RequestCard extends React.Component {
                     {panDetails!==null && 
                         <div>
                             <div className="carddata">
-                                <div className="cardname">{panDetails[0].embossingName}</div>
+                                <div className="cardname">{this.state.user.fullName}</div>
                             </div>
                         </div>
                     }
@@ -535,9 +534,11 @@ class RequestCard extends React.Component {
                 case LOADING_INFOFOR_CARDREQUEST_SUCCESS:
                     let cardInfoFromRequest = loadCardsInfo.atmcard_info.response;
                         // console.log('cards is', cardInfoFromRequest)
-                        if(cardInfoFromRequest.cardsList.length===0){
+                        // if(cardInfoFromRequest.cardsList.length===0){
+                        if(cardInfoFromRequest.cardDesignId.length===0){
                             return(
                                 <div>
+                                    <h4 className="m-b-10 center-text hd-underline">Our debit cards make payments simpler. Request one now.</h4>
                                     {this.renderNoAlatCard()}
                                 </div>
                             );
@@ -584,7 +585,7 @@ class RequestCard extends React.Component {
                             <div className="max-600">
                                 <div className="al-card no-pad">
                                     {/* <h4 className="m-b-10 center-text hd-underline">Request an ALAT ATM Card</h4> */}
-                                    <h4 className="m-b-10 center-text hd-underline">Our debit cards make payments simpler. Request one now.</h4>
+                                    
                                     {/* <div className="transfer-ctn"> */}
                                             {this.renderRequestNewCardScreen1()}
                                     {/* </div> */}
@@ -632,7 +633,7 @@ class RequestCard extends React.Component {
 
 
 function mapStateToProps(state){
-    console.error(state);
+    // console.error(state);
     return {
         debitable_accounts  : state.accounts,
         infoForCardRequest   : state.alatCardReducersPile.infoForATMCardRequest,

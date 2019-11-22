@@ -17,6 +17,12 @@ import {
     ACCEPT_NDRP_SUCCESS,
     ACCEPT_NDRP_PENDING,
     ACCEPT_NDRP_FAILURE,
+    GET_CMDMPRIORITY_SUCCESS,
+    GET_CMDMPRIORITY_PENDING,
+    GET_CMDMPRIORITY_FAILURE,
+    UPDATE_CMDMPRIORITY_SUCCESS,
+    UPDATE_CMDMPRIORITY_PENDING,
+    UPDATE_CMDMPRIORITY_FAILURE,
     SENDANSWERFOR_FORGOTPW_SUCCESS,
     SENDANSWERFOR_FORGOTPW_PENDING,
     SENDANSWERFOR_FORGOTPW_FAILURE,
@@ -41,6 +47,12 @@ import {
     SEND_NEWPIN_FORPINRESET_SUCCESS,
     SEND_NEWPIN_FORPINRESET_PENDING,
     SEND_NEWPIN_FORPINRESET_FAILURE,
+    SEND_CUSTOMERRATING_SUCCESS,
+    SEND_CUSTOMERRATING_PENDING,
+    SEND_CUSTOMERRATING_FAILURE,
+    SEND_WILLCUSTOMER_REFERALAT_SUCCESS,
+    SEND_WILLCUSTOMER_REFERALAT_PENDING,
+    SEND_WILLCUSTOMER_REFERALAT_FAILURE,
 } from "../../constants/onboarding/user.constants";
 import { dispatch } from "rxjs/internal/observable/pairs";
 
@@ -58,6 +70,8 @@ export const userActions = {
     initStore,
     checkNDPRStatus,
     acceptNDPR,
+    fetchCMDMPriority,
+    sendCustomerRating,
     sendForgotPwEmail,
     sendForgotPwAnswer,
     sendTokenResetPassword,
@@ -450,6 +464,57 @@ function acceptNDPR(token){
     function success(response) { return {type:ACCEPT_NDRP_SUCCESS, response} }
     function failure(error) { return {type:ACCEPT_NDRP_FAILURE, error} }
 }
+
+function fetchCMDMPriority(token){
+    SystemConstant.HEADER['alat-token'] = token; 
+    return dispatch =>{
+        let consume = ApiService.request(routes.CMDM_PRIORITY, "GET", null,  SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response));
+            }).catch(error =>{
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+        
+    }
+
+    function request(request) { return { type:GET_CMDMPRIORITY_PENDING, request} }
+    function success(response) { return {type:GET_CMDMPRIORITY_SUCCESS, response} }
+    function failure(error) { return {type:GET_CMDMPRIORITY_FAILURE, error} }
+}
+
+function sendCustomerRating(rating, willrefer){
+    let requestHeaders = Object.assign({}, SystemConstant.HEADER);
+    // delete requestHeaders['Content-Type'];
+    return dispatch =>{
+        let consume = ApiService.request(routes.SEND_CUSTOMER_RATING+rating, "POST", null, requestHeaders);
+        dispatch(request(consume));
+        return consume
+            .then(response =>{
+                let consume2 = ApiService.request(routes.WILL_CUSTOMER_REFER_ALAT+willrefer, "POST", null);
+                dispatch(request(consume2));
+                return consume2
+                    .then(response2=>{
+                        dispatch(success(response2));
+                    }).catch(error =>{
+                        dispatch(failure(modelStateErrorHandler(error)));
+                        dispatch(alertActions.error(modelStateErrorHandler(error)));
+                    });
+                // dispatch(success(response));
+            }).catch(error =>{
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+        
+    }
+
+    function request(request) { return { type:SEND_CUSTOMERRATING_PENDING, request} }
+    function success(response) { return {type:SEND_CUSTOMERRATING_SUCCESS, response} }
+    function failure(error) { return {type:SEND_CUSTOMERRATING_FAILURE, error} }
+}
+
 
 function bvnVerify (bvnDetails){
     

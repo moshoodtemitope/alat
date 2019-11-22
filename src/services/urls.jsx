@@ -1,6 +1,6 @@
-const URL = 'https://api.alat.ng';
+ const URL = 'https://api.alat.ng';
 //const URL = 'https://196.43.215.170';
-//const URL = 'https://196.43.215.157';
+// const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;    
 
@@ -28,6 +28,8 @@ export const routes = {
     LOGIN: BASEURL + '/UserSecurityApi/api/v1/Account/LoginV2',
     ACCEPTNDRP: BASEURL + '/UserSecurityApi/api/v1/Account/AcceptNdrp?isNdrpAccepted=',
     CHECK_NDRP: BASEURL + '/UserSecurityApi/api/v1/Account/GetNDRPPriority',
+    CMDM_PRIORITY: BASEURL + '/AccountMaintenance/api/account/CMDMPriority',
+    CMDM_UPDATEFIELD: BASEURL + '/AccountMaintenance/api/account/UpdateField',
     EMAIL_FOR_FORGETPASSWORD: BASEURL + '/UserSecurityApi/api/v1/Account/EmailForForgetPassword',
     VERIFYUSER_FOR_FORGETPASSWORD: BASEURL + '/UserSecurityApi/api/v1/Account/VerifyUserForForgetPassword',
     RESET_PASSWORD_WITHPIN: BASEURL + '/UserSecurityApi/api/v1/Account/CallResetPasswordWithPin',
@@ -51,6 +53,10 @@ export const routes = {
     
     //goals and savings
     CUSTOMERGOALS: BASEURL + '/Savings.WebApi/api/Savings/CustomergoalsV2',
+
+    //Ratings
+    WILL_CUSTOMER_REFER_ALAT: BASEURL + '/AccountSetting/api/Rating/NPS?answer=',
+    SEND_CUSTOMER_RATING: BASEURL + '/AccountSetting/api/Rating/CSAT?rating=',
 
     //Virtual Cards
     GET_VC_EXCHENGE_RATE: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/GetCurrentExchangeRateV2',

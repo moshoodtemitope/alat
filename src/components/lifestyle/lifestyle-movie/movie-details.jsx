@@ -69,7 +69,7 @@ class Moviedetails extends React.Component {
 
     componentDidMount = () => {
         this.init();
-        console.log(this.props.location.pathname)
+        // console.log(this.props.location.pathname)
 
     };
 
@@ -81,7 +81,7 @@ class Moviedetails extends React.Component {
         else {
             
             let data = JSON.parse(this.props.SubmitMovieData.data.data);
-            console.log('tag',data.cinemaList);
+            // console.log('tag',data.cinemaList);
             
           
             this.setState({
@@ -284,7 +284,7 @@ class Moviedetails extends React.Component {
         let fee = amounts.split(" ")[5];
         let ticketType = amounts.split(" ")[6];
         let name = event.target.name;
-        console.log("*******", childrenAmount, studentAmount, adultAmount, fee)
+        // console.log("*******", childrenAmount, studentAmount, adultAmount, fee)
 
        
         

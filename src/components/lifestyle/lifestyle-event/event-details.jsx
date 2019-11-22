@@ -41,13 +41,13 @@ class EventDetails extends React.Component {
             id:"",
         };
         this.fetchCinemaList();
-        console.log('',this.state.eventId)
+        // console.log('',this.state.eventId)
     }
     
     componentDidMount = () => {
         this.init();
 
-        console.log(this.props.location.pathname)
+        // console.log(this.props.location.pathname)
        
     };
 
@@ -57,7 +57,7 @@ class EventDetails extends React.Component {
         else {
             
             let data = JSON.parse(this.props.SubmitEventData.data.data);
-            console.log('======', data.ticketClassses)
+            // console.log('======', data.ticketClassses)
 
             this.setState({
                 description:data.description,
@@ -152,7 +152,7 @@ class EventDetails extends React.Component {
             ticketId:this.state.ticketId,
             id:this.state.id
         }
-         console.log("=========",data)
+        //  console.log("=========",data)
         this.props.dispatch(actions.SubmitEventTicketData(data));
     }
 
@@ -183,7 +183,7 @@ class EventDetails extends React.Component {
         let gottenValue = event.target.value.split("000r");
         let name = event.target.name;
         let childAmount = gottenValue[1]
-        console.log("*************",childAmount)
+        // console.log("*************",childAmount)
 
 
        
@@ -210,7 +210,7 @@ class EventDetails extends React.Component {
         this.setState({ticketId:gottenValue[0]});
         this.setState({childAmount:gottenValue[1]})
 
-        console.log("********",data);
+        // console.log("********",data);
         this.props.dispatch(actions.ShowTime(this.state.user.token, data))
     }
 
