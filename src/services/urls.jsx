@@ -302,4 +302,9 @@ export const routes = {
     BRANCH_ATM:BASEURL + '/Contact.WebApi/api/contact/branchesatm',
     REPORT_ERROR:BASEURL + '/Contact.WebApi/api/contact/reporterror',
 
+    //Travel
+    GET_VISA_OPTIONS: BASEURL + '/Alat.VisaApplication.Api/api/visa/GetVisaOptions',
+    GET_VISA_PACKAGE: BASEURL + '/Alat.VisaApplication.Api/api/visa/GetVisaPackages/1',
+    POST_VISA_ENTRY: BASEURL + '/Alat.VisaApplication.Api/api/visa/SaveVisaEntry'
+
 };

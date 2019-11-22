@@ -135,9 +135,6 @@ class Event extends Component {
         else if (getEvents.message === listStyleConstants.GET_EVENTS_SUCCESS){
             let userEvents =this.props.getEvents.data.response.eventList
             
-
-            console.log('=========',userEvents)
-
             if(this.state.searchItem == "") {
             let result
             for(var x of userEvents){

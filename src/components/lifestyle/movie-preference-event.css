@@ -520,19 +520,23 @@ border: 1px solid #ddd;
   position: relative;
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.travel-card{
+  width: 150px;
+  height: 150px;
+  background-color:white;
+  border-radius: 3px;
+  margin: 8px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.0945143);
+}
+.travel-image{
+  width: 150px;
+  height: 150px;
+  padding: 50px;
+}
+.travel-label{
+  display: flex;
+}
+.travel-description{
+  text-align: center;
+  width: 100%;
+}

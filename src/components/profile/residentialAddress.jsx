@@ -264,12 +264,13 @@ CheckIfStoreInformationIsSet = () => {
 
        switch(this.checkIfUserInputsAreValid()){
            case null:
-            //  console.log('Empty value was found');
+            // console.log('Empty value was found');
              break;
            case 'valid': 
-            //  console.log("No Empty Value Found");
+            // console.log("No Empty Value Found");
              this.InitiateNetworkCall();
              break;
+
        }
     }
 

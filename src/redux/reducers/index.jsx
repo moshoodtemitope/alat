@@ -136,7 +136,7 @@ const GoalReducerPile=(state, action)=>{
     return GoalReducer(state, action)
 }
 const LifestyleReducerPile=(state,action)=>{
-    if(action.type ===listStyleConstants.MOVIE_REDUCER_CLEAR){
+    if(action.type === listStyleConstants.MOVIE_REDUCER_CLEAR){
         state = undefined
     }
     return LifestyleReducer(state, action)
@@ -271,11 +271,18 @@ const LifestyleReducer = combineReducers({
     FetchMovieGenre:movies.FetchMovieGenre,
     PostMovieContent:movies.PostMovieContent,
     SubmitMovieData:movies.SubmitMovieData,
-    SubmitEventData:movies.SubmitEventData
+    SubmitEventData:movies.SubmitEventData,
+
+    //Visa
+    PostVisa:movies.PostVisa,
+    GetVisaOptions:movies.GetVisaOptions,
+    GetVisaPackage:movies.GetVisaPackage,
+    PostVisaDetail:movies.PostVisaDetail,
+    PostPersonalDetail:movies.PostPersonalDetail
 
 })
             
- const FlexGoalReducer =combineReducers({
+ const FlexGoalReducer = combineReducers({
 
     flex_goal_step1:flexGoal.flexGoalStep1Reducer,
     flex_goal_step2:flexGoal.flexGoalStep2Reducer,
@@ -283,14 +290,12 @@ const LifestyleReducer = combineReducers({
 
  })
   const CreateGoalReducer = combineReducers({
-      
     create_stash_goal:stashGoal.createStashGoalReducer,
     create_stash_step1:stashGoal.createStashGoalStep1Reducer,
 
   })
   const CustomerGoalReducer = combineReducers({
           //customer Goal reducers
-
     customerGoalTransHistory:customerGoal.getCustomerGoalTransHistoryReducer,
     customerGoalType:customerGoal.GET_GOAL_TYPE,
     customerGoalFormular:customerGoal.GET_FORMULAR,

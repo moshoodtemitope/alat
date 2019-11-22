@@ -21,9 +21,6 @@ const selectedTime = [
 ];
 
 
-
-
-
 class FixedGoal extends Component {
 
     constructor(props){

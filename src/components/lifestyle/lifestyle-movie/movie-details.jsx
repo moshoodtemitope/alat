@@ -91,19 +91,14 @@ class Moviedetails extends React.Component {
     fetchCinemaList(){
         const { dispatch } = this.props;
         dispatch(getCinemaList(this.state.user.token));
-        // console.log(this.props.getCinemaList)
+        //console.log(this.props.getCinemaList)
 
     };
 
-    
-    
-   
-        
-        
     fetchSingleTicket(data){
         const { dispatch } = this.props;
-        dispatch(getSingleMovie(this.state.user.token, ));
-        // console.log(this.props.getCinemaList)
+        dispatch(getSingleMovie(this.state.user.token));
+        //console.log(this.props.getCinemaList)
 
     };
 
@@ -338,34 +333,29 @@ class Moviedetails extends React.Component {
         return amount.toLocaleString(navigator.language,{minimumFractionDigits:0});
     };
 
-    rendershowTime = () => {
-    if (this.props.ShowTime.message === listStyleConstants.GET_MOVIE_SHOWTIME_PENDING) {
+    rendershowTime=() => {
+        if (this.props.ShowTime.message === listStyleConstants.GET_MOVIE_SHOWTIME_PENDING) {
 
-        return <select name="showTime">
-        <option>Loading Movie Showtime...</option>;
-        </select>
-       
-    }
-
-    
-
-    else if (this.props.ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && this.props.ShowTime.data.response.length > 0){
-        // console.log("=0000000000", this.props.showTime.data.response)  
-    return <div>
-        <label style={{ marginTop: 16 }}>Select Day</label>
-        <select onChange={this.UseSelectedTime}  name="showTime">
-            <option>Select ShowTime</option>
-            {                            
-                        
-                this.props.ShowTime.message === listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
-                this.props.ShowTime.data.response.map(event=> {
-                    return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children  + " " + event.id + " " + event.ticketId + " " + event.fee + " " + event.ticketTypes[0].ticketName}>
-                    {moment(event.date).format('LLLL')}</option>
-                })
-            } 
-            </select>
-    
-    </div>
+            return <select name="showTime">
+                        <option>Loading Movie Showtime...</option>;
+                    </select>
+        
+        }else if (this.props.ShowTime.message === listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && this.props.ShowTime.data.response.length > 0){
+            return <div>
+                <label style={{ marginTop:16 }}>Select Day</label>
+                <select onChange={this.UseSelectedTime}  name="showTime">
+                    <option>Select ShowTime</option>
+                    {                            
+                                
+                        this.props.ShowTime.message === listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
+                        this.props.ShowTime.data.response.map(event=> {
+                            return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children  + " " + event.id + " " + event.ticketId + " " + event.fee + " " + event.ticketTypes[0].ticketName}>
+                            {moment(event.date).format('LLLL')}</option>
+                        })
+                    } 
+                    </select>
+            
+        </div>
             
             
 
@@ -407,7 +397,7 @@ class Moviedetails extends React.Component {
                 </div>
 
                     
-            <div className="max-750">
+                <div className="max-750">
                 <div className="al-card fund-al-card no-pad" id="pad">
                     <div className="buy-movies">
                         Buy Movie Ticket
@@ -574,7 +564,7 @@ class Moviedetails extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        getCinemaList: state.LifestyleReducerPile.getCinemaList,
+        getCinemaList:state.LifestyleReducerPile.getCinemaList,
         ShowTime:state.LifestyleReducerPile.ShowTime,
         SubmitTicketData:state.LifestyleReducerPile.SubmitTicketData,
         SubmitMovieData:state.LifestyleReducerPile.SubmitMovieData

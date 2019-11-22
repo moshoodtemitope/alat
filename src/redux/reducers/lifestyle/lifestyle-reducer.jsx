@@ -1,4 +1,4 @@
-// Group Savings Reducer
+// lifestyle Reducer
 import { listStyleConstants } from "../../constants/lifestyle/lifestyle-constants";
 
 export function getCinemaList(state=[], action){
@@ -425,6 +425,119 @@ export function SubmitEventData(state=[], action){
            return {... state}
     }
 }
+
+export function PostVisa(state = [], action) {
+    switch (action.type) {
+        case listStyleConstants.POST_VISA_PENDING:
+            return {
+                message: listStyleConstants.POST_VISA_PENDING,
+                data: action
+            }
+        case listStyleConstants.POST_VISA_SUCCESS:
+            return {
+                message: listStyleConstants.POST_VISA_SUCCESS,
+                data: action
+            }
+        case listStyleConstants.POST_VISA_FAILURE:
+            return {
+                message: listStyleConstants.POST_VISA_FAILURE,
+                data: action
+            }
+        default:
+            return { ...state }
+    }
+}
+
+export function GetVisaOptions(state = [], action) {
+    switch (action.type) {
+        case listStyleConstants.GET_VISA_OPTIONS_PENDING:
+            return {
+                message: listStyleConstants.GET_VISA_OPTIONS_PENDING,
+                data: action
+            }
+        case listStyleConstants.GET_VISA_OPTIONS_SUCCESS:
+            return {
+                message: listStyleConstants.GET_VISA_OPTIONS_SUCCESS,
+                data: action
+            }
+        case listStyleConstants.GET_VISA_OPTIONS_FAILURE:
+            return {
+                message: listStyleConstants.GET_VISA_OPTIONS_FAILURE,
+                data: action
+            }
+        default:
+            return { ...state }
+    }
+}
+
+export function GetVisaPackage(state =[], action){
+    switch (action.type) {
+        case listStyleConstants.GET_VISA_PACKAGE_PENDING:
+            return {
+                message: listStyleConstants.GET_VISA_PACKAGE_PENDING,
+                data: action
+            }
+        case listStyleConstants.GET_VISA_PACKAGE_SUCCESS:
+            return {
+                message: listStyleConstants.GET_VISA_PACKAGE_SUCCESS,
+                data: action
+            }
+        case listStyleConstants.GET_VISA_PACKAGE_FAILURE:
+            return {
+                message: listStyleConstants.GET_VISA_PACKAGE_FAILURE,
+                data: action
+            }
+        default:
+            return { ...state }
+    }
+
+}
+export function PostVisaDetail(state = [], action) {
+    switch (action.type) {
+        case listStyleConstants.POST_VISA_DETAIL_PENDING:
+            return {
+                message: listStyleConstants.POST_VISA_DETAIL_PENDING,
+                data: action
+            }
+        case listStyleConstants.POST_VISA_DETAIL_SUCCESS:
+            return {
+                message: listStyleConstants.POST_VISA_DETAIL_SUCCESS,
+                data: action
+            }
+        case listStyleConstants.POST_VISA_DETAIL_FAILURE:
+            return {
+                message: listStyleConstants.POST_VISA_DETAIL_FAILURE,
+                data: action
+            }
+        default:
+            return { ...state }
+    }
+
+}
+
+export function PostPersonalDetail(state = [], action) {
+    switch (action.type) {
+        case listStyleConstants.POST_PERSONAL_DETAILS_PENDING:
+            return {
+                message: listStyleConstants.POST_PERSONAL_DETAILS_PENDING,
+                data: action
+            }
+        case listStyleConstants.POST_PERSONAL_DETAILS_SUCCESS:
+            return {
+                message: listStyleConstants.POST_PERSONAL_DETAILS_SUCCESS,
+                data: action
+            }
+        case listStyleConstants.POST_PERSONAL_DETAILS_FAILURE:
+            return {
+                message: listStyleConstants.POST_PERSONAL_DETAILS_FAILURE,
+                data: action
+            }
+        default:
+            return { ...state }
+    }
+
+}
+
 
 
 

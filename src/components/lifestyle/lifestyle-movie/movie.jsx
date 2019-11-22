@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React,{Component} from 'react'
 import { connect } from "react-redux";
 import styles from '../movie-preference-event.css'
 import * as utils from "../../../shared/utils";
@@ -7,7 +7,7 @@ import {Fragment} from "react";
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
 import clock from '../../../assets/img/clock-circular-outline.svg';
 import {listStyleConstants} from '../../../redux/constants/lifestyle/lifestyle-constants';
-import { FetchMovie,getCinemaList,fetchMovieGenre,SubmitMoviesData } from "../../../redux/actions/lifestyle/movies-actions";
+import {FetchMovie,getCinemaList,fetchMovieGenre,SubmitMoviesData} from "../../../redux/actions/lifestyle/movies-actions";
 import unescape from 'lodash/unescape';
 import FilterSearch from './filter-result';
 
@@ -385,7 +385,7 @@ class Movie extends React.Component {
         const {getMovieList} = this.props;
         const pageNumbers = [];
         if (this.state.total !== null) {
-        for (let i = 1; i <= Math.ceil(this.state.total / this.state.per_page); i++){
+        for (let i = 2; i <= Math.ceil(this.state.total / this.state.per_page); i++){
         pageNumbers.push(i);
       }
     }
