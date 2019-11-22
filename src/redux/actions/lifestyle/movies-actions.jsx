@@ -16,7 +16,7 @@ export const FetchMovie = (token, data) => {
         dispatch(request(consume));
         return consume
             .then(response => {
-                // consume.log(response);
+                console.log("=======",response);
                 dispatch(success(response.data, data));
             })
             .catch(error => {
@@ -58,7 +58,7 @@ export const getCinemaList = (token, data) => {
         dispatch(request(consume));
         return consume
             .then(response => {
-                // consume.log(response);
+                // console.log(response);
                 dispatch(success(response.data));
             })
             .catch(error => {

@@ -5,6 +5,9 @@ import clock from '../../../assets/img/clock-circular-outline.svg';
 export default class FilterSearch extends React.Component {
     constructor(props){
         super(props)
+        this.state={
+            
+        }
 
     }
     render() {

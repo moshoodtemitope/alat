@@ -233,6 +233,7 @@ class EventDetails extends React.Component {
          
 
             return (
+                <div className="container">
                 <div>
                     <div className="row"  id="image">
                     <img alt="" src={this.state.originalImage} class="img-responsive"/>
@@ -365,6 +366,7 @@ class EventDetails extends React.Component {
                                     Go back
                             </a>
                      </center>
+                </div>
                 </div>
                 </div>
             );

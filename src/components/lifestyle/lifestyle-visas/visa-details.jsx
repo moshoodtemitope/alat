@@ -6,6 +6,8 @@ import pass from '../../../assets/img/pass.svg';
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
 import { listStyleConstants } from '../../../redux/constants/lifestyle/lifestyle-constants';
 import { connect } from "react-redux";
+import ImageUploader from 'react-images-upload';
+
 
 
 
@@ -33,13 +35,18 @@ class VisaDetails extends React.Component{
             PassportPhoto:null,
             PassportNumber:"",
             PassportPage:null,
+            pictures:[],
+            user: JSON.parse(localStorage.getItem("user")),
+
 
         };
         this.handleOnChange = this.handleOnChange.bind(this);
         this.handleDepatureDatePicker = this.handleDepatureDatePicker.bind(this);
         this.handleReturnDatePicker = this.handleReturnDatePicker.bind(this);
         this.PassPortPhotoFileUpLoad = this.PassPortPhotoFileUpLoad.bind(this);
-        this.PassportPageFileUpload = this.PassportPageFileUpload.bind(this)
+        this.PassportPageFileUpload = this.PassportPageFileUpload.bind(this);
+        this.onDrop = this.onDrop.bind(this);
+
 
     }
     componentDidMount = () => {
@@ -82,6 +89,11 @@ class VisaDetails extends React.Component{
         let name = event.target.name;
         console.log(name)
         this.setState({ PassportPage:event.target.files[0]})
+    }
+    onDrop(picture) {
+        this.setState({
+            pictures: this.state.pictures.concat(picture),
+        });
     }
 
     valDepatureDate = () => {
@@ -231,30 +243,43 @@ class VisaDetails extends React.Component{
                                                 </div>
                                             </div>
                                              <div className="form-row">
-                                                    <div className="">
+                                                <div className="travel-card">
                                                         {/* <div className='travel-image'>
                                                             <img src={newUser} alt=""/>
 
                                                         </div> */}
-                                                        <input type="file" name="PassportPhoto" accept="image/*" id="PassportPhoto"  onChange={this.PassPortPhotoFileUpLoad} />
+                                                    <ImageUploader
+                                                        // withIcon={true}
+                                                        // buttonText='Choose images'
+                                                        onChange={this.onDrop}
+                                                        imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                                                        maxFileSize={5242880}
+                                                    />
+                                                        {/* <input type="file" name="PassportPhoto" accept="image/*" id="PassportPhoto"  onChange={this.PassPortPhotoFileUpLoad}/> */}
 
                                                     
 
                                                     </div>
-                                                    <div className="travel-card">
-                                                        {/* <div className="travel-image"> */}
-                                                            {/* <img src={pass} alt=""/> */}
+                                                     <div className="travel-card">
+                                                        {/* <div className="travel-image"> 
+                                                            <img src={pass} alt=""/>
 
-                                                        {/* </div> */}
-                                                        <label></label>
+                                                         </div> */}
                                                     <input type="file" name="PassportPage" accept="image/*" id="PassportPage"  onChange={this.PassportPageFileUpload}/>
+                                                        {/* <ImageUploader
+                                                         withIcon={true}
+                                                            // buttonText='Choose images'
+                                                            onChange={this.onDrop}
+                                                            imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                                                            maxFileSize={5242880}
+                                                        /> */}
 
                                                              
                                                     </div>
-                                                    <div className="travel-label">
+                                                    {/* <div className="travel-label">
                                                         <p className="travel-description">Upload a picture of your face</p>
                                                         <p className="travel-description">Upload International Passport Page</p>
-                                                    </div>
+                                                    </div> */}
                                                     
 
                                             </div>

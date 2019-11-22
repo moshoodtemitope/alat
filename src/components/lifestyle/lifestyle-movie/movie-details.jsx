@@ -54,6 +54,7 @@ class Moviedetails extends React.Component {
             youtubeId:'',
             id:'',
             duration:'',
+            cinemaList:[],
 
             
 
@@ -61,11 +62,18 @@ class Moviedetails extends React.Component {
         this.UseSelectedItem = this.UseSelectedItem.bind(this);
         this.fetchCinemaList();
 
+
+
+
     }
 
     componentDidMount = () => {
         this.init();
+        console.log(this.props.location.pathname)
+
     };
+
+
 
     init = () => {
         if (this.props.SubmitMovieData.message !== listStyleConstants.SUBMIT_MOVIE_DATA_SUCCESS)
@@ -73,6 +81,7 @@ class Moviedetails extends React.Component {
         else {
             
             let data = JSON.parse(this.props.SubmitMovieData.data.data);
+            console.log('tag',data.cinemaList);
             
           
             this.setState({
@@ -81,7 +90,8 @@ class Moviedetails extends React.Component {
                 title:data.title,
                 youtubeId:data.youtubeId,
                 id:data.id,
-                duration:data.duration
+                duration:data.duration,
+                cinemaList:data.cinemaList
                 
             });
         }
@@ -264,7 +274,6 @@ class Moviedetails extends React.Component {
     
     }
     
-    // value={event.date + "8888" + event.student + " " + event.adult + " " + event.children}>{event.date}</option>
     UseSelectedTime = (event) => {
         let amounts = event.target.value.split("8888")[1];
         let adultAmount = amounts.split(" ")[1];
@@ -382,7 +391,8 @@ class Moviedetails extends React.Component {
             childNumber,
             error,
             CinemaLocationValidity,
-            showTimeValidity
+            showTimeValidity,
+            cinemaList
         } = this.state;
          const {getCinemaList,ShowTime,buyMovieTicket}=this.props
 
@@ -390,7 +400,7 @@ class Moviedetails extends React.Component {
     
 
         return (
-            <div>
+            <div class="container">
                  <div className="video">
                 <iframe className="iframe" src={`https://www.youtube.com/embed/${this.state.youtubeId}`}
                     frameBorder='0'/>
@@ -450,10 +460,11 @@ class Moviedetails extends React.Component {
                                 <select onChange={this.UseSelectedItem} name="CinemaLocation">
                                     <option>Select Cinema Location</option>
                                 
-                                    {
-                                        getCinemaList.message === listStyleConstants.GET_CINEMA_LIST_SUCCESS && 
-                                        getCinemaList.data.response.map(event => {
-                                            return (<option key={event.cinemaUid} value={event.cinemaUid + " " + "000" + this.state.id }>{event.name}</option>)
+                                    { 
+                                            this.props.SubmitMovieData.message === listStyleConstants.SUBMIT_MOVIE_DATA_SUCCESS &&
+
+                                        cinemaList.map(event =>{
+                                            return (<option key={event.cinemaUid} value={event.cinemaUid + " " + "000" + this.state.id}>{event.name}</option>)
                                         })
                                     }
                                 </select>

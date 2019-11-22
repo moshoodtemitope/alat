@@ -21,7 +21,8 @@ class Event extends Component {
             total:5,
             per_page: 4,
             current_page: 1,
-            searchItem: ""
+            searchItem: "",
+            value:""
 
         };
         // console.log("state",this.state);
@@ -37,10 +38,9 @@ class Event extends Component {
     };
 
     search = data => {
-
         this.setState({searchItem: data}, () => this.renderEvent());
       
-      };
+    };
 
     EventDetails=(event)=>{
         // let event = event.target.id
@@ -53,6 +53,8 @@ class Event extends Component {
     onChangeHandler = async e => {
         this.search(e.target.value);
         this.setState({ value: e.target.value });
+        this.setState({ display: "none" })
+
 
         
     }
@@ -68,7 +70,7 @@ class Event extends Component {
         if(SearchfetchEventList.message === listStyleConstants.SEARCH_FETCH_EVENT_PENDING){
             return  <h4  style={{marginTop:"60px"}} className="text-center">Loading Event...</h4>;
         }
-        else if(SearchfetchEventList.message === listStyleConstants.SEARCH_FETCH_EVENT_FAILURE){
+        else if (SearchfetchEventList.message === listStyleConstants.SEARCH_FETCH_EVENT_SUCCESS && this.props.SearchfetchEventList.data.response.eventList > 0){
             return(
                 <h4 className="text-center" style={{ marginTop: '65px'}}>No Event Found</h4>
             );
@@ -160,14 +162,14 @@ class Event extends Component {
                                   
                                 }}>
                                 
-                                       {
-                                           event.thumbnailImage === null ? <img className="picCard" src={dummyImage}/>:
+                                    {
+                                        event.thumbnailImage === null ? <img alt="" className="picCard" src={dummyImage}/>:
                                         <div 
                                         id={JSON.stringify(event)} onClick={that.EventDetails} className="picCard" style={{backgroundImage: 'url("'+event.thumbnailImage+'")'}}>
                                             
                                        </div>
 
-                                       }
+                                    }
                                         
                                 
                                    
@@ -255,7 +257,7 @@ class Event extends Component {
         let classes = this.state.current_page === number ? styles.pagination : '';
 
         return (
-          <span  key={number} className={classes} onClick={() => this.fetchEventList(number)}>{this.props.getEvents.message ===listStyleConstants.GET_EVENTS_SUCCESS ? <p style={{color:"#43063C", fontSize:16, position:"relative", cursor:"pointer"}}>Load More</p>:null }</span>
+            <span key={number} className={classes} onClick={() => this.fetchEventList(number)}>{this.props.getEvents.message === listStyleConstants.GET_EVENTS_SUCCESS ? <p style={{ color: "#43063C", fontSize: 16, position: "relative", cursor: "pointer", display: this.state.display}}>Load More</p>:null }</span>
         );
     });
        

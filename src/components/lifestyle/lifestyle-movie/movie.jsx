@@ -90,6 +90,9 @@ class Movie extends React.Component {
     onChangeHandler = async e => {
         this.search(e.target.value);
         this.setState({ value: e.target.value });
+        this.setState({display: "none"})
+
+        
 
         
     };
@@ -397,7 +400,7 @@ class Movie extends React.Component {
           <span  key={number} className={classes} onClick={() => this.fetchMovieList(number)}>{this.props.getMovieList.message ===listStyleConstants.GET_MOVIE_LIST_SUCCESS ? <p style={{color:"#43063C", fontSize:16, position:"relative", cursor:'pointer', display: this.state.display}}>Load More</p>:null}</span>
         );
       });
-      let userMovies = this.props.getMovieList;
+        let userMovies = this.props.getMovieList;
 
         
         

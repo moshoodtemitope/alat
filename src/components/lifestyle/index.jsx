@@ -35,25 +35,32 @@ class LifestyleIndex extends Component {
                     <div className="dashboard-wrapper">
                         <div className="container">
                             <div className="row eventWrap">
-                                <div className="col-sm-12">
-                                    <p className="page-title">LifeStyle</p>
-                                </div>
-                                <div className="col-sm-12">
-                                    <div>
-                                        <div className="sub-tab-nav">
-                                            <ul>
-                                                <li className="active" onClick={() => this.setState({ display: "block" })}><NavLink  to={'/lifestyle/movie'}>Movies</NavLink></li>
-                                                <li> <NavLink to={'/lifestyle/event'}>Event</NavLink></li>
-                                                <li> <NavLink to={'/lifestyle/travels/visas'}>Travels</NavLink></li>
-                                            </ul>
+                                {
+                                    this.props.location.pathname !=="/lifestyle/movie-details" && 
+                                    <div className="col-sm-12">
+                                        <p className="page-title">LifeStyle</p>
+                                    </div>
+                                }
+                                {
+                                    this.props.location.pathname !=="/lifestyle/movie-details" &&
+                                    <div className="col-sm-12">
+                                        <div>
+                                            <div className="sub-tab-nav">
+                                                <ul>
+                                                    <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
+                                                    <li> <NavLink to={'/lifestyle/event'}>Event</NavLink></li>
+                                                    {/* <li> <NavLink to={'/lifestyle/travels/visas'}>Travels</NavLink></li> */}
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                }
+                                
+                                
                                 {this.props.children}
                                 <Route path={'/lifestyle'} exact component={LifeStyle} />
                                 <Route path={'/lifestyle/movie'} exact component={LifeStyle} />
                                 <Route path={'/lifestyle/event'} component={LifeStyleEvent} />
-                                {/* <Route path={'/lifestyle/preference'} component={LifestylePreference} /> */}
                                 <Route path={'/lifestyle/movie-details'} component={MovieDetail} />
                                 <Route path={'/lifestyle/buy-ticket-details'} component={BuyTicketData}/>
                                 <Route path={'/lifestyle/event-details'} component={EventDetails}/>

@@ -235,7 +235,7 @@ class ViewGroupSummary extends React.Component {
                                                         /><br /><br/>
                                                         <div className="btn-position" style={{paddingBottom:"50px"}} >
                                                             {
-                                                                this.state.percentageCompleted ===100 ?
+                                                                this.state.percentageCompleted === 100 ?
                                                                     <NavLink to="/savings/stash-cashout">
                                                                         <span href="#"
                                                                               className="btn-withdraw-goal btn-sm border-btn">Cash Out</span>
@@ -264,7 +264,7 @@ class ViewGroupSummary extends React.Component {
 
                                     </div>
 
-                                </div>                            ): (
+                                </div>                            ):(
                             <div className="col-sm-12">
                                 <div className="row">
                                     <div className="col-sm-12">

@@ -163,7 +163,9 @@ class WithDrawFromGoalSummmary extends Component {
                                                         <center>
                                                             <button disabled={this.props.withdraw_from_goal.withdraw_from_goal_status === customerGoalConstants.WITHDRAW_FROM_GOAL_PENDING}
                                                                     type="submit" className="btn-alat m-t-10 m-b-20 text-center">
-                                                                {this.props.withdraw_from_goal.withdraw_from_goal_status === customerGoalConstants.WITHDRAW_FROM_GOAL_PENDING ? "Processing..." :"WithDraw"}
+                                                                {
+                                                                    this.props.withdraw_from_goal.withdraw_from_goal_status === customerGoalConstants.WITHDRAW_FROM_GOAL_PENDING ? "Processing..." :"WithDraw"
+                                                                }
                                                             </button>
                                                         </center>
                                                     </div>

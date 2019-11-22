@@ -77,7 +77,7 @@ class LandingPage extends React.Component {
                                         <NavLink to="/bills/paybills" className="clearfix"><i className="demo-icon icon-bills" aria-hidden="true"></i> <span>Pay Bills</span></NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to={"/lifestyle"} className="clearfix"><i className="demo-icon icon-movies" aria-hidden="true"></i>Lifestyle</NavLink>
+                                        <NavLink to={"/lifestyle/movie"} className="clearfix"><i className="demo-icon icon-movies" aria-hidden="true"></i>Lifestyle</NavLink>
                                     </li>
                                     <li>
                                         <NavLink to={"/savings"} className="clearfix"><i className="demo-icon icon-target" aria-hidden="true"></i>Savings &amp; Investment</NavLink>
