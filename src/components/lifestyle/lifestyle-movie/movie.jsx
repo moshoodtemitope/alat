@@ -114,7 +114,7 @@ class Movie extends React.Component {
         let that =this
 
         if(getMovieList.message === listStyleConstants.GET_MOVIE_LIST_PENDING){
-            return  <h4 style={{marginTop:100}} className="text-center">Loading Movies...</h4>;
+            return <h4 style={{ marginTop: 100 }} className="text-center">Loading Movies...</h4>;
         }
         else if(getMovieList.message === listStyleConstants.GET_MOVIE_LIST_FAILURE){
             return(
@@ -172,7 +172,7 @@ class Movie extends React.Component {
 
 
         if(SearchfetchMovieList.message === listStyleConstants.SEARCH_FETCH_MOVIE_PENDING){
-            return  <h4 style={{marginTop:"60px"}} className="text-center">Loading Movies...</h4>;
+            return  <h4 style={{marginTop:"60px", justifyContent:'center'}} className="text-center">Loading Movies...</h4>;
 
         }
         else if(SearchfetchMovieList.message === listStyleConstants.SEARCH_FETCH_MOVIE_FAILURE){

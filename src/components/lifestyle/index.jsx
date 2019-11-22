@@ -36,13 +36,16 @@ class LifestyleIndex extends Component {
                         <div className="container">
                             <div className="row eventWrap">
                                 {
-                                    this.props.location.pathname !=="/lifestyle/movie-details" && 
+                                    (this.props.location.pathname !=="/lifestyle/movie-details" &&
+                                        this.props.location.pathname !== "/lifestyle/event-details" ) && 
                                     <div className="col-sm-12">
                                         <p className="page-title">LifeStyle</p>
                                     </div>
                                 }
+                            
                                 {
-                                    this.props.location.pathname !=="/lifestyle/movie-details" &&
+                                    (this.props.location.pathname !== "/lifestyle/movie-details" &&
+                                        this.props.location.pathname !== "/lifestyle/event-details") && 
                                     <div className="col-sm-12">
                                         <div>
                                             <div className="sub-tab-nav">
@@ -55,6 +58,8 @@ class LifestyleIndex extends Component {
                                         </div>
                                     </div>
                                 }
+                            
+                
                                 
                                 
                                 {this.props.children}

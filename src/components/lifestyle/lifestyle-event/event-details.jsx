@@ -46,6 +46,8 @@ class EventDetails extends React.Component {
     
     componentDidMount = () => {
         this.init();
+
+        console.log(this.props.location.pathname)
        
     };
 
