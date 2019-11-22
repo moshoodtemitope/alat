@@ -13,9 +13,7 @@
 
 
 .eventTrays .eventCards {
-    /* width: 168px; */
-    /* margin-right: 15px; */
-    /* margin-left: 10px; */
+
     border-radius: 4px;
     outline-offset: 0px 4px;
     flex-basis: 16.66%;
@@ -29,7 +27,6 @@
 }
 .eventTrays .picCard {
     width: 100%;
-    /* background-color: black; */
     height: 226px;
     border-radius: 4px;
     margin-bottom: 20px;
@@ -206,14 +203,16 @@ border: 1px solid #ddd;
 .video{
   position:relative ;
   padding-bottom:30.25%;
-  padding-top:25;
+  padding-top:25px;
   height:0;
   margin-left:22%;
 }
 .iframe{
-  position:absolute;
-  width:640px;
-  height:360px
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 640px;
+  height: 360px;
 }
 .buy-movies{
   margin-top:18px;
@@ -460,7 +459,7 @@ border: 1px solid #ddd;
   margin-top: 16px
 }
 #col{
-      margin-top: 23px,
+  margin-top: 23px,
 }
 .pad{
   margin-top: 10px
@@ -520,19 +519,23 @@ border: 1px solid #ddd;
   position: relative;
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* .travel-card{
+  width: 150px;
+  height: 150px;
+  background-color:white;
+  border-radius: 3px;
+  margin: 8px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.0945143);
+}
+.travel-image{
+  width: 150px;
+  height: 150px;
+  padding: 50px;
+}
+.travel-label{
+  display: flex;
+}
+.travel-description{
+  text-align: center;
+  width: 100%;
+} */

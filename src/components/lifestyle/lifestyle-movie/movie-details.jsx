@@ -54,6 +54,7 @@ class Moviedetails extends React.Component {
             youtubeId:'',
             id:'',
             duration:'',
+            cinemaList:[],
 
             
 
@@ -61,11 +62,18 @@ class Moviedetails extends React.Component {
         this.UseSelectedItem = this.UseSelectedItem.bind(this);
         this.fetchCinemaList();
 
+
+
+
     }
 
     componentDidMount = () => {
         this.init();
+        // console.log(this.props.location.pathname)
+
     };
+
+
 
     init = () => {
         if (this.props.SubmitMovieData.message !== listStyleConstants.SUBMIT_MOVIE_DATA_SUCCESS)
@@ -73,6 +81,7 @@ class Moviedetails extends React.Component {
         else {
             
             let data = JSON.parse(this.props.SubmitMovieData.data.data);
+            // console.log('tag',data.cinemaList);
             
           
             this.setState({
@@ -81,7 +90,8 @@ class Moviedetails extends React.Component {
                 title:data.title,
                 youtubeId:data.youtubeId,
                 id:data.id,
-                duration:data.duration
+                duration:data.duration,
+                cinemaList:data.cinemaList
                 
             });
         }
@@ -91,19 +101,14 @@ class Moviedetails extends React.Component {
     fetchCinemaList(){
         const { dispatch } = this.props;
         dispatch(getCinemaList(this.state.user.token));
-        // console.log(this.props.getCinemaList)
+        //console.log(this.props.getCinemaList)
 
     };
 
-    
-    
-   
-        
-        
     fetchSingleTicket(data){
         const { dispatch } = this.props;
-        dispatch(getSingleMovie(this.state.user.token, ));
-        // console.log(this.props.getCinemaList)
+        dispatch(getSingleMovie(this.state.user.token));
+        //console.log(this.props.getCinemaList)
 
     };
 
@@ -269,7 +274,6 @@ class Moviedetails extends React.Component {
     
     }
     
-    // value={event.date + "8888" + event.student + " " + event.adult + " " + event.children}>{event.date}</option>
     UseSelectedTime = (event) => {
         let amounts = event.target.value.split("8888")[1];
         let adultAmount = amounts.split(" ")[1];
@@ -280,7 +284,7 @@ class Moviedetails extends React.Component {
         let fee = amounts.split(" ")[5];
         let ticketType = amounts.split(" ")[6];
         let name = event.target.name;
-        console.log("*******", childrenAmount, studentAmount, adultAmount, fee)
+        // console.log("*******", childrenAmount, studentAmount, adultAmount, fee)
 
        
         
@@ -338,34 +342,29 @@ class Moviedetails extends React.Component {
         return amount.toLocaleString(navigator.language,{minimumFractionDigits:0});
     };
 
-    rendershowTime = () => {
-    if (this.props.ShowTime.message === listStyleConstants.GET_MOVIE_SHOWTIME_PENDING) {
+    rendershowTime=() => {
+        if (this.props.ShowTime.message === listStyleConstants.GET_MOVIE_SHOWTIME_PENDING) {
 
-        return <select name="showTime">
-        <option>Loading Movie Showtime...</option>;
-        </select>
-       
-    }
-
-    
-
-    else if (this.props.ShowTime.message == listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && this.props.ShowTime.data.response.length > 0){
-        // console.log("=0000000000", this.props.showTime.data.response)  
-    return <div>
-        <label style={{ marginTop: 16 }}>Select Day</label>
-        <select onChange={this.UseSelectedTime}  name="showTime">
-            <option>Select ShowTime</option>
-            {                            
-                        
-                this.props.ShowTime.message === listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
-                this.props.ShowTime.data.response.map(event=> {
-                    return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children  + " " + event.id + " " + event.ticketId + " " + event.fee + " " + event.ticketTypes[0].ticketName}>
-                    {moment(event.date).format('LLLL')}</option>
-                })
-            } 
-            </select>
-    
-    </div>
+            return <select name="showTime">
+                        <option>Loading Movie Showtime...</option>;
+                    </select>
+        
+        }else if (this.props.ShowTime.message === listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && this.props.ShowTime.data.response.length > 0){
+            return <div>
+                <label style={{ marginTop:16 }}>Select Day</label>
+                <select onChange={this.UseSelectedTime}  name="showTime">
+                    <option>Select ShowTime</option>
+                    {                            
+                                
+                        this.props.ShowTime.message === listStyleConstants.GET_MOVIE_SHOWTIME_SUCCESS && 
+                        this.props.ShowTime.data.response.map(event=> {
+                            return <option key={event.date} value={event.date + "8888" + event.student + " " + event.adult + " " + event.children  + " " + event.id + " " + event.ticketId + " " + event.fee + " " + event.ticketTypes[0].ticketName}>
+                            {moment(event.date).format('LLLL')}</option>
+                        })
+                    } 
+                    </select>
+            
+        </div>
             
             
 
@@ -392,7 +391,8 @@ class Moviedetails extends React.Component {
             childNumber,
             error,
             CinemaLocationValidity,
-            showTimeValidity
+            showTimeValidity,
+            cinemaList
         } = this.state;
          const {getCinemaList,ShowTime,buyMovieTicket}=this.props
 
@@ -400,14 +400,14 @@ class Moviedetails extends React.Component {
     
 
         return (
-            <div>
+            <div class="container">
                  <div className="video">
                 <iframe className="iframe" src={`https://www.youtube.com/embed/${this.state.youtubeId}`}
                     frameBorder='0'/>
                 </div>
 
                     
-            <div className="max-750">
+                <div className="max-750">
                 <div className="al-card fund-al-card no-pad" id="pad">
                     <div className="buy-movies">
                         Buy Movie Ticket
@@ -460,10 +460,11 @@ class Moviedetails extends React.Component {
                                 <select onChange={this.UseSelectedItem} name="CinemaLocation">
                                     <option>Select Cinema Location</option>
                                 
-                                    {
-                                        getCinemaList.message === listStyleConstants.GET_CINEMA_LIST_SUCCESS && 
-                                        getCinemaList.data.response.map(event => {
-                                            return (<option key={event.cinemaUid} value={event.cinemaUid + " " + "000" + this.state.id }>{event.name}</option>)
+                                    { 
+                                            this.props.SubmitMovieData.message === listStyleConstants.SUBMIT_MOVIE_DATA_SUCCESS &&
+
+                                        cinemaList.map(event =>{
+                                            return (<option key={event.cinemaUid} value={event.cinemaUid + " " + "000" + this.state.id}>{event.name}</option>)
                                         })
                                     }
                                 </select>
@@ -574,7 +575,7 @@ class Moviedetails extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        getCinemaList: state.LifestyleReducerPile.getCinemaList,
+        getCinemaList:state.LifestyleReducerPile.getCinemaList,
         ShowTime:state.LifestyleReducerPile.ShowTime,
         SubmitTicketData:state.LifestyleReducerPile.SubmitTicketData,
         SubmitMovieData:state.LifestyleReducerPile.SubmitMovieData

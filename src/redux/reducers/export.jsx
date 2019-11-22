@@ -35,7 +35,12 @@ import {getCinemaList,
       movieDetails,
       FetchMovieGenre,
       PostMovieContent,SubmitMovieData,
-      SubmitEventData
+      SubmitEventData,
+    PostVisa,
+    GetVisaOptions,
+    GetVisaPackage,
+    PostVisaDetail,
+    PostPersonalDetail
     } from './lifestyle/lifestyle-reducer';
 
 
@@ -364,8 +369,14 @@ export const movies = {
     FetchMovieGenre,
     PostMovieContent,
     SubmitMovieData,
-    SubmitEventData
+    SubmitEventData,
+    PostVisa,
+    GetVisaOptions,
+    GetVisaPackage,
+    PostVisaDetail,
+    PostPersonalDetail
 }
+
 
 export const preferences = {
     getAllEngagements,

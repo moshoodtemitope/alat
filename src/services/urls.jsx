@@ -1,5 +1,5 @@
-// const URL = 'https://api.alat.ng';
-const URL = 'https://196.43.215.170';
+ const URL = 'https://api.alat.ng';
+//const URL = 'https://196.43.215.170';
 // const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;    
@@ -307,5 +307,10 @@ export const routes = {
     GET_PAGE_DATA:BASEURL +'/Contact.WebApi/api/contact/getpagedata',
     BRANCH_ATM:BASEURL + '/Contact.WebApi/api/contact/branchesatm',
     REPORT_ERROR:BASEURL + '/Contact.WebApi/api/contact/reporterror',
+
+    //Travel
+    GET_VISA_OPTIONS: BASEURL + '/Alat.VisaApplication.Api/api/visa/GetVisaOptions',
+    GET_VISA_PACKAGE: BASEURL + '/Alat.VisaApplication.Api/api/visa/GetVisaPackages/1',
+    POST_VISA_ENTRY: BASEURL + '/Alat.VisaApplication.Api/api/visa/SaveVisaEntry'
 
 };

@@ -7,8 +7,13 @@ import LifeStyleEvent from "../lifestyle/lifestyle-event/event";
 import MovieDetail from '../lifestyle/lifestyle-movie/movie-details';
 import EventDetails from '../lifestyle/lifestyle-event/event-details';
 import BuyTicketData from '../lifestyle/lifestyle-movie/buy-ticket';
-import MovieSuccess from '../lifestyle/lifestyle-movie/movie-success'
-import BuyEventTicket from '../lifestyle/lifestyle-event/buy-event-ticket'
+import MovieSuccess from '../lifestyle/lifestyle-movie/movie-success';
+import BuyEventTicket from '../lifestyle/lifestyle-event/buy-event-ticket';
+import Visas from '../lifestyle/lifestyle-visas/visas';
+import Dubai from '../lifestyle/lifestyle-visas/dubai-visas';
+import personalDetails from '../lifestyle/lifestyle-visas/personal-details';
+import VisaDetail from '../lifestyle/lifestyle-visas/visa-details'
+import VisaDetails from '../lifestyle/lifestyle-visas/visa-details';
 
 
 class LifestyleIndex extends Component {
@@ -30,30 +35,46 @@ class LifestyleIndex extends Component {
                     <div className="dashboard-wrapper">
                         <div className="container">
                             <div className="row eventWrap">
-                                <div className="col-sm-12">
-                                    <p className="page-title">LifeStyle</p>
-                                </div>
-                                <div className="col-sm-12">
-                                    <div>
-                                        <div className="sub-tab-nav">
-                                            <ul>
-                                                <li onClick={() => this.setState({ display: "block" })}><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
-                                                <li> <NavLink to={'/lifestyle/event'}>Event</NavLink></li>
-                    
-                                            </ul>
+                                {
+                                    (this.props.location.pathname !=="/lifestyle/movie-details" &&
+                                        this.props.location.pathname !== "/lifestyle/event-details" ) && 
+                                    <div className="col-sm-12">
+                                        <p className="page-title">LifeStyle</p>
+                                    </div>
+                                }
+                            
+                                {
+                                    (this.props.location.pathname !== "/lifestyle/movie-details" &&
+                                        this.props.location.pathname !== "/lifestyle/event-details") && 
+                                    <div className="col-sm-12">
+                                        <div>
+                                            <div className="sub-tab-nav">
+                                                <ul>
+                                                    <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
+                                                    <li> <NavLink to={'/lifestyle/event'}>Event</NavLink></li>
+                                                    {/* <li> <NavLink to={'/lifestyle/travels/visas'}>Travels</NavLink></li> */}
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                }
+                            
+                
+                                
+                                
                                 {this.props.children}
                                 <Route path={'/lifestyle'} exact component={LifeStyle} />
                                 <Route path={'/lifestyle/movie'} exact component={LifeStyle} />
                                 <Route path={'/lifestyle/event'} component={LifeStyleEvent} />
-                                {/* <Route path={'/lifestyle/preference'} component={LifestylePreference} /> */}
                                 <Route path={'/lifestyle/movie-details'} component={MovieDetail} />
                                 <Route path={'/lifestyle/buy-ticket-details'} component={BuyTicketData}/>
                                 <Route path={'/lifestyle/event-details'} component={EventDetails}/>
                                 <Route path={'/lifestyle/buy-event-ticket'} component={BuyEventTicket}/>
                                 <Route path={'/lifestyle/movie-success'} component={MovieSuccess}/>
+                                <Route path={'/lifestyle/travels/visas'} component={Visas}/>
+                                <Route path={'/lifestyle/travels/dubai-visa'} component={Dubai}/>
+                                <Route path={'/lifestyle/travels/personal-detail'} component={personalDetails}/>
+                                <Route path={'/lifestyle/travels/visa-detail'} component={VisaDetails}/>
                             </div>
                         </div>
                     </div>

@@ -16,7 +16,7 @@ export const FetchMovie = (token, data) => {
         dispatch(request(consume));
         return consume
             .then(response => {
-                // consume.log(response);
+                console.log("=======",response);
                 dispatch(success(response.data, data));
             })
             .catch(error => {
@@ -58,7 +58,7 @@ export const getCinemaList = (token, data) => {
         dispatch(request(consume));
         return consume
             .then(response => {
-                // consume.log(response);
+                // console.log(response);
                 dispatch(success(response.data));
             })
             .catch(error => {
@@ -328,6 +328,104 @@ export const ClearAction=(type)=>{
     };
     function clear(type){return {type : type}}
 };
+
+export const PostVisa = (data) => {
+    return (dispatch) => {
+        dispatch(success(data))
+    }
+    function success(data) {
+        return {
+            type: listStyleConstants.POST_VISA_SUCCESS,
+            data: data
+        }
+    }
+}
+
+export const GetVisaOption = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.GET_VISA_OPTIONS, "GET", data, SystemConstant.HEADER, false);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response));
+            })
+            .catch(error => {
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
+            });
+    };
+
+    function request(request) { return { type: listStyleConstants.GET_VISA_OPTIONS_PENDING, request } }
+    function success(response) { return { type: listStyleConstants.GET_VISA_OPTIONS_SUCCESS, response } }
+    function failure(error) { return { type: listStyleConstants.GET_VISA_OPTIONS_FAILURE, error } }
+
+
+}
+
+
+export const GetVisaPackage = (token, data) => {
+
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.GET_VISA_PACKAGE, "GET", data, SystemConstant.HEADER, false);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response));
+            })
+            .catch(error => {
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
+            });
+    };
+
+    function request(request) { return { type: listStyleConstants.GET_VISA_PACKAGE_PENDING, request } }
+    function success(response) { return { type: listStyleConstants.GET_VISA_PACKAGE_SUCCESS, response } }
+    function failure(error) { return { type: listStyleConstants.GET_VISA_PACKAGE_FAILURE, error } }
+
+
+}
+
+export const PostPersonalDetails = (data) => {
+    return (dispatch) => {
+        dispatch(success(data))
+    }
+    function success(data) {
+        return {
+            type: listStyleConstants.POST_PERSONAL_DETAILS_SUCCESS,
+            data: data
+        }
+    }
+}
+
+
+
+export const PostVisaDetail = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.POST_VISA_ENTRY, "POST", data, SystemConstant.HEADER, false);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                // consume.log(response);
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
+            });
+    };
+
+    function request(request) { return { type: listStyleConstants.POST_VISA_DETAIL_PENDING, request } }
+    function success(response) { return { type: listStyleConstants.POST_VISA_DETAIL_SUCCESS, response } }
+    function failure(error) { return { type: listStyleConstants.POST_VISA_FAILURE, error } }
+};
+
+
 
 
 
