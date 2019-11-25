@@ -6,15 +6,11 @@ import {Fragment} from "react";
 import moment from 'moment';
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
 import {listStyleConstants} from '../../../redux/constants/lifestyle/lifestyle-constants';
-import {getEvents,SubmitEventData} from "../../../redux/actions/lifestyle/movies-actions";
+import { getEvents, SubmitEventData, SearchFetchEvent} from "../../../redux/actions/lifestyle/movies-actions";
 import clock from '../../../assets/img/date.svg'
 import location from '../../../assets/img/Facebook.svg'
 import dummyImage from '../../../assets/img/dummyImage.svg'
 
-let  payload ={
-    pageNumber:1,
-    search: null,
-}
 
 
 class Event extends Component {
@@ -55,6 +51,7 @@ class Event extends Component {
         this.search(e.target.value);
         this.setState({ value: e.target.value });
         this.setState({ display: "none" })
+        this.props.dispatch(SearchFetchEvent(this.state.user.token, this.state.value))
 
 
         

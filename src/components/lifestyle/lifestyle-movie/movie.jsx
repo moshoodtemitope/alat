@@ -384,8 +384,8 @@ class Movie extends React.Component {
     loadMore=()=>{
         if (this.props.getMovieList.message === listStyleConstants.GET_MOVIE_LIST_SUCCESS){
             return <span className="loadMore" onClick={() => this.handleLoadMore()}>Load More</span>
-        } else if (this.props.getMovieList.message === listStyleConstants.GET_MOVIE_LIST_SUCCESS && this.props.getMovieList.data.response.length == 0){
-            console.log(this.props.getMovieList.data.length == 0 )
+        } else if (this.props.getMovieList.message === listStyleConstants.GET_MOVIE_LIST_SUCCESS && this.props.getMovieList.data.response.length === 0){
+            // console.log(this.props.getMovieList.data.length == 0 )
 
             return <h2>No Movie Found</h2>
 
