@@ -11,6 +11,11 @@ import clock from '../../../assets/img/date.svg'
 import location from '../../../assets/img/Facebook.svg'
 import dummyImage from '../../../assets/img/dummyImage.svg'
 
+let  payload ={
+    pageNumber:1,
+    search: null,
+}
+
 
 class Event extends Component {
     constructor(props){
@@ -18,14 +23,11 @@ class Event extends Component {
         this.state={
             user: JSON.parse(localStorage.getItem("user")),
             event:null,
-            total:5,
-            per_page: 4,
-            current_page: 1,
+            pageSize:2,
             searchItem: "",
             value:""
 
         };
-        // console.log("state",this.state);
     }
     componentDidMount(){
         this.fetchEventList(1)
@@ -34,7 +36,7 @@ class Event extends Component {
     }
     fetchEventList(pageNumber){
         const { dispatch } = this.props;
-        dispatch(getEvents(this.state.user.token, pageNumber));
+        dispatch(getEvents(this.state.user.token, pageNumber ));
     };
 
     search = data => {
@@ -43,8 +45,7 @@ class Event extends Component {
     };
 
     EventDetails=(event)=>{
-        // let event = event.target.id
-        //console.log('======',events)
+
         this.props.dispatch(SubmitEventData(event.target.id))
     }
    
@@ -58,6 +59,14 @@ class Event extends Component {
 
         
     }
+    handleLoadMore() {
+        this.setState(prevState => ({
+            pageSize: prevState.pageSize + 1
+        }));
+        const { dispatch } = this.props;
+        dispatch(getEvents(this.state.user.token, this.state.pageSize));
+    }
+    
 
    
 
@@ -68,7 +77,7 @@ class Event extends Component {
         let that = this
 
         if(SearchfetchEventList.message === listStyleConstants.SEARCH_FETCH_EVENT_PENDING){
-            return  <h4  style={{marginTop:"60px"}} className="text-center">Loading Event...</h4>;
+            return  <h4 className="container" style={{marginTop:"60px"}}>Loading Event...</h4>;
         }
         else if (SearchfetchEventList.message === listStyleConstants.SEARCH_FETCH_EVENT_SUCCESS && this.props.SearchfetchEventList.data.response.eventList > 0){
             return(
@@ -245,41 +254,26 @@ class Event extends Component {
         }
     }
     render = () => {
-        let userEvent = this.props.getEvents;
-        let  renderPageNumbers;
-        const pageNumbers = [];
-        if (this.state.total !== null) {
-        for (let i = 2; i <= Math.ceil(this.state.total / this.state.per_page); i++){
-        pageNumbers.push(i);
-      }
-    }
-    renderPageNumbers = pageNumbers.map(number => {
-        let classes = this.state.current_page === number ? styles.pagination : '';
-
-        return (
-            <span key={number} className={classes} onClick={() => this.fetchEventList(number)}>{this.props.getEvents.message === listStyleConstants.GET_EVENTS_SUCCESS ? <p style={{ color: "#43063C", fontSize: 16, position: "relative", cursor: "pointer", display: this.state.display}}>Load More</p>:null }</span>
-        );
-    });
-       
                 return(
                     <Fragment>
         
                         <div className="eventWrapper">
                             <div className="">
                                 <ul>
-                                    <li className="inputList"><label className="inputLabel">Search by keyword</label><input className='SearchInput' type="text" placeholder="search ..." value={this.state.value} onChange={ e => this.onChangeHandler(e)}/></li>
+                                    <li className="inputList"><label className="inputLabel">Search by keyword</label><input className='SearchInput' type="text" placeholder="search ..." value={this.state.value} onChange={e => this.onChangeHandler(e)}/></li>
                                 </ul>
                                        
                             </div>
                               
                            
                         </div>
-                        <div className="row" style={{ justifyContent: "center" }}>
+                        <div className="container">
                             {this.renderEvent()}
-                            <span onClick={() => this.fetchEventList(1)}></span>
-                            {renderPageNumbers}
-                            <span onClick={() => this.fetchEventList(1)}></span> 
+                            {
+                                this.props.getEvents.message === listStyleConstants.GET_EVENTS_SUCCESS ?
+                                    <span className="loadMore" onClick={() => this.handleLoadMore()}>Load More</span>:null
 
+                            }
                         </div>
         
                     </Fragment>
