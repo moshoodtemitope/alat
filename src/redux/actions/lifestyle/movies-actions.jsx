@@ -36,7 +36,7 @@ export const SearchFetchMovie = (token, data) => {
         dispatch(request(consume));
         return consume
             .then(response => {
-                // consume.log(response);
+                console.log(response);
                 dispatch(success(response.data));
             })
             .catch(error => {

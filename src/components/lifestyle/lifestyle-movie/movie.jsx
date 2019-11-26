@@ -58,7 +58,7 @@ class Movie extends React.Component {
         const movies = await this.props.SearchfetchMovieList.data.response;
     
         this.setState({ movies });
-      };
+    };
 
     filterGenre = () => {
         const genre = this.props.getMovieList.data.response;
@@ -72,9 +72,6 @@ class Movie extends React.Component {
                 this.setState({display: "none"})
             })
         }
-        
-        
-
     }
     
     handleLoadMore() {
@@ -84,16 +81,12 @@ class Movie extends React.Component {
         const { dispatch } = this.props;
         dispatch(FetchMovie(this.state.user.token, this.state.pageSize));
     }
-    
-    
+
     onChangeHandler = async e => {
         this.search(e.target.value);
         this.setState({ value: e.target.value });
         this.setState({display: "none"})
 
-        
-
-        
     };
 
     moviesDetails=(event)=>{
@@ -384,9 +377,7 @@ class Movie extends React.Component {
     loadMore=()=>{
         if (this.props.getMovieList.message === listStyleConstants.GET_MOVIE_LIST_SUCCESS){
             return <span className="loadMore" onClick={() => this.handleLoadMore()}>Load More</span>
-        } else if (this.props.getMovieList.message === listStyleConstants.GET_MOVIE_LIST_SUCCESS && this.props.getMovieList.data.response.length === 0){
-            // console.log(this.props.getMovieList.data.length == 0 )
-
+        } else if (this.props.getMovieList.message === listStyleConstants.GET_MOVIE_LIST_SUCCESS && this.props.getMovieList.data.response.length > 1){
             return <h2>No Movie Found</h2>
 
         }
@@ -433,12 +424,6 @@ class Movie extends React.Component {
                    {
                         this.loadMore()
                    }
-
-                   {/* {
-                        this.props.getMovieList.message === listStyleConstants.GET_MOVIE_LIST_SUCCESS ?
-                        <span className="loadMore" onClick={() => this.handleLoadMore()}>Load More</span>: null
-
-                   } */}
 
                
                 </div>

@@ -18,11 +18,11 @@ class Event extends Component {
         super(props);
         this.state={
             user: JSON.parse(localStorage.getItem("user")),
-            event:null,
-            pageSize:2,
+            event: null,
+            pageSize: 2,
             searchItem: "",
-            value:""
-
+            value: "",
+            events:"",
         };
     }
     componentDidMount(){
@@ -30,32 +30,36 @@ class Event extends Component {
 
 
     }
+    
     fetchEventList(pageNumber){
         const { dispatch } = this.props;
         dispatch(getEvents(this.state.user.token, pageNumber ));
     };
 
-    search = data => {
-        this.setState({searchItem: data}, () => this.renderEvent());
+    // search = data => {
+    //     this.setState({searchItem: data}, () => this.renderEvent());
       
+    // };
+    search = async data => {
+        this.props.dispatch(actions.SearchFetchEvent(this.state.user.token, data))
+        let events = await this.props.SearchfetchEventList.data.response.eventList;
+        this.setState({ events });
     };
 
     EventDetails=(event)=>{
-
         this.props.dispatch(SubmitEventData(event.target.id))
     }
+    
    
     
     
-    onChangeHandler = async e => {
+    onChangeHandler =  e => {
         this.search(e.target.value);
         this.setState({ value: e.target.value });
-        this.setState({ display: "none" })
-        this.props.dispatch(SearchFetchEvent(this.state.user.token, this.state.value))
-
-
-        
+        //console.log(e.target.value)
+        // this.setState({ display: "none" })
     }
+   
     handleLoadMore() {
         this.setState(prevState => ({
             pageSize: prevState.pageSize + 1
@@ -67,59 +71,7 @@ class Event extends Component {
 
    
 
-    renderEventSeach = () => {
-        let user = this.state.user;
-        let props = this.props;
-        let SearchfetchEventList = props.SearchfetchEventList;
-        let that = this
-
-        if(SearchfetchEventList.message === listStyleConstants.SEARCH_FETCH_EVENT_PENDING){
-            return  <h4 className="container" style={{marginTop:"60px"}}>Loading Event...</h4>;
-        }
-        else if (SearchfetchEventList.message === listStyleConstants.SEARCH_FETCH_EVENT_SUCCESS && this.props.SearchfetchEventList.data.response.eventList > 0){
-            return(
-                <h4 className="text-center" style={{ marginTop: '65px'}}>No Event Found</h4>
-            );
-        }
-        else if (SearchfetchEventList.message === listStyleConstants.SEARCH_FETCH_EVENT_SUCCESS){
-            let userEvents = SearchfetchEventList.data.response.eventList;
-            // let userMovies = this.state.filtered;
-
-            return(
-                <div className="eventTrays col-sm-12">
-                    {userEvents.map(function(event, index){
-                        return(
-                            <div className="eventCards" key={index}>
-                                <Link to={{
-                                    pathname:"/lifestyle/event-details",
-                                    
-                                }}>
-                                    <div  id={localStorage.setItem("goal",JSON.stringify(event))} onClick={that.EventDetails}  className="picCard" style={{backgroundImage: 'url("'+event.thumbnailImage+'")'}}>
-                                    </div>
-                                </Link>
-
-                                <div className="boldHeader">{event.title.toString().length > 15 ? event.title.toString().substring(0, 15)+"...": event.title.toString()}</div>
-                                <div id="disc">{ event.location.toString().length > 30 ? event.location.toString().substring(0, 30)+"...": event.location.toString() }</div>
-                                <div className="details">
-                                    <div className="left">
-                                        <i></i>
-                                    </div>
-                                    <div className="right">
-                                        <div style={{fontSize: 12}}> {moment(event.date).format('MMMM DD, h:mm:ss a')}</div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-
-                        );
-                    })}
-                </div>
-
-            );
-        }
-
-    }
-    
+       
     
     
 
@@ -250,6 +202,72 @@ class Event extends Component {
             }
         }
     }
+    renderEventSeach = () => {
+        
+        let props = this.props;
+        let SearchfetchEventList = props.SearchfetchEventList;
+        let that = this
+
+        if (SearchfetchEventList.message === listStyleConstants.SEARCH_FETCH_EVENT_PENDING) {
+            return <h4 className="container" style={{ marginTop: "60px" }}></h4>;
+        }
+        else if (SearchfetchEventList.message === listStyleConstants.SEARCH_FETCH_EVENT_SUCCESS && this.props.SearchfetchEventList.data.response.eventList.length < 1) {
+            console.log('this is a search response', this.props.SearchfetchEventList.data.response)
+
+            return (
+                <h4 className="text-center" style={{ marginTop: '65px' }}>No Event Found</h4>
+            );
+        }
+        else if (SearchfetchEventList.message === listStyleConstants.SEARCH_FETCH_EVENT_SUCCESS && this.props.SearchfetchEventList.data.response.eventList.length >= 1) {
+            let userEvents = SearchfetchEventList.data.response.eventList;
+            // let userMovies = this.state.filtered;
+            // console.log('=======', userEvents )
+            return (
+                <div className="eventTrays col-sm-12">
+                    {userEvents.map(function (event, index) {
+                        console.log('the event exist', event)
+                        return (
+                            <div className="eventCards" key={index}>
+                                <Link to={{
+                                    pathname: "/lifestyle/event-details"}}>
+                                    <div id={localStorage.setItem("goal", JSON.stringify(event))} onClick={that.EventDetails} className="picCard" style={{ backgroundImage: 'url("' + event.thumbnailImage + '")' }}>
+                                    </div>
+                                </Link>
+
+                                <div className="boldHeader">{event.title.toString().length > 15 ? event.title.toString().substring(0, 15) + "..." : event.title.toString()}</div>
+                                <div id="disc">{event.location}</div>
+                                <div className="details">
+                                    <div className="left">
+                                        <i></i>
+                                    </div>
+                                    <div className="right">
+                                        <div style={{ fontSize: 12 }}> {moment(event.date).format('MMMM DD, h:mm:ss a')}</div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                        
+                    })}
+                </div>
+
+            );
+        }
+
+    }
+
+    resultu = () => {
+        if (this.state.events !== "") {
+            return this.renderEventSeach();
+        }
+        else {
+            console.log('this is no event', this.state.events)
+            return this.renderEvent();
+        }
+
+
+
+    }
     render = () => {
                 return(
                     <Fragment>
@@ -265,7 +283,7 @@ class Event extends Component {
                            
                         </div>
                         <div className="container">
-                            {this.renderEvent()}
+                            {this.resultu()}
                             {
                                 this.props.getEvents.message === listStyleConstants.GET_EVENTS_SUCCESS ?
                                     <span className="loadMore" onClick={() => this.handleLoadMore()}>Load More</span>:null
