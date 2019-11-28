@@ -36,7 +36,7 @@ export const SearchFetchMovie = (token, data) => {
         dispatch(request(consume));
         return consume
             .then(response => {
-                // consume.log(response);
+                console.log(response);
                 dispatch(success(response.data));
             })
             .catch(error => {
@@ -141,7 +141,7 @@ export const buyMovieTicket = (token, data) => {
 };
 
 
-export const getEvents = (token, data) => {
+export const getEvents = (token,data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
         let consume = ApiService.request(routes.GET_EVENTS + data, "GET", data, SystemConstant.HEADER, false);
