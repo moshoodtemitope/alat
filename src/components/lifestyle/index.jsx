@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import InnerContainer from '../../shared/templates/inner-container';
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import LifeStyle from '../lifestyle/lifestyle-movie/movie';
-import LifestylePreference from "../lifestyle/lifestyle-preference/preference";
+// import LifestylePreference from "../lifestyle/lifestyle-preference/preference";
 import LifeStyleEvent from "../lifestyle/lifestyle-event/event";
 import MovieDetail from '../lifestyle/lifestyle-movie/movie-details';
 import EventDetails from '../lifestyle/lifestyle-event/event-details';
@@ -12,8 +12,8 @@ import BuyEventTicket from '../lifestyle/lifestyle-event/buy-event-ticket';
 import Visas from '../lifestyle/lifestyle-visas/visas';
 import Dubai from '../lifestyle/lifestyle-visas/dubai-visas';
 import personalDetails from '../lifestyle/lifestyle-visas/personal-details';
-import VisaDetail from '../lifestyle/lifestyle-visas/visa-details'
 import VisaDetails from '../lifestyle/lifestyle-visas/visa-details';
+import VisaPayment from '../lifestyle/lifestyle-visas/VisaPayment'
 
 
 class LifestyleIndex extends Component {
@@ -52,7 +52,7 @@ class LifestyleIndex extends Component {
                                                 <ul>
                                                     <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
                                                     <li> <NavLink to={'/lifestyle/event'}>Event</NavLink></li>
-                                                    {/* <li> <NavLink to={'/lifestyle/travels/visas'}>Travels</NavLink></li> */}
+                                                    <li> <NavLink to={'/lifestyle/travels/visas'}>Travels</NavLink></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -75,6 +75,8 @@ class LifestyleIndex extends Component {
                                 <Route path={'/lifestyle/travels/dubai-visa'} component={Dubai}/>
                                 <Route path={'/lifestyle/travels/personal-detail'} component={personalDetails}/>
                                 <Route path={'/lifestyle/travels/visa-detail'} component={VisaDetails}/>
+                                <Route path={'/lifestyle/travels/visa-payment'} component={VisaPayment} />
+
                             </div>
                         </div>
                     </div>

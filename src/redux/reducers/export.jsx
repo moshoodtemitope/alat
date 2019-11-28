@@ -40,7 +40,8 @@ import {getCinemaList,
     GetVisaOptions,
     GetVisaPackage,
     PostVisaDetail,
-    PostPersonalDetail
+    PostPersonalDetail,
+    PostVisaPayment
     } from './lifestyle/lifestyle-reducer';
 
 
@@ -374,7 +375,8 @@ export const movies = {
     GetVisaOptions,
     GetVisaPackage,
     PostVisaDetail,
-    PostPersonalDetail
+    PostPersonalDetail,
+    PostVisaPayment
 }
 
 

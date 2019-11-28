@@ -548,3 +548,40 @@ border: 1px solid #ddd;
   margin-left: 50%;
   top:0
 }
+
+.visa_wrapper{
+  width: 150px;
+  height: 150px;
+  background-color:white;
+  border-radius: 3px;
+  margin: 8px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.0945143);
+
+}
+.visa-payment-content{
+  display: flex;
+}
+
+.pl-amount-balance{
+  float: right;
+  font-size: 16px;
+  margin-bottom: 0;
+  font-family: "proxima_novasemibold",sans-serif;
+}
+.pl-amount-balance{
+  color:#fff
+}
+.pl-amount-balance span {
+  display: block;
+  margin-top: 5px;
+  font-size: 13px;
+  font-family: "proxima_novaregular", sans-serif;
+}
+.pl-amount-balance span{
+  color: #D6D6D6;
+  font-size: 14px;
+}
+.visa-title{
+    color: #B93E6B;
+    font-size:19px;
+}

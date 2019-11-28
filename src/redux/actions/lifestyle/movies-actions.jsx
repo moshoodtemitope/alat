@@ -400,18 +400,14 @@ export const PostPersonalDetails = (data) => {
         }
     }
 }
-
-
-
 export const PostVisaDetail = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
-        let consume = ApiService.request(routes.POST_VISA_ENTRY, "POST", data, SystemConstant.HEADER, false);
+        let consume = ApiService.request(routes.SAVE_VISA_ENTRY, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
         return consume
             .then(response => {
-                // consume.log(response);
-                dispatch(success(response.data));
+                dispatch(success(response.data, data));
             })
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
@@ -421,8 +417,33 @@ export const PostVisaDetail = (token, data) => {
     };
 
     function request(request) { return { type: listStyleConstants.POST_VISA_DETAIL_PENDING, request } }
-    function success(response) { return { type: listStyleConstants.POST_VISA_DETAIL_SUCCESS, response } }
-    function failure(error) { return { type: listStyleConstants.POST_VISA_FAILURE, error } }
+    function success(response, data) { 
+        return {
+                type: listStyleConstants.POST_VISA_DETAIL_SUCCESS, response,
+                data: data,
+            }}
+    function failure(error) { return { type: listStyleConstants.POST_VISA_DETAIL_FAILURE, error } }
+};
+
+export const PostVisaPayment = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.VISA_PAYMENT, "POST", data, SystemConstant.HEADER, false);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
+            });
+    };
+
+    function request(request) { return { type: listStyleConstants.POST_VISA_PAYMENT_PENDING, request } }
+    function success(response) { return { type: listStyleConstants.POST_VISA_PAYMENT_SUCCESS, response } }
+    function failure(error) { return { type: listStyleConstants.POST_VISA_PAYMENT_FAILURE, error } }
 };
 
 

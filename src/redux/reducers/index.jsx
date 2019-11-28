@@ -278,7 +278,8 @@ const LifestyleReducer = combineReducers({
     GetVisaOptions:movies.GetVisaOptions,
     GetVisaPackage:movies.GetVisaPackage,
     PostVisaDetail:movies.PostVisaDetail,
-    PostPersonalDetail:movies.PostPersonalDetail
+    PostPersonalDetail:movies.PostPersonalDetail,
+    PostVisaPayment: movies.PostVisaPayment
 
 })
             

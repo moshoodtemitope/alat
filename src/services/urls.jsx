@@ -311,6 +311,8 @@ export const routes = {
     //Travel
     GET_VISA_OPTIONS: BASEURL + '/Alat.VisaApplication.Api/api/visa/GetVisaOptions',
     GET_VISA_PACKAGE: BASEURL + '/Alat.VisaApplication.Api/api/visa/GetVisaPackages/1',
-    POST_VISA_ENTRY: BASEURL + '/Alat.VisaApplication.Api/api/visa/SaveVisaEntry'
+    SAVE_VISA_ENTRY: BASEURL + '/Alat.VisaApplication.Api/api/visa/SaveVisaEntry',
+    VISA_PAYMENT: BASEURL +'/Alat.VisaApplication.Api/api/visa/PostPaymentandTransaction'
+
 
 };
