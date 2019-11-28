@@ -69,31 +69,31 @@ class AlatRatings extends React.Component {
                                             onChange={(rating, e)=>{
                                                 this.setCustomerRating(rating.target.value);
                                             }} />
-                                    <label title="5 stars" htmlFor="score-5">5 stars</label>
+                                    <label title="5 stars" htmlFor="score-5"></label>
                                     
                                     <input type="radio" id="score-4" name="score" value="4" 
                                             onChange={(rating, e)=>{
                                                 this.setCustomerRating(rating.target.value);
                                             }}/>
-                                    <label title="4 stars" htmlFor="score-4">4 stars</label>
+                                    <label title="4 stars" htmlFor="score-4"></label>
                                     
                                     <input type="radio" id="score-3" name="score" value="3" 
                                             onChange={(rating, e)=>{
                                                 this.setCustomerRating(rating.target.value);
                                             }}/>
-                                    <label title="3 stars" htmlFor="score-3">3 stars</label>
+                                    <label title="3 stars" htmlFor="score-3"></label>
                                     
                                     <input type="radio" id="score-2" name="score" value="2" 
                                             onChange={(rating, e)=>{
                                                 this.setCustomerRating(rating.target.value);
                                             }}/>
-                                    <label title="2 stars" htmlFor="score-2">2 stars</label>
+                                    <label title="2 stars" htmlFor="score-2"></label>
                                     
                                     <input type="radio" id="score-1" name="score" value="1" 
                                             onChange={(rating, e)=>{
                                                 this.setCustomerRating(rating.target.value);
                                             }}/>
-                                    <label title="1 stars" htmlFor="score-1">1 stars</label>
+                                    <label title="1 stars" htmlFor="score-1"></label>
                                 </div>
                             </div>
                             <div className="each-rating-wrap">

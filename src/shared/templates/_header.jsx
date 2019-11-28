@@ -142,7 +142,7 @@ class HeaderContainer extends React.Component{
         // this.props.dispatch(userActions.getAll());
         this.getProfileImage();
         this.getNDPRStatus();
-        this.getCMDMPriority();
+        // this.getCMDMPriority();
         // console.log('name is dssd');
     }
 

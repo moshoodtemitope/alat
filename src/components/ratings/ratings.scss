@@ -103,37 +103,7 @@ body{
     position: relative;
     top: 1px;
   }
-//   .rating > span {
-//     display: inline-block;
-//     position: relative;
-//     width: 1.1em;
-//     font-size: 30px;
-//   }
-//   .rating > *:hover,
-//   .rating > *:hover ~ span,
-//   .rating:not(:hover) > input:checked ~ span {
-//     color: transparent;
-//   }
-//   .rating > *:hover:before,
-//   .rating > *:hover ~ span:before,
-//   .rating:not(:hover) > input:checked ~ span:before {
-//      content: "\2605";
-//      position: absolute;
-//      left: 0; 
-//      color: #880830;
-//   }
-  
-//   .rating > input {
-//      margin-left:-1.1em;
-//      margin-right:0;
-//      top:9px;
-//      width:1.1em;
-//      height:1.1em;
-//      position:relative;
-//      z-index:2;
-//      opacity:0;
-//      display: unset;
-//   }
+
 .each-option{
     margin-bottom: 10px;
     input[type=radio]{
@@ -153,4 +123,21 @@ body{
 .referal-options {
     margin-top: 15px;
     margin-left: 15px;
+}
+
+@media (max-width: 768px){
+    .ratings-container {
+        width: 95%;
+        margin: 0 auto;
+    }
+    .alat-rating-wrap {
+        width: 95%;
+        margin: 0 auto;
+    }
+    .rating-wrap{
+        padding: 30px 2px;
+    }
+    .rating label{
+        font-size: 1.7rem;
+    }
 }
