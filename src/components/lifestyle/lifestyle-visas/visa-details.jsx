@@ -243,43 +243,32 @@ class VisaDetails extends React.Component{
                                                 </div>
                                             </div>
                                              <div className="form-row">
-                                                <div className="travel-card">
-                                                        {/* <div className='travel-image'>
-                                                            <img src={newUser} alt=""/>
+                                                <div className="travel-card" >
+                                        
+                                                    <label htmlFor="PassportPhoto" className="travel-image">
+                                                    <img src={newUser} alt="" />
+                                                     </label>
+                                                    <input type="file" name="PassportPhoto" accept="image/*" id="PassportPhoto" onChange={this.PassPortPhotoFileUpLoad} />
 
-                                                        </div> */}
-                                                    <ImageUploader
-                                                        // withIcon={true}
-                                                        // buttonText='Choose images'
-                                                        onChange={this.onDrop}
-                                                        imgExtension={['.jpg', '.gif', '.png', '.gif']}
-                                                        maxFileSize={5242880}
-                                                    />
-                                                        {/* <input type="file" name="PassportPhoto" accept="image/*" id="PassportPhoto"  onChange={this.PassPortPhotoFileUpLoad}/> */}
+                                                    
 
                                                     
 
                                                     </div>
                                                      <div className="travel-card">
-                                                        {/* <div className="travel-image"> 
-                                                            <img src={pass} alt=""/>
+                                                    <label htmlFor="PassportPage" className="travel-image">
+                                                        <img src={pass} alt="" />
+                                                    <input type="file" name="PassportPage" accept="image/*" id="PassportPage" onChange={this.PassportPageFileUpload} />
 
-                                                         </div> */}
-                                                    <input type="file" name="PassportPage" accept="image/*" id="PassportPage"  onChange={this.PassportPageFileUpload}/>
-                                                        {/* <ImageUploader
-                                                         withIcon={true}
-                                                            // buttonText='Choose images'
-                                                            onChange={this.onDrop}
-                                                            imgExtension={['.jpg', '.gif', '.png', '.gif']}
-                                                            maxFileSize={5242880}
-                                                        /> */}
+                                                    </label>
+                                                        
 
                                                              
                                                     </div>
-                                                    {/* <div className="travel-label">
+                                                    <div className="travel-label">
                                                         <p className="travel-description">Upload a picture of your face</p>
                                                         <p className="travel-description">Upload International Passport Page</p>
-                                                    </div> */}
+                                                    </div> 
                                                     
 
                                             </div>

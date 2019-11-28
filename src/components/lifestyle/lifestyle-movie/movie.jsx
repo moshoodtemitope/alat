@@ -20,9 +20,7 @@ class Movie extends React.Component {
             genre:null,
             movies:null,
             values:"",
-            total: 5,
-            per_page: 4,
-            current_page: 1,
+            pageSize:2,
             genreType: "",
             doFilter: false,
             display: "block"
@@ -49,7 +47,6 @@ class Movie extends React.Component {
     fetchCinemaList(){
         const { dispatch } = this.props;
         dispatch(getCinemaList(this.state.user.token));
-        // console.log(this.props.getCinemaList)
 
     };
     fetchGenre(){
@@ -61,7 +58,7 @@ class Movie extends React.Component {
         const movies = await this.props.SearchfetchMovieList.data.response;
     
         this.setState({ movies });
-      };
+    };
 
     filterGenre = () => {
         const genre = this.props.getMovieList.data.response;
@@ -75,26 +72,21 @@ class Movie extends React.Component {
                 this.setState({display: "none"})
             })
         }
-        // this.filterGenre(e.target.value);
-        
-        // return 
-        // console.log("values",e.target.value)
-
     }
     
-    // componentWillMount(){
-    //     this.moviesDetails()
-    // }
-    
-    
+    handleLoadMore() {
+        this.setState(prevState => ({
+            pageSize: prevState.pageSize + 1
+        }));
+        const { dispatch } = this.props;
+        dispatch(FetchMovie(this.state.user.token, this.state.pageSize));
+    }
+
     onChangeHandler = async e => {
         this.search(e.target.value);
         this.setState({ value: e.target.value });
         this.setState({display: "none"})
 
-        
-
-        
     };
 
     moviesDetails=(event)=>{
@@ -114,7 +106,7 @@ class Movie extends React.Component {
         let that =this
 
         if(getMovieList.message === listStyleConstants.GET_MOVIE_LIST_PENDING){
-            return <h4 style={{ marginTop: 100 }} className="text-center">Loading Movies...</h4>;
+            return <h4 style={{ marginTop: 100, textAlign:'center' }} className="text-center">Loading Movies...</h4>;
         }
         else if(getMovieList.message === listStyleConstants.GET_MOVIE_LIST_FAILURE){
             return(
@@ -172,7 +164,7 @@ class Movie extends React.Component {
 
 
         if(SearchfetchMovieList.message === listStyleConstants.SEARCH_FETCH_MOVIE_PENDING){
-            return  <h4 style={{marginTop:"60px", justifyContent:'center'}} className="text-center">Loading Movies...</h4>;
+            return  <h4 style={{marginTop:"60px"}} className="text-center">Loading Movies...</h4>;
 
         }
         else if(SearchfetchMovieList.message === listStyleConstants.SEARCH_FETCH_MOVIE_FAILURE){
@@ -372,7 +364,7 @@ class Movie extends React.Component {
     }
     
     resultu = () => {
-        if (this.state.movies !== null && this.state.movies !== "") {
+        if(this.state.movies !== null && this.state.movies !== "") {
             return this.renderMoviesSeach();
         }
         else{
@@ -382,24 +374,20 @@ class Movie extends React.Component {
         
 
     }
+    loadMore=()=>{
+        if (this.props.getMovieList.message === listStyleConstants.GET_MOVIE_LIST_SUCCESS){
+            return <span className="loadMore" onClick={() => this.handleLoadMore()}>Load More</span>
+        } else if (this.props.getMovieList.message === listStyleConstants.GET_MOVIE_LIST_SUCCESS && this.props.getMovieList.data.response.length > 1){
+            return <h2>No Movie Found</h2>
+
+        }
+    }
+
 
     render(){
         let  renderPageNumbers;
         const {getMovieList} = this.props;
-        const pageNumbers = [];
-        if (this.state.total !== null) {
-        for (let i = 2; i <= Math.ceil(this.state.total / this.state.per_page); i++){
-        pageNumbers.push(i);
-      }
-    }
-    renderPageNumbers = pageNumbers.map(number => {
-        let classes = this.state.current_page === number ? styles.pagination : '';
-
-        return (
-            
-          <span  key={number} className={classes} onClick={() => this.fetchMovieList(number)}>{this.props.getMovieList.message ===listStyleConstants.GET_MOVIE_LIST_SUCCESS ? <p style={{color:"#43063C", fontSize:16, position:"relative", cursor:'pointer', display: this.state.display}}>Load More</p>:null}</span>
-        );
-      });
+    
         let userMovies = this.props.getMovieList;
 
         
@@ -429,14 +417,14 @@ class Movie extends React.Component {
                     </div>
                 </div>
 
-                <div className="row" style={{justifyContent: "center"}}>
+                <div className="container" style={{justifyContent: "center", alignItems:'center'}}>
                     {
                        !this.state.doFilter ? this.resultu() : this.renderFilter(this.state.genreType)
                    }
+                   {
+                        this.loadMore()
+                   }
 
-                        <span onClick={() => this.fetchMovieList(1)}></span> 
-                            {renderPageNumbers}
-                        <span onClick={() => this.fetchMovieList(1)}></span> 
                
                 </div>
             </Fragment>

@@ -519,7 +519,7 @@ border: 1px solid #ddd;
   position: relative;
 
 }
-/* .travel-card{
+.travel-card{
   width: 150px;
   height: 150px;
   background-color:white;
@@ -538,4 +538,13 @@ border: 1px solid #ddd;
 .travel-description{
   text-align: center;
   width: 100%;
-} */
+}
+
+.loadMore{
+  color:#43063C;
+  font-size:16px;
+  position:relative;
+  cursor:pointer;
+  margin-left: 50%;
+  top:0
+}
