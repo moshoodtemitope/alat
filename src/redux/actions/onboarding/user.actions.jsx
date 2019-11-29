@@ -71,6 +71,7 @@ export const userActions = {
     checkNDPRStatus,
     acceptNDPR,
     fetchCMDMPriority,
+    updateCMDM,
     sendCustomerRating,
     sendForgotPwEmail,
     sendForgotPwAnswer,
@@ -483,6 +484,26 @@ function fetchCMDMPriority(token){
     function request(request) { return { type:GET_CMDMPRIORITY_PENDING, request} }
     function success(response) { return {type:GET_CMDMPRIORITY_SUCCESS, response} }
     function failure(error) { return {type:GET_CMDMPRIORITY_FAILURE, error} }
+}
+
+function updateCMDM(updatedfields, token){
+    SystemConstant.HEADER['alat-token'] = token; 
+    return dispatch =>{
+        let consume = ApiService.request(routes.CMDM_UPDATEFIELD, "POST", updatedfields,  SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response));
+            }).catch(error =>{
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+        
+    }
+
+    function request(request) { return { type:UPDATE_CMDMPRIORITY_PENDING, request} }
+    function success(response) { return {type:UPDATE_CMDMPRIORITY_SUCCESS, response} }
+    function failure(error) { return {type:UPDATE_CMDMPRIORITY_FAILURE, error} }
 }
 
 function sendCustomerRating(rating, willrefer){
