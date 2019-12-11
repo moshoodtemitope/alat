@@ -7,6 +7,8 @@ import * as actions from '../../../redux/actions/lifestyle/movies-actions';
 import { listStyleConstants } from '../../../redux/constants/lifestyle/lifestyle-constants';
 import { connect } from "react-redux";
 import { Redirect } from 'react-router-dom';
+import Modal from 'react-responsive-modal';
+
 
 
 
@@ -37,6 +39,8 @@ class VisaDetails extends React.Component{
             PassportNumber:"",
             PassportPage:null,
             PackageName:"",
+            showModal: false,
+
             user:JSON.parse(localStorage.getItem("user")),
             PassportPhotoInvalid:false
 
@@ -76,6 +80,22 @@ class VisaDetails extends React.Component{
             });
         }
     };
+    onShowModal = (event) => {
+        // console.log("dot here")
+        event.preventDefault();
+        // this.props.clearError();
+        this.setState({
+            showModal: true
+        });
+    }
+
+    onCloseModal = () => {
+        this.setState({
+            showModal: false
+        })
+        // this.props.clearError();
+    }
+
     checkPassPortNumber = () => {
         if (this.state.PassportNumber.length != 11) {
             this.setState({ PassportNumberInvalid: true });
@@ -91,7 +111,7 @@ class VisaDetails extends React.Component{
     }
     
     checkPassPortPage =()=>{
-        if (this.state.PassportPage == "") {
+        if (this.state.PassportPage === "") {
             this.setState({ PassPortPageInvalid: true });
             return true;
         }
@@ -188,13 +208,7 @@ class VisaDetails extends React.Component{
         }
         console.log(data)
         // return
-        
-        
-            
         this.props.dispatch(actions.PostVisaDetail(this.state.user.token, data));
-
-            
-
 
         }
     }
@@ -216,10 +230,31 @@ class VisaDetails extends React.Component{
                     <div className="col-sm-12">
                         <div className="max-600">
                             <div className="al-card no-pad">
+                                <Modal open={this.state.showModal} onClose={this.onCloseModal} center>
+                                    <div className="disclaimer text-center">
+                                        <h4 className="hd-underline" style={{ width: "100%", color: "#AB2656" }}>Instructions</h4>
+                                        <ul className="disclaimer-list">
+                                            <li> Taken within the last 6 months to reflect your current appearance</li>
+                                            <li>Taken in front of a plain white or off-white background</li>
+                                            <li>Taken in full-face view directly facing the camera</li>
+                                            <li>With a neutral facial expression and both eyes open</li>
+                                            <li>With a neutral facial expression and both eyes open</li>
+                                        </ul>
+                                        <div className="btn-">
+                                            <button style={{ width: "80%" }}
+                                                className="btn-alat"> <b>Okay, I understand</b>
+
+                                                
+                                            </button><br /><br />
+                                            <button onClick={this.onCloseModal} className="disclaimer-btn"><b>Cancel</b></button>
+
+                                        </div>
+                                    </div>
+                                </Modal>
                                 <h4 className="m-b-10 center-text hd-underline">Visa Details</h4>
                                 {/* <div className="transfer-ctn">  */}
                                 {this.props.alert && this.props.alert.message &&
-                                    <div style={{ width: "100%", marginLeft: "150px", marginRight: "150px" }} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                                    <div style={{ width: "100%" }} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                                 }
                                
                                         <form onSubmit={this.handleSubmit}>
@@ -293,10 +328,10 @@ class VisaDetails extends React.Component{
                                                     <label htmlFor="PassportPhoto" className="travel-image">
                                                         {
                                                     this.state.PassportPhoto
-                                                    ? <img src={this.state.PassportPhoto} alt=""/> : <img src={newUser} alt="" />
+                                                    ? <img  src={this.state.PassportPhoto} alt=""/> : <img src={newUser} alt="" />
                                                     }
                                                      </label>
-                                                        <input type="file" name="PassportPhoto" accept="image/*" id="PassportPhoto" onChange={this.PassPortPhotoFileUpLoad}/>
+                                            <input type="file" name="PassportPhoto" accept="image/*" id="PassportPhoto" onChange={this.PassPortPhotoFileUpLoad}/>
                                                     {PassportPhotoInvalid &&
                                                         <div className="text-danger">Upload a PassportPhoto</div>
                                                     }

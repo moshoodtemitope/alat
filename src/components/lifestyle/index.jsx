@@ -13,7 +13,9 @@ import Visas from '../lifestyle/lifestyle-visas/visas';
 import Dubai from '../lifestyle/lifestyle-visas/dubai-visas';
 import personalDetails from '../lifestyle/lifestyle-visas/personal-details';
 import VisaDetails from '../lifestyle/lifestyle-visas/visa-details';
-import VisaPayment from '../lifestyle/lifestyle-visas/VisaPayment'
+import VisaPayment from '../lifestyle/lifestyle-visas/VisaPayment';
+import SelectVisa from '../lifestyle/lifestyle-visas/selectVisa';
+import Success from '../lifestyle/lifestyle-visas/success'
 
 
 class LifestyleIndex extends Component {
@@ -52,7 +54,7 @@ class LifestyleIndex extends Component {
                                                 <ul>
                                                     <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
                                                     <li> <NavLink to={'/lifestyle/event'}>Event</NavLink></li>
-                                                    <li> <NavLink to={'/lifestyle/travels/visas'}>Travels</NavLink></li>
+                                                    {/* <li> <NavLink to={'/lifestyle/travels/visas'}>Travels</NavLink></li> */}
                                                 </ul>
                                             </div>
                                         </div>
@@ -76,6 +78,8 @@ class LifestyleIndex extends Component {
                                 <Route path={'/lifestyle/travels/personal-detail'} component={personalDetails}/>
                                 <Route path={'/lifestyle/travels/visa-detail'} component={VisaDetails}/>
                                 <Route path={'/lifestyle/travels/visa-payment'} component={VisaPayment} />
+                                <Route path={'/lifestyle/travels/select-visa'} component={SelectVisa}/>
+                                <Route path={'/lifestyle/travels/success'} component={Success}/>
 
                             </div>
                         </div>

@@ -234,6 +234,7 @@ class ViewGroupSummary extends React.Component {
                                                             discBottomSib="Amount Saved"
                                                         /><br /><br/>
                                                         <div className="btn-position" style={{paddingBottom:"50px"}} >
+
                                                             {
                                                                 this.state.percentageCompleted === 100 ?
                                                                     <NavLink to="/savings/stash-cashout">
@@ -298,45 +299,56 @@ class ViewGroupSummary extends React.Component {
                                                         leftBottom="Interest Accrued"
                                                         middleTop={"₦"+ this.state.interestEarned}
                                                         middleBottom="Interest Earned"
-                                                         rightContent={moment(this.state.nextstandingDate).format("L")}
-                                                         rightContentBottom="Next Payment"/>
+                                                        rightContent={moment(this.state.nextstandingDate).format("L")}
+                                                        rightContentBottom="Next Payment"/>
                                                     <div className="btn-position">
-                                                        {
-                                                            this.state.percentageCompleted ===100 ?
-                                                                <NavLink to="/savings/withdraw-from-goal_step1">
-                                                                    <span href="#" className="btn-withdraw-goal btn-sm border-btn">Withdraw</span>
-                                                                </NavLink>:null
-
-                                                        }
-                                                        { this.state.percentageCompleted === 100 ? null :
+                                                        
+                                                        {/* {
+                                                            this.state.percentageCompleted < 100 ? <NavLink to="/savings/withdraw-from-goal_step1">
+                                                                <span href="#" className="btn-withdraw-goal btn-sm border-btn">Withdraw</span>
+                                                            </NavLink> : null
+                                                        } */}
+                                                    
+                                                        { 
+                                                        this.state.percentageCompleted < 100 ?
                                                             <Link to={{
                                                                 pathname:"/savings/top-up-goal-step1",
                                                                 
                                                             }}>
                                                                 <span href="#"  className="btn-top-up-goal btn-sm border-btn">Top Up Goal</span>
-                                                            </Link>
-
-
+                                                            </Link>: null
                                                         }
 
 
-                                                     </div>
+                                                        </div>
+                                                     {
+                                                            <div className="btn-position">
+                                                                {
+                                                                this.state.percentageCompleted >= 100 ?
+                                                                    <NavLink to="/savings/stash-cashout">
+                                                                        <span href="#" className="btn-withdraw-goal btn-sm border-btn">Cashout</span>
+                                                                    </NavLink> :
+                                                                    <NavButtons
+                                                                        navType={this.state.navType}
+                                                                        leftName={this.props.pause_goal.pause_customer_goal_status === customerGoalConstants.PAUSE_CUSTOMER_GOAL_SUCCESS ? 'Continue' : 'Pause'}
+                                                                        // middleName='Pause'
+                                                                        rightName='Delete'
+                                                                        edit={this.state.goalId}
+                                                                        delete={this.state.goalId}
+                                                                        unpause={this.state.goalId}
+                                                                        DeleteGroup={this.DeleteCustomerGoal}
+                                                                        PauseGroup={this.UnpauseCustomerGoal}
+                                                                        EditGroup={this.PauseCustomerGoal}/>
+
+                                                                }
 
 
-                                                    <NavButtons
-                                                       navType={this.state.navType}
-                                                        leftName={this.props.pause_goal.pause_customer_goal_status === customerGoalConstants.PAUSE_CUSTOMER_GOAL_SUCCESS?'Continue':'Pause'}
-                                                        // middleName='Pause'
-                                                        rightName='Delete'
-                                                       edit={this.state.goalId}
-                                                       delete={this.state.goalId}
-                                                       unpause={this.state.goalId}
-                                                       DeleteGroup={this.DeleteCustomerGoal}
-                                                        PauseGroup={this.UnpauseCustomerGoal}
-                                                       EditGroup={this.PauseCustomerGoal}
-                                                       
+                                                            </div>
 
-                                                    />
+                                                     }
+
+
+                                                    
                                                 </div>
 
 

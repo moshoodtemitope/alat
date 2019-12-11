@@ -11,6 +11,7 @@ import {FetchMovie,getCinemaList,fetchMovieGenre,SubmitMoviesData} from "../../.
 import unescape from 'lodash/unescape';
 import FilterSearch from './filter-result';
 
+
 class Movie extends React.Component {
     constructor(props){
         super(props);
@@ -23,11 +24,12 @@ class Movie extends React.Component {
             pageSize:2,
             genreType: "",
             doFilter: false,
-            display: "block"
+            display: "block",
 
         };
         this.showMovies = true;
-        this.moviesDetails =this.moviesDetails.bind(this)
+        this.moviesDetails =this.moviesDetails.bind(this);
+
 
        
     }
@@ -81,6 +83,7 @@ class Movie extends React.Component {
         const { dispatch } = this.props;
         dispatch(FetchMovie(this.state.user.token, this.state.pageSize));
     }
+    
 
     onChangeHandler = async e => {
         this.search(e.target.value);
@@ -104,6 +107,8 @@ class Movie extends React.Component {
         let props = this.props;
         let getMovieList = props.getMovieList;
         let that =this
+        const { length } = this.state;
+
 
         if(getMovieList.message === listStyleConstants.GET_MOVIE_LIST_PENDING){
             return <h4 style={{ marginTop: 100, textAlign:'center' }} className="text-center">Loading Movies...</h4>;
@@ -118,7 +123,9 @@ class Movie extends React.Component {
 
             return(
                 <div className="eventTrays col-sm-12">
-                    {userMovies.map(function(film, index){
+
+                    {Array.from(userMovies).map(function(film, index){
+                        index *=3
                         return(
                                 <div  className="eventCards" key={index}>
                                     <Link to={{
@@ -149,6 +156,7 @@ class Movie extends React.Component {
 
                         );
                     })}
+
                 </div>
             );
         }
@@ -177,6 +185,7 @@ class Movie extends React.Component {
 
             return(
                 <div className="eventTrays col-sm-12">
+
                     {userMovies.map(function(film, index){
                         return(
                                 <div className="eventCards" key={index}>
@@ -202,6 +211,7 @@ class Movie extends React.Component {
 
                         );
                     })}
+
                 </div>
             );
         }

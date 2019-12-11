@@ -22,6 +22,7 @@ class DeleteGoal extends Component {
             isSubmit: false,
             formattedValue: "",
             amountSaved:null,
+            interestEarned:null,
 
 
         };
@@ -38,6 +39,7 @@ class DeleteGoal extends Component {
         else {
             
             let data = JSON.parse(this.props.submitDashboardData.data.data);
+            console.log(data)
             
           
             this.setState({
@@ -46,7 +48,8 @@ class DeleteGoal extends Component {
                 debitAccount:data.DebitAccount,
                 amountSaved:data.amountSaved,
                 goalTypeName:data.goalTypeName,
-                partialWithdrawal:true
+                partialWithdrawal:true,
+                interestEarned:data.interestEarned
             });
         }
     };
@@ -127,8 +130,8 @@ class DeleteGoal extends Component {
                                                        {/* <div className="form-row"> */}
                                                             <Description 
                                                                     leftHeader={this.state.goalName}
-                                                                    leftDescription={'You have ₦'+this.state.amountSaved+' in your goal account and you need to transfer it to another account before you can delete it.'}
-                                                                    rightHeader={'₦'+this.state.amountSaved}
+                                                leftDescription={'By deleting your goal, you will lose approximately ₦' + this.state.interestEarned+' in interest because you have not met your target amount'}
+                                                rightHeader={'₦' + this.state.amountSaved}
                                                                     rightDiscription="Amount Saved"
                                                                     />
                                                        {/* </div> */}
@@ -155,7 +158,7 @@ class DeleteGoal extends Component {
                                                 </div>
                                             </form>
                                         </div>
-                                        <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
+                                        <a   style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
                                                 this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
                                                 Go back
                                         </a>

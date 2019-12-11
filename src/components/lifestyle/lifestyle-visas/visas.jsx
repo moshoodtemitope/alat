@@ -20,7 +20,7 @@ class Visas extends React.Component{
                     </div>
                     <div className="al-card fund-al-card no-pad">
                         <div className="fund-option-ctn loan">
-                            <div className="fund-option loan" onClick={() => { this.props.history.push("/lifestyle/travels/dubai-visa") }}>
+                            <div className="fund-option loan" onClick={() => { this.props.history.push("/lifestyle/travels/select-visa") }}>
                                 <i className="toshow"><img src={Airline} alt=""/></i>
                                 <i className="hoveraction"><img src={Airline2} alt="" /></i>
                                 <p>Visas</p>

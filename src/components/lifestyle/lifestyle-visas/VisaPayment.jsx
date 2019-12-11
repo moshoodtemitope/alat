@@ -1,9 +1,12 @@
+
+
 import React from 'react'
 import { listStyleConstants } from '../../../redux/constants/lifestyle/lifestyle-constants';
 import { connect } from "react-redux";
 import { Redirect } from 'react-router-dom';
 import AlatPinInput from '../../../shared/components/alatPinInput';
 import * as actions from '../../../redux/actions/lifestyle/movies-actions';
+
 
 
 
@@ -89,6 +92,12 @@ class VisaPayment extends React.Component{
 
         }
     }
+    gotoStep2 = () => {
+        if (this.props.PostVisaPayment)
+            if (this.props.PostVisaPayment.message === listStyleConstants.POST_VISA_PAYMENT_SUCCESS) {
+                return <Redirect to="/lifestyle/travels/success"/>
+            }
+    };
 
     render(){
         return(
@@ -96,9 +105,9 @@ class VisaPayment extends React.Component{
                 <div className="row">
                     <div className="col-sm-12">
                         <div className="max-600">
-                            {this.props.alert && this.props.alert.message &&
-                                <div style={{ width: "100%" }} className={`info-label ${this.props.alert.type}`}>{this.props.PostVisaDetail.data.response.message}</div>
-                            }
+                            {/* {this.props.alert && this.props.alert.message &&
+                                <div style={{ width: "100%" }} className={`info-label ${this.props.alert.type}`}>{this.props.PostVisaPayment.data.response.message}</div>
+                            } */}
                             <div className="al-card no-pad">
                                 <h4 className="m-b-10 center-text hd-underline">Payment Details</h4>
                                 <div className="transfer-ctn">
@@ -138,10 +147,6 @@ class VisaPayment extends React.Component{
                                                 </center>
                                             </div>
                                         </div>
-
-
-
-
                                     </form>
                                 </div>
                             </div>
