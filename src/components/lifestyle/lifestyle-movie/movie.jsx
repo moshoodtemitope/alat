@@ -29,9 +29,6 @@ class Movie extends React.Component {
         };
         this.showMovies = true;
         this.moviesDetails =this.moviesDetails.bind(this);
-
-
-       
     }
 
     componentDidMount(){
@@ -125,7 +122,6 @@ class Movie extends React.Component {
                 <div className="eventTrays col-sm-12">
 
                     {Array.from(userMovies).map(function(film, index){
-                        index *=3
                         return(
                                 <div  className="eventCards" key={index}>
                                     <Link to={{

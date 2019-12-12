@@ -290,7 +290,7 @@ class HeaderContainer extends React.Component{
         return (
             <Fragment>
                 {this.showNDRPMessage()}
-                {this.showCMDMPriorityMessage()}
+                {/* {this.showCMDMPriorityMessage()} */}
                 <div className="db2-fixed-header">
                     <div className="container">
                         <div className="row">

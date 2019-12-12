@@ -150,6 +150,8 @@ class Moviedetails extends React.Component {
                                  result =null;
                                  break;
                              }
+
+
  
                  
              }
@@ -169,11 +171,7 @@ class Moviedetails extends React.Component {
 
     increaseAdult = () => {
         let { adultNumber } = this.state;
-        this.setState(
-            {
-                adultNumber: adultNumber + 1
-            },
-            () =>
+        this.setState({ adultNumber: adultNumber + 1},() =>
                 this.setState({
                     adultAmount: this.state.initialAdultAmount * this.state.adultNumber
                 })
@@ -190,7 +188,7 @@ class Moviedetails extends React.Component {
     };
 
     increaseChild = () => {
-        this.setState({ childNumber: this.state.childNumber + 1 }, () =>
+        this.setState({ childNumber: this.state.childNumber + 1}, () =>
             this.setState({
                 childrenAmount: this.state.initialChildAmount * this.state.childNumber
             })
@@ -235,12 +233,13 @@ class Moviedetails extends React.Component {
             );
     };
     InitiateNetworkCall=()=>{
+
         const data = {
             ShowTimeId:this.state.showTimeId,
             TicketAmount:this.state.TicketAmount,
-            initialAdultAmount:this.state.initialAdultAmount,
-            initialStudentAmount:this.state.initialStudentAmount,
-            initialChildAmount:this.state.initialChildAmount, 
+            adultAmount: this.state.adultAmount,
+            studentAmount: this.state.studentAmount,
+            childrenAmount: this.state.childrenAmount, 
             adultQuantity:this.state.adultNumber,
             childQuantity:this.state.childNumber,
             studentQuantity:this.state.studentNumber,
@@ -250,7 +249,6 @@ class Moviedetails extends React.Component {
             ticketType:this.state.ticketType,
             title:this.state.title
         }
-        // console.log(data)
         this.props.dispatch(actions.SubmitTicketData(data));
 
 
@@ -270,6 +268,7 @@ class Moviedetails extends React.Component {
             //   console.log("No Empty Value Found");
               this.InitiateNetworkCall();
               break;
+              default:
         }
     
     }

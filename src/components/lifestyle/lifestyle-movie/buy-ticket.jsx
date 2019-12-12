@@ -79,7 +79,7 @@ class BuyTicket extends Component {
             console.log('tag', data);
 
             this.setState({
-                TicketAmount:data.initialAdultAmount,
+                TicketAmount:data.adultAmount,
                 title:data.title,
                 cinemaId:data.cinemaId,
                 ShowTimeId:data.ShowTimeId,
@@ -115,7 +115,6 @@ class BuyTicket extends Component {
                 "fee":this.state.fee,
 
             };
-            // console.log(data)
         
             this.props.dispatch(actions.buyMovieTicket(this.state.user.token, data));
 

@@ -25,10 +25,7 @@ class BuyTicket extends Component {
             Pin: "",
             source: "",
             isPinInvalid: false,
-
-
-
-        };
+    };
         this.handleDebit = this.handleDebit.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleAlatPinChange = this.handleAlatPinChange.bind(this);
@@ -120,7 +117,13 @@ class BuyTicket extends Component {
     // formatAmountNoDecimal = (amount) => {
     //     return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
     // };
+    gotoSuccessPage = () => {
+        if (this.props.purchaseEventTicket)
+            if (this.props.purchaseEventTicket.message == listStyleConstants.BUY_EVENT_TICKET_SUCCESS) {
+                return <Redirect to="/lifestyle/movie-success" />
+            }
 
+    }
     
     NavigateBack = () => {
         history.push('');
@@ -133,6 +136,7 @@ class BuyTicket extends Component {
                     <div className="col-sm-12">
                         <p className="page-title">LifeStyle</p>
                     </div>
+                {this.gotoSuccessPage()}
 
                     <div className="col-sm-12">
                         <div>
