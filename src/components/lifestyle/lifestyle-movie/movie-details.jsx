@@ -55,6 +55,7 @@ class Moviedetails extends React.Component {
             id:'',
             duration:'',
             cinemaList:[],
+            selected:""
 
             
 
@@ -504,7 +505,10 @@ class Moviedetails extends React.Component {
                                         </div>
                                     </div>
                                     <div className="studentAmount">
-                                        {this.formatAmountNoDecimal(this.state.adultAmount)}
+                                        {
+                                                this.formatAmountNoDecimal(this.state.adultAmount)
+                                        
+                                        }
                                     </div>
                                 </div>
                                 {/* student */}
@@ -545,7 +549,10 @@ class Moviedetails extends React.Component {
                                         </div>
                                     </div>
                                     <div className="studentAmount">
-                                        {this.formatAmountNoDecimal(this.state.childrenAmount)}
+                                        {
+
+                                         this.formatAmountNoDecimal(this.state.childrenAmount)
+                                        }
                                     </div>
                                 </div>
                             </div>
