@@ -432,6 +432,7 @@ class RequestCard extends React.Component {
             loadCardsInfo           = props.infoForCardRequest.atmcard_info.response,
             customerOtpRequest      = props.otpForCardRequest,
             cardPrice               =loadCardsInfo.customerAccounts.requestCardMenu.cardPrice,
+            isFirstCard             =loadCardsInfo.customerAccounts.requestCardMenu.isFirstCard,
             allDesigns              = loadCardsInfo.allCardDesigns,
             cardDesignUrl           = allDesigns.filter(eachDesign=>eachDesign.id===selectedDesignId)[0].url;
             
@@ -446,7 +447,7 @@ class RequestCard extends React.Component {
             
         return(
             <div className="transfer-ctn">
-                <h4 className="text-center m-b-20">You will be charged &#8358;{cardPrice}</h4>
+                <h4 className="text-center m-b-20">You will be charged &#8358;{isFirstCard?'0': cardPrice}</h4>
 
                 <div className="atmcard-wrap nonvirtual" style={cardStyle}>
                     <div className="carddata">

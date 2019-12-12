@@ -400,7 +400,7 @@ class Moviedetails extends React.Component {
     
 
         return (
-            <div class="container">
+            <div className="container">
                  <div className="video">
                 <iframe className="iframe" src={`https://www.youtube.com/embed/${this.state.youtubeId}`}
                     frameBorder='0'/>
@@ -425,7 +425,7 @@ class Moviedetails extends React.Component {
                         </div>
                         <div
                             className="col-sm-9" id="tickettext">
-                            <div class="ticket-title">
+                            <div className="ticket-title">
                                 {this.state.title}
                             </div>
                             <div className="title">
@@ -488,7 +488,7 @@ class Moviedetails extends React.Component {
                             <div
                                 className="row selectionCover">
                                     <div className="col-sm-4" id="padding-left">
-                                        <div class="child-text">Adult</div>
+                                        <div className="child-text">Adult</div>
                                     <div
                                         className="row count-border">
                                         <div
@@ -513,7 +513,7 @@ class Moviedetails extends React.Component {
                                 </div>
                                 {/* student */}
                                     <div className="col-sm-4" id="padding-left" >
-                                        <div class="child-text">Student</div>
+                                        <div className="child-text">Student</div>
                                     <div
                                         className="row count-border">
                                         <div className="decreaseStudent"
@@ -533,7 +533,7 @@ class Moviedetails extends React.Component {
                                     </div>
                                 </div>
                                     <div className="col-sm-4" id="padding-left">
-                                    <div class="child-text">Child</div>
+                                    <div className="child-text">Child</div>
                                     <div
                                         className="row count-border">
                                         <div className="decreaseChild"

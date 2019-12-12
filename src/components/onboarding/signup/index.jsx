@@ -172,7 +172,7 @@ class Signup extends React.Component{
         }
 
         // let tempNum = telNumber.split()
-        this.setState({phone: tempNum, numPrefix}, ()=>console.log('number is',this.state.phone));
+        this.setState({phone: tempNum, numPrefix});
         // this.setState({phone: phoneNum}, ()=>console.log('number is',this.state.phone));
     }
 
