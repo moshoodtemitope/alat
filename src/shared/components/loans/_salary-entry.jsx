@@ -168,7 +168,8 @@ class SalaryEntry extends React.Component {
                         <div className="max-650">
                             <div className="loan-header-text text-center">
                                 <h4 className="text-black">Select Salary</h4>
-                                <p>Kindly select at least 6 transaction(s) that represent your salary</p>
+                                {/* <p>Kindly select at least 6 transaction(s) that represent your salary</p> */}
+                                <p>Kindly select ALL transactions that represents your monthly salary</p>
                             </div>
                             <div className="al-card no-pad">
                                 {this.props.alert && this.props.alert.message &&

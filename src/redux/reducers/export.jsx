@@ -79,7 +79,7 @@ import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingV
 import { loanCalcDataReducer, loanApplyReducer, GetIndustriesReducer, GetEmployerReducer, CurrentLoanReducer, 
         LoanHistoryReducer, WorkIdFrontReducer, WorkIdBackReducer, loanRejectReducer, loanStandingOrderReducer,
      loanMandateStatusReducer, loanValidateRemitaOtpReducer, loanStatementUpload, continueApplication, 
-     SignatureReducer , PassportReducer, KycRequired, termsReducer } from './loan.reducer';
+     SignatureReducer , PassportReducer, KycRequired,liquidateLoanReducer, termsReducer } from './loan.reducer';
 import { linkBVN, profileSuccessMessage, profileMenu, capturePersonalInformation,getContactDetail,
         getResidential, addNextOfKin, addContactDetails, occupationAndSector, addDocuments,getPersonalInfo, GetResidentialAddress, addResidentialAddress, getStates, nextOfKinsRelationship } from './profile-reducer';
 
@@ -170,6 +170,7 @@ export const loans = {
     SignatureReducer,
     PassportReducer,
     KycRequired,
+    liquidateLoanReducer,
     termsReducer
 }
 

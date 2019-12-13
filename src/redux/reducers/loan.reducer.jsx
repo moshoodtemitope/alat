@@ -407,6 +407,34 @@ export function KycRequired(state = {}, action) {
     }
 }
 
+
+export function liquidateLoanReducer(state = {}, action) {
+    switch (action.type) {
+        case loanConstants.LIQUIDATE_LOAN_SUCCESS:
+            return {
+                liquidateloan_status: loanConstants.LIQUIDATE_LOAN_SUCCESS,
+                is_processing: false,
+                liquidateloan_data: action
+            };
+        case loanConstants.LIQUIDATE_LOAN_PENDING:
+            return {
+                liquidateloan_status: loanConstants.LIQUIDATE_LOAN_PENDING,
+                is_processing: true,
+                liquidateloan_data: action
+            };
+        case loanConstants.LIQUIDATE_LOAN_FAILURE:
+            return {
+                liquidateloan_status: loanConstants.LIQUIDATE_LOAN_FAILURE,
+                is_processing: false,
+                liquidateloan_data: action
+            };
+        default:
+            return{
+                ...state,
+            };
+    }
+}
+
 export function termsReducer(state = {}, action) {
     switch (action.type) {
         case loanConstants.LOAN_TERMS_SUCCESS:

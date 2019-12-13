@@ -238,6 +238,7 @@ const loansReducer = combineReducers({
     passport: loans.PassportReducer,
     signature: loans.SignatureReducer,
     kycrequired : loans.KycRequired,
+    liquidateLoan : loans.liquidateLoanReducer,
     terms: loans.termsReducer,
 })
  const GoalReducer = combineReducers({
