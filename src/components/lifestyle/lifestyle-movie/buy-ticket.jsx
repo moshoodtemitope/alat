@@ -27,13 +27,16 @@ class BuyTicket extends Component {
             child:"",
             student:"",
             isPinInvalid: false,
-
-
+            adultAmount:"",
+            studentAmount:"",
+            childrenAmount:"",
+          
 
         };
         this.handleDebit = this.handleDebit.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleAlatPinChange = this.handleAlatPinChange.bind(this);
+
 
     };
     handleAlatPinChange(pin) {
@@ -76,10 +79,12 @@ class BuyTicket extends Component {
             let data = {
                 ...this.props.SubmitTicketData.data.data
             };
-            console.log('tag', data);
+            // console.log('tag', data);
 
             this.setState({
-                TicketAmount:data.adultAmount,
+                adultAmount:data.adultAmount,
+                studentAmount:data.studentAmount,
+                childrenAmount:data.childrenAmount,
                 title:data.title,
                 cinemaId:data.cinemaId,
                 ShowTimeId:data.ShowTimeId,
@@ -94,6 +99,16 @@ class BuyTicket extends Component {
         }
     };
 
+    computeTicketPrice = () => {
+        let total = 0;
+        if(this.state.adult !== 0)
+            total = total +  this.state.adultAmount;
+        if(this.state.child !== 0)
+            total = total + this.state.childrenAmount;
+        if(this.state.student !== 0)
+            total = total + this.state.studentAmount;
+        return total;
+    }
 
 
     handleSubmit = (e) => {
@@ -108,7 +123,7 @@ class BuyTicket extends Component {
                 "TicketId":this.state.ticketId,
                 'AccountNo':this.state.accountToDebit,
                 'Pin':this.state.Pin,
-                'TicketAmount':this.state.TicketAmount,
+                'TicketAmount': this.computeTicketPrice(),
                 "Adult":this.state.adult,
                 "Student":this.state.student,
                 "Children":this.state.child,
@@ -169,7 +184,7 @@ class BuyTicket extends Component {
                                                                 <p className="ticket-title">{this.state.ticketType}</p>
                                                            </div>
                                                            <div className="right">
-                                                               <p>N{this.formatAmountNoDecimal(this.state.TicketAmount)}</p>
+                                                    <p>N{this.formatAmountNoDecimal(this.computeTicketPrice())}</p>
 
                                                            </div>
                                                        </div>
@@ -183,11 +198,11 @@ class BuyTicket extends Component {
                                                     />
                                                 </div>
                                                 <div className="inputctn-wrap centered-input form-group movieStyleL">
-                                                                <AlatPinInput
-                                                                    value={this.state.Pin}
-                                                                    onChange={this.handleAlatPinChange}
-                                                                    PinInvalid={this.state.isPinInvalid}
-                                                                    maxLength={4} />
+                                                    <AlatPinInput
+                                                        value={this.state.Pin}
+                                                        onChange={this.handleAlatPinChange}
+                                                        PinInvalid={this.state.isPinInvalid}
+                                                        maxLength={4} />
                                                 </div>
 
 
@@ -208,10 +223,11 @@ class BuyTicket extends Component {
                                            
                                         </div>
                                         <center>
-                                            <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(listStyleConstants.MOVIE_REDUCER_CLEAR));
+                                            <a style={{ cursor: "pointer" }} onClick={() => { 
                                                 this.props.history.push('/lifestyle/movie-details') }} className="add-bene m-t-50">
                                                 Go back
                                             </a>
+
                                         </center>
                                         
 

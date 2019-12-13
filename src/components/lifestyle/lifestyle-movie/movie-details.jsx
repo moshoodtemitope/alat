@@ -55,7 +55,8 @@ class Moviedetails extends React.Component {
             id:'',
             duration:'',
             cinemaList:[],
-            selected:""
+            selected:"",
+            QuantityInValidity:false,
 
             
 
@@ -121,45 +122,30 @@ class Moviedetails extends React.Component {
     };
 
     checkCinemaLocationValidity = () => {
-        if(this.state.CinemaLocation == null || this.state.CinemaLocation == ""){
-            this.setState({CinemaLocationValidity: true});
+        // console.log("this is cinemalocation")
+        if(this.state.CinemaLocation === null || this.state.CinemaLocation === ""){
+            this.setState({CinemaLocationValidity:true});
         }else{
-            this.setState({CinemaLocationValidity: false});
+            this.setState({CinemaLocationValidity:false});
         }
     }
     checkShowTimeValidity =()=>{
-        if(this.state.showTime ==null || this.state.showTime == ""){
+        // console.log("this is showtimevalidation")
+
+        if(this.state.showTime === null || this.state.showTime === ""){
             this.setState({showTimeValidity:true});
         }else{
             this.setState({showTimeValidity:false})
         }
     }
-    checkValidity = () => {
-        let result = 'valid';
-        for(let x in this.state){
-             switch(x){
-                 
-                 case 'CinemaLocation':
-                         if(this.state[x] == null || this.state[x] == ""){
-                            //  console.log(x)
-                             result = null;
-                             break;
-                         }
-                case 'showTime':
-                        if(this.state[x] == null || this.state[x] ==""){
-                                //  console.log(x)
-                                 result =null;
-                                 break;
-                             }
-
-
- 
-                 
-             }
-         }
- 
-        // console.log(result);
-        return result;
+    checkQuantity =()=>{
+        if (this.state.adultNumber  >= 1 || this.state.studentNumber >= 1  || this.state.childNumber >= 1 ){
+            this.setState({ QuantityInValidity:true})
+            return true
+        }else{
+            this.setState({ QuantityInValidity:false})
+            return false
+        }
     }
  
 
@@ -233,43 +219,27 @@ class Moviedetails extends React.Component {
                 })
             );
     };
-    InitiateNetworkCall=()=>{
-
-        const data = {
-            ShowTimeId:this.state.showTimeId,
-            TicketAmount:this.state.TicketAmount,
-            adultAmount: this.state.adultAmount,
-            studentAmount: this.state.studentAmount,
-            childrenAmount: this.state.childrenAmount, 
-            adultQuantity:this.state.adultNumber,
-            childQuantity:this.state.childNumber,
-            studentQuantity:this.state.studentNumber,
-            cinemaId:this.state.cinemaId,
-            ticketId:this.state.ticketId,
-            fee:this.state.fee,
-            ticketType:this.state.ticketType,
-            title:this.state.title
-        }
-        this.props.dispatch(actions.SubmitTicketData(data));
-
-
-    }
-
+    
     ShowBuyTicketData = (event) => {
         event.preventDefault();
+        if (this.checkCinemaLocationValidity() || this.checkShowTimeValidity() || this.checkQuantity()){
+            this.props.dispatch(actions.SubmitTicketData({
+                "ShowTimeId": this.state.showTimeId,
+                "TicketAmount": this.state.TicketAmount,
+                "adultAmount": this.state.adultAmount,
+                "studentAmount": this.state.studentAmount,
+                "childrenAmount": this.state.childrenAmount,
+                "adultQuantity": this.state.adultNumber,
+                "childQuantity": this.state.childNumber,
+                "studentQuantity": this.state.studentNumber,
+                "cinemaId": this.state.cinemaId,
+                "ticketId": this.state.ticketId,
+                "fee": this.state.fee,
+                "ticketType": this.state.ticketType,
+                "title": this.state.title
+            }));
 
-        this.checkCinemaLocationValidity();
-        this.checkShowTimeValidity();
-
-        switch(this.checkValidity()){
-            case null:
-            //   console.log('Empty value was found');
-              break;
-            case 'valid': 
-            //   console.log("No Empty Value Found");
-              this.InitiateNetworkCall();
-              break;
-              default:
+        } else {
         }
     
     }
@@ -290,19 +260,20 @@ class Moviedetails extends React.Component {
         
         this.setState({initialStudentAmount: studentAmount, studentAmount}, () => {
             if (this.state.studentAmount !== 0) {
-                this.setState({studentNumber: this.state.studentNumber + 1})
+                // this.setState({studentNumber: this.state.studentNumber + 1})
             }
         });
         this.setState({initialAdultAmount: adultAmount,adultAmount}, () => {
             if (this.state.AdultAmount !== 0) {
-                this.setState({adultNumber: this.state.adultNumber + 1})
+                // this.setState({adultNumber: this.state.adultNumber + 1})
             } 
         });
         this.setState({initialChildAmount: childrenAmount,childrenAmount}, () => {
             if (this.state.childrenAmount !== 0) {
-                this.setState({childNumber: this.state.childNumber + 1})
+                // this.setState({childNumber: this.state.childNumber + 1})
             }
         });
+
         this.setState({ showTimeId:showTimeId });
         this.setState({ticketId:ticketId});
         this.setState({fee:fee});
@@ -332,12 +303,6 @@ class Moviedetails extends React.Component {
         this.props.dispatch(actions.ShowTime(this.state.user.token, data))
     }
 
-    gotobuyTicket=()=>{
-        if(this.props.SubmitTicketData)
-        if(this.props.SubmitTicketData.message === listStyleConstants.SUBMIT_MOVIE_TICKET_SUCCESS){
-            return<Redirect to="/lifestyle/buy-ticket-details"/>
-        }
-    }
     formatAmountNoDecimal = (amount) => {
         return amount.toLocaleString(navigator.language,{minimumFractionDigits:0});
     };
@@ -384,15 +349,13 @@ class Moviedetails extends React.Component {
         //  const details = this.props.location.state.details;
 
        const {
-            movieLocation,
-            movieDay,
             adultNumber,
             studentNumber,
             childNumber,
-            error,
             CinemaLocationValidity,
             showTimeValidity,
-            cinemaList
+            cinemaList,
+           QuantityInValidity,
         } = this.state;
          const {getCinemaList,ShowTime,buyMovieTicket}=this.props
 
@@ -402,7 +365,7 @@ class Moviedetails extends React.Component {
         return (
             <div className="container">
                  <div className="video">
-                <iframe className="iframe" src={`https://www.youtube.com/embed/${this.state.youtubeId}`}
+                <iframe title="youtube Video" className="iframe" src={`https://www.youtube.com/embed/${this.state.youtubeId}`}
                     frameBorder='0'/>
                 </div>
 
@@ -415,7 +378,7 @@ class Moviedetails extends React.Component {
                         <div className="event-border" />
                     <div
                             className="row" id="eventticket">
-                        {this.gotobuyTicket()}
+                        {/* {this.gotobuyTicket()} */}
                         <div className="col-sm-3">
                             <i className="toshow">
                                 <img alt=""
@@ -485,9 +448,8 @@ class Moviedetails extends React.Component {
                             {showTimeValidity && <div className='text-danger'>Select cinema show time </div>}
                             </div>
         
-                            <div
-                                className="row selectionCover">
-                                    <div className="col-sm-4" id="padding-left">
+                                <div className="row selectionCover">
+                                    <div className="col-sm-4 form-error" id="padding-left">
                                         <div className="child-text">Adult</div>
                                     <div
                                         className="row count-border">
@@ -504,11 +466,12 @@ class Moviedetails extends React.Component {
                                             +    
                                         </div>
                                     </div>
-                                    <div className="studentAmount">
+                                        <div className={QuantityInValidity ? "studentAmount form-error" : "studentAmount"}>
                                         {
                                                 this.formatAmountNoDecimal(this.state.adultAmount)
                                         
                                         }
+                                            {QuantityInValidity && <div className='text-danger'>Select number of  ticket </div>}
                                     </div>
                                 </div>
                                 {/* student */}
@@ -528,8 +491,9 @@ class Moviedetails extends React.Component {
                                             +
                                         </div>
                                     </div>
-                                    <div className="studentAmount">
+                                        <div className="studentAmount">
                                         {this.formatAmountNoDecimal(this.state.studentAmount)}
+
                                     </div>
                                 </div>
                                     <div className="col-sm-4" id="padding-left">

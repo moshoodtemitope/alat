@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
 import successLogo from '../../../assets/img/success.svg';
+import * as actions from '../../../redux/actions/lifestyle/movies-actions';
+import { listStyleConstants } from "../../../redux/constants/lifestyle/lifestyle-constants";
+import { connect } from "react-redux";
+
+
+
+
 
  class MovieSuccess extends Component{
      constructor(props){
@@ -26,11 +33,16 @@ import successLogo from '../../../assets/img/success.svg';
                                         </center>
                                         <center>
                                             
-                                            <p style={{color:"#444444", fontSize:"16px"}}>you just bought movie ticket(s) your ticket has been sent to your registered email address</p>
+                                            <p style={{color:"#444444", fontSize:"16px"}}>You just bought movie ticket(s) your ticket has been sent to your registered email address</p>
                                         </center>
 
                                         <center>
-                                            <button className="btn-alat m-t-10 m-b-20 text-center">Got it</button>
+                                            <button onClick={() => {
+                                                this.props.dispatch(actions.ClearAction(listStyleConstants.MOVIE_REDUCER_CLEAR));
+                                                this.props.history.push('/lifestyle/movie')
+                                            }} 
+                                            className="btn-alat m-t-10 m-b-20 text-center">Got it
+                                            </button>
                                         </center>
 
                                     </div>
@@ -48,7 +60,15 @@ import successLogo from '../../../assets/img/success.svg';
         )
 
     }
+
     
 }
-
-export default MovieSuccess
+function mapStateToProps(state) {
+    return {
+        getCinemaList: state.LifestyleReducerPile.getCinemaList,
+        ShowTime: state.LifestyleReducerPile.ShowTime,
+        SubmitTicketData: state.LifestyleReducerPile.SubmitTicketData,
+        SubmitMovieData: state.LifestyleReducerPile.SubmitMovieData
+    };
+}
+export default connect(mapStateToProps)(MovieSuccess)

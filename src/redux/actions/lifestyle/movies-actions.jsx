@@ -231,9 +231,10 @@ export const ShowTime = (token, data) => {
 export const SubmitTicketData =(data) =>{
     return(dispatch)=>{
         dispatch(success(data))
-
+        history.push("/lifestyle/buy-ticket-details")
     }
     function success(data){
+
         return{
             type:listStyleConstants.SUBMIT_MOVIE_TICKET_SUCCESS,
             data:data
@@ -268,6 +269,8 @@ export const SubmitEventData =(data) =>{
 export const SubmitEventTicketData =(data) =>{
     return(dispatch)=>{
         dispatch(success(data))
+        history.push("/lifestyle/buy-event-ticket")
+
 
     }
     function success(data){

@@ -214,13 +214,13 @@ class EventDetails extends React.Component {
         this.props.dispatch(actions.ShowTime(this.state.user.token, data))
     }
 
-    gotobuyEventTicket=()=>{
-        if(this.props.SubmitEventTicketData)
-        if(this.props.SubmitEventTicketData.message == listStyleConstants.SUBMIT_EVENT_TICKET_SUCCESS){
-            return<Redirect to="/lifestyle/buy-event-ticket"/>
-        }
+    // gotobuyEventTicket=()=>{
+    //     if(this.props.SubmitEventTicketData)
+    //     if(this.props.SubmitEventTicketData.message == listStyleConstants.SUBMIT_EVENT_TICKET_SUCCESS){
+    //         return<Redirect to="/lifestyle/buy-event-ticket"/>
+    //     }
         
-    }
+    // }
 
 
     
@@ -249,7 +249,7 @@ class EventDetails extends React.Component {
                         <div className="event-border" />
                         <div
                             className="row" id="eventticket">
-                            {this.gotobuyEventTicket()}
+                            {/* {this.gotobuyEventTicket()} */}
                             <div className="col-sm-3">
                                 <i className="toshow">
                                     <img alt="" className="img"
