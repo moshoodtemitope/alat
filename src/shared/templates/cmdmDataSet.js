@@ -456,23 +456,23 @@ export const religionDataSet = [
     },
     {
         "VALUE": "MCCHR",
-        "LOCALETEXT": "CHRISTIANS"
+        "LOCALETEXT": "CHRISTIAN"
     },
     {
         "VALUE": "MCMUS",
-        "LOCALETEXT": "MUSLIMS"
+        "LOCALETEXT": "MUSLIM"
     },
     {
         "VALUE": "MCNBU",
-        "LOCALETEXT": "NEO BUDDHISTS"
+        "LOCALETEXT": "NEO BUDDHIST"
     },
     {
         "VALUE": "MCSIK",
-        "LOCALETEXT": "SIKHS"
+        "LOCALETEXT": "SIKH"
     },
     {
         "VALUE": "MCZOR",
-        "LOCALETEXT": "ZORASTRIANS"
+        "LOCALETEXT": "ZORASTRIAN"
     },
     {
         "VALUE": "OTHER",

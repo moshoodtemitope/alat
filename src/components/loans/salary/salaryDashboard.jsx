@@ -30,6 +30,7 @@ class LoansDashboard extends React.Component {
             ///////////////////Modal prperties
             openModal: false,
             IsSuccess: false,
+            openLiquidateModal: false,
             modalMessage: "",
         }
     }
@@ -215,13 +216,82 @@ class LoansDashboard extends React.Component {
         );
     }
 
+
+    closeLiquidateModal = () => {
+        this.setState({ openLiquidateModal: false });
+    };
+
+    showLiquidateModal = () => {
+        this.setState({ openLiquidateModal: true });
+    };
+
+    confirmLiquidation =()=>{
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        const { dispatch } = this.props;
+        dispatch(LoanActions.liquidateLoan(user.token));
+    }
+    refreshAfterLiquidation =()=>{
+        setTimeout(() => {
+            this.closeLiquidateModal();
+            // this.getCurrentLoan();
+        }, 3000);
+        this.props.dispatch(LoanActions.loanCurrent(this.state.user.token));
+        
+    }
+
+
+    showLiquidate =()=>{
+        const {openLiquidateModal} = this.state;
+        let liquidateLoan = this.props.liquidate_loan
+        return(
+            <Modal open={openLiquidateModal} onClose={this.closeLiquidateModal}>
+                <div className="div-modal">
+                    {liquidateLoan.liquidateloan_status !==loanConstants.LIQUIDATE_LOAN_SUCCESS &&
+                        <div>
+                            <div className="">Are you sure you want liquidate your loan</div>
+
+                            <div className="m-t-20 text-center">
+                                {/* <button onClick={this.onCloseModal} className="border-btn">Back</button> */}
+                                <button onClick={(e)=>{
+                                    e.preventDefault();
+                                    this.confirmLiquidation();
+                                }}
+                                disabled={liquidateLoan.is_processing}
+                                className="btn-alat">
+                                {liquidateLoan.is_processing?'Luiquidating...':'Yes, I confirm'}  
+                                </button>
+                            </div>
+                        </div>
+                    }
+                    {liquidateLoan.liquidateloan_status ===loanConstants.LIQUIDATE_LOAN_SUCCESS &&
+                        <div className="success-wrap">
+                            <center>
+                                <div className="m-b-30 m-t-20">
+                                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M26.418 38.3379L20 32L16 36L26.4268 46L48 22L43.9629 18L26.418 38.3379Z" fill="#169A62"/>
+                                    <path d="M32 0C14.3261 0 0 14.3261 0 32C0 49.6739 14.3261 64 32 64C49.6739 64 64 49.6739 64 32C64 14.3261 49.6739 0 32 0ZM32 59C17.0879 59 5 46.9121 5 32C5 17.0879 17.0879 5 32 5C46.9121 5 59 17.0879 59 32C59 46.9121 46.9121 59 32 59Z" fill="#169A62"/>
+                                    </svg>
+                                </div>
+                            </center>
+                            <h4 className="center-text red-text">Your loan was successfully liquidated</h4>
+                            {this.refreshAfterLiquidation()}
+                        </div>
+                    }
+                </div>
+            </Modal>
+        )
+    }
+
     render() {
         this.initCurrentLoan();
         setTimeout(this.movetoCalculator(), 2000);
         this.declineAction();
+        
         //this.returnPendingLoanAppLication();
         const { currentLoan } = this.state;
         return (<Fragment>
+            {this.showLiquidate()}
             <div className="row">
                 <div className="col-sm-12">
                     <div className="loan-dsh-ctn">
@@ -297,17 +367,44 @@ class LoansDashboard extends React.Component {
                             </div>
                             }
                             {this.state.pendingLoanApplication != null && <Fragment>
-                                <input type="button" value="Proceed" disabled={!this.state.pendingLoanApplication.ProceedActive} onClick={this.continueApplication} className="btn-alat btn-block" />
-                                <input type="button" disabled={!this.state.pendingLoanApplication.RejectLoanActive} value={this.props.loan_reject.loan_reject_status == loanConstants.LOAN_REJECT_PENDING ? "Processing..." : "Discard Loan Application"} onClick={this.controlModal}
+                                {this.state.pendingLoanApplication.ProceedActive===true &&
+                                     <input type="button" value="Proceed"  onClick={this.continueApplication} className="btn-alat btn-block" />
+                                }
+
+                                {/* <input type="button" value="Proceed" disabled={!this.state.pendingLoanApplication.ProceedActive} onClick={this.continueApplication} className="btn-alat btn-block" /> */}
+                                
+                                {this.state.pendingLoanApplication.RejectLoanActive===true &&
+                                    <input type="button" value={this.props.loan_reject.loan_reject_status == loanConstants.LOAN_REJECT_PENDING ? "Processing..." : "Discard Loan Application"} onClick={this.controlModal}
                                     className={this.state.pendingLoanApplication.RejectLoanActive == false ? "btn-alat btn-disabled" : "btn-alat btn-alat-outline"} />
+                                }
+
+                                {/* <input type="button" disabled={!this.state.pendingLoanApplication.RejectLoanActive} value={this.props.loan_reject.loan_reject_status == loanConstants.LOAN_REJECT_PENDING ? "Processing..." : "Discard Loan Application"} onClick={this.controlModal}
+                                    className={this.state.pendingLoanApplication.RejectLoanActive == false ? "btn-alat btn-disabled" : "btn-alat btn-alat-outline"} /> */}
                             </Fragment>
                             }
                             {/* && currentLoan.Response != null */}
-                            {currentLoan != null  && <Fragment>
-                                {/* <input type="button" disabled={currentLoan == null} value="Liquidate Current Loan" className="btn-alat btn-block" /> */}
-                                <input type="button" disabled={currentLoan.Status == 'Active'} value="Apply For Loan" onClick={() => this.props.history.push("/loans/salary/calc")}
-                                    className={currentLoan.Status == 'Active' ? "btn-alat btn-disabled" : "btn-alat btn-alat-outline"} />
+                            {currentLoan != null  && 
+                                <Fragment>
+                                    {/* <input type="button" disabled={currentLoan == null} value="Liquidate Current Loan" className="btn-alat btn-block" /> */}
+                                    {currentLoan.Status == 'Active' && 
+                                        <input type="button" value="Liquidate loan"
+                                            onClick={this.showLiquidateModal}
+                                        className="btn-alat "  />
+                                    }
+
+                                    
+                                    {/* <input type="button" disabled={currentLoan.Status == 'Active'} value="Apply For Loan dfd" onClick={() => this.props.history.push("/loans/salary/calc")} */}
+                                    {/* <input type="button" value="Apply For Loan dfd" onClick={() => this.props.history.push("/loans/salary/calc")}
+                                        className={currentLoan.Status == 'Active' ? "btn-alat " : "btn-alat btn-alat-outline"} /> */}
+                                    
+                                </Fragment>
+                            }
+                            {(currentLoan ==null && this.state.pendingLoanApplication == null) && 
+                            <Fragment>
+                                <input type="button" value="Apply For Loan" onClick={() => this.props.history.push("/loans/salary/calc")}
+                                        className="btn-alat "  />
                             </Fragment>
+                                        
                             }
 
                         </div>
@@ -354,6 +451,7 @@ function mapStateToProps(state) {
         loan_current: state.loanReducerPile.loanCurrent,
         loan_history: state.loanReducerPile.loanHistory,
         loan_reject: state.loanReducerPile.loanReject,
+        liquidate_loan: state.loanReducerPile.liquidateLoan,
     }
 }
 

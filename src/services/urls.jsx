@@ -1,4 +1,4 @@
-// const URL = 'https://api.alat.ng';
+//const URL = 'https://api.alat.ng';
 //const URL = 'https://196.43.215.170';
 const URL = 'https://196.43.215.157';
 
@@ -178,6 +178,7 @@ export const routes = {
     LOAN_OTP_MANDATE : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/ValidateOtpMandate',
     LOAN_KYC_REQIURED : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/KycRequired',
     LOAN_TERMS: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/TermsAndConditions',
+    LIQUIDATECURRENT_LOAN: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/LiquidateLoan',
 
     //ALat-Loans
     GET_ACTIVE_LOANS : BASEURL + '/Lending.API/api/loan/GetCustomerStatus',

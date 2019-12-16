@@ -48,7 +48,7 @@ class Moviedetails extends React.Component {
             CinemaLocationValidity:false,
             CinemaLocation:null,
             showTime:null,
-            showTimeValidity:false,
+            // showTimeValidity:false,
             description:"",
             artworkThumbnail:'',
             youtubeId:'',
@@ -119,29 +119,36 @@ class Moviedetails extends React.Component {
     };
 
     checkCinemaLocationValidity = () => {
-        // console.log("this is cinemalocation")
+        console.log("this is cinemalocation")
         if(this.state.CinemaLocation === null || this.state.CinemaLocation === ""){
             this.setState({CinemaLocationValidity:true});
+            return false;
         }else{
             this.setState({CinemaLocationValidity:false});
+            return true;
         }
     }
     checkShowTimeValidity =()=>{
-        // console.log("this is showtimevalidation")
+         console.log("this is showtimevalidation")
 
         if(this.state.showTime === null || this.state.showTime === ""){
             this.setState({showTimeValidity:true});
+            return false;
 
         }else{
             this.setState({showTimeValidity:false})
+            return true;
         }
     }
     checkQuantity =()=>{
+        console.log("this is out the statement")
         if (this.state.adultNumber  >= 1|| this.state.studentNumber >= 1  || this.state.childNumber >= 1 ){
             this.setState({ QuantityInValidity:true})
+            console.log('this is if statement')
             return true
         }else{
             this.setState({ QuantityInValidity:false})
+            console.log("this thr else statement")
          return false
         }
     }
@@ -220,7 +227,7 @@ class Moviedetails extends React.Component {
     
     ShowBuyTicketData = (event) => {
         event.preventDefault();
-        if (this.checkCinemaLocationValidity() || this.checkShowTimeValidity() || this.checkQuantity()){
+        if (this.checkCinemaLocationValidity() && this.checkShowTimeValidity() && this.checkQuantity()){
             this.props.dispatch(actions.SubmitTicketData({
                 "ShowTimeId": this.state.showTimeId,
                 "TicketAmount": this.state.TicketAmount,
@@ -516,6 +523,7 @@ class Moviedetails extends React.Component {
                                     </div>
                                 </div>
                             </div>
+                        
 
                             <center>
                                 {

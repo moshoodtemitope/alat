@@ -459,10 +459,10 @@ border: 1px solid #ddd;
   margin-top: 16px
 }
 #col{
-  margin-top: 23px,
+  margin-top: 23px;
 }
 .pad{
-  margin-top: 10px
+  margin-top: 10px;
   
 }
 .event-border{

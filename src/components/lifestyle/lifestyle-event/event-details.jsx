@@ -215,7 +215,7 @@ class EventDetails extends React.Component {
         }
         this.setState({ initialChildAmount: childAmount,childAmount }, () => {
             if (this.state.childAmount !== 0) {
-                this.setState({ childNumber: this.state.childNumber + 1 })
+                // this.setState({ childNumber: this.state.childNumber + 1 })
             }
         });
 
