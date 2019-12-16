@@ -127,13 +127,13 @@ CheckIfStoreInformationIsSet = () => {
     history.push('/profile/profile-residential-address');
 }
 
-   SubmitDocuments = () => {
+    SubmitDocuments = () => {
         const formData = new FormData()
         formData.append('DocumentType', "Passport")
         formData.append('File', this.state.file3,this.state.file3.name)
         // console.log(formData);
        this.props.dispatch(actions.addDocuments(this.state.user.token, formData));
-   }
+    }
 
 
    HandleSubmit = (event) => {

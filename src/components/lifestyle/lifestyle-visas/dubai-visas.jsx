@@ -18,9 +18,8 @@ class Dubai extends React.Component{
             AmountInvalid: false,
             VisaOptionInvalid:false,
             ApplicationInvalid:false,
+            PackageName:"",
             user: JSON.parse(localStorage.getItem("user")),
-
-
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -83,6 +82,7 @@ class Dubai extends React.Component{
                 ApplicationType: this.state.ApplicationType,
                 Package: this.state.Package,
                 Amount: this.state.Amount,
+                PackageName: this.state.PackageName
             }));
             console.log(this.state.ApplicationType, this.state.Package, this.state.Amount)
         }
@@ -111,12 +111,15 @@ class Dubai extends React.Component{
     handleSelectVisaPackageChange = (event) => {
         let Amount = event.target.value.split("8888")[1];
         let Package = event.target.value.split("8888")[0];
+        let PackageName = event.target.value.split("8888")[2]
 
         console.log('amount',Amount)
 
         this.setState({ Package: Package });
         console.log("visaPackage", Package)
-        this.setState({ Amount: Amount})
+        this.setState({ Amount: Amount});
+        this.setState({ PackageName: PackageName});
+        console.log('packageName', PackageName)
         
 
         if (this.state.formsubmitted && event.target.value != "")
@@ -167,7 +170,7 @@ class Dubai extends React.Component{
                     {
                         visaPackage.map(visa => {
                             return visa.visaPackageModel.map(visaPackage => {
-                                return (<option key={visaPackage.visaPackageID} value={visaPackage.visaPackageName + "8888" + visaPackage.amount }>{visaPackage.visaPackageName}</option>)
+                                return (<option key={visaPackage.visaPackageID} value={visaPackage.visaPackageID + "8888" + visaPackage.amount + "8888" + visaPackage.visaPackageName }>{visaPackage.visaPackageName}</option>)
 
                             })
                         })

@@ -18,7 +18,7 @@ class BuyData extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedNetwork: null,
+            selectedNetwork:null,
             selectedDataPlan: null,
             dataPlansOptions: [],
             validation: {
@@ -126,9 +126,9 @@ class BuyData extends Component {
         if(this.state.selectedNetwork && this.state.buyDataForm.phone.value != "" && this.phoneValidation(this.state.buyDataForm.phone.value)){
             
             var dataToBuy = {
-                Amount: parseFloat(this.state.buyDataForm.amount.value),
+                Amount: this.state.buyDataForm.amount.value.toString(),
                 BillerPaymentCode: (this.state.selectedDataPlan ? this.state.selectedDataPlan.billerCode : this.state.dataPlansOptions[0].billerCode),
-                NetworkCode: (this.state.selectedDataPlan ? this.state.selectedDataPlan.networkCode : this.state.dataPlansOptions[0].networkCode),
+                NetworkCode: (this.state.selectedDataPlan ? this.state.selectedDataPlan.networkCode.toString() : this.state.dataPlansOptions[0].networkCode.toString()),
                 PaymentItem: (this.state.selectedDataPlan ? this.state.selectedDataPlan.value : this.state.dataPlansOptions[0].value),
                 PhoneNumber: this.state.buyDataForm.phone.value,
                 SubscriberId: this.state.buyDataForm.phone.value,

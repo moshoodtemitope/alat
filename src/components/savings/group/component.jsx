@@ -40,6 +40,9 @@ export function NavButtons(props){
                             <p id={props.delete} onClick={props.DeleteGroup}>{props.rightName}</p>
                         </div>
                 </div>);
+        default:
+
+        
     }
 }
 

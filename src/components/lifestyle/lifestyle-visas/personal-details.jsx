@@ -8,9 +8,6 @@ import { Textbox } from "react-inputs-validation";
 
 var selectedNations = [
     { value: "2", label: "Nigeria" },
-    { value: "3", label: "kenya" },
-    { value: "1", label: "Ghana" },
-    { value: "4", label: "Germany" }
 ]
 
 class PersonalDetail extends Component {
@@ -19,23 +16,25 @@ class PersonalDetail extends Component {
         this.state = {
             PhoneNumber: "",
             formsubmitted: false,
-            fullName:"",
+            firstName:"",
+            lastName:"",
             email:"",
             occupation:"",
             phoneIvalid: false,
             fullNameInvalid: false,
             occupationInvalid:false,
             nationalityInvalid:false,
+            lastNameInvalid:false,
             selectedNationality:"",
             ApplicationType:"",
             Package:"",
             Amount:"",
             Nationality:"",
+            PackageName:"",
             user:JSON.parse(localStorage.getItem("user")),
 
             
         };
-
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleOnChange = this.handleOnChange.bind(this);
@@ -55,7 +54,8 @@ class PersonalDetail extends Component {
             this.setState({
                 ApplicationType:data.ApplicationType,
                 Package: data.Package,
-                Amount: data.Amount
+                Amount: data.Amount,
+                PackageName: data.PackageName
 
             });
         }
@@ -63,9 +63,17 @@ class PersonalDetail extends Component {
    
 
     checkFullName = () => {
-        if (this.state.fullName == "") {
+        if (this.state.firstName === "") {
             this.setState({ fullNameInvalid: true });
             return true;
+        }
+    }
+
+    checkLastName=()=>{
+        if(this.state.lastName === ""){
+            this.setState({ lastNameInvalid: true});
+            return true
+
         }
     }
 
@@ -96,14 +104,16 @@ class PersonalDetail extends Component {
         } else {
 
             this.props.dispatch(actions.PostPersonalDetails({
-                FirstName: this.state.fullName,
+                FirstName: this.state.firstName,
+                LastName: this.state.lastName,
                 Email: this.state.email,
                 PhoneNumber: this.state.PhoneNumber,
                 Occupation: this.state.occupation,
                 Nationality: this.state.Nationality,
                 Package: this.state.Package,
                 ApplicationType: this.state.ApplicationType,
-                Amount: this.state.Amount
+                Amount: this.state.Amount,
+                PackageName: this.state.PackageName
 
             }));
             
@@ -149,12 +159,12 @@ class PersonalDetail extends Component {
     gotoStep2 = () => {
         if (this.props.post_personal_detail)
             if (this.props.post_personal_detail.message === listStyleConstants.POST_PERSONAL_DETAILS_SUCCESS) {
-                return <Redirect to="/lifestyle/travels/visa-detail" />
+                return <Redirect to="/lifestyle/travels/visa-detail"/>
             }
     };
 
     render() {
-        let { phoneIvalid, email, Nationality, nationalityInvalid, occupationInvalid, fullNameInvalid, fullName, PhoneNumber, occupation } = this.state;
+        let { phoneIvalid, email, Nationality, nationalityInvalid, occupationInvalid, lastName, fullNameInvalid, firstName, PhoneNumber, occupation, lastNameInvalid } = this.state;
         let props = this.props;
         return (
             <div className="col-sm-12">
@@ -167,10 +177,17 @@ class PersonalDetail extends Component {
                                 <div className="transfer-ctn">
                                     <form onSubmit={this.handleSubmit}>
                                         <div className={fullNameInvalid ? "input-ctn form-error" : "input-ctn"}>
-                                            <label>Full Name</label>
-                                            <input type="text" onChange={this.handleOnChange} name="fullName" value={fullName}
+                                            <label>First Name</label>
+                                            <input type="text" onChange={this.handleOnChange} name="firstName" value={firstName}
                                             />
                                             {fullNameInvalid &&
+                                                <div className="text-danger">Enter Full Name</div>}
+                                        </div>
+                                        <div className={lastNameInvalid ? "input-ctn form-error" : "input-ctn"}>
+                                            <label>Last Name</label>
+                                            <input type="text" onChange={this.handleOnChange} name="lastName" value={lastName}
+                                            />
+                                            {lastNameInvalid &&
                                                 <div className="text-danger">Enter Full Name</div>}
                                         </div>
                                         <div className="input-ctn">
@@ -204,7 +221,7 @@ class PersonalDetail extends Component {
                                             <input type="text" onChange={this.handleOnChange} name="occupation" value={occupation}
                                             />
                                             {occupationInvalid &&
-                                                <div className="text-danger">Enter Full Name</div>}
+                                                <div className="text-danger">Enter Your Occupation</div>}
                                         </div>
                                         
                                         <div className={nationalityInvalid ? "input-ctn form-error" : "input-ctn"}>

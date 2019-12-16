@@ -1,7 +1,20 @@
 import React, {Component} from 'react';
 import successLogo from '../../../assets/img/success.svg';
+import * as actions from '../../../redux/actions/lifestyle/movies-actions';
+import { listStyleConstants } from "../../../redux/constants/lifestyle/lifestyle-constants";
+import { connect } from "react-redux";
+
+
+
+
 
  class MovieSuccess extends Component{
+     constructor(props){
+         super(props)
+         this.state={
+
+         }
+     }
     render(){
         return(
             <div className="col-sm-12">
@@ -9,6 +22,7 @@ import successLogo from '../../../assets/img/success.svg';
                     <div className="col-sm-12">
                         <div className="max-600">
                             <div className="al-card no-pad">
+                                
                                 <form>
                                     <div className="form-group">
                                         <center>
@@ -18,11 +32,20 @@ import successLogo from '../../../assets/img/success.svg';
                                             <label style={{fontSize:"24px",color:"#AB2656"}}>Transaction successful</label>
                                         </center>
                                         <center>
-                                            <p style={{color:"#444444", fontSize:"16px"}}>you just bought movie ticket(s) your ticket has been sent to your registered email address</p>
+                                            {
+                                                this.props.buyMovieTicket.message === listStyleConstants.BUY_MOVIE_TICKET_SUCCESS ?
+                                                 <p style={{ color: "#444444", fontSize: "16px" }}>You just bought movie ticket(s) your ticket has been sent to your registered email address</p>:
+                                                <p style={{ color: "#444444", fontSize: "16px" }}>You just bought event ticket(s) your ticket has been sent to your registered email address</p>
+                                            }
                                         </center>
 
                                         <center>
-                                            <button className="btn-alat m-t-10 m-b-20 text-center">Got it</button>
+                                            <button onClick={() => {
+                                                this.props.dispatch(actions.ClearAction(listStyleConstants.MOVIE_REDUCER_CLEAR));
+                                                this.props.history.push('/lifestyle/movie')
+                                            }} 
+                                            className="btn-alat m-t-10 m-b-20 text-center">Got it
+                                            </button>
                                         </center>
 
                                     </div>
@@ -40,7 +63,17 @@ import successLogo from '../../../assets/img/success.svg';
         )
 
     }
+
     
 }
+function mapStateToProps(state) {
+    return {
+        getCinemaList: state.LifestyleReducerPile.getCinemaList,
+        ShowTime: state.LifestyleReducerPile.ShowTime,
+        SubmitTicketData: state.LifestyleReducerPile.SubmitTicketData,
+        SubmitMovieData: state.LifestyleReducerPile.SubmitMovieData,
+        buyMovieTicket: state.LifestyleReducerPile.buyMovieTicket
 
-export default MovieSuccess
+    };
+}
+export default connect(mapStateToProps)(MovieSuccess)

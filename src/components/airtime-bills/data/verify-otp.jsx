@@ -1,6 +1,5 @@
 import React, { Component } from 'React';
 import { Link, Redirect } from 'react-router-dom';
-
 import { Input } from './input';
 import Select from 'react-select';
 import verifyOtp from '../../../assets/img/verify-phone.svg';
@@ -39,7 +38,6 @@ class VerifyOtp extends Component {
     }
 
     validateInputedOTP = (value) => {
-
         return (value.length >= 4 && value.length <= 6 && pattern.test(value));
     } 
 
@@ -48,6 +46,7 @@ class VerifyOtp extends Component {
         this.props.clearError();
         if(this.validateInputedOTP(this.state.otpFormData.otp.value)){
             let payload = {...this.props.dataInfo, OTP: this.state.otpFormData.otp.value};
+            console.log('=======',payload)
         delete payload.NetworkCode;
         delete payload.PaymentItem;
 
