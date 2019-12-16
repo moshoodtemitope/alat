@@ -51,6 +51,7 @@ class LoansDashboard extends React.Component {
 
     componentDidMount = () => {
         this.init();
+        this.refreshAfterLiquidation();
     }
 
     discardLoan = () => {
@@ -232,11 +233,14 @@ class LoansDashboard extends React.Component {
         dispatch(LoanActions.liquidateLoan(user.token));
     }
     refreshAfterLiquidation =()=>{
-        setTimeout(() => {
-            this.closeLiquidateModal();
-            // this.getCurrentLoan();
-        }, 3000);
-        this.props.dispatch(LoanActions.loanCurrent(this.state.user.token));
+        let liquidateLoan = this.props.liquidate_loan
+        if(liquidateLoan.liquidateloan_status ===loanConstants.LIQUIDATE_LOAN_SUCCESS){
+            setTimeout(() => {
+                this.closeLiquidateModal();
+                // this.getCurrentLoan();
+            }, 3000);
+            this.props.dispatch(LoanActions.loanCurrent(this.state.user.token));
+        }
         
     }
 
@@ -275,7 +279,7 @@ class LoansDashboard extends React.Component {
                                 </div>
                             </center>
                             <h4 className="center-text red-text">Your loan was successfully liquidated</h4>
-                            {this.refreshAfterLiquidation()}
+                            {/* {this.refreshAfterLiquidation()} */}
                         </div>
                     }
                 </div>
