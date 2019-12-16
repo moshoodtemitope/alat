@@ -39,6 +39,8 @@ class EventDetails extends React.Component {
             source:"",
             ticketId:"",
             id:"",
+            QuantityInValidity: false,
+
         };
         this.fetchCinemaList();
         // console.log('',this.state.eventId)
@@ -56,8 +58,7 @@ class EventDetails extends React.Component {
             this.props.history.push("/lifestyle/event");
         else {
             
-            let data = JSON.parse(this.props.SubmitEventData.data.data);
-            // console.log('======', data.ticketClassses)
+            const data = JSON.parse(this.props.SubmitEventData.data.data);
 
             this.setState({
                 description:data.description,
@@ -74,6 +75,15 @@ class EventDetails extends React.Component {
             });
         }
     };
+    checkQuantity = () => {
+        if (this.state.childNumber === 0) {
+            this.setState({ QuantityInValidity: true });
+            return true
+        } else {
+            this.setState({ QuantityInValidity: false })
+            return false
+        }
+    }
 
     fetchCinemaList(){
         const { dispatch } = this.props;
@@ -100,6 +110,13 @@ class EventDetails extends React.Component {
                              result = null;
                              break;
                          }
+                 case 'childNumber':
+                     if (this.state[x] == null || this.state[x] == "") {
+                         //  console.log(x)
+                         result = null;
+                         break;
+                     }
+
  
                  
              }
@@ -161,6 +178,7 @@ class EventDetails extends React.Component {
 
 
         this.checkTicketClassValidity();
+        this.checkQuantity();
         
         switch(this.checkValidity()){
             case null:
@@ -200,12 +218,7 @@ class EventDetails extends React.Component {
                 this.setState({ childNumber: this.state.childNumber + 1 })
             }
         });
-  
-        // this.setState({initialChildAmount:gottenValue[0]}, () => {
-        //     this.setState({childNumber: 1})
-        // });
-        // this.setState({childAmount:gottenValue[0]});
-        //  this.setState({eventId:gottenValue[2]});
+
         this.setState({[name] : event.target.value});
         this.setState({ticketId:gottenValue[0]});
         this.setState({childAmount:gottenValue[1]})
@@ -214,14 +227,6 @@ class EventDetails extends React.Component {
         this.props.dispatch(actions.ShowTime(this.state.user.token, data))
     }
 
-    // gotobuyEventTicket=()=>{
-    //     if(this.props.SubmitEventTicketData)
-    //     if(this.props.SubmitEventTicketData.message == listStyleConstants.SUBMIT_EVENT_TICKET_SUCCESS){
-    //         return<Redirect to="/lifestyle/buy-event-ticket"/>
-    //     }
-        
-    // }
-
 
     
 
@@ -229,7 +234,8 @@ class EventDetails extends React.Component {
        let {
             childNumber,
             TicketClassValidity,
-            ticketClassses
+            ticketClassses,
+            QuantityInValidity
         } = this.state;
          const{ getCinemaList,getEvents,ShowTime,buyMovieTicket,SubmitEventData }=this.props
          
@@ -238,7 +244,7 @@ class EventDetails extends React.Component {
                 <div className="container">
                 <div>
                     <div className="row"  id="image">
-                    <img alt="" src={this.state.originalImage} class="img-responsive"/>
+                    <img alt="" src={this.state.originalImage} className="img-responsive"/>
                 </div>
            
                 <div className="max-750">
@@ -319,9 +325,8 @@ class EventDetails extends React.Component {
                                     className="col-md-6" id="col">
                                     
                                    <div id="selectionCover">
-                                        <div class="child-text">Quantity</div>
-                                        <div
-                                            className="row count-border">
+                                        <div className="child-text">Quantity</div>
+                                        <div className={QuantityInValidity ? "row count-border form-error" : "row count-border"}>
                                             <div className="decreaseChild"
                                                 onClick={this.decreaseChild}>
                                                 -
@@ -337,6 +342,7 @@ class EventDetails extends React.Component {
                                             >
                                                 +
                                             </div>
+                                                        
                                         </div>
                                         <div className="studentAmount"
                                         
@@ -348,7 +354,14 @@ class EventDetails extends React.Component {
                                         </div> 
                                     </div>
                                 </div>
-                                            </div>
+                                </div>
+                                <center>
+                                    {
+                                        QuantityInValidity &&
+                                        <div style={{ width: "50%" }} className="info-label error">Select number of ticket</div>
+                                    }
+                                </center>
+                                            
                                     
     
                                 

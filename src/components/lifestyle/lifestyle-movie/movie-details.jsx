@@ -56,7 +56,7 @@ class Moviedetails extends React.Component {
             duration:'',
             cinemaList:[],
             selected:"",
-            QuantityInValidity:false,
+            QuantityInValidity:null,
 
             
 
@@ -83,9 +83,6 @@ class Moviedetails extends React.Component {
         else {
             
             let data = JSON.parse(this.props.SubmitMovieData.data.data);
-            // console.log('tag',data.cinemaList);
-            
-          
             this.setState({
                 description:data.description,
                 artworkThumbnail:data.artworkThumbnail,
@@ -134,17 +131,18 @@ class Moviedetails extends React.Component {
 
         if(this.state.showTime === null || this.state.showTime === ""){
             this.setState({showTimeValidity:true});
+
         }else{
             this.setState({showTimeValidity:false})
         }
     }
     checkQuantity =()=>{
-        if (this.state.adultNumber  >= 1 || this.state.studentNumber >= 1  || this.state.childNumber >= 1 ){
+        if (this.state.adultNumber  >= 1|| this.state.studentNumber >= 1  || this.state.childNumber >= 1 ){
             this.setState({ QuantityInValidity:true})
             return true
         }else{
             this.setState({ QuantityInValidity:false})
-            return false
+         return false
         }
     }
  
@@ -239,7 +237,6 @@ class Moviedetails extends React.Component {
                 "title": this.state.title
             }));
 
-        } else {
         }
     
     }
@@ -471,7 +468,6 @@ class Moviedetails extends React.Component {
                                                 this.formatAmountNoDecimal(this.state.adultAmount)
                                         
                                         }
-                                            {QuantityInValidity && <div className='text-danger'>Select number of  ticket </div>}
                                     </div>
                                 </div>
                                 {/* student */}
@@ -520,6 +516,14 @@ class Moviedetails extends React.Component {
                                     </div>
                                 </div>
                             </div>
+
+                            <center>
+                                {
+                                    QuantityInValidity==false &&
+                                        <div 
+                                        style={{ width: "50%" }} className="info-label error">Select number of ticket</div>
+                                }
+                            </center>
                             <div
                                 className="row btn-corner">
                                 <button className="next-btn">
@@ -532,7 +536,7 @@ class Moviedetails extends React.Component {
                                         
                 </div>
                     <center>
-                        <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(listStyleConstants.MOVIE_REDUCER_CLEAR));
+                        <a href='kkkkkkk' style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(listStyleConstants.MOVIE_REDUCER_CLEAR));
                             this.props.history.push('/lifestyle/movie') }} className="add-bene m-t-50">
                                                 Go back
                         </a>
@@ -548,7 +552,10 @@ function mapStateToProps(state) {
         getCinemaList:state.LifestyleReducerPile.getCinemaList,
         ShowTime:state.LifestyleReducerPile.ShowTime,
         SubmitTicketData:state.LifestyleReducerPile.SubmitTicketData,
-        SubmitMovieData:state.LifestyleReducerPile.SubmitMovieData
+        SubmitMovieData:state.LifestyleReducerPile.SubmitMovieData,
+        alert: state.alert,
+
+        
     };
 }
 

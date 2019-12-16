@@ -23,6 +23,7 @@ class Event extends Component {
             searchItem: "",
             value: "",
             events:"",
+            
         };
     }
     componentDidMount(){
@@ -54,7 +55,9 @@ class Event extends Component {
     
     
     onChangeHandler =  e => {
-        this.search(e.target.value);
+        if (e.target.value.length >= 2) {
+            this.search(e.target.value);
+        }
         this.setState({ value: e.target.value });
         //console.log(e.target.value)
         // this.setState({ display: "none" })
@@ -209,10 +212,9 @@ class Event extends Component {
         let that = this
 
         if (SearchfetchEventList.message === listStyleConstants.SEARCH_FETCH_EVENT_PENDING) {
-            return <h4 className="container" style={{ marginTop: "60px" }}></h4>;
+            return <h4 className="container" style={{ marginTop: "60px", textAlign:"center" }}>Please wait...</h4>;
         }
         else if (SearchfetchEventList.message === listStyleConstants.SEARCH_FETCH_EVENT_SUCCESS && this.props.SearchfetchEventList.data.response.eventList.length < 1) {
-            console.log('this is a search response', this.props.SearchfetchEventList.data.response)
 
             return (
                 <h4 className="text-center" style={{ marginTop: '65px' }}>No Event Found</h4>
@@ -220,17 +222,14 @@ class Event extends Component {
         }
         else if (SearchfetchEventList.message === listStyleConstants.SEARCH_FETCH_EVENT_SUCCESS && this.props.SearchfetchEventList.data.response.eventList.length >= 1) {
             let userEvents = SearchfetchEventList.data.response.eventList;
-            // let userMovies = this.state.filtered;
-            // console.log('=======', userEvents )
             return (
                 <div className="eventTrays col-sm-12">
                     {userEvents.map(function (event, index) {
-                        console.log('the event exist', event)
                         return (
                             <div className="eventCards" key={index}>
                                 <Link to={{
                                     pathname: "/lifestyle/event-details"}}>
-                                    <div id={localStorage.setItem("goal", JSON.stringify(event))} onClick={that.EventDetails} className="picCard" style={{ backgroundImage: 'url("' + event.thumbnailImage + '")' }}>
+                                    <div id={JSON.stringify(event)} onClick={that.EventDetails} className="picCard" style={{ backgroundImage: 'url("' + event.thumbnailImage + '")' }}>
                                     </div>
                                 </Link>
 
@@ -255,13 +254,18 @@ class Event extends Component {
         }
 
     }
+    loadMore=()=>{
+        if (this.props.getEvents.message === listStyleConstants.GET_EVENTS_SUCCESS && this.props.SearchfetchEventList.message !== listStyleConstants.SEARCH_FETCH_EVENT_PENDING){
+            return <span className="loadMore" onClick={() => this.handleLoadMore()}>Load More</span>
+
+        }
+    }
 
     resultu = () => {
         if (this.state.events !== "") {
             return this.renderEventSeach();
         }
         else {
-            console.log('this is no event', this.state.events)
             return this.renderEvent();
         }
 
@@ -285,8 +289,7 @@ class Event extends Component {
                         <div className="container">
                             {this.resultu()}
                             {
-                                this.props.getEvents.message === listStyleConstants.GET_EVENTS_SUCCESS ?
-                                    <span className="loadMore" onClick={() => this.handleLoadMore()}>Load More</span>:null
+                                this.loadMore()
 
                             }
                         </div>

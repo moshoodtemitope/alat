@@ -32,8 +32,11 @@ import { connect } from "react-redux";
                                             <label style={{fontSize:"24px",color:"#AB2656"}}>Transaction successful</label>
                                         </center>
                                         <center>
-                                            
-                                            <p style={{color:"#444444", fontSize:"16px"}}>You just bought movie ticket(s) your ticket has been sent to your registered email address</p>
+                                            {
+                                                this.props.buyMovieTicket.message === listStyleConstants.BUY_MOVIE_TICKET_SUCCESS ?
+                                                 <p style={{ color: "#444444", fontSize: "16px" }}>You just bought movie ticket(s) your ticket has been sent to your registered email address</p>:
+                                                <p style={{ color: "#444444", fontSize: "16px" }}>You just bought event ticket(s) your ticket has been sent to your registered email address</p>
+                                            }
                                         </center>
 
                                         <center>
@@ -68,7 +71,9 @@ function mapStateToProps(state) {
         getCinemaList: state.LifestyleReducerPile.getCinemaList,
         ShowTime: state.LifestyleReducerPile.ShowTime,
         SubmitTicketData: state.LifestyleReducerPile.SubmitTicketData,
-        SubmitMovieData: state.LifestyleReducerPile.SubmitMovieData
+        SubmitMovieData: state.LifestyleReducerPile.SubmitMovieData,
+        buyMovieTicket: state.LifestyleReducerPile.buyMovieTicket
+
     };
 }
 export default connect(mapStateToProps)(MovieSuccess)

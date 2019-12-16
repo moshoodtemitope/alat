@@ -365,7 +365,6 @@ class FixedGoal extends Component {
                                                             showMonthDropdown
                                                             showYearDropdown
                                                             useShortMonthInDropdown
-                                                            dropdownMode="select"
                                                             minDate={new Date()}
                                                             showWeekNumbers
                                                             onChange={this.handleEndDatePicker}
