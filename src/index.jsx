@@ -16,6 +16,7 @@ import './assets/css/common.css';
 import './assets/css/dashboard.css';
 import {Redirect, Route} from "react-router";
 import App from "./App";
+// import *  as sw from '../sw';
 
 
 // import {createStore} from "redux";
@@ -47,3 +48,4 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.unregister();
+// sw.unregister()

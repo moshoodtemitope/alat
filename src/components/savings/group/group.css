@@ -774,6 +774,8 @@ font-weight: bold;
 .navRight p {
     text-align: right;
     cursor: pointer;
+    /* margin-left:170px; */
+    
 
 }
 

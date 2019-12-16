@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import InnerContainer from '../../shared/templates/inner-container';
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import LifeStyle from '../lifestyle/lifestyle-movie/movie';
-import LifestylePreference from "../lifestyle/lifestyle-preference/preference";
+// import LifestylePreference from "../lifestyle/lifestyle-preference/preference";
 import LifeStyleEvent from "../lifestyle/lifestyle-event/event";
 import MovieDetail from '../lifestyle/lifestyle-movie/movie-details';
 import EventDetails from '../lifestyle/lifestyle-event/event-details';
@@ -12,8 +12,10 @@ import BuyEventTicket from '../lifestyle/lifestyle-event/buy-event-ticket';
 import Visas from '../lifestyle/lifestyle-visas/visas';
 import Dubai from '../lifestyle/lifestyle-visas/dubai-visas';
 import personalDetails from '../lifestyle/lifestyle-visas/personal-details';
-import VisaDetail from '../lifestyle/lifestyle-visas/visa-details'
 import VisaDetails from '../lifestyle/lifestyle-visas/visa-details';
+import VisaPayment from '../lifestyle/lifestyle-visas/VisaPayment';
+import SelectVisa from '../lifestyle/lifestyle-visas/selectVisa';
+import Success from '../lifestyle/lifestyle-visas/success'
 
 
 class LifestyleIndex extends Component {
@@ -37,7 +39,9 @@ class LifestyleIndex extends Component {
                             <div className="row eventWrap">
                                 {
                                     (this.props.location.pathname !=="/lifestyle/movie-details" &&
-                                        this.props.location.pathname !== "/lifestyle/event-details" ) && 
+                                        this.props.location.pathname !== "/lifestyle/event-details" && 
+                                        this.props.location.pathname !== "/lifestyle/buy-event-ticket" 
+                                        && this.props.location.pathname !=="/lifestyle/buy-ticket-details") && 
                                     <div className="col-sm-12">
                                         <p className="page-title">LifeStyle</p>
                                     </div>
@@ -45,7 +49,9 @@ class LifestyleIndex extends Component {
                             
                                 {
                                     (this.props.location.pathname !== "/lifestyle/movie-details" &&
-                                        this.props.location.pathname !== "/lifestyle/event-details") && 
+                                        this.props.location.pathname !== "/lifestyle/event-details" && 
+                                        this.props.location.pathname !== "/lifestyle/buy-event-ticket" && 
+                                        this.props.location.pathname !=="/lifestyle/buy-ticket-details") && 
                                     <div className="col-sm-12">
                                         <div>
                                             <div className="sub-tab-nav">
@@ -75,6 +81,10 @@ class LifestyleIndex extends Component {
                                 <Route path={'/lifestyle/travels/dubai-visa'} component={Dubai}/>
                                 <Route path={'/lifestyle/travels/personal-detail'} component={personalDetails}/>
                                 <Route path={'/lifestyle/travels/visa-detail'} component={VisaDetails}/>
+                                <Route path={'/lifestyle/travels/visa-payment'} component={VisaPayment} />
+                                <Route path={'/lifestyle/travels/select-visa'} component={SelectVisa}/>
+                                <Route path={'/lifestyle/travels/success'} component={Success}/>
+
                             </div>
                         </div>
                     </div>

@@ -538,6 +538,28 @@ export function PostPersonalDetail(state = [], action) {
 
 }
 
+export function PostVisaPayment(state = [], action) {
+    switch (action.type) {
+        case listStyleConstants.POST_VISA_PAYMENT_PENDING:
+            return {
+                message: listStyleConstants.POST_VISA_PAYMENT_PENDING,
+                data: action
+            }
+        case listStyleConstants.POST_VISA_PAYMENT_SUCCESS:
+            return {
+                message: listStyleConstants.POST_VISA_PAYMENT_SUCCESS,
+                data: action
+            }
+        case listStyleConstants.POST_VISA_PAYMENT_FAILURE:
+            return {
+                message: listStyleConstants.POST_VISA_PAYMENT_FAILURE,
+                data: action
+            }
+        default:
+            return { ...state }
+    }
+
+}
 
 
 
