@@ -390,11 +390,12 @@ class LoansDashboard extends React.Component {
                             {currentLoan != null  && 
                                 <Fragment>
                                     {/* <input type="button" disabled={currentLoan == null} value="Liquidate Current Loan" className="btn-alat btn-block" /> */}
-                                    {currentLoan.Status == 'Active' && 
+                                    {/* disabled liquidate loan */}
+                                    {/* {currentLoan.Status == 'Active' && 
                                         <input type="button" value="Liquidate loan"
                                             onClick={this.showLiquidateModal}
                                         className="btn-alat "  />
-                                    }
+                                    } */}
 
                                     
                                     {/* <input type="button" disabled={currentLoan.Status == 'Active'} value="Apply For Loan dfd" onClick={() => this.props.history.push("/loans/salary/calc")} */}
