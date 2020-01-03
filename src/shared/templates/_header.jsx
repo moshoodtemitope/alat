@@ -780,8 +780,8 @@ class HeaderContainer extends React.Component{
         return (
             <Fragment>
                 {this.showNDRPMessage()}
-                {history.location.pathname==='/home' && this.showCMDMPriorityMessage()}
-                {this.state.openCYDMModal && this.collectPriorityInformaton()}
+                {/* {history.location.pathname==='/home' && this.showCMDMPriorityMessage()} */}
+                {/* {this.state.openCYDMModal && this.collectPriorityInformaton()} */}
                 <div className="db2-fixed-header">
                     <div className="container">
                         <div className="row">
