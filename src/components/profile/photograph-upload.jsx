@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 // import * as actions from '../../redux/actions/profile/profile-action';
 import {Fragment} from "react";
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
+import ImageUploader from 'react-images-upload';
 import InnerContainer from '../../shared/templates/inner-container';
 import * as actions from '../../redux/actions/profile/profile-action';
 import { connect } from 'react-redux';
@@ -38,7 +39,9 @@ class PhotographUpload extends Component {
           isToNextOfKin: false,
           navToNextOfKin: false,
           isImageUploaded: false,
-          residentialAddress: false
+          residentialAddress: false,
+          photoUploadLabel: "Upload",
+          photoUploadStatus: false
        }
 
        this.GetResidentialAddress();
@@ -113,8 +116,21 @@ CheckIfStoreInformationIsSet = () => {
    HandleFileUpLoad = (event) => {
        let name = event.target.name;
     //    console.log(name);
-    //    console.log(event.target.files[0]);
+      
     //    return;
+
+    var reader = new  FileReader();
+
+        reader.onload = function(e){
+            document.querySelector('#signatureUploadTemp').style.background = `url(${e.target.result})`;
+            document.querySelector('#signatureUploadTemp').style.backgroundSize = `cover`;
+            document.querySelector('#signatureUploadTemp').style.backgroundRepeat = `no-repeat`;
+            document.querySelector('#signatureUploadTemp').style.backgroundPosition = `center center`;
+           
+        }
+        reader.readAsDataURL(document.querySelector('#file-upload3').files[0]);
+        this.setState({photoUploadLabel:'Change Upload', photoUploadStatus: true});
+        
        this.setState({file3: event.target.files[0]});
    }
    
@@ -299,9 +315,20 @@ ChangeResidentialStatus = () => {
                                                <p className="formHeading">Passport Upload</p>
                                                <div className="form-row">
                                                     <div className={idPhotographValid ? "form-group form-error col-md-10" : "form-group col-md-10"}>
-                                                        <p className="upLoadDiscription">take a picture of your face in a well lit place with your ears clearly visible</p>
-                                                        <div className="signatureUploadTemp">
-                                                                <label htmlFor="file-upload3" className="resizeLabel">Upload</label>
+                                                        <p className="upLoadDiscription">Upload a picture of your face in a well lit place with your ears clearly visible</p>
+                                                        <div className="signatureUploadTemp" id="signatureUploadTemp">
+                                                            <label htmlFor="file-upload3" className={this.state.photoUploadStatus===true?"activated-label resizeLabel":"resizeLabel"}>{this.state.photoUploadLabel}</label>
+                                                                {/* <ImageUploader
+                                                                    withIcon={true}
+                                                                    singleImage={true}
+                                                                    withPreview={true}
+                                                                    label='Upload your Photograph'
+                                                                    className="selfieBtn"
+                                                                    buttonText='Choose image'
+                                                                    onChange={this.HandleFileUpLoad}
+                                                                    imgExtension={['.jpg', '.png', '.jpeg']}
+                                                                    maxFileSize={5242880}
+                                                                /> */}
                                                                 <input name="file3" accept="image/*" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/>
                                                         </div>
                                                    </div>
@@ -309,6 +336,10 @@ ChangeResidentialStatus = () => {
     
                                                <div className="align-buttons">
                                                     <button type="submit" className="twoBut no-border">Submit</button>
+                                                </div>
+
+                                                <div className="back-cta text-center">
+                                                    <Link className="" to="/profile/profile-documents">Back</Link>
                                                 </div>
                                                
                                         </form>

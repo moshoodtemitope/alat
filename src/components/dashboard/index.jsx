@@ -251,7 +251,7 @@ class Dashboard extends React.Component{
                     <div className="container">
                         <div className="row">
                             <div className="col-sm-12">
-                                <p className="welcome-name">Welcome back, <span>{user.fullName}</span></p>
+                                <p className="welcome-name">Welcome back, <span>{user && user.fullName}</span></p>
                             </div>
 
                             <div className="col-sm-12">

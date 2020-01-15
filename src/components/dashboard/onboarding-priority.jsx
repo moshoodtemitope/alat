@@ -65,6 +65,11 @@ class OnboardingPriority extends React.Component{
                     link:'/fund',
                     linkText:'Fund Account'};
                 break;
+            case 'ResidentialAddress':
+                    prorityViewModel = { message:"Please, fill the residential address form",
+                    link:'/profile/profile-residential-address',
+                    linkText:'Provide Residential Address'};
+                break;
             case 'AccountReactivation' : 
                     prorityViewModel = { message:"Your account has been blocked due to an extended period of inactivity.Reactivate your account to remove this restriction.",
                     link:'#',
@@ -107,7 +112,8 @@ class OnboardingPriority extends React.Component{
             NoActivity: 100,
             AccountReactivation: 98,
             InvalidCustomer: 99,
-            Completed: 0
+            Completed: 0,
+            ResidentialAddress: 666
         };
         let user = this.state.user;
 
@@ -134,19 +140,44 @@ class OnboardingPriority extends React.Component{
                         <p>{prorityViewModel.message}</p>
 
                         <ul>
-                            {user.isBvnLinked && <li className="active">Link BVN</li>}
-                            {!user.isBvnLinked && <li>Link BVN</li>}
+                            {user.isBvnLinked && 
+                                <li className="active">Link BVN</li>
+                            }
+                            {!user.isBvnLinked && 
+                                <li>
+                                    <Link className="linktext" to="/profile/linkBVN">Link BVN</Link>
+                                </li>
+                            }
 
                             {user.isAlatPinSet && <li className="active">Set PIN</li>}
-                            {!user.isAlatPinSet && <li>Set PIN</li>}
+                            {!user.isAlatPinSet && 
+                                <li>
+                                    <Link className="linktext" to="/settings/pin-management/create/create-pin">Set PIN</Link>
+                                    
+                                </li>
+                            }
 
                             {user.isAlatLiteDocCompleted && <li className="active">Update Profile</li>}
-                            {!user.isAlatLiteDocCompleted && <li>Update Profile</li>}
+                            {!user.isAlatLiteDocCompleted && 
+                                <li>
+                                     <Link className="linktext" to="/profile">Update Profile</Link>
+                                </li>
+                            }
 
                             {user.isDocumentUploaded && <li className="active">Upload Document</li>}
-                            {!user.isDocumentUploaded && <li>Upload Document</li>}
+                            {!user.isDocumentUploaded && 
+                                <li>
+                                    
+                                    <Link className="linktext" to="/profile/profile-documents">Upload Document</Link>
+                                </li>
+                            }
 
-                            {priorityObject.onboarding_priority_data.response.score < 100 && <li>Fund Account</li>}
+                            {priorityObject.onboarding_priority_data.response.score < 100 && 
+                                <li>
+                                     <Link className="linktext" to="/fund"> Fund Account</Link>
+                                   
+                                </li>
+                            }
                             {priorityObject.onboarding_priority_data.response.score >= 100 && <li className="active">Fund Account</li>}
 
                         </ul>
@@ -163,7 +194,7 @@ class OnboardingPriority extends React.Component{
                             else if(priorityObject.onboarding_priority_data.response.score >= 100)
                             {<a href="#">Fund Account</a>}
                             ); */}
-                            <Link to={prorityViewModel.link}>{prorityViewModel.linkText}</Link>
+                            <Link className="btn-alat" to={prorityViewModel.link}>{prorityViewModel.linkText}</Link>
                             {/* <a href={prorityViewModel.link}>{prorityViewModel.linkText}</a> */}
                         </div>
                     </div>
@@ -188,10 +219,10 @@ class OnboardingPriority extends React.Component{
 }
 
 function mapStateToProps(state){
-    return state.dashboard_userOnboardingPriority;
-    // return {
-    //     onboardingPriority: state.userOnboardingPriority
-    // };
+    // return state.dashboard_userOnboardingPriority;
+    return {
+        // onboardingPriority: state.userOnboardingPriority
+    };
 }
 
 export default connect(mapStateToProps)(OnboardingPriority);

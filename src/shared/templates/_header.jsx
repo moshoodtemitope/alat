@@ -285,7 +285,7 @@ class HeaderContainer extends React.Component{
                             <div className="ndPrWrap">
                                 <div className="ndprMsg al-card">
                                 <span className="close-btn" onClick={()=>this.setState({displayNdpr:false})}>X</span>
-                                    <h3 className="username-heading">Dear {user.fullName},</h3>
+                                    <h3 className="username-heading">Dear {user && user.fullName},</h3>
                                     <p>
                                     Our Privacy Policy has been updated to give you more clarity on how we collect the information you share with us and how we use it.
                                     </p>
@@ -807,7 +807,7 @@ class HeaderContainer extends React.Component{
                                         {/* <img src="../../assets/img/10.jpg" /> */}
                                         <img src={DpHolder} alt=""/>
                                     </div>
-                                    <p className="name">{user.fullName}</p>
+                                    <p className="name">{user && user.fullName}</p>
                                 </div>
                                 { this.renderMiniNav() }
                                 <div className="user-name-circle clearfix">

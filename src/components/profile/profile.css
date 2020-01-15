@@ -326,9 +326,21 @@
     border: 1px solid #DADADA !important;
     height: 40px;
     color:  #7C7C7C !important;
-    /* margin-left: 40% !important; */
+    
+    
+}
+.resizeLabel.activated-label{
+    background-color: #AB2656;
+    color: #ffffff!important;
 }
 
+.back-cta{
+    margin-top: 20px;
+    
+}
+.back-cta a{
+    text-decoration: underline;
+}
 .upLoadDiscription {
     text-align: center;
     color: #787878;
@@ -366,7 +378,10 @@
 .forIdentityCards:hover {
     color: white !important;
 }
-
+.forIdentityCards.activated-label{
+    background-color: #AB2656;
+    color: #ffffff!important;
+}
 .hdStyle {
     padding-bottom: 0px;
     margin-bottom: 0px;

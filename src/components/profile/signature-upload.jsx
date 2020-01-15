@@ -39,6 +39,8 @@ class SignatureUpload extends Component {
           isDocument: false,
           navToNextOfKin: false,
           residentialAddress: false,
+          photoUploadLabel: "Upload",
+          photoUploadStatus: false
        }
 
        this.GetResidentialAddress();
@@ -126,8 +128,19 @@ CheckIfStoreInformationIsSet = () => {
        let name = event.target.name;
     //    console.log(name);
     //    console.log(event.target.files[0]);
+        var reader = new  FileReader();
 
-       this.setState({file3: event.target.files[0]});
+        reader.onload = function(e){
+            document.querySelector('#signatureUploadTemp').style.background = `url(${e.target.result})`;
+            document.querySelector('#signatureUploadTemp').style.backgroundSize = `cover`;
+            document.querySelector('#signatureUploadTemp').style.backgroundRepeat = `no-repeat`;
+            document.querySelector('#signatureUploadTemp').style.backgroundPosition = `center center`;
+        
+        }
+        reader.readAsDataURL(document.querySelector('#file-upload3').files[0]);
+        this.setState({photoUploadLabel:'Change Upload', photoUploadStatus: true});
+
+        this.setState({file3: event.target.files[0]});
    }
 
    SubmitDocuments = () => {
@@ -332,8 +345,8 @@ ChangeResidentialStatus = () => {
                                                <div className="form-row">
                                                     <div className={idCardValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
                                                         <p className="upLoadDiscription">Upload a picture of your signature on a plain white background</p>
-                                                        <div className="signatureUploadTemp">
-                                                                <label htmlFor="file-upload3" className="resizeLabel">Upload</label>
+                                                        <div className="signatureUploadTemp" id="signatureUploadTemp">
+                                                                <label htmlFor="file-upload3" className={this.state.photoUploadStatus===true?"activated-label resizeLabel":"resizeLabel"}>{this.state.photoUploadLabel}</label>
                                                                 <input name="file3" accept="image/*" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/>
                                                         </div>
                                                     </div>
@@ -341,6 +354,9 @@ ChangeResidentialStatus = () => {
                                                
                                                <div className="align-buttons">
                                                     <button type="submit" className="twoBut">Submit</button>
+                                                </div>
+                                                <div className="back-cta text-center">
+                                                    <Link className="" to="/profile/profile-documents">Back</Link>
                                                 </div>
                                         </form>
                                         

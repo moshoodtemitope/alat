@@ -41,6 +41,10 @@ class IdentityCardUpload extends Component {
         //   isToNextOfKin: false,
           isDocument: false, 
           isToNextOfKin: false,
+          frontPhotoLabel: "Upload",
+          photoFrontStatus: false,
+          backPhotoLabel: "Upload",
+          photoBackStatus: false
        }
 
        this.GetResidentialAddress();
@@ -177,6 +181,39 @@ CheckIfStoreInformationIsSet = () => {
     //    console.log(name);
     //    console.log(event.target.files[0]);
     //    return;
+
+    var reader = new  FileReader();
+
+    if(name==="file2"){
+        reader.onload = function(e){
+        
+                document.querySelector('#frontface-preview').style.background = `url(${e.target.result})`;
+                document.querySelector('#frontface-preview').style.backgroundSize = `cover`;
+                document.querySelector('#frontface-preview').style.backgroundRepeat = `no-repeat`;
+                document.querySelector('#frontface-preview').style.backgroundPosition = `center center`;
+            
+            
+        
+        }
+        reader.readAsDataURL(document.querySelector('#file-upload2').files[0]);
+        this.setState({frontPhotoLabel:'Change Upload', photoFrontStatus: true});
+    }
+    if(name==="file3"){
+        reader.onload = function(e){
+        
+                document.querySelector('#backface-preview').style.background = `url(${e.target.result})`;
+                document.querySelector('#backface-preview').style.backgroundSize = `cover`;
+                document.querySelector('#backface-preview').style.backgroundRepeat = `no-repeat`;
+                document.querySelector('#backface-preview').style.backgroundPosition = `center center`;
+            
+            
+        
+        }
+        reader.readAsDataURL(document.querySelector('#file-upload3').files[0]);
+        this.setState({backPhotoLabel:'Change Upload', photoBackStatus: true});
+    }
+    
+    // 
        this.setState({[name]: event.target.files[0]});
    }
 
@@ -414,19 +451,19 @@ ChangeResidentialStatus = () => {
                                                <div className="form-row upload-identity">
                                                     <div className={idFrontFace ? "form-group form-error col-sm-5" : "form-group col-sm-5"}>
                                                             <p className="hdStyle">Identity Card Front</p>
-                                                            <div className="inlineCardsProfile">
+                                                            <div className="inlineCardsProfile" id="frontface-preview">
                                                                 
-                                                                <label htmlFor="file-upload2" className="forIdentityCards">Upload</label>
-                                                                <input name="file2" type="file" id="file-upload2"  onChange={this.HandleFileUpLoad}/>
+                                                <label htmlFor="file-upload2" className={this.state.photoFrontStatus===true?"activated-label forIdentityCards":"forIdentityCards"}>{this.state.frontPhotoLabel}</label>
+                                                                <input accept="image/*" name="file2" type="file" id="file-upload2"  onChange={this.HandleFileUpLoad}/>
                                                             </div>
                                                     </div>
     
                                                     <div className={idCardValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
                                                             <p className="hdStyle">Identity Card Back</p>
-                                                            <div className="inlineCardsProfile">
+                                                            <div className="inlineCardsProfile" id="backface-preview">
                                                                  
-                                                                <label htmlFor="file-upload3" className="forIdentityCards">Upload</label>
-                                                                <input name="file3" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/>
+                                                                <label htmlFor="file-upload3"className={this.state.photoBackStatus===true?"activated-label forIdentityCards":"forIdentityCards"}>{this.state.backPhotoLabel}</label>
+                                                                <input accept="image/*" name="file3" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/>
                                                             </div>
                                                     </div>
                                                </div>
