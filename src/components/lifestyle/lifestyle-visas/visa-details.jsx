@@ -31,8 +31,8 @@ class VisaDetails extends React.Component{
             ApplicationType:"",
             Amount:"",
             passportInvalid:false,
-            depatureDate:'',
-            returnDate:'',
+            depatureDate:"",
+            returnDate:"",
             returnDateInvalid:false,
             departureDateInvalid:false,
             PassportPhoto:null,
@@ -40,9 +40,12 @@ class VisaDetails extends React.Component{
             PassportPage:null,
             PackageName:"",
             showModal: false,
+            showMessage:false,
+            invalidInterval:false,
+            PassportPhotoInvalid:false,
+            PassPortPageInvalid:false,
 
             user:JSON.parse(localStorage.getItem("user")),
-            PassportPhotoInvalid:false
 
 
         };
@@ -100,20 +103,30 @@ class VisaDetails extends React.Component{
         if (this.state.PassportNumber.length != 11) {
             this.setState({ PassportNumberInvalid: true });
             return true;
+        }else{
+            this.setState({ PassportNumberInvalid: false });
+            return false;
+            
         }
     }
     checkPassPortPhoto=()=>{
-        if (this.state.PassportPhoto == "") {
+        if (this.state.PassportPhoto == "" || this.state.PassportPhoto == null) {
             this.setState({ PassportPhotoInvalid: true });
             return true;
+        }else{
+            this.setState({ PassportPhotoInvalid:false});
+            return false
         }
 
     }
     
     checkPassPortPage =()=>{
-        if (this.state.PassportPage === "") {
+        if (this.state.PassportPage == "" || this.state.PassportPage == null) {
             this.setState({ PassPortPageInvalid: true });
             return true;
+        }else{
+            this.setState({ PassPortPageInvalid:false});
+            return false
         }
 
     }
@@ -136,53 +149,91 @@ class VisaDetails extends React.Component{
     }
 
     valDepatureDate = () => {
-        if (this.state.depatureDate == null) {
+        if (this.state.depatureDate == "" || this.state.depatureDate == null) {
             this.setState({ departureDateInvalid: true });
             return true;
-        } else {
+        }else{
             this.setState({ departureDateInvalid: false });
             return false;
+
         }
     };
     valReturnDate = () => {
-        if (this.state.returnDate == null) {
+        if (this.state.returnDate == "" || this.state.returnDate == null) {
             this.setState({ returnDateInvalid: true });
             return true;
-        } else {
+        }else{
             this.setState({ returnDateInvalid: false });
             return false;
+            
         }
     };
+    dateComparison=()=>{
+        if (this.state.depatureDate != this.state.returnDate) {
+            if (this.state.depatureDate && this.state.returnDate) {
+                if (Date.parse(this.state.returnDate) > Date.parse(this.state.depatureDate)) {
+                    this.setState({ invalidInterval: true });
+                    return true;
+                }
+            }
+    }
+   
+}
     handleDepatureDatePicker = (depatureDate) => {
         depatureDate.setHours(depatureDate.getHours() + 1);
         this.setState({ depatureDate: depatureDate });
     };
+    // handleDepatureDatePicker = (depatureDate) => {
+    //     if (typeof depatureDate === 'object') {
+    //         depatureDate.setHours(depatureDate.getHours() + 1);
+
+    //         let StartDateField = new Date(depatureDate).getUTCFullYear() + '-' + (new Date(depatureDate).getUTCMonth() + 1) + '-' + (new Date(depatureDate).getUTCDate()) + 'T00:00:00';
+
+
+    //         this.setState({ depatureDate, StartDateField, defaultStartDate: '' });
+    //     } else {
+
+    //         this.setState({ depatureDate: '', StartDateField: '' });
+    //     }
+    // }
     handleReturnDatePicker = (returnDate) => {
         returnDate.setHours(returnDate.getHours() + 1);
         this.setState({ returnDate: returnDate });
-    };
+    }; 
+    // handleReturnDatePicker = (returnDate) => {
+    //     if (typeof returnDate === 'object') {
+    //         returnDate.setHours(returnDate.getHours() + 1);
+
+    //         let EndDateField = new Date(returnDate).getUTCFullYear() + '-' + (new Date(returnDate).getUTCMonth() + 1) + '-' + (new Date(returnDate).getUTCDate()) + 'T00:00:00';
+
+
+
+
+    //         this.setState({ returnDate, EndDateField, defaultEndDate: '' });
+    //     } else {
+
+    //         this.setState({ returnDate: '', EndDateField: '' });
+    //     }
+    // }
     handleOnChange = (e) => {
         let name = e.target.name;
         this.setState({ [name]: e.target.value })
 
     }
     handleChange = (e) => {
-        const name = e.target.name;
-        if (/^[0-9]+$/.test(e.target.value)) {
-            this.setState({ [name]: e.target.value });
-            if (this.state.formsubmitted && e.target.value.length == 11)
-                this.setState({ passportInvalid: false });
-        }
-        else if (e.target.value === "") {
-            this.setState({ [name]: e.target.value });
-        }
+       let name = e.target.name;
+        this.setState({ PassportNumber: e.target.value })
 
     }
+    showInfo=()=>{
+        this.setState({showMessage:true})
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({ formsubmitted: true });
 
-        if (this.checkPassPortNumber() || this.valDepatureDate() || this.valReturnDate()) {
+        if (this.checkPassPortNumber() || this.valDepatureDate() || this.valReturnDate() || this.checkPassPortPhoto() || this.checkPassPortPage() || this.dateComparison() ) {
 
         } else {
             const data ={
@@ -199,6 +250,7 @@ class VisaDetails extends React.Component{
             DepartingDate:this.state.depatureDate,
             VisaCountry: "Dubia",
             VisaOptionID: "1",
+            VisaPackageID: this.state.Package,
             PackageSpecialIdentifier: this.state.Package,
             ChannelType: "Website",
             PassportPhoto: this.state.PassportPhoto,
@@ -213,28 +265,31 @@ class VisaDetails extends React.Component{
         }
     }
 
-    gotoStep2 = () => {
-        if (this.props.PostVisaDetail)
-            if (this.props.PostVisaDetail.message === listStyleConstants.POST_VISA_DETAIL_SUCCESS) {
-                return <Redirect to="/lifestyle/travels/visa-payment"/>
-            }
-    };
+    // gotoStep2 = () => {
+    //     if (this.props.PostVisaDetail)
+    //         if (this.props.PostVisaDetail.message === listStyleConstants.POST_VISA_DETAIL_SUCCESS) {
+    //             return <Redirect to="/lifestyle/travels/visa-payment"/>
+    //         }
+    // };
 
     render(){
-        const { PassportNumberInvalid, PassportNumber, departureDateInvalid, returnDateInvalid, PassPortPageInvalid, PassportPhotoInvalid } = this.state
+        const { PassportNumberInvalid, invalidInterval, PassportNumber, departureDateInvalid, returnDateInvalid, PassPortPageInvalid, PassportPhotoInvalid } = this.state
         return(
             
             <div className="col-sm-12">
-                {this.gotoStep2()}
+                {/* {this.gotoStep2()} */}
                 <div className="row">
                     <div className="col-sm-12">
                         <div className="max-600">
+                            {this.props.alert && this.props.alert.message &&
+                                <div style={{ width: "100%" ,marginLeft: "1px" }} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                            }
                             <div className="al-card no-pad">
                                 <Modal open={this.state.showModal} onClose={this.onCloseModal} center>
                                     <div className="disclaimer text-center">
                                         <h4 className="hd-underline" style={{ width: "100%", color: "#AB2656" }}>Instructions</h4>
                                         <ul className="disclaimer-list">
-                                            <li> Taken within the last 6 months to reflect your current appearance</li>
+                                            <li>Taken within the last 6 months to reflect your current appearance</li>
                                             <li>Taken in front of a plain white or off-white background</li>
                                             <li>Taken in full-face view directly facing the camera</li>
                                             <li>With a neutral facial expression and both eyes open</li>
@@ -251,11 +306,10 @@ class VisaDetails extends React.Component{
                                         </div>
                                     </div>
                                 </Modal>
+                                
                                 <h4 className="m-b-10 center-text hd-underline">Visa Details</h4>
                                 {/* <div className="transfer-ctn">  */}
-                                {this.props.alert && this.props.alert.message &&
-                                    <div style={{ width: "100%" }} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
-                                }
+                                
                                
                                         <form onSubmit={this.handleSubmit}>
                                             <div className={PassportNumberInvalid ? "form-group form-error" : "form-group"}>
@@ -266,11 +320,11 @@ class VisaDetails extends React.Component{
                                                 }
                                             </div>
                                             <div className="form-row">
-                                                <div className={!departureDateInvalid ? "form-group col-md-6 " : "form-group col-md-6 form-error"}>
+                                            <div className={!departureDateInvalid   ? "form-group col-md-6 " : "form-group col-md-6 form-error"}>
                                                     <label className="label-text">Depature Date</label>
                                                     <DatePicker
                                                         className="form-control"
-                                                       selected={this.state.depatureDate}
+                                                        selected={this.state.depatureDate}
                                                         autoComplete="off"
                                                         placeholderText="12/09/2019"
                                                         dateFormat=" MMMM d, yyyy"
@@ -289,15 +343,15 @@ class VisaDetails extends React.Component{
                                                     />
                                                     <i className="mdi mdi-calendar-range"></i>
 
-                                                    {departureDateInvalid &&
+                                                {departureDateInvalid &&
                                                         <div className="text-danger">select a valid date</div>
                                                     }
 
                                                 </div>
-                                                <div className={!returnDateInvalid ? "form-group col-md-6" : "form-group col-md-6 form-error"}>
+                                                <div className={!returnDateInvalid || invalidInterval ? "form-group col-md-6" : "form-group col-md-6 form-error"}>
                                                     <label className="label-text">Return date</label>
                                                     <DatePicker
-                                                       selected={this.state.returnDate}
+                                                        selected={this.state.returnDate}
                                                         className="form-control"
                                                         autoComplete="off"
                                                         placeholderText="12/10/2020"
@@ -317,9 +371,10 @@ class VisaDetails extends React.Component{
                                                     />
                                                     <i className="mdi mdi-calendar-range"></i>
 
-                                                    {returnDateInvalid &&
+                                                {returnDateInvalid && 
                                                         <div className="text-danger">select a valid date</div>
                                                     }
+                                                    
                                                 </div>
                                             </div>
                                              <div className="form-row">
@@ -328,12 +383,12 @@ class VisaDetails extends React.Component{
                                                     <label htmlFor="PassportPhoto" className="travel-image">
                                                         {
                                                     this.state.PassportPhoto
-                                                    ? <img  src={this.state.PassportPhoto} alt=""/> : <img src={newUser} alt="" />
+                                                        ? <img style={{ width: "50px", height: "100px"}} src={this.state.PassportPhoto} alt=""/> : <img src={newUser} alt="" />
                                                     }
                                                      </label>
-                                            <input type="file" name="PassportPhoto" accept="image/*" id="PassportPhoto" onChange={this.PassPortPhotoFileUpLoad}/>
+                                                    <input type="file" name="PassportPhoto" accept="image/*" id="PassportPhoto" onChange={this.PassPortPhotoFileUpLoad}/>
                                                     {PassportPhotoInvalid &&
-                                                        <div className="text-danger">Upload a PassportPhoto</div>
+                                                        <div className="text-danger" style={{marginTop:"15px"}}>Upload a PassportPhoto</div>
                                                     }
 
                                                     </div>
@@ -341,12 +396,12 @@ class VisaDetails extends React.Component{
                                                         <label htmlFor="PassportPage" className="travel-image">
                                                             {
                                                                 this.state.PassportPage
-                                                                ? <img src={this.state.PassportPage} alt=""/>:<img src={pass} alt=""/>
+                                                                ? <img style={{width:"50px", height:"100px"}} src={this.state.PassportPage} alt=""/>:<img src={pass} alt=""/>
                                                             }
                                                             <input type="file" name="PassportPage" accept="image/*" id="PassportPage" onChange={this.PassportPageFileUpload} />
                                                         </label>
                                                         {PassPortPageInvalid &&
-                                                            <div className="text-danger">Upload a PassportPage</div>
+                                                            <div className="text-danger" style={{marginTop:'15px'}}>Upload a PassportPage</div>
                                                         }
                                                     </div>
                                                     <div className="travel-label">
@@ -368,19 +423,30 @@ class VisaDetails extends React.Component{
                                                     } 
                                                 </button>
                                                              
-                                                
+                                                    <div style={{cursor:"pointer", marginBottom:'15px'}}>
+                                                    <h2 onClick={this.onShowModal} className="text-purple">Click here to see <span  className="text-purple">Picture Guidelines</span></h2>
+                                                    </div>
                                                     </center>
+                                                    
                                                 </div>
                                             </div>
                                         </form>
                                      </div>
 
 
-
+                                <center>
+                                    <a href='kkkkkkk' style={{ cursor: "pointer" }} onClick={() => {
+                                        this.props.dispatch(actions.ClearAction(listStyleConstants.MOVIE_REDUCER_CLEAR));
+                                    this.props.history.push('/lifestyle/travels/personal-detail')
+                                    }} className="add-bene m-t-50">
+                                        Go back
+                                    </a>
+                                </center>
 
                             {/* </div> */}
                         </div>
                     </div>
+                    
                 </div>
             </div>
 

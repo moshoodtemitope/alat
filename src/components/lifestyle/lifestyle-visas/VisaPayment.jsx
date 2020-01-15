@@ -92,22 +92,28 @@ class VisaPayment extends React.Component{
 
         }
     }
-    gotoStep2 = () => {
-        if (this.props.PostVisaPayment)
-            if (this.props.PostVisaPayment.message === listStyleConstants.POST_VISA_PAYMENT_SUCCESS) {
-                return <Redirect to="/lifestyle/travels/success"/>
-            }
+    // gotoStep2 = () => {
+    //     if (this.props.PostVisaPayment)
+    //         if (this.props.PostVisaPayment.message === listStyleConstants.POST_VISA_PAYMENT_SUCCESS) {
+    //             return <Redirect to="/lifestyle/travels/success"/>
+    //         }
+    // };
+    formatAmountNoDecimal = (amount) => {
+        return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
     };
+
 
     render(){
         return(
             <div className="col-sm-12">
                 <div className="row">
+                    {/* {this.gotoStep2()} */}
+
                     <div className="col-sm-12">
                         <div className="max-600">
-                            {/* {this.props.alert && this.props.alert.message &&
-                                <div style={{ width: "100%" }} className={`info-label ${this.props.alert.type}`}>{this.props.PostVisaPayment.data.response.message}</div>
-                            } */}
+                            {this.props.alert && this.props.alert.message &&
+                                <div style={{ width: "100%", marginLeft:"1px" }} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                            }
                             <div className="al-card no-pad">
                                 <h4 className="m-b-10 center-text hd-underline">Payment Details</h4>
                                 <div className="transfer-ctn">
@@ -117,7 +123,7 @@ class VisaPayment extends React.Component{
                                             <div className="trans-summary-card">
                                                 <div className="name-amount clearfix">
                                                     <p className="pl-name-email">{this.state.user.accounts[0].accountType}<span>{this.state.user.accounts[0].accountNumber}</span></p>
-                                                    <p className="pl-amount-balance">N{this.state.user.accounts[0].availableBalance}<span>Account Balance</span></p>
+                                                    <p className="pl-amount-balance">₦{this.state.user.accounts[0].availableBalance}<span>Account Balance</span></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -125,7 +131,7 @@ class VisaPayment extends React.Component{
                                             <div className="trans-summary-card">
                                                 <div className="name-amount clearfix">
                                                 <p className="pl-name-email">{this.state.ApplicationType}<span>{this.state.PackageName}</span><span>{this.state.Email}</span><span>Passport Number:{this.state.PassportNumber}</span></p>
-                                                    <p className="pl-amount-balance">N{this.state.Amount}</p>
+                                                    <p className="pl-amount-balance">₦{this.formatAmountNoDecimal(this.state.Amount)}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -150,8 +156,17 @@ class VisaPayment extends React.Component{
                                     </form>
                                 </div>
                             </div>
+                             <center>
+                                <a  style={{ cursor: "pointer" }} onClick={() => {
+                                    this.props.dispatch(actions.ClearAction(listStyleConstants.MOVIE_REDUCER_CLEAR));
+                                    this.props.history.push('/lifestyle/travels/visa-detail')
+                                }} className="add-bene m-t-50">
+                                    Go back
+                                </a>
+                        </center>
                         </div>
                     </div>
+                   
                 </div>
             </div>
 

@@ -146,6 +146,13 @@ export const addDocuments = (token, data) => {
     return (dispatch) => {
         let consume = ApiService.request(routes.ADD_DOCUMENT, "POST", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        // smartech('identify', user.email);
+        // smartech('dispatch', 'alat_utility_success',{
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo
+        // });
         return consume
             .then(response => {
                 dispatch(success(response.data));

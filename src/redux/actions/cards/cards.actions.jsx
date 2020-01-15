@@ -206,8 +206,14 @@ export const sendNewVirtualCardInfo = (newVirtualCardInfo, token, hasOtp)=>{
         if(hasOtp===true){
             consume = ApiService.request(routes.CREAT_VIRTUAL_CARD_FINAL, "POST", newVirtualCardInfo, SystemConstant.HEADER);
         }
-         
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
         dispatch(request(consume));
+        // smartech('identify', user.email);
+        // smartech('dispatch', 'ALAT_VCard_Success', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo
+        // });
         return consume
             .then(response=>{
                 
@@ -307,6 +313,13 @@ export const getVirtualDetails = (payload, token)=>{
     return (dispatch)=>{
         let consume =  ApiService.request(routes.GET_SINGLE_VC, "POST", payload, SystemConstant.HEADER); 
         dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        // smartech('identify', user.email);
+        // smartech('dispatch', 'ALAT_VCard_Success', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo
+        // });
         return consume
             .then(response=>{
                 dispatch(success(response));
@@ -407,6 +420,13 @@ export const deleteAlatVirtualCard = (payload, token)=>{
     return (dispatch)=>{
         let consume =  ApiService.request(routes.DELETE_VIRTUAL_CARD, "POST", payload, SystemConstant.HEADER); 
         dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        // smartech('identify', user.email);
+        // smartech('dispatch', 'ALAT_VCard_Delete', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo
+        // });
         return consume
             .then(response=>{
                 dispatch(success(response));
@@ -477,6 +497,14 @@ export const getCurrentATMCard = (token)=>{
     return (dispatch)=>{
         let consume =  ApiService.request(routes.GET_PANS, "GET", null, SystemConstant.HEADER); 
         dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        console.log(user)
+        // smartech('identify', user.email);
+        // smartech('dispatch', 'ALAT_Request_Card', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo
+        // }); 
         return consume
             .then(response=>{
                 if(response.data.length>=1){
@@ -517,6 +545,14 @@ export const getATMCardHotlistReasons = (token)=>{
     return (dispatch)=>{
         let consume =  ApiService.request(routes.HOTLIST_CARD_REASONS, "GET", null, SystemConstant.HEADER); 
         dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        // smartech('identify', user.email);
+        // smartech('dispatch', 'ALAT_Card_Hotlist_Success', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo
+        // });
+
         return consume
             .then(response=>{
                 dispatch(success(response));
@@ -551,6 +587,13 @@ export const hotlistATMCard = (payload, token)=>{
     return (dispatch)=>{
         let consume =  ApiService.request(routes.HOTLIST_CARD, "POST", payload, SystemConstant.HEADER); 
         dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        // smartech('identify', user.email);
+        // smartech('dispatch', 'ALAT_Card_Hotlist', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo
+        // });
         return consume
             .then(response=>{
                 dispatch(success(response));
@@ -705,6 +748,13 @@ export const getALATCardSettings = (token, pan, isWemaCustomer)=>{
                        
                         
                         dispatch(request(consume2))
+                        let user_details = localStorage.getItem("user");
+                        let user = JSON.parse(user_details)
+                        // smartech('identify', user.email);
+                        // smartech('dispatch', 'ALAT_Card_Control', {
+                        //     "Email": user.email,
+                        //     "mobile": user.phoneNo
+                        // });
                         return consume2
                             .then(response2=>{
                                 // let panNum = response2.data[0].maskedPan.replace(/\*/g, '');
@@ -1083,6 +1133,13 @@ export const postDataForNewATMCard = (payload, token)=>{
     return(dispatch)=>{
         let consume =  ApiService.request(routes.SAVECARD, "POST", payload, SystemConstant.HEADER); 
         dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        // smartech('identify', user.email);
+        // smartech('dispatch', 'ALAT_Request_Card_Success', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo
+        // }); 
         return consume
             .then(response=>{
                 dispatch(success(response));

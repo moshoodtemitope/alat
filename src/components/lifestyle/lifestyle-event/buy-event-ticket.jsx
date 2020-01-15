@@ -104,7 +104,8 @@ class BuyTicket extends Component {
                 "Source":this.state.source,
                 "TicketAmount":this.state.TicketAmount.toString(),
                 "TicketNo":this.state.quantity.toString(),
-                "Pin":this.state.Pin
+                "Pin":this.state.Pin,
+                "title":this.state.title
             };
             // console.log(data)
         

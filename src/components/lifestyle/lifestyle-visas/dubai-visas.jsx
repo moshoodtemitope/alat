@@ -125,12 +125,12 @@ class Dubai extends React.Component{
         if (this.state.formsubmitted && event.target.value != "")
             this.setState({ ApplicationInvalid: false })
     }
-    gotoStep2 = () => {
-        if (this.props.post_visa)
-            if (this.props.post_visa.message === listStyleConstants.POST_VISA_SUCCESS) {
-                return <Redirect to="/lifestyle/travels/personal-detail"/>
-            }
-    };
+    // gotoStep2 = () => {
+    //     if (this.props.post_visa)
+    //         if (this.props.post_visa.message === listStyleConstants.POST_VISA_SUCCESS) {
+    //             return <Redirect to="/lifestyle/travels/personal-detail"/>
+    //         }
+    // };
     renderSelect = () => {
         if (this.props.get_visa_package.message === listStyleConstants.GET_VISA_PACKAGE_PENDING) {
             return <select> <option> Loading Visa Application Type... </option> </select>
@@ -192,7 +192,7 @@ class Dubai extends React.Component{
                 <div className="row">
                     <div className="col-sm-12">
                         <div className="max-600">
-                            {this.gotoStep2()}
+                            {/* {this.gotoStep2()} */}
                             <div className="al-card no-pad">
                                 <h4 className="m-b-10 center-text hd-underline">Dubai Visa</h4>
                                 <div className="transfer-ctn">
