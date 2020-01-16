@@ -118,6 +118,8 @@ class OnboardingPriority extends React.Component{
         let user = this.state.user;
 
         let priorityObject = priority;
+        // console.log("H++++HH",priorityObject.onboarding_priority_data.response.score );
+        
         if(priorityObject.onboarding_priority === userConstants.DASHBOARD_ONBOARDING_PRIORITY_SUCCESS && priorityObject.onboarding_priority_data){
             let prorityViewModel = { message:'', link:'', linkText:''};
             if(priorityObject.onboarding_priority_data.response.message !== ""){
@@ -127,8 +129,8 @@ class OnboardingPriority extends React.Component{
             else{
                 prorityViewModel = this.getCorrespondingMessage(priorityObject);
             }
-            //console.log(prorityViewModel);
-            if(priorityObject.onboarding_priority_data.response.score < 100 || !user.isAlatPinSet) {
+           
+            if(parseInt(priorityObject.onboarding_priority_data.response.score) < 100 || !user.isAlatPinSet) {
 
                 return (
                     <div className="account-setup">
@@ -219,10 +221,10 @@ class OnboardingPriority extends React.Component{
 }
 
 function mapStateToProps(state){
-    // return state.dashboard_userOnboardingPriority;
-    return {
-        // onboardingPriority: state.userOnboardingPriority
-    };
+    return state.dashboard_userOnboardingPriority;
+    // return {
+    //     onboarding_priority: state.userOnboardingPriority
+    // };
 }
 
 export default connect(mapStateToProps)(OnboardingPriority);
