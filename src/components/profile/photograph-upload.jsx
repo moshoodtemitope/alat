@@ -50,11 +50,16 @@ class PhotographUpload extends Component {
    componentDidMount = () => {
     this.CheckIfStoreInformationIsSet();
     this.setProfile();
+    this.checkProfileuploads();
    }
 
    GetResidentialAddress = () => {
     this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
-}
+    }
+
+    checkProfileuploads=()=>{
+        this.props.dispatch(actions.checkProfileUploads(this.state.user.token));
+    }
 
 
 setProfile = () => {
@@ -148,7 +153,25 @@ CheckIfStoreInformationIsSet = () => {
         formData.append('DocumentType', "Passport")
         formData.append('File', this.state.file3,this.state.file3.name)
         // console.log(formData);
-       this.props.dispatch(actions.addDocuments(this.state.user.token, formData));
+    //    this.props.dispatch(actions.addDocuments(this.state.user.token, formData));
+       this.asynAddRequest(this.state.user.token, formData)
+            .then(()=>{
+
+                if(this.props.addDocuments.message === profile.DOCUMENTS_SUCCESS){
+                                                    
+                                                    
+                    setTimeout(() => {
+                        this.props.dispatch(actions.addDocuments(this.state.user.token, "CLEAR"))
+                    }, 2000);
+                }
+                
+            })
+    }
+
+    asynAddRequest = async (token, data)=>{
+        const {dispatch} = this.props;
+
+        await  dispatch(actions.addDocuments(token, data));
     }
 
 
@@ -243,6 +266,107 @@ ChangeResidentialStatus = () => {
         this.setState({residentialAddress: true});
     }, 1000)
 }
+
+renderPhotoForm =()=>{
+    let checkedProfileResponse =  this.props.checkProfileUploads;   
+    let addDocumentsRequest = this.props.addDocuments;
+    const {residentialAddress, isImageUploaded, isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, isToNextOfKin, idTypeValidity, idFrontFace, idPhotographValid, idCardNumberValidity} = this.state;
+    switch (checkedProfileResponse.message){
+        case (profile.CHECK_PROFILE_UPLOADS_PENDING):
+            return(
+                <div className="parentForm text-center">
+                    Please wait...
+                </div>
+            )
+        case (profile.CHECK_PROFILE_UPLOADS_SUCCESS):
+            let profileStatusData = checkedProfileResponse.data.response.ResponseDict
+            return(
+                <div>
+                    <form onSubmit={this.HandleSubmit} className="parentForm docUpLoadFormProfile">
+                        {addDocumentsRequest.message !== profile.DOCUMENTS_SUCCESS &&
+                            <div>
+                                <p className="formHeading">Passport Upload</p>
+                                <div className="form-row">
+                                    <div className={idPhotographValid ? "form-group form-error col-md-10" : "form-group col-md-10"}>
+                                    {(profileStatusData.Passport === "No") &&
+                                        <p className="upLoadDiscription">Upload a picture of your face in a well lit place with your ears clearly visible</p>
+                                    }   
+
+                                    {profileStatusData.Passport === "No" &&
+                                        <div className="signatureUploadTemp" id="signatureUploadTemp">
+                                            <label htmlFor="file-upload3" className={this.state.photoUploadStatus === true ? "activated-label resizeLabel" : "resizeLabel"}>{this.state.photoUploadLabel}</label>
+                                            {/* <ImageUploader
+                                                                    withIcon={true}
+                                                                    singleImage={true}
+                                                                    withPreview={true}
+                                                                    label='Upload your Photograph'
+                                                                    className="selfieBtn"
+                                                                    buttonText='Choose image'
+                                                                    onChange={this.HandleFileUpLoad}
+                                                                    imgExtension={['.jpg', '.png', '.jpeg']}
+                                                                    maxFileSize={5242880}
+                                                                /> */}
+                                            <input name="file3" accept="image/*" type="file" id="file-upload3" onChange={this.HandleFileUpLoad} />
+                                     </div>
+                                    } 
+
+                                    {profileStatusData.Passport === "Yes" &&
+                                        <div className="signatureUploadTemp" id="signatureUploadTemp">
+                                            <label htmlFor="file-upload3"className="completedupload resizeLabel">
+                                            <img className="doneIcon" src={CompletedprofileImage} alt="" />Uploaded
+                                                
+                                            </label>
+                                           
+                                            
+                                     </div>
+                                    } 
+                                        
+                                        
+                                    </div>
+                                </div>
+
+                                {profileStatusData.Passport === "No" &&
+                                    <div className="align-buttons">
+                                        <button type="submit"
+                                            disabled={addDocumentsRequest.is_processing}
+                                            className="twoBut no-border"
+                                        >{addDocumentsRequest.is_processing ? "Please wait..." : "Submit"}</button>
+                                    </div>
+                                }
+
+                                {(addDocumentsRequest.is_processing === false || addDocumentsRequest.is_processing === undefined) &&
+                                    <div className="back-cta text-center">
+                                        <Link className="" to="/profile/profile-documents">Back</Link>
+                                    </div>
+                                }
+                            </div>
+                        }
+
+                        {
+                            addDocumentsRequest.message === profile.DOCUMENTS_SUCCESS &&
+                            <div className="info-label success upload-alert">Successfully Uploaded signature</div>
+                        }
+
+                        {
+                            addDocumentsRequest.message === profile.DOCUMENTS_FAILURE &&
+                            <div className="info-label error upload-alert">{addDocumentsRequest.data}</div>
+                        }
+
+
+
+
+                    </form>
+                </div>
+            )
+        case (profile.CHECK_PROFILE_UPLOADS_FAILURE):
+            return(
+                <div className="parentForm text-center">
+                    An error occured
+                </div>
+            )
+
+    }
+}
    render(){
       const {residentialAddress, isImageUploaded, isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, isToNextOfKin, idTypeValidity, idFrontFace, idPhotographValid, idCardNumberValidity} = this.state;
       
@@ -250,6 +374,7 @@ ChangeResidentialStatus = () => {
              this.ChangeResidentialStatus();
 
       if(this.props.profileMenu.message === profile.GET_PROFILE_MENU_SUCCESS){
+          let addDocumentsRequest = this.props.addDocuments;
         return(
             <Fragment>
                         <div className="">
@@ -311,39 +436,8 @@ ChangeResidentialStatus = () => {
                                             </div>
                                         </div>
                                         <div className="col-sm-6">
-                                        <form onSubmit={this.HandleSubmit} className="parentForm docUpLoadFormProfile">
-                                               <p className="formHeading">Passport Upload</p>
-                                               <div className="form-row">
-                                                    <div className={idPhotographValid ? "form-group form-error col-md-10" : "form-group col-md-10"}>
-                                                        <p className="upLoadDiscription">Upload a picture of your face in a well lit place with your ears clearly visible</p>
-                                                        <div className="signatureUploadTemp" id="signatureUploadTemp">
-                                                            <label htmlFor="file-upload3" className={this.state.photoUploadStatus===true?"activated-label resizeLabel":"resizeLabel"}>{this.state.photoUploadLabel}</label>
-                                                                {/* <ImageUploader
-                                                                    withIcon={true}
-                                                                    singleImage={true}
-                                                                    withPreview={true}
-                                                                    label='Upload your Photograph'
-                                                                    className="selfieBtn"
-                                                                    buttonText='Choose image'
-                                                                    onChange={this.HandleFileUpLoad}
-                                                                    imgExtension={['.jpg', '.png', '.jpeg']}
-                                                                    maxFileSize={5242880}
-                                                                /> */}
-                                                                <input name="file3" accept="image/*" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/>
-                                                        </div>
-                                                   </div>
-                                               </div>
-    
-                                               <div className="align-buttons">
-                                                    <button type="submit" className="twoBut no-border">Submit</button>
-                                                </div>
-
-                                                <div className="back-cta text-center">
-                                                    <Link className="" to="/profile/profile-documents">Back</Link>
-                                                </div>
-                                               
-                                        </form>
                                         
+                                           {this.renderPhotoForm()}
                                         </div>
                                     </div>
                                     </div>
@@ -447,7 +541,9 @@ const mapStateToProps = (state) => {
     return{
         profileMenu: state.profileMenu,
         alert:state.alert,
-        GetResidentialAddress: state.GetResidentialAddress
+        GetResidentialAddress: state.GetResidentialAddress,
+        checkProfileUploads: state.checkProfileUploads,
+        addDocuments: state.addDocuments,
     }
 }
 

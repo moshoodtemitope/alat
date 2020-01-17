@@ -374,6 +374,36 @@
     height: 40px;
     color:  #7C7C7C !important;
 }
+label.completedupload {
+    cursor: not-allowed;
+    pointer-events: none;
+    font-weight: bold;
+    border-color: #ECF0F1;
+    background: #ECF0F1;
+}
+.docUpLoadFormProfile label.completedupload {
+    cursor: not-allowed;
+    pointer-events: none;
+    font-weight: bold;
+    border-color: #ECF0F1;
+    background: #ECF0F1;
+}
+
+.upload-alert{
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+.pl-0{
+    padding-left: 0!important;
+}
+
+.doneIcon {
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
+    margin-top: 0;
+}
 
 .forIdentityCards:hover {
     color: white !important;

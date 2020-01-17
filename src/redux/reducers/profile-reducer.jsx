@@ -44,6 +44,27 @@ export function profileMenu (state=[], action){
            return {... state}
     }
 }
+export function checkProfileUploads (state=[], action){
+    switch(action.type){
+        case profile.CHECK_PROFILE_UPLOADS_PENDING: 
+           return {
+               message: profile.CHECK_PROFILE_UPLOADS_PENDING,
+               data: action
+           }
+        case profile.CHECK_PROFILE_UPLOADS_SUCCESS:
+           return {
+               message: profile.CHECK_PROFILE_UPLOADS_SUCCESS,
+               data: action
+           }
+        case profile.CHECK_PROFILE_UPLOADS_FAILURE:
+           return {
+               message: profile.CHECK_PROFILE_UPLOADS_FAILURE,
+               data: action
+           }
+        default: 
+           return {... state}
+    }
+}
 
 
 export function capturePersonalInformation (state=[], action){
@@ -140,18 +161,27 @@ export function addDocuments (state=[], action){
         case profile.DOCUMENTS_PENDING:  
            return { 
                message: profile.DOCUMENTS_PENDING, 
+               is_processing: true,
                data: action           
            }
         case profile.DOCUMENTS_SUCCESS:
            return {
                message: profile.DOCUMENTS_SUCCESS,
+               is_processing: false,
                data: action
            }
         case profile.DOCUMENTS_FAILURE:
            return {
                message: profile.DOCUMENTS_FAILURE,
+               is_processing: false,
                data: action
            }
+        case profile.DOCUMENTS_CLEAR:
+            return {
+                message: profile.DOCUMENTS_CLEAR,
+                is_processing: false,
+                data: action
+            }
         default: 
            return {... state}
     }
