@@ -13,7 +13,8 @@ class LoanEstimator extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            Term: 6,
+            // Term: 6,
+            Term: 0,
             LoanAmount: "",
             LoanAmountText: "",
             repaymentAmount: "",
@@ -159,7 +160,8 @@ class LoanEstimator extends React.Component {
                                             <div className="text-danger">{`Amount to borrow must be greater than ${util.formatAmount(this.props.minimumLoanAmount)} and not more than ${util.formatAmount(this.props.maxAmount)}`} </div>
                                         }
                                     </div>
-                                    <p>Payment Terms(months) <span>{this.state.Term}</span></p>
+                                    
+                                    <p>Payment Terms(months) <span>{(this.state.Term>=1?this.state.Term:'')}</span></p>
                                     <div className="input-ctn">
                                         {/* <span className="input-span">N</span>
                                     <input className="input-borderless" type="text" /> */}
