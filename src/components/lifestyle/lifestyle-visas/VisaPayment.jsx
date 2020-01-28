@@ -24,8 +24,12 @@ class VisaPayment extends React.Component{
             Email:"",
             PassportNumber:"",
             TransactionReference:"",
-            DebitAccountNumber:"",
+            DebitAccountNumber: "",
+            AccountNo: "",
             user: JSON.parse(localStorage.getItem("user")),
+            AccountType:"",
+            AvailableBalance:"",
+    
 
 
         }
@@ -66,7 +70,12 @@ class VisaPayment extends React.Component{
                 PassportNumber: data.data.PassportNumber,
                 Email: data.data.Email,
                 PackageName: data.data.PackageName,
-                TransactionReference: data.response.data.transactionReference
+                TransactionReference: data.response.data.transactionReference,
+                AccountNo: data.data.AccountNo,
+                AccountType: data.data.AccountType,
+                AvailableBalance: data.data.AvailableBalance
+
+
 
 
 
@@ -82,7 +91,7 @@ class VisaPayment extends React.Component{
         } else {
             let data={
                 TransactionReference: this.state.TransactionReference,
-                DebitAccountNumber: this.state.user.accounts[0].accountNumber,
+                DebitAccountNumber: this.state.AccountNo.trim(),
                 Pin: this.state.Pin,
                 Amount: parseFloat(this.state.Amount),
                 
@@ -122,8 +131,8 @@ class VisaPayment extends React.Component{
                                         <div className="al-card no-pad">
                                             <div className="trans-summary-card">
                                                 <div className="name-amount clearfix">
-                                                    <p className="pl-name-email">{this.state.user.accounts[0].accountType}<span>{this.state.user.accounts[0].accountNumber}</span></p>
-                                                    <p className="pl-amount-balance">₦{this.state.user.accounts[0].availableBalance}<span>Account Balance</span></p>
+                                                    <p className="pl-name-email">{this.state.AccountType}<span>{this.state.AccountNo}</span></p>
+                                                    <p className="pl-amount-balance">₦{this.state.AvailableBalance}<span>Account Balance</span></p>
                                                 </div>
                                             </div>
                                         </div>

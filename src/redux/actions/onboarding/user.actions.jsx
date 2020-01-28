@@ -1,9 +1,11 @@
+import React from 'react'
 import { ApiService } from "../../../services/apiService";
 import { routes } from "../../../services/urls";
 import { alertActions } from "../alert.actions";
 import { SystemConstant } from "../../../shared/constants";
 import { history } from './../../../_helpers/history';
 import { handleError, modelStateErrorHandler } from './../../../shared/utils';
+
 import {
     USER_REGISTER_FETCH, USER_REGISTER_SAVE, userConstants, BVN_VERIFICATION_PENDING,
     BVN_VERIFICATION_SUCCESS, BVN_VERIFICATION_FAILURE, SKIP_BVN_PENDING, SKIP_BVN_SUCCESS,
@@ -125,11 +127,11 @@ function login(email, password) {
                 localStorage.setItem("user", JSON.stringify(response.data));
                 let user_details = localStorage.getItem("user");
                 let user = JSON.parse(user_details)
-                // smartech('identify', user.email);
-                // smartech('dispatch', 'alat_Login_Success', {
-                //     "Email": user.email,
-                //     "mobile": user.phoneNo
-                // });
+                window.smartech('identify', user.email);
+                window.smartech('dispatch', 'alat_Login_Success', {
+                    "Email": user.email,
+                    "mobile": user.phoneNo
+                });
                 // console.log(user);
                 //     this.apiService.getEncrytionRule(encrytedData => {
                 //         this.sharedData.keepData('encryptedFigure', encrytedData);

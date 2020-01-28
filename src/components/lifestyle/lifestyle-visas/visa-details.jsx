@@ -8,6 +8,9 @@ import { listStyleConstants } from '../../../redux/constants/lifestyle/lifestyle
 import { connect } from "react-redux";
 import { Redirect } from 'react-router-dom';
 import Modal from 'react-responsive-modal';
+import { DebitableAccount } from '../../../redux/actions/lifestyle/movies-actions';
+
+
 
 
 
@@ -44,6 +47,10 @@ class VisaDetails extends React.Component{
             invalidInterval:false,
             PassportPhotoInvalid:false,
             PassPortPageInvalid:false,
+            accountToDebitInValid: false,
+            AccountNo:"",
+            AvailableBalance:null,
+            AccountType:null,
 
             user:JSON.parse(localStorage.getItem("user")),
 
@@ -54,6 +61,9 @@ class VisaDetails extends React.Component{
         this.handleReturnDatePicker = this.handleReturnDatePicker.bind(this);
         this.PassPortPhotoFileUpLoad = this.PassPortPhotoFileUpLoad.bind(this);
         this.PassportPageFileUpload = this.PassportPageFileUpload.bind(this);
+        // this.handleDebit = this.handleDebit.bind(this);
+        this.fetchDebitableAccount()
+
 
 
     }
@@ -83,6 +93,11 @@ class VisaDetails extends React.Component{
             });
         }
     };
+    fetchDebitableAccount() {
+        const { dispatch } = this.props;
+        dispatch(DebitableAccount(this.state.user.token));
+
+    };
     onShowModal = (event) => {
         // console.log("dot here")
         event.preventDefault();
@@ -100,7 +115,7 @@ class VisaDetails extends React.Component{
     }
 
     checkPassPortNumber = () => {
-        if (this.state.PassportNumber.length != 11) {
+        if (this.state.PassportNumber === "" || this.state.PassportNumber === null)  {
             this.setState({ PassportNumberInvalid: true });
             return true;
         }else{
@@ -147,6 +162,29 @@ class VisaDetails extends React.Component{
         }
         reader.readAsDataURL(file);
     }
+    handleDebitableAccount = (event) => {
+        let AccountNo = event.target.value.split("8888")[2];
+        let AccountName = event.target.value.split("8888")[1];
+        let AccountType = event.target.value.split("8888")[0];
+        let AvailableBalance = event.target.value.split("8888")[3];
+        this.setState({ AccountNo:AccountNo});
+        this.setState({ AccountName: AccountName});
+        this.setState({ AccountType: AccountType});
+        this.setState({ AvailableBalance: AvailableBalance});
+        if (this.state.formsubmitted && event.target.value != "")
+            this.setState({ accountToDebitInValid: false })
+    
+        
+    };
+    validateAccountNumber() {
+        if (this.state.AccountNo === "" || this.state.AccountNo === null) {
+            this.setState({ accountToDebitInValid: true });
+            return true;
+        } else {
+            this.setState({ accountToDebitInValid: false })
+            return false;
+        }
+    }
 
     valDepatureDate = () => {
         if (this.state.depatureDate == "" || this.state.depatureDate == null) {
@@ -171,7 +209,7 @@ class VisaDetails extends React.Component{
     dateComparison=()=>{
         if (this.state.depatureDate != this.state.returnDate) {
             if (this.state.depatureDate && this.state.returnDate) {
-                if (Date.parse(this.state.returnDate) > Date.parse(this.state.depatureDate)) {
+                if (Date.parse(this.state.returnDate) <= Date.parse(this.state.depatureDate)) {
                     this.setState({ invalidInterval: true });
                     return true;
                 }
@@ -183,38 +221,12 @@ class VisaDetails extends React.Component{
         depatureDate.setHours(depatureDate.getHours() + 1);
         this.setState({ depatureDate: depatureDate });
     };
-    // handleDepatureDatePicker = (depatureDate) => {
-    //     if (typeof depatureDate === 'object') {
-    //         depatureDate.setHours(depatureDate.getHours() + 1);
-
-    //         let StartDateField = new Date(depatureDate).getUTCFullYear() + '-' + (new Date(depatureDate).getUTCMonth() + 1) + '-' + (new Date(depatureDate).getUTCDate()) + 'T00:00:00';
-
-
-    //         this.setState({ depatureDate, StartDateField, defaultStartDate: '' });
-    //     } else {
-
-    //         this.setState({ depatureDate: '', StartDateField: '' });
-    //     }
-    // }
+    
     handleReturnDatePicker = (returnDate) => {
         returnDate.setHours(returnDate.getHours() + 1);
         this.setState({ returnDate: returnDate });
     }; 
-    // handleReturnDatePicker = (returnDate) => {
-    //     if (typeof returnDate === 'object') {
-    //         returnDate.setHours(returnDate.getHours() + 1);
-
-    //         let EndDateField = new Date(returnDate).getUTCFullYear() + '-' + (new Date(returnDate).getUTCMonth() + 1) + '-' + (new Date(returnDate).getUTCDate()) + 'T00:00:00';
-
-
-
-
-    //         this.setState({ returnDate, EndDateField, defaultEndDate: '' });
-    //     } else {
-
-    //         this.setState({ returnDate: '', EndDateField: '' });
-    //     }
-    // }
+    
     handleOnChange = (e) => {
         let name = e.target.name;
         this.setState({ [name]: e.target.value })
@@ -233,7 +245,8 @@ class VisaDetails extends React.Component{
         e.preventDefault();
         this.setState({ formsubmitted: true });
 
-        if (this.checkPassPortNumber() || this.valDepatureDate() || this.valReturnDate() || this.checkPassPortPhoto() || this.checkPassPortPage() || this.dateComparison() ) {
+        if (this.checkPassPortNumber() || this.valDepatureDate() || this.valReturnDate() || this.dateComparison()
+         || this.checkPassPortPhoto() || this.checkPassPortPage() || this.validateAccountNumber()) {
 
         } else {
             const data ={
@@ -256,7 +269,12 @@ class VisaDetails extends React.Component{
             PassportPhoto: this.state.PassportPhoto,
             PassportPage: this.state.PassportPage,
             CurrencyType: "NGN",
-            PackageName: this.state.PackageName
+            PackageName: this.state.PackageName,
+            AccountNo: this.state.AccountNo,
+            AccountType: this.state.AccountType,
+            AvailableBalance: this.state.AvailableBalance
+
+
         }
         console.log(data)
         // return
@@ -264,20 +282,38 @@ class VisaDetails extends React.Component{
 
         }
     }
+    renderSelectableDebitabe=()=>{
+        if (this.props.debitable_account.message === listStyleConstants.DEBITABLE_ACCOUNT_PENDING){
+           return <select><option>loading... debitable Account</option></select>
+        } else if (this.props.debitable_account.message === listStyleConstants.DEBITABLE_ACCOUNT_FAILURE){
+            return <select><option>No debitable Account</option></select>
 
-    // gotoStep2 = () => {
-    //     if (this.props.PostVisaDetail)
-    //         if (this.props.PostVisaDetail.message === listStyleConstants.POST_VISA_DETAIL_SUCCESS) {
-    //             return <Redirect to="/lifestyle/travels/visa-payment"/>
-    //         }
-    // };
+
+        } else if (this.props.debitable_account.message === listStyleConstants.DEBITABLE_ACCOUNT_SUCCESS){
+            let account = this.props.debitable_account.data.response
+            return(
+                <select onChange={this.handleDebitableAccount}>
+                    <option>Select Account to debit</option>
+                    {
+                        account.map(select_debitable => {
+                            return (<option key={select_debitable.BranchCode} value={select_debitable.AccountType + "8888" + " " +select_debitable.AccountName+ " " + "8888" + " " + select_debitable.AccountNumber + "8888" + " " + select_debitable.AvailableBalance}>
+                                {select_debitable.AccountType + '' + "("+select_debitable.AccountNumber + ")" + '-' + select_debitable.Currency+''+select_debitable.AvailableBalance}</option>)
+                        })
+                    }
+
+                </select>
+            )
+
+        }
+
+    }
 
     render(){
-        const { PassportNumberInvalid, invalidInterval, PassportNumber, departureDateInvalid, returnDateInvalid, PassPortPageInvalid, PassportPhotoInvalid } = this.state
+        const { PassportNumberInvalid, invalidInterval, PassportNumber, departureDateInvalid, returnDateInvalid, PassPortPageInvalid, PassportPhotoInvalid,accountToDebitInValid} = this.state
+        const { debitable_account } = this.props
         return(
             
             <div className="col-sm-12">
-                {/* {this.gotoStep2()} */}
                 <div className="row">
                     <div className="col-sm-12">
                         <div className="max-600">
@@ -296,12 +332,12 @@ class VisaDetails extends React.Component{
                                             <li>With a neutral facial expression and both eyes open</li>
                                         </ul>
                                         <div className="btn-">
-                                            <button style={{ width: "80%" }}
-                                                className="btn-alat"> <b>Okay, I understand</b>
+                                            <button style={{ width: "80%" }} onClick={this.onCloseModal}
+                                                className="btn-alat"> <b>Okay, I Agree</b>
 
                                                 
                                             </button><br /><br />
-                                            <button onClick={this.onCloseModal} className="disclaimer-btn"><b>Cancel</b></button>
+                                            <button onClick={this.onCloseModal} className="disclaimer-btn"><b>Okay, I Disagree</b></button>
 
                                         </div>
                                     </div>
@@ -374,7 +410,8 @@ class VisaDetails extends React.Component{
                                                 {returnDateInvalid && 
                                                         <div className="text-danger">select a valid date</div>
                                                     }
-                                                    
+                                            
+
                                                 </div>
                                             </div>
                                              <div className="form-row">
@@ -407,9 +444,21 @@ class VisaDetails extends React.Component{
                                                     <div className="travel-label">
                                                         <p className="travel-description">Upload a picture of your face</p>
                                                         <p className="travel-description">Upload International Passport Page</p>
+                                                       
                                                     </div> 
+                                                    {invalidInterval &&
+                                                        <div className="text-danger">Departure date can not be greater than the returning date
+                                                                    </div>
+                                                    }
                                                     
 
+                                            </div>
+                                            <div className={accountToDebitInValid ? "form-group form-error":"form-group"}>
+                                                {this.renderSelectableDebitabe()}
+                                                {
+                                                    accountToDebitInValid && <div className="text-danger">Select account number</div>
+                                                }
+                                                   
                                             </div>
                                             <div className="row">
                                                 <div className="col-sm-12">
@@ -464,6 +513,7 @@ function mapStateToProps(state) {
         post_visa:state.LifestyleReducerPile.PostVisa,
         PostVisaDetail:state.LifestyleReducerPile.PostVisaDetail,
         alert: state.alert,
+        debitable_account:state.LifestyleReducerPile.DebitableAccount
 
 
 

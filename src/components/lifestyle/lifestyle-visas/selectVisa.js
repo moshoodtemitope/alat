@@ -55,8 +55,8 @@ class SelectVisa extends React.Component{
                                 </ul>
                                 <div className="btn-">
                                     <button onClick = {() => this.props.history.push('/lifestyle/travels/dubai-visa')}style = {{width: "80%"}}
-                                    className = "btn-alat"> <b>Okay, I understand</b></button><br/><br/>
-                                    <button  onClick={this.onCloseModal} className="disclaimer-btn"><b>Cancel</b></button>
+                                    className = "btn-alat"> <b>I Agree</b></button><br/><br/>
+                                    <button  onClick={this.onCloseModal} className="disclaimer-btn"><b>I Disagree</b></button>
                                 </div>
                             </div>
                         </Modal>

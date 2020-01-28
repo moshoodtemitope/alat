@@ -488,6 +488,28 @@ export const PostVisaPayment = (token, data) => {
     function success(response) { return { type: listStyleConstants.POST_VISA_PAYMENT_SUCCESS, response } }
     function failure(error) { return { type: listStyleConstants.POST_VISA_PAYMENT_FAILURE, error } }
 };
+export const DebitableAccount = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.GetAllCustomerAccountsWithLimitsV2, "POST", data, SystemConstant.HEADER, false);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
+            });
+    };
+
+    function request(request) { return { type: listStyleConstants.DEBITABLE_ACCOUNT_PENDING, request } }
+    function success(response) { return { type: listStyleConstants.DEBITABLE_ACCOUNT_SUCCESS, response } }
+    function failure(error) { return { type: listStyleConstants.DEBITABLE_ACCOUNT_FAILURE, error } }
+};
+
+
 
 
 

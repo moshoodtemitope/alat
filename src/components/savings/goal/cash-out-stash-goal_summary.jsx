@@ -153,7 +153,7 @@ class CashoutStashGoal extends Component {
                                                         </div>
 
                                                         <div className="right">
-                                                            <p className='GoalText'>Account to Debit</p>
+                                                            <p className='GoalText'>Account to Credit</p>
                                                             <p className='boldedText'>{this.state.debitAccount}</p>
                                                         </div>
                                                     </div>

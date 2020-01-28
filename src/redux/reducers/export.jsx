@@ -41,7 +41,8 @@ import {getCinemaList,
     GetVisaPackage,
     PostVisaDetail,
     PostPersonalDetail,
-    PostVisaPayment
+    PostVisaPayment,
+    DebitableAccount
     } from './lifestyle/lifestyle-reducer';
 
 
@@ -82,7 +83,9 @@ import { loanCalcDataReducer, loanApplyReducer, GetIndustriesReducer, GetEmploye
      loanMandateStatusReducer, loanValidateRemitaOtpReducer, loanStatementUpload, continueApplication, 
      SignatureReducer , PassportReducer, KycRequired,liquidateLoanReducer, termsReducer } from './loan.reducer';
 import { linkBVN, profileSuccessMessage, profileMenu, capturePersonalInformation,getContactDetail,
-        getResidential, addNextOfKin, addContactDetails, occupationAndSector, addDocuments,getPersonalInfo, GetResidentialAddress, addResidentialAddress, getStates, nextOfKinsRelationship } from './profile-reducer';
+        getResidential, addNextOfKin, addContactDetails, occupationAndSector,
+         addDocuments,getPersonalInfo, GetResidentialAddress, addResidentialAddress, getStates,
+        nextOfKinsRelationship, DocumentUploadCheckReducer } from './profile-reducer';
 
 import { geCurrentVirtualCardsRequest,
          sendVCNewCardinfo,
@@ -377,7 +380,8 @@ export const movies = {
     GetVisaPackage,
     PostVisaDetail,
     PostPersonalDetail,
-    PostVisaPayment
+    PostVisaPayment,
+    DebitableAccount
 }
 
 
@@ -400,5 +404,6 @@ export const profile = {
     getStates,
     nextOfKinsRelationship,
     addResidentialAddress,
-    GetResidentialAddress
+    GetResidentialAddress,
+    DocumentUploadCheckReducer
 }

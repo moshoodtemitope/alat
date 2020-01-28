@@ -42,6 +42,7 @@ class PhotographUpload extends Component {
        }
 
        this.GetResidentialAddress();
+       this.documentUploadCheck()
    }
 
    componentDidMount = () => {
@@ -51,7 +52,10 @@ class PhotographUpload extends Component {
 
    GetResidentialAddress = () => {
     this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
-}
+    }
+    documentUploadCheck =()=>{
+        this.props.dispatch(actions.DocumentUploadCheck(this.state.user.token))
+    }
 
 
 setProfile = () => {
@@ -229,6 +233,8 @@ ChangeResidentialStatus = () => {
 }
    render(){
       const {residentialAddress, isImageUploaded, isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, isToNextOfKin, idTypeValidity, idFrontFace, idPhotographValid, idCardNumberValidity} = this.state;
+       const { documentUploadCheck} = this.props;
+       console.log("this is the photograph upload cheeck",documentUploadCheck)
       
       if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
              this.ChangeResidentialStatus();
@@ -416,7 +422,8 @@ const mapStateToProps = (state) => {
     return{
         profileMenu: state.profileMenu,
         alert:state.alert,
-        GetResidentialAddress: state.GetResidentialAddress
+        GetResidentialAddress: state.GetResidentialAddress,
+        documentUploadCheck: state.documentUploadCheck
     }
 }
 
