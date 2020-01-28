@@ -83,9 +83,13 @@ import { loanCalcDataReducer, loanApplyReducer, GetIndustriesReducer, GetEmploye
      loanMandateStatusReducer, loanValidateRemitaOtpReducer, loanStatementUpload, continueApplication, 
      SignatureReducer , PassportReducer, KycRequired,liquidateLoanReducer, termsReducer } from './loan.reducer';
 import { linkBVN, profileSuccessMessage, profileMenu, capturePersonalInformation,getContactDetail,
+<<<<<<< HEAD
         getResidential, addNextOfKin, addContactDetails, occupationAndSector,
          addDocuments,getPersonalInfo, GetResidentialAddress, addResidentialAddress, getStates,
         nextOfKinsRelationship, DocumentUploadCheckReducer } from './profile-reducer';
+=======
+        getResidential, checkProfileUploads, addNextOfKin, addContactDetails, occupationAndSector, addDocuments,getPersonalInfo, GetResidentialAddress, addResidentialAddress, getStates, nextOfKinsRelationship } from './profile-reducer';
+>>>>>>> 4bc214f37ad6ac11f7c743041407420f58c97dff
 
 import { geCurrentVirtualCardsRequest,
          sendVCNewCardinfo,
@@ -395,6 +399,7 @@ export const profile = {
     profileMenu,
     capturePersonalInformation,
     addNextOfKin,
+    checkProfileUploads,
     addContactDetails,
     occupationAndSector,
     addDocuments,

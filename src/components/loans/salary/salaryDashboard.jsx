@@ -71,16 +71,21 @@ class LoansDashboard extends React.Component {
 
 
     initCurrentLoan = () => {
-        if (this.props.loan_current && !this.state.currentLoanSet)
+        if (this.props.loan_current && !this.state.currentLoanSet){
             if (this.props.loan_current.loan_current_status == loanConstants.LOAN_CURRENT_SUCCESS) {
                 var data = {
                     ...this.props.loan_current.loan_current_data.response.Response
                 };
                 
-                if(this.props.loan_current.loan_current_data.response.Response != null)
-                this.setState({ currentLoan: data, currentLoanSet: true });
-                else this.setState({currentLoanSet: true });
+                
+                if(this.props.loan_current.loan_current_data.response.Response != null){
+                    this.setState({ currentLoan: data, currentLoanSet: true });
+                }
+                else{ 
+                    this.setState({currentLoanSet: true });
+                }
             }
+        }
     }
 
     controlModal = () => {
@@ -162,12 +167,17 @@ class LoansDashboard extends React.Component {
     }
 
     returnCurrentLoanPendingStatus = () => {
-        if (this.props.loan_current)
+        if (this.props.loan_current){
             if (this.props.loan_current.loan_current_status == loanConstants.LOAN_CURRENT_PENDING) {
                 return loanConstants.LOAN_CURRENT_PENDING;
-            } else if (this.props.loan_current.loan_current_status == loanConstants.LOAN_CURRENT_FAILURE) {
+            } 
+            if (this.props.loan_current.loan_current_status == loanConstants.LOAN_CURRENT_FAILURE) {
                 return loanConstants.LOAN_CURRENT_FAILURE;
             }
+            if (this.props.loan_current.loan_current_status == loanConstants.LOAN_CURRENT_SUCCESS) {
+                return loanConstants.LOAN_CURRENT_SUCCESS;
+            }
+        }
     }
 
     returnLoanHistoryPendingStatus = () => {
@@ -294,6 +304,7 @@ class LoansDashboard extends React.Component {
         
         //this.returnPendingLoanAppLication();
         const { currentLoan } = this.state;
+        console.log("current loans are", currentLoan);
         return (<Fragment>
             {this.showLiquidate()}
             <div className="row">
@@ -353,7 +364,7 @@ class LoansDashboard extends React.Component {
                                 </div>
                             </div>}
                             {currentLoan == null && this.state.pendingLoanApplication == null && <div className="shd-box seg empty">
-                                {this.returnCurrentLoanPendingStatus() == loanConstants.LOAN_CURRENT_SUCCESS && <span className="grey-text big">You dont have a current loan!</span>}
+                                {this.returnCurrentLoanPendingStatus() == loanConstants.LOAN_CURRENT_SUCCESS && <span className="grey-text big">Hi {this.state.user.fullName}, You do not have a current loan!</span>}
                                 {this.returnCurrentLoanPendingStatus() == loanConstants.LOAN_CURRENT_PENDING && <span className="grey-text big">Loading...</span>}
                                 {this.returnCurrentLoanPendingStatus() == loanConstants.LOAN_CURRENT_FAILURE && <span className="grey-text big"><a onClick={this.getCurrentLoan} style={{ cursor: "pointer" }}>Click to try again</a></span>}
                             </div>}

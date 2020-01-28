@@ -187,7 +187,7 @@ class TopUPGoal extends Component {
                                     <div className="sub-tab-nav">
                                         <ul>
                                             <NavLink to='/savings/choose-goal-plan'>
-                                                <li><a href="accounts.html" className="active">Goals</a></li>
+                                                <li className="active">Goals</li>
                                             </NavLink>
                                             <NavLink to='/savings/activityDashBoard'>
                                                 <li><a href="/savings/activityDashBoard">Group Savings</a></li>

@@ -458,6 +458,7 @@ const appReducer = combineReducers({
     profileMenu:profile.profileMenu,
     capturePersonalInformation: profile.capturePersonalInformation,
     addNextOfKin:profile.addNextOfKin,
+    checkProfileUploads:profile.checkProfileUploads,
     addContactDetails:profile.addContactDetails,
     occupationAndSector:profile.occupationAndSector,
     addDocuments:profile.addDocuments,

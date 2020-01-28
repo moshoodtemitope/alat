@@ -30,8 +30,8 @@ class FundAccountIndex extends React.Component {
                                             {this.props.children}
                                            
                                                 <Route exact path={'/fund'} component={FundAccount} />
-                                                <Route path={'/fund/wema'} component={FundWemaIndex} />
-                                                <Route path={'/fund/wema/success'} component={FundWemaSuccess}/>
+                                                <Route exact path={'/fund/wema'} component={FundWemaIndex} />
+                                                <Route exact path={'/fund/wema/success'} component={FundWemaSuccess}/>
                                                 {/* card */}
                                                 <Route exact path={'/fund/card'} component={FundCardIndex}/>
                                                 <Route path={'/fund/card/details'} component={FundCardDetails} />

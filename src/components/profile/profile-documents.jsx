@@ -43,11 +43,16 @@ class ProfileDocuments extends Component {
    componentDidMount = () => {
     this.CheckIfStoreInformationIsSet();
     this.setProfile();
+    this.checkProfileuploads();
    }
 
    GetResidentialAddress = () => {
-    this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
-}
+        this.props.dispatch(actions.GetResidentialAddress(this.state.user.token));
+    }
+
+    checkProfileuploads=()=>{
+        this.props.dispatch(actions.checkProfileUploads(this.state.user.token));
+    }
 
 
 setProfile = () => {
@@ -264,9 +269,109 @@ ChangeResidentialStatus = () => {
     }, 1000)
 }
 
+renderUploadOptions = ()=>{
+    let checkedProfileResponse =  this.props.checkProfileUploads;
+    const {photoGraphUploadValidity, signatureValidity, idCardValidity}= this.state
+    switch (checkedProfileResponse.message){
+        case (profile.CHECK_PROFILE_UPLOADS_PENDING):
+            return(
+                <div className="parentForm text-center">
+                    Please wait...
+                </div>
+            )
+        case (profile.CHECK_PROFILE_UPLOADS_SUCCESS):
+            let profileStatusData = checkedProfileResponse.data.response.ResponseDict
+            return(
+                <div>
+                    <form onSubmit={this.HandleSubmit} className="parentForm docUpLoadFormProfile">
+                        <p className="formHeading">Documents</p>
+                        <div className="form-row">
+                            <div className={photoGraphUploadValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
+                                
+                                {/* <input type="file" name="file1" id="file-upload1" readOnly onClick={this.NavigateToUploadPicture} onChange={this.PreventDefault}/> */}
+
+                                {
+                                    profileStatusData.Passport==="Yes" &&
+                                   
+                                    <label htmlFor="file-upload1" className="completedupload">
+                                        <img className="doneIcon" src={CompletedprofileImage} alt="" />Photograph
+                                    </label>
+                                }
+
+                                {
+                                    profileStatusData.Passport==="No" &&
+                                    <label htmlFor="file-upload1" onClick={this.NavigateToUploadPicture}>Photograph</label>
+                                    
+                                }
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <div className={signatureValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
+                                {/* <label htmlFor="file-upload2" onClick={this.NavigateToUploadSignature}>Signature</label> */}
+                                {
+                                    profileStatusData.Signature==="Yes" &&
+                                    <label htmlFor="file-upload2" className="completedupload" onClick={this.NavigateToUploadSignature}>
+                                    
+                                        <img className="doneIcon" src={CompletedprofileImage} alt="" />Signature
+                                    </label>
+                                }
+
+                                {
+                                    profileStatusData.Signature==="No" &&
+                                    <label htmlFor="file-upload2" onClick={this.NavigateToUploadSignature}>
+                                        Signature
+                                    </label>
+                                }
+                                
+                                {/* <input name="file2" type="file" id="file-upload2"  onChange={this.HandleFileUpLoad}/> */}
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <div className={idCardValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
+                                
+                                {/* <input name="file3" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/> */}
+                                
+                                {
+                                   (profileStatusData.Identity==="Yes" && profileStatusData['Identity Back']==="Yes") &&
+                                   
+                                    <label htmlFor="file-upload3" className="completedupload">
+                                        <img className="doneIcon" src={CompletedprofileImage} alt="" />Identity Card
+                                    </label>
+                                }
+
+                                {
+                                    (profileStatusData.Identity==="No" || profileStatusData['Identity Back']==="No") &&
+                                    <label htmlFor="file-upload3" onClick={this.NavigateToDocumentUpload}>Identity Card</label>
+                                    
+                                }
+                            </div>
+                        </div>
+
+                        {/* <div className="align-buttons">
+                            <button disabled={this.props.addDocuments.message === profile.DOCUMENTS_PENDING} type="submit" className="twoBut no-border">
+                                {this.props.addDocuments.message === profile.DOCUMENTS_PENDING ? "Processing..." : "Submit"}
+
+                            </button>
+                        </div> */}
+                    </form>
+                </div>
+            )
+        case (profile.CHECK_PROFILE_UPLOADS_FAILURE):
+            return(
+                <div className="parentForm text-center">
+                    An error occured
+                </div>
+            )
+
+    }
+
+}
+
    render(){
       const {residentialAddress, isImageUploaded, isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isToNextOfKin, isDocument, photoGraphUploadValidity, signatureValidity, idCardValidity} = this.state;
-      
+        
       if(this.props.GetResidentialAddress.message === profile.GET_RESIDENTIAL_ADDRESS_SUCCESS)
              this.ChangeResidentialStatus();
 
@@ -366,36 +471,8 @@ ChangeResidentialStatus = () => {
                                             
                                         </div>
                                         <div className="col-sm-6">
-                                        <form onSubmit={this.HandleSubmit} className="parentForm docUpLoadFormProfile">
-                                               <p className="formHeading">Documents</p>
-                                               <div className="form-row">
-                                                    <div className={photoGraphUploadValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
-                                                            <label htmlFor="file-upload1" onClick={this.NavigateToUploadPicture}>Photograph</label>
-                                                            {/* <input type="file" name="file1" id="file-upload1" readOnly onClick={this.NavigateToUploadPicture} onChange={this.PreventDefault}/> */}
-                                                    </div>
-                                               </div>
-    
-                                               <div className="form-row">
-                                                    <div className={signatureValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
-                                                                <label htmlFor="file-upload2" onClick={this.NavigateToUploadSignature}>Signature</label>
-                                                                {/* <input name="file2" type="file" id="file-upload2"  onChange={this.HandleFileUpLoad}/> */}
-                                                    </div>
-                                               </div>
-    
-                                               <div className="form-row">
-                                                    <div className={idCardValidity ? "form-group form-error col-md-10" : "form-group col-md-10"}>
-                                                                <label htmlFor="file-upload3" onClick={this.NavigateToDocumentUpload}>Identity Card</label>
-                                                                {/* <input name="file3" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/> */}
-                                                    </div>
-                                               </div>
-                                               
-                                               <div className="align-buttons">
-                                                    <button disabled={this.props.addDocuments.message ===profile.DOCUMENTS_PENDING} type="submit" className="twoBut no-border">
-                                                    {this.props.addDocuments.message === profile.DOCUMENTS_PENDING ? "Processing..." :"Submit"}
-
-                                                    </button>
-                                                </div>
-                                        </form>
+                                            
+                                        {this.renderUploadOptions()}
                                         
                                         </div>
                                     </div>
@@ -472,7 +549,8 @@ const mapStateToProps = (state) => {
         profileMenu: state.profileMenu,
         alert:state.alert,
          addDocuments:state.addDocuments,
-         GetResidentialAddress: state.GetResidentialAddress
+         GetResidentialAddress: state.GetResidentialAddress,
+         checkProfileUploads: state.checkProfileUploads
 
     }
 }

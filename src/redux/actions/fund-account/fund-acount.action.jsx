@@ -23,7 +23,7 @@ export const fundAlatWemaAccount =(token, data)=>{
         return consume
             .then(response => {
                 //TODO: edit localDB accounts object
-                dispatch(success(response.data, request));
+                dispatch(success(response.data, data));
             })
             .catch(error => {
                // dispatch(success(response.data, request));
@@ -34,7 +34,7 @@ export const fundAlatWemaAccount =(token, data)=>{
     };
 
     function request(request) { return { type: fundAccountConstants.FUND_ALAT_WEMA_PENDING, request } }
-    function success(response, request) { return { type: fundAccountConstants.FUND_ALAT_WEMA_SUCCESS, response : response, data: request } }
+    function success(response, data) { return { type: fundAccountConstants.FUND_ALAT_WEMA_SUCCESS, response : response, data } }
     function failure(error) { return { type: fundAccountConstants.FUND_ALAT_WEMA_FAILURE, error } }
 };
 

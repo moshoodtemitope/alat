@@ -1346,11 +1346,17 @@ ul.menu-side {
   border-top: 1px solid #f5f5f5;
   padding: 15px 30px;
   text-align: right; }
-  .footer-breaker a {
+  /* .footer-breaker a {
     color: #AB2656; }
     .footer-breaker a:hover {
-      text-decoration: none; }
-
+      text-decoration: none; } */
+  .linktext{
+    text-decoration: underline;
+  }
+  /* .resizeLabel.activated-label{
+    background-color: #AB2656;
+    color: #ffffff;
+  } */
 .bar-ctn {
   width: 100%;
   height: 10px;
