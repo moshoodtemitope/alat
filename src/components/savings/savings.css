@@ -11,8 +11,7 @@
    background: #9D0F3E;
    border: 0.95px solid #FFF4F4;
    box-sizing: border-box;
-   /* width: 300px;
-   height: 250px; */
+   
    margin-left:10px;
    margin-right:10px;
 }
@@ -59,7 +58,7 @@
    color: #ffffff;
    margin-left: 25px;
    line-height: 22px;
-   /* font-family:"proxima_novasemibold", sans-serif !important; */
+   
    font-style: normal;
 }
 .info-text3{
@@ -70,7 +69,7 @@
    margin-left: 15px;
    padding-left: 10px;
    padding-right: 20px;
-   /* font-family:"proxima_novaregular", sans-serif !important; */
+   
 
 }
 .info-text2{
@@ -81,52 +80,29 @@
    margin-left: 14px;
    padding-left: 10px;
    padding-right: 20px;
-   /* font-family:"proxima_novaregular", sans-serif !important; */
+   
 
 }
-/* .info-text2:hover{
-    color: #FFFFFF;
-    font-size: 14px;
-    line-height: 20px;
-    display: block;
-    margin-left: 14px;
-    padding-left: 10px;
-    padding-right: 20px;
-    font-family:"proxima_novaregular", sans-serif !important;
- 
- } */
+
 .flex-goal{
    box-shadow: 3px 8px 24px rgba(255, 255, 255, 0.3221);
    border-radius: 6px;
    background: #ffffff;
    border: 0.95px solid #FFF4F4;
    box-sizing: border-box;
-   /* width: 300px;
-   height: 250px; */
+   
    margin-left:10px;
    margin-right:10px;
 }
 
-/* .flex-goal:hover{
-    box-shadow: 3px 8px 24px rgba(255, 255, 255, 0.3221);
-   border-radius: 6px;
-   background: #A90836;
-   border: 0.95px solid #FFF4F4;
-   box-sizing: border-box;
-   width: 300px;
-   height: 250px;
-   margin-left:10px;
-   margin-right:10px;
 
-} */
 .stash-goal{
    border-radius: 6px;
    background: #ffffff;
    box-shadow: 0px 8px 24px rgba(185, 185, 185, 0.162138);
    border: 0.95px solid #FFF4F4;
    box-sizing: border-box;
-   /* width: 300px;
-   height: 250px; */
+   
    margin-left:10px;
    margin-right:10px;
 }
@@ -137,11 +113,11 @@
    color: #AB2656;
    margin-left: 25px;
    line-height: 22px;
-   /* font-family:"proxima_novasemibold", sans-serif !important; */
+   
    font-style: normal;
 }
 .header-info{
-    /* font-family: "proxima_novasemibold", sans-serif !important; */
+   
     font-size: 18px;
     color: #444444;
     display: block;
@@ -151,7 +127,7 @@
 
 } 
 .label-text{
-   /* font-family: "proxima_novasemibold",sans-serif !important; */
+   
    font-size: 14px;
    line-height: 17px;
    color: #7C7C7C;
@@ -197,7 +173,7 @@
    font-weight: bold;
    margin-bottom: 0px;
    font-size: 16px;
-   /* font-family: "proxima_novasemibold", sans-serif !important; */
+   
    padding-bottom: 20px;
    word-break: break-all;
 
@@ -207,15 +183,10 @@
    line-height: 17px;
    color: #4D4D4D;
    margin-bottom: 10px;
-   /* font-family:"proxima_novaregular", sans-serif !important; */
+   
    padding-top: 20px;
 }
-/* .css-vj8t7z{
-   height:25px;
-}
-.css-19bqh2r{
-   height: 25px;
-} */
+
 .date-picker-icon {
     float: right;
     margin-right: 6px;
@@ -228,14 +199,14 @@
     font-size:14px;
     margin:auto;
     padding-top: 3px;
-    /* font-family:"proxima_novaregular", sans-serif !important; */
+    
 }
   .successIcon{
       padding-top: 20px;
   }
   .btn-create-new-goal{
       color: #FFFFFF;
-      /* font-family:"proxima_novasemibold",sans-serif !important; */
+      
       font-size:18px;
   }
   .btn-position{
@@ -280,7 +251,7 @@
   .top-goal-Message{
       color: #9F083E;
       font-size: 14px;
-      /* font-family: "proxima_novasemibold",sans-serif !important; */
+      
       line-height: 24px;
       width: 100%;
       text-align: center;
@@ -305,7 +276,7 @@
 .information{
     font-size: 14px;
     color:#4D4D4D;
-    /* font-family:"proxima_novaregular", sans-serif !important; */
+    
     margin-top: 40px;
 
 

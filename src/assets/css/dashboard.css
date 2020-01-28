@@ -2032,21 +2032,30 @@ ul.menu-side {
     color: #57084E;
     font-size: 1.14286em; }
 
-
+.fund-card .fa.fa-trash-o:hover{
+ cursor: pointer;
+}
 .fund-card-ctn {
   -webkit-box-shadow: 0px 2px 11px rgba(255, 255, 255, 0.103431);
-  box-shadow: 0px 2px 11px rgba(255, 255, 255, 0.103431); }
+  box-shadow: 0px 2px 11px rgba(255, 255, 255, 0.103431); 
+}
   .fund-card-ctn .fund-card {
-    background: url(../img/credit-card.svg);
-    background-size: cover;
-    background-position: center;
+    /* background: url(../img/credit-card.svg); */
+    background: rgba(113, 113, 113, 0.8);
+    /* background-size: cover;
+    background-position: center; */
     max-width: 400px;
-    max-height: 131px;
+    /* max-height: 131px; */
     border-radius: 4px;
     margin-bottom: 10px;
     color: white;
     padding: 25px 20px;
     font-family: Proxima Nova; }
+    .fund-card-ctn:hover{
+      cursor: pointer;
+      -webkit-box-shadow: 0px 2px 11px rgba(0, 0, 0, 0.6);
+      box-shadow: 0px 2px 11px rgba(0, 0, 0, 0.6);
+    }
     .fund-card-ctn .fund-card a {
       color: white;
       float: right; }
@@ -2069,6 +2078,7 @@ ul.menu-side {
       font-size: 12px;
       line-height: 15px;
       text-transform: uppercase;
+      margin-bottom: 0;
       color: rgba(255, 255, 255, 0.461843); }
 
       .fund-option {
