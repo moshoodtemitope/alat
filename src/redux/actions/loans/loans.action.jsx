@@ -39,6 +39,14 @@ export const loanApply =(token, data)=>{
         let consume = ApiService.request(routes.LOAN_APPLY,
              "POST", data, SystemConstant.HEADER);
         dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        // smartech('identify', user.email);
+        // smartech('dispatch', 'ALAT_Loans', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo
+        // });
+
         return consume
             .then(response => {
                 //TODO: edit localDB accounts object

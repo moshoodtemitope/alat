@@ -298,6 +298,13 @@ export const saveBankTransferBeneficiary = (token, bankTransferBeneficiary) => {
                     .then(response => {
                         // history.push("/transfer");
                         dispatch(success(response));
+                        let user_details = localStorage.getItem("user");
+                        let user = JSON.parse(user_details)
+                        //  smartech('identify', user.email);
+                        //  smartech('dispatch', 'ALAT_Send_Money_Add_Beneficiaries',{
+                        //      "Email": user.email,
+                        //      "mobile": user.phoneNo
+                        //  });
                     })
                     .catch(error => {
                         if((error.response && error.response.data.Message)){
@@ -333,6 +340,13 @@ export const sendMoneyTransfer = (token, transferPayload, resend, isFxTransfer) 
             if(transferPayload.TransactionPin.length==4){
                 let consume = ApiService.request(routes.BANK_TRANSFER_WITHPIN, "POST", transferPayload, SystemConstant.HEADER);
                 dispatch(request(consume));
+                 let user_details = localStorage.getItem("user");
+                 let user = JSON.parse(user_details)
+                    // smartech('identify', user.email);
+                    // smartech('dispatch', 'ALAT_Send_Money_Bank', {
+                    //     "Email": user.email,
+                    //     "mobile": user.phoneNo
+                    // });
                 return consume
                     .then(response => {
                         if(resend===false && !isFxTransfer){
@@ -388,6 +402,14 @@ export const processMoneyTransfer = (token, transferPayload ,isFxTransfer) => {
                     history.push("/fx-transfer/success");
                 }
                 dispatch(success(response));
+                 let user_details = localStorage.getItem("user");
+                 let user = JSON.parse(user_details)
+                // smartech('identify', user.email);
+                // smartech('dispatch', 'ALAT_Send_Money_Bank', {
+                //     "Email": user.email,
+                //     "mobile": user.phoneNo,
+                //     // "destination": Gtb
+                // });
             })
             .catch(error => {
                 // console.log("error is", error.response);
@@ -403,6 +425,14 @@ export const processMoneyTransfer = (token, transferPayload ,isFxTransfer) => {
                 }
                 else{
                     dispatch(failure('An error while sending funds.'));
+                     let user_details = localStorage.getItem("user");
+                     let user = JSON.parse(user_details)
+                    //  smartech('identify', user.email);
+                    //  smartech('dispatch', 'ALAT_Send_Money_Bank_Successful', {
+                    //      "Email": user.email,
+                    //      "mobile": user.mobile,
+                    //     //  "destination": Gtb
+                    //  });
                 }
                    
                 

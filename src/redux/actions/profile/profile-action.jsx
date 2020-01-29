@@ -356,6 +356,25 @@ export const addResidentialAddress = (token, data) => {
     function success(response) { return {type: profile.POST_RESIDENTIAL_ADDRESS_SUCCESS, response} }
     function failure(error) { return {type: profile.POST_RESIDENTIAL_ADDRESS_FAILURE, error} }
 };
+export const DocumentUploadCheck = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.DOCUMENT_UPLOAD_CHECK, "POST", data, SystemConstant.HEADER, false);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+                // history.push('/');
+            })
+            .catch(error => {
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function request(request) { return { type: profile.DOCUMENT_UPLOAD_CHECK_PENDING, request } }
+    function success(response) { return { type: profile.DOCUMENT_UPLOAD_CHECK_SUCCESS, response } }
+    function failure(error) { return { type: profile.DOCUMENT_UPLOAD_CHECK_FAILURE, error } }
+};
 
 
 export const profileSuccessMessage = (data) =>{

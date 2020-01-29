@@ -654,7 +654,7 @@ ChangeResidentialStatus = () => {
                                                                     <select name="Nationality" onChange={this.SetInputValue} className="form-control input-border-radius">
                                                                             <option value="Select Country">Select Country</option>
 
-                                                                       <option value="Nigeria" >Nigeria</option>
+                                                                       <option value="Nigeria">Nigeria</option>
                                                                     </select>
                                                                     {/* <input type="text" name="Nationality" className="form-control" onChange={this.SetInputValue} placeholder="Nationality"/> */}
                                                                 </div>

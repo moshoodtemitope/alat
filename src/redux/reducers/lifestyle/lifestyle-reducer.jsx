@@ -560,6 +560,28 @@ export function PostVisaPayment(state = [], action) {
     }
 
 }
+export function DebitableAccount(state = [], action) {
+    switch (action.type) {
+        case listStyleConstants.DEBITABLE_ACCOUNT_PENDING:
+            return {
+                message: listStyleConstants.DEBITABLE_ACCOUNT_PENDING,
+                data: action
+            }
+        case listStyleConstants.DEBITABLE_ACCOUNT_SUCCESS:
+            return {
+                message: listStyleConstants.DEBITABLE_ACCOUNT_SUCCESS,
+                data: action
+            }
+        case listStyleConstants.DEBITABLE_ACCOUNT_FAILURE:
+            return {
+                message: listStyleConstants.DEBITABLE_ACCOUNT_FAILURE,
+                data: action
+            }
+        default:
+            return { ...state }
+    }
+
+}
 
 
 

@@ -35,7 +35,7 @@ class FixedGoal extends React.Component {
             isAccountInvalid: false,
             frequency:"",
             goalFrequencyInvalid:false,
-            showInterests:"",
+            showInterests:0.00,
             goalFrequencyType: "",
             goalFrequencyLabel: "",
 

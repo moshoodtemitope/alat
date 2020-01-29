@@ -14,6 +14,14 @@ export const FetchMovie = (token, data) => {
     return (dispatch) => {
         let consume = ApiService.request(routes.FETCH_MOVIES_LIST + data, "GET", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        console.log(user)
+        // smartech('identify',user.email);
+        // smartech('dispatch', 'alat_movies', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo
+        // });
         return consume
             .then(response => {
                 // console.log("=======",response);
@@ -117,7 +125,17 @@ export const buyMovieTicket = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
         let consume = ApiService.request(routes.BUY_MOVIE_TICKET, "POST", data, SystemConstant.HEADER, false);
+        console.log("movie name",data)
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        console.log("+++++++", user)
         dispatch(request(consume));
+        // smartech('identify', user.email);
+        // smartech('dispatch', 'alat_movies_purchase success', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo,
+        //     "moviename": data.title,
+        // });
         return consume
             .then(response => {
                 // consume.log(response);
@@ -145,7 +163,16 @@ export const getEvents = (token,data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
         let consume = ApiService.request(routes.GET_EVENTS + data, "GET", data, SystemConstant.HEADER, false);
+        console.log("===",data)
         dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        // smartech('identify', user.email);
+        // smartech('dispatch', 'ALAT_Events', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo,
+        //     "pagetitle": data
+        // })
         return consume
             .then(response => {
                 // consume.log(response);
@@ -188,7 +215,16 @@ export const purchaseEventTicket = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
         let consume = ApiService.request(routes.BUY_EVENT_TICKETV2, "POST", data, SystemConstant.HEADER, false);
+        console.log(data)
         dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        // smartech('identify', user.email);
+        // smartech('dispatch', 'ALAT_Events_Tickets_Success', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo,
+        //     "eventname": data.title
+        // }); 
         return consume
             .then(response => {
                 // consume.log(response);
@@ -335,6 +371,7 @@ export const ClearAction=(type)=>{
 export const PostVisa = (data) => {
     return (dispatch) => {
         dispatch(success(data))
+        history.push("/lifestyle/travels/personal-detail")
     }
     function success(data) {
         return {
@@ -395,6 +432,7 @@ export const GetVisaPackage = (token, data) => {
 export const PostPersonalDetails = (data) => {
     return (dispatch) => {
         dispatch(success(data))
+        history.push("/lifestyle/travels/visa-detail")
     }
     function success(data) {
         return {
@@ -411,6 +449,7 @@ export const PostVisaDetail = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data, data));
+                history.push("/lifestyle/travels/visa-payment")
             })
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
@@ -436,6 +475,7 @@ export const PostVisaPayment = (token, data) => {
         return consume
             .then(response => {
                 dispatch(success(response.data));
+                history.push("/lifestyle/travels/success")
             })
             .catch(error => {
                 dispatch(failure(modelStateErrorHandler(error)));
@@ -448,6 +488,28 @@ export const PostVisaPayment = (token, data) => {
     function success(response) { return { type: listStyleConstants.POST_VISA_PAYMENT_SUCCESS, response } }
     function failure(error) { return { type: listStyleConstants.POST_VISA_PAYMENT_FAILURE, error } }
 };
+export const DebitableAccount = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.GetAllCustomerAccountsWithLimitsV2, "POST", data, SystemConstant.HEADER, false);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+
+            });
+    };
+
+    function request(request) { return { type: listStyleConstants.DEBITABLE_ACCOUNT_PENDING, request } }
+    function success(response) { return { type: listStyleConstants.DEBITABLE_ACCOUNT_SUCCESS, response } }
+    function failure(error) { return { type: listStyleConstants.DEBITABLE_ACCOUNT_FAILURE, error } }
+};
+
+
 
 
 

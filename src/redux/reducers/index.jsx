@@ -273,6 +273,7 @@ const LifestyleReducer = combineReducers({
     PostMovieContent:movies.PostMovieContent,
     SubmitMovieData:movies.SubmitMovieData,
     SubmitEventData:movies.SubmitEventData,
+    DebitableAccount:movies.DebitableAccount,
 
     //Visa
     PostVisa:movies.PostVisa,
@@ -467,7 +468,8 @@ const appReducer = combineReducers({
     getStates: profile.getStates,
     nextOfKinsRelationship: profile.nextOfKinsRelationship,
     addResidentialAddress: profile.addResidentialAddress,
-    GetResidentialAddress: profile.GetResidentialAddress
+    GetResidentialAddress: profile.GetResidentialAddress,
+    documentUploadCheck: profile.DocumentUploadCheckReducer
 });
 
 //export defualt appReducer;
