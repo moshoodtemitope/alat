@@ -545,12 +545,9 @@ const mapStateToProps = (state) => {
         profileMenu: state.profileMenu,
         alert:state.alert,
         GetResidentialAddress: state.GetResidentialAddress,
-<<<<<<< HEAD
-        documentUploadCheck: state.documentUploadCheck
-=======
+        documentUploadCheck: state.documentUploadCheck,
         checkProfileUploads: state.checkProfileUploads,
         addDocuments: state.addDocuments,
->>>>>>> 4bc214f37ad6ac11f7c743041407420f58c97dff
     }
 }
 

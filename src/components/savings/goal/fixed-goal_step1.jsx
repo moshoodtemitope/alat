@@ -252,7 +252,7 @@ removeComma(currencyValue) {
             this.setState({ error: "the selected date should be greater than 30 days", hideButton:true})
 
         }else{
-            this.setState({ error: "" , displayState: "none"})
+            this.setState({ error: "", hideButton: false})
             return this.interest
             
         }
@@ -302,7 +302,7 @@ showInterest = () => {
 
 render() {
 
-    let { GoalNameInvalid, endDateInvalid, startDateInvalid, targetAmountInvalid, goalFrequencyInvalid, goalFrequency } = this.state
+    let { GoalNameInvalid, hideButton ,endDateInvalid, startDateInvalid, targetAmountInvalid, goalFrequencyInvalid, goalFrequency } = this.state
     let props = this.props;
 
     return (
@@ -472,7 +472,7 @@ render() {
                                                     {
                                                         this.state.displayState === "block" ?
                                                             <button
-                                                                disabled={this.props.fixed_goal_step1.fixed_step1_status === fixedGoalConstants.FETCH_FIXED_GOAL_PENDING}
+                                                                disabled={hideButton}
 
                                                                 type="submit" className="btn-alat m-t-10 m-b-20 text-center">
                                                                 {this.props.fixed_goal_step1.fixed_step1_status === fixedGoalConstants.FETCH_FIXED_GOAL_PENDING ? "Processing..." : "Next"}
