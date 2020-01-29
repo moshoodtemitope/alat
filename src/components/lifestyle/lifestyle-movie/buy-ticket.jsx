@@ -128,6 +128,7 @@ class BuyTicket extends Component {
                 "Student":this.state.student,
                 "Children":this.state.child,
                 "fee":this.state.fee,
+                "title":this.state.title
 
             };
         

@@ -102,7 +102,7 @@ class ManageInsurance extends React.Component {
                         policies.map((eachPolicy,key)=>(
                             <div className="col-sm-4" key={key}>
                                 <div className="al-card no-pad">
-                                    <h4 className="m-b-10  hd-underline covername"> {eachPolicy.InsuranceProductCategory}</h4>
+                                    <h4 className="m-b-10  hd-underline covername">{eachPolicy.InsuranceProductCategory}</h4>
                                     <div className="policyinfo-wrap">
                                         <div className="product-name">{eachPolicy.ProductName}</div> 
                                         <div className="help-info">

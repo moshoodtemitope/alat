@@ -7,7 +7,29 @@ import { listStyleConstants } from '../../../redux/constants/lifestyle/lifestyle
 import { Textbox } from "react-inputs-validation";
 
 var selectedNations = [
-    { value: "2", label: "Nigeria" },
+    { value: "1", label: "Nigeria" },
+    { value: "2", label: "Afghanistan" },
+    { value: "3", label: "Algeria" },
+    { value: "4", label: "AmericanSamoa" },
+    { value: "5", label: "Angola" },
+    { value: "6", label: "Antigua and Barbuda" },
+    { value: "7", label: "Argentina" },
+    { value: "8", label: "Belgium" },
+    { value: "9", label: "Bahamas" },
+    { value: "10", label: "Barbados" },
+    { value: "11", label: "Bahrain" },
+    { value: "12", label: "Bolivia" },
+    { value: "13", label: "Bosnia and Herzegovina" },
+    { value: "14", label: "British Indian Ocean" },
+    { value: "15", label: "Brunei Darussalam" },
+    { value: "16", label: "Bulgaria" },
+    { value: "17", label: "Burundi" },
+    { value: "18", label: "Canada" },
+    { value: "19", label: "China" },
+    { value: "20", label: "Christmas Island" },
+    { value: "21", label: "Colombia" },
+    { value: "22", label: "Cook Islands" }
+
 ]
 
 class PersonalDetail extends Component {
@@ -32,6 +54,7 @@ class PersonalDetail extends Component {
             Nationality:"",
             PackageName:"",
             user:JSON.parse(localStorage.getItem("user")),
+            showMessage:false
 
             
         };
@@ -156,12 +179,10 @@ class PersonalDetail extends Component {
         if (this.state.formsubmitted && selectedNationality.value != "")
             this.setState({ nationalityInvalid: false })
     }
-    gotoStep2 = () => {
-        if (this.props.post_personal_detail)
-            if (this.props.post_personal_detail.message === listStyleConstants.POST_PERSONAL_DETAILS_SUCCESS) {
-                return <Redirect to="/lifestyle/travels/visa-detail"/>
-            }
-    };
+    
+    showInfo=()=>{
+        this.setState({showMessage:true})
+    }
 
     render() {
         let { phoneIvalid, email, Nationality, nationalityInvalid, occupationInvalid, lastName, fullNameInvalid, firstName, PhoneNumber, occupation, lastNameInvalid } = this.state;
@@ -170,7 +191,6 @@ class PersonalDetail extends Component {
             <div className="col-sm-12">
                 <div className="row">
                     <div className="col-sm-12">
-                        {this.gotoStep2()}
                         <div className="max-600">
                             <div className="al-card no-pad">
                                 <h4 className="m-b-10 center-text hd-underline">Personal Details</h4>
@@ -178,10 +198,21 @@ class PersonalDetail extends Component {
                                     <form onSubmit={this.handleSubmit}>
                                         <div className={fullNameInvalid ? "input-ctn form-error" : "input-ctn"}>
                                             <label>First Name</label>
-                                            <input type="text" onChange={this.handleOnChange} name="firstName" value={firstName}
+                                            <input 
+                                            onKeyUp={this.showInfo}
+                                            type="text"
+                                             onChange={this.handleOnChange} 
+                                             name="firstName" 
+                                             value={firstName}
                                             />
                                             {fullNameInvalid &&
                                                 <div className="text-danger">Enter Full Name</div>}
+                                                {
+                                                this.state.showMessage ? <div className="text-purple">
+                                                    <h3 className="text-purple">Make sure full name is written as it is on your international passport</h3>
+                                                    </div>:null 
+                                                }
+
                                         </div>
                                         <div className={lastNameInvalid ? "input-ctn form-error" : "input-ctn"}>
                                             <label>Last Name</label>
@@ -250,7 +281,7 @@ class PersonalDetail extends Component {
                             </div>
 
                             <center>
-                                <Link to={'/lifestyle/travels/dubai-visa'} className="add-bene m-t-50">Go Back</Link>
+                                <Link to={'/lifestyle/travels/select-visa'} className="add-bene m-t-50">Go Back</Link>
                             </center>
                         </div>
                     </div>
