@@ -1,9 +1,11 @@
+import React from 'react'
 import { ApiService } from "../../../services/apiService";
 import { routes } from "../../../services/urls";
 import { alertActions } from "../alert.actions";
 import { SystemConstant } from "../../../shared/constants";
 import { history } from './../../../_helpers/history';
 import { handleError, modelStateErrorHandler } from './../../../shared/utils';
+
 import {
     USER_REGISTER_FETCH, USER_REGISTER_SAVE, userConstants, BVN_VERIFICATION_PENDING,
     BVN_VERIFICATION_SUCCESS, BVN_VERIFICATION_FAILURE, SKIP_BVN_PENDING, SKIP_BVN_SUCCESS,
@@ -123,6 +125,13 @@ function login(email, password) {
             .then(function (response) {
                 // console.log(response.data);
                 localStorage.setItem("user", JSON.stringify(response.data));
+                let user_details = localStorage.getItem("user");
+                let user = JSON.parse(user_details)
+                window.smartech('identify', user.email);
+                window.smartech('dispatch', 'alat_Login_Success', {
+                    "Email": user.email,
+                    "mobile": user.phoneNo
+                });
                 // console.log(user);
                 //     this.apiService.getEncrytionRule(encrytedData => {
                 //         this.sharedData.keepData('encryptedFigure', encrytedData);
@@ -156,6 +165,14 @@ function login(email, password) {
 function loginAfterOnboarding(loginData) {
     return dispatch => {
         localStorage.setItem("user", JSON.stringify(loginData));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        console.log("the user on boarding ",user)
+        // smartech('identify', user.email);
+        // smartech('dispatch', 'alat_onboarding_mobile_input', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo
+        // });
 
         dispatch(success(loginData));
         history.push('/dashboard');
@@ -169,6 +186,13 @@ function sendForgotPwEmail(payload){
     return dispatch =>{
         let consume = ApiService.request(routes.EMAIL_FOR_FORGETPASSWORD, "POST", payload,  SystemConstant.HEADER);
         dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        // smartech('identify', user.email);
+        // smartech('dispatch', 'alat_onboarding_emailpwd_Success', {
+        //     "Email":user.email,
+        //     "mobile": user.email
+        // });
         return consume
             .then(response =>{
                 dispatch(success(response));
@@ -338,7 +362,15 @@ function sendOtpOrTokenForPinReset(payload, token){
         }
 
         // let consume = ApiService.request(routes.VERIFYRESETOTP, "POST", payload,  SystemConstant.HEADER);
-        dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        // dispatch(request(consume));
+        // smartech('identify', user.email);
+        // smartech('dispatch', 'alat_otp_verified',{
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo
+        // });
+
         return consume
             .then(response =>{
                 dispatch(success(response));
@@ -549,10 +581,19 @@ function bvnVerify (bvnDetails){
         //   };
         let consume = ApiService.request(routes.BVN_VERIFICATION, "POST", bvnDetails);
         dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        // smartech('identify', user.email);
+        // smartech('dispatch', 'alat_bvn_verified', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo
+        // });
         return consume
             .then(response => {
                 dispatch(success(response.data));
                 // this.props.history.push('/register/verify-bvn');
+                
+
 
                 history.push('/register/verify-bvn', { userPhone: bvnDetails.phoneNo });
             }).catch(error => {
@@ -610,6 +651,13 @@ function getCustomerProfileImage(token, image){
         let profileroute = `${routes.GET_USERPROFILE_IMAGE}${image}`;
         let consume = ApiService.request(profileroute, "GET", null, SystemConstant.HEADER);
         dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        // smartech('identify', user.email);
+        // smartech('dispatch', 'alat_onb_photo_sign_success',{
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo
+        // });
         return consume
             .then(response =>{
                 dispatch(success(response.data));
@@ -654,6 +702,13 @@ export const uploadDocument = (token, data, action, type) => {
     delete requestHeaders['Accept'];
     requestHeaders['alat-token'] = token;
     requestHeaders['Content-Type'] = false;
+    let user_details = localStorage.getItem("user");
+    let user = JSON.parse(user_details)
+    // smartech('identify', user.email);
+    // smartech('dispatch', 'alat_onb_photo_sign_success',{
+    //     "Email": user.email,
+    //     "mobile": user.phoneNo
+    // });
     return (dispatch) => {
         let consume = ApiService.request(routes.DOCUMENT_UPLOAD,
             "POST", data, requestHeaders);

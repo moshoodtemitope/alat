@@ -1,7 +1,7 @@
-const URL = 'https://api.alat.ng';
+//const URL = 'https://api.alat.ng';
 // const URL = 'https://196.43.215.172';
 // const URL = 'https://196.43.215.170';
-// const URL = 'https://196.43.215.157';
+ const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;    
 
@@ -219,6 +219,7 @@ export const routes = {
     GETPERSONALINFO: BASEURL + '/ProfileManagement.WebApi/api/PersonalInfo',
     GETSTATES: BASEURL + '/AccountMaintenance/api/account/GetStatesAndLgas',
     ADD_DOCUMENT: BASEURL + '/DocumentUpload/api/upload/document',
+    DOCUMENT_UPLOAD_CHECK: BASEURL + '/DocumentUpload/api/upload/check',
 
     IDENTITY_TYPE: BASEURL + '/DocumentUpload/api/upload/check',
     

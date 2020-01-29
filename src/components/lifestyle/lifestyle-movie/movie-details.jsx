@@ -549,7 +549,7 @@ class Moviedetails extends React.Component {
                                                 Go back
                         </a>
                     </center>
-            </div>
+                </div>
             </div>
         );
     }

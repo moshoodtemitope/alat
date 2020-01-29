@@ -20,10 +20,13 @@ class Dubai extends React.Component{
             ApplicationInvalid:false,
             PackageName:"",
             user: JSON.parse(localStorage.getItem("user")),
+           
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleAmount = this.handleAmount.bind(this);
+        // this.handleDebit = this.handleDebit.bind(this);
+
     }
     componentDidMount() {
         this.fetchVisaOptions();
@@ -38,6 +41,7 @@ class Dubai extends React.Component{
         const { dispatch } = this.props;
         dispatch(GetVisaPackage(this.state.user.token));
     }
+    
 
     
     checkAmount = () => {
@@ -109,8 +113,8 @@ class Dubai extends React.Component{
             this.setState({ ApplicationInvalid: false })
     }
     handleSelectVisaPackageChange = (event) => {
-        let Amount = event.target.value.split("8888")[1];
         let Package = event.target.value.split("8888")[0];
+        let Amount = event.target.value.split("8888")[1];
         let PackageName = event.target.value.split("8888")[2]
 
         console.log('amount',Amount)
@@ -125,12 +129,7 @@ class Dubai extends React.Component{
         if (this.state.formsubmitted && event.target.value != "")
             this.setState({ ApplicationInvalid: false })
     }
-    gotoStep2 = () => {
-        if (this.props.post_visa)
-            if (this.props.post_visa.message === listStyleConstants.POST_VISA_SUCCESS) {
-                return <Redirect to="/lifestyle/travels/personal-detail"/>
-            }
-    };
+    
     renderSelect = () => {
         if (this.props.get_visa_package.message === listStyleConstants.GET_VISA_PACKAGE_PENDING) {
             return <select> <option> Loading Visa Application Type... </option> </select>
@@ -170,7 +169,7 @@ class Dubai extends React.Component{
                     {
                         visaPackage.map(visa => {
                             return visa.visaPackageModel.map(visaPackage => {
-                                return (<option key={visaPackage.visaPackageID} value={visaPackage.visaPackageID + "8888" + visaPackage.amount + "8888" + visaPackage.visaPackageName }>{visaPackage.visaPackageName}</option>)
+                                return (<option key={visaPackage.visaPackageID} value={visaPackage.visaPackageID + "8888" + " " + visaPackage.amount + " " + "8888" + " " + visaPackage.visaPackageName }>{visaPackage.visaPackageName}</option>)
 
                             })
                         })
@@ -192,7 +191,7 @@ class Dubai extends React.Component{
                 <div className="row">
                     <div className="col-sm-12">
                         <div className="max-600">
-                            {this.gotoStep2()}
+                            {/* {this.gotoStep2()} */}
                             <div className="al-card no-pad">
                                 <h4 className="m-b-10 center-text hd-underline">Dubai Visa</h4>
                                 <div className="transfer-ctn">

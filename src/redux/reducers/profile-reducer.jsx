@@ -363,6 +363,27 @@ export function ActivateGroup (state=[], action){
            return {... state}
     }
 }
+export function DocumentUploadCheckReducer(state = [], action) {
+    switch (action.type) {
+        case profile.DOCUMENT_UPLOAD_CHECK_PENDING:
+            return {
+                message: profile.DOCUMENT_UPLOAD_CHECK_PENDING,
+                data: action
+            }
+        case profile.DOCUMENT_UPLOAD_CHECK_SUCCESS:
+            return {
+                message: profile.DOCUMENT_UPLOAD_CHECK_SUCCESS,
+                data: action
+            }
+        case profile.DOCUMENT_UPLOAD_CHECK_FAILURE:
+            return {
+                message: profile.DOCUMENT_UPLOAD_CHECK_FAILURE,
+                data: action
+            }
+        default:
+            return { ...state }
+    }
+}
 
 
 

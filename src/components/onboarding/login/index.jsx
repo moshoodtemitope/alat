@@ -76,6 +76,7 @@ class Login extends React.Component{
           if (email && password) {
               this.setState({ submitted: true });
               dispatch(userActions.login(email, password));
+
           }
           else{
               this.setState({ submitted: false });
