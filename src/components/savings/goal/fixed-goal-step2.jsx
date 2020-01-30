@@ -35,7 +35,7 @@ class FixedGoal extends React.Component {
             isAccountInvalid: false,
             frequency:"",
             goalFrequencyInvalid:false,
-            showInterests:0.00,
+            showInterest:0.00,
             goalFrequencyType: "",
             goalFrequencyLabel: "",
 
@@ -135,7 +135,7 @@ class FixedGoal extends React.Component {
             // console.log('timeBetween', timeBetween)
         }
         // console.log("monthly" +amount/timeBetween)
-        return this.setState({showInterests:  parseFloat(amount/timeBetween).toFixed(2)});
+        return this.setState({showInterest:  parseFloat(amount/timeBetween).toFixed(2)});
     }
 
     handleSelectChange = (frequency) => {
@@ -241,7 +241,7 @@ class FixedGoal extends React.Component {
                                                         <div className="form-group col-md-6">
                                                             <label className="label-text">You will have to save</label>
                                                             <input type="text"
-                                                                   value={this.state.showInterests}
+                                                                   value={this.state.showInterest}
                                                                    onChange={this.handleChange}
                                                                    placeholder="E.g. ₦100,000"/>
                                                         </div>
