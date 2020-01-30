@@ -838,7 +838,7 @@ class PolicyDetails extends React.Component {
                     <form className="detailsform" onSubmit={this.handleCustomerPolicyDetails}>
                         <div className="twosided-inputs">
                             <div className="input-ctn textwrap">
-                                    <label>Registration Number</label>
+                                <label>Registration Number</label>
                                     <Textbox
                                     id={'autoRegNo'}
                                     name="autoRegNo"
@@ -848,17 +848,37 @@ class PolicyDetails extends React.Component {
                                     value={autoRegNo}
                                     placeholder= ""
                                     onChange= {(autoRegNo, e)=>{
-                                        this.setState({autoRegNo});
+                                        this.setState({autoRegNo, autoRegNoInvalid:true});
+                                        // if(autoRegNo.length>=4){
+                                        //     this.setState({autoRegNo, autoRegNoInvalid:true});
+                                        // }else{
+                                        //     this.setState({autoRegNoInvalid:false})   
+                                        // }
+                                        
                                     }}
                                 />
                             </div>
                             <div className="input-ctn">
                                 <button type="button"
-                                        onClick={this.getCarData}
+                                        onClick={
+                                            ()=>{
+                                                if(autoRegNo!==''){
+                                                    this.getCarData();
+                                                }else{
+                                                    this.setState({autoRegNoInvalid:false})
+                                                }
+                                            }
+                                            
+                                        }
                                         className="btn-alat btn-inverse getinfo m-t-25 text-center">Get Details    
                                 </button>
+                                {(this.state.autoRegNoInvalid===false && this.state.autoRegNoInvalid!==null) &&
+                                    <span className="error-msg">Registration number is required</span>
+                                }
                             </div>
                         </div>
+                        
+                        
                         <div className="input-ctn textwrap">
                             <label>Engine Number</label>
                             {this.renderCarDetail('engineno')}

@@ -41,7 +41,7 @@ class FundCardDetails extends React.Component {
     handleSubmit=(e)=>{
         e.preventDefault();
         this.setState({formSubmitted : true});
-         if(this.validateCard() && this.validateCvv() && this.validateDateLength()){
+         if(this.validateCard() || this.validateCvv() || this.validateDateLength()){
 
          } else{
             const payload = {
@@ -74,10 +74,9 @@ class FundCardDetails extends React.Component {
     }
 
     validateCvv=()=>{
-        if(this.state.Cvv.length != 3)
-        {this.setState({cvvInvalid : true});
+        if(this.state.Cvv.length != 3){this.setState({cvvInvalid : true});
           return true;
-          }
+        }
     }
 
     validateDateLength=()=>{
@@ -101,10 +100,10 @@ class FundCardDetails extends React.Component {
     }
      
     validateCard=()=>{
-      if(this.state.formartCardNumber.length != 19)
-      {
-          this.setState({ cardNumberInvalid: true });
-        return true;}
+        if (this.state.formartCardNumber.length != 19) {
+            this.setState({ cardNumberInvalid: true });
+            return true;
+        }
     }
 
     handleCardChange =(e)=>{

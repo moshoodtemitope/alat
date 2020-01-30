@@ -62,9 +62,43 @@ class EmployerDetails extends React.Component {
 
         this.onIDUpload = this.onIDUpload.bind(this);
     }
+    renderIdUploadPreview = (frontOrBack)=>{
+
+        var reader = new  FileReader();
+
+        if(frontOrBack==="workIDFront"){
+            reader.onload = function(e){
+                document.querySelector('.selfieBtn.workIDFront .fileContainer').style.background = `url(${e.target.result})`;
+                document.querySelector('.selfieBtn.workIDFront .fileContainer').style.backgroundSize = `cover`;
+                document.querySelector('.selfieBtn.workIDFront .fileContainer').style.backgroundRepeat = `no-repeat`;
+                document.querySelector('.selfieBtn.workIDFront .fileContainer').style.backgroundPosition = `50% 25%`;
+                document.querySelector('.selfieBtn.workIDFront .fileContainer').style.height = `130px`;
+               
+            }
+
+            // console.log("=======",document.getElementsByName('frontId')[0].files[0]);
+    
+            reader.readAsDataURL(document.getElementsByName('frontId')[0].files[0]);
+        }
+
+        if(frontOrBack==="workIDBack"){
+            reader.onload = function(e){
+                document.querySelector('.selfieBtn.workIDBack .fileContainer').style.background = `url(${e.target.result})`;
+                document.querySelector('.selfieBtn.workIDBack .fileContainer').style.backgroundSize = `cover`;
+                document.querySelector('.selfieBtn.workIDBack .fileContainer').style.backgroundRepeat = `no-repeat`;
+                document.querySelector('.selfieBtn.workIDBack .fileContainer').style.backgroundPosition = `50% 25%`;
+                document.querySelector('.selfieBtn.workIDBack .fileContainer').style.height = `130px`;
+               
+            }
+    
+            reader.readAsDataURL(document.getElementsByName('backID')[0].files[0]);
+        }
+        
+    }
 
     onIDUpload = (picture, e) => {
         if (picture.length >= 1) {
+
             util.getBase64(picture[picture.length - 1], (result) => {
                 this.setState({ [e]: { file: result, name: picture[picture.length - 1].name } }, () => {
                     // console.log(this.state[e]);
@@ -88,6 +122,7 @@ class EmployerDetails extends React.Component {
                     failure: loanConstants.LOAN_WORkID_FRONT_FAILURE
                 }
             }, () => {
+                this.renderIdUploadPreview("workIDFront");
                 this.onIDUpload(picture, "workIDFront");
             })
     }
@@ -97,7 +132,7 @@ class EmployerDetails extends React.Component {
             return "Upload in Progress...";
         }
         else if (this.props.workid_front.loan_frontId_status == loanConstants.LOAN_WORkID_FRONT_SUCCESS) {
-            return "Work ID (Front) Upload Successful";
+            return "Uploaded. Click to change";
         } else if (this.props.workid_front.loan_frontId_status == loanConstants.LOAN_WORkID_FRONT_FAILURE) {
             return "Upload Failed, Click to try again";
         } else {
@@ -115,6 +150,7 @@ class EmployerDetails extends React.Component {
                 failure: loanConstants.LOAN_WORkID_BACK_FAILURE
             }
         }, () => {
+            this.renderIdUploadPreview("workIDBack");
             this.onIDUpload(picture, "workIDBack");
         })
     }
@@ -124,7 +160,7 @@ class EmployerDetails extends React.Component {
             return "Upload in Progress...";
         }
         else if (this.props.workid_back.loan_backId_status == loanConstants.LOAN_WORkID_BACK_SUCCESS) {
-            return "Work ID (Back) Upload Successful";
+            return "Uploaded. Click to change";
         } else if (this.props.workid_back.loan_backId_status == loanConstants.LOAN_WORkID_BACK_FAILURE) {
             return "Upload Failed, Click to try again";
         } else {
@@ -432,7 +468,8 @@ class EmployerDetails extends React.Component {
                                             withPreview={false}
                                             name="frontId"
                                             label=''
-                                            className="selfieBtn"
+                                            className="selfieBtn workIDFront"
+                                            id="workIDFront"
                                             buttonText={this.returnOnFrontUploadText()}
                                             onChange={this.onFrontUpload}
                                             imgExtension={['.jpg', '.png', '.jpeg']}s
@@ -448,7 +485,8 @@ class EmployerDetails extends React.Component {
                                             withPreview={false}
                                             name="backID"
                                             label=''  
-                                            className="selfieBtn"
+                                            className="selfieBtn workIDBack"
+                                            id="workIDBack"
                                             buttonText={this.returnOnBackUploadText()}
                                             onChange={this.onBackUpload}
                                             imgExtension={['.jpg', '.png', '.jpeg']}

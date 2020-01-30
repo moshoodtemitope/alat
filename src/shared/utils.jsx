@@ -247,8 +247,28 @@ export const mapCurrency = (currency) => {
 }
 
 export const getOnlyNumericPhoneNumber = (phoneString) => {
-    phoneString = phoneString.replace(/\D/g,'');
-    phoneString = phoneString.replace("234", "0");
+     phoneString = phoneString.replace(/\D/g,'');
+    if(phoneString.length>=4 && (phoneString.substring(0,3)==="234" || phoneString.substring(0,4)==="+234")){
+        
+        if(phoneString.substring(0,3)==="234"){
+            phoneString = phoneString.replace("234", "0");
+        }
+        if( phoneString.substring(0,4)==="+234"){
+            phoneString = phoneString.replace("+234", "0");
+        }
+        
+    }
+
+    if(phoneString.length>=4 && phoneString.substring(0,1)!=="0"){
+        phoneString =`0${phoneString}`;
+    }
+
+    if(phoneString.length>=11){
+        phoneString = phoneString.substring(0,11)
+    }
+
+
+    
     return phoneString;
 }
 

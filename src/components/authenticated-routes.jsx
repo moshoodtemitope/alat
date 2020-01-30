@@ -40,7 +40,7 @@ import TalkToUsIndex from './talk-to-us/index'
 
 
 
-var timer = 12
+var timer = 60
 var user = JSON.parse(localStorage.getItem("user"));
 //console.log("ouside", user);
 function PrivateRoute({ component: Component, authed, ...rest }) {
@@ -59,7 +59,7 @@ class AuthenticatedRoutes extends React.Component {
         this.state = {
             clearInterval: false,
             countDownTimeOn: false,
-            countDownSeconds: 12,
+            countDownSeconds: 60,
             openModal: false
         };
         this.events = [
@@ -97,7 +97,7 @@ class AuthenticatedRoutes extends React.Component {
     }
 
     setPlayInterval() {
-        this.run = setInterval(this.func, 4 * 12 * 1000);
+        this.run = setInterval(this.func, 4 * 60 * 1000);
     }
 
     setCountDown() {
@@ -119,7 +119,7 @@ class AuthenticatedRoutes extends React.Component {
         this.warnTimeout = setTimeout(this.warn, 4 * 59 * 1000);
         // this.warnTimeout = setTimeout(this.warn, 10 * 1000);
 
-        this.logoutTimeout = setTimeout(this.logout, 5 * 12 * 1000);
+        this.logoutTimeout = setTimeout(this.logout, 5 * 60 * 1000);
         // this.logoutTimeout = setTimeout(this.logout, 71 * 1000);
     }
     reissue() {
@@ -140,7 +140,7 @@ class AuthenticatedRoutes extends React.Component {
     }
 
     warn() {
-        timer = 12;
+        timer = 60;
         this.setState({ openModal: true, countDownTimeOn: true })
         this.setCountDown()
     }
@@ -168,7 +168,7 @@ class AuthenticatedRoutes extends React.Component {
 
     closeModal = (event) => {
        if (event) event.preventDefault();
-        timer = 12;
+        timer = 60;
         this.setState({ openModal: false, countDownTimeOn: false }, clearInterval(this.countDown))
 
     }
