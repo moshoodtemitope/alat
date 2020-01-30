@@ -272,6 +272,34 @@ export const getOnlyNumericPhoneNumber = (phoneString) => {
     return phoneString;
 }
 
+export const numberInputOnly = (inputString) => {
+    inputString = inputString.replace(/\D/g,'');
+//    if(phoneString.length>=4 && (phoneString.substring(0,3)==="234" || phoneString.substring(0,4)==="+234")){
+       
+//        if(phoneString.substring(0,3)==="234"){
+//            phoneString = phoneString.replace("234", "0");
+//        }
+//        if( phoneString.substring(0,4)==="+234"){
+//            phoneString = phoneString.replace("+234", "0");
+//        }
+       
+//    }
+
+//    if(phoneString.length>=4 && phoneString.substring(0,1)!=="0"){
+//        phoneString =`0${phoneString}`;
+//    }
+
+//    if(phoneString.length>=11){
+//        phoneString = phoneString.substring(0,11)
+//    }
+
+
+   
+   return inputString;
+}
+
+
+
 export const getBase64=(file, cb)=> {
     let reader = new FileReader();
     // reader.readAsDataURL(file);
