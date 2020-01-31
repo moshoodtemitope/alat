@@ -17,11 +17,11 @@ export const FetchMovie = (token, data) => {
         let user_details = localStorage.getItem("user");
         let user = JSON.parse(user_details)
         console.log(user)
-        // smartech('identify',user.email);
-        // smartech('dispatch', 'alat_movies', {
-        //     "Email": user.email,
-        //     "mobile": user.phoneNo
-        // });
+        window.smartech('identify',user.email);
+        window.smartech('dispatch', 'alat_movies', {
+            "Email": user.email,
+            "mobile": user.phoneNo
+        });
         return consume
             .then(response => {
                 // console.log("=======",response);
@@ -130,12 +130,12 @@ export const buyMovieTicket = (token, data) => {
         let user = JSON.parse(user_details)
         console.log("+++++++", user)
         dispatch(request(consume));
-        // smartech('identify', user.email);
-        // smartech('dispatch', 'alat_movies_purchase success', {
-        //     "Email": user.email,
-        //     "mobile": user.phoneNo,
-        //     "moviename": data.title,
-        // });
+        window.smartech('identify', user.email);
+        window.smartech('dispatch', 'alat_movies_purchase success', {
+            "Email": user.email,
+            "mobile": user.phoneNo,
+            "moviename": data.title,
+        });
         return consume
             .then(response => {
                 // consume.log(response);
@@ -167,12 +167,12 @@ export const getEvents = (token,data) => {
         dispatch(request(consume));
         let user_details = localStorage.getItem("user");
         let user = JSON.parse(user_details)
-        // smartech('identify', user.email);
-        // smartech('dispatch', 'ALAT_Events', {
-        //     "Email": user.email,
-        //     "mobile": user.phoneNo,
-        //     "pagetitle": data
-        // })
+        window.smartech('identify', user.email);
+        window.smartech('dispatch', 'ALAT_Events', {
+            "Email": user.email,
+            "mobile": user.phoneNo,
+            "pagetitle": data
+        })
         return consume
             .then(response => {
                 // consume.log(response);
@@ -219,12 +219,12 @@ export const purchaseEventTicket = (token, data) => {
         dispatch(request(consume));
         let user_details = localStorage.getItem("user");
         let user = JSON.parse(user_details)
-        // smartech('identify', user.email);
-        // smartech('dispatch', 'ALAT_Events_Tickets_Success', {
-        //     "Email": user.email,
-        //     "mobile": user.phoneNo,
-        //     "eventname": data.title
-        // }); 
+        window.smartech('identify', user.email);
+        window.smartech('dispatch', 'ALAT_Events_Tickets_Success', {
+            "Email": user.email,
+            "mobile": user.phoneNo,
+            "eventname": data.title
+        }); 
         return consume
             .then(response => {
                 // consume.log(response);

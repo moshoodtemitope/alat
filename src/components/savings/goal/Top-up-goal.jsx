@@ -131,9 +131,11 @@ class TopUPGoal extends Component {
 
 
     validateAmount = (amount) => {
-        if (amount == "") {
+        if (this.state.Amount === "" || this.state.Amount === null) {
             this.setState({ AmountInvalid: true });
             return true;
+        }else{
+            this.setState({AmountInvalid:false})
         }
     };
     handleDebit = (account) => {

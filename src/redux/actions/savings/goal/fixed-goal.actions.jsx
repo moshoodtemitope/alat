@@ -44,6 +44,13 @@ export const addFixedGoal =(data)=>{
                 //TODO: edit localDB accounts object
                 dispatch(success(response.data, data));
                 // console.log("000000000000000",response.data)
+                let user_details = localStorage.getItem("user");
+                let user = JSON.parse(user_details)
+                window.smartech('identify', user.email);
+                window.smartech('dispatch', 'ALAT_Savings_and_Investment', {
+                    "Email": user.email,
+                    "mobile": user.mobile
+                });
                 history.push({
                     pathname:"/savings/goal/success",
                     state:{details:response.data}

@@ -414,8 +414,8 @@ render() {
 
                                             </div>
                                         </div>
-                                        <div className="form-row">
-                                            <div className={targetAmountInvalid ? "form-group col-md-6 form-error" : "form-group col-md-6"}>
+                        
+                                            <div className={targetAmountInvalid ? "form-group form-error" : "form-group"}>
                                                 <label className="label-text">How much would you like to save ?</label>
                                                 <input
                                                     onKeyUp={this.showInterest}
@@ -453,18 +453,8 @@ render() {
                                             </div>
 
 
-                                            <div className={goalFrequencyInvalid ? "form-group col-md-6 form-error" : "form-group col-md-6"}>
-                                                <label className="label-text">How often do you want to save ?</label>
-                                                <Select type="text"
-                                                    options={selectedTime}
-                                                    name="goalFrequency"
-                                                    autoComplete="off"
-                                                    onChange={this.handleSelectChange}
-                                                    value={goalFrequency.label}
-                                                />
-                                                {goalFrequencyInvalid && <div className='text-danger'>Enter saving duration</div>}
-                                            </div>
-                                        </div>
+                                           
+                                       
                                         <div className="row">
                                             <div className="col-sm-12">
                                                 <center>

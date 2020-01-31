@@ -300,11 +300,11 @@ export const saveBankTransferBeneficiary = (token, bankTransferBeneficiary) => {
                         dispatch(success(response));
                         let user_details = localStorage.getItem("user");
                         let user = JSON.parse(user_details)
-                        //  smartech('identify', user.email);
-                        //  smartech('dispatch', 'ALAT_Send_Money_Add_Beneficiaries',{
-                        //      "Email": user.email,
-                        //      "mobile": user.phoneNo
-                        //  });
+                         window.smartech('identify', user.email);
+                         window.smartech('dispatch', 'ALAT_Send_Money_Add_Beneficiaries',{
+                             "Email": user.email,
+                             "mobile": user.phoneNo
+                         });
                     })
                     .catch(error => {
                         if((error.response && error.response.data.Message)){
