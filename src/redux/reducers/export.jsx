@@ -407,5 +407,5 @@ export const profile = {
     nextOfKinsRelationship,
     addResidentialAddress,
     GetResidentialAddress,
-    // DocumentUploadCheckReducer
+    DocumentUploadCheckReducer
 }

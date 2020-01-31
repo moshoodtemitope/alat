@@ -405,7 +405,7 @@ render() {
                                                     value={this.state.endDate}
 
                                                 />
-                                                <i class="mdi mdi-calendar-range"></i>
+                                                <i className="mdi mdi-calendar-range"></i>
 
                                                 {endDateInvalid &&
                                                     <div className="text-danger">select a valid date</div>

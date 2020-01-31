@@ -175,9 +175,9 @@ class GoalPlan extends React.Component {
                         <div className="row">
                         <div className="compContainer2">
                             {goals.map((hist, key)=> (
-                                    <div className="eachComp2">
+                                    <div className="eachComp2" key={key}>
                                         <div className='topCard' >
-                                            <div className="left" key={key}>
+                                            <div className="left" >
                                                 <p className='top' >{hist.goalTypeName}</p>
                                                 <p className='bottom'>{hist.goalName}</p>
                                             </div>

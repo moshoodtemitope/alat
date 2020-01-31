@@ -166,11 +166,11 @@ class BuyTicket extends Component {
                                                        <div className="puchaseSumTickets">
                                                            <div className="left">
                                                                 <p className="ticket-title">{this.state.title}</p>
-                                                                <p className="ticket-title">{this.state.ticketClassses}</p>
+                                                                <p className="ticket-title">Quantity</p>
                                                            </div>
                                                            <div className="right">
-                                                               <p>N{this.state.TicketAmount}</p>
-                                                               <p className="qty">Quantity {this.state.quantity}</p>
+                                                               <p className="ticket-title">N{this.state.TicketAmount}</p>
+                                                               <p className="ticket-title">{this.state.quantity}</p>
 
                                                            </div>
                                                        </div>

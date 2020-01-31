@@ -127,7 +127,7 @@ class StashCashout extends Component {
         }
     }
 
-    
+
 
 
     handleAmount = (event) => {
@@ -208,13 +208,18 @@ class StashCashout extends Component {
                         <div className="tab-overflow">
                             <div className="sub-tab-nav">
                                 <ul>
-                                    <NavLink to='/savings/choose-goal-plan'>
+                                    <li>
+                                        <NavLink className="active" to='/savings/choose-goal-plan'>
 
-                                        <li><a href="accounts.html" className="active">Goals</a></li>
-                                    </NavLink>
+                                            >Goals
+                                        </NavLink>
+
+                                    </li>
+                                    <li>
                                     <NavLink to='/savings/activityDashBoard'>
-                                        <li><a href="/savings/activityDashBoard">Group Savings</a></li>
+                                        Group Savings
                                     </NavLink>
+                                    </li>
                                     {/* <li><a href="#">Investments</a></li> */}
 
                                 </ul>
