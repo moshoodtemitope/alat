@@ -198,7 +198,7 @@ class GroupAnalyticsMini extends React.Component {
                                          
                                           <div className="max-600">
                                            <div className="al-card no-pad">
-                                                 <div class='firstSubHead'>
+                                                 <div className='firstSubHead'>
                                                       <p>ROTATING SAVING GROUP</p>
                                                       <p>{this.props.groupDetails.response.name}</p>
                                                  </div>

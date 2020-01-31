@@ -21,7 +21,7 @@ export default (props) => {
                      <Progress color="success" value={props.percentage}></Progress>
                      <div className='bottomDiscription topDiscription row'>
                          <div className='left'>
-                             <p class="perc" >{props.discBottom}<span className="shiftLeft">{props.discSpan}</span></p>
+                             <p className="perc" >{props.discBottom}<span className="shiftLeft">{props.discSpan}</span></p>
                              <p className="butProgBar">{props.discBottomSib}</p>
                             
                          </div>
