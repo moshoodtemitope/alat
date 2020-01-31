@@ -298,6 +298,7 @@ export const EditCustomerGoal =(token,data)=>{
             .then(response => {
                 //TODO: edit localDB accounts object
                 dispatch(success(response.data, data));
+                
                 // history.push({
                 //     pathname:"/savings/top-up-goal-success",
                 //     state:{details:response.data}

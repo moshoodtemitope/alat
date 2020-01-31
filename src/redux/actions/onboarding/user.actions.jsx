@@ -168,11 +168,11 @@ function loginAfterOnboarding(loginData) {
         let user_details = localStorage.getItem("user");
         let user = JSON.parse(user_details)
         console.log("the user on boarding ",user)
-        // smartech('identify', user.email);
-        // smartech('dispatch', 'alat_onboarding_mobile_input', {
-        //     "Email": user.email,
-        //     "mobile": user.phoneNo
-        // });
+        window.smartech('identify', user.email);
+        window.smartech('dispatch', 'alat_onboarding_mobile_input', {
+            "Email": user.email,
+            "mobile": user.phoneNo
+        });
 
         dispatch(success(loginData));
         history.push('/dashboard');
@@ -188,11 +188,11 @@ function sendForgotPwEmail(payload){
         dispatch(request(consume));
         let user_details = localStorage.getItem("user");
         let user = JSON.parse(user_details)
-        // smartech('identify', user.email);
-        // smartech('dispatch', 'alat_onboarding_emailpwd_Success', {
-        //     "Email":user.email,
-        //     "mobile": user.email
-        // });
+        window.smartech('identify', user.email);
+        window.smartech('dispatch', 'alat_onboarding_emailpwd_Success', {
+            "Email":user.email,
+            "mobile": user.email
+        });
         return consume
             .then(response =>{
                 dispatch(success(response));
@@ -364,12 +364,12 @@ function sendOtpOrTokenForPinReset(payload, token){
         // let consume = ApiService.request(routes.VERIFYRESETOTP, "POST", payload,  SystemConstant.HEADER);
         let user_details = localStorage.getItem("user");
         let user = JSON.parse(user_details)
-        // dispatch(request(consume));
-        // smartech('identify', user.email);
-        // smartech('dispatch', 'alat_otp_verified',{
-        //     "Email": user.email,
-        //     "mobile": user.phoneNo
-        // });
+        dispatch(request(consume));
+        window.smartech('identify', user.email);
+        window.smartech('dispatch', 'alat_otp_verified',{
+            "Email": user.email,
+            "mobile": user.phoneNo
+        });
 
         return consume
             .then(response =>{
@@ -583,11 +583,11 @@ function bvnVerify (bvnDetails){
         dispatch(request(consume));
         let user_details = localStorage.getItem("user");
         let user = JSON.parse(user_details)
-        // smartech('identify', user.email);
-        // smartech('dispatch', 'alat_bvn_verified', {
-        //     "Email": user.email,
-        //     "mobile": user.phoneNo
-        // });
+        window.smartech('identify', user.email);
+        window.smartech('dispatch', 'alat_bvn_verified', {
+            "Email": user.email,
+            "mobile": user.phoneNo
+        });
         return consume
             .then(response => {
                 dispatch(success(response.data));
@@ -653,11 +653,11 @@ function getCustomerProfileImage(token, image){
         dispatch(request(consume));
         let user_details = localStorage.getItem("user");
         let user = JSON.parse(user_details)
-        // smartech('identify', user.email);
-        // smartech('dispatch', 'alat_onb_photo_sign_success',{
-        //     "Email": user.email,
-        //     "mobile": user.phoneNo
-        // });
+        window.smartech('identify', user.email);
+        window.smartech('dispatch', 'alat_onb_photo_sign_success',{
+            "Email": user.email,
+            "mobile": user.phoneNo
+        });
         return consume
             .then(response =>{
                 dispatch(success(response.data));
@@ -704,11 +704,11 @@ export const uploadDocument = (token, data, action, type) => {
     requestHeaders['Content-Type'] = false;
     let user_details = localStorage.getItem("user");
     let user = JSON.parse(user_details)
-    // smartech('identify', user.email);
-    // smartech('dispatch', 'alat_onb_photo_sign_success',{
-    //     "Email": user.email,
-    //     "mobile": user.phoneNo
-    // });
+    window.smartech('identify', user.email);
+    window.smartech('dispatch', 'alat_onb_photo_sign_success',{
+        "Email": user.email,
+        "mobile": user.phoneNo
+    });
     return (dispatch) => {
         let consume = ApiService.request(routes.DOCUMENT_UPLOAD,
             "POST", data, requestHeaders);

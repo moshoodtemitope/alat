@@ -127,9 +127,12 @@ class WithdrawFromGoal extends Component {
 
 
     validateAmount = (amount) => {
-        if (amount == "") {
+        if (this.state.Amount === "" || this.state.Amount === null) {
             this.setState({ AmountInvalid: true });
             return true;
+        }else{
+            this.setState({AmountInvalid:false});
+            return false
         }
     };
    
@@ -180,7 +183,7 @@ class WithdrawFromGoal extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({isSubmit: true});
-        if (this.validateAmount(this.state.Amount) || this.validateAccountNumber(this.state.AccountNo)) {
+        if (this.validateAmount() || this.validateAccountNumber()) {
             //not valid
         }else {
             this.props.dispatch(actions.WithDrawFromGoalStep1( {

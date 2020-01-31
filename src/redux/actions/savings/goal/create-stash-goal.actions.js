@@ -32,6 +32,13 @@ export const CreateStashGoal =(data)=>{
             .then(response => {
                 //TODO: edit localDB accounts object
                 dispatch(success(response.data, data));
+                let user_details = localStorage.getItem("user");
+                let user = JSON.parse(user_details)
+                window.smartech('identify', user.email);
+                window.smartech('dispatch', 'ALAT_Goal_Create_Success', {
+                    "Email": user.email,
+                    "mobile": user.mobile
+                });
                 history.push({
                     pathname:"/savings/goal/success",
                     state:{
