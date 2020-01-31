@@ -42,7 +42,7 @@ import {getCinemaList,
     PostVisaDetail,
     PostPersonalDetail,
     PostVisaPayment,
-    // DebitableAccount
+    DebitableAccount
     } from './lifestyle/lifestyle-reducer';
 
 
@@ -382,7 +382,7 @@ export const movies = {
     PostVisaDetail,
     PostPersonalDetail,
     PostVisaPayment,
-    // DebitableAccount
+    DebitableAccount
 }
 
 
