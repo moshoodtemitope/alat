@@ -78,7 +78,7 @@ class SelectVisa extends React.Component{
                             <div className="fund-option loan" onClick={this.onShowModal}>
                                 <i className="toshow"><img src={Airline2} alt=""/></i>
                                 <i className="hoveraction"><img src={Airline2} alt="" /></i>
-                                <p>Dubia Visa</p>
+                                <p>Dubai Visa</p>
                                 <p>You don’t need to stress over getting your visas. Get a visas here now.</p>
                             </div>
 

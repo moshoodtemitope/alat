@@ -7,6 +7,10 @@ import {customerGoalConstants} from "../../../redux/constants/goal/get-customer-
 import * as actions from "../../../redux/actions/savings/goal/get-customer-transaction-history.actions";
 import {connect} from 'react-redux';
 import {Description} from '../group/component'
+import { DebitableAccount } from '../../../redux/actions/lifestyle/movies-actions';
+import { listStyleConstants } from '../../../redux/constants/lifestyle/lifestyle-constants';
+
+
 
 
 class WithdrawFromGoal extends Component {
@@ -24,15 +28,62 @@ class WithdrawFromGoal extends Component {
             showMessage:false,
             payOutInterest:"",
             displayState: "block",
-            showLimitLevel: false
+            showLimitLevel: false,
+            accountToDebitInValid: false,
+            AccountNo: "",
+            AvailableBalance: null,
+            AccountType: null,
 
 
         };
         this.handleDebit = this.handleDebit.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.fetchDebitableAccount()
 
 
     }
+    fetchDebitableAccount() {
+        const { dispatch } = this.props;
+        dispatch(DebitableAccount(this.state.user.token));
+
+    };
+    validateAccountNumber() {
+        if (this.state.AccountNo === "" || this.state.AccountNo === null) {
+            this.setState({ accountToDebitInValid: true });
+            return true;
+        } else {
+            this.setState({ accountToDebitInValid: false })
+            return false;
+        }
+    }
+    renderSelectableDebitabe = () => {
+        if (this.props.debitable_account.message === listStyleConstants.DEBITABLE_ACCOUNT_PENDING) {
+            return <select><option>loading... debitable Account</option></select>
+        } else if (this.props.debitable_account.message === listStyleConstants.DEBITABLE_ACCOUNT_FAILURE) {
+            return <select><option>No debitable Account</option></select>
+
+
+        } else if (this.props.debitable_account.message === listStyleConstants.DEBITABLE_ACCOUNT_SUCCESS) {
+            let account = this.props.debitable_account.data.response
+            return (
+                <select onChange={this.handleDebitableAccount}>
+                    <option>Select Account to debit</option>
+                    {
+                        account.map(select_debitable => {
+                            return (<option key={select_debitable.BranchCode} value={select_debitable.AccountType + "8888" + " " + select_debitable.AccountName + " " + "8888" + " " + select_debitable.AccountNumber + "8888" + " " + select_debitable.AvailableBalance}>
+                                {select_debitable.AccountType + '' + "(" + select_debitable.AccountNumber + ")" + '-' + select_debitable.Currency + '' + select_debitable.AvailableBalance}</option>)
+                        })
+                    }
+
+                </select>
+            )
+
+        }
+
+    }
+    formatAmount(amount) {
+        return amount.toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
     componentDidMount = () => {
         this.init();
     };
@@ -55,6 +106,24 @@ class WithdrawFromGoal extends Component {
             });
         }
     };
+    handleDebitableAccount = (event) => {
+        let AccountNo = event.target.value.split("8888")[2];
+        console.log(AccountNo)
+        let AccountName = event.target.value.split("8888")[1];
+        console.log(AccountName)
+        let AccountType = event.target.value.split("8888")[0];
+        console.log(AccountType)
+        let AvailableBalance = event.target.value.split("8888")[3];
+        console.log(AvailableBalance)
+        this.setState({ AccountNo: AccountNo });
+        this.setState({ AccountName: AccountName });
+        this.setState({ AccountType: AccountType });
+        this.setState({ AvailableBalance: AvailableBalance });
+        if (this.state.formsubmitted && event.target.value != "")
+            this.setState({ accountToDebitInValid: false })
+
+
+    };
 
 
     validateAmount = (amount) => {
@@ -63,14 +132,7 @@ class WithdrawFromGoal extends Component {
             return true;
         }
     };
-    handleDebit = (account) => {
-        //console.log(account);
-        this.setState({ accountToDebit: account });
-        if (this.state.isSubmit) {
-            if (account != "")
-                this.setState({ accountToDebitInValid: false });
-        }
-    };
+   
     validateAccountNumber(account, state) {
         if (account.length != 10) {
             this.setState({ [state]: true });
@@ -118,14 +180,18 @@ class WithdrawFromGoal extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({isSubmit: true});
-        if (this.validateAmount(this.state.Amount) || this.validateAccountNumber(this.state.accountToDebit, "accountToDebitInValid")) {
+        if (this.validateAmount(this.state.Amount) || this.validateAccountNumber(this.state.AccountNo)) {
             //not valid
         }else {
             this.props.dispatch(actions.WithDrawFromGoalStep1( {
                     'goalName':this.state.goalName,
                     'goalId':parseInt(this.state.goalId),
                     "amount":this.state.amountSaved,
-                    'accountNumber':this.state.accountToDebit
+                    'accountNumber': this.state.AccountNo,
+                    "AvailableBalance": this.state.AvailableBalance,
+                    "AccountType": this.state.AccountType
+                
+
                 }
             ));
 
@@ -140,7 +206,7 @@ class WithdrawFromGoal extends Component {
 
 
     render() {
-        const {AmountInvalid} =this.state;
+        const { AmountInvalid, accountToDebitInValid} =this.state;
         return (
             <Fragment>
                 
@@ -211,14 +277,13 @@ class WithdrawFromGoal extends Component {
                                                     {
 
                                             }
-                                                <div className="form-group">
+                                        <div className={accountToDebitInValid ? "form-group form-error" : "form-group"}>
+                                            {this.renderSelectableDebitabe()}
+                                            {
+                                                accountToDebitInValid && <div className="text-danger">Select account number</div>
+                                            }
 
-                                                    <SelectDebitableAccounts
-                                                        accountInvalid={this.state.accountToDebitInValid}
-                                                        onChange={this.handleDebit}
-                                                        labelText={"Where would you like to withdraw to ?"}
-                                                    />
-                                                </div>
+                                        </div>
 
 
                                                 <div className="row">
@@ -263,7 +328,8 @@ class WithdrawFromGoal extends Component {
 const mapStateToProps = state => ({
     alert:state.alert,
     withdraw_from_goal_step1:state.CustomerGoalReducerPile.withdraw_from_goal_step1,
-    submitDashboardData:state.CustomerGoalReducerPile.submitDashboardData
+    submitDashboardData:state.CustomerGoalReducerPile.submitDashboardData,
+    debitable_account: state.LifestyleReducerPile.DebitableAccount
 });
 
 export default connect (mapStateToProps)(WithdrawFromGoal);
