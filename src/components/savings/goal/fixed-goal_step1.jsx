@@ -266,7 +266,7 @@ removeComma(currencyValue) {
 onSubmit(event) {
     event.preventDefault();
 
-    if (this.checkGoalName() || this.valStartDate() || this.valEndDate() || this.checkAmount() || this.checkgoalFrequency()) {
+    if (this.checkGoalName() || this.valStartDate() || this.valEndDate() || this.checkAmount()) {
 
     } else {
         this.setState({ isSubmitted: true });
