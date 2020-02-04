@@ -16,33 +16,46 @@ class AmountInput extends React.Component {
 
     onChange(event) {
         var intVal = event.target.value.replace(/,/g, '');
-        //console.log(intVal);
-        if(/^\d+(\.\d+)?$/g.test(intVal)) {
+        let testSequence = /^[0-9.,]+$/;
+        if(testSequence.test(event.target.value)){
+            if(/^\d+(\.\d+)?$/g.test(intVal)) {
 
-            if(this.props.onChange){
-                this.props.onChange(event.target.value);
-                    this.setState({
-                        formartedValue: this.toCurrency(intVal),
-                        intValue: intVal
-                    })
-            }else{
-                if(this.props.onKeyUp){
-                    this.props.onKeyUp(event.target.value);
-                    this.setState({
-                        formartedValue: this.toCurrency(intVal),
-                        intValue: intVal
-                    })
+                if(this.props.onChange){
+                    this.props.onChange(event.target.value);
+                        this.setState({
+                            formartedValue: this.toCurrency(intVal),
+                            intValue: intVal
+                        })
+                }else{
+                    if(this.props.onKeyUp){
+                        this.props.onKeyUp(event.target.value);
+                        this.setState({
+                            formartedValue: this.toCurrency(intVal),
+                            intValue: intVal
+                        })
+                    }
                 }
             }
-        }
-         else if (intVal == '') {
+            else if (intVal == '') {
+                this.setState({
+                    formartedValue: '',
+                    intValue: ''
+                })
+            }
+            else {
+                this.setState({
+                    formartedValue: null,
+                    intValue: null,
+                    computedValue:null
+                })
+            }
+        }else{
+           
             this.setState({
-                formartedValue: '',
-                intValue: ''
+                formartedValue: "",
+                intValue: "",
+                computedValue:""
             })
-        }
-        else {
-
         }
     }
 
@@ -75,8 +88,8 @@ class AmountInput extends React.Component {
                         type="text"
                         autoComplete="off"
                         name={this.props.name}
-                        value={this.state.formartedValue||this.props.computedValue}
-                        onKeyUp={this.onChange.bind(this)}
+                        value={this.state.formartedValue}
+                        // onKeyUp={this.onChange.bind(this)}
                         onChange={this.onChange.bind(this)}
                     />
                 }

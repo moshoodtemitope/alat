@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { Switch } from '../../../shared/elements/_toggle';
-import {cc_format, formatCardExpiryDate, checkValue} from '../../../shared/utils';
+import {cc_format, formatCardExpiryDate,validateCardExpiry, checkValue} from '../../../shared/utils';
 
 import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
 import AmountInput from '../../../shared/components/amountInput';
@@ -129,8 +129,25 @@ class FundCardDetails extends React.Component {
     }
 
     handleDate =(e)=> {
-        var date = e.target.value;
-       this.setState({formartedDate: formatCardExpiryDate(date) });
+        var date = e.target.value.trim();
+        let {eventTriggered} = this.state;
+        // let inputString = date.replace(/\D/g,'');
+       
+        
+        //this.setState({formartedDate: formatCardExpiryDate(inputString) });
+        if(eventTriggered===8 || eventTriggered===46){
+            this.setState({formartedDate: validateCardExpiry(date,eventTriggered)});
+        }else{
+            this.setState({formartedDate: validateCardExpiry(date)});
+        }
+       
+
+    }
+
+    handleDateKeyPress=(e)=>{
+        var eventTriggered = e.keyCode;
+        this.setState({eventTriggered})
+        // return eventTriggered;
     }
     
     
@@ -172,8 +189,9 @@ class FundCardDetails extends React.Component {
                                          onChange={this.handleDate}
                                          maxLength={7}
                                          value={this.state.formartedDate}
-                                         onKeyPress={checkValue}
-                                         placeholder="MM / YY" />
+                                        //  onKeyPress={checkValue}
+                                        onKeyDown={this.handleDateKeyPress}
+                                         placeholder="MM / YYYY" />
                                     </div>
                                 </div>
 
@@ -181,11 +199,11 @@ class FundCardDetails extends React.Component {
                                     <div className={this.state.cvvInvalid ? "input-ctn form-error" : "input-ctn"}>
                                         <label>CVV</label>
                                         <input 
-                                        placeholder="123"
-                                        value={this.state.Cvv}
-                                        maxLength={3}
-                                        onChange={this.handleCVV}
-                                        type="text" />
+                                            placeholder="123"
+                                            value={(this.state.Cvv)}
+                                            maxLength={3}
+                                            onChange={this.handleCVV}
+                                            type="text" />
                                     </div>
                                 </div>
                             </div>

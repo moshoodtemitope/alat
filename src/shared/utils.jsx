@@ -114,6 +114,66 @@ export const formatCardExpiryDate = (value) => {
     return value.replace(/ \/ /, '').replace(/^(\d{2})/g, '$1 / ');
 }
 
+export const numberWithCommas= (amount)=> {
+    let testSequence = /^[0-9.,]+$/;
+    // let testSequence = /^(?:\d{1,3}(?:,\d{3})*|\d+)(?:\.\d+)?$/;
+    if(amount!==undefined && amount!==''){
+        let amountFiltered ;
+
+        if(!testSequence.test(amount)){
+            return "";
+        }
+    // return numberProvided.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    // return parseFloat(numberProvided).toLocaleString(undefined, {maximumFractionDigits:2});
+        
+        // if(amount.indexOf(',')>-1){
+             amountFiltered = amount.toString().replace(/,/g, '');
+        // }
+        
+        return amountFiltered.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');    
+       
+        
+    }
+}
+
+export const validateCardExpiry = (inputString, actionKey)=>{
+    
+
+    
+    if(actionKey===undefined){
+        if(inputString.indexOf('/')===-1){
+            inputString = inputString.replace(/\D/g,'');
+            if(inputString.length===2){
+                return inputString+'/';
+            } 
+
+            
+        }
+        if(inputString.indexOf('/')===-1){
+            inputString = inputString.replace(/\D/g,'');
+            if(inputString.length>2){
+                let splittedInput = [inputString.slice(0,2),'/',inputString.slice(2)].join('');
+                return splittedInput;
+            } 
+        }
+    }
+
+    if(actionKey!==undefined){
+        if(inputString.indexOf('/')===-1){
+            inputString = inputString.replace(/\D/g,'');
+            if(inputString.length>2){
+                let splittedInput = [inputString.slice(0,2),'/',inputString.slice(2)].join('');
+                return splittedInput;
+            } 
+        }
+    }
+    
+
+    
+
+    return inputString;
+}
+
 export const canvasToFile = (dataURL) => {
     let byteString;
     byteString = atob(dataURL.split(',')[1]);
@@ -271,6 +331,8 @@ export const getOnlyNumericPhoneNumber = (phoneString) => {
     
     return phoneString;
 }
+
+
 
 export const numberInputOnly = (inputString) => {
     inputString = inputString.replace(/\D/g,'');

@@ -53,12 +53,16 @@ class FundCardSelectAccount extends React.Component {
     }
 
     handleAmount = (e) => {
-        // console.log(this.intValue);
-        this.setState({ Amount: e });
-        if (this.state.formSubmitted) {
-            if (e != "")
-                this.setState({ AmountInvalid: false });
+        // console.log("dsdsds", e)
+        let testSequence = /^[0-9.,]+$/;
+        if(testSequence.test(e)){
+            this.setState({ Amount: e });
+            if (this.state.formSubmitted) {
+                if (e != "")
+                    this.setState({ AmountInvalid: false });
+            }
         }
+        
     }
 
     checkAmount = () => {

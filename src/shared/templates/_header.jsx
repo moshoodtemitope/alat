@@ -16,6 +16,7 @@ import {occupationsList,
         idTypes, 
         religionDataSet,
         genderDataSet,
+        employmentStatusList,
         maritalStatusDataSet} from './cmdmDataSet'
 import "./heading.scss";
 import {
@@ -354,11 +355,13 @@ class HeaderContainer extends React.Component{
         let cmdmRequest         = this.props.loadCMDMPriorityRequest,
             cydmDataList        = cmdmRequest.cmdm_priority.response.data.Field,
             occupationsData     =  occupationsList,
+            employmentStatusData     =  employmentStatusList,
             allIDs              = idTypes,
             religionList        = religionDataSet,
             genderList          = genderDataSet,
             maritalStatusList   = maritalStatusDataSet,
             occupationsDropdownData  = [],
+            employmentstatusDropdownData  = [],
             allIDssDropdownData      = [],
             genderDropdownData      = [],
             maritalStatusDropdownData      = [],
@@ -370,6 +373,13 @@ class HeaderContainer extends React.Component{
                 occupationsDropdownData.push({
                     value:eachJob.REF_CODE,
                     label: eachJob.REF_DESC
+                })
+            })
+
+            employmentStatusData.map(eachStatus=>{
+                employmentstatusDropdownData.push({
+                    value:eachStatus.REF_CODE,
+                    label: eachStatus.REF_DESC
                 })
             })
 
@@ -639,7 +649,7 @@ class HeaderContainer extends React.Component{
                             <div className="input-ctn inputWrap">
                                 <label>Employment Status </label>
                                 <Select
-                                    options={occupationsDropdownData}
+                                    options={employmentstatusDropdownData}
                                     onChange={(selectedOccupation)=>{
                                         this.fieldsProvided.EMPLOYMENT_STATUS = selectedOccupation.value;
                                         this.setState({selectedOccupation});
@@ -666,6 +676,8 @@ class HeaderContainer extends React.Component{
 
                             </div>
                         }
+
+                    
 
 
                         {cydmDataList.GENDER_PRIORITY!==null &&
@@ -780,8 +792,8 @@ class HeaderContainer extends React.Component{
         return (
             <Fragment>
                 {/* {this.showNDRPMessage()} */}
-                {/* {history.location.pathname==='/home' && this.showCMDMPriorityMessage()}
-                 {this.state.openCYDMModal && this.collectPriorityInformaton()}  */}
+                {history.location.pathname==='/home' && this.showCMDMPriorityMessage()}
+                 {this.state.openCYDMModal && this.collectPriorityInformaton()} 
                 <div className="db2-fixed-header">
                     <div className="container">
                         <div className="row">
