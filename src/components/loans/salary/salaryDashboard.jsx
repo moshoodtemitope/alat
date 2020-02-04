@@ -250,7 +250,7 @@ class LoansDashboard extends React.Component {
                     setTimeout(() => {
                         // this.closeLiquidateModal();
                         // this.getCurrentLoan();
-                        location.reload();
+                        window.location.reload();
                     }, 3000);
                     
                     // 
