@@ -51,7 +51,7 @@ class LoansDashboard extends React.Component {
 
     componentDidMount = () => {
         this.init();
-        this.refreshAfterLiquidation();
+        // this.refreshAfterLiquidation();
     }
 
     discardLoan = () => {
@@ -85,6 +85,8 @@ class LoansDashboard extends React.Component {
                     this.setState({currentLoanSet: true });
                 }
             }
+
+            // console.log("---------", data);
         }
     }
 
@@ -237,10 +239,32 @@ class LoansDashboard extends React.Component {
     };
 
     confirmLiquidation =()=>{
+        let liquidateLoan = this.props.liquidate_loan;
+        this.sendLiquidationRequest()
+            .then(()=>{
+                
+                if(this.props.liquidate_loan.liquidateloan_status ===loanConstants.LIQUIDATE_LOAN_SUCCESS){
+                    
+                   
+                    // this.props.dispatch(LoanActions.loanCurrent(this.state.user.token));
+                    setTimeout(() => {
+                        // this.closeLiquidateModal();
+                        // this.getCurrentLoan();
+                        window.location.reload();
+                    }, 3000);
+                    
+                    // 
+                }
+                
+            })
+    }
+
+    sendLiquidationRequest = async()=>{
+
         const user = JSON.parse(localStorage.getItem("user"));
 
         const { dispatch } = this.props;
-        dispatch(LoanActions.liquidateLoan(user.token));
+       await dispatch(LoanActions.liquidateLoan(user.token));
     }
     refreshAfterLiquidation =()=>{
         let liquidateLoan = this.props.liquidate_loan
@@ -304,7 +328,7 @@ class LoansDashboard extends React.Component {
         
         //this.returnPendingLoanAppLication();
         const { currentLoan } = this.state;
-        console.log("current loans are", currentLoan);
+        // console.log("current loans are", currentLoan);
         return (<Fragment>
             {this.showLiquidate()}
             <div className="row">
@@ -402,11 +426,11 @@ class LoansDashboard extends React.Component {
                                 <Fragment>
                                     {/* <input type="button" disabled={currentLoan == null} value="Liquidate Current Loan" className="btn-alat btn-block" /> */}
                                     {/* disabled liquidate loan */}
-                                    {/* {currentLoan.Status == 'Active' && 
+                                    {currentLoan.Status == 'Active' && 
                                         <input type="button" value="Liquidate loan"
                                             onClick={this.showLiquidateModal}
                                         className="btn-alat "  />
-                                    } */}
+                                    }
 
                                     
                                     {/* <input type="button" disabled={currentLoan.Status == 'Active'} value="Apply For Loan dfd" onClick={() => this.props.history.push("/loans/salary/calc")} */}

@@ -667,7 +667,7 @@ class HeaderContainer extends React.Component{
                                 <Select
                                     options={occupationsDropdownData}
                                     onChange={(selectedOccupation)=>{
-                                        this.fieldsProvided.EMPLOYMENT_STATUS = selectedOccupation.value;
+                                        this.fieldsProvided.OCCUPATION = selectedOccupation.value;
                                         this.setState({selectedOccupation});
                                         // console.log('occupation', selectedOccupation)
                                     }}
