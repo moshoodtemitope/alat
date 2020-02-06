@@ -14,11 +14,20 @@ export const getAirtimeBeneficiaries = (token) => {
     return (dispatch) => {
         let consume = ApiService.request(routes.AIRTIME_BENEFICIARIES, "POST", null, SystemConstant.HEADER);
         dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        window.smartech('identify', user.email);
+        window.smartech('dispatch', 'ALAT_Airtime_View', {
+            "Email": user.email,
+            "mobile": user.phoneNo
+        });
         return consume
             .then(response => {
                 //TODO: edit localDB accounts object
                 // console.log(response);
+                
                 dispatch(success(response.data));
+               
             })
             .catch(error => {
                 //dispatch(failure(modelStateErrorHandler(error)));
@@ -116,11 +125,20 @@ export const airtimeWebPinpayment =(token, data) =>{
     return (dispatch) => {
         let consume = ApiService.request(routes.AIRTIME_PAYMENT_WEBPIN, "POST", data, SystemConstant.HEADER);
         dispatch(request(data));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        window.smartech('identify', user.email);
+        window.smartech('dispatch', 'ALAT_Airtime_Initiate', {
+            "Email": user.email,
+            "mobile": user.phoneNo,
+            "airtimetype": user.phoneNo,
+        });
         return consume
             .then(response => {
                 //TODO: edit localDB accounts object
               
                 dispatch(success(response.data, data));
+                
                // return response;
             })
             .catch(error => {
@@ -143,19 +161,20 @@ export const airtimeWebPinOTPpayment =(token, data) =>{
     return (dispatch) => {
         let consume = ApiService.request(routes.AIRTIME_PAYMENT_WEBPINOTP, "POST", data, SystemConstant.HEADER);
         dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        window.smartech('identify', user.email);
+        window.smartech('dispatch', 'ALAT_Airtime_Success', {
+            "Email": user.email,
+            "mobile": user.phoneNo,
+            "airtimetype": user.phoneNo
+        });
         return consume
             .then(response => {
                 //TODO: edit localDB accounts object
               
                 dispatch(success(response.data));
-                let user_details = localStorage.getItem("user");
-                let user = JSON.parse(user_details)
-                window.smartech('identify', user.email);
-                window.smartech('dispatch', 'ALAT_Airtime_Success', {
-                    "Email": user.email,
-                    "mobile": user.mobile,
-                    "airtimetype": user.mobile
-                });
+                
                // return response;
             })
             .catch(error => {
@@ -166,8 +185,8 @@ export const airtimeWebPinOTPpayment =(token, data) =>{
                 window.smartech('identify', user.email);
                 window.smartech('dispatch', 'ALAT_Airtime_Failure', {
                     "Email": user.email,
-                    "mobile": user.mobile,
-                    "airtimetype": user.mobile,
+                    "mobile": user.phoneNo,
+                    "airtimetype": user.phoneNo,
                 });
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
                

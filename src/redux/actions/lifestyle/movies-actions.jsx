@@ -14,18 +14,19 @@ export const FetchMovie = (token, data) => {
     return (dispatch) => {
         let consume = ApiService.request(routes.FETCH_MOVIES_LIST + data, "GET", data, SystemConstant.HEADER, false);
         dispatch(request(consume));
-        let user_details = localStorage.getItem("user");
-        let user = JSON.parse(user_details)
-        console.log(user)
-        window.smartech('identify',user.email);
-        window.smartech('dispatch', 'alat_movies', {
-            "Email": user.email,
-            "mobile": user.phoneNo
-        });
+        
         return consume
             .then(response => {
                 // console.log("=======",response);
                 dispatch(success(response.data, data));
+                let user_details = localStorage.getItem("user");
+                let user = JSON.parse(user_details)
+                console.log(user)
+                window.smartech('identify', user.email);
+                window.smartech('dispatch', 'alat_movies', {
+                    "Email": user.email,
+                    "mobile": user.phoneNo
+                });
             })
             .catch(error => {
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
