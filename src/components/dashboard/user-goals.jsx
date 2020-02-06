@@ -56,9 +56,9 @@ class UserGoals extends React.Component{
                                 className="red-text">10%</span> interest</h3>
                             <p>Create goals to meet your targets and earn interest while doing
                                 so.</p>
-                            <NavLink to="/savings/choose-goal-plan">
-
-                            <a href="" className="btn-alat m-b-10 m-t-20">Discover More</a>
+                            <NavLink className="btn-alat m-b-10 m-t-20" to="/savings/choose-goal-plan">
+                                Discover More
+                            {/* <a href="" className="btn-alat m-b-10 m-t-20"></a> */}
                             </NavLink>
                         </div>
                     );
@@ -88,7 +88,8 @@ class UserGoals extends React.Component{
                         </div>
                         <p className="">{goals.length} Active Goals</p>
                         <NavLink to="/savings/choose-goal-plan">
-                        <a href="#" className="btn-alat border-btn btn-sm">View all goals</a>
+                            View all goals
+                        {/* <a href="#" className="btn-alat border-btn btn-sm">View all goals</a> */}
                         </NavLink>
                     </div>
                 );

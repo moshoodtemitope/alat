@@ -294,10 +294,18 @@ export const saveBankTransferBeneficiary = (token, bankTransferBeneficiary) => {
             }else{   
                 let consume = ApiService.request(routes.SAVE_TRANSFER_BENEFICIARY, "POST", bankTransferBeneficiary, SystemConstant.HEADER);
                 dispatch(request(consume));
+                let user_details = localStorage.getItem("user");
+                let user = JSON.parse(user_details)
+                window.smartech('identify', user.email);
+                window.smartech('dispatch', 'ALAT_Send_Money_Add_Beneficiaries', {
+                    "Email": user.email,
+                    "mobile": user.phoneNo
+                });
                 return consume
                     .then(response => {
                         // history.push("/transfer");
                         dispatch(success(response));
+                        
                     })
                     .catch(error => {
                         if((error.response && error.response.data.Message)){
@@ -333,6 +341,13 @@ export const sendMoneyTransfer = (token, transferPayload, resend, isFxTransfer) 
             if(transferPayload.TransactionPin.length==4){
                 let consume = ApiService.request(routes.BANK_TRANSFER_WITHPIN, "POST", transferPayload, SystemConstant.HEADER);
                 dispatch(request(consume));
+                 let user_details = localStorage.getItem("user");
+                 let user = JSON.parse(user_details)
+                    window.smartech('identify', user.email);
+                    window.smartech('dispatch', 'ALAT_Send_Money_Bank', {
+                        "Email": user.email,
+                        "mobile": user.phoneNo
+                    });
                 return consume
                     .then(response => {
                         if(resend===false && !isFxTransfer){
@@ -378,6 +393,14 @@ export const processMoneyTransfer = (token, transferPayload ,isFxTransfer) => {
     return (dispatch) => {
         let consume = ApiService.request(routes.BANK_TRANSFER_WITHPIN_ANDOTP, "POST", transferPayload, SystemConstant.HEADER);
         dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        window.smartech('identify', user.email);
+        window.smartech('dispatch', 'ALAT_Send_Money_Bank', {
+            "Email": user.email,
+            "mobile": user.phoneNo,
+            // "destination": Gtb
+        });
         return consume
             .then(response => {
                 if(!isFxTransfer){
@@ -388,6 +411,7 @@ export const processMoneyTransfer = (token, transferPayload ,isFxTransfer) => {
                     history.push("/fx-transfer/success");
                 }
                 dispatch(success(response));
+                 
             })
             .catch(error => {
                 // console.log("error is", error.response);
@@ -403,6 +427,14 @@ export const processMoneyTransfer = (token, transferPayload ,isFxTransfer) => {
                 }
                 else{
                     dispatch(failure('An error while sending funds.'));
+                     let user_details = localStorage.getItem("user");
+                     let user = JSON.parse(user_details)
+                    window.smartech('identify', user.email);
+                     window.smartech('dispatch', 'ALAT_Send_Money_Bank_Successful', {
+                         "Email": user.email,
+                         "mobile": user.mobile,
+                        //  "destination": Gtb
+                     });
                 }
                    
                 

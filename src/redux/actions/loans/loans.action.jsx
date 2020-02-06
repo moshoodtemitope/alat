@@ -39,6 +39,14 @@ export const loanApply =(token, data)=>{
         let consume = ApiService.request(routes.LOAN_APPLY,
              "POST", data, SystemConstant.HEADER);
         dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        // smartech('identify', user.email);
+        // smartech('dispatch', 'ALAT_Loans', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo
+        // });
+
         return consume
             .then(response => {
                 //TODO: edit localDB accounts object
@@ -246,6 +254,27 @@ export const loanValidateRemitaOtp =(token, data) =>{
     function request(request) { return { type: loanConstants.LOAN_VALIDATEOTP_PENDING, request } }
     function success(response) { return { type: loanConstants.LOAN_VALIDATEOTP_SUCCESS, response }}
     function failure(error) { return { type: loanConstants.LOAN_VALIDATEOTP_FAILURE, error } }
+}
+
+export const liquidateLoan =(token, data) =>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.LIQUIDATECURRENT_LOAN,
+             "POST", null, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+            })
+            .catch(error => {
+                 dispatch(failure(modelStateErrorHandler(error)));
+                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function request(request) { return { type: loanConstants.LIQUIDATE_LOAN_PENDING, request } }
+    function success(response) { return { type: loanConstants.LIQUIDATE_LOAN_SUCCESS, response }}
+    function failure(error) { return { type: loanConstants.LIQUIDATE_LOAN_FAILURE, error } }
 }
 
 

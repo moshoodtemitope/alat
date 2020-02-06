@@ -1,4 +1,5 @@
-// const URL = 'https://api.alat.ng';
+//  const URL = 'https://api.alat.ng';
+// const URL = 'https://196.43.215.172';
 // const URL = 'https://196.43.215.170';
 const URL = 'https://196.43.215.157';
 
@@ -178,6 +179,7 @@ export const routes = {
     LOAN_OTP_MANDATE : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/ValidateOtpMandate',
     LOAN_KYC_REQIURED : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/KycRequired',
     LOAN_TERMS: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/TermsAndConditions',
+    LIQUIDATECURRENT_LOAN: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/LiquidateLoan',
 
     //ALat-Loans
     GET_ACTIVE_LOANS : BASEURL + '/Lending.API/api/loan/GetCustomerStatus',
@@ -217,6 +219,7 @@ export const routes = {
     GETPERSONALINFO: BASEURL + '/ProfileManagement.WebApi/api/PersonalInfo',
     GETSTATES: BASEURL + '/AccountMaintenance/api/account/GetStatesAndLgas',
     ADD_DOCUMENT: BASEURL + '/DocumentUpload/api/upload/document',
+    DOCUMENT_UPLOAD_CHECK: BASEURL + '/DocumentUpload/api/upload/check',
 
     IDENTITY_TYPE: BASEURL + '/DocumentUpload/api/upload/check',
     
@@ -311,6 +314,8 @@ export const routes = {
     //Travel
     GET_VISA_OPTIONS: BASEURL + '/Alat.VisaApplication.Api/api/visa/GetVisaOptions',
     GET_VISA_PACKAGE: BASEURL + '/Alat.VisaApplication.Api/api/visa/GetVisaPackages/1',
-    POST_VISA_ENTRY: BASEURL + '/Alat.VisaApplication.Api/api/visa/SaveVisaEntry'
+    SAVE_VISA_ENTRY: BASEURL + '/Alat.VisaApplication.Api/api/visa/SaveVisaEntry',
+    VISA_PAYMENT: BASEURL +'/Alat.VisaApplication.Api/api/visa/PostPaymentandTransaction'
+
 
 };

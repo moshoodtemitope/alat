@@ -24,7 +24,8 @@ const domain = [0, 24];
 
 class SliderComponent extends React.Component {
    state = {
-    values: [6]
+    values: [0]
+    // values: [6]
   };
 
    onChange = (values) => {

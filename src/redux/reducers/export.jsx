@@ -40,7 +40,9 @@ import {getCinemaList,
     GetVisaOptions,
     GetVisaPackage,
     PostVisaDetail,
-    PostPersonalDetail
+    PostPersonalDetail,
+    PostVisaPayment,
+    DebitableAccount
     } from './lifestyle/lifestyle-reducer';
 
 
@@ -79,9 +81,12 @@ import { loanOnboardingStep1Reducer, loanOnboardingStep2Reducer, loanOnboardingV
 import { loanCalcDataReducer, loanApplyReducer, GetIndustriesReducer, GetEmployerReducer, CurrentLoanReducer, 
         LoanHistoryReducer, WorkIdFrontReducer, WorkIdBackReducer, loanRejectReducer, loanStandingOrderReducer,
      loanMandateStatusReducer, loanValidateRemitaOtpReducer, loanStatementUpload, continueApplication, 
-     SignatureReducer , PassportReducer, KycRequired, termsReducer } from './loan.reducer';
+     SignatureReducer , PassportReducer, KycRequired,liquidateLoanReducer, termsReducer } from './loan.reducer';
 import { linkBVN, profileSuccessMessage, profileMenu, capturePersonalInformation,getContactDetail,
-        getResidential, addNextOfKin, addContactDetails, occupationAndSector, addDocuments,getPersonalInfo, GetResidentialAddress, addResidentialAddress, getStates, nextOfKinsRelationship } from './profile-reducer';
+        getResidential, addNextOfKin, addContactDetails, occupationAndSector,
+         addDocuments,getPersonalInfo, GetResidentialAddress, addResidentialAddress, getStates,
+        nextOfKinsRelationship, DocumentUploadCheckReducer, checkProfileUploads,
+ } from './profile-reducer';
 
 import { geCurrentVirtualCardsRequest,
          sendVCNewCardinfo,
@@ -170,6 +175,7 @@ export const loans = {
     SignatureReducer,
     PassportReducer,
     KycRequired,
+    liquidateLoanReducer,
     termsReducer
 }
 
@@ -374,7 +380,9 @@ export const movies = {
     GetVisaOptions,
     GetVisaPackage,
     PostVisaDetail,
-    PostPersonalDetail
+    PostPersonalDetail,
+    PostVisaPayment,
+    DebitableAccount
 }
 
 
@@ -388,6 +396,7 @@ export const profile = {
     profileMenu,
     capturePersonalInformation,
     addNextOfKin,
+    checkProfileUploads,
     addContactDetails,
     occupationAndSector,
     addDocuments,
@@ -397,5 +406,6 @@ export const profile = {
     getStates,
     nextOfKinsRelationship,
     addResidentialAddress,
-    GetResidentialAddress
+    GetResidentialAddress,
+    DocumentUploadCheckReducer
 }

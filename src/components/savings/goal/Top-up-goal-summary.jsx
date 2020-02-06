@@ -36,13 +36,15 @@ class TopUPGoalSummmary extends Component {
             let data = {
                 ...this.props.top_up_goal_step1.top_up_goal_data_step1.data
             };
-            // console.log('tag', data);
+            console.log('tag', data);
 
             this.setState({
                 Amount:data.amount,
                 goalName:data.goalName,
                 goalId:data.goalId,
                 debitAccount:data.accountNumber,
+                AvailableBalance:data.AvailableBalance,
+                AccountType: data.AccountType,
             });
         }
     };
@@ -110,7 +112,7 @@ class TopUPGoalSummmary extends Component {
                                                     <div className="coverForSummary">
                                                         <div className="left">
                                                             <p className='GoalText'>Account Type</p>
-                                                            <p className='boldedText'>{this.state.user.accounts[0].accountType}</p>
+                                                    <p className='boldedText'>{this.state.AccountType}</p>
                                                         </div>
 
                                                     </div>
@@ -118,7 +120,7 @@ class TopUPGoalSummmary extends Component {
                                                     <div className="coverForSummary">
                                                         <div className="left">
                                                             <p className='GoalText'>Account Balance</p>
-                                                            <p className='boldedText'>₦{this.state.user.accounts[0].availableBalance}</p>
+                                                    <p className='boldedText'>₦{this.state.AvailableBalance}</p>
                                                         </div>
 
                                                         <div className="right">

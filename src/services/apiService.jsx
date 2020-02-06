@@ -42,9 +42,7 @@ export class ApiService {
                 axios.defaults.headers.common['Content-Type'] = 'application/json';
                 // axios.default.headers.common['content-type'] ='multipart/form-data'
                
-            }
-           
-            else if(headers !== undefined){
+            }else if(headers !== undefined){
                 for (let [key, value] of Object.entries(headers)) {
                     axios.defaults.headers.common[key] = value;
                 }

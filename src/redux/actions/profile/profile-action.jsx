@@ -51,6 +51,28 @@ export const profileMenu = (token) => {
     function failure(error) { return {type: profile.GET_PROFILE_MENU_FAILURE, error} }
 };
 
+export const checkProfileUploads = (token) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.IDENTITY_TYPE, "POST", null, SystemConstant.HEADER, true);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+                // history.push('/');
+            })
+            .catch(error => {
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // dispatch(failure(error.response.data.message.toString()));
+            });
+    };
+    
+    function request(request) { return {type: profile.CHECK_PROFILE_UPLOADS_PENDING, request} }
+    function success(response) { return {type: profile.CHECK_PROFILE_UPLOADS_SUCCESS, response} }
+    function failure(error) { return {type: profile.CHECK_PROFILE_UPLOADS_FAILURE, error} }
+};
+
 export const capturePersonalInformation = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
@@ -143,24 +165,42 @@ export const occupationAndSector = (token, data) => {
 
 export const addDocuments = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
-    return (dispatch) => {
-        let consume = ApiService.request(routes.ADD_DOCUMENT, "POST", data, SystemConstant.HEADER, false);
-        dispatch(request(consume));
-        return consume
-            .then(response => {
-                dispatch(success(response.data));
-                history.push('/profile/profile-success-document');
-            })
-            .catch(error => {
-                // dispatch(failure(modelStateErrorHandler(error)));
-                dispatch(alertActions.error(modelStateErrorHandler(error)));
-                // dispatch(failure(error.response.data.message.toString()));
-            });
-    };
+    if(data!=="CLEAR"){
+        return (dispatch) => {
+            let consume = ApiService.request(routes.ADD_DOCUMENT, "POST", data, SystemConstant.HEADER, false);
+            dispatch(request(consume));
+            return consume
+                .then(response => {
+                    dispatch(success(response.data));
+                    // history.push('/profile/profile-success-document');
+                })
+                .catch(error => {
+                    if(error.message){
+                        dispatch(failure(error.response.data.Message));
+                    }
+                    if(error.Message){
+                        dispatch(failure(error.response.data.Message));
+                    }
+                    if(!error.message){
+                        dispatch(failure(modelStateErrorHandler(error)));
+                    }
+                    
+                    // dispatch(alertActions.error(modelStateErrorHandler(error)));
+                    // dispatch(failure(error.response.data.message.toString()));
+                });
+        };
+    }
+
+    return dispatch =>{
+        
+        dispatch(clear());
+        history.push('/profile/profile-documents')
+    }
 
     function request(request) { return {type: profile.DOCUMENTS_PENDING, request} }
     function success(response) { return {type: profile.DOCUMENTS_SUCCESS, response} }
     function failure(error) { return {type: profile.DOCUMENTS_FAILURE, error} }
+    function clear() { return { type: profile.DOCUMENTS_CLEAR, clear_data:""} }
 };
 
 export const getContactDetails = (token, data) => {
@@ -315,6 +355,25 @@ export const addResidentialAddress = (token, data) => {
     function request(request) { return {type: profile.POST_RESIDENTIAL_ADDRESS_PENDING, request} }
     function success(response) { return {type: profile.POST_RESIDENTIAL_ADDRESS_SUCCESS, response} }
     function failure(error) { return {type: profile.POST_RESIDENTIAL_ADDRESS_FAILURE, error} }
+};
+export const DocumentUploadCheck = (token, data) => {
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.DOCUMENT_UPLOAD_CHECK, "POST", data, SystemConstant.HEADER, false);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                dispatch(success(response.data));
+                // history.push('/');
+            })
+            .catch(error => {
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+    };
+
+    function request(request) { return { type: profile.DOCUMENT_UPLOAD_CHECK_PENDING, request } }
+    function success(response) { return { type: profile.DOCUMENT_UPLOAD_CHECK_SUCCESS, response } }
+    function failure(error) { return { type: profile.DOCUMENT_UPLOAD_CHECK_FAILURE, error } }
 };
 
 

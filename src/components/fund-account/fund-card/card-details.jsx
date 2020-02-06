@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { Switch } from '../../../shared/elements/_toggle';
-import {cc_format, formatCardExpiryDate, checkValue} from '../../../shared/utils';
+import {cc_format, formatCardExpiryDate,validateCardExpiry, checkValue} from '../../../shared/utils';
 
 import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
 import AmountInput from '../../../shared/components/amountInput';
@@ -41,7 +41,7 @@ class FundCardDetails extends React.Component {
     handleSubmit=(e)=>{
         e.preventDefault();
         this.setState({formSubmitted : true});
-         if(this.validateCard() || this.validateCvv()){
+         if(this.validateCard() || this.validateCvv() || this.validateDateLength()){
 
          } else{
             const payload = {
@@ -74,27 +74,36 @@ class FundCardDetails extends React.Component {
     }
 
     validateCvv=()=>{
-        if(this.state.Cvv.length != 3)
-        {this.setState({cvvInvalid : true});
+        if(this.state.Cvv.length != 3){this.setState({cvvInvalid : true});
           return true;
-          }
+        }
+    }
+
+    validateDateLength=()=>{
+        if(this.state.formartedDate.length <5){
+            this.setState({dateInvalid : true});
+            return true;
+        }
     }
 
 
     handleCVV=(e)=>{
-        if(/^[0-9]\d*$/.test(e.target.value))
-        {this.setState({Cvv : e.target.value});}
-        if(e.target.value.length == 0)
-        this.setState({Cvv : ""});
-        if(this.state.formSubmitted && (e.target.value.length == 3))
-        {this.setState({ cvvInvalid : false })}     
+        if(/^[0-9]\d*$/.test(e.target.value)){
+            this.setState({Cvv : e.target.value});
+        }
+        if(e.target.value.length == 0){
+            this.setState({Cvv : ""});
+        }
+        if(this.state.formSubmitted && (e.target.value.length == 3)){
+            this.setState({ cvvInvalid : false })
+        }     
     }
      
     validateCard=()=>{
-      if(this.state.formartCardNumber.length != 19)
-      {
-          this.setState({ cardNumberInvalid: true });
-        return true;}
+        if (this.state.formartCardNumber.length != 19) {
+            this.setState({ cardNumberInvalid: true });
+            return true;
+        }
     }
 
     handleCardChange =(e)=>{
@@ -120,8 +129,25 @@ class FundCardDetails extends React.Component {
     }
 
     handleDate =(e)=> {
-        var date = e.target.value;
-       this.setState({formartedDate: formatCardExpiryDate(date) });
+        var date = e.target.value.trim();
+        let {eventTriggered} = this.state;
+        // let inputString = date.replace(/\D/g,'');
+       
+        
+        //this.setState({formartedDate: formatCardExpiryDate(inputString) });
+        if(eventTriggered===8 || eventTriggered===46){
+            this.setState({formartedDate: validateCardExpiry(date,eventTriggered)});
+        }else{
+            this.setState({formartedDate: validateCardExpiry(date)});
+        }
+       
+
+    }
+
+    handleDateKeyPress=(e)=>{
+        var eventTriggered = e.keyCode;
+        this.setState({eventTriggered})
+        // return eventTriggered;
     }
     
     
@@ -163,8 +189,9 @@ class FundCardDetails extends React.Component {
                                          onChange={this.handleDate}
                                          maxLength={7}
                                          value={this.state.formartedDate}
-                                         onKeyPress={checkValue}
-                                         placeholder="MM / YY" />
+                                        //  onKeyPress={checkValue}
+                                        onKeyDown={this.handleDateKeyPress}
+                                         placeholder="MM / YYYY" />
                                     </div>
                                 </div>
 
@@ -172,11 +199,11 @@ class FundCardDetails extends React.Component {
                                     <div className={this.state.cvvInvalid ? "input-ctn form-error" : "input-ctn"}>
                                         <label>CVV</label>
                                         <input 
-                                        placeholder="123"
-                                        value={this.state.Cvv}
-                                        maxLength={3}
-                                        onChange={this.handleCVV}
-                                        type="text" />
+                                            placeholder="123"
+                                            value={(this.state.Cvv)}
+                                            maxLength={3}
+                                            onChange={this.handleCVV}
+                                            type="text" />
                                     </div>
                                 </div>
                             </div>

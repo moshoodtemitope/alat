@@ -114,6 +114,66 @@ export const formatCardExpiryDate = (value) => {
     return value.replace(/ \/ /, '').replace(/^(\d{2})/g, '$1 / ');
 }
 
+export const numberWithCommas= (amount)=> {
+    let testSequence = /^[0-9.,]+$/;
+    // let testSequence = /^(?:\d{1,3}(?:,\d{3})*|\d+)(?:\.\d+)?$/;
+    if(amount!==undefined && amount!==''){
+        let amountFiltered ;
+
+        if(!testSequence.test(amount)){
+            return "";
+        }
+    // return numberProvided.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    // return parseFloat(numberProvided).toLocaleString(undefined, {maximumFractionDigits:2});
+        
+        // if(amount.indexOf(',')>-1){
+             amountFiltered = amount.toString().replace(/,/g, '');
+        // }
+        
+        return amountFiltered.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');    
+       
+        
+    }
+}
+
+export const validateCardExpiry = (inputString, actionKey)=>{
+    
+
+    
+    if(actionKey===undefined){
+        if(inputString.indexOf('/')===-1){
+            inputString = inputString.replace(/\D/g,'');
+            if(inputString.length===2){
+                return inputString+'/';
+            } 
+
+            
+        }
+        if(inputString.indexOf('/')===-1){
+            inputString = inputString.replace(/\D/g,'');
+            if(inputString.length>2){
+                let splittedInput = [inputString.slice(0,2),'/',inputString.slice(2)].join('');
+                return splittedInput;
+            } 
+        }
+    }
+
+    if(actionKey!==undefined){
+        if(inputString.indexOf('/')===-1){
+            inputString = inputString.replace(/\D/g,'');
+            if(inputString.length>2){
+                let splittedInput = [inputString.slice(0,2),'/',inputString.slice(2)].join('');
+                return splittedInput;
+            } 
+        }
+    }
+    
+
+    
+
+    return inputString;
+}
+
 export const canvasToFile = (dataURL) => {
     let byteString;
     byteString = atob(dataURL.split(',')[1]);
@@ -247,10 +307,60 @@ export const mapCurrency = (currency) => {
 }
 
 export const getOnlyNumericPhoneNumber = (phoneString) => {
-    phoneString = phoneString.replace(/\D/g,'');
-    phoneString = phoneString.replace("234", "0");
+     phoneString = phoneString.replace(/\D/g,'');
+    if(phoneString.length>=4 && (phoneString.substring(0,3)==="234" || phoneString.substring(0,4)==="+234")){
+        
+        if(phoneString.substring(0,3)==="234"){
+            phoneString = phoneString.replace("234", "0");
+        }
+        if( phoneString.substring(0,4)==="+234"){
+            phoneString = phoneString.replace("+234", "0");
+        }
+        
+    }
+
+    if(phoneString.length>=4 && phoneString.substring(0,1)!=="0"){
+        phoneString =`0${phoneString}`;
+    }
+
+    if(phoneString.length>=11){
+        phoneString = phoneString.substring(0,11)
+    }
+
+
+    
     return phoneString;
 }
+
+
+
+export const numberInputOnly = (inputString) => {
+    inputString = inputString.replace(/\D/g,'');
+//    if(phoneString.length>=4 && (phoneString.substring(0,3)==="234" || phoneString.substring(0,4)==="+234")){
+       
+//        if(phoneString.substring(0,3)==="234"){
+//            phoneString = phoneString.replace("234", "0");
+//        }
+//        if( phoneString.substring(0,4)==="+234"){
+//            phoneString = phoneString.replace("+234", "0");
+//        }
+       
+//    }
+
+//    if(phoneString.length>=4 && phoneString.substring(0,1)!=="0"){
+//        phoneString =`0${phoneString}`;
+//    }
+
+//    if(phoneString.length>=11){
+//        phoneString = phoneString.substring(0,11)
+//    }
+
+
+   
+   return inputString;
+}
+
+
 
 export const getBase64=(file, cb)=> {
     let reader = new FileReader();

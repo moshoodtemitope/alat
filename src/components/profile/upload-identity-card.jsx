@@ -41,6 +41,10 @@ class IdentityCardUpload extends Component {
         //   isToNextOfKin: false,
           isDocument: false, 
           isToNextOfKin: false,
+          frontPhotoLabel: "Upload",
+          photoFrontStatus: false,
+          backPhotoLabel: "Upload",
+          photoBackStatus: false
        }
 
        this.GetResidentialAddress();
@@ -53,9 +57,10 @@ class IdentityCardUpload extends Component {
    }
 
    componentDidMount = () => {
-    this.CheckIfStoreInformationIsSet();
+        this.CheckIfStoreInformationIsSet();
 
-    this.setProfile();
+        this.setProfile();
+        this.checkProfileuploads();
    }
 
    GetResidentialAddress = () => {
@@ -103,6 +108,10 @@ CheckIfStoreInformationIsSet = () => {
            this.setState({idTypeValidity: false});
        }
    }
+
+    checkProfileuploads=()=>{
+        this.props.dispatch(actions.checkProfileUploads(this.state.user.token));
+    }
 
    checkIdCardNumberValidity = () => {
         if(this.state.idCardNumber == null || this.state.idCardNumber == ""){
@@ -177,6 +186,39 @@ CheckIfStoreInformationIsSet = () => {
     //    console.log(name);
     //    console.log(event.target.files[0]);
     //    return;
+
+    var reader = new  FileReader();
+
+    if(name==="file2"){
+        reader.onload = function(e){
+        
+                document.querySelector('#frontface-preview').style.background = `url(${e.target.result})`;
+                document.querySelector('#frontface-preview').style.backgroundSize = `cover`;
+                document.querySelector('#frontface-preview').style.backgroundRepeat = `no-repeat`;
+                document.querySelector('#frontface-preview').style.backgroundPosition = `center center`;
+            
+            
+        
+        }
+        reader.readAsDataURL(document.querySelector('#file-upload2').files[0]);
+        this.setState({frontPhotoLabel:'Change Upload', photoFrontStatus: true});
+    }
+    if(name==="file3"){
+        reader.onload = function(e){
+        
+                document.querySelector('#backface-preview').style.background = `url(${e.target.result})`;
+                document.querySelector('#backface-preview').style.backgroundSize = `cover`;
+                document.querySelector('#backface-preview').style.backgroundRepeat = `no-repeat`;
+                document.querySelector('#backface-preview').style.backgroundPosition = `center center`;
+            
+            
+        
+        }
+        reader.readAsDataURL(document.querySelector('#file-upload3').files[0]);
+        this.setState({backPhotoLabel:'Change Upload', photoBackStatus: true});
+    }
+    
+    // 
        this.setState({[name]: event.target.files[0]});
    }
 
@@ -199,8 +241,27 @@ CheckIfStoreInformationIsSet = () => {
     //    console.log(formData);
 
     //    return; 
-       this.props.dispatch(actions.addDocuments(this.state.user.token, formData));
+    //    this.props.dispatch(actions.addDocuments(this.state.user.token, formData));
+       this.asynAddRequest(this.state.user.token, formData)
+            .then(()=>{
+
+                if(this.props.addDocuments.message === profile.DOCUMENTS_SUCCESS){
+                                                    
+                                                    
+                    setTimeout(() => {
+                        this.props.dispatch(actions.addDocuments(this.state.user.token, "CLEAR"))
+                    }, 2000);
+                }
+                
+            })
    }
+
+    asynAddRequest = async (token, data)=>{
+        const {dispatch} = this.props;
+
+        await  dispatch(actions.addDocuments(token, data));
+    }
+
 
    HandleSubmit = (event) => {
         event.preventDefault();
@@ -307,6 +368,138 @@ ChangeResidentialStatus = () => {
     }, 1000)
 }
 
+renderIdForm =()=>{
+    let checkedProfileResponse =  this.props.checkProfileUploads;   
+    let addDocumentsRequest = this.props.addDocuments;
+    const {residentialAddress, isImageUploaded, isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, isToNextOfKin, birthDate, birthDateValidity, idTypeValidity, idFrontFace, idCardValidity, idCardNumberValidity} = this.state;
+    switch (checkedProfileResponse.message){
+        case (profile.CHECK_PROFILE_UPLOADS_PENDING):
+            return(
+                <div className="parentForm text-center">
+                    Please wait...
+                </div>
+            )
+        case (profile.CHECK_PROFILE_UPLOADS_SUCCESS):
+            let profileStatusData = checkedProfileResponse.data.response.ResponseDict
+            return(
+                <div>
+                    <form onSubmit={this.HandleSubmit} className="parentForm docUpLoadFormProfile">
+                    <p className="formHeading">Identity Card Details</p>
+                        {addDocumentsRequest.message !== profile.DOCUMENTS_SUCCESS &&
+                            <div>
+                                {(profileStatusData['Identity Back'] === "No" || profileStatusData.Identity === "No") &&
+                                    <div>
+                                        <div className="form-row">
+                                            <div className={idTypeValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                <label className="profileOtherLabel">Select Id Type</label>
+                                                <select onChange={this.HandleSelectedCardType} className="select-identity">
+                                                    <option value="International Passport">International Passport</option>
+                                                    <option value="Drivers License">Drivers License</option>
+                                                    <option value="NIMC">NIMC</option>
+                                                    <option value="Permanent Voters Card">Permanent Voters Card</option>
+                                                    <option value="School id">School id</option>
+                                                    <option value="Nysc id">Nysc id</option>
+                                                    <option value="Others">Others</option>
+                                                </select>
+                                            </div>
+
+
+                                        </div>
+                                        <div className="form-row">
+                                            <div className={idCardNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
+                                                <label className="profileOtherLabel">Identity Card number</label>
+                                                <input type="text" name="idCardNumber" id="file-upload1" onChange={this.GetIdCardInputs} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                <div className="form-row upload-identity">
+                                    <div className={idFrontFace ? "form-group form-error col-sm-5" : "form-group col-sm-5"}>
+                                        <p className="hdStyle">Identity Card Front</p>
+                                        {profileStatusData.Identity === "Yes" &&
+                                            <div className="inlineCardsProfile" id="frontface-preview">
+
+                                                <label htmlFor="file-upload2" className="completedupload">
+                                                    <img className="doneIcon" src={CompletedprofileImage} alt="" />Uploaded
+                                        </label>
+
+                                            </div>
+                                        }
+                                        {profileStatusData.Identity === "No" &&
+                                            <div className="inlineCardsProfile" id="frontface-preview">
+
+                                                <label htmlFor="file-upload2" className={this.state.photoFrontStatus === true ? "activated-label forIdentityCards" : "forIdentityCards"}>{this.state.frontPhotoLabel}</label>
+                                                <input accept="image/*" name="file2" type="file" id="file-upload2" onChange={this.HandleFileUpLoad} />
+                                            </div>
+                                        }
+                                    </div>
+
+                                    <div className={idCardValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
+                                        <p className="hdStyle">Identity Card Back</p>
+
+
+
+
+                                        {profileStatusData['Identity Back'] === "Yes" &&
+                                            <div className="inlineCardsProfile" id="backface-preview">
+
+                                                <label htmlFor="file-upload3" className="completedupload">
+                                                    <img className="doneIcon" src={CompletedprofileImage} alt="" />Uploaded
+                                            </label>
+
+                                            </div>
+                                        }
+                                        {profileStatusData['Identity Back'] === "No" &&
+                                            <div className="inlineCardsProfile" id="backface-preview">
+
+                                                <label htmlFor="file-upload3" className={this.state.photoBackStatus === true ? "activated-label forIdentityCards" : "forIdentityCards"}>{this.state.backPhotoLabel}</label>
+                                                <input accept="image/*" name="file3" type="file" id="file-upload3" onChange={this.HandleFileUpLoad} />
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+
+
+                                {(profileStatusData['Identity Back'] === "No" || profileStatusData.Identity === "No") &&
+                                <div className="align-buttons">
+                                    <button type="submit" 
+                                     disabled={addDocumentsRequest.is_processing}
+                                     className="twoBut">{addDocumentsRequest.is_processing?"Please wait...":"Submit"}</button>
+                                </div>
+                                }
+
+                                {(addDocumentsRequest.is_processing===false || addDocumentsRequest.is_processing===undefined) &&
+                                    <div className="back-cta text-center">
+                                        <Link className="" to="/profile/profile-documents">Back</Link>
+                                    </div>
+                                }
+
+                            </div>
+                        }
+
+                            {
+                                addDocumentsRequest.message===profile.DOCUMENTS_SUCCESS &&
+                                <div  className="info-label success upload-alert">Successfully Uploaded signature</div>
+                            }
+
+                            {
+                                addDocumentsRequest.message===profile.DOCUMENTS_FAILURE &&
+                                <div  className="info-label error upload-alert m-t-10">{addDocumentsRequest.data.error}</div>
+                            }
+                    </form>
+                </div>
+            )
+        case (profile.CHECK_PROFILE_UPLOADS_FAILURE):
+            return(
+                <div className="parentForm text-center">
+                    An error occured
+                </div>
+            )
+
+    }
+}
+
 
    render(){
       const {residentialAddress, isImageUploaded, isBvNLinked,navToNextOfKin, isProfileInformation, isContactDetails, isDocument, isToNextOfKin, birthDate, birthDateValidity, idTypeValidity, idFrontFace, idCardValidity, idCardNumberValidity} = this.state;
@@ -330,8 +523,8 @@ ChangeResidentialStatus = () => {
                                                 <div className="sub-tab-nav" style={{marginBottom: 10}}>
                                                     <ul>
                                                           <li><NavLink to={'/profile'} >Profile</NavLink></li>
-                                                          <li>Pin Management</li>
-                                                          <li>Security Questions</li>
+                                                          {/* <li>Pin Management</li>
+                                                          <li>Security Questions</li> */}
                                                     </ul>
                                                 </div>
                                             </div>
@@ -376,66 +569,7 @@ ChangeResidentialStatus = () => {
                                             </div>
                                         </div>
                                         <div className="col-sm-6">
-                                        <form onSubmit={this.HandleSubmit} className="parentForm docUpLoadFormProfile">
-                                               <p className="formHeading">Identity Card Details</p>
-                                               <div className="form-row">
-                                                    <div className={idTypeValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="profileOtherLabel">Select Id Type</label>
-                                                            <select onChange={this.HandleSelectedCardType} className="select-identity">
-                                                                 <option value="International Passport">International Passport</option>  
-                                                                 <option value="Drivers License">Drivers License</option>
-                                                                 <option value="NIMC">NIMC</option>
-                                                                 <option value="Permanent Voters Card">Permanent Voters Card</option>
-                                                                 <option value="School id">School id</option>
-                                                                 <option value="Nysc id">Nysc id</option>
-                                                                 <option value="Others">Others</option>
-                                                            </select>
-                                                    </div>
-    
-                                                    {/* <div className={birthDateValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
-                                                            <p id="dateOfIssuance">Date of Issuance</p>
-                                                            <DatePicker className="form-control" selected={birthDate} 
-                                                            placeholder="June 31, 2019"
-                                                            dateFormat=" MMMM d, yyyy"
-                                                            showMonthDropdown
-                                                            showYearDropdown
-                                                            onChange={this.SetBirthDay}
-                                                            dropdownMode="select"
-                                                            />
-                                                    </div> */}
-                                               </div>
-                                               <div className="form-row">
-                                                    <div className={idCardNumberValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="profileOtherLabel">Identity Card number</label>
-                                                            <input type="text" name="idCardNumber" id="file-upload1" onChange={this.GetIdCardInputs}/>
-                                                    </div>
-                                               </div>
-    
-                                               <div className="form-row upload-identity">
-                                                    <div className={idFrontFace ? "form-group form-error col-sm-5" : "form-group col-sm-5"}>
-                                                            <p className="hdStyle">Identity Card Front</p>
-                                                            <div className="inlineCardsProfile">
-                                                                
-                                                                <label htmlFor="file-upload2" className="forIdentityCards">Upload</label>
-                                                                <input name="file2" type="file" id="file-upload2"  onChange={this.HandleFileUpLoad}/>
-                                                            </div>
-                                                    </div>
-    
-                                                    <div className={idCardValidity ? "form-group form-error col-md-5" : "form-group col-md-5"}>
-                                                            <p className="hdStyle">Identity Card Back</p>
-                                                            <div className="inlineCardsProfile">
-                                                                 
-                                                                <label htmlFor="file-upload3" className="forIdentityCards">Upload</label>
-                                                                <input name="file3" type="file" id="file-upload3"  onChange={this.HandleFileUpLoad}/>
-                                                            </div>
-                                                    </div>
-                                               </div>
-    
-                                
-                                               <div className="align-buttons">
-                                                    <button type="submit" className="twoBut">Submit</button>
-                                                </div>
-                                        </form>
+                                            {this.renderIdForm()}
                                         
                                         </div>
                                     </div>
@@ -546,6 +680,8 @@ const mapStateToProps = (state) => {
     return {
         profileMenu: state.profileMenu,
         alert:state.alert,
+        checkProfileUploads: state.checkProfileUploads,
+        addDocuments: state.addDocuments,
         GetResidentialAddress: state.GetResidentialAddress
     }
 }

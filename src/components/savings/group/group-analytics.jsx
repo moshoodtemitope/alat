@@ -220,7 +220,7 @@ class GroupAnalytics extends React.Component {
                                           <div className="max-600">
                                            <div className="al-card no-pad">
                                         
-                                                 <div class='firstSubHead'>
+                                                 <div className='firstSubHead'>
                                                       <p>Loading GroupDetails ...</p>
                                                      
                                                  </div>
@@ -274,7 +274,7 @@ class GroupAnalytics extends React.Component {
                                           <div className="max-600">
                                            <div className="al-card no-pad">
                                         
-                                                 <div class='firstSubHead'>
+                                                 <div className='firstSubHead'>
                                                       <p>Loading GroupDetails ...</p>
                                                      
                                                  </div>
@@ -325,7 +325,7 @@ class GroupAnalytics extends React.Component {
                                           <div className="max-600">
                                            <div className="al-card no-pad">
                                         
-                                                 <div class='firstSubHead'>
+                                                 <div className='firstSubHead'>
                                                       <p>Please Check Your Network ...</p>
                                                      
                                                  </div>
@@ -375,7 +375,7 @@ class GroupAnalytics extends React.Component {
                                           <div className="max-600">
                                            <div className="al-card no-pad">
                                         
-                                                 <div class='firstSubHead'>
+                                                 <div className='firstSubHead'>
                                                       <p>Target Group</p>
                                                       <p>{this.props.groupDetails.data.response.name}</p>
                                                       <p>{this.props.groupDetails.data.response.purpose}</p>
@@ -484,7 +484,7 @@ class GroupAnalytics extends React.Component {
                                               <div className="max-600">
                                                <div className="al-card no-pad">
                                             
-                                                     <div class='firstSubHead'>
+                                                     <div className='firstSubHead'>
                                                           <p>Target Group</p>
                                                           <p>{this.props.groupDetails.data.response.name}</p>
                                                           <p>{this.props.groupDetails.data.response.purpose}</p>

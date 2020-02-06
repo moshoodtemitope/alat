@@ -25,10 +25,7 @@ class BuyTicket extends Component {
             Pin: "",
             source: "",
             isPinInvalid: false,
-
-
-
-        };
+    };
         this.handleDebit = this.handleDebit.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleAlatPinChange = this.handleAlatPinChange.bind(this);
@@ -46,7 +43,6 @@ class BuyTicket extends Component {
             let data = this.props.SubmitEventTicketData.data.data
         
             
-            console.log('tag', data);
 
             this.setState({
                 TicketAmount:data.TicketAmount,
@@ -108,7 +104,8 @@ class BuyTicket extends Component {
                 "Source":this.state.source,
                 "TicketAmount":this.state.TicketAmount.toString(),
                 "TicketNo":this.state.quantity.toString(),
-                "Pin":this.state.Pin
+                "Pin":this.state.Pin,
+                "title":this.state.title
             };
             // console.log(data)
         
@@ -120,7 +117,13 @@ class BuyTicket extends Component {
     // formatAmountNoDecimal = (amount) => {
     //     return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
     // };
+    gotoSuccessPage = () => {
+        if (this.props.purchaseEventTicket)
+            if (this.props.purchaseEventTicket.message == listStyleConstants.BUY_EVENT_TICKET_SUCCESS) {
+                return <Redirect to="/lifestyle/movie-success" />
+            }
 
+    }
     
     NavigateBack = () => {
         history.push('');
@@ -133,6 +136,7 @@ class BuyTicket extends Component {
                     <div className="col-sm-12">
                         <p className="page-title">LifeStyle</p>
                     </div>
+                {this.gotoSuccessPage()}
 
                     <div className="col-sm-12">
                         <div>
@@ -162,11 +166,11 @@ class BuyTicket extends Component {
                                                        <div className="puchaseSumTickets">
                                                            <div className="left">
                                                                 <p className="ticket-title">{this.state.title}</p>
-                                                                <p className="ticket-title">{this.state.ticketClassses}</p>
+                                                                <p className="ticket-title">Quantity</p>
                                                            </div>
                                                            <div className="right">
-                                                               <p>N{this.state.TicketAmount}</p>
-                                                               <p className="qty">Quantity {this.state.quantity}</p>
+                                                               <p className="ticket-title">N{this.state.TicketAmount}</p>
+                                                               <p className="ticket-title">{this.state.quantity}</p>
 
                                                            </div>
                                                        </div>
@@ -205,8 +209,8 @@ class BuyTicket extends Component {
                                             
                                         </div>
                                         <center>
-                                                <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(listStyleConstants.MOVIE_REDUCER_CLEAR));
-                                                    this.props.history.push('/lifestyle/event') }} className="add-bene m-t-50">
+                                                <a style={{ cursor: "pointer" }} onClick={() => { ;
+                                                this.props.history.push('/lifestyle/event-details') }} className="add-bene m-t-50">
                                                     Go back
                                                 </a>
                                             </center>

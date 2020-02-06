@@ -37,13 +37,15 @@ class CashoutStashGoal extends Component {
             let data = {
                 ...this.props.stashGoal_step1.stashout_goal_data_step1.data
             };
-            // console.log('tag', data);
+             console.log('tag', data);
 
             this.setState({
                 goalName:data.goalName,
                 goalId:data.goalId,
                 debitAccount:data.DebitAccount,
                 Amount:data.Amount,
+                AvailableBalance: data.AvailableBalance,
+                AccountType: data.AccountType,
                 partialWithdrawal:true
             });
         }
@@ -71,6 +73,9 @@ class CashoutStashGoal extends Component {
         }
         return currency;
     }
+    formatAmount(amount) {
+        return amount.toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
 
 
     handleSubmit=(event)=>{
@@ -135,13 +140,13 @@ class CashoutStashGoal extends Component {
                                                         </div>
                                                         <div className="right">
                                                             <p className='GoalText'>Amount</p>
-                                                            <p className='boldedText'>₦{this.state.Amount}</p>
+                                                    <p className='boldedText'>₦{this.formatAmount(this.state.Amount)}</p>
                                                         </div>
                                                     </div>
                                                     <div className="coverForSummary">
                                                         <div className="left">
                                                             <p className='GoalText'>Account Type</p>
-                                                            <p className='boldedText'>{this.state.user.accounts[0].accountType}</p>
+                                                            <p className='boldedText'>{this.state.AccountType}</p>
                                                         </div>
 
                                                     </div>
@@ -149,11 +154,11 @@ class CashoutStashGoal extends Component {
                                                     <div className="coverForSummary">
                                                         <div className="left">
                                                             <p className='GoalText'>Account Balance</p>
-                                                            <p className='boldedText'>₦{this.state.user.accounts[0].availableBalance}</p>
+                                                            <p className='boldedText'>₦{this.state.AvailableBalance}</p>
                                                         </div>
 
                                                         <div className="right">
-                                                            <p className='GoalText'>Account to Debit</p>
+                                                            <p className='GoalText'>Account to Credit</p>
                                                             <p className='boldedText'>{this.state.debitAccount}</p>
                                                         </div>
                                                     </div>

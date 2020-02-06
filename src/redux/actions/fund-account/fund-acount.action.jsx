@@ -12,10 +12,18 @@ export const fundAlatWemaAccount =(token, data)=>{
         let consume = ApiService.request(routes.WEMA_TO_ALAT_TRANSFER_WITHOUT_OTP,
              "POST", data, SystemConstant.HEADER);
         dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        window.smartech('identify', user.email);
+        window.smartech('dispatch', 'ALATfund_My_Account_Success', {
+            "Email": user.email,
+            "mobile": user.phoneNo
+        });
+
         return consume
             .then(response => {
                 //TODO: edit localDB accounts object
-                dispatch(success(response.data, request));
+                dispatch(success(response.data, data));
             })
             .catch(error => {
                // dispatch(success(response.data, request));
@@ -26,7 +34,7 @@ export const fundAlatWemaAccount =(token, data)=>{
     };
 
     function request(request) { return { type: fundAccountConstants.FUND_ALAT_WEMA_PENDING, request } }
-    function success(response, request) { return { type: fundAccountConstants.FUND_ALAT_WEMA_SUCCESS, response : response, data: request } }
+    function success(response, data) { return { type: fundAccountConstants.FUND_ALAT_WEMA_SUCCESS, response : response, data } }
     function failure(error) { return { type: fundAccountConstants.FUND_ALAT_WEMA_FAILURE, error } }
 };
 
@@ -36,6 +44,14 @@ export const saveCardAfterTransaction =(token, data)=>{
         let consume = ApiService.request("",
              "POST", data, SystemConstant.HEADER);
         dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        window.smartech('identify', user.email);
+        window.smartech('dispatch', 'ALATFund_My_Account_View ', {
+            "Email": user.email,
+            "mobile": user.phoneNo
+        });
+
         return consume
             .then(response => {
                 //TODO: edit localDB accounts object
@@ -84,6 +100,14 @@ export const saveCard =(token, data)=>{
         let consume = ApiService.request(routes.SAVE_CARD,
              "POST", data, SystemConstant.HEADER);
         dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        window.smartech('identify', user.email);
+        window.smartech('dispatch', 'ALATFund_My_Account_Initiate', {
+            "Email": user.email,
+            "mobile": user.phoneNo
+        });
+
         return consume
             .then(response => {
                 dispatch(success(response.data));
@@ -104,6 +128,14 @@ export const saveCard =(token, data)=>{
 export const fundCardDetails =(data)=>{
     return (dispatch) => { 
        dispatch(success(data));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        window.smartech('identify', user.email);
+        window.smartech('dispatch', 'ALATFund_My_Account_View ', {
+            "Email": user.email,
+            "mobile": user.phoneNo
+        });
+
     };
    // function request(request) { return { type: fundAccountConstants.SAVE_CARD_PENDING, request } }
     function success(response) { return { type: fundAccountConstants.FUNDCARD_DETAILS_SUCCESS, data  } }

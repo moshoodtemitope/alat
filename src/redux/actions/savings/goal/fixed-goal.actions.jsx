@@ -39,11 +39,19 @@ export const addFixedGoal =(data)=>{
         let consume = ApiService.request(routes.ADDGOAL,
              "POST", data);
         dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        window.smartech('identify', user.email);
+        window.smartech('dispatch', 'ALAT_Savings_and_Investment', {
+            "Email": user.email,
+            "mobile": user.mobile
+        });
         return consume
             .then(response => {
                 //TODO: edit localDB accounts object
                 dispatch(success(response.data, data));
                 // console.log("000000000000000",response.data)
+                
                 history.push({
                     pathname:"/savings/goal/success",
                     state:{details:response.data}

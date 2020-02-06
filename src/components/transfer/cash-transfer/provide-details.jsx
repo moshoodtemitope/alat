@@ -179,7 +179,7 @@ class ProvideDetails extends React.Component{
                     );
                 case GET_TRANSACTION_LIMIT_SUCCESS:
                     return(
-                        <div className="limit-text">Your daily transfer limit is ₦{this.transacLimitData.transferlimit_data.response.data.WemaBankLimit}</div>
+                        <div className="limit-text">Your daily transfer limit is ₦{utils.formatAmount(this.transacLimitData.transferlimit_data.response.data.WemaBankLimit)}</div>
                     )
             }
 
@@ -289,7 +289,7 @@ class ProvideDetails extends React.Component{
                                                                 accountInvalid={this.state.isAccountInvalid}
                                                                 onChange={this.handleSelectDebitableAccounts} />
                                                             {isSelectChanged===true &&
-                                                                <span className="limit-text">Your daily transfer limit is ₦{transferLimit} </span>
+                                                                <span className="limit-text">Your daily transfer limit is ₦{utils.formatAmount(transferLimit)} </span>
                                                             }
                                                         </div>
 

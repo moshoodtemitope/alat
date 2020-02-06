@@ -17,17 +17,25 @@ class FundWemaSuccess extends React.Component {
     }
 
     init() {
-       if(this.props.fundwema.fund_account_status)
+       if(this.props.fundwema.fund_account_status!==undefined){
            if(this.props.fundwema.fund_account_status !== fundAccountConstants.FUND_ALAT_WEMA_SUCCESS){
                this.props.history.push("/fund/wema")
            }else{
             
            }
+       }else{
+        this.props.history.push("/fund/wema")   
+       }
     }
     
     returnAccountName=(accountNumber)=>{
         if(this.props.accounts.debitable_accounts_data)
         var _account = this.props.accounts.debitable_accounts_data.data.find(account => account.AccountNumber== accountNumber);
+        console.log("++++++++", _account);
+        console.log("||||||", accountNumber);
+        // console.log("=+++=+=+====", this.props.fundwema.fund_account_data);
+        // console.log("=======", this.props.accounts.debitable_accounts_data.data);
+
         return _account.AccountDescription;
     }
     redirectHome=()=>{
@@ -40,46 +48,46 @@ class FundWemaSuccess extends React.Component {
          let props = this.props;
          if(props.fundwema.fund_account_data)
             return (
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="max-600">
-                                <div class="al-card">
+                <div className="col-sm-12">
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <div className="max-600">
+                                <div className="al-card">
                                     <center>
-                                        <img src={succesImg} class="m-b-30 m-t-20" />
+                                        <img src={succesImg} className="m-b-30 m-t-20" />
                                     </center>
-                                    <h4 class="center-text red-text">Transfer was successful</h4>
+                                    <h4 className="center-text red-text">Transfer was successful</h4>
 
-                                    <div class="m-t-20 width-400">
-                                        <div class="al-card no-pad">
-                                            <p4>From</p4>
-                                            <div class="trans-summary-card">
-                                                <div class="name-amount clearfix">
-                                                    <p class="pl-name-email">{this.returnAccountName(props.fundwema.fund_account_data.data.accountToDebit)}
-                                                    <span>{props.fundwema.fund_account_data.data.accountToDebit}</span></p>
-                                                    {/* <p class="pl-amount">N5,000</p> */}
+                                    <div className="m-t-20 width-400">
+                                        <div className="al-card no-pad">
+                                            <h4>From</h4>
+                                            <div className="trans-summary-card">
+                                                <div className="name-amount clearfix">
+                                                    <p className="pl-name-email">{this.returnAccountName(props.fundwema.fund_account_data.data.DebitAccountNumber)}
+                                                    <span>{props.fundwema.fund_account_data.data.DebitAccountNumber}</span></p>
+                                                    {/* <p className="pl-amount">N5,000</p> */}
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="al-card no-pad">
-                                            <p4>To</p4>
-                                            <div class="trans-summary-card">
-                                                <div class="name-amount clearfix">
-                                                    <p class="pl-name-email">{this.returnAccountName(props.fundwema.fund_account_data.data.accountToDebit)}
-                                                    <span>{props.fundwema.fund_account_data.data.accountToCredit}</span></p>
-                                                    {/* <p class="pl-amount">N5,000</p> */}
+                                        <div className="al-card no-pad">
+                                            <h4>To</h4>
+                                            <div className="trans-summary-card">
+                                                <div className="name-amount clearfix">
+                                                    <p className="pl-name-email">{this.returnAccountName(props.fundwema.fund_account_data.data.CreditAccountNumber)}
+                                                    <span>{props.fundwema.fund_account_data.data.CreditAccountNumber}</span></p>
+                                                    {/* <p className="pl-amount">N5,000</p> */}
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="input-ctn">
+                                        <div className="input-ctn">
                                             <label>Amount</label>
                                             <input type="text" value={props.fundwema.fund_account_data.data.Amount} disabled={true} />
                                         </div>
 
-                                        <div class="row">
-                                            <div class="col-sm-12">
+                                        <div className="row">
+                                            <div className="col-sm-12">
                                                 <center>
-                                                    <a style={{cursor: "pointer"}}><button onClick={this.redirectHome()} class="btn-alat m-t-10 m-b-20 text-center" type="submit">Done</button></a>
+                                                    <a style={{cursor: "pointer"}}><button onClick={this.redirectHome} class="btn-alat m-t-10 m-b-20 text-center" type="submit">Done</button></a>
                                                 </center>
                                             </div>
                                         </div>

@@ -336,7 +336,7 @@ class ProvideDetails extends React.Component {
                                 value={customerInsurancePhoneNo}
                                 placeholder= "Enter phone no"
                                 onChange= {(customerInsurancePhoneNo, e)=>{
-                                    this.setState({customerInsurancePhoneNo});
+                                    this.setState({customerInsurancePhoneNo: utils.getOnlyNumericPhoneNumber(customerInsurancePhoneNo)});
                                 }}
                             />
                         </div>

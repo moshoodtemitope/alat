@@ -238,6 +238,7 @@ const loansReducer = combineReducers({
     passport: loans.PassportReducer,
     signature: loans.SignatureReducer,
     kycrequired : loans.KycRequired,
+    liquidateLoan : loans.liquidateLoanReducer,
     terms: loans.termsReducer,
 })
  const GoalReducer = combineReducers({
@@ -272,13 +273,15 @@ const LifestyleReducer = combineReducers({
     PostMovieContent:movies.PostMovieContent,
     SubmitMovieData:movies.SubmitMovieData,
     SubmitEventData:movies.SubmitEventData,
+    DebitableAccount:movies.DebitableAccount,
 
     //Visa
     PostVisa:movies.PostVisa,
     GetVisaOptions:movies.GetVisaOptions,
     GetVisaPackage:movies.GetVisaPackage,
     PostVisaDetail:movies.PostVisaDetail,
-    PostPersonalDetail:movies.PostPersonalDetail
+    PostPersonalDetail:movies.PostPersonalDetail,
+    PostVisaPayment: movies.PostVisaPayment
 
 })
             
@@ -455,6 +458,7 @@ const appReducer = combineReducers({
     profileMenu:profile.profileMenu,
     capturePersonalInformation: profile.capturePersonalInformation,
     addNextOfKin:profile.addNextOfKin,
+    checkProfileUploads:profile.checkProfileUploads,
     addContactDetails:profile.addContactDetails,
     occupationAndSector:profile.occupationAndSector,
     addDocuments:profile.addDocuments,
@@ -464,7 +468,8 @@ const appReducer = combineReducers({
     getStates: profile.getStates,
     nextOfKinsRelationship: profile.nextOfKinsRelationship,
     addResidentialAddress: profile.addResidentialAddress,
-    GetResidentialAddress: profile.GetResidentialAddress
+    GetResidentialAddress: profile.GetResidentialAddress,
+    documentUploadCheck: profile.DocumentUploadCheckReducer
 });
 
 //export defualt appReducer;

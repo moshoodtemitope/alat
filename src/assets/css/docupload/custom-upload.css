@@ -62,3 +62,11 @@ input[type="file"] {
     padding: 6px 12px;
     cursor: pointer;
 }
+
+.IduploadPrev {
+    padding-top: 70px;
+    padding-bottom: 50px !important;
+    height: 180px;
+    background-color: #F5F5F5;
+    padding-left: 30% !important;
+}

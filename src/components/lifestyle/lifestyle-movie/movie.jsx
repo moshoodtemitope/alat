@@ -10,12 +10,14 @@ import {listStyleConstants} from '../../../redux/constants/lifestyle/lifestyle-c
 import {FetchMovie,getCinemaList,fetchMovieGenre,SubmitMoviesData} from "../../../redux/actions/lifestyle/movies-actions";
 import unescape from 'lodash/unescape';
 import FilterSearch from './filter-result';
+import dummyImage from '../../../assets/img/dummyImage.svg'
+
 
 class Movie extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            user: JSON.parse(localStorage.getItem("user")),
+            user:JSON.parse(localStorage.getItem("user")),
             value:"",
             genre:null,
             movies:null,
@@ -23,13 +25,11 @@ class Movie extends React.Component {
             pageSize:2,
             genreType: "",
             doFilter: false,
-            display: "block"
+            display: "block",
 
         };
         this.showMovies = true;
-        this.moviesDetails =this.moviesDetails.bind(this)
-
-       
+        this.moviesDetails =this.moviesDetails.bind(this);
     }
 
     componentDidMount(){
@@ -81,9 +81,13 @@ class Movie extends React.Component {
         const { dispatch } = this.props;
         dispatch(FetchMovie(this.state.user.token, this.state.pageSize));
     }
+    
 
     onChangeHandler = async e => {
-        this.search(e.target.value);
+        if (e.target.value.length >= 2){
+            this.search(e.target.value);
+        }
+       
         this.setState({ value: e.target.value });
         this.setState({display: "none"})
 
@@ -91,7 +95,6 @@ class Movie extends React.Component {
 
     moviesDetails=(event)=>{
         let movies = event.target.id
-        // console.log('======',movies)
         this.props.dispatch(SubmitMoviesData(event.target.id))
 
         
@@ -104,6 +107,8 @@ class Movie extends React.Component {
         let props = this.props;
         let getMovieList = props.getMovieList;
         let that =this
+        const { length } = this.state;
+
 
         if(getMovieList.message === listStyleConstants.GET_MOVIE_LIST_PENDING){
             return <h4 style={{ marginTop: 100, textAlign:'center' }} className="text-center">Loading Movies...</h4>;
@@ -118,15 +123,23 @@ class Movie extends React.Component {
 
             return(
                 <div className="eventTrays col-sm-12">
-                    {userMovies.map(function(film, index){
+
+                    {Array.from(userMovies).map(function(film, index){
                         return(
                                 <div  className="eventCards" key={index}>
                                     <Link to={{
                                         pathname:"/lifestyle/movie-details",
                                     }}>
-                                        <div id={JSON.stringify(film)} onClick={that.moviesDetails} className="picCard" style={{backgroundImage: 'url("'+film.artworkThumbnail+'")',}}>
-                                          
-                                        </div>
+                                        {
+                                            film.artworkThumbnail ?
+                                            <div id={JSON.stringify(film)} onClick={that.moviesDetails} className="picCard" style={{ backgroundImage: 'url("' + film.artworkThumbnail + '")', }}>
+
+                                            </div> :
+                                            <div id={JSON.stringify(film)} onClick={that.moviesDetails} className="picCard">
+                                                <img alt="emptyImage" src={dummyImage}/>
+                                            </div>
+                                        }
+                                        
                                         
                                         
                                     </Link>
@@ -149,6 +162,7 @@ class Movie extends React.Component {
 
                         );
                     })}
+
                 </div>
             );
         }
@@ -164,7 +178,7 @@ class Movie extends React.Component {
 
 
         if(SearchfetchMovieList.message === listStyleConstants.SEARCH_FETCH_MOVIE_PENDING){
-            return  <h4 style={{marginTop:"60px"}} className="text-center">Loading Movies...</h4>;
+            return  <h4 style={{marginTop:"60px"}} className="text-center">please wait...</h4>;
 
         }
         else if(SearchfetchMovieList.message === listStyleConstants.SEARCH_FETCH_MOVIE_FAILURE){
@@ -177,6 +191,7 @@ class Movie extends React.Component {
 
             return(
                 <div className="eventTrays col-sm-12">
+
                     {userMovies.map(function(film, index){
                         return(
                                 <div className="eventCards" key={index}>
@@ -202,6 +217,7 @@ class Movie extends React.Component {
 
                         );
                     })}
+
                 </div>
             );
         }
@@ -375,9 +391,12 @@ class Movie extends React.Component {
 
     }
     loadMore=()=>{
-        if (this.props.getMovieList.message === listStyleConstants.GET_MOVIE_LIST_SUCCESS){
+        
+        if (this.props.getMovieList.message === listStyleConstants.GET_MOVIE_LIST_SUCCESS 
+            && this.props.SearchfetchMovieList.message !== listStyleConstants.SEARCH_FETCH_MOVIE_PENDING){
             return <span className="loadMore" onClick={() => this.handleLoadMore()}>Load More</span>
-        } else if (this.props.getMovieList.message === listStyleConstants.GET_MOVIE_LIST_SUCCESS && this.props.getMovieList.data.response.length > 1){
+        } else if (this.props.SearchfetchMovieList.message === listStyleConstants.SEARCH_FETCH_EVENT_SUCCESS && this.props.getMovieList.data.response.length === 0 ){
+
             return <h2>No Movie Found</h2>
 
         }

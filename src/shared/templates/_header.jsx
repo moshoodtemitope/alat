@@ -16,6 +16,7 @@ import {occupationsList,
         idTypes, 
         religionDataSet,
         genderDataSet,
+        employmentStatusList,
         maritalStatusDataSet} from './cmdmDataSet'
 import "./heading.scss";
 import {
@@ -57,6 +58,7 @@ class HeaderContainer extends React.Component{
             phoneNumberInfo:'',
             religionInfo:'',
             updatedFields:'',
+            tinnumber:'',
             selectedOccupation:null,
             selectedGender:null,
             selectedStatus:null,
@@ -219,7 +221,10 @@ class HeaderContainer extends React.Component{
         const user = JSON.parse(localStorage.getItem("user"));
 
         const { dispatch } = this.props;
-        dispatch(userActions.fetchCMDMPriority(user.token));
+        if(history.location.pathname==='/home'){
+            dispatch(userActions.fetchCMDMPriority(user.token));
+        }
+        
     }
 
     showCMDMPriorityMessage(){
@@ -231,26 +236,29 @@ class HeaderContainer extends React.Component{
         switch (cmdmRequest.fetch_status){
             case GET_CMDMPRIORITY_SUCCESS:
                     let cmdmData = cmdmRequest.cmdm_priority.response.data;
-                    
-                return(
-                    <Modal open={openModal} onClose={this.onCloseModal}>
-                        <div className="div-modal">
-                            
+                if(cmdmData.Message!==null){   
+                    return(
+                        <Modal open={openModal} onClose={this.onCloseModal}>
+                            <div className="div-modal">
+                                
 
-                            <div className="cmdm-message">{cmdmData.Message}</div>
+                                <div className="cmdm-message">{cmdmData.Message}</div>
 
-                        <div className="btn-opt text-center">
-                            {/* <button onClick={this.onCloseModal} className="border-btn">Back</button> */}
-                            <button onClick={(e)=>{
-                                e.preventDefault();
-                                this.setState({openModal:false, openCYDMModal: true})
-                            
-                            }}
-                            className="btn-alat">Proceed</button>
-                        </div>
-                        </div>
-                    </Modal>
-                )
+                            <div className="btn-opt text-center">
+                                {/* <button onClick={this.onCloseModal} className="border-btn">Back</button> */}
+                                <button onClick={(e)=>{
+                                    e.preventDefault();
+                                    this.setState({openModal:false, openCYDMModal: true})
+                                
+                                }}
+                                className="btn-alat">Proceed</button>
+                            </div>
+                            </div>
+                        </Modal>
+                    )
+                }else{
+                    return null;
+                }
                 
         }
     }
@@ -278,7 +286,7 @@ class HeaderContainer extends React.Component{
                             <div className="ndPrWrap">
                                 <div className="ndprMsg al-card">
                                 <span className="close-btn" onClick={()=>this.setState({displayNdpr:false})}>X</span>
-                                    <h3 className="username-heading">Dear {user.fullName},</h3>
+                                    <h3 className="username-heading">Dear {user && user.fullName},</h3>
                                     <p>
                                     Our Privacy Policy has been updated to give you more clarity on how we collect the information you share with us and how we use it.
                                     </p>
@@ -347,11 +355,13 @@ class HeaderContainer extends React.Component{
         let cmdmRequest         = this.props.loadCMDMPriorityRequest,
             cydmDataList        = cmdmRequest.cmdm_priority.response.data.Field,
             occupationsData     =  occupationsList,
+            employmentStatusData     =  employmentStatusList,
             allIDs              = idTypes,
             religionList        = religionDataSet,
             genderList          = genderDataSet,
             maritalStatusList   = maritalStatusDataSet,
             occupationsDropdownData  = [],
+            employmentstatusDropdownData  = [],
             allIDssDropdownData      = [],
             genderDropdownData      = [],
             maritalStatusDropdownData      = [],
@@ -363,6 +373,13 @@ class HeaderContainer extends React.Component{
                 occupationsDropdownData.push({
                     value:eachJob.REF_CODE,
                     label: eachJob.REF_DESC
+                })
+            })
+
+            employmentStatusData.map(eachStatus=>{
+                employmentstatusDropdownData.push({
+                    value:eachStatus.REF_CODE,
+                    label: eachStatus.REF_DESC
                 })
             })
 
@@ -470,7 +487,7 @@ class HeaderContainer extends React.Component{
                                     onBlur={(e) => {}}
                                     onChange= {(lastNameInfo, e)=>{
                                         this.fieldsProvided.LAST_NAME = lastNameInfo;
-                                        // this.setState({lastNameInfo});
+                                        this.setState({lastNameInfo});
                                         
                                     }}
                                 />
@@ -518,7 +535,7 @@ class HeaderContainer extends React.Component{
                                     onBlur={(e) => {}}
                                     onChange= {(emailInfo, e)=>{
                                         this.fieldsProvided.EMAIL = emailInfo;
-                                        // this.setState({emailInfo});
+                                        this.setState({emailInfo});
                                         
                                     }}
                                 />
@@ -543,7 +560,7 @@ class HeaderContainer extends React.Component{
                                     onBlur={(e) => {}}
                                     onChange= {(phoneNumberInfo, e)=>{
                                         this.fieldsProvided.MOBILE_NO = phoneNumberInfo;
-                                        // this.setState({phoneNumberInfo});
+                                        this.setState({phoneNumberInfo});
                                         
                                     }}
                                 />
@@ -568,7 +585,7 @@ class HeaderContainer extends React.Component{
                                     onBlur={(e) => {}}
                                     onChange= {(addressTextInfo, e)=>{
                                         this.fieldsProvided.ADDRESS_PRIORITY = addressTextInfo;
-                                        // this.setState({addressTextInfo});
+                                        this.setState({addressTextInfo});
                                         
                                     }}
                                 />
@@ -577,6 +594,30 @@ class HeaderContainer extends React.Component{
                             </div>
                         }
 
+
+                        {cydmDataList.TIN_PRIORITY!==null &&
+                            <div className="input-ctn inputWrap">
+                                <label>Enter your TIN</label>
+                                <Textbox
+                                    tabIndex="2"
+                                    id={'tin'}
+                                    name="tin"
+                                    type="text"
+                                    autoComplete ="off"
+                                    value={this.state.tinnumber}
+                                    maxLength="11"
+                                    placeholder= "Enter your TIN"
+                                    onBlur={(e) => {}}
+                                    onChange= {(TIN_NUM, e)=>{
+                                        this.fieldsProvided.TIN = TIN_NUM;
+                                        this.setState({tinnumber: TIN_NUM});
+                                        
+                                    }}
+                                />
+                                
+
+                            </div>
+                        }
 
                         {cydmDataList.DOB_PRIORITY!==null &&
                             <div className="input-ctn inputWrap">
@@ -606,9 +647,9 @@ class HeaderContainer extends React.Component{
 
                         {cydmDataList.EMPLOYMENT_STATUS_PRIORITY!==null &&
                             <div className="input-ctn inputWrap">
-                                <label>Your occupation </label>
+                                <label>Employment Status </label>
                                 <Select
-                                    options={occupationsDropdownData}
+                                    options={employmentstatusDropdownData}
                                     onChange={(selectedOccupation)=>{
                                         this.fieldsProvided.EMPLOYMENT_STATUS = selectedOccupation.value;
                                         this.setState({selectedOccupation});
@@ -619,6 +660,24 @@ class HeaderContainer extends React.Component{
 
                             </div>
                         }
+
+                        {cydmDataList.OCCUPATION_PRIORITY!==null &&
+                            <div className="input-ctn inputWrap">
+                                <label>Your occupation</label>
+                                <Select
+                                    options={occupationsDropdownData}
+                                    onChange={(selectedOccupation)=>{
+                                        this.fieldsProvided.OCCUPATION = selectedOccupation.value;
+                                        this.setState({selectedOccupation});
+                                        // console.log('occupation', selectedOccupation)
+                                    }}
+                                />
+                                
+
+                            </div>
+                        }
+
+                    
 
 
                         {cydmDataList.GENDER_PRIORITY!==null &&
@@ -678,7 +737,7 @@ class HeaderContainer extends React.Component{
                                     onChange={(selectedReligion)=>{
                                         this.fieldsProvided.RELIGION = selectedReligion.value;
                                         this.setState({selectedReligion});
-                                        console.log('fields are', this.fieldsProvided);
+                                        // console.log('fields are', this.fieldsProvided);
                                        
                                     }}
                                 />
@@ -732,9 +791,9 @@ class HeaderContainer extends React.Component{
         
         return (
             <Fragment>
-                {this.showNDRPMessage()}
-                {this.showCMDMPriorityMessage()}
-                {this.state.openCYDMModal && this.collectPriorityInformaton()}
+                {/* {this.showNDRPMessage()} */}
+                {history.location.pathname==='/home' && this.showCMDMPriorityMessage()}
+                 {this.state.openCYDMModal && this.collectPriorityInformaton()} 
                 <div className="db2-fixed-header">
                     <div className="container">
                         <div className="row">
@@ -760,7 +819,7 @@ class HeaderContainer extends React.Component{
                                         {/* <img src="../../assets/img/10.jpg" /> */}
                                         <img src={DpHolder} alt=""/>
                                     </div>
-                                    <p className="name">{user.fullName}</p>
+                                    <p className="name">{user && user.fullName}</p>
                                 </div>
                                 { this.renderMiniNav() }
                                 <div className="user-name-circle clearfix">

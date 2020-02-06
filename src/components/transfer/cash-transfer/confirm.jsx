@@ -50,12 +50,26 @@ class ConFirmTransfer extends React.Component{
                 SenderAccountName: props.transfersender.transfer_info_data.data.SenderAccountName,
                 SenderAccountBalance: props.transfersender.transfer_info_data.data.AccountBalance,
                 AmountToSend: props.transfersender.transfer_info_data.data.AmountToSend,
-                BankCharge : props.transfer_charges.bank_charges_data.response.data[0].Charge,
+                // BankCharge : props.transfer_charges.bank_charges_data.response.data[0].Charge,
                 SenderAccountNumber: props.transfersender.transfer_info_data.data.SenderAccountNumber
             };
             if(transferDetails.BankCode === '035' || transferDetails.BankCode === '000017'){
                 transferDetails.BankCharge = '0';
+            }else{
+                let bankChargesData = props.transfer_charges.bank_charges_data.response.data,
+                    formattedAmount = parseFloat(transferDetails.AmountToSend.replace(',',''));
+                
+                for(var count=0; count<bankChargesData.length; count++){
+                   
+
+                    if((bankChargesData[count].LowerLimit <= formattedAmount) &&  (formattedAmount<=bankChargesData[count].UpperLimit)){
+                        transferDetails.BankCharge =bankChargesData[count].Charge;
+                        break;
+                    }
+                }
+                
             }
+            
             
 
             this.state.accountData={
