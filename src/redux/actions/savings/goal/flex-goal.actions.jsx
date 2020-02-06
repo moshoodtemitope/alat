@@ -46,7 +46,7 @@ export const addFlexGoal =(data)=>{
         window.smartech('identify', user.email);
         window.smartech('dispatch', 'ALAT_Goal_Create_Success', {
             "Email": user.email,
-            "mobile": user.mobile
+            "mobile": user.phoneNo
         });
         return consume
             .then(response => {

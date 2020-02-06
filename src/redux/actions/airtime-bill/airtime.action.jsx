@@ -18,8 +18,8 @@ export const getAirtimeBeneficiaries = (token) => {
         let user = JSON.parse(user_details)
         window.smartech('identify', user.email);
         window.smartech('dispatch', 'ALAT_Airtime_View', {
-            "Email": email,
-            "mobile": phoneNo
+            "Email": user.email,
+            "mobile": user.phoneNo
         });
         return consume
             .then(response => {
