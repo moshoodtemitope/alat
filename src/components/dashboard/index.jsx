@@ -270,6 +270,7 @@ class Dashboard extends React.Component{
                                     </div>
 
                                     <UserGoals />
+                                    
                                 </div>
                             </div>
 
