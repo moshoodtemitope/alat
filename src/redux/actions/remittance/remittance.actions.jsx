@@ -20,6 +20,13 @@ export const getWesternUnionCountries = (token)=>{
     return (dispatch)=>{
         let consume =  ApiService.request(routes.WESTERNUNION_COUNTRIES, "GET", null, SystemConstant.HEADER); 
         dispatch(request(consume));
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+        smartech('identify', user.email);
+        smartech('dispatch', 'ALAT_Receive_Money', {
+            "Email": user.email,
+            "mobile": user.phoneNo
+        });
         return consume
             .then(response=>{
                 // dispatch(success(response));
@@ -82,9 +89,16 @@ export const receiveWUMoney = (payload, token)=>{
     let isCompleted =false;
     return (dispatch) =>{
         let consume = ApiService.request(routes.RECEIVE_WESTERNUNION, "POST", payload, SystemConstant.HEADER);
-        
-         
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+       
         dispatch(request(consume));
+        smartech('identify', user.email);
+        smartech('dispatch', 'ALAT_Receive_Money_Success', {
+            "Email": user.email,
+            "mobile": user.phoneNo
+        });
+
         return consume
             .then(response=>{
                 dispatch(success(response));
