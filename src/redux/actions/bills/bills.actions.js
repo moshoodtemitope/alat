@@ -84,6 +84,13 @@ export const fetchBillerItems = (token, data) => {
     return (dispatch) => {
         dispatch(isFetchingBillerItems());
         let consume = ApiService.request(routes.FETCH_BILLER_ITEM, "POST", data, SystemConstant.HEADER);
+         let user_details = localStorage.getItem("user");
+         let user = JSON.parse(user_details)
+         window.smartech('identify', user.email);
+         window.smartech('dispatch', 'ALAT_Utility_Bill_View', {
+             "Email": user.email,
+             "mobile":user.phoneNo
+         });
         return consume
             .then(response => {
                 dispatch(isFetchingBillerItems());
@@ -123,6 +130,16 @@ export const getSubscriberNameEnquiry = (token, data) => {
     return (dispatch) => {
         dispatch(isFetchingTrue());
         let consume = ApiService.request(routes.GET_SUBSCRIBER_NAME, "POST", data, SystemConstant.HEADER);
+         let user_details = localStorage.getItem("user");
+         let user = JSON.parse(user_details)
+         window.smartech('identify', user.email);
+            window.smartech('dispatch', 'ALAT_Utility_Bill_initiate', {
+             "Email": user.email,
+             "mobile": user.phoneNo,
+             "billtype": user.phoneNo
+             
+         });
+
         return consume
             .then(response => {
                 // console.log(response.data);
@@ -189,6 +206,15 @@ export const verifyOtpForCustomer = (token, data) => {
     return (dispatch) => {
         dispatch(isFetchingTrue());
         let consume = ApiService.request(routes.DATA_OTP_VERIFICATION, "POST", data, SystemConstant.HEADER);
+        let user_details = localStorage.getItem("user");
+        let user = JSON.parse(user_details)
+         window.smartech('identify', user.email);
+         window.smartech('dispatch', 'ALAT_Utility_Bill_Success', {
+             "Email": user.email,
+             "mobile": user.phoneNo,
+             "billtype":user.phoneNo
+         });
+
         return consume
             .then(response => {
                 // console.log(response.data);

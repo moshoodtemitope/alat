@@ -196,6 +196,13 @@ export const sendLoan = (token, data, isResending = false) => {
                 if(!isResending){
                     dispatch(setLoanDetail(data))
                     dispatch(success());
+                    let user_details = localStorage.getItem("user");
+                    let user = JSON.parse(user_details)
+                    window.smartech('identify', user.email);
+                    window.smartech('dispatch', 'ALAT_Loans', {
+                        "Email": user.email,
+                        "mobile": user.phoneNo
+                    });
                 }else{
                     dispatch(isFetchingFalse());
                 } 
