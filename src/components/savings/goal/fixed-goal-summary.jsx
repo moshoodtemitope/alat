@@ -137,7 +137,7 @@ import * as actions from '../../../redux/actions/savings/goal/fixed-goal.actions
                                         <div className="coverForSummary">
                                             <div className="left">
                                                 <p className='GoalText'>Contributions</p>
-                                                <p className='boldedText'>₦{this.state.showInterests}/{this.goalFrequencyLabel()} </p>
+                                                <p className='boldedText'>₦{this.state.targetAmount}/{this.goalFrequencyLabel()} </p>
                                             </div>
                                             <div className="right">
                                                 <p className='GoalText'>Account to Debit</p>
