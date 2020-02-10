@@ -17,7 +17,7 @@ class LoanEstimator extends React.Component {
             Term: 0,
             LoanAmount: "",
             LoanAmountText: "",
-            repaymentAmount: "",
+            repaymentAmount: 0,
             MaxAmount: "",
             PhoneNumber: "",
             InterestRate: "",
@@ -95,15 +95,23 @@ class LoanEstimator extends React.Component {
     }
 
     updateRepayment = () => {
-        this.setState({ repaymentAmount: this.CalculateMonthlyRepayment(this.state.LoanAmount, this.props.interestRate, this.state.Term) })
+        this.setState({ 
+            repaymentAmount: this.CalculateMonthlyRepayment(this.state.LoanAmount, this.props.interestRate, this.state.Term)
+        })
     }
 
     CalculateMonthlyRepayment(loanAmount, percentageInterestRate, numberOfPayments) {
         // rate of interest and number of payments for monthly payments
         var rateOfInterest = (percentageInterestRate/100) / 12;
 
+        var paymentAmount =0;
+
         // loan amount = (interest rate * loan amount) / (1 - (1 + interest rate)^(number of payments * -1))
-        var paymentAmount = (rateOfInterest * loanAmount) / (1 - Math.pow(1 + rateOfInterest, numberOfPayments * -1));
+        if(numberOfPayments>0 && loanAmount>0 && loanAmount<=this.props.maxAmount){
+            paymentAmount = (rateOfInterest * loanAmount) / (1 - Math.pow(1 + rateOfInterest, numberOfPayments * -1));
+        }
+        
+       
         return paymentAmount;
     }
 
