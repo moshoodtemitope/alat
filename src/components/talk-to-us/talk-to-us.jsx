@@ -72,7 +72,7 @@ import {profile} from '../../redux/constants/profile/profile-constants';
         }else{
             this.props.dispatch(actions.TalkUsMessage({
                 "Email": "help@alat.ng",
-                "RecipientEmail":this.state.RecipientEmail,
+                "RecipientEmail": this.state.RecipientEmail,
                 "SenderName":this.state.user.fullName,
                 "Subject": "New Message from AYOMIDE on ALAT Web",
                 "Body":this.state.Body
