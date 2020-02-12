@@ -61,6 +61,12 @@ export const saveUserDetails = (data) => {
 }
 
 
+export const goToUploadStatement = ()=>{
+    this.props.history.push("/loan/statement-upload");
+    
+}
+
+
 // Email and password is also collected on this page and saved wth this endpoint
 export const LoanOnboardingStep3 = (data) => {
     //SystemConstant.HEADER['alat-token'] = token;
