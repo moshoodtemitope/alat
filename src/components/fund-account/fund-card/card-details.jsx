@@ -179,7 +179,11 @@ class FundCardDetails extends React.Component {
                                 onChange={this.handleCardChange}
                                 value={this.state.formartCardNumber}
                                 placeholder="1234 5678 9101 2345" />
+                                {this.state.cardNumberInvalid &&
+                                    <div className="text-danger">Enter your Card Number</div>
+                                }
                             </div>
+                            
 
                             <div className="row">
                                 <div className="col-sm-6 col-md-6">
@@ -192,7 +196,11 @@ class FundCardDetails extends React.Component {
                                         //  onKeyPress={checkValue}
                                         onKeyDown={this.handleDateKeyPress}
                                          placeholder="MM / YYYY" />
+                                        {this.state.dateInvalid &&
+                                            <div className="text-danger">Enter a Valid date</div>
+                                        }
                                     </div>
+                                   
                                 </div>
 
                                 <div className="col-sm-6 col-md-6">
@@ -204,7 +212,12 @@ class FundCardDetails extends React.Component {
                                             maxLength={3}
                                             onChange={this.handleCVV}
                                             type="text" />
+                                        {this.state.cvvInvalid &&
+                                            <div className="text-danger">Enter your CVV</div>
+                                        }
                                     </div>
+                                    
+                                    
                                 </div>
                             </div>
 

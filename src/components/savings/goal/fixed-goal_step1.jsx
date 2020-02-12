@@ -121,8 +121,10 @@ checkgoalFrequency = () => {
 };
 
 handleAmount = (e) => {
+
         // console.log
         var intVal = e.target.value.replace(/,/g, '');
+    console.log("========",intVal)
         if (/^\d+(\.\d+)?$/g.test(intVal)) {
             // if (parseInt(intVal, 10) <= 2000000) {
             this.setState({ targetAmount: intVal, targetAmount: this.toCurrency(intVal) },
