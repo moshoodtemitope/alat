@@ -62,12 +62,12 @@ class SalaryDetails extends React.Component {
     validateFields = () => {
         var acctNumberInvalid = false;
         var selectedBankInvalid = false;
-        if (this.state.accountNumber.length != 10) {
+        if (this.state.accountNumber.length < 10 || this.state.accountNumber.length > 11 ) {
             this.setState({ accountNumberInvalid: true })
             acctNumberInvalid = true;
         }
 
-        if (this.state.accountNumber.length == 10) {
+        if (this.state.accountNumber.length == 10 || this.state.accountNumber.length == 11) {
             this.setState({ accountNumberInvalid: false })
             acctNumberInvalid = false;
         }
@@ -238,7 +238,7 @@ class SalaryDetails extends React.Component {
                                 <form onSubmit={this.onSubmit}>
                                     <div className={accountNumberInvalid ? "input-ctn form-error" : "input-ctn"}>
                                         <label>Account Number</label>
-                                        <input type="text" name="accountNumber" maxLength={10} value={accountNumber}
+                                        <input type="text" name="accountNumber" maxLength={11} value={accountNumber}
                                             onChange={this.handleInputChange} />
                                         {accountNumberInvalid &&
                                             <div className="text-danger">A valid account number is needed</div>

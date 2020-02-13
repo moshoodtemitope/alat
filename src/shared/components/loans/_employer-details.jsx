@@ -360,23 +360,28 @@ class EmployerDetails extends React.Component {
         if (this.validateFields()) {
 
         } else {
+            if(this.props.workid_front.loan_frontId_status === loanConstants.LOAN_WORkID_FRONT_SUCCESS &&
+                this.props.workid_back.loan_backId_status === loanConstants.LOAN_WORkID_BACK_SUCCESS
+                ){
 
-            var data = {
-                //AccountNumber: this.state.accountNumber,
-                //BankId: this.state.bankCode,
-                EmployerName: this.state.selectedEmployer.label,
-                EmployerIndustryId: this.state.selectedIndustry.value,
-                EmployerId: this.state.selectedEmployer.value,
-                Page: "WorkDetails"
-            };
-            if (data.EmployerName == "Others") {
-                data.EmployerName = this.state.employerName;
-                data.EmployerId = "999";
+                var data = {
+                    //AccountNumber: this.state.accountNumber,
+                    //BankId: this.state.bankCode,
+                    EmployerName: this.state.selectedEmployer.label,
+                    EmployerIndustryId: this.state.selectedIndustry.value,
+                    EmployerId: this.state.selectedEmployer.value,
+                    Page: "WorkDetails"
+                };
+                if (data.EmployerName == "Others") {
+                    data.EmployerName = this.state.employerName;
+                    data.EmployerId = "999";
+                }
+                //let url = `accountNumber=${this.state.accountNumber}&bankId=${this.state.bankCode}&employersName=${this.state.employerName}`;
+                //this.props.dispatch(onboardingActions.requestStatement(this.props.loan_step3.loan_step3_data.data.response.token, url));
+                //this.props.dispatch(onboardingActions.requestStatement(this.props.token, data));
+                this.props.dispatch(loanActions.saveWorkDetails(data));
             }
-            //let url = `accountNumber=${this.state.accountNumber}&bankId=${this.state.bankCode}&employersName=${this.state.employerName}`;
-            //this.props.dispatch(onboardingActions.requestStatement(this.props.loan_step3.loan_step3_data.data.response.token, url));
-            //this.props.dispatch(onboardingActions.requestStatement(this.props.token, data));
-            this.props.dispatch(loanActions.saveWorkDetails(data));
+
         }
     }
 
@@ -429,7 +434,7 @@ class EmployerDetails extends React.Component {
                         </div>
                         <div className="al-card no-pad">
                             <div className="transfer-ctn">
-                                {this.props.alert && this.props.alert.message &&
+                                {this.props.alert && this.props.alert.message && this.props.alert.message!=="Maximum allowed File Size is 1mb" &&
                                     <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                                 }
                                 <form onSubmit={this.onSubmit}>
@@ -476,6 +481,10 @@ class EmployerDetails extends React.Component {
                                             maxFileSize={5242880}
                                         />
                                     </div>
+
+                                    {this.props.alert && this.props.alert.message && this.props.alert.message==="Maximum allowed File Size is 1mb" &&
+                                        <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                                    }
 
                                     <div className={this.state.workIdBackUploadInvalid ? "input-ctn form-error" : "input-ctn"}>
                                         <label>Work ID (Back)</label>

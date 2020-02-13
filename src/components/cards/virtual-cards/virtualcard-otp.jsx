@@ -76,6 +76,7 @@ class VirtualCardsOtp extends React.Component{
 
                     payload = newCardotpRequestStatus.new_vc_info.cardpayload;
                     payload.OTP = this.state.OtpValue;
+                    this.setState({isResendOtp: false});
                 dispatch(sendNewVirtualCardInfo(payload, this.state.user.token , true))
 
             }
@@ -103,6 +104,7 @@ class VirtualCardsOtp extends React.Component{
 
     resendOTP(cardAction, payload){
         const { dispatch } = this.props;
+        
         if(cardAction==="newcard"){
             dispatch(sendNewVirtualCardInfo(payload, this.state.user.token, false))
         }
@@ -132,7 +134,8 @@ class VirtualCardsOtp extends React.Component{
                                     </svg>
                                 </center>
                                 <div className="m-t-30 width-300">
-                                  {(newCardotpRequestStatus.is_fetching ===true || topupOtpRequestStatus.is_processing===true ) && <p className="m-b-20" >Resending OTP</p> }
+                                  {((newCardotpRequestStatus.new_vc_info !==undefined && topupOtpRequestStatus.topup_vc_info !==undefined) && (newCardotpRequestStatus.new_vc_info.hasOtp ===false || topupOtpRequestStatus.topup_vc_info.hasOtp===false) ) && <p className="m-b-20" >Resending OTP</p> }
+                                  {/* {(newCardotpRequestStatus.is_fetching ===true ) && <p className="m-b-20" >Resending OTP</p> } */}
 
                                     {/* Display OTP message for new Virtual Card */}
                                     {(newCardotpRequestStatus.new_vc_info!==undefined 

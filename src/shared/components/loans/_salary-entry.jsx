@@ -189,7 +189,8 @@ class SalaryEntry extends React.Component {
                                         <div className="transfer-ctn text-center">
                                             <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                                             {
-                                                this.props.alert.message !=="Your loan application was rejected. Please check your email for reasons." &&
+                                               ( this.props.alert.message !=="Your loan application was rejected. Please check your email for reasons."
+                                               && this.props.alert.message.indexOf('PROCEED')===-1) &&
                                             
                                                 <div className="row">
                                                     <div className="col-sm-12">

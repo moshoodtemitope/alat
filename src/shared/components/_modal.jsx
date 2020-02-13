@@ -11,34 +11,28 @@ class ExtendModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            user: JSON.parse(localStorage.getItem("user")),
         }
     }
 
     goToUploadStatement = ()=>{
-        // this.props.dispatch(actions.goToUploadStatement());
-        history.push("/loan/statement-upload");
+        this.props.dispatch(actions.enableStatementUpload(this.state.user.token));
+        
     }
     
 
      render(){
              const  { props } = this.state;
+             let enableStatementUpload = this.props.enableStatementUpload;
          return(<Modal open={this.props.openModal} onClose={this.props.onCloseModal} showCloseIcon={this.props.showCloseIcon}  center>
             <div className="div-modal">
                {this.props.IsSuccess && <img src={successIcon}/>}
                {!this.props.IsSuccess && <img src={failIcon}/>}
                 <h3><br/><strong><span>{this.props.message}</span></strong>.<br/> </h3>
 
-                {(this.props.message!==undefined && (this.props.message.indexOf("do not qualify for this loan category at the moment because you have less than 6 month(s) salary entries")>-1 ||
-                 this.props.message.indexOf("You have no recent salary payment entry")>-1)) &&
-                   <div className="text-center text-center m-b-20"> 
-                        Would you rather upload your 6months bank statement in pdf format showing salary entries?
-                   </div>
-                }
                 {/* <div className="btn-opt"> */}
 
-                        {( this.props.message!==undefined && (this.props.message.indexOf("do not qualify for this loan category at the moment because you have less than 6 month(s) salary entries") ===-1 &&
-                        this.props.message.indexOf("You have no recent salary payment entry")===-1)) &&
+                        {( this.props.message!==undefined && this.props.message.indexOf("upload") ===-1) &&
                             <button 
                             onClick={this.props.SubmitAction} disabled={this.props.isProcessing} 
                             className="btn-alat">{ this.props.isProcessing ? "Processing..." : "Proceed"}</button>
@@ -47,17 +41,16 @@ class ExtendModal extends React.Component {
                    
                 {/* </div> */}
 
-                {( this.props.message!==undefined && (this.props.message.indexOf("do not qualify for this loan category at the moment because you have less than 6 month(s) salary entries")>-1 ||
-                        this.props.message.indexOf("You have no recent salary payment entry")>-1)) &&
+                {( this.props.message!==undefined && this.props.message.indexOf("upload")>-1) &&
                         <div className="btn-opt">
 
                        
-                            <button onClick={this.props.SubmitAction} disabled={this.props.isProcessing} className="border-btn">Decline</button>
+                            <button onClick={this.props.SubmitAction} disabled={this.props.enableStatementUpload.is_processing} className="border-btn">Decline</button>
                         
                     
                         <button 
-                            onClick={this.goToUploadStatement} disabled={this.props.isProcessing} 
-                            className="btn-alat">Proceed</button>
+                            onClick={this.goToUploadStatement} disabled={this.props.enableStatementUpload.is_processing} 
+                    className="btn-alat">{this.props.enableStatementUpload.is_processing?"Please wait...":"Proceed"}</button>
                     </div>
                 }
             </div>
@@ -67,7 +60,7 @@ class ExtendModal extends React.Component {
 
 function mapStateToProps(state){
     return {
-
+        enableStatementUpload: state.loanReducerPile.enableStatementUpload,
     }
 }
 export default connect(mapStateToProps)(ExtendModal);

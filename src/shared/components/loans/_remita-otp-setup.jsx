@@ -54,7 +54,9 @@ class RemitaOtpSetupComponent extends React.Component {
         };
         // console.log(data);
         let _formsFieldModel = data;//{ ...this.state.formFieldsModel }
+        
         data.MandateValidationDetails.map((value, index) => {
+            // console.log("params",value );
             _formsFieldModel[value.ParamId] = {
                 Param: value.Param,
                 ParamId: value.ParamId,
@@ -78,6 +80,7 @@ class RemitaOtpSetupComponent extends React.Component {
         // e.preventDefault();
         if (this.state.formFieldsModel) {
             const formElementArray = [];
+            
             for (let key in this.state.formFieldsModel) {
                 formElementArray.push(this.state.formFieldsModel[key])
             }
@@ -108,8 +111,9 @@ class RemitaOtpSetupComponent extends React.Component {
         if (this.state.formFieldsModel) {
             // console.log(this.state.formFieldsModel);
             const formElementArray = [];
-            for (let key in this.state.formFieldsModel) {
-                formElementArray.push(this.state.formFieldsModel[key])
+            console.log("#####", this.state.formFieldsModel);
+            for (let key in this.state.formFieldsModel.MandateValidationDetails) {
+                formElementArray.push(this.state.formFieldsModel.MandateValidationDetails[key])
             }
             form = (
                 <div className="row">
@@ -127,12 +131,18 @@ class RemitaOtpSetupComponent extends React.Component {
                                     <form onSubmit={this.onSubmit}>
                                         {
                                             formElementArray.map(formElement => {
-                                                return (
-                                                    <div className="input-ctn" key={formElement.ParamId}>
-                                                        <label>{formElement.Description}</label>
-                                                        <input type="text" name={formElement.ParamId} value={formElement.Value} onChange={(event) => this.handleChange(event, formElement.ParamId)} />
-                                                    </div>
-                                                )
+                                                console.log("-----", formElement);
+                                                if(formElement!==null && formElement!==undefined && typeof formElement==="object" && Object.keys(formElement).length>=3){
+                                                    // if((formElement!==null && typeof formElement==="object" && Object.keys(formElement)>=4)  && formElement!==undefined && formElement!=="" && typeof formElement!==boolean && typeof formElement!=="number" ){
+                                                        console.log("-++++--=====-", formElement);
+                                                    return (
+                                                        <div className="input-ctn" key={formElement.ParamId}>
+                                                            <label>{formElement.Description}</label>
+                                                            {/* <input type="text" name={formElement.ParamId} value={formElement.Value} onChange={(event) => this.handleChange(event, formElement.ParamId)} /> */}
+                                                            <input type="text" name={formElement.ParamId} value={formElement.Value} onChange={(event) => this.handleChange(event, formElement.ParamId)} />
+                                                        </div>
+                                                    )
+                                                }
 
                                             })
                                         }
