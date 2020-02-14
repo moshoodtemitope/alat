@@ -134,7 +134,13 @@ class VirtualCardsOtp extends React.Component{
                                     </svg>
                                 </center>
                                 <div className="m-t-30 width-300">
-                                  {((newCardotpRequestStatus.new_vc_info !==undefined && topupOtpRequestStatus.topup_vc_info !==undefined) && (newCardotpRequestStatus.new_vc_info.hasOtp ===false || topupOtpRequestStatus.topup_vc_info.hasOtp===false) ) && <p className="m-b-20" >Resending OTP</p> }
+                                    {( topupOtpRequestStatus.topup_vc_info !==undefined  && topupOtpRequestStatus.topup_vc_info.hasOtp===false ) 
+                                        && <p className="m-b-20" >Resending OTP</p> 
+                                    }
+                                    
+                                    {(newCardotpRequestStatus.new_vc_info !==undefined && newCardotpRequestStatus.new_vc_info.hasOtp ===false  ) 
+                                        && <p className="m-b-20" >Resending OTP</p> 
+                                    }
                                   {/* {(newCardotpRequestStatus.is_fetching ===true ) && <p className="m-b-20" >Resending OTP</p> } */}
 
                                     {/* Display OTP message for new Virtual Card */}

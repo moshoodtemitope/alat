@@ -27,12 +27,13 @@ class StatementUpload extends React.Component {
     }
 
     componentDidMount=()=>{
-        if (this.props.loan_reqStat)
-        if (this.props.loan_reqStat.loan_reqStat_status == loanConstants.LOAN_REQUEST_STATEMENT_SUCCESS) {
-            
-        } else{
-            this.props.gotoPreviousPageMethod();
-        }
+        // if (this.props.loan_reqStat) {
+        //     if (this.props.loan_reqStat.loan_reqStat_status == loanConstants.LOAN_REQUEST_STATEMENT_SUCCESS) {
+
+        //     } else {
+        //         this.props.gotoPreviousPageMethod();
+        //     }
+        // }
     }
 
     uploadImage = (data) => {
@@ -77,10 +78,11 @@ class StatementUpload extends React.Component {
     }
 
     goToNextPage=()=>{
-      if(this.props.statement_upload)
-      if(this.props.statement_upload.loan_statement_status == loanConstants.LOAN_STATEMENT_UPLOAD_SUCCESS){
-          this.props.ParentGoToNextPage();
-      }
+        if (this.props.statement_upload) {
+            if (this.props.statement_upload.loan_statement_status == loanConstants.LOAN_STATEMENT_UPLOAD_SUCCESS) {
+                this.props.ParentGoToNextPage();
+            }
+        }
     }
 
 
