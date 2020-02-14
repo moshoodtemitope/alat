@@ -88,6 +88,11 @@ class LoanOnboardingSalaryEntry extends React.Component {
         this.props.history.push('/loans/salary/dashboard');
     }
 
+    goToUploadStatement = ()=>{
+        // return (<Redirect to="/loan/statement-upload" />);
+        this.props.history.push("/loan/statement-upload");
+    }
+
     PreviousPageMethod =()=>{
 
     }
@@ -100,8 +105,10 @@ class LoanOnboardingSalaryEntry extends React.Component {
                     forwardUrl={'/loan/score-card'}
                     backwardUrl={'/loan/salary/detail'}
                     NextPageMethod={this.gotoNextPage}
+                    goToUploadStatement={this.goToUploadStatement}
                     PreviousPageMethod={this.PreviousPageMethod}
                     gotoDashBoard={this.NavigateToLoanDashBoard}
+
                 />
             </LoanOnboardingContainer>
         );

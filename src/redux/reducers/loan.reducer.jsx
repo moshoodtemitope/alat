@@ -81,6 +81,33 @@ export function GetIndustriesReducer(state = {}, action) {
     }
 }
 
+export function EnableStatementUploadReducer(state = {}, action) {
+    switch (action.type) {
+        case loanConstants.LOAN_ENABLE_STATEMENTUPLOAD_SUCCESS:
+            return {
+                request_status: loanConstants.LOAN_ENABLE_STATEMENTUPLOAD_SUCCESS,
+                request_data: action,
+                is_processing: false
+            };
+        case loanConstants.LOAN_ENABLE_STATEMENTUPLOAD_PENDING:
+            return {
+                request_status: loanConstants.LOAN_ENABLE_STATEMENTUPLOAD_PENDING,
+                request_data: action,
+                is_processing: true
+            };
+        case loanConstants.LOAN_ENABLE_STATEMENTUPLOAD_FAILURE:
+            return {
+                request_status: loanConstants.LOAN_ENABLE_STATEMENTUPLOAD_FAILURE,
+                request_data: action,
+                is_processing: false
+            };
+        default:
+            return {
+                ...state,
+            };
+    }
+}
+
 export function GetEmployerReducer(state = {}, action) {
     switch (action.type) {
         case loanConstants.LOAN_EMPLOYER_SUCCESS:

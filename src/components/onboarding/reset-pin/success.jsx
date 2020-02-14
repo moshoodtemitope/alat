@@ -55,7 +55,7 @@ class ResetPinSuccessMessage extends React.Component{
                         <div className="row">
                             <div className="col-12">
                                 <div className="text-center m-b-30">
-                                    <div>You have successfull changed your ALAT Pin</div>
+                                    <div>You have successfully changed your ALAT Pin</div>
                                 </div>
                             
                                 <center>
