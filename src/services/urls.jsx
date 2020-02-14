@@ -176,7 +176,10 @@ export const routes = {
     LOAN_STANDING_ORDER : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/SetupStandingOrder',
     LOAN_REJECT : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/RejectLoan',
     LOAN_MANDATE_STATUS : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/MandateStatus',
-    LOAN_OTP_MANDATE : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/ValidateOtpMandate',
+    // LOAN_OTP_MANDATE : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/ValidateOtpMandate',
+    LOAN_OTP_MANDATE: BASEURL + "DL_LoanRequest.WebApi/Api/AccountDetails/ValidateOtpMandate",
+
+
     LOAN_KYC_REQIURED : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/KycRequired',
     LOAN_TERMS: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/TermsAndConditions',
     LIQUIDATECURRENT_LOAN: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/LiquidateLoan',
