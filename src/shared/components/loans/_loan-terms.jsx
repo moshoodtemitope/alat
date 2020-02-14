@@ -141,10 +141,20 @@ class LoanTermsComponent extends React.Component {
                                         </Fragment>
                                      }
                                 </div>
-                                <div className="term-ctn">
+                                <div className="term-ctn btn-opt">
                                 {this.props.loan_terms && this.props.loan_terms.terms_status == loanConstants.LOAN_TERMS_SUCCESS && <center>
-                                        <a onClick={this.onAccept} className="term-acpt-link" style={{ cursor: "pointer", color: "red" }}>Accept</a>
-                                        <a href onClick={this.onDecline} className="grey-text" style={{ cursor: "pointer" }}>Decline</a>
+                                    <button type="button"
+                                        onClick={this.onAccept}
+                                        disabled={this.props.loan_reject.is_processing|| this.props.standing_order.is_processing} className="btn-alat">
+                                    {this.props.standing_order.is_processing===true?"Processing...":"Accept"}</button>
+
+                                    <button type="button"
+                                        onClick={this.onDecline}
+                                        disabled={this.props.loan_reject.is_processing|| this.props.standing_order.is_processing} className="border-btn">
+                                             {this.props.loan_reject.is_processing===true?"Processing...":"Decline"}</button>
+
+                                        {/* <a onClick={this.onAccept} className="term-acpt-link" style={{ cursor: "pointer", color: "red" }}>Accept</a>
+                                        <a href onClick={this.onDecline} className="grey-text" style={{ cursor: "pointer" }}>Decline</a> */}
                                     </center>}
                                 </div>
                             </div>

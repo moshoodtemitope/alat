@@ -26,10 +26,16 @@ class LoanRemitaOtpSetUp extends React.Component {
         this.props.history.push('/loans/salary/kyc');
     }
 
+    NavigateToLoanDashBoard=()=>{
+        this.props.dispatch(LoanActions.clearLoanOnboardingStore());
+        this.props.history.push('/loans/salary/dashboard');
+    }
+
     render() {
         return (<RemitaOtpSetupComponent
             onConfirmClick={this.onConfirm}
             NavigateToPreviousPage={this.goBack}
+            // gotoDashboard={this.NavigateToLoanDashBoard}
             NavigateToKyc={this.NavigateToKyc}
         />);
     }

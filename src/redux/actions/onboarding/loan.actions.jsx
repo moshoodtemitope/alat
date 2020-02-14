@@ -158,6 +158,9 @@ export const validateOtp = (data) => {
         return consume
             .then(response => {
                 //TODO: edit localDB accounts object
+                // if(response.data.Message){
+                //     dispatch(alertActions.success(response.data.Message));
+                // }
                 dispatch(success(response.data, data));
             })
             .catch(error => {
@@ -213,6 +216,8 @@ export const requestStatement = (token, data) => {
             .then(response => {
                 //TODO: edit localDB accounts object
                 // dispatch(success(response.data, data));
+               
+                
                 dispatch(success(response.data));
             })
             .catch(error => {
