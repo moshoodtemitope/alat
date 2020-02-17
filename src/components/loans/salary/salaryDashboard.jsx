@@ -281,12 +281,18 @@ class LoansDashboard extends React.Component {
 
     showLiquidate =()=>{
         const {openLiquidateModal} = this.state;
-        let liquidateLoan = this.props.liquidate_loan
+        let liquidateLoan = this.props.liquidate_loan;
+        // if(liquidateLoan.liquidateloan_status ===loanConstants.LIQUIDATE_LOAN_FAILURE && liquidateLoan.liquidateloan_data!==undefined){
+        //     console.log("fgsdsdcs",liquidateLoan.liquidateloan_data);
+        // }
         return(
             <Modal open={openLiquidateModal} onClose={this.closeLiquidateModal}>
                 <div className="div-modal">
                     {liquidateLoan.liquidateloan_status !==loanConstants.LIQUIDATE_LOAN_SUCCESS &&
                         <div>
+                            {liquidateLoan.liquidateloan_status ===loanConstants.LIQUIDATE_LOAN_FAILURE && liquidateLoan.liquidateloan_data!==undefined &&
+                                <div className="info-label error">{liquidateLoan.liquidateloan_data.error}</div>
+                            }
                             <div className="">Are you sure you want liquidate your loan</div>
 
                             <div className="m-t-20 text-center">
