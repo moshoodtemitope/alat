@@ -74,7 +74,7 @@ class StashCashout extends Component {
             let account = this.props.debitable_account.data.response
             return (
                 <select onChange={this.handleDebitableAccount}>
-                    <option>Select Account to debit</option>
+                    <option>Select Account to credit</option>
                     {
                         account.map(select_debitable => {
                             return (<option key={select_debitable.BranchCode} value={select_debitable.AccountType + "8888" + " " + select_debitable.AccountName + " " + "8888" + " " + select_debitable.AccountNumber + "8888" + " " + select_debitable.AvailableBalance}>

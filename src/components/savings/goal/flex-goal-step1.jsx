@@ -312,13 +312,16 @@ class FlexGoal extends React.Component {
         if (this.state.goalFrequencyName === "Monthly") {
             // this.setState({goalFrequencyValue: "12 Month"});
             return (
+                <div>
                 <select onChange={(e) => {
+
                     this.setState({ goalFrequencyValue: e.target.value }, () => {
                         this.calculateInterestRate();
                         this.calculationForTotalAmount();
                     });
                     
                     }}>
+
                     <option >1 Month</option>
                     <option>2 Month</option>
                     <option>3 Month</option>
@@ -331,16 +334,22 @@ class FlexGoal extends React.Component {
                     <option>10 Month</option>
                     <option>11 Month</option>
                     <option selected={true}>12 Month</option>
+                    <i class="fas fa-cloud"></i>
+
                 </select>
+                </div>
+               
             )
         }
         if (this.state.goalFrequencyName === "Weekly") {
             // this.setState({goalFrequencyValue: "52 Weeks"});
             return (
                 <select onChange={(e) => this.setState({ goalFrequencyValue: e.target.value }, () => {
+
                     this.calculateInterestRate();
                     this.calculationForTotalAmount();
                 })}>
+
                     <option>2 Weeks</option>
                     <option>4 Weeks</option>
                     <option>6 Weeks</option>
