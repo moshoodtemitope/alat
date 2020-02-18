@@ -119,7 +119,7 @@ class BuyTicket extends Component {
         }else {
             let data={
                 "ShowTimeId":this.state.ShowTimeId,	
-                "CinemaId":this.state.cinemaId,
+                "CinemaId":this.state.cinemaId.trim(),
                 "TicketId":this.state.ticketId,
                 'AccountNo':this.state.accountToDebit,
                 'Pin':this.state.Pin,
