@@ -99,7 +99,7 @@ class BuyTicket extends Component {
                 // 'Email':this.state.user.email,
                 "customerId":this.state.id,
                 'accountNumber':this.state.accountToDebit,
-                "ClassId":this.state.ticketId,	
+                "ClassId":this.state.ticketId.trim(),	
                 "EventId":this.state.eventId,
                 "Source":this.state.source,
                 "TicketAmount":this.state.TicketAmount.toString(),
