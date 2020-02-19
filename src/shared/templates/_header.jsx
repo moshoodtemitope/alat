@@ -236,7 +236,7 @@ class HeaderContainer extends React.Component{
         switch (cmdmRequest.fetch_status){
             case GET_CMDMPRIORITY_SUCCESS:
                     let cmdmData = cmdmRequest.cmdm_priority.response.data;
-                if(cmdmData.Message!==null){   
+                if(cmdmData.Message!==null || cmdmData.Message!==""){   
                     return(
                         <Modal open={openModal} onClose={this.onCloseModal}>
                             <div className="div-modal">
@@ -423,7 +423,7 @@ class HeaderContainer extends React.Component{
                     {updateCMDMPriority.fetch_status !==UPDATE_CMDMPRIORITY_SUCCESS &&
                     <form onSubmit={this.handleCYDMDataSubmit}>
                         <h4>Please provide the following information</h4>
-                        {/* {cydmDataList.ACCOUNTNUMBER!==null &&
+                        {/* {cydmDataList.ACCOUNTNUMBER===null ||
                             <div className="input-ctn inputWrap">
                                 <label>Account number</label>
                                 <Textbox
@@ -433,7 +433,7 @@ class HeaderContainer extends React.Component{
                                     type="text"
                                     autoComplete ="off"
                                     value={this.state.accountNumberInfo}
-                                    maxLength="11"
+                                    
                                     placeholder= "Enter your account number"
                                     onBlur={(e) => {}}
                                     onChange= {(accountNumberInfo, e)=>{
@@ -448,7 +448,7 @@ class HeaderContainer extends React.Component{
 
                             </div>
                         } */}
-                        {cydmDataList.FIRST_NAME_PRIORITY!==null &&
+                        {(cydmDataList.FIRST_NAME_PRIORITY===null || cydmDataList.FIRST_NAME_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Enter your first name </label>
                                 <Textbox
@@ -458,7 +458,7 @@ class HeaderContainer extends React.Component{
                                     type="text"
                                     autoComplete ="off"
                                     value={this.state.firstNameInfo}
-                                    maxLength="11"
+                                    
                                     placeholder= "Enter your first name"
                                     onBlur={(e) => {}}
                                     onChange= {(firstNameInfo, e)=>{
@@ -472,7 +472,7 @@ class HeaderContainer extends React.Component{
                             </div>
                         }
 
-                        {cydmDataList.LAST_NAME_PRIORITY!==null &&
+                        {(cydmDataList.LAST_NAME_PRIORITY===null || cydmDataList.LAST_NAME_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Enter last name </label>
                                 <Textbox
@@ -482,7 +482,7 @@ class HeaderContainer extends React.Component{
                                     type="text"
                                     autoComplete ="off"
                                     value={this.state.lastNameInfo}
-                                    maxLength="11"
+                                    
                                     placeholder= "Enter your last name"
                                     onBlur={(e) => {}}
                                     onChange= {(lastNameInfo, e)=>{
@@ -496,7 +496,7 @@ class HeaderContainer extends React.Component{
                             </div>
                         }
 
-                        {cydmDataList.MIDDLE_NAME_PRIORITY!==null &&
+                        {(cydmDataList.MIDDLE_NAME_PRIORITY===null ||cydmDataList.MIDDLE_NAME_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Your middle name </label>
                                 <Textbox
@@ -506,7 +506,7 @@ class HeaderContainer extends React.Component{
                                     type="text"
                                     autoComplete ="off"
                                     value={this.state.middleNameInfo}
-                                    maxLength="11"
+                                    
                                     placeholder= "Enter your middle name"
                                     onBlur={(e) => {}}
                                     onChange= {(middleNameInfo, e)=>{
@@ -520,7 +520,7 @@ class HeaderContainer extends React.Component{
                             </div>
                         }
 
-                        {cydmDataList.EMAIL_PRIORITY!==null &&
+                        {(cydmDataList.EMAIL_PRIORITY===null || cydmDataList.EMAIL_PRIORITY!=="")&&
                             <div className="input-ctn inputWrap">
                                 <label>Enter your email </label>
                                 <Textbox
@@ -530,7 +530,7 @@ class HeaderContainer extends React.Component{
                                     type="text"
                                     autoComplete ="off"
                                     value={this.state.emailInfo}
-                                    maxLength="11"
+                                    
                                     placeholder= "Enter your email"
                                     onBlur={(e) => {}}
                                     onChange= {(emailInfo, e)=>{
@@ -545,7 +545,7 @@ class HeaderContainer extends React.Component{
                         }
                                       
 
-                        {cydmDataList.PhoneNumber_PRIORITY!==null &&
+                        {(cydmDataList.PhoneNumber_PRIORITY===null || cydmDataList.PhoneNumber_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Your phone number</label>
                                 <Textbox
@@ -570,7 +570,7 @@ class HeaderContainer extends React.Component{
                         }
 
 
-                        {cydmDataList.ADDRESS_PRIORITY!==null &&
+                        {(cydmDataList.ADDRESS_PRIORITY===null || cydmDataList.ADDRESS_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Enter your address</label>
                                 <Textbox
@@ -580,7 +580,7 @@ class HeaderContainer extends React.Component{
                                     type="text"
                                     autoComplete ="off"
                                     value={this.state.addressTextInfo}
-                                    maxLength="11"
+                                   
                                     placeholder= "Enter your home address"
                                     onBlur={(e) => {}}
                                     onChange= {(addressTextInfo, e)=>{
@@ -595,7 +595,7 @@ class HeaderContainer extends React.Component{
                         }
 
 
-                        {cydmDataList.TIN_PRIORITY!==null &&
+                        {(cydmDataList.TIN_PRIORITY===null || cydmDataList.TIN_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Enter your TIN</label>
                                 <Textbox
@@ -605,7 +605,7 @@ class HeaderContainer extends React.Component{
                                     type="text"
                                     autoComplete ="off"
                                     value={this.state.tinnumber}
-                                    maxLength="11"
+                                   
                                     placeholder= "Enter your TIN"
                                     onBlur={(e) => {}}
                                     onChange= {(TIN_NUM, e)=>{
@@ -619,7 +619,7 @@ class HeaderContainer extends React.Component{
                             </div>
                         }
 
-                        {cydmDataList.DOB_PRIORITY!==null &&
+                        {(cydmDataList.DOB_PRIORITY===null || cydmDataList.DOB_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Your date of birth</label>
                                 <Textbox
@@ -629,7 +629,7 @@ class HeaderContainer extends React.Component{
                                     type="text"
                                     autoComplete ="off"
                                     value={this.state.dobInfo}
-                                    maxLength="11"
+                                   
                                     placeholder= "Enter your date of birth"
                                     onBlur={(e) => {}}
                                     onChange= {(dobInfo, e)=>{
@@ -645,7 +645,7 @@ class HeaderContainer extends React.Component{
 
                         
 
-                        {cydmDataList.EMPLOYMENT_STATUS_PRIORITY!==null &&
+                        {(cydmDataList.EMPLOYMENT_STATUS_PRIORITY===null || cydmDataList.EMPLOYMENT_STATUS_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Employment Status </label>
                                 <Select
@@ -661,7 +661,7 @@ class HeaderContainer extends React.Component{
                             </div>
                         }
 
-                        {cydmDataList.OCCUPATION_PRIORITY!==null &&
+                        {(cydmDataList.OCCUPATION_PRIORITY===null || cydmDataList.OCCUPATION_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Your occupation</label>
                                 <Select
@@ -680,7 +680,7 @@ class HeaderContainer extends React.Component{
                     
 
 
-                        {cydmDataList.GENDER_PRIORITY!==null &&
+                        {(cydmDataList.GENDER_PRIORITY===null || cydmDataList.GENDER_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Gender </label>
                                 <Select
@@ -696,7 +696,7 @@ class HeaderContainer extends React.Component{
 
                        
 
-                        {cydmDataList.MARITAL_STATUS_PRIORITY!==null &&
+                        {(cydmDataList.MARITAL_STATUS_PRIORITY===null || cydmDataList.MARITAL_STATUS_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Marital status </label>
                                 <Select
@@ -712,7 +712,7 @@ class HeaderContainer extends React.Component{
                             </div>
                         }
 
-                        {cydmDataList.MEANS_OF_IDENTIFICATION_PRIORITY!==null &&
+                        {(cydmDataList.MEANS_OF_IDENTIFICATION_PRIORITY===null || cydmDataList.MEANS_OF_IDENTIFICATION_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Means of Identification </label>
                                 <Select
@@ -729,7 +729,7 @@ class HeaderContainer extends React.Component{
 
           
 
-                        {cydmDataList.RELIGION_PRIORITY!==null &&
+                        {(cydmDataList.RELIGION_PRIORITY===null || cydmDataList.RELIGION_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Choose your religion</label>
                                 <Select
