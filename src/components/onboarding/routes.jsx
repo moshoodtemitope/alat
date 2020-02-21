@@ -2,7 +2,10 @@ import * as React from 'react';
 import Login from "./login";
 import ProvideEmail from "./forgot-password/provide-email";
 import ProvideSecurityAnswer from "./forgot-password/security-answer";
+
 import AlatRatings from "../ratings/customer-ratings/ratings";
+import OfflineLoans from "../offline-loan";
+
 import SuccessMessage from "./forgot-password/success";
 import ResetPassword from "./reset-password/reset-password";
 import ResetSuccessMessage from "./reset-password/success";
@@ -84,7 +87,10 @@ class OnboardingRoute extends React.Component {
                 {/*<Route exact path="/" component={Login} />*/}
                 {/*<Route exact path="/logout" component={Logout} />*/}
                 <Route exact path="/register" component={Signup} />
+                
                 <Route exact path="/rate-us" component={AlatRatings} />
+                <Route exact path="/i-msg/:keyId" component={OfflineLoans} />
+
                 <Route path="/register/bvn" component={Bvn} />
                 <Route path="/register/verify-bvn" component={VerifyBvn} />
                 <Route path="/register/create-account" component={CreateAccount} />

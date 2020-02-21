@@ -59,6 +59,10 @@ export const routes = {
     WILL_CUSTOMER_REFER_ALAT: BASEURL + '/AccountSetting/api/Rating/NPS?answer=',
     SEND_CUSTOMER_RATING: BASEURL + '/AccountSetting/api/Rating/CSAT?rating=',
 
+    //ofline loan
+    OFFLINELOAN_GET_CUSTOMERDATA: BASEURL + '/AccountSetting/api/Rating/CSAT?rating=',
+    OFFLINELOAN_SEND_RESPONSE_CUSTOMERDATA: BASEURL + '/AccountSetting/api/Rating/CSAT?rating=',
+
     //Virtual Cards
     GET_VC_EXCHENGE_RATE: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/GetCurrentExchangeRateV2',
     CREAT_VIRTUAL_CARD_INITIAL: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/CreateVirtualCardInit',

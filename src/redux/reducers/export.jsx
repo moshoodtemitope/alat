@@ -15,7 +15,9 @@ import {userRegistrationRequest,
     getCMDMPriorityReducer,
     updateCMDMPriorityReducer,
     sendCustomerRatingReducer,
-    sendCustomerWillReferAlatReducer
+    sendCustomerWillReferAlatReducer,
+    offlineLoanGetCustomerDataReducer,
+    offlineLoanSendCustomerDataReducer,
 } from "./onboarding.reducer";
 
 import {getCinemaList, 
@@ -154,7 +156,9 @@ export const onboarding = {
     getCMDMPriorityReducer,
     updateCMDMPriorityReducer,
     sendCustomerRatingReducer,
-    sendCustomerWillReferAlatReducer
+    sendCustomerWillReferAlatReducer,
+    offlineLoanGetCustomerDataReducer,
+    offlineLoanSendCustomerDataReducer,
 };
 
 export const loans = {

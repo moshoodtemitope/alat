@@ -83,7 +83,9 @@ export const userActions = {
     sendAnswerForPinReset,
     sendOtpOrTokenForPinReset,
     sendNewPinForPinReset,
-    reissueToken
+    reissueToken,
+    offlineLoanGetCustomerData,
+    offlineLoanSendCustomerData
 };
 
 function reissueToken(payload) {
@@ -566,6 +568,46 @@ function sendCustomerRating(rating, willrefer){
     function request(request) { return { type:SEND_CUSTOMERRATING_PENDING, request} }
     function success(response) { return {type:SEND_CUSTOMERRATING_SUCCESS, response} }
     function failure(error) { return {type:SEND_CUSTOMERRATING_FAILURE, error} }
+}
+
+function offlineLoanGetCustomerData(keyId){
+    
+    return dispatch =>{
+        let consume = ApiService.request(routes.OFFLINELOAN_GET_CUSTOMERDATA, "GET", null,  SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response));
+            }).catch(error =>{
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+        
+    }
+
+    function request(request) { return { type:OFFLINELOAN_GET_DATAOF_CUSTOMER_PENDING, request} }
+    function success(response) { return {type:OFFLINELOAN_GET_DATAOF_CUSTOMER_SUCCESS, response} }
+    function failure(error) { return {type:OFFLINELOAN_GET_DATAOF_CUSTOMER_FAILURE, error} }
+}
+
+function offlineLoanSendCustomerData(payload){
+    
+    return dispatch =>{
+        let consume = ApiService.request(routes.OFFLINELOAN_SEND_RESPONSE_CUSTOMERDATA, "POST", payload,  SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response));
+            }).catch(error =>{
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+        
+    }
+
+    function request(request) { return { type:OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_PENDING, request} }
+    function success(response) { return {type:OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_SUCCESS, response} }
+    function failure(error) { return {type:OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_FAILURE, error} }
 }
 
 

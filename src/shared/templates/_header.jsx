@@ -183,9 +183,11 @@ class HeaderContainer extends React.Component{
 
         // console.log(this.props);
         // this.props.dispatch(userActions.getAll());
-        this.getProfileImage();
-        this.getNDPRStatus();
-        this.getCMDMPriority();
+        if((history.location.pathname.indexOf('i-msg')===-1)){
+            this.getProfileImage();
+            this.getNDPRStatus();
+            this.getCMDMPriority();
+        }
         // console.log('name is dssd');
     }
 
@@ -792,51 +794,86 @@ class HeaderContainer extends React.Component{
         return (
             <Fragment>
                 {/* {this.showNDRPMessage()} */}
-                {history.location.pathname==='/home' && this.showCMDMPriorityMessage()}
-                 {this.state.openCYDMModal && this.collectPriorityInformaton()} 
-                <div className="db2-fixed-header">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-xs-4 col-sm-4">
-                                {history.location.pathname!=='/home' &&
-                                    // <div id="nav-icon1" className="" onClick={ this.openMobileMenu }>
-                                    <div id="nav-icon1" className="" onClick={()=> history.push("/home") }>
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                    </div>
-                                }
-                                <NavLink to="/home" className={history.location.pathname==='/home'?"menulogo-wrap":"menulogo-wrap logo-middle"}>
-                                    <img src={whitelogo} />
-                                </NavLink>
-                                {/* <a href="/dasboard" className="menulogo-wrap">
-                                    <img src={whitelogo} />
-                                </a> */}
-                            </div>
-                            <div className="col-xs-8 col-sm-8">
-                                <div className="user-name-circle clearfix" onClick={ this.toggleMiniNav }>
-                                    <div className="circle-image">
-                                        {/* <img src="../../assets/img/10.jpg" /> */}
-                                        <img src={DpHolder} alt=""/>
-                                    </div>
-                                    <p className="name">{user && user.fullName}</p>
+                {(history.location.pathname.indexOf('i-msg')===-1) &&
+                    <Fragment>
+                    {history.location.pathname==='/home' && this.showCMDMPriorityMessage()}
+                    {this.state.openCYDMModal && this.collectPriorityInformaton()} 
+                    <div className="db2-fixed-header">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-xs-4 col-sm-4">
+                                    {history.location.pathname!=='/home' &&
+                                        // <div id="nav-icon1" className="" onClick={ this.openMobileMenu }>
+                                        <div id="nav-icon1" className="" onClick={()=> history.push("/home") }>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </div>
+                                    }
+                                    <NavLink to="/home" className={history.location.pathname==='/home'?"menulogo-wrap":"menulogo-wrap logo-middle"}>
+                                        <img src={whitelogo} />
+                                    </NavLink>
+                                    {/* <a href="/dasboard" className="menulogo-wrap">
+                                        <img src={whitelogo} />
+                                    </a> */}
                                 </div>
-                                { this.renderMiniNav() }
-                                <div className="user-name-circle clearfix">
-                                   <NavLink to="/talk-to-us">
-                                   <p className="name">Talk to Us</p>
-                                   <img  style={{ margin:'5px',marginTop:'5px'}}src={selfCareImage} />
+                                <div className="col-xs-8 col-sm-8">
+                                    <div className="user-name-circle clearfix" onClick={ this.toggleMiniNav }>
+                                        <div className="circle-image">
+                                            {/* <img src="../../assets/img/10.jpg" /> */}
+                                            <img src={DpHolder} alt=""/>
+                                        </div>
+                                        <p className="name">{user && user.fullName}</p>
+                                    </div>
+                                    { this.renderMiniNav() }
+                                    <div className="user-name-circle clearfix">
+                                    <NavLink to="/talk-to-us">
+                                    <p className="name">Talk to Us</p>
+                                    <img  style={{ margin:'5px',marginTop:'5px'}}src={selfCareImage} />
 
-                                   </NavLink>
+                                    </NavLink>
+                                    </div>
+                                    {/* <span className="notification-top"><i className="demo-icon icon-alert-active"></i></span> */}
+                                
                                 </div>
-                                {/* <span className="notification-top"><i className="demo-icon icon-alert-active"></i></span> */}
-                              
+
+
                             </div>
-
-
                         </div>
                     </div>
-                </div>
+                </Fragment>
+                }
+
+            {(history.location.pathname.indexOf('i-msg')>-1) &&
+                 <Fragment>
+                    <div className="db2-fixed-header">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-xs-4 col-sm-4">
+                                    {history.location.pathname!=='/home' &&
+                                        // <div id="nav-icon1" className="" onClick={ this.openMobileMenu }>
+                                        <div id="nav-icon1" className="" onClick={()=> history.push("/home") }>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </div>
+                                    }
+                                    <NavLink to="/" className={history.location.pathname==='/home'?"menulogo-wrap":"menulogo-wrap logo-middle"}>
+                                        <img src={whitelogo} />
+                                    </NavLink>
+                                    
+                                </div>
+                                <div className="col-xs-8 col-sm-8">
+                                    
+                                
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                 </Fragment>
+            }
             </Fragment>
         );
     }

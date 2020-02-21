@@ -43,6 +43,14 @@ import {USER_REGISTER_SAVE, USER_REGISTER_FETCH, BVN_VERIFICATION_SUCCESS,
     SEND_WILLCUSTOMER_REFERALAT_SUCCESS,
     SEND_WILLCUSTOMER_REFERALAT_PENDING,
     SEND_WILLCUSTOMER_REFERALAT_FAILURE,
+
+    OFFLINELOAN_GET_DATAOF_CUSTOMER_SUCCESS,
+    OFFLINELOAN_GET_DATAOF_CUSTOMER_PENDING,
+    OFFLINELOAN_GET_DATAOF_CUSTOMER_FAILURE,
+
+    OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_SUCCESS,
+    OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_PENDING,
+    OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_FAILURE,
 } from "../constants/onboarding/user.constants"
 
 export function userRegistrationRequest(state={}, action) {
@@ -458,6 +466,60 @@ export function updateCMDMPriorityReducer(state=[], action){
                 is_processing: false,
                 fetch_status: UPDATE_CMDMPRIORITY_FAILURE,
                 cmdm_priority: action
+            };
+
+        default:
+            return { ...state }
+    }
+
+}
+
+export function offlineLoanGetCustomerDataReducer(state=[], action){
+    switch (action.type) {
+        case OFFLINELOAN_GET_DATAOF_CUSTOMER_PENDING:
+            return {
+                is_processing: true,
+                processing_status: OFFLINELOAN_GET_DATAOF_CUSTOMER_PENDING,
+                rating_data: action
+            };
+        case OFFLINELOAN_GET_DATAOF_CUSTOMER_SUCCESS:
+            return {
+                is_processing: false,
+                processing_status: OFFLINELOAN_GET_DATAOF_CUSTOMER_SUCCESS,
+                rating_data: action
+            };
+        case OFFLINELOAN_GET_DATAOF_CUSTOMER_FAILURE:
+            return {
+                is_processing: false,
+                processing_status: OFFLINELOAN_GET_DATAOF_CUSTOMER_FAILURE,
+                rating_data: action
+            };
+
+        default:
+            return { ...state }
+    }
+
+}
+
+export function offlineLoanSendCustomerDataReducer(state=[], action){
+    switch (action.type) {
+        case OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_PENDING:
+            return {
+                is_processing: true,
+                processing_status: OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_PENDING,
+                rating_data: action
+            };
+        case OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_SUCCESS:
+            return {
+                is_processing: false,
+                processing_status: OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_SUCCESS,
+                rating_data: action
+            };
+        case OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_FAILURE:
+            return {
+                is_processing: false,
+                processing_status: OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_FAILURE,
+                rating_data: action
             };
 
         default:
