@@ -419,28 +419,30 @@ class NewTransfer extends React.Component {
                 // }
                 let options = [
                 ];
-                banksList.map(eachBank=>{
-                    options.push({value: eachBank.BankCode, label: eachBank.BankName});
-                })
-                const allBanks = options.reduce((acc, current) => {
-                    const x = acc.find(item => item.label === current.label);
-                    if (!x) {
-                      return acc.concat([current]);
-                    } else {
-                      return acc;
-                    }
-                }, []);
-                const { selectedBank } = this.state;
-                return(
-                    <Select
-                        options={allBanks}
-                        // isDisabled={this.state.submitButtonState}
-                        isDisabled={props.account_details.fetchStatus}
-                        // onInputChange={this.handleChange}
-                        onChange={this.handleChange}
-                    />
+                if(banksList!==undefined && banksList!==null && banksList.length>=1){
+                    banksList.map(eachBank=>{
+                        options.push({value: eachBank.BankCode, label: eachBank.BankName});
+                    })
+                    const allBanks = options.reduce((acc, current) => {
+                        const x = acc.find(item => item.label === current.label);
+                        if (!x) {
+                        return acc.concat([current]);
+                        } else {
+                        return acc;
+                        }
+                    }, []);
+                    const { selectedBank } = this.state;
+                    return(
+                        <Select
+                            options={allBanks}
+                            // isDisabled={this.state.submitButtonState}
+                            isDisabled={props.account_details.fetchStatus}
+                            // onInputChange={this.handleChange}
+                            onChange={this.handleChange}
+                        />
 
-                );
+                    );
+                }
             case FETCH_BANK_FAILURE:
                 return(
                     <div>

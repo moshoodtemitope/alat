@@ -25,8 +25,8 @@ class LoanScoreCard extends React.Component{
 
     render(){
         return(<ScoreCard 
-                forwardUrl={'/loan/salary/card-result'}
-                backwardUrl={'/loan/salary/entry'}
+                forwardUrl={'/loans/salary/card-result'}
+                backwardUrl={'/loans/salary/entry'}
                 gotoNextPageMethod={this.goForward}
                 gotoPreviosuPageMethod={this.goBackward}
                 gotoDashBoard={this.NavigateToLoanDashBoard}

@@ -240,6 +240,7 @@ const loansReducer = combineReducers({
     kycrequired : loans.KycRequired,
     liquidateLoan : loans.liquidateLoanReducer,
     terms: loans.termsReducer,
+    enableStatementUpload: loans.EnableStatementUploadReducer,
 })
  const GoalReducer = combineReducers({
     fixed_goal_step1:fixedGoal.fixedGoalStep1Reducer,

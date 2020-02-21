@@ -267,8 +267,9 @@ export const liquidateLoan =(token, data) =>{
                 dispatch(success(response.data));
             })
             .catch(error => {
+                // console.log("dsdsdsd", error.response);
                  dispatch(failure(modelStateErrorHandler(error)));
-                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+                //  dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
     };
 

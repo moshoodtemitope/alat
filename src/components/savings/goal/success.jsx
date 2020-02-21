@@ -46,7 +46,7 @@ class SuccessMessage extends React.Component {
                                         <NavLink to="/savings/activityDashBoard">
                                             <li><a>Group Savings</a></li>
                                         </NavLink>
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
 
                                         </ul>
                                     </div>
@@ -63,7 +63,7 @@ class SuccessMessage extends React.Component {
                                                     <center>
                                                     <img className="successIcon"    alt="" src={successLogo}/>
                                                     </center>
-                                                    <label id="sucMessage">{details.goalTypeName} goal created successfully</label>
+                                                    <label id="sucMessage">{details.goalTypeName} created successfully</label>
                                                 </div>
                                                 <div className="form-row">
                                                 <Members 

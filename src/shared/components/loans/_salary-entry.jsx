@@ -36,13 +36,15 @@ class SalaryEntry extends React.Component {
         if (this.props.loan_reqStat) {
             if (this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS) { this.props.dispatch(actions.salaryTransaction(this.state.user.token)); }
         }
-        else
-            if (this.props.loan_status) {
-                if (this.props.loan_status.loan_app_data.data == LoanApplicationProgress.Inprogress_SalaryEntries) {
-                    this.props.dispatch(actions.salaryTransaction(this.state.user.token));
-                }
-            }
-            else { this.props.dispatch(actions.salaryTransaction(this.state.user.token)); }
+        else{}
+            // if (this.props.loan_status) {
+            //     if (this.props.loan_status.loan_app_data.data == LoanApplicationProgress.Inprogress_SalaryEntries) {
+            //         this.props.dispatch(actions.salaryTransaction(this.state.user.token));
+            //     }
+            // }
+            // else { 
+            //     this.props.dispatch(actions.salaryTransaction(this.state.user.token)); 
+            // }
         this.props.dispatch(actions.salaryTransaction(this.state.user.token));
         // if(this.props.user_detail.loan_userdetails_data)
         // this.setState({ FirstName :this.props.user_detail.loan_userdetails_data.data.FirstName }); 
@@ -86,6 +88,11 @@ class SalaryEntry extends React.Component {
             }
         }
     }
+
+    // goToUploadStatement = ()=>{
+    //     // return (<Redirect to="/loan/statement-upload" />);
+    //     this.props.goToUploadStatement();
+    // }
 
     //Modal Methods
     PopupModal = () => {
@@ -166,33 +173,77 @@ class SalaryEntry extends React.Component {
                 <div className="row">
                     <div className="col-sm-12">
                         <div className="max-650">
-                            <div className="loan-header-text text-center">
-                                <h4 className="text-black">Select Salary</h4>
-                                {/* <p>Kindly select at least 6 transaction(s) that represent your salary</p> */}
-                                <p>Kindly select ALL transactions that represents your monthly salary</p>
-                            </div>
-                            <div className="al-card no-pad">
-                                {this.props.alert && this.props.alert.message &&
-                                    <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
-                                }
-                                <div className="transfer-ctn no-pad unset-pad">
-                                    {this.renderSalaryEntries()}
+                            {
+                                this.props.salary_trans.loan_salTran_status == loanOnboardingConstants.LOAN_SALARYTRANSACTION_SUCCESS &&
+                            
+                                <div className="loan-header-text text-center">
+                                    <h4 className="text-black">Select Salary</h4>
+                                    {/* <p>Kindly select at least 6 transaction(s) that represent your salary</p> */}
+                                    <p>Kindly select ALL transactions that represents your monthly salary</p>
                                 </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-sm-12">
-                                    <center>
-                                        <button type="button" onClick={this.postSalarEntries}
-                                            disabled={this.returnEntriesPendingStatus()}
-                                            className="btn-alat m-t-10 m-b-20 text-center">{this.returnEntriesPendingStatus() ? "Processing..." : "Proceed"}</button>
-                                    </center>
+                            }
+
+                            
+                            {this.props.alert && this.props.alert.message && this.props.salary_trans.loan_salTran_status === loanOnboardingConstants.LOAN_SALARYTRANSACTION_FAILURE &&
+                                    <div className="al-card no-pad">
+                                        <div className="transfer-ctn text-center">
+                                            <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                                            {
+                                               ( this.props.alert.message !=="Your loan application was rejected. Please check your email for reasons."
+                                               && this.props.alert.message.indexOf('PROCEED')===-1) &&
+                                            
+                                                <div className="row">
+                                                    <div className="col-sm-12">
+                                                        <center>
+                                                            <button type="button" onClick={this.init}
+                                                                className="btn-alat m-t-20  text-center">Try again</button>
+                                                        </center>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                   </div>
+                            }
+
+                            {
+                                this.props.salary_trans.loan_salTran_status == loanOnboardingConstants.LOAN_SALARYTRANSACTION_PENDING &&
+                                
+                                <div className="al-card no-pad">
+                                
+                                    <div className="transfer-ctn text-center">
+                                        Loading your salary records...
+                                    </div>
                                 </div>
-                            </div>
+                            }
+
+                            {
+                                this.props.salary_trans.loan_salTran_status == loanOnboardingConstants.LOAN_SALARYTRANSACTION_SUCCESS &&
+                            
+                                <div className="al-card no-pad">
+                                
+                                    <div className="transfer-ctn no-pad unset-pad">
+                                        {this.renderSalaryEntries()}
+                                    </div>
+                                </div>
+                            }
+                            {
+                                this.props.salary_trans.loan_salTran_status == loanOnboardingConstants.LOAN_SALARYTRANSACTION_SUCCESS &&
+                                <div className="row">
+                                    <div className="col-sm-12">
+                                        <center>
+                                            <button type="button" onClick={this.postSalarEntries}
+                                                disabled={this.returnEntriesPendingStatus()}
+                                                className="btn-alat m-t-10 m-b-20 text-center">{this.returnEntriesPendingStatus() ? "Processing..." : "Proceed"}</button>
+                                        </center>
+                                    </div>
+                                </div>
+                            }
+                            
                         </div>
                     </div>
                 </div>
                 <ExtendModal openModal={this.state.openModal} onCloseModal={this.controlModal} showCloseIcon={false}
-                    IsSuccess={this.state.IsSuccess} message={this.props.alert.message} SubmitAction={this.SubmitModal}
+                    IsSuccess={this.state.IsSuccess}  message={this.props.alert.message} SubmitAction={this.SubmitModal}
                 />
             </Fragment>
         );

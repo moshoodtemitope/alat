@@ -81,6 +81,33 @@ export function GetIndustriesReducer(state = {}, action) {
     }
 }
 
+export function EnableStatementUploadReducer(state = {}, action) {
+    switch (action.type) {
+        case loanConstants.LOAN_ENABLE_STATEMENTUPLOAD_SUCCESS:
+            return {
+                request_status: loanConstants.LOAN_ENABLE_STATEMENTUPLOAD_SUCCESS,
+                request_data: action,
+                is_processing: false
+            };
+        case loanConstants.LOAN_ENABLE_STATEMENTUPLOAD_PENDING:
+            return {
+                request_status: loanConstants.LOAN_ENABLE_STATEMENTUPLOAD_PENDING,
+                request_data: action,
+                is_processing: true
+            };
+        case loanConstants.LOAN_ENABLE_STATEMENTUPLOAD_FAILURE:
+            return {
+                request_status: loanConstants.LOAN_ENABLE_STATEMENTUPLOAD_FAILURE,
+                request_data: action,
+                is_processing: false
+            };
+        default:
+            return {
+                ...state,
+            };
+    }
+}
+
 export function GetEmployerReducer(state = {}, action) {
     switch (action.type) {
         case loanConstants.LOAN_EMPLOYER_SUCCESS:
@@ -206,17 +233,20 @@ export function loanRejectReducer(state = {}, action) {
         case loanConstants.LOAN_REJECT_SUCCESS:
             return {
                 loan_reject_status: loanConstants.LOAN_REJECT_SUCCESS,
-                loan_reject_data: action
+                loan_reject_data: action,
+                is_processing:false
             };
         case loanConstants.LOAN_REJECT_PENDING:
             return {
                 loan_reject_status: loanConstants.LOAN_REJECT_PENDING,
-                loan_reject_data: action
+                loan_reject_data: action,
+                is_processing:true
             };
         case loanConstants.LOAN_REJECT_FAILURE:
             return {
                 loan_reject_status: loanConstants.LOAN_REJECT_FAILURE,
-                loan_reject_data: action
+                loan_reject_data: action,
+                is_processing:false
             };
         default:
             return{
@@ -230,17 +260,20 @@ export function loanStandingOrderReducer(state = {}, action) {
         case loanConstants.LOAN_STAND_ORDER_SUCCESS:
             return {
                 loan_standOrder_status: loanConstants.LOAN_STAND_ORDER_SUCCESS,
-                loan_standOrder_data: action
+                loan_standOrder_data: action,
+                is_processing:false
             };
         case loanConstants.LOAN_STAND_ORDER_PENDING:
             return {
                 loan_standOrder_status: loanConstants.LOAN_STAND_ORDER_PENDING,
-                loan_standOrder_data: action
+                loan_standOrder_data: action,
+                is_processing:true
             };
         case loanConstants.LOAN_STAND_ORDER_FAILURE:
             return {
                 loan_standOrder_status: loanConstants.LOAN_STAND_ORDER_FAILURE,
-                loan_standOrder_data: action
+                loan_standOrder_data: action,
+                is_processing:false
             };
         default:
             return{
@@ -278,17 +311,20 @@ export function loanValidateRemitaOtpReducer(state = {}, action) {
         case loanConstants.LOAN_VALIDATEOTP_SUCCESS:
             return {
                 loan_valotp_status: loanConstants.LOAN_VALIDATEOTP_SUCCESS,
-                lo_valotp_data: action
+                lo_valotp_data: action,
+                is_processing:false,
             };
         case loanConstants.LOAN_VALIDATEOTP_PENDING:
             return {
                 loan_valotp_status: loanConstants.LOAN_VALIDATEOTP_PENDING,
-                lo_valotp_data: action
+                lo_valotp_data: action,
+                is_processing:true
             };
         case loanConstants.LOAN_VALIDATEOTP_FAILURE:
             return {
                 loan_valotp_status: loanConstants.LOAN_VALIDATEOTP_FAILURE,
-                lo_valotp_data: action
+                lo_valotp_data: action,
+                is_processing:false
             };
         default:
             return{

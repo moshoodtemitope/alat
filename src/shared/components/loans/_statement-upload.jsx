@@ -18,6 +18,7 @@ class StatementUpload extends React.Component {
             user: JSON.parse(localStorage.getItem("user")),
             pdf: { name: "" },
             file: {},
+            maxSizeExceeded:false,
             actions: {
                 pending: loanConstants.LOAN_STATEMENT_UPLOAD_PENDING,
                 success: loanConstants.LOAN_STATEMENT_UPLOAD_SUCCESS,
@@ -27,12 +28,13 @@ class StatementUpload extends React.Component {
     }
 
     componentDidMount=()=>{
-        if (this.props.loan_reqStat)
-        if (this.props.loan_reqStat.loan_reqStat_status == loanConstants.LOAN_REQUEST_STATEMENT_SUCCESS) {
-            
-        } else{
-            this.props.gotoPreviousPageMethod();
-        }
+        // if (this.props.loan_reqStat) {
+        //     if (this.props.loan_reqStat.loan_reqStat_status == loanConstants.LOAN_REQUEST_STATEMENT_SUCCESS) {
+
+        //     } else {
+        //         this.props.gotoPreviousPageMethod();
+        //     }
+        // }
     }
 
     uploadImage = (data) => {
@@ -64,12 +66,27 @@ class StatementUpload extends React.Component {
     }
 
     proceedClick = () => {
+       
+        
         this.uploadStatement(this.state.pdf);
+        // 
     }
 
     pdfInputChange = (pdf) => {
-        this.setState({ pdf: pdf[0] }, () => {
-        });
+        let maxFileSize = 7168000;
+        console.log("file os", this.state.pdf.size);
+        if (pdf[0].size <= maxFileSize) {
+
+            this.setState({ maxSizeExceeded: false })
+            this.setState({ pdf: pdf[0] }, () => {
+            });
+            this.uploadStatement(this.state.pdf);
+        } else {
+            this.setState({ maxSizeExceeded: true })
+
+        }
+
+        
     }
 
     deletePdf = (pdf) => {
@@ -77,15 +94,17 @@ class StatementUpload extends React.Component {
     }
 
     goToNextPage=()=>{
-      if(this.props.statement_upload)
-      if(this.props.statement_upload.loan_statement_status == loanConstants.LOAN_STATEMENT_UPLOAD_SUCCESS){
-          this.props.ParentGoToNextPage();
-      }
+        if (this.props.statement_upload) {
+            if (this.props.statement_upload.loan_statement_status == loanConstants.LOAN_STATEMENT_UPLOAD_SUCCESS) {
+                this.props.ParentGoToNextPage();
+            }
+        }
     }
 
 
     render() {
         this.goToNextPage();
+        let {maxSizeExceeded} = this.state;
         return (
             <div className="col-sm-12">
                 <div className="max-500">
@@ -108,13 +127,19 @@ class StatementUpload extends React.Component {
                                             }
                                         </div>
                                         <center>
+                                        {maxSizeExceeded===true && 
+                                            <div className="info-label error">Maximum filesize of 7mb is allowed</div>
+                                        }
+                                        
                                             {this.state.pdf.name == "" && <label className="btn-alat m-t-20 m-b-20 text-center">
                                                 <input type="file" name="upload" accept="application/pdf"
                                                     onChange={(e) => this.pdfInputChange(e.target.files)} />
                                                 Upload
                                              </label>}
+
                                             {this.state.pdf.name != "" && <button onClick={this.proceedClick} type="button" disabled={this.props.statement_upload.loan_statement_status == loanConstants.LOAN_STATEMENT_UPLOAD_PENDING} 
                                              className="btn-alat m-t-20 m-b-20 text-center">{ this.props.statement_upload.loan_statement_status == loanConstants.LOAN_STATEMENT_UPLOAD_PENDING ? "Processing..." : "Proceed" }</button>}
+                                            <div className={maxSizeExceeded===true?"error-text":""}>Maximum filesize of 7mb is allowed</div>
                                         </center>
                                     </div>
                                 </div>

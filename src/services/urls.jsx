@@ -1,7 +1,7 @@
-//  const URL = 'https://api.alat.ng';
+ const URL = 'https://api.alat.ng';
 // const URL = 'https://196.43.215.172';
 // const URL = 'https://196.43.215.170';
-const URL = 'https://196.43.215.157';
+// const URL = 'https://196.43.215.157';
 
 const BASEURL = URL;    
 
@@ -19,7 +19,7 @@ export const routes = {
     RESENDOTP: BASEURL + '/RegistrationApi/api/registration/ResendOtpV2',
     GETALLQUESTIONS: BASEURL + '/UserSecurityApi/api/v1/Account/AllQuestions',
     REGISTRATIONURLV2: BASEURL + '/UserSecurityApi/api/v1/Account/RegistrationV2',
-    DOCUMENT_UPLOAD: BASEURL + '/DocumentUpload/api/upload/document',
+    DOCUMENT_UPLOAD: BASEURL + '/DocumentUpload/api/upload/documentV2',
     GET_USERPROFILE_IMAGE: BASEURL + '/DocumentUpload/api/upload/dp/',
 
     //user security
@@ -160,8 +160,9 @@ export const routes = {
     LOAN_RESEND_OTP: BASEURL + '/DL_LoanOnboardingAPI/api/DigitalLendingOnBoarding/ResendOtp',
     LOAN_REQUEST_STATEMENT: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/RequestBankStatement', // request param
     LOAN_GENERATE_STATEMENT: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GenerateBankStatement', //request params
-    LOAN_SELECTED_ENTRIES : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/SelectedSalaryEntries',
-    LOAN_SALARY_TRANSACTION: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GetSalaryTransactions',
+    LOAN_SELECTED_ENTRIES : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/SelectedSalaryEntriesV2',
+    ENABLE_STATEMENT_UPLOAD : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/EnableStatementUpload',
+    LOAN_SALARY_TRANSACTION: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GetSalaryTransactionsV2',
     LOAN_GET_SCORECARD_QUESTIONS : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GetScoreCardQuestions',
     LOAN_POST_SCORECARD_ANSWER: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/PostScoreCardResponse',
     LOAN_BANK_LIST: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/GetBankList',
@@ -176,7 +177,10 @@ export const routes = {
     LOAN_STANDING_ORDER : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/SetupStandingOrder',
     LOAN_REJECT : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/RejectLoan',
     LOAN_MANDATE_STATUS : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/MandateStatus',
-    LOAN_OTP_MANDATE : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/ValidateOtpMandate',
+    // LOAN_OTP_MANDATE : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/ValidateOtpMandate',
+    LOAN_OTP_MANDATE: BASEURL + "/DL_LoanRequest.WebApi/Api/AccountDetails/ValidateOtpMandate",
+
+
     LOAN_KYC_REQIURED : BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/KycRequired',
     LOAN_TERMS: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/TermsAndConditions',
     LIQUIDATECURRENT_LOAN: BASEURL + '/DL_LoanRequest.WebApi/api/AccountDetails/LiquidateLoan',

@@ -48,8 +48,9 @@ class FundCardDetails extends React.Component {
                 'CardPan': this.state.formartCardNumber.replace(/\s/g, ''),
                 'MaskedPan' : this.state.formartCardNumber.replace(/\s/g, ''),
                 'Cvv': this.state.Cvv,
-                'ExpiryMonth': this.state.formartedDate.split(' / ')[0],
-                'ExpiryYear': '20' + this.state.formartedDate.split(' / ')[1],
+                'ExpiryMonth': this.state.formartedDate.split('/')[0],
+                // 'ExpiryYear': '20' + this.state.formartedDate.split(' / ')[1],
+                'ExpiryYear': '20' + this.state.formartedDate.split('/')[1],
                 'TokenizedAlias': this.state.Alias
               };
               this.props.dispatch(actions.fundCardDetails(payload));
@@ -64,8 +65,8 @@ class FundCardDetails extends React.Component {
             const payload = {
                 'CardPan': this.state.formartCardNumber.replace(/\s/g, ''),
                 'Cvv': this.state.Cvv,
-                'ExpiryMonth': this.state.formartedDate.split(' / ')[0],
-                'ExpiryYear': '20' + this.state.formartedDate.split(' / ')[1],
+                'ExpiryMonth': this.state.formartedDate.split('/')[0],
+                'ExpiryYear': '20' + this.state.formartedDate.split('/')[1],
                 'TokenizedAlias': this.state.Alias
               };
 
@@ -136,9 +137,11 @@ class FundCardDetails extends React.Component {
         
         //this.setState({formartedDate: formatCardExpiryDate(inputString) });
         if(eventTriggered===8 || eventTriggered===46){
-            this.setState({formartedDate: validateCardExpiry(date,eventTriggered)});
+            console.log("#####", validateCardExpiry(date,eventTriggered));
+            this.setState({formartedDate: validateCardExpiry(date,eventTriggered).toString()});
         }else{
-            this.setState({formartedDate: validateCardExpiry(date)});
+            console.log("=====#", validateCardExpiry(date));
+            this.setState({formartedDate: validateCardExpiry(date).toString()});
         }
        
 
@@ -179,7 +182,11 @@ class FundCardDetails extends React.Component {
                                 onChange={this.handleCardChange}
                                 value={this.state.formartCardNumber}
                                 placeholder="1234 5678 9101 2345" />
+                                {this.state.cardNumberInvalid &&
+                                    <div className="text-danger">Enter your Card Number</div>
+                                }
                             </div>
+                            
 
                             <div className="row">
                                 <div className="col-sm-6 col-md-6">
@@ -187,12 +194,16 @@ class FundCardDetails extends React.Component {
                                         <label>Expires</label>
                                         <input type="text"
                                          onChange={this.handleDate}
-                                         maxLength={7}
+                                         maxLength={5}
                                          value={this.state.formartedDate}
                                         //  onKeyPress={checkValue}
                                         onKeyDown={this.handleDateKeyPress}
-                                         placeholder="MM / YYYY" />
+                                         placeholder="MM / YY" />
+                                        {this.state.dateInvalid &&
+                                            <div className="text-danger">Enter a Valid date</div>
+                                        }
                                     </div>
+                                   
                                 </div>
 
                                 <div className="col-sm-6 col-md-6">
@@ -204,7 +215,12 @@ class FundCardDetails extends React.Component {
                                             maxLength={3}
                                             onChange={this.handleCVV}
                                             type="text" />
+                                        {this.state.cvvInvalid &&
+                                            <div className="text-danger">Enter your CVV</div>
+                                        }
                                     </div>
+                                    
+                                    
                                 </div>
                             </div>
 

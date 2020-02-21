@@ -247,7 +247,7 @@ export const sendNewVirtualCardInfo = (newVirtualCardInfo, token, hasOtp)=>{
             })
     };
 
-    function request(request) { return { type:SEND_NEWVC_DATA_PENDING, request} }
+    function request(request) { return { type:SEND_NEWVC_DATA_PENDING, request, hasOtp} }
     function success(response) { return {type:SEND_NEWVC_DATA_SUCCESS, response, cardpayload: newVirtualCardInfo, isCompleted} }
     function failure(error) { return {type:SEND_NEWVC_DATA_FAILURE, error, hasOtp, cardpayload: newVirtualCardInfo, isCompleted} }
 }

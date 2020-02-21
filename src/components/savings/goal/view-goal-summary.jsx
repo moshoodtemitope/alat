@@ -38,6 +38,7 @@ class ViewGroupSummary extends React.Component {
             debitAccount: null,
             nextstandingDate: null,
             goalTypeName: null,
+            frequency:null
 
 
 
@@ -66,6 +67,7 @@ class ViewGroupSummary extends React.Component {
         else {
 
             let data = JSON.parse(this.props.submitDashboardData.data.data);
+            console.log("this is data",data)
 
 
             this.setState({
@@ -76,14 +78,15 @@ class ViewGroupSummary extends React.Component {
                 targetDate: data.targetDate,
                 startDate: data.startDate,
                 goalTypeId: data.goalTypeId,
-                percentageCompleted: data.percentageCompleted,
+                percentageCompleted: data.percentageCompleted.toFixed(1),
                 targetAmount: data.targetAmount,
                 interestAccrued: data.interestAccrued,
                 interestEarned: data.interestEarned,
                 frequencyId: data.frequencyId,
                 debitAccount: data.debitAccount,
                 nextstandingDate: data.nextstandingDate,
-                goalTypeName: data.goalTypeName
+                goalTypeName: data.goalTypeName,
+                frequency: data.frequency
             });
         }
     };
@@ -287,7 +290,7 @@ class ViewGroupSummary extends React.Component {
                                                 />
 
                                                 <div className='statContainer'>
-                                                    <p className="information">You have saved <span style={{ color: "#AB2656" }}> N{this.toCurrency(this.state.Amount)}</span> of your <span style={{ color: "#AB2656" }}>N{this.toCurrency(this.state.targetAmount)}</span> goal by saving <span style={{ color: "#AB2656" }}>N{this.toCurrency(this.state.Amount)}</span> monthly </p>
+                                                    <p className="information">You have saved <span style={{ color: "#AB2656" }}> N{this.toCurrency(this.state.Amount)}</span> of your <span style={{ color: "#AB2656" }}>N{this.toCurrency(this.state.targetAmount)}</span> goal by saving <span style={{ color: "#AB2656" }}>N{this.toCurrency(this.state.Amount)} </span>     {this.state.frequency}</p>
 
                                                     <ProgressBar
                                                         discTopSpan="Goal Progress"

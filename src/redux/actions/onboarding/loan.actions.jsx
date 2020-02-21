@@ -2,6 +2,7 @@ import { ApiService } from "../../../services/apiService";
 import { routes } from "../../../services/urls";
 import { alertActions } from "../alert.actions";
 import { SystemConstant } from "../../../shared/constants";
+import { history } from './../../../_helpers/history';
 import { modelStateErrorHandler, returnStatusCode } from "../../../shared/utils";
 import { loanOnboardingConstants } from '../../constants/onboarding/loan.constants';
 import {userConstants} from "../../constants/onboarding/user.constants";
@@ -58,6 +59,36 @@ export const saveUserDetails = (data) => {
     // function request(request) { return { type: loanOnboardingConstants.LOAN_STEP1_PENDING, request } }
     function success(data) { return { type: loanOnboardingConstants.LOAN_USERNAME_SUCCESS, data: data } }
     // function failure(error) { return { type: loanOnboardingConstants.LOAN_STEP1_FAILURE, error } }
+}
+
+
+export const enableStatementUpload = (token)=>{
+    SystemConstant.HEADER['alat-token'] = token;
+    return (dispatch) => {
+        let consume = ApiService.request(routes.ENABLE_STATEMENT_UPLOAD,
+            "GET", null, SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response => {
+                //TODO: edit localDB accounts object
+                //dispatch(success(response.data, data));
+                dispatch(success(response.data));
+                history.push("/loan/statement-upload");
+            })
+            .catch(error => {
+                // console.log("error in here");
+                // dispatch(success(response.data, request));
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+                // throw(error);
+            });
+    };
+
+    function request(request) { return { type: loanOnboardingConstants.LOAN_ENABLE_STATEMENTUPLOAD_PENDING, request } }
+    // function success(response, request) { return { type: loanOnboardingConstants.LOAN_ENABLE_STATEMENTUPLOAD_SUCCESS, data: { response : response, request: request } }}
+    function success(response) { return { type: loanOnboardingConstants.LOAN_ENABLE_STATEMENTUPLOAD_SUCCESS, data: { response } } }
+    function failure(error) { return { type: loanOnboardingConstants.LOAN_ENABLE_STATEMENTUPLOAD_FAILURE, error } }
+    
 }
 
 
@@ -127,6 +158,9 @@ export const validateOtp = (data) => {
         return consume
             .then(response => {
                 //TODO: edit localDB accounts object
+                // if(response.data.Message){
+                //     dispatch(alertActions.success(response.data.Message));
+                // }
                 dispatch(success(response.data, data));
             })
             .catch(error => {
@@ -182,6 +216,8 @@ export const requestStatement = (token, data) => {
             .then(response => {
                 //TODO: edit localDB accounts object
                 // dispatch(success(response.data, data));
+               
+                
                 dispatch(success(response.data));
             })
             .catch(error => {
