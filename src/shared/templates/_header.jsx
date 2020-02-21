@@ -850,17 +850,21 @@ class HeaderContainer extends React.Component{
                         <div className="container">
                             <div className="row">
                                 <div className="col-xs-4 col-sm-4">
-                                    {history.location.pathname!=='/home' &&
+                                    {/* {(history.location.pathname!=='/home' && (history.location.pathname.indexOf('i-msg')===-1)) &&
                                         // <div id="nav-icon1" className="" onClick={ this.openMobileMenu }>
                                         <div id="nav-icon1" className="" onClick={()=> history.push("/home") }>
                                             <span></span>
                                             <span></span>
                                             <span></span>
                                         </div>
-                                    }
-                                    <NavLink to="/" className={history.location.pathname==='/home'?"menulogo-wrap":"menulogo-wrap logo-middle"}>
+                                    } */}
+
+                                    <div className="menulogo-wrap logo-middle">
                                         <img src={whitelogo} />
-                                    </NavLink>
+                                    </div>
+                                    {/* <NavLink to="/" className={history.location.pathname==='/home'?"menulogo-wrap":"menulogo-wrap logo-middle"}>
+                                        
+                                    </NavLink> */}
                                     
                                 </div>
                                 <div className="col-xs-8 col-sm-8">

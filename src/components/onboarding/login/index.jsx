@@ -89,11 +89,12 @@ class Login extends React.Component{
         return (
             <OnboardingContainer>
                 <div className="row">
-                    <div className="col-12">
+                    {/* <div className="col-12">
                         <h3>Welcome Back!<span></span></h3>
-                    </div>
+                    </div> */}
+                    <p className="text-center"> <NavLink to="/i-msg/sdsdsd">Test Loan offer</NavLink></p>
                 </div>
-                <div className="row">
+                {/* <div className="row">
                     <div className="col-12">
                         {alert && alert.message && !alert.message.includes("'closed'") &&
                         <div className={`info-label ${alert.type}`}>{alert.message}</div>
@@ -144,7 +145,7 @@ class Login extends React.Component{
                         <p className="text-center">Don't have an account? <NavLink to="/signup-landing">Get Loan/Sign Up</NavLink></p>
                         <p className="text-center m-t-20">Need help? <a target="_blank" href="http://www.alat.ng/contact-us">We are here for you</a></p>
                     </div>
-                </div>
+                </div> */}
             </OnboardingContainer>
         );
     }
