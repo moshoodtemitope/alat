@@ -581,7 +581,7 @@ function sendCustomerRating(rating, willrefer){
 function offlineLoanGetCustomerData(keyId){
     
     return dispatch =>{
-        let consume = ApiService.request(routes.OFFLINELOAN_GET_CUSTOMERDATA, "GET", null,  SystemConstant.HEADER);
+        let consume = ApiService.request(routes.OFFLINELOAN_GET_CUSTOMERDATA+keyId, "GET", null,  SystemConstant.HEADER);
         dispatch(request(consume));
         return consume
             .then(response =>{

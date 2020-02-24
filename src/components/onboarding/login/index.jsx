@@ -92,7 +92,7 @@ class Login extends React.Component{
                     {/* <div className="col-12">
                         <h3>Welcome Back!<span></span></h3>
                     </div> */}
-                    <p className="text-center"> <NavLink to="/i-msg/sdsdsd">Test Loan offer</NavLink></p>
+                    <p className="text-center"> <NavLink to="/i-msg/e17d3df">Test Loan offer</NavLink></p>
                 </div>
                 {/* <div className="row">
                     <div className="col-12">

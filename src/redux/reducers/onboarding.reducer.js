@@ -480,19 +480,19 @@ export function offlineLoanGetCustomerDataReducer(state=[], action){
             return {
                 is_processing: true,
                 processing_status: OFFLINELOAN_GET_DATAOF_CUSTOMER_PENDING,
-                rating_data: action
+                offlineloan_data: action
             };
         case OFFLINELOAN_GET_DATAOF_CUSTOMER_SUCCESS:
             return {
                 is_processing: false,
                 processing_status: OFFLINELOAN_GET_DATAOF_CUSTOMER_SUCCESS,
-                rating_data: action
+                offlineloan_data: action
             };
         case OFFLINELOAN_GET_DATAOF_CUSTOMER_FAILURE:
             return {
                 is_processing: false,
                 processing_status: OFFLINELOAN_GET_DATAOF_CUSTOMER_FAILURE,
-                rating_data: action
+                offlineloan_data: action
             };
 
         default:
@@ -507,19 +507,19 @@ export function offlineLoanSendCustomerDataReducer(state=[], action){
             return {
                 is_processing: true,
                 processing_status: OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_PENDING,
-                rating_data: action
+                offlineloan_data: action
             };
         case OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_SUCCESS:
             return {
                 is_processing: false,
                 processing_status: OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_SUCCESS,
-                rating_data: action
+                offlineloan_data: action
             };
         case OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_FAILURE:
             return {
                 is_processing: false,
                 processing_status: OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_FAILURE,
-                rating_data: action
+                offlineloan_data: action
             };
 
         default:

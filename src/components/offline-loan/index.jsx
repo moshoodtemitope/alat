@@ -29,7 +29,9 @@ class OfflineLoans extends React.Component {
         this.state = {
             rating:'',
             willrefer:'',
-            showTerms:false
+            showTerms:false,
+            RequestedAmount: '',
+            amountError:''
         };
 
         
@@ -38,7 +40,7 @@ class OfflineLoans extends React.Component {
     }
 
     componentDidMount(){
-        // this.offlineLoanGetCustomerData();
+        this.offlineLoanGetCustomerData();
     }
 
 
@@ -49,75 +51,148 @@ class OfflineLoans extends React.Component {
         dispatch(userActions.offlineLoanGetCustomerData(keyId));
     }
 
-    offlineLoanSendCustomerData=()=>{
+    offlineLoanSendCustomerData=(status)=>{
         
         const {dispatch} = this.props;
+        let{RequestedAmount, ApplicationStatus, amountError} = this.state;
+        // this.setState({ApplicationStatus:status});
 
-        // let payload ={
-
-        // }
+        if(amountError===''){
+            let payload ={
+                customerId:this.props.match.params.keyId,
+                ApplicationStatus: ApplicationStatus,
+                RequestedAmount: (RequestedAmount==='' || ApplicationStatus===false)? 0: parseFloat(RequestedAmount)
+            }
+            
+            console.log("====", payload);
+            dispatch(userActions.offlineLoanSendCustomerData(payload));
+        }
         
-        // dispatch(userActions.offlineLoanSendCustomerData(payload));
+        
+       
     }
 
+    renderSuccessfulApplication =()=>{
+        let {RequestedAmount, ApplicationStatus} =this.state;
+        return(
+            <div>
+                <center>
+                    <div className="m-b-30 m-t-20">
+                        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M26.418 38.3379L20 32L16 36L26.4268 46L48 22L43.9629 18L26.418 38.3379Z" fill="#169A62"/>
+                        <path d="M32 0C14.3261 0 0 14.3261 0 32C0 49.6739 14.3261 64 32 64C49.6739 64 64 49.6739 64 32C64 14.3261 49.6739 0 32 0ZM32 59C17.0879 59 5 46.9121 5 32C5 17.0879 17.0879 5 32 5C46.9121 5 59 17.0879 59 32C59 46.9121 46.9121 59 32 59Z" fill="#169A62"/>
+                        </svg>
+                    </div>
+                </center>
+                {ApplicationStatus===true &&
+                    <div>
+                        <h4 className="center-text red-text">Your interest in a loan {(RequestedAmount!=='' && RequestedAmount>0)?`amount of  ₦${numberWithCommas(RequestedAmount)}`:''} was successful</h4>
+                        <div className="text-center">
+                            An officer will give you a call shortly.
+                        </div>
+                    </div>
+                }
+                {ApplicationStatus===false &&
+                    <div>
+                        <h4 className="center-text red-text">Thank you for your response</h4>
+                    </div>
+                }
+            </div>
+        )
+    }
 
    
 
    
 
     renderFetchingData =()=>{
+        let getCustomerData = this.props.offlineLoanGetCustomerDataRequest;
+        if(getCustomerData.processing_status === OFFLINELOAN_GET_DATAOF_CUSTOMER_PENDING){
+            return(
+                <div>
+                    <h3 className="headingtext text-center">Please wait...</h3>
+                </div>
+            )
+        }
 
-        return(
-            <div>
-                <h3 className="headingtext text-center">Please wait...</h3>
-            </div>
-        )
+        if(getCustomerData.processing_status === OFFLINELOAN_GET_DATAOF_CUSTOMER_FAILURE){
+            // console.log("====",error.response);
+            return(
+                <div>
+                    <h3 className="headingtext text-center">{getCustomerData.offlineloan_data.error}</h3>
+                    <div className="text-center"><span className="error-msg" onClick={this.offlineLoanGetCustomerData}>Try again</span></div>
+                </div>
+            )
+        }
     }
 
     handleAmount = (e) => {
-        
-        this.setState({ AmountToSend: e});
+        let getCustomerData = this.props.offlineLoanGetCustomerDataRequest.offlineloan_data.response.data,
+            valueTotest = e.target.value.toString().replace(/,/g, '');
+        this.setState({ AmountToSend: e.target.value, RequestedAmount:valueTotest!==''?parseFloat(valueTotest):0});
+        if(parseFloat(getCustomerData.MaxLimit)<parseFloat(valueTotest)){
+            
+            this.setState({amountError:`Maximum amount you can apply for is ${getCustomerData.MaxLimit}`});
+        }else{
+            this.setState({amountError:''});
+        }
         
         
     }
 
 
     renderDataOfCustomer =()=>{
-        let getCustomerData = this.props.offlineLoanGetCustomerDataRequest;
+        let getCustomerData = this.props.offlineLoanGetCustomerDataRequest.offlineloan_data.response.data;
         let sendCustomerData = this.props.offlineLoanSendCustomerDataRequest;
-        let {AmountToSend, formattedValue} = this.state;
+        let {AmountToSend, formattedValue, amountError, ApplicationStatus} = this.state;
+        
         return(
             <div>
-                <div className="nameheading">Hello <span>Toritsemogha Afinotan</span></div>
+                <div className="nameheading">Hello <span>{getCustomerData.FullName}</span></div>
 
                 <div className="loanmsg">
-                    Congratulations! You are now qualified to take a <span>personal loan </span> of up to 
-                    <span>&#8358;5,000,000</span> over a period of <span>24 months.</span>
+                    Congratulations! You are now qualified to take a <span>{(getCustomerData.LoanType===null || getCustomerData.LoanType==='')?"Personal Loan": getCustomerData.LoanType}</span> of up to 
+                    <span>&#8358;{numberWithCommas(getCustomerData.MaxLimit)}</span> over a period of <span>{getCustomerData.Tenure} months.</span>
                 </div>
                 <div className="loanmsg">
                     If you wish to take below the pre-qualified amount kindly input the amount you would like to take and click on 
                     <span>Apply Now</span> to proceed.
                 </div>
-                <div className="amount-wrap">
+                <div className={amountError!==''?"amount-wrap witherror":"amount-wrap"} >
                     
-                    <AmountInput label="Input Loan Amount" value={formattedValue} intValue={AmountToSend}  name="Amount" onKeyUp={this.handleAmount}  onChange={this.handleAmount} />
+                    {/* <AmountInput label="Input Loan Amount" value={formattedValue} intValue={AmountToSend}  name="Amount" onKeyUp={this.handleAmount}  onChange={this.handleAmount} /> */}
+                    <div className="input-ctn">
+                        <label htmlFor="Amount">Input Loan Amount</label>
+                        <input type="text" onChange={this.handleAmount} autoComplete="off" name="Amount" value={numberWithCommas(AmountToSend) }/>
+                        
+                    </div>
                     <span className="currencyicon"></span>
+                    {amountError!=='' && <div className="amount-error">{amountError}</div>}
+                    
                     <div className="terms-txt">By continuing, you agree to our 
                     <span 
                         onClick={()=>this.setState({showTerms:true})}>Terms and Conditions</span> </div>
                 </div>
 
                 <div className="cta-wrap">
-                    <button type="button"
-                        onClick={this.offlineLoanSendCustomerData}
+                    <button type="submit"
+                        onClick={()=>{
+                            this.setState({ApplicationStatus:false}, this.offlineLoanSendCustomerData)
+                                
+                            }  
+                        }
                         disabled={sendCustomerData.is_processing} 
                         className="btn-alat decline-btn m-t-10 m-b-20">
                             {sendCustomerData.is_processing?'Please wait...':'Maybe Later'} </button>
                     <button type="submit" 
                         className="btn-alat m-t-10 m-b-20 text-center btn-block"
                         disabled={sendCustomerData.is_processing}
-                        onClick={this.offlineLoanSendCustomerData}
-                        >{sendCustomerData.is_processing?'Please wait...':'Submit'}  </button>
+                        onClick={()=>{
+                                
+                            this.setState({ApplicationStatus:true}, this.offlineLoanSendCustomerData)
+                            }  
+                        }
+                        >{(sendCustomerData.is_processing && ApplicationStatus===true)?'Please wait...':'Submit'}  </button>
                 </div>
             </div>
 
@@ -289,7 +364,7 @@ class OfflineLoans extends React.Component {
                     
                     <button type="button" 
                         className="btn-alat m-t-10 m-b-20 text-center btn-block"
-                        onClick={()=>this.setState({showTerms:false})}
+                        onClick={()=>this.setState({showTerms:false, amountError:''})}
                         >Okay  </button>
                 </div>
             </div>
@@ -306,6 +381,7 @@ class OfflineLoans extends React.Component {
         let {ratingRequest} = this.props;
 
         let getCustomerData = this.props.offlineLoanGetCustomerDataRequest;
+        let sendCustomerData = this.props.offlineLoanSendCustomerDataRequest;
         
         return (
             <Fragment>
@@ -314,22 +390,33 @@ class OfflineLoans extends React.Component {
                         <div className="heading-icon">
                             {/* <img src={ratingHeader} /> */}
                         </div>
-                        <h3 className="text-center loanheader">Loan Offer!</h3>
+                        {
+                            (getCustomerData.processing_status === OFFLINELOAN_GET_DATAOF_CUSTOMER_SUCCESS && 
+                                sendCustomerData.processing_status !==OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_SUCCESS) && 
+                            <h3 className="text-center loanheader">Loan Offer!</h3>
+                        }
+                        
                         <div className="offlineloan-wrap">
                             
                             <div className= {showTerms?"offlineloan-container p-20":"offlineloan-container"}>
                                 
-                                {/* {getCustomerData.processing_status === OFFLINELOAN_GET_DATAOF_CUSTOMER_PENDING &&
+                                
                                     <div>{this.renderFetchingData()}</div> 
-                                } */}
+                                
 
-                                {!showTerms && this.renderFetchingData()}
+                                
 
-                                {!showTerms && this.renderDataOfCustomer()}
+                                {(!showTerms && 
+                                    getCustomerData.processing_status === OFFLINELOAN_GET_DATAOF_CUSTOMER_SUCCESS &&
+                                    sendCustomerData.processing_status !==OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_SUCCESS)  
+                                    && this.renderDataOfCustomer()}
                                 
 
                                 {showTerms && this.renderTerms()}
 
+                                {sendCustomerData.processing_status===OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_SUCCESS &&
+                                    this.renderSuccessfulApplication()
+                                }
                                 {/* {setTimeout(() => {
                                     {this.state.showNow!==true && this.renderFetchingData()}
                                     this.setState({showNow:true})

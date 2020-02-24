@@ -135,6 +135,23 @@ body{
         
     }
 }
+.amount-error{
+    color: #AB2656;
+}
+.witherror{
+    label{
+        color: #AB2656!important;
+    }
+    input{
+        border-color: #AB2656!important;
+    }
+}
+.error-msg{
+    text-decoration: underline;
+    &:hover{
+        cursor: pointer;
+    }
+}
 .rating {
     // unicode-bidi: bidi-override;
     // direction: rtl;
