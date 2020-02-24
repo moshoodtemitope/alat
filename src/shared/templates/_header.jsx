@@ -4,6 +4,8 @@ import {history} from "../../_helpers/history";
 import { connect } from 'react-redux';
 import $ from 'jquery';
 import {Fragment} from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import {userActions} from "../../redux/actions/onboarding/user.actions";
 import whitelogo from "../../assets/img/white-logo.svg";
 import selfCareImage from '../../assets/img/contact-centers.svg'
@@ -69,7 +71,8 @@ class HeaderContainer extends React.Component{
         this.fieldsProvided ={
 
         }
-        const { dispatch } = this.props;
+        this.fieldsCount='';
+        // const { dispatch } = this.props;
         
         $('#nav-icon1').click(function(){
             //console.error("clicked");
@@ -340,7 +343,12 @@ class HeaderContainer extends React.Component{
 
     handleCYDMDataSubmit = (e)=>{
         e.preventDefault();
-        if(Object.keys(this.fieldsProvided).length>=1){
+        // console.log("=====",Object.keys(this.fieldsProvided).length)
+        // console.log("In Submit",this.fieldsCount)
+        let updateCMDMPriority = this.props.updateCMDMPriorityRequest;
+
+        if(Object.keys(this.fieldsProvided).length >=this.fieldsCount){
+            this.setState({showEmptyFieldError:false})
             const user = JSON.parse(localStorage.getItem("user"));
 
             const { dispatch } = this.props;
@@ -349,13 +357,26 @@ class HeaderContainer extends React.Component{
         }else{
             this.setState({showEmptyFieldError:true})
         }
+
+        if(updateCMDMPriority.fetch_status !==UPDATE_CMDMPRIORITY_FAILURE){
+            setTimeout(() => {
+                this.closeCYDMModal();    
+            }, 2500);
+            
+        }
+    }
+
+    handleDob = (DateOfBirth) => {
+        DateOfBirth.setHours(DateOfBirth.getHours() + 1);
+        // console.log(DateOfBirth)
+        this.fieldsProvided.DATE_OF_BIRTH = DateOfBirth;
+        this.setState({ DateOfBirth });
     }
 
     
 
     collectPriorityInformaton =()=>{
         let cmdmRequest         = this.props.loadCMDMPriorityRequest,
-            cydmDataList        = cmdmRequest.cmdm_priority.response.data.Field,
             occupationsData     =  occupationsList,
             employmentStatusData     =  employmentStatusList,
             allIDs              = idTypes,
@@ -370,6 +391,22 @@ class HeaderContainer extends React.Component{
             religionListDropdownData = [];
 
             let updateCMDMPriority = this.props.updateCMDMPriorityRequest;
+            let {DateOfBirth} = this.state;
+
+
+
+            let cydmDataList= this.props.loadCMDMPriorityRequest.cmdm_priority.response.data.Field;
+            
+            this.fieldsCount=0;
+            for (var key in cydmDataList) {
+                if (cydmDataList[key]!==null && cydmDataList[key]!=="") {
+                    
+                    this.fieldsCount +=1;
+                }
+            }
+
+            
+           
 
             occupationsData.map(eachJob=>{
                 occupationsDropdownData.push({
@@ -450,7 +487,7 @@ class HeaderContainer extends React.Component{
 
                             </div>
                         } */}
-                        {(cydmDataList.FIRST_NAME_PRIORITY===null || cydmDataList.FIRST_NAME_PRIORITY!=="") &&
+                        {(cydmDataList.FIRST_NAME_PRIORITY!==null && cydmDataList.FIRST_NAME_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Enter your first name </label>
                                 <Textbox
@@ -474,7 +511,7 @@ class HeaderContainer extends React.Component{
                             </div>
                         }
 
-                        {(cydmDataList.LAST_NAME_PRIORITY===null || cydmDataList.LAST_NAME_PRIORITY!=="") &&
+                        {(cydmDataList.LAST_NAME_PRIORITY!==null && cydmDataList.LAST_NAME_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Enter last name </label>
                                 <Textbox
@@ -498,7 +535,7 @@ class HeaderContainer extends React.Component{
                             </div>
                         }
 
-                        {(cydmDataList.MIDDLE_NAME_PRIORITY===null ||cydmDataList.MIDDLE_NAME_PRIORITY!=="") &&
+                        {(cydmDataList.MIDDLE_NAME_PRIORITY!==null &&cydmDataList.MIDDLE_NAME_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Your middle name </label>
                                 <Textbox
@@ -522,7 +559,7 @@ class HeaderContainer extends React.Component{
                             </div>
                         }
 
-                        {(cydmDataList.EMAIL_PRIORITY===null || cydmDataList.EMAIL_PRIORITY!=="")&&
+                        {(cydmDataList.EMAIL_PRIORITY!==null && cydmDataList.EMAIL_PRIORITY!=="")&&
                             <div className="input-ctn inputWrap">
                                 <label>Enter your email </label>
                                 <Textbox
@@ -547,7 +584,7 @@ class HeaderContainer extends React.Component{
                         }
                                       
 
-                        {(cydmDataList.PhoneNumber_PRIORITY===null || cydmDataList.PhoneNumber_PRIORITY!=="") &&
+                        {(cydmDataList.PhoneNumber_PRIORITY!==null && cydmDataList.PhoneNumber_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Your phone number</label>
                                 <Textbox
@@ -572,7 +609,7 @@ class HeaderContainer extends React.Component{
                         }
 
 
-                        {(cydmDataList.ADDRESS_PRIORITY===null || cydmDataList.ADDRESS_PRIORITY!=="") &&
+                        {(cydmDataList.ADDRESS_PRIORITY!==null && cydmDataList.ADDRESS_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Enter your address</label>
                                 <Textbox
@@ -597,7 +634,7 @@ class HeaderContainer extends React.Component{
                         }
 
 
-                        {(cydmDataList.TIN_PRIORITY===null || cydmDataList.TIN_PRIORITY!=="") &&
+                        {(cydmDataList.TIN_PRIORITY!==null && cydmDataList.TIN_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Enter your TIN</label>
                                 <Textbox
@@ -621,10 +658,20 @@ class HeaderContainer extends React.Component{
                             </div>
                         }
 
-                        {(cydmDataList.DOB_PRIORITY===null || cydmDataList.DOB_PRIORITY!=="") &&
+                        {(cydmDataList.DOB_PRIORITY!==null && cydmDataList.DOB_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Your date of birth</label>
-                                <Textbox
+                                <DatePicker placeholderText="" selected={DateOfBirth}
+                                    onChange={this.handleDob}
+                                    //onChangeRaw={(e) => this.handleChange(e)}
+                                    dateFormat="d MMMM, yyyy"
+                                    peekNextMonth
+                                    showMonthDropdown
+                                    showYearDropdown
+                                    dropdownMode="select"
+                                    maxDate={new Date()}
+                                />
+                                {/* <Textbox
                                     tabIndex="2"
                                     id={'dobInfo'}
                                     name="dobInfo"
@@ -639,7 +686,7 @@ class HeaderContainer extends React.Component{
                                         // this.setState({dobInfo});
                                         
                                     }}
-                                />
+                                /> */}
                                 
 
                             </div>
@@ -647,7 +694,7 @@ class HeaderContainer extends React.Component{
 
                         
 
-                        {(cydmDataList.EMPLOYMENT_STATUS_PRIORITY===null || cydmDataList.EMPLOYMENT_STATUS_PRIORITY!=="") &&
+                        {(cydmDataList.EMPLOYMENT_STATUS_PRIORITY!==null && cydmDataList.EMPLOYMENT_STATUS_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Employment Status </label>
                                 <Select
@@ -663,7 +710,7 @@ class HeaderContainer extends React.Component{
                             </div>
                         }
 
-                        {(cydmDataList.OCCUPATION_PRIORITY===null || cydmDataList.OCCUPATION_PRIORITY!=="") &&
+                        {(cydmDataList.OCCUPATION_PRIORITY!==null && cydmDataList.OCCUPATION_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Your occupation</label>
                                 <Select
@@ -682,7 +729,7 @@ class HeaderContainer extends React.Component{
                     
 
 
-                        {(cydmDataList.GENDER_PRIORITY===null || cydmDataList.GENDER_PRIORITY!=="") &&
+                        {(cydmDataList.GENDER_PRIORITY!==null && cydmDataList.GENDER_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Gender </label>
                                 <Select
@@ -698,7 +745,7 @@ class HeaderContainer extends React.Component{
 
                        
 
-                        {(cydmDataList.MARITAL_STATUS_PRIORITY===null || cydmDataList.MARITAL_STATUS_PRIORITY!=="") &&
+                        {(cydmDataList.MARITAL_STATUS_PRIORITY!==null && cydmDataList.MARITAL_STATUS_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Marital status </label>
                                 <Select
@@ -714,7 +761,7 @@ class HeaderContainer extends React.Component{
                             </div>
                         }
 
-                        {(cydmDataList.MEANS_OF_IDENTIFICATION_PRIORITY===null || cydmDataList.MEANS_OF_IDENTIFICATION_PRIORITY!=="") &&
+                        {(cydmDataList.MEANS_OF_IDENTIFICATION_PRIORITY!==null && cydmDataList.MEANS_OF_IDENTIFICATION_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Means of Identification </label>
                                 <Select
@@ -731,7 +778,7 @@ class HeaderContainer extends React.Component{
 
           
 
-                        {(cydmDataList.RELIGION_PRIORITY===null || cydmDataList.RELIGION_PRIORITY!=="") &&
+                        {(cydmDataList.RELIGION_PRIORITY!==null && cydmDataList.RELIGION_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Choose your religion</label>
                                 <Select

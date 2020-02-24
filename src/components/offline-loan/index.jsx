@@ -156,7 +156,7 @@ class OfflineLoans extends React.Component {
                 </div>
                 <div className="loanmsg">
                     If you wish to take below the pre-qualified amount kindly input the amount you would like to take and click on 
-                    <span>Apply Now</span> to proceed.
+                    <span>Submit</span> to proceed.
                 </div>
                 <div className={amountError!==''?"amount-wrap witherror":"amount-wrap"} >
                     

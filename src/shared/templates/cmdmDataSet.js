@@ -720,39 +720,39 @@ export const maritalStatusDataSet = [
     // },
     {
         label: "LEGALLY SEPARATED",
-        label: "LSEPT"
+        value: "LSEPT"
     },
     {
         label: "LIVE-IN RELATIONSHIP",
-        label: "LVEIN"
+        value: "LVEIN"
     },
 
     {
         label: "MARRIED",
-        label: "MRIED"
+        value: "MRIED"
     },
 
     {
         label: "SINGLE",
-        label: "SINGL"
+        value: "SINGL"
 
     },
     {
         label: "UNKNOWN",
-        label: "UNNON"
+        value: "UNNON"
     },
     {
         label: "WIDOW",
-        label: "WIDOW"
+        value: "WIDOW"
     },
     {
         label: "WIDOWER",
-        label: "WIDWR"
+        value: "WIDWR"
     },
 
     {
         label: "DIVORCED",
-        label: "DVRCD"
+        value: "DVRCD"
     }
 ]
 

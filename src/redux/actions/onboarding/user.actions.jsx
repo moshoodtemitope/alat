@@ -537,8 +537,13 @@ function updateCMDM(updatedfields, token){
             .then(response =>{
                 dispatch(success(response));
             }).catch(error =>{
-                dispatch(failure(modelStateErrorHandler(error)));
-                dispatch(alertActions.error(modelStateErrorHandler(error)));
+                console.log("====", error.response);
+                if(error.response.status===400 || error.response.status===500){
+                    dispatch(failure("An error occured Please try again later"))
+                }else{
+                    dispatch(failure(modelStateErrorHandler(error)));
+                    dispatch(alertActions.error(modelStateErrorHandler(error)));
+                }
             });
         
     }
