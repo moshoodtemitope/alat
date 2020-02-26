@@ -151,7 +151,7 @@ class OfflineLoans extends React.Component {
                 <div className="nameheading">Hello <span>{getCustomerData.FullName}</span></div>
 
                 <div className="loanmsg">
-                    Congratulations! You are now qualified to take a <span>{(getCustomerData.LoanType===null || getCustomerData.LoanType==='')?"Personal Loan": getCustomerData.LoanType}</span> of up to 
+                    Congratulations! You are now qualified to take a <span>{(getCustomerData.ProductType===null || getCustomerData.ProductType==='')?"Personal Loan": getCustomerData.ProductType}</span> of up to 
                     <span>&#8358;{numberWithCommas(getCustomerData.MaxLimit)}</span> over a period of <span>{getCustomerData.Tenure} months.</span>
                 </div>
                 <div className="loanmsg">
