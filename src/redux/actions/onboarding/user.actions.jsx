@@ -592,8 +592,17 @@ function offlineLoanGetCustomerData(keyId){
             .then(response =>{
                 dispatch(success(response));
             }).catch(error =>{
-                dispatch(failure(modelStateErrorHandler(error)));
-                dispatch(alertActions.error(modelStateErrorHandler(error)));
+                console.log("====",typeof error.response.data);
+                let errorResponse = error.response.data;
+                if(typeof errorResponse ==="string"){
+                    errorResponse = JSON.parse(errorResponse);
+                    
+                    dispatch(failure(modelStateErrorHandler(errorResponse)));
+                    dispatch(alertActions.error(modelStateErrorHandler(errorResponse)));
+                }else{
+                    dispatch(failure(modelStateErrorHandler(error)));
+                    dispatch(alertActions.error(modelStateErrorHandler(error)));
+                }
             });
         
     }

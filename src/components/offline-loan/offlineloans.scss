@@ -55,11 +55,20 @@ body{
 .terms-txt{
     font-weight: 600;
     span{
-        color: #AB2656;
-        margin-left: 6px;
-        &:hover{
-            cursor: pointer;
+        &:not(.termslink){
+            margin-left: 21px;
         }
+        &.termslink{
+            color: #AB2656;
+            &:hover{
+                cursor: pointer;
+            }
+        }
+    }
+    input[type=checkbox]{
+        opacity: 1;
+        min-height: unset;
+        margin-top: 5px;
     }
 }
 .cta-wrap {

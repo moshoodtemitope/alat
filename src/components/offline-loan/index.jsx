@@ -31,7 +31,9 @@ class OfflineLoans extends React.Component {
             willrefer:'',
             showTerms:false,
             RequestedAmount: '',
-            amountError:''
+            amountError:'',
+            isChecked:false,
+            isCheckedMsg:''
         };
 
         
@@ -54,19 +56,41 @@ class OfflineLoans extends React.Component {
     offlineLoanSendCustomerData=(status)=>{
         
         const {dispatch} = this.props;
-        let{RequestedAmount, ApplicationStatus, amountError} = this.state;
+        let{RequestedAmount, ApplicationStatus, amountError, isChecked} = this.state;
         // this.setState({ApplicationStatus:status});
 
-        if(amountError===''){
-            let payload ={
-                customerId:this.props.match.params.keyId,
-                ApplicationStatus: ApplicationStatus,
-                RequestedAmount: (RequestedAmount==='' || ApplicationStatus===false)? 0: parseFloat(RequestedAmount)
+       
+            if(ApplicationStatus===1){
+                if(amountError==='' && RequestedAmount!=='' && parseFloat(RequestedAmount)>0){
+
+                    if(isChecked===true){
+                        this.setState({isCheckedMsg: ""});
+                        let payload ={
+                            customerId:this.props.match.params.keyId,
+                            ApplicationStatus: ApplicationStatus,
+                            RequestedAmount: (RequestedAmount==='' || ApplicationStatus===3)? 0: parseFloat(RequestedAmount)
+                        }
+                        
+                        dispatch(userActions.offlineLoanSendCustomerData(payload));
+                    }else{
+                        this.setState({isCheckedMsg: "Please accept terms and conditions"});
+                    }
+
+                    
+                }else{
+                    this.setState({amountError:'Please input loan amount'});
+                }
+            }else{
+                let payload ={
+                    customerId:this.props.match.params.keyId,
+                    ApplicationStatus: ApplicationStatus,
+                    RequestedAmount: 0
+                }
+                
+                dispatch(userActions.offlineLoanSendCustomerData(payload));
             }
-            
-            console.log("====", payload);
-            dispatch(userActions.offlineLoanSendCustomerData(payload));
-        }
+
+
         
         
        
@@ -84,7 +108,7 @@ class OfflineLoans extends React.Component {
                         </svg>
                     </div>
                 </center>
-                {ApplicationStatus===true &&
+                {ApplicationStatus===1 &&
                     <div>
                         <h4 className="center-text red-text">Your interest in a loan {(RequestedAmount!=='' && RequestedAmount>0)?`amount of  ₦${numberWithCommas(RequestedAmount)}`:''} was successful</h4>
                         <div className="text-center">
@@ -92,7 +116,7 @@ class OfflineLoans extends React.Component {
                         </div>
                     </div>
                 }
-                {ApplicationStatus===false &&
+                {ApplicationStatus===3 &&
                     <div>
                         <h4 className="center-text red-text">Thank you for your response</h4>
                     </div>
@@ -117,13 +141,32 @@ class OfflineLoans extends React.Component {
 
         if(getCustomerData.processing_status === OFFLINELOAN_GET_DATAOF_CUSTOMER_FAILURE){
             // console.log("====",error.response);
-            return(
-                <div>
-                    <h3 className="headingtext text-center">{getCustomerData.offlineloan_data.error}</h3>
-                    <div className="text-center"><span className="error-msg" onClick={this.offlineLoanGetCustomerData}>Try again</span></div>
-                </div>
-            )
+            if(getCustomerData.offlineloan_data.error!=="Customer not found!" && getCustomerData.offlineloan_data.error!=="It seems you have applied before!"){
+                return(
+                    <div>
+                        <h3 className="headingtext text-center">{getCustomerData.offlineloan_data.error}</h3>
+                        <div className="text-center"><span className="error-msg" onClick={this.offlineLoanGetCustomerData}>Try again</span></div>
+                    </div>
+                )
+            }else if(getCustomerData.offlineloan_data.error==="It seems you have applied before!"){
+                return(
+                    <div>
+                        <h3 className="headingtext text-center">{getCustomerData.offlineloan_data.error}</h3>
+                    </div>
+                )
+            }
+            else{
+                return(
+                    <div className="text-center">
+                        Sorry, page not found
+                    </div>
+                )
+            }
         }
+    }
+    handleTermsCheck =()=>{
+        let {isChecked}= this.state;
+        this.setState({isChecked :!isChecked});
     }
 
     handleAmount = (e) => {
@@ -132,7 +175,7 @@ class OfflineLoans extends React.Component {
         this.setState({ AmountToSend: e.target.value, RequestedAmount:valueTotest!==''?parseFloat(valueTotest):0});
         if(parseFloat(getCustomerData.MaxLimit)<parseFloat(valueTotest)){
             
-            this.setState({amountError:`Maximum amount you can apply for is ${getCustomerData.MaxLimit}`});
+            this.setState({amountError:`Maximum amount you can apply for is ₦${numberWithCommas(getCustomerData.MaxLimit)}`});
         }else{
             this.setState({amountError:''});
         }
@@ -144,7 +187,7 @@ class OfflineLoans extends React.Component {
     renderDataOfCustomer =()=>{
         let getCustomerData = this.props.offlineLoanGetCustomerDataRequest.offlineloan_data.response.data;
         let sendCustomerData = this.props.offlineLoanSendCustomerDataRequest;
-        let {AmountToSend, formattedValue, amountError, ApplicationStatus} = this.state;
+        let {AmountToSend, isCheckedMsg,formattedValue, amountError, ApplicationStatus} = this.state;
         
         return(
             <div>
@@ -155,7 +198,7 @@ class OfflineLoans extends React.Component {
                     <span>&#8358;{numberWithCommas(getCustomerData.MaxLimit)}</span> over a period of <span>{getCustomerData.Tenure} months.</span>
                 </div>
                 <div className="loanmsg">
-                    If you wish to take below the pre-qualified amount kindly input the amount you would like to take and click on 
+                    Kindly input the loan amount you would like to take and click on 
                     <span>Submit</span> to proceed.
                 </div>
                 <div className={amountError!==''?"amount-wrap witherror":"amount-wrap"} >
@@ -169,15 +212,23 @@ class OfflineLoans extends React.Component {
                     <span className="currencyicon"></span>
                     {amountError!=='' && <div className="amount-error">{amountError}</div>}
                     
-                    <div className="terms-txt">By continuing, you agree to our 
-                    <span 
+                    <div className="terms-txt">
+                    <input 
+                        type="checkbox"
+                        checked={this.state.isChecked}
+                        onChange={this.handleTermsCheck} />
+                       <span>I agree to  </span> 
+                    <span className="termslink"
                         onClick={()=>this.setState({showTerms:true})}>Terms and Conditions</span> </div>
+
+                    {isCheckedMsg!=='' && <div className="amount-error"> {isCheckedMsg} </div>}
                 </div>
+                
 
                 <div className="cta-wrap">
                     <button type="submit"
                         onClick={()=>{
-                            this.setState({ApplicationStatus:false}, this.offlineLoanSendCustomerData)
+                            this.setState({ApplicationStatus:3}, this.offlineLoanSendCustomerData)
                                 
                             }  
                         }
@@ -189,10 +240,10 @@ class OfflineLoans extends React.Component {
                         disabled={sendCustomerData.is_processing}
                         onClick={()=>{
                                 
-                            this.setState({ApplicationStatus:true}, this.offlineLoanSendCustomerData)
+                            this.setState({ApplicationStatus:1}, this.offlineLoanSendCustomerData)
                             }  
                         }
-                        >{(sendCustomerData.is_processing && ApplicationStatus===true)?'Please wait...':'Submit'}  </button>
+                        >{(sendCustomerData.is_processing && ApplicationStatus===1)?'Please wait...':'Submit'}  </button>
                 </div>
             </div>
 
