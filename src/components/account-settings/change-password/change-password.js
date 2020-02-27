@@ -208,7 +208,7 @@ class ChangePassword extends Component {
         this.props.clearError();
         let validation = { ...this.state.validation };
         let formData = { ...this.state.changeForm };
-        if (formData.currentPassword.value == '' || formData.newPassword.value == '' || formData.verifyNewPassword.value == '' || formData.pin.value == '') {
+        if (formData.currentPassword.value == '' || formData.newPassword.value == '' && formData.verifyNewPassword.value == '' || formData.pin.value == '') {
             if (formData.currentPassword.value == '') validation.required.currentEmpty = true;
             if (formData.newPassword.value == '') validation.required.newEmpty = true;
             if (formData.verifyNewPassword.value == '') validation.required.verifyEmpty = true;

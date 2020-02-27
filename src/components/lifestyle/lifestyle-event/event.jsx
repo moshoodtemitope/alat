@@ -70,15 +70,8 @@ class Event extends Component {
         const { dispatch } = this.props;
         dispatch(getEvents(this.state.user.token, this.state.pageSize));
     }
-    
-
    
-
-       
     
-    
-
-
     renderEvent = () => {
         let user = this.state.user;
         let props = this.props;
@@ -136,7 +129,7 @@ class Event extends Component {
                                    
                                 </Link>
 
-                                <div className="boldHeader">{event.title.toString().length > 40 ? event.title.toString().substring(0, 40)+"...": event.title.toString()}</div>
+                                <div className="boldHeader">{event.title.toString().length > 15 ? event.title.toString().substring(0, 15) + "..." : event.title.toString()}</div>
                                 <div className="details">
                                     <div className="left">
                                         <img src={clock} alt=""/> 
@@ -150,7 +143,7 @@ class Event extends Component {
                                         <img src={location} alt=""/> 
                                     </div>
                                     <div className="right">
-                                        <div style={{fontSize:12, marginTop:3}} id="disc">{ event.location.toString().length > 30 ? event.location.toString().substring(0, 30)+"...": event.location.toString() }</div>
+                                        <div style={{fontSize:12, marginTop:3}} id="disc">{ event.location }</div>
                                     </div>
 
                                 </div>

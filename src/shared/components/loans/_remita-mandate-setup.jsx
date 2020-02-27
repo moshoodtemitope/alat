@@ -95,7 +95,8 @@ class RemitaMandateSetupComponent extends React.Component {
                                 <form>
                                     <div className="input-ctn">
                                         <label>Reference Number</label>
-                                        <input type="text" name="remitaRefrence" disabled={true}
+                                        {/* <input type="text" name="remitaRefrence" disabled={true} */}
+                                        <input type="text" name="remitaRefrence"
                                             value={this.state.collectionModel.RemitaMandateReference} />
                                     </div>
 

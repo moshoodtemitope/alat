@@ -32,7 +32,9 @@ class ConFirmTransfer extends React.Component{
         this.verifyTransferStage();
         
     }
-
+    formatAmount(amount) {
+        return amount.toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
     verifyTransferStage(){
         // console.log('charegs', this.props.transfer_charges);
         let props = this.props
@@ -49,7 +51,7 @@ class ConFirmTransfer extends React.Component{
                 SenderBankName: props.transfersender.transfer_info_data.data.SenderBankName,
                 SenderAccountName: props.transfersender.transfer_info_data.data.SenderAccountName,
                 SenderAccountBalance: props.transfersender.transfer_info_data.data.AccountBalance,
-                AmountToSend: props.transfersender.transfer_info_data.data.AmountToSend,
+                AmountToSend:props.transfersender.transfer_info_data.data.AmountToSend,
                 // BankCharge : props.transfer_charges.bank_charges_data.response.data[0].Charge,
                 SenderAccountNumber: props.transfersender.transfer_info_data.data.SenderAccountNumber
             };
@@ -57,7 +59,7 @@ class ConFirmTransfer extends React.Component{
                 transferDetails.BankCharge = '0';
             }else{
                 let bankChargesData = props.transfer_charges.bank_charges_data.response.data,
-                    formattedAmount = parseFloat(transferDetails.AmountToSend.replace(',',''));
+                    formattedAmount = parseFloat(transferDetails.AmountToSend.replace(',','',));
                 
                 for(var count=0; count<bankChargesData.length; count++){
                    
@@ -112,6 +114,7 @@ class ConFirmTransfer extends React.Component{
            this.setState({isPinInvalid : false})
         }
     }
+    
 
     
 
@@ -149,7 +152,7 @@ class ConFirmTransfer extends React.Component{
                                                                     <div className="recipient-and-amount">
                                                                         <p className="recipient-name">
                                                                             <span className="recipientname">{this.state.accountData.AccountName}</span>
-                                                                            <span className="amount-to-send">₦{this.state.accountData.AmountToSend}</span>
+                                                                <span className="amount-to-send">₦{this.state.accountData.AmountToSend}</span>
                                                                         </p>
                                                                         <div className="bank-info">
                                                                             <p className="bankname">{this.state.accountData.BankName}</p>

@@ -58,7 +58,7 @@ class LifestyleIndex extends Component {
                                                 <ul>
                                                     <li><NavLink to={'/lifestyle/movie'}>Movies</NavLink></li>
                                                     <li> <NavLink to={'/lifestyle/event'}>Event</NavLink></li>
-                                                    <li> <NavLink to={'/lifestyle/travels/visas'}>Travels</NavLink></li>
+                                                    {/* <li> <NavLink to={'/lifestyle/travels/visas'}>Travels</NavLink></li> */}
                                                 </ul>
                                             </div>
                                         </div>

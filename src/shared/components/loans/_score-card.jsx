@@ -7,7 +7,7 @@ import * as actions from '../../../redux/actions/onboarding/loan.actions';
 import { loanOnboardingConstants } from '../../../redux/constants/onboarding/loan.constants';
 import { LoanApplicationProgress } from '../../../shared/constants';
 import ExtendModal from '../_modal';
-
+import {history} from "../../../_helpers/history";
 class ScoreCard extends React.Component {
     constructor(props) {
         super(props);
@@ -36,12 +36,13 @@ class ScoreCard extends React.Component {
     }
 
     init = () => {
+        this.props.dispatch(actions.getScoreCard(this.state.user.token));
         if (this.props.salary_entry) {
             if (this.props.salary_entry.loan_salEnt_status == loanOnboardingConstants.LOAN_SALARYENTRY_SUCCESS) {
                 this.props.dispatch(actions.getScoreCard(this.state.user.token));
             } else {
                 // return (<Redirect to={this.props.backwardUrl}/>);  //this.props.history.push());
-                this.props.gotoPreviosuPageMethod();
+                // this.props.gotoPreviosuPageMethod();
             }
         } else
             if (this.props.loan_status) {
@@ -126,7 +127,8 @@ class ScoreCard extends React.Component {
                 // || this.props.score_card_A.loan_scoreA_status == loanOnboardingConstants.LOAN_SCORECARD_ANSWER_FAILURE
                 ) {
                 // this.props.history.push(this.props.forwardUrl);
-                this.props.gotoNextPageMethod();
+                history.push(this.props.forwardUrl);
+                // this.props.gotoNextPageMethod();
             }
     }
 

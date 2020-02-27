@@ -65,6 +65,8 @@ class BuyTicket extends Component {
             return true;
         }
     }
+
+    
    
 
     
@@ -79,7 +81,7 @@ class BuyTicket extends Component {
             let data = {
                 ...this.props.SubmitTicketData.data.data
             };
-            // console.log('tag', data);
+            console.log('tag', data);
 
             this.setState({
                 adultAmount:data.adultAmount,
@@ -140,6 +142,9 @@ class BuyTicket extends Component {
     formatAmountNoDecimal = (amount) => {
         return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
     };
+    formatAmount(amount) {
+        return amount.toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
 
     
     NavigateBack = () => {
@@ -185,7 +190,7 @@ class BuyTicket extends Component {
                                                                 <p className="ticket-title">{this.state.ticketType}</p>
                                                            </div>
                                                            <div className="right">
-                                                    <p>N{this.computeTicketPrice()}</p>
+                                                    <p>N{this.formatAmount(this.computeTicketPrice())}</p>
 
                                                            </div>
                                                        </div>

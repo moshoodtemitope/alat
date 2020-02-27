@@ -165,7 +165,7 @@ class ParentDashBoard extends React.Component {
                                     <div className="bodyDetails">
                                           
                                             <div className="loadingData">
-                                                <p style={{textAlign:'center'}}>Loading data...</p>
+                                                <p style={{justifyContent:'center', alignItems:"center"}}>Loading data...</p>
                                             </div>
                                     </div>
                                </div>
