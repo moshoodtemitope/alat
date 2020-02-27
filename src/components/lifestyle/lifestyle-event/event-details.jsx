@@ -191,8 +191,12 @@ class EventDetails extends React.Component {
         }
         // return;
     }
-    formatAmountNoDecimal = (amount) => {
-        return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+    // formatAmountNoDecimal = (amount) => {
+    //     return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+    // };
+
+    formatAmount(amount) {
+        return amount.toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     };
     
     
@@ -226,6 +230,11 @@ class EventDetails extends React.Component {
         // console.log("********",data);
         this.props.dispatch(actions.ShowTime(this.state.user.token, data))
     }
+
+    stripTags(value) {
+        return value.replace(/(<([^>]+)>)/gi, '');
+    }
+   
 
 
     
@@ -274,7 +283,7 @@ class EventDetails extends React.Component {
                                 </div>
                                 <div className="description"
                                 >
-                                    {unescape(this.state.description.toString().length > 15 ? this.state.description.toString().substring(0, 80)+"...": this.state.description.toString())}
+                                {this.stripTags(this.state.description.toString().length > 2 ? this.state.description.toString().substring(0, 80)+"...": this.state.description.toString())}
                                 </div>
                                 <div>
                                     <i className="toshow">
@@ -305,7 +314,7 @@ class EventDetails extends React.Component {
                                                     this.props.SubmitEventData.message === listStyleConstants.SUBMIT_EVENT_DATA_SUCCESS && 
                                                  
                                                     ticketClassses.map(event => {
-                                                        return <option key={event.title} value={event.ticketId + " " + "000r" + " " + event.price + " " + "000r" + " " + event.title + " " + "000r" + " " + event.eventId + " " + "000r" + " " + event.ticketId}>{unescape(event.title)}</option>
+                                                        return <option key={event.title} value={event.ticketId + " " + "000r" + " " + event.price + " " + "000r" + " " + event.title + " " + "000r" + " " + event.eventId + " " + "000r" + " " + event.ticketId}>{event.title}</option>
                                                     })
                                                 }
                                             
@@ -347,10 +356,14 @@ class EventDetails extends React.Component {
                                         <div className="studentAmount"
                                         
                                         >
-                                        {
+                                        {/* {
                                             (this.state.childAmount).toString().includes("-") ? "0" : `₦${this.formatAmountNoDecimal(this.state.childAmount)}`
+                                        } */}
+
+                                        {
+                                                            this.state.childAmount
                                         }
-                                            
+                                                           
                                         </div> 
                                     </div>
                                 </div>

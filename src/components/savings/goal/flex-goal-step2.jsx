@@ -159,7 +159,7 @@ import React from 'react'
                                        <div className="max-600">
                                         <div className="al-card no-pad">
                                         <h4 className="m-b-10 center-text hd-underline">Create a Flexi Goal</h4>
-                                        <p className="header-info">To achieve your target of <span style={{color:'#AB2656'}}>N{this.state.targetAmount} <span style={{color:'#444444'}}>by </span>{this.state.goalFrequencyValue}</span></p>
+                                        <p className="header-info">To achieve your target of <span style={{color:'#AB2656'}}>N{this.state.targetAmount} <span style={{color:'#444444'}}>by </span>{this.state.goalFrequencyValue}(s)</span></p>
 
                                              <form onSubmit={this.onSubmit}>
 

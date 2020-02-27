@@ -544,7 +544,7 @@ class Moviedetails extends React.Component {
                                         
                 </div>
                     <center>
-                        <a href='kkkkkkk' style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(listStyleConstants.MOVIE_REDUCER_CLEAR));
+                        <a  style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(listStyleConstants.MOVIE_REDUCER_CLEAR));
                             this.props.history.push('/lifestyle/movie') }} className="add-bene m-t-50">
                                                 Go back
                         </a>
