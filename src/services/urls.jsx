@@ -1,7 +1,7 @@
 const URL = 'https://api.alat.ng';
 // const URL = 'https://196.43.215.172';
 // const URL = 'https://196.43.215.170';
-//const URL = 'https://196.43.215.157';
+// const URL = 'http://196.43.215.157';
 
 const BASEURL = URL;    
 
@@ -60,6 +60,10 @@ export const routes = {
     //Ratings
     WILL_CUSTOMER_REFER_ALAT: BASEURL + '/AccountSetting/api/Rating/NPS?answer=',
     SEND_CUSTOMER_RATING: BASEURL + '/AccountSetting/api/Rating/CSAT?rating=',
+
+    //ofline loan
+    OFFLINELOAN_GET_CUSTOMERDATA: BASEURL + '/PreApprovedLoanApi/api/GetDetails?customerId=',
+    OFFLINELOAN_SEND_RESPONSE_CUSTOMERDATA: BASEURL + '/PreApprovedLoanApi/api/UpdateApplicatinStats',
 
     //Virtual Cards
     GET_VC_EXCHENGE_RATE: BASEURL + '/virtual.cards.api/api/v1/VirtualCard/GetCurrentExchangeRateV2',

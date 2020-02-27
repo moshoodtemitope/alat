@@ -207,10 +207,14 @@ export const modelStateErrorHandler = (error, field) => {
                 }
                 return message;
             } else
-                return handleError(error);  //Check for the exact error code to know what to return
+               { 
+                   return handleError(error); 
+                } //Check for the exact error code to know what to return
         }
         else
-            return handleError(error);  //Check for the exact error code to know what to return
+           { 
+               return handleError(error);
+            }  //Check for the exact error code to know what to return
     } catch (err) {
        // console.log(err);
         return "Error : Something went wrong";
@@ -231,6 +235,7 @@ export const handleError = (error) => {
         if (error.response.status >= 500 && error.response.status < 600) {
             message = 'something went wrong, try again please.';
         } else {
+            console.log("----====", typeof error.response.data);
             message = error.response.data.message || error.response.data.Message;
         }
 

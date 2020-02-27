@@ -350,12 +350,20 @@ const appReducer = combineReducers({
     onboarding_bvn_details: onboarding.bvnDetailsReducer,
     onboarding_bvnskip_details: onboarding.bvnSkipReducer,
     onboarding_dataFrom_bvn: onboarding.bvnCustomerDetailsReducer,
+
     ndpr_status_request: onboarding.getNDPRStatusReducer,
     acceptndrp_request: onboarding.acceptNDRpReducer,
+
     cmdmpriority_request: onboarding.getCMDMPriorityReducer,
     update_cmdmpriority_request: onboarding.updateCMDMPriorityReducer,
+
     send_rating_request: onboarding.sendCustomerRatingReducer,
-    send_willrefer_alat_request: onboarding.sendCustomerWillReferAlatReducer,
+    send_willrefer_alat_request: onboarding.sendCustomerWillReferAlatReducer, 
+
+    offlineloan_get_customer_data_request: onboarding.offlineLoanGetCustomerDataReducer, 
+    offlineloan_send_customer_data_request: onboarding.offlineLoanSendCustomerDataReducer, 
+    
+    
     sendemailfor_forgotpw_request: onboarding.sendEmailForgotPasswordReducer,
     sendanswerfor_forgotpw_request: onboarding.sendAnswerForgotPasswordReducer,
     send_customertoken_request: onboarding.sendTokenResetPasswordRequest,

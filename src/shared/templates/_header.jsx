@@ -4,6 +4,8 @@ import {history} from "../../_helpers/history";
 import { connect } from 'react-redux';
 import $ from 'jquery';
 import {Fragment} from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import {userActions} from "../../redux/actions/onboarding/user.actions";
 import whitelogo from "../../assets/img/white-logo.svg";
 import selfCareImage from '../../assets/img/contact-centers.svg'
@@ -69,7 +71,8 @@ class HeaderContainer extends React.Component{
         this.fieldsProvided ={
 
         }
-        const { dispatch } = this.props;
+        this.fieldsCount='';
+        // const { dispatch } = this.props;
         
         $('#nav-icon1').click(function(){
             //console.error("clicked");
@@ -183,9 +186,11 @@ class HeaderContainer extends React.Component{
 
         // console.log(this.props);
         // this.props.dispatch(userActions.getAll());
-        this.getProfileImage();
-        this.getNDPRStatus();
-        this.getCMDMPriority();
+        if((history.location.pathname.indexOf('i-msg')===-1)){
+            this.getProfileImage();
+            this.getNDPRStatus();
+            this.getCMDMPriority();
+        }
         // console.log('name is dssd');
     }
 
@@ -236,7 +241,7 @@ class HeaderContainer extends React.Component{
         switch (cmdmRequest.fetch_status){
             case GET_CMDMPRIORITY_SUCCESS:
                     let cmdmData = cmdmRequest.cmdm_priority.response.data;
-                if(cmdmData.Message!==null){   
+                if(cmdmData.Message!==null || cmdmData.Message!==""){   
                     return(
                         <Modal open={openModal} onClose={this.onCloseModal}>
                             <div className="div-modal">
@@ -338,7 +343,12 @@ class HeaderContainer extends React.Component{
 
     handleCYDMDataSubmit = (e)=>{
         e.preventDefault();
-        if(Object.keys(this.fieldsProvided).length>=1){
+        // console.log("=====",Object.keys(this.fieldsProvided).length)
+        // console.log("In Submit",this.fieldsCount)
+        let updateCMDMPriority = this.props.updateCMDMPriorityRequest;
+
+        if(Object.keys(this.fieldsProvided).length >=this.fieldsCount){
+            this.setState({showEmptyFieldError:false})
             const user = JSON.parse(localStorage.getItem("user"));
 
             const { dispatch } = this.props;
@@ -347,13 +357,26 @@ class HeaderContainer extends React.Component{
         }else{
             this.setState({showEmptyFieldError:true})
         }
+
+        if(updateCMDMPriority.fetch_status !==UPDATE_CMDMPRIORITY_FAILURE){
+            setTimeout(() => {
+                this.closeCYDMModal();    
+            }, 2500);
+            
+        }
+    }
+
+    handleDob = (DateOfBirth) => {
+        DateOfBirth.setHours(DateOfBirth.getHours() + 1);
+        // console.log(DateOfBirth)
+        this.fieldsProvided.DATE_OF_BIRTH = DateOfBirth;
+        this.setState({ DateOfBirth });
     }
 
     
 
     collectPriorityInformaton =()=>{
         let cmdmRequest         = this.props.loadCMDMPriorityRequest,
-            cydmDataList        = cmdmRequest.cmdm_priority.response.data.Field,
             occupationsData     =  occupationsList,
             employmentStatusData     =  employmentStatusList,
             allIDs              = idTypes,
@@ -368,6 +391,22 @@ class HeaderContainer extends React.Component{
             religionListDropdownData = [];
 
             let updateCMDMPriority = this.props.updateCMDMPriorityRequest;
+            let {DateOfBirth} = this.state;
+
+
+
+            let cydmDataList= this.props.loadCMDMPriorityRequest.cmdm_priority.response.data.Field;
+            
+            this.fieldsCount=0;
+            for (var key in cydmDataList) {
+                if (cydmDataList[key]!==null && cydmDataList[key]!=="") {
+                    
+                    this.fieldsCount +=1;
+                }
+            }
+
+            
+           
 
             occupationsData.map(eachJob=>{
                 occupationsDropdownData.push({
@@ -423,7 +462,7 @@ class HeaderContainer extends React.Component{
                     {updateCMDMPriority.fetch_status !==UPDATE_CMDMPRIORITY_SUCCESS &&
                     <form onSubmit={this.handleCYDMDataSubmit}>
                         <h4>Please provide the following information</h4>
-                        {/* {cydmDataList.ACCOUNTNUMBER!==null &&
+                        {/* {cydmDataList.ACCOUNTNUMBER===null ||
                             <div className="input-ctn inputWrap">
                                 <label>Account number</label>
                                 <Textbox
@@ -433,7 +472,7 @@ class HeaderContainer extends React.Component{
                                     type="text"
                                     autoComplete ="off"
                                     value={this.state.accountNumberInfo}
-                                    maxLength="11"
+                                    
                                     placeholder= "Enter your account number"
                                     onBlur={(e) => {}}
                                     onChange= {(accountNumberInfo, e)=>{
@@ -448,7 +487,7 @@ class HeaderContainer extends React.Component{
 
                             </div>
                         } */}
-                        {cydmDataList.FIRST_NAME_PRIORITY!==null &&
+                        {(cydmDataList.FIRST_NAME_PRIORITY!==null && cydmDataList.FIRST_NAME_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Enter your first name </label>
                                 <Textbox
@@ -458,7 +497,7 @@ class HeaderContainer extends React.Component{
                                     type="text"
                                     autoComplete ="off"
                                     value={this.state.firstNameInfo}
-                                    maxLength="11"
+                                    
                                     placeholder= "Enter your first name"
                                     onBlur={(e) => {}}
                                     onChange= {(firstNameInfo, e)=>{
@@ -472,7 +511,7 @@ class HeaderContainer extends React.Component{
                             </div>
                         }
 
-                        {cydmDataList.LAST_NAME_PRIORITY!==null &&
+                        {(cydmDataList.LAST_NAME_PRIORITY!==null && cydmDataList.LAST_NAME_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Enter last name </label>
                                 <Textbox
@@ -482,7 +521,7 @@ class HeaderContainer extends React.Component{
                                     type="text"
                                     autoComplete ="off"
                                     value={this.state.lastNameInfo}
-                                    maxLength="11"
+                                    
                                     placeholder= "Enter your last name"
                                     onBlur={(e) => {}}
                                     onChange= {(lastNameInfo, e)=>{
@@ -496,7 +535,7 @@ class HeaderContainer extends React.Component{
                             </div>
                         }
 
-                        {cydmDataList.MIDDLE_NAME_PRIORITY!==null &&
+                        {(cydmDataList.MIDDLE_NAME_PRIORITY!==null &&cydmDataList.MIDDLE_NAME_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Your middle name </label>
                                 <Textbox
@@ -506,7 +545,7 @@ class HeaderContainer extends React.Component{
                                     type="text"
                                     autoComplete ="off"
                                     value={this.state.middleNameInfo}
-                                    maxLength="11"
+                                    
                                     placeholder= "Enter your middle name"
                                     onBlur={(e) => {}}
                                     onChange= {(middleNameInfo, e)=>{
@@ -520,7 +559,7 @@ class HeaderContainer extends React.Component{
                             </div>
                         }
 
-                        {cydmDataList.EMAIL_PRIORITY!==null &&
+                        {(cydmDataList.EMAIL_PRIORITY!==null && cydmDataList.EMAIL_PRIORITY!=="")&&
                             <div className="input-ctn inputWrap">
                                 <label>Enter your email </label>
                                 <Textbox
@@ -530,7 +569,7 @@ class HeaderContainer extends React.Component{
                                     type="text"
                                     autoComplete ="off"
                                     value={this.state.emailInfo}
-                                    maxLength="11"
+                                    
                                     placeholder= "Enter your email"
                                     onBlur={(e) => {}}
                                     onChange= {(emailInfo, e)=>{
@@ -545,7 +584,7 @@ class HeaderContainer extends React.Component{
                         }
                                       
 
-                        {cydmDataList.PhoneNumber_PRIORITY!==null &&
+                        {(cydmDataList.PhoneNumber_PRIORITY!==null && cydmDataList.PhoneNumber_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Your phone number</label>
                                 <Textbox
@@ -570,7 +609,7 @@ class HeaderContainer extends React.Component{
                         }
 
 
-                        {cydmDataList.ADDRESS_PRIORITY!==null &&
+                        {(cydmDataList.ADDRESS_PRIORITY!==null && cydmDataList.ADDRESS_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Enter your address</label>
                                 <Textbox
@@ -580,7 +619,7 @@ class HeaderContainer extends React.Component{
                                     type="text"
                                     autoComplete ="off"
                                     value={this.state.addressTextInfo}
-                                    maxLength="11"
+                                   
                                     placeholder= "Enter your home address"
                                     onBlur={(e) => {}}
                                     onChange= {(addressTextInfo, e)=>{
@@ -595,7 +634,7 @@ class HeaderContainer extends React.Component{
                         }
 
 
-                        {cydmDataList.TIN_PRIORITY!==null &&
+                        {(cydmDataList.TIN_PRIORITY!==null && cydmDataList.TIN_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Enter your TIN</label>
                                 <Textbox
@@ -605,7 +644,7 @@ class HeaderContainer extends React.Component{
                                     type="text"
                                     autoComplete ="off"
                                     value={this.state.tinnumber}
-                                    maxLength="11"
+                                   
                                     placeholder= "Enter your TIN"
                                     onBlur={(e) => {}}
                                     onChange= {(TIN_NUM, e)=>{
@@ -619,17 +658,27 @@ class HeaderContainer extends React.Component{
                             </div>
                         }
 
-                        {cydmDataList.DOB_PRIORITY!==null &&
+                        {(cydmDataList.DOB_PRIORITY!==null && cydmDataList.DOB_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Your date of birth</label>
-                                <Textbox
+                                <DatePicker placeholderText="" selected={DateOfBirth}
+                                    onChange={this.handleDob}
+                                    //onChangeRaw={(e) => this.handleChange(e)}
+                                    dateFormat="d MMMM, yyyy"
+                                    peekNextMonth
+                                    showMonthDropdown
+                                    showYearDropdown
+                                    dropdownMode="select"
+                                    maxDate={new Date()}
+                                />
+                                {/* <Textbox
                                     tabIndex="2"
                                     id={'dobInfo'}
                                     name="dobInfo"
                                     type="text"
                                     autoComplete ="off"
                                     value={this.state.dobInfo}
-                                    maxLength="11"
+                                   
                                     placeholder= "Enter your date of birth"
                                     onBlur={(e) => {}}
                                     onChange= {(dobInfo, e)=>{
@@ -637,7 +686,7 @@ class HeaderContainer extends React.Component{
                                         // this.setState({dobInfo});
                                         
                                     }}
-                                />
+                                /> */}
                                 
 
                             </div>
@@ -645,7 +694,7 @@ class HeaderContainer extends React.Component{
 
                         
 
-                        {cydmDataList.EMPLOYMENT_STATUS_PRIORITY!==null &&
+                        {(cydmDataList.EMPLOYMENT_STATUS_PRIORITY!==null && cydmDataList.EMPLOYMENT_STATUS_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Employment Status </label>
                                 <Select
@@ -661,7 +710,7 @@ class HeaderContainer extends React.Component{
                             </div>
                         }
 
-                        {cydmDataList.OCCUPATION_PRIORITY!==null &&
+                        {(cydmDataList.OCCUPATION_PRIORITY!==null && cydmDataList.OCCUPATION_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Your occupation</label>
                                 <Select
@@ -680,7 +729,7 @@ class HeaderContainer extends React.Component{
                     
 
 
-                        {cydmDataList.GENDER_PRIORITY!==null &&
+                        {(cydmDataList.GENDER_PRIORITY!==null && cydmDataList.GENDER_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Gender </label>
                                 <Select
@@ -696,7 +745,7 @@ class HeaderContainer extends React.Component{
 
                        
 
-                        {cydmDataList.MARITAL_STATUS_PRIORITY!==null &&
+                        {(cydmDataList.MARITAL_STATUS_PRIORITY!==null && cydmDataList.MARITAL_STATUS_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Marital status </label>
                                 <Select
@@ -712,7 +761,7 @@ class HeaderContainer extends React.Component{
                             </div>
                         }
 
-                        {cydmDataList.MEANS_OF_IDENTIFICATION_PRIORITY!==null &&
+                        {(cydmDataList.MEANS_OF_IDENTIFICATION_PRIORITY!==null && cydmDataList.MEANS_OF_IDENTIFICATION_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Means of Identification </label>
                                 <Select
@@ -729,7 +778,7 @@ class HeaderContainer extends React.Component{
 
           
 
-                        {cydmDataList.RELIGION_PRIORITY!==null &&
+                        {(cydmDataList.RELIGION_PRIORITY!==null && cydmDataList.RELIGION_PRIORITY!=="") &&
                             <div className="input-ctn inputWrap">
                                 <label>Choose your religion</label>
                                 <Select
@@ -792,51 +841,90 @@ class HeaderContainer extends React.Component{
         return (
             <Fragment>
                 {/* {this.showNDRPMessage()} */}
-                {history.location.pathname==='/home' && this.showCMDMPriorityMessage()}
-                 {this.state.openCYDMModal && this.collectPriorityInformaton()} 
-                <div className="db2-fixed-header">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-xs-4 col-sm-4">
-                                {history.location.pathname!=='/home' &&
-                                    // <div id="nav-icon1" className="" onClick={ this.openMobileMenu }>
-                                    <div id="nav-icon1" className="" onClick={()=> history.push("/home") }>
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                    </div>
-                                }
-                                <NavLink to="/home" className={history.location.pathname==='/home'?"menulogo-wrap":"menulogo-wrap logo-middle"}>
-                                    <img src={whitelogo} />
-                                </NavLink>
-                                {/* <a href="/dasboard" className="menulogo-wrap">
-                                    <img src={whitelogo} />
-                                </a> */}
-                            </div>
-                            <div className="col-xs-8 col-sm-8">
-                                <div className="user-name-circle clearfix" onClick={ this.toggleMiniNav }>
-                                    <div className="circle-image">
-                                        {/* <img src="../../assets/img/10.jpg" /> */}
-                                        <img src={DpHolder} alt=""/>
-                                    </div>
-                                    <p className="name">{user && user.fullName}</p>
+                {(history.location.pathname.indexOf('i-msg')===-1) &&
+                    <Fragment>
+                    {/* {history.location.pathname==='/home' && this.showCMDMPriorityMessage()} */}
+                    {this.state.openCYDMModal && this.collectPriorityInformaton()} 
+                    <div className="db2-fixed-header">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-xs-4 col-sm-4">
+                                    {history.location.pathname!=='/home' &&
+                                        // <div id="nav-icon1" className="" onClick={ this.openMobileMenu }>
+                                        <div id="nav-icon1" className="" onClick={()=> history.push("/home") }>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </div>
+                                    }
+                                    <NavLink to="/home" className={history.location.pathname==='/home'?"menulogo-wrap":"menulogo-wrap logo-middle"}>
+                                        <img src={whitelogo} />
+                                    </NavLink>
+                                    {/* <a href="/dasboard" className="menulogo-wrap">
+                                        <img src={whitelogo} />
+                                    </a> */}
                                 </div>
-                                { this.renderMiniNav() }
-                                <div className="user-name-circle clearfix">
-                                   <NavLink to="/talk-to-us">
-                                   <p className="name">Talk to Us</p>
-                                   <img  style={{ margin:'5px',marginTop:'5px'}}src={selfCareImage} />
+                                <div className="col-xs-8 col-sm-8">
+                                    <div className="user-name-circle clearfix" onClick={ this.toggleMiniNav }>
+                                        <div className="circle-image">
+                                            {/* <img src="../../assets/img/10.jpg" /> */}
+                                            <img src={DpHolder} alt=""/>
+                                        </div>
+                                        <p className="name">{user && user.fullName}</p>
+                                    </div>
+                                    { this.renderMiniNav() }
+                                    <div className="user-name-circle clearfix">
+                                    <NavLink to="/talk-to-us">
+                                    <p className="name">Talk to Us</p>
+                                    <img  style={{ margin:'5px',marginTop:'5px'}}src={selfCareImage} />
 
-                                   </NavLink>
+                                    </NavLink>
+                                    </div>
+                                    {/* <span className="notification-top"><i className="demo-icon icon-alert-active"></i></span> */}
+                                
                                 </div>
-                                {/* <span className="notification-top"><i className="demo-icon icon-alert-active"></i></span> */}
-                              
+
+
                             </div>
-
-
                         </div>
                     </div>
-                </div>
+                </Fragment>
+                }
+
+            {(history.location.pathname.indexOf('i-msg')>-1) &&
+                 <Fragment>
+                    <div className="db2-fixed-header">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-xs-4 col-sm-4">
+                                    {/* {(history.location.pathname!=='/home' && (history.location.pathname.indexOf('i-msg')===-1)) &&
+                                        // <div id="nav-icon1" className="" onClick={ this.openMobileMenu }>
+                                        <div id="nav-icon1" className="" onClick={()=> history.push("/home") }>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </div>
+                                    } */}
+
+                                    <div className="menulogo-wrap logo-middle">
+                                        <img src={whitelogo} />
+                                    </div>
+                                    {/* <NavLink to="/" className={history.location.pathname==='/home'?"menulogo-wrap":"menulogo-wrap logo-middle"}>
+                                        
+                                    </NavLink> */}
+                                    
+                                </div>
+                                <div className="col-xs-8 col-sm-8">
+                                    
+                                
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                 </Fragment>
+            }
             </Fragment>
         );
     }

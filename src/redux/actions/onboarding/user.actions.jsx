@@ -55,6 +55,14 @@ import {
     SEND_WILLCUSTOMER_REFERALAT_SUCCESS,
     SEND_WILLCUSTOMER_REFERALAT_PENDING,
     SEND_WILLCUSTOMER_REFERALAT_FAILURE,
+
+    OFFLINELOAN_GET_DATAOF_CUSTOMER_SUCCESS,
+    OFFLINELOAN_GET_DATAOF_CUSTOMER_PENDING,
+    OFFLINELOAN_GET_DATAOF_CUSTOMER_FAILURE,
+
+    OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_SUCCESS,
+    OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_PENDING,
+    OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_FAILURE,
 } from "../../constants/onboarding/user.constants";
 import { dispatch } from "rxjs/internal/observable/pairs";
 
@@ -83,7 +91,9 @@ export const userActions = {
     sendAnswerForPinReset,
     sendOtpOrTokenForPinReset,
     sendNewPinForPinReset,
-    reissueToken
+    reissueToken,
+    offlineLoanGetCustomerData,
+    offlineLoanSendCustomerData
 };
 
 function reissueToken(payload) {
@@ -527,8 +537,13 @@ function updateCMDM(updatedfields, token){
             .then(response =>{
                 dispatch(success(response));
             }).catch(error =>{
-                dispatch(failure(modelStateErrorHandler(error)));
-                dispatch(alertActions.error(modelStateErrorHandler(error)));
+                console.log("====", error.response);
+                if(error.response.status===400 || error.response.status===500){
+                    dispatch(failure("An error occured Please try again later"))
+                }else{
+                    dispatch(failure(modelStateErrorHandler(error)));
+                    dispatch(alertActions.error(modelStateErrorHandler(error)));
+                }
             });
         
     }
@@ -566,6 +581,55 @@ function sendCustomerRating(rating, willrefer){
     function request(request) { return { type:SEND_CUSTOMERRATING_PENDING, request} }
     function success(response) { return {type:SEND_CUSTOMERRATING_SUCCESS, response} }
     function failure(error) { return {type:SEND_CUSTOMERRATING_FAILURE, error} }
+}
+
+function offlineLoanGetCustomerData(keyId){
+    
+    return dispatch =>{
+        let consume = ApiService.request(routes.OFFLINELOAN_GET_CUSTOMERDATA+keyId, "GET", null,  SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response));
+            }).catch(error =>{
+                console.log("====",typeof error.response.data);
+                let errorResponse = error.response.data;
+                if(typeof errorResponse ==="string"){
+                    errorResponse = JSON.parse(errorResponse);
+                    
+                    dispatch(failure(modelStateErrorHandler(errorResponse)));
+                    dispatch(alertActions.error(modelStateErrorHandler(errorResponse)));
+                }else{
+                    dispatch(failure(modelStateErrorHandler(error)));
+                    dispatch(alertActions.error(modelStateErrorHandler(error)));
+                }
+            });
+        
+    }
+
+    function request(request) { return { type:OFFLINELOAN_GET_DATAOF_CUSTOMER_PENDING, request} }
+    function success(response) { return {type:OFFLINELOAN_GET_DATAOF_CUSTOMER_SUCCESS, response} }
+    function failure(error) { return {type:OFFLINELOAN_GET_DATAOF_CUSTOMER_FAILURE, error} }
+}
+
+function offlineLoanSendCustomerData(payload){
+    
+    return dispatch =>{
+        let consume = ApiService.request(routes.OFFLINELOAN_SEND_RESPONSE_CUSTOMERDATA, "POST", payload,  SystemConstant.HEADER);
+        dispatch(request(consume));
+        return consume
+            .then(response =>{
+                dispatch(success(response));
+            }).catch(error =>{
+                dispatch(failure(modelStateErrorHandler(error)));
+                dispatch(alertActions.error(modelStateErrorHandler(error)));
+            });
+        
+    }
+
+    function request(request) { return { type:OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_PENDING, request} }
+    function success(response) { return {type:OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_SUCCESS, response} }
+    function failure(error) { return {type:OFFLINELOAN_SEND_RESPONSEOF_CUSTOMER_FAILURE, error} }
 }
 
 
