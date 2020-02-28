@@ -35,6 +35,9 @@ class BuyTicket extends Component {
     componentDidMount = () => {
         this.init();
     };
+    formatAmountNoDecimal = (amount) => {
+        return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+    };
 
     init = () => {
         if (this.props.SubmitEventTicketData.message !== listStyleConstants.SUBMIT_EVENT_TICKET_SUCCESS)
@@ -169,7 +172,7 @@ class BuyTicket extends Component {
                                                                 <p className="ticket-title">Quantity</p>
                                                            </div>
                                                            <div className="right">
-                                                               <p className="ticket-title">N{this.state.TicketAmount}</p>
+                                                    <p className="ticket-title">N{this.formatAmountNoDecimal(this.state.TicketAmount)}</p>
                                                                <p className="ticket-title">{this.state.quantity}</p>
 
                                                            </div>

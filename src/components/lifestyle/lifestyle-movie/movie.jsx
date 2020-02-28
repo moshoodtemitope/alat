@@ -394,7 +394,16 @@ class Movie extends React.Component {
         
         if (this.props.getMovieList.message === listStyleConstants.GET_MOVIE_LIST_SUCCESS 
             && this.props.SearchfetchMovieList.message !== listStyleConstants.SEARCH_FETCH_MOVIE_PENDING){
-            return <span className="loadMore" onClick={() => this.handleLoadMore()}>Load More</span>
+            return ( 
+                    <div>
+                        {
+                        this.state.genreType || this.state.value? <h2 className="loadMore">No Movie Found</h2> :
+                                <span className="loadMore" onClick={() => this.handleLoadMore()} >Load More</span> 
+                        }
+                        
+                    </div>
+                    
+                )
         } else if (this.props.SearchfetchMovieList.message === listStyleConstants.SEARCH_FETCH_EVENT_SUCCESS && this.props.getMovieList.data.response.length === 0 ){
 
             return <h2>No Movie Found</h2>

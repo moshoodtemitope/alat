@@ -190,7 +190,7 @@ class BuyTicket extends Component {
                                                                 <p className="ticket-title">{this.state.ticketType}</p>
                                                            </div>
                                                            <div className="right">
-                                                    <p>N{this.formatAmount(this.computeTicketPrice())}</p>
+                                                    <p>N{this.formatAmountNoDecimal(this.computeTicketPrice())}</p>
 
                                                            </div>
                                                        </div>
