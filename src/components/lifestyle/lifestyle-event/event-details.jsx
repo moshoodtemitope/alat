@@ -191,9 +191,9 @@ class EventDetails extends React.Component {
         }
         // return;
     }
-    // formatAmountNoDecimal = (amount) => {
-    //     return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
-    // };
+    formatAmountNoDecimal = (amount) => {
+        return amount.toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+    };
 
     formatAmount(amount) {
         return amount.toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -353,16 +353,15 @@ class EventDetails extends React.Component {
                                             </div>
                                                         
                                         </div>
-                                        <div className="studentAmount"
-                                        
-                                        >
-                                        {/* {
-                                            (this.state.childAmount).toString().includes("-") ? "0" : `₦${this.formatAmountNoDecimal(this.state.childAmount)}`
-                                        } */}
-
+                                        <div className="studentAmount">
                                         {
-                                                            this.state.childAmount
+                                            
+                                            (this.state.childAmount).toString().includes("-") ? "0" : `₦${this.formatAmountNoDecimal(this.state.childAmount)}`
                                         }
+
+                                        {/* {
+                                                            this.state.childAmount
+                                        } */}
                                                            
                                         </div> 
                                     </div>
