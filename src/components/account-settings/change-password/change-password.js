@@ -208,7 +208,7 @@ class ChangePassword extends Component {
         this.props.clearError();
         let validation = { ...this.state.validation };
         let formData = { ...this.state.changeForm };
-        if (formData.currentPassword.value == '' || formData.newPassword.value == '' || formData.verifyNewPassword.value == '' || formData.pin.value == '') {
+        if (formData.currentPassword.value == '' || formData.newPassword.value == '' && formData.verifyNewPassword.value == '' || formData.pin.value == '') {
             if (formData.currentPassword.value == '') validation.required.currentEmpty = true;
             if (formData.newPassword.value == '') validation.required.newEmpty = true;
             if (formData.verifyNewPassword.value == '') validation.required.verifyEmpty = true;
@@ -285,7 +285,8 @@ class ChangePassword extends Component {
 
                                                         {formElement.id == "pin" && validation.pinDigit ? <span className="text-danger">Password must be four digits</span> : formElement.id == "pin" && validation.required.pinEmpty ? <span className="text-danger">Field is required</span> : null}
 
-                                                        {formElement.id == "currentPassword" && validation.format.invalidCurrent ? <span className="text-danger">Invalid password format</span> : formElement.id == "currentPassword" && validation.required.currentEmpty ? <span className="text-danger">Field is required</span> : null}
+                                                        {formElement.id == "currentPassword" && validation.format.invalidCurrent ?
+                                                         <span className="text-danger">Invalid password format</span> : formElement.id == "currentPassword" && validation.required.currentEmpty ? <span className="text-danger">Field is required</span> : null}
 
                                                         {formElement.id == "newPassword" && validation.format.invalidNew ? <span className="text-danger">Invalid password format</span> : formElement.id == "newPassword" && validation.required.newEmpty ? <span className="text-danger">Field is required</span> : null}
 

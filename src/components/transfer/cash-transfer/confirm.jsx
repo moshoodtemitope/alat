@@ -10,7 +10,7 @@ import {
     SENDBANK_TRANSFER_FAILURE,} from "../../../redux/constants/transfer.constants";
 import AlatPinInput from '../../../shared/components/alatPinInput';
 import {sendMoneyTransfer} from "../../../redux/actions/transfer/cash-transfer.actions";
-
+import {numberWithCommas} from "../../../shared/utils";
 class ConFirmTransfer extends React.Component{
     constructor(props) {
         super(props);
@@ -30,9 +30,12 @@ class ConFirmTransfer extends React.Component{
 
     componentDidMount() {
         this.verifyTransferStage();
+        this.props.dispatch(sendMoneyTransfer(null, null, null,null, "CLEAR"))
         
     }
-
+    formatAmount(amount) {
+        return amount.toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
     verifyTransferStage(){
         // console.log('charegs', this.props.transfer_charges);
         let props = this.props
@@ -49,7 +52,7 @@ class ConFirmTransfer extends React.Component{
                 SenderBankName: props.transfersender.transfer_info_data.data.SenderBankName,
                 SenderAccountName: props.transfersender.transfer_info_data.data.SenderAccountName,
                 SenderAccountBalance: props.transfersender.transfer_info_data.data.AccountBalance,
-                AmountToSend: props.transfersender.transfer_info_data.data.AmountToSend,
+                AmountToSend:props.transfersender.transfer_info_data.data.AmountToSend,
                 // BankCharge : props.transfer_charges.bank_charges_data.response.data[0].Charge,
                 SenderAccountNumber: props.transfersender.transfer_info_data.data.SenderAccountNumber
             };
@@ -57,7 +60,7 @@ class ConFirmTransfer extends React.Component{
                 transferDetails.BankCharge = '0';
             }else{
                 let bankChargesData = props.transfer_charges.bank_charges_data.response.data,
-                    formattedAmount = parseFloat(transferDetails.AmountToSend.replace(',',''));
+                    formattedAmount = parseFloat(transferDetails.AmountToSend.replace(',','',));
                 
                 for(var count=0; count<bankChargesData.length; count++){
                    
@@ -82,6 +85,12 @@ class ConFirmTransfer extends React.Component{
         }
     }
 
+    sendMoneyTransfer = async (token, transferPayload, resend, isFxTransfer)=>{
+        const {dispatch} = this.props;
+
+        await dispatch(sendMoneyTransfer(token, transferPayload, resend, isFxTransfer));
+    }
+
     makeTransfer(e){
         e.preventDefault();
         const {dispatch} = this.props;
@@ -98,7 +107,33 @@ class ConFirmTransfer extends React.Component{
                         Narration:this.props.transfersender.transfer_info_data.data.TransferPurpose,
                         TransactionPin:this.state.Pin
                     }
-            dispatch(sendMoneyTransfer(this.state.user.token,payload, false, false));
+            this.sendMoneyTransfer(this.state.user.token,payload, false, false)
+            .then(
+                () => {
+                    // if(this.props.transfer_money.sendmoney_status === SENDBANK_TRANSFER_FAILURE){
+                        
+                    //     setTimeout(() => {
+                            
+                    //         this.props.dispatch(sendMoneyTransfer(null, null, null,null, "CLEAR"))
+                    //     }, 1500);
+                    // }
+                    
+                    
+
+                }
+            )
+            .catch(() => {
+                // if(this.props.transfer_money.sendmoney_status === SENDBANK_TRANSFER_FAILURE){
+                    
+                //     setTimeout(() => {
+                        
+                //         this.props.dispatch(sendMoneyTransfer(null, null, null,null, "CLEAR"))
+                //     }, 1500);
+                // }
+                
+                
+
+            })
             let transferStatus = this.props.transfer_money;
 
             
@@ -112,6 +147,7 @@ class ConFirmTransfer extends React.Component{
            this.setState({isPinInvalid : false})
         }
     }
+    
 
     
 
@@ -149,7 +185,7 @@ class ConFirmTransfer extends React.Component{
                                                                     <div className="recipient-and-amount">
                                                                         <p className="recipient-name">
                                                                             <span className="recipientname">{this.state.accountData.AccountName}</span>
-                                                                            <span className="amount-to-send">₦{this.state.accountData.AmountToSend}</span>
+                                                                <span className="amount-to-send">₦{numberWithCommas(this.state.accountData.AmountToSend)}</span>
                                                                         </p>
                                                                         <div className="bank-info">
                                                                             <p className="bankname">{this.state.accountData.BankName}</p>
@@ -179,7 +215,7 @@ class ConFirmTransfer extends React.Component{
                                                                         <button type="submit" 
                                                                             disabled={(this.props.transfer_money.fetchStatus && this.props.transfer_money.fetchStatus===true)?true:false}
                                                                             className="btn-alat m-t-10 m-b-20 text-center">
-                                                                            {transferStatus.sendmoney_status===SENDBANK_TRANSFER_PENDING ?"Processing...": "Proceed"}
+                                                                            {transferStatus.fetchStatus===true ?"Processing...": "Proceed"}
                                                                         </button>
                                                                     </center>
 

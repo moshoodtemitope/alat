@@ -6,6 +6,8 @@ import { fundAccountConstants } from '../../../redux/constants/fund-account/fund
 import * as actions from '../../../redux/actions/fund-account/fund-acount.action';
 //import OtpValidation from '../../../shared/components/otpvalidation';
 
+
+import {numberWithCommas} from "../../../shared/utils";
 class FundWemaSuccess extends React.Component {
     constructor(props) {
         super(props);
@@ -81,7 +83,7 @@ class FundWemaSuccess extends React.Component {
                                         </div>
                                         <div className="input-ctn">
                                             <label>Amount</label>
-                                            <input type="text" value={props.fundwema.fund_account_data.data.Amount} disabled={true} />
+                                            <input type="text" value={numberWithCommas(props.fundwema.fund_account_data.data.Amount)} disabled={true} />
                                         </div>
 
                                         <div className="row">

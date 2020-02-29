@@ -28,6 +28,7 @@ import {
     SENDBANK_TRANSFER_PENDING, 
     SENDBANK_TRANSFER_SUCCESS, 
     SENDBANK_TRANSFER_FAILURE,
+    SENDBANK_TRANSFER_RESET,
     PROCESS_TRANSFER_PENDING, 
     PROCESS_TRANSFER_SUCCESS, 
     PROCESS_TRANSFER_FAILURE,
@@ -334,58 +335,67 @@ export const saveBankTransferBeneficiary = (token, bankTransferBeneficiary) => {
     function failure(error) { return {type:SAVE_TRANSFER_BENEFICIARY_FAILURE, error} }
 };
 
-export const sendMoneyTransfer = (token, transferPayload, resend, isFxTransfer) => {
-    SystemConstant.HEADER['alat-token'] = token;
-    
-        return (dispatch) => {
-            if(transferPayload.TransactionPin.length==4){
-                let consume = ApiService.request(routes.BANK_TRANSFER_WITHPIN, "POST", transferPayload, SystemConstant.HEADER);
-                dispatch(request(consume));
-                 let user_details = localStorage.getItem("user");
-                 let user = JSON.parse(user_details)
-                    window.smartech('identify', user.email);
-                    window.smartech('dispatch', 'ALAT_Send_Money_Bank', {
-                        "Email": user.email,
-                        "mobile": user.phoneNo
-                    });
-                return consume
-                    .then(response => {
-                        if(resend===false && !isFxTransfer){
-                            history.push("/transfer/otp");
-                        }
-                        if(resend===false && isFxTransfer){
-                            history.push("/fx-transfer/otp");
-                        }
-                        
-                        dispatch(success(response));
-                    })
-                    .catch(error => {
-                        if((error.response.data.Message)){
-                            dispatch(failure(error.response.data.Message.toString()));
-                        }
-                        else if(error.response.message){
-                            dispatch(failure(error.response.message.toString()));
-                        }
+export const sendMoneyTransfer = (token, transferPayload, resend, isFxTransfer, isClear) => {
+    if(isClear!=="CLEAR"){
+        SystemConstant.HEADER['alat-token'] = token;
+        
+            return (dispatch) => {
+                if(transferPayload.TransactionPin.length==4){
+                    let consume = ApiService.request(routes.BANK_TRANSFER_WITHPIN, "POST", transferPayload, SystemConstant.HEADER);
+                    dispatch(request(consume));
+                    let user_details = localStorage.getItem("user");
+                    let user = JSON.parse(user_details)
+                        window.smartech('identify', user.email);
+                        window.smartech('dispatch', 'ALAT_Send_Money_Bank', {
+                            "Email": user.email,
+                            "mobile": user.phoneNo
+                        });
+                    return consume
+                        .then(response => {
+                            if(resend===false && !isFxTransfer){
+                                history.push("/transfer/otp");
+                            }
+                            if(resend===false && isFxTransfer){
+                                history.push("/fx-transfer/otp");
+                            }
                             
-                        else if(error.response.data.ModelState){
-                                dispatch(failure(modelStateErrorHandler(error)));
-                        }
-                        else{
-                            dispatch(failure('An error occurred.'));
-                        }
-                        
-                    });
-            }else{
-                dispatch(failure('Please provide a valid Pin.'))
-            }
-        };
+                            dispatch(success(response));
+                        })
+                        .catch(error => {
+                            if((error.response.data.Message)){
+                                dispatch(failure(error.response.data.Message.toString()));
+                            }
+                            else if(error.response.message){
+                                dispatch(failure(error.response.message.toString()));
+                            }
+                                
+                            else if(error.response.data.ModelState){
+                                    dispatch(failure(modelStateErrorHandler(error)));
+                            }
+                            else{
+                                dispatch(failure('An error occurred.'));
+                            }
+                            
+                        });
+                }else{
+                    dispatch(failure('Please provide a valid Pin.'))
+                }
+            };
     
+    }
+    
+    return dispatch =>{
+    
+        dispatch(clear());
+        
+    }
 
     
 
     function request(request) { return { type:SENDBANK_TRANSFER_PENDING, request, resend} }
     function success(response) { return {type:SENDBANK_TRANSFER_SUCCESS, response, payloadPin:transferPayload.TransactionPin, resend} }
     function failure(error) { return {type:SENDBANK_TRANSFER_FAILURE, error, resend} }
+    function clear() { return { type:SENDBANK_TRANSFER_RESET, clear_data:""} }
 };
 
 export const processMoneyTransfer = (token, transferPayload ,isFxTransfer) => {

@@ -47,6 +47,8 @@ export const removeComma= (currencyValue)=> {
     return currencyValue.replace(/,/g, '');
   }
 
+
+
 export const cc_format = (value) => {
 
     var v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
@@ -115,22 +117,62 @@ export const formatCardExpiryDate = (value) => {
 }
 
 export const numberWithCommas= (amount)=> {
-    let testSequence = /^[0-9.,]+$/;
-    // let testSequence = /^(?:\d{1,3}(?:,\d{3})*|\d+)(?:\.\d+)?$/;
+    // let testSequence = /^[0-9.,]+$/;
+    // let testSequence = /([0-9]+(\.[0-9]+)?)/;
+    
+    
     if(amount!==undefined && amount!==''){
-        let amountFiltered ;
+        let amountFiltered, splittedDecimal, amountTemp;
+        amount = amount.toString().replace(/[^0-9.,]/g,'');
 
-        if(!testSequence.test(amount)){
-            return "";
-        }
+        // if(!testSequence.test(amount)){
+        //     return "";
+        // }
     // return numberProvided.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     // return parseFloat(numberProvided).toLocaleString(undefined, {maximumFractionDigits:2});
         
         // if(amount.indexOf(',')>-1){
              amountFiltered = amount.toString().replace(/,/g, '');
         // }
+
         
-        return amountFiltered.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');    
+        if((amountFiltered.match(/\./g) || []).length===1){
+       
+            if(amountFiltered.indexOf('.')>0){
+                splittedDecimal = amountFiltered.trim().split('.');
+
+                if(splittedDecimal[1].indexOf('.')>-1){
+                    splittedDecimal[1] = splittedDecimal[1].replace(/./g, '')
+                }
+
+                if(splittedDecimal[0].indexOf('.')>-1){
+                    splittedDecimal[0] = splittedDecimal[0].replace(/./g, '')
+                }
+
+                if(splittedDecimal[1].length>2){
+                    
+                    splittedDecimal[1] = splittedDecimal[1].substring(2,0);
+                }
+
+                // if(splittedDecimal[1].length===1 && splittedDecimal[1]!=='0'){
+                //     splittedDecimal[1] = splittedDecimal[1]+'0';
+                // }
+                
+
+                amountTemp = splittedDecimal[0].toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+                return `${amountTemp}.${splittedDecimal[1]}`;
+            }
+        }
+        if((amountFiltered.match(/\./g) || []).length>1){
+
+            var numberParts = amountFiltered.split('.');
+            numberParts =  numberParts.slice(0,-1).join('') + '.' + numberParts.slice(-1)
+            
+            return numberParts.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');    
+        }
+        
+        return amountFiltered.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+        
        
         
     }
@@ -207,10 +249,14 @@ export const modelStateErrorHandler = (error, field) => {
                 }
                 return message;
             } else
-                return handleError(error);  //Check for the exact error code to know what to return
+               { 
+                   return handleError(error); 
+                } //Check for the exact error code to know what to return
         }
         else
-            return handleError(error);  //Check for the exact error code to know what to return
+           { 
+               return handleError(error);
+            }  //Check for the exact error code to know what to return
     } catch (err) {
        // console.log(err);
         return "Error : Something went wrong";
@@ -231,6 +277,7 @@ export const handleError = (error) => {
         if (error.response.status >= 500 && error.response.status < 600) {
             message = 'something went wrong, try again please.';
         } else {
+            console.log("----====", typeof error.response.data);
             message = error.response.data.message || error.response.data.Message;
         }
 

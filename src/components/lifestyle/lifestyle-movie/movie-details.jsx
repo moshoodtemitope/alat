@@ -120,7 +120,7 @@ class Moviedetails extends React.Component {
 
     checkCinemaLocationValidity = () => {
         console.log("this is cinemalocation")
-        if(this.state.CinemaLocation === null || this.state.CinemaLocation === ""){
+        if (this.state.CinemaLocation === null || this.state.CinemaLocation === "" || this.state.CinemaLocation ==="Select Cinema Location"){
             this.setState({CinemaLocationValidity:true});
             return false;
         }else{
@@ -128,10 +128,10 @@ class Moviedetails extends React.Component {
             return true;
         }
     }
-    checkShowTimeValidity =()=>{
-         console.log("this is showtimevalidation")
+    checkShowTimeValidity =(event)=>{
+        console.log("this is showtimevalidation", this.state.showTime)
 
-        if(this.state.showTime === null || this.state.showTime === ""){
+        if(this.state.showTime === null || this.state.showTime === "" ){
             this.setState({showTimeValidity:true});
             return false;
 
@@ -147,9 +147,9 @@ class Moviedetails extends React.Component {
             console.log('this is if statement')
             return true
         }else{
-            this.setState({ QuantityInValidity:false})
+            this.setState({ QuantityInValidity:true})
             console.log("this thr else statement")
-         return false
+         return true
         }
     }
  
@@ -254,6 +254,7 @@ class Moviedetails extends React.Component {
         let childrenAmount = amounts.split(" ")[2];
         let studentAmount = amounts.split(" ")[0];
         let showTimeId = amounts.split(" ")[3];
+        console.log("=======",showTimeId)
         let ticketId = amounts.split(" ")[4];
         let fee = amounts.split(" ")[5];
         let ticketType = amounts.split(" ")[6];
@@ -288,11 +289,9 @@ class Moviedetails extends React.Component {
    
     UseSelectedItem = (event) => {
         let gottenValue = event.target.value.split("000");
+        console.log("=========",gottenValue)
         let selectedItem = event.target.value;
-        let name = event.target.name;
-
-        // console.log(selectedItem);
-        
+        let name = event.target.name;        
         
         let data = {
             item: gottenValue[0],
@@ -544,7 +543,7 @@ class Moviedetails extends React.Component {
                                         
                 </div>
                     <center>
-                        <a href='kkkkkkk' style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(listStyleConstants.MOVIE_REDUCER_CLEAR));
+                        <a  style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(listStyleConstants.MOVIE_REDUCER_CLEAR));
                             this.props.history.push('/lifestyle/movie') }} className="add-bene m-t-50">
                                                 Go back
                         </a>

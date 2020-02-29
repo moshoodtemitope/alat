@@ -92,6 +92,8 @@ class MenuContainer extends React.Component{
                                             </li>
                                             <li><NavLink to="/cardless-withdrawal">ATM Cardless Withdrawal</NavLink></li>
                                             <li><NavLink to="/fx-transfer">Fx Transfer</NavLink></li>
+                                            <li><NavLink to="/fund">Fund My Account</NavLink></li>
+
                                             {/* <li><a href="#">To Email / Phone No</a></li> */}
                                         </ul>
                                     </li>

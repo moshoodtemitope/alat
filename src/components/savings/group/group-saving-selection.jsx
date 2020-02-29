@@ -1,16 +1,17 @@
 import React from 'react';
-import {Fragment} from "react";
-import calender from '../../../assets/img/calender.svg' ;
+import { Fragment } from "react";
+import calender from '../../../assets/img/calender.svg';
 import graph from '../../../assets/img/graph.svg';
 import stash from '../../../assets/img/stash.svg';
-import '../savings.css';
-import {NavLink, Route} from "react-router-dom";
+import { NavLink, Route } from "react-router-dom";
 import './group.css';
-import {history} from '../../../_helpers/history';
+// import '../savings.css';
+
+import { history } from '../../../_helpers/history';
 
 
 class GroupSavingsSelection extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
 
@@ -24,33 +25,34 @@ class GroupSavingsSelection extends React.Component {
     render() {
         return (
             <Fragment>
-                
-                    <div className="row">
-                        <div className="col-sm-12">
-                            <p className="page-title">Savings & Goals</p>
-                        </div>
-                        <div className="col-sm-12">
-                            <div className="tab-overflow">
-                                <div className="sub-tab-nav">
-                                    <ul>
-                                        <NavLink to='/savings/choose-goal-plan'>
-                                            <li><a href="#">Goals</a></li>
-                                        </NavLink>
-                                        <NavLink to="/savings/goal/group-savings-selection">
-                                            <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                        </NavLink>
-                                        {/* <li><a href="#">Investments</a></li> */}
-                                    </ul>
-                                </div>
+
+                <div className="row checkSome">
+                    <div className="col-sm-12">
+                        <p className="page-title">Savings & Goals</p>
+                    </div>
+                    <div className="col-sm-12">
+                        <div className="tab-overflow">
+                            <div className="sub-tab-nav">
+                                <ul>
+                                    <NavLink to='/savings/choose-goal-plan'>
+                                        <li><a href="#">Goals</a></li>
+                                    </NavLink>
+                                    <NavLink to="/savings/goal/group-savings-selection">
+                                        <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
+                                    </NavLink>
+                                    {/* <li><a href="#">Investments</a></li> */}
+                                </ul>
                             </div>
                         </div>
-                        <div className="col-sm-12 groupHeading">
-                            <center>
-                                <h4>SELECT A GROUP SAVING PLAN</h4>
-                            </center>
-                        </div>
-                        <div className="Home-container">
-                            <div className="row selectionTray">
+                    </div>
+                    <div className="col-sm-12 groupHeading">
+                        <center>
+                            <h4>SELECT A GROUP SAVING PLAN</h4>
+                        </center>
+                    </div>
+                    
+                    <div className="row">
+                        <div className="row choosegoalwrap">
                                 <NavLink to="/savings/group/save-towards-a-target">
                                 <div className="fixed-goal">
                                     <img className="goal-icon" src={calender} alt=''/>
@@ -74,8 +76,8 @@ class GroupSavingsSelection extends React.Component {
                                 </NavLink>
                             </div>
                         </div>
-                    </div>
-                   
+                </div>
+
             </Fragment>
         );
     }

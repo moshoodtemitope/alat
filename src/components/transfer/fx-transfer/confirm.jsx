@@ -11,6 +11,7 @@ import {
 import AlatPinInput from '../../../shared/components/alatPinInput';
 import {sendMoneyTransfer} from "../../../redux/actions/transfer/cash-transfer.actions";
 
+import {numberWithCommas} from "../../../shared/utils";
 class ConFirmFxTransfer extends React.Component{
     constructor(props) {
         super(props);
@@ -32,6 +33,9 @@ class ConFirmFxTransfer extends React.Component{
         this.verifyTransferStage();
         
     }
+    formatAmount(amount) {
+        return amount.toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
 
     verifyTransferStage(){
         // console.log('charegs', this.props.transfer_charges);
@@ -136,7 +140,8 @@ class ConFirmFxTransfer extends React.Component{
                                                                     <div className="recipient-and-amount">
                                                                         <p className="recipient-name">
                                                                             <span className="recipientname">{this.state.accountData.AccountName}</span>
-                                                                            <span className="amount-to-send">{currency}{this.state.accountData.AmountToSend}</span>
+                                                                            <span className="amount-to-send">{currency}{
+                                                                            this.formatAmount(numberWithCommas(this.state.accountData.AmountToSend))}</span>
                                                                         </p>
                                                                         <div className="bank-info">
                                                                             <p className="bankname">{this.state.accountData.BankName}</p>

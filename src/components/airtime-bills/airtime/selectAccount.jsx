@@ -5,6 +5,8 @@ import { Select } from 'react-select';
 import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
 import AlatPinInput from '../../../shared/components/alatPinInput';
 import * as utils from '../../../shared/utils';
+import AmountInput from '../../../shared/components/amountInput';
+
 
 // Component to select account number to bill and accepts PIN
 //Component also displays bill and returns submit action to the calling component.
@@ -17,11 +19,17 @@ class SelectAcount extends React.Component {
             selectedAccount: "",
             isAccountInvalid: false,
             isSubmitted: false,
+            AmountInvalid: false,
+            Amount:"",
+            formattedValue:""
+
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleAlatPinChange = this.handleAlatPinChange.bind(this);
         this.handleSelectDebitableAccounts = this.handleSelectDebitableAccounts.bind(this);
+        this.handleAmount = this.handleAmount.bind(this);
+
     }
 
     handleAlatPinChange(pin) {
@@ -45,10 +53,24 @@ class SelectAcount extends React.Component {
             this.setState({ isPinInvalid: true })
             return true;}
     }
+    handleAmount = (e) => {
+        // console.log(this.intValue);
+        this.setState({ "Amount": e });
+        if (this.state.formsubmitted) {
+            if (e != "")
+                this.setState({ AmountInvalid: false });
+        }
+    }
 
     checkAccountNumber() {
         if (this.state.selectedAccount.length != 10) {
             this.setState({ isAccountInvalid: true })
+            return true;
+        }
+    }
+    checkAmount = () => {
+        if (this.state.Amount == "") {
+            this.setState({ AmountInvalid: true });
             return true;
         }
     }
@@ -61,11 +83,12 @@ class SelectAcount extends React.Component {
         }
         else {
             // alert("sucess");
-            this.props.submitAction({ TransactionPin: this.state.Pin, AccountNumber: this.state.selectedAccount });
+            this.props.submitAction({ TransactionPin: this.state.Pin, AccountNumber: this.state.selectedAccount, Amount: this.state.Amount, });
         }
     }
 
     render() {
+        const { formattedValue, Amount, AmountInvalid} =this.state
 
         return (
             <div className="col-sm-12">
@@ -95,6 +118,13 @@ class SelectAcount extends React.Component {
                                             accountInvalid={this.state.isAccountInvalid}
                                             onChange={this.handleSelectDebitableAccounts} 
                                             labelText={"Select an account to debit"}/>
+
+                                        <AmountInput
+                                            value={formattedValue}
+                                            onChange={this.handleAmount}
+                                            name="Amount"
+                                            intValue={Amount}
+                                            AmountInvalid={AmountInvalid} />
 
                                         <AlatPinInput
                                             value={this.state.Pin}

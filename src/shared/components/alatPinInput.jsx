@@ -21,7 +21,7 @@ class AlatPinInput extends React.Component {
             <Fragment>
                 <div className={this.props.PinInvalid ? "input-ctn form-error" : "input-ctn"}>
                      <label> {this.props.PinLabel? this.props.PinLabel:'Enter ALAT PIN'} </label>
-                    <input className="text-center" value={this.props.value} onChange={this.onChange.bind(this)} maxLength={this.props.maxLength} type="password" />
+                    <input className="text-center" autoComplete="off" value={this.props.value} onChange={this.onChange.bind(this)}  maxLength={this.props.maxLength} type="password" />
                     {this.props.PinInvalid &&
                                                 <div className="text-danger">Please supply your pin</div>
                                             }

@@ -90,7 +90,7 @@ class SelectDebitableAccounts extends React.Component {
     }
 
     handleSelectAccount = (e) => {
-       console.log("this is the value",e.value);
+    //    console.log("this is the value",e.value);
         this.props.onChange(e.value, e);
         this.setState({ debitAccount: e.value })
     }

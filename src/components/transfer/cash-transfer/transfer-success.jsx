@@ -10,6 +10,8 @@ import {
 import {
     PROCESS_TRANSFER_SUCCESS} from "../../../redux/constants/transfer.constants";
 
+    import {numberWithCommas} from "../../../shared/utils";
+
 class TransferSuccess extends React.Component{
     constructor(props) {
         super(props);
@@ -33,6 +35,9 @@ class TransferSuccess extends React.Component{
            }
         });
     }
+    formatAmount(amount) {
+        return amount.toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
     
     goToSaveBeneficiary(){
         // e.preventDefault();
@@ -69,7 +74,7 @@ class TransferSuccess extends React.Component{
         if(props.transfer_money.sendmoney_status && props.transfer_money.sendmoney_status !== PROCESS_TRANSFER_SUCCESS){
             transferData = {
                 AccountName : props.transfer_info.transfer_info_data.data.AccountName,
-                AmountSent: props.transfersender.transfer_info_data.data.AmountToSend
+                AmountSent:  props.transfersender.transfer_info_data.data.AmountToSend
             }
             this.setState({transferData: {...transferData}});
         }else{
@@ -106,7 +111,7 @@ class TransferSuccess extends React.Component{
 
                                                         <div className="m-t-20 width-400">
                                                             {/* <p className="m-b-40 f-s-16">You just transfered <span className="bold-text">₦232</span> to <span className="bold-text">dssdsds</span></p> */}
-                                                            <p className="m-b-40 f-s-16">You just transfered <span className="bold-text">₦{this.state.transferData.AmountSent}</span> to <span className="bold-text">{this.state.transferData.AccountName}</span></p>
+                                                <p className="m-b-40 f-s-16">You just transfered <span className="bold-text">₦{numberWithCommas(this.state.transferData.AmountSent)}</span> to <span className="bold-text">{this.state.transferData.AccountName}</span></p>
                                                             <div className="clearfix save-purchase">
                                                                 <p>Save this beneficiary</p>
                                                                 <div className="">

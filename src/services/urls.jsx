@@ -1,7 +1,7 @@
- const URL = 'https://api.alat.ng';
+//const URL = 'https://api.alat.ng';
 // const URL = 'https://196.43.215.172';
 // const URL = 'https://196.43.215.170';
-// const URL = 'http://196.43.215.157';
+const URL = 'http://196.43.215.157';
 
 const BASEURL = URL;    
 
@@ -9,6 +9,8 @@ export const routes = {
     BASEURL: BASEURL,
 
     //registration
+
+    
     SIGNUP_IMAGES: BASEURL + '/RegistrationApi',
     SIGNUP_PHONE: BASEURL + '/RegistrationApi/api/registration/SavePhoneNumber',
     BVN_VERIFICATION: BASEURL + '/RegistrationApi/api/registration/CallBvnService',
