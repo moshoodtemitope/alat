@@ -22,11 +22,11 @@ export const getWesternUnionCountries = (token)=>{
         dispatch(request(consume));
         let user_details = localStorage.getItem("user");
         let user = JSON.parse(user_details)
-        window.smartech('identify', user.email);
-        window.smartech('dispatch', 'ALAT_Receive_Money', {
-            "Email": user.email,
-            "mobile": user.phoneNo
-        });
+        // window.smartech('identify', user.email);
+        // window.smartech('dispatch', 'ALAT_Receive_Money', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo
+        // });
         return consume
             .then(response=>{
                 // dispatch(success(response));
@@ -93,11 +93,11 @@ export const receiveWUMoney = (payload, token)=>{
         let user = JSON.parse(user_details)
        
         dispatch(request(consume));
-        window.smartech('identify', user.email);
-        window.smartech('dispatch', 'ALAT_Receive_Money_Success', {
-            "Email": user.email,
-            "mobile": user.phoneNo
-        });
+        // window.smartech('identify', user.email);
+        // window.smartech('dispatch', 'ALAT_Receive_Money_Success', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo
+        // });
 
         return consume
             .then(response=>{

@@ -14,11 +14,11 @@ export const fundAlatWemaAccount =(token, data)=>{
         dispatch(request(consume));
         let user_details = localStorage.getItem("user");
         let user = JSON.parse(user_details)
-        window.smartech('identify', user.email);
-        window.smartech('dispatch', 'ALATfund_My_Account_Success', {
-            "Email": user.email,
-            "mobile": user.phoneNo
-        });
+        // window.smartech('identify', user.email);
+        // window.smartech('dispatch', 'ALATfund_My_Account_Success', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo
+        // });
 
         return consume
             .then(response => {
@@ -46,11 +46,11 @@ export const saveCardAfterTransaction =(token, data)=>{
         dispatch(request(consume));
         let user_details = localStorage.getItem("user");
         let user = JSON.parse(user_details)
-        window.smartech('identify', user.email);
-        window.smartech('dispatch', 'ALATFund_My_Account_View ', {
-            "Email": user.email,
-            "mobile": user.phoneNo
-        });
+        // window.smartech('identify', user.email);
+        // window.smartech('dispatch', 'ALATFund_My_Account_View ', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo
+        // });
 
         return consume
             .then(response => {
@@ -102,11 +102,11 @@ export const saveCard =(token, data)=>{
         dispatch(request(consume));
         let user_details = localStorage.getItem("user");
         let user = JSON.parse(user_details)
-        window.smartech('identify', user.email);
-        window.smartech('dispatch', 'ALATFund_My_Account_Initiate', {
-            "Email": user.email,
-            "mobile": user.phoneNo
-        });
+        // window.smartech('identify', user.email);
+        // window.smartech('dispatch', 'ALATFund_My_Account_Initiate', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo
+        // });
 
         return consume
             .then(response => {
@@ -130,11 +130,11 @@ export const fundCardDetails =(data)=>{
        dispatch(success(data));
         let user_details = localStorage.getItem("user");
         let user = JSON.parse(user_details)
-        window.smartech('identify', user.email);
-        window.smartech('dispatch', 'ALATFund_My_Account_View ', {
-            "Email": user.email,
-            "mobile": user.phoneNo
-        });
+        // window.smartech('identify', user.email);
+        // window.smartech('dispatch', 'ALATFund_My_Account_View ', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo
+        // });
 
     };
    // function request(request) { return { type: fundAccountConstants.SAVE_CARD_PENDING, request } }

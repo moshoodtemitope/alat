@@ -16,11 +16,11 @@ export const getAirtimeBeneficiaries = (token) => {
         dispatch(request(consume));
         let user_details = localStorage.getItem("user");
         let user = JSON.parse(user_details)
-        window.smartech('identify', user.email);
-        window.smartech('dispatch', 'ALAT_Airtime_View', {
-            "Email": user.email,
-            "mobile": user.phoneNo
-        });
+        //window.smartech('identify', user.email);
+        // window.smartech('dispatch', 'ALAT_Airtime_View', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo
+        // });
         return consume
             .then(response => {
                 //TODO: edit localDB accounts object
@@ -127,12 +127,12 @@ export const airtimeWebPinpayment =(token, data) =>{
         dispatch(request(data));
         let user_details = localStorage.getItem("user");
         let user = JSON.parse(user_details)
-        window.smartech('identify', user.email);
-        window.smartech('dispatch', 'ALAT_Airtime_Initiate', {
-            "Email": user.email,
-            "mobile": user.phoneNo,
-            "airtimetype": user.phoneNo,
-        });
+        // window.smartech('identify', user.email);
+        // window.smartech('dispatch', 'ALAT_Airtime_Initiate', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo,
+        //     "airtimetype": user.phoneNo,
+        // });
         return consume
             .then(response => {
                 //TODO: edit localDB accounts object
@@ -163,12 +163,12 @@ export const airtimeWebPinOTPpayment =(token, data) =>{
         dispatch(request(consume));
         let user_details = localStorage.getItem("user");
         let user = JSON.parse(user_details)
-        window.smartech('identify', user.email);
-        window.smartech('dispatch', 'ALAT_Airtime_Success', {
-            "Email": user.email,
-            "mobile": user.phoneNo,
-            "airtimetype": user.phoneNo
-        });
+        // window.smartech('identify', user.email);
+        // window.smartech('dispatch', 'ALAT_Airtime_Success', {
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo,
+        //     "airtimetype": user.phoneNo
+        // });
         return consume
             .then(response => {
                 //TODO: edit localDB accounts object
@@ -182,12 +182,12 @@ export const airtimeWebPinOTPpayment =(token, data) =>{
                 dispatch(failure(modelStateErrorHandler(error)));
                 let user_details = localStorage.getItem("user");
                 let user = JSON.parse(user_details)
-                window.smartech('identify', user.email);
-                window.smartech('dispatch', 'ALAT_Airtime_Failure', {
-                    "Email": user.email,
-                    "mobile": user.phoneNo,
-                    "airtimetype": user.phoneNo,
-                });
+                // window.smartech('identify', user.email);
+                // window.smartech('dispatch', 'ALAT_Airtime_Failure', {
+                //     "Email": user.email,
+                //     "mobile": user.phoneNo,
+                //     "airtimetype": user.phoneNo,
+                // });
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
                
                 // throw(error);
