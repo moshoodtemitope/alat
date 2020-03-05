@@ -145,7 +145,7 @@ class OfflineLoans extends React.Component {
                 return(
                     <div>
                         <h3 className="headingtext text-center">{getCustomerData.offlineloan_data.error}</h3>
-                        <div className="text-center"><span className="error-msg" onClick={this.offlineLoanGetCustomerData}>Try again</span></div>
+                        <div className="text-center"><span className="error-msg withborder" onClick={this.offlineLoanGetCustomerData}>Try again</span></div>
                     </div>
                 )
             }else if(getCustomerData.offlineloan_data.error==="It seems you have applied before!"){

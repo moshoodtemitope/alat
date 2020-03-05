@@ -155,7 +155,7 @@ body{
         border-color: #AB2656!important;
     }
 }
-.error-msg{
+.error-msg.withborder {
     text-decoration: underline;
     &:hover{
         cursor: pointer;

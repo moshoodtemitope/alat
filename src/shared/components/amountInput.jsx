@@ -18,8 +18,10 @@ class AmountInput extends React.Component {
         var intVal = event.target.value.replace(/,/g, '');
         let testSequence = /^[0-9.,]+$/;
         if(testSequence.test(event.target.value)){
-            if(/^\d+(\.\d+)?$/g.test(intVal)) {
-
+            console.log("option9",intVal);
+            // if (/^\d+(\.\d+)?$/g.test(intVal)) {
+            if (/^\d*(?:\.\d{1,2})/g.test(intVal)) {
+                console.log("option1");
                 if(this.props.onChange){
                     this.props.onChange(event.target.value);
                         this.setState({
@@ -37,12 +39,14 @@ class AmountInput extends React.Component {
                 }
             }
             else if (intVal == '') {
+                console.log("option2");
                 this.setState({
                     formartedValue: '',
                     intValue: ''
                 })
             }
             else {
+                console.log("option3");
                 this.setState({
                     formartedValue: null,
                     intValue: null,
@@ -50,7 +54,7 @@ class AmountInput extends React.Component {
                 })
             }
         }else{
-           
+           console.log("option9",intVal);
             this.setState({
                 formartedValue: "",
                 intValue: "",
