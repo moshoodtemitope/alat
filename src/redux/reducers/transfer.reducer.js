@@ -17,6 +17,7 @@ import {
     SENDBANK_TRANSFER_PENDING, 
     SENDBANK_TRANSFER_SUCCESS, 
     SENDBANK_TRANSFER_FAILURE,
+    SENDBANK_TRANSFER_RESET, 
     PROCESS_TRANSFER_PENDING, 
     PROCESS_TRANSFER_SUCCESS, 
     PROCESS_TRANSFER_FAILURE,
@@ -204,12 +205,18 @@ export function sendMoneyTransferRequest(state=[], action) {
             return {
                 sendmoney_status: SENDBANK_TRANSFER_SUCCESS,
                 sendmoney_status_data: action,
-                fetchStatus: true
+                fetchStatus: false
             };
         case SENDBANK_TRANSFER_FAILURE:
             return {
                 sendmoney_status: SENDBANK_TRANSFER_FAILURE,
                 sendmoney_status_data: action,
+                fetchStatus: false
+            };
+        case SENDBANK_TRANSFER_RESET:
+            return {
+                sendmoney_status: SENDBANK_TRANSFER_RESET,
+                sendmoney_status_data: {},
                 fetchStatus: false
             };
 

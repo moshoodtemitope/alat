@@ -189,7 +189,7 @@ class HeaderContainer extends React.Component{
         if((history.location.pathname.indexOf('i-msg')===-1)){
             this.getProfileImage();
             this.getNDPRStatus();
-            this.getCMDMPriority();
+            // this.getCMDMPriority();
         }
         // console.log('name is dssd');
     }
@@ -844,7 +844,7 @@ class HeaderContainer extends React.Component{
                 {(history.location.pathname.indexOf('i-msg')===-1) &&
                     <Fragment>
                     {/* {history.location.pathname==='/home' && this.showCMDMPriorityMessage()} */}
-                    {this.state.openCYDMModal && this.collectPriorityInformaton()} 
+                    {/* {this.state.openCYDMModal && this.collectPriorityInformaton()}  */}
                     <div className="db2-fixed-header">
                         <div className="container">
                             <div className="row">

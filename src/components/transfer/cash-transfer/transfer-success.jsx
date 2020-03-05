@@ -10,6 +10,8 @@ import {
 import {
     PROCESS_TRANSFER_SUCCESS} from "../../../redux/constants/transfer.constants";
 
+    import {numberWithCommas} from "../../../shared/utils";
+
 class TransferSuccess extends React.Component{
     constructor(props) {
         super(props);
@@ -109,7 +111,7 @@ class TransferSuccess extends React.Component{
 
                                                         <div className="m-t-20 width-400">
                                                             {/* <p className="m-b-40 f-s-16">You just transfered <span className="bold-text">₦232</span> to <span className="bold-text">dssdsds</span></p> */}
-                                                <p className="m-b-40 f-s-16">You just transfered <span className="bold-text">₦{this.state.transferData.AmountSent}</span> to <span className="bold-text">{this.state.transferData.AccountName}</span></p>
+                                                <p className="m-b-40 f-s-16">You just transfered <span className="bold-text">₦{numberWithCommas(this.state.transferData.AmountSent)}</span> to <span className="bold-text">{this.state.transferData.AccountName}</span></p>
                                                             <div className="clearfix save-purchase">
                                                                 <p>Save this beneficiary</p>
                                                                 <div className="">

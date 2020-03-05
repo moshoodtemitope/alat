@@ -24,6 +24,9 @@
   cursor: not-allowed;
 }
 .forgotpw-link{
+  &.error-msg{
+    font-size: 12px;
+  }
   &:hover{
     cursor: pointer;
     text-decoration: underline;

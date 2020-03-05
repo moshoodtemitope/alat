@@ -445,7 +445,7 @@ class LoansDashboard extends React.Component {
                                     
                                 </Fragment>
                             }
-                            {(currentLoan ==null && this.state.pendingLoanApplication == null) && 
+                            {(currentLoan ==null && this.state.pendingLoanApplication == null && this.returnCurrentLoanPendingStatus() !== loanConstants.LOAN_CURRENT_PENDING) && 
                             <Fragment>
                                 <input type="button" value="Apply For Loan" onClick={() => this.props.history.push("/loans/salary/calc")}
                                         className="btn-alat "  />
