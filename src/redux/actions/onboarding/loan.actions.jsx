@@ -73,7 +73,7 @@ export const enableStatementUpload = (token)=>{
                 //TODO: edit localDB accounts object
                 //dispatch(success(response.data, data));
                 dispatch(success(response.data));
-                history.push("/loan/statement-upload");
+                history.push("/loans/salary/statement-upload");
             })
             .catch(error => {
                 // console.log("error in here");

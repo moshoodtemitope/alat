@@ -117,6 +117,11 @@ class SalaryEntry extends React.Component {
         this.props.gotoDashBoard();
     }
 
+    goToUploadStatement = ()=>{
+        this.props.dispatch(actions.enableStatementUpload(this.state.user.token));
+        
+    }
+
     //Modal Methods ends
 
 
@@ -184,22 +189,28 @@ class SalaryEntry extends React.Component {
                             }
 
                             
-                            {this.props.alert && this.props.alert.message && this.props.salary_trans.loan_salTran_status === loanOnboardingConstants.LOAN_SALARYTRANSACTION_FAILURE &&
+                            {this.props.alert && (this.props.alert.message || this.props.alert.Message) && this.props.salary_trans.loan_salTran_status === loanOnboardingConstants.LOAN_SALARYTRANSACTION_FAILURE &&
                                     <div className="al-card no-pad">
                                         <div className="transfer-ctn text-center">
-                                            <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                                            <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message || this.props.alert.Message}</div>
                                             {
                                                ( this.props.alert.message !=="Your loan application was rejected. Please check your email for reasons."
                                                && this.props.alert.message.indexOf('PROCEED')===-1) &&
                                             
-                                                <div className="row">
-                                                    <div className="col-sm-12">
-                                                        <center>
-                                                            <button type="button" onClick={this.init}
-                                                                className="btn-alat m-t-20  text-center">Try again</button>
-                                                        </center>
-                                                    </div>
-                                                </div>
+                                                // <div className="row">
+                                                //     <div className="col-sm-12">
+                                                        <div className="btn-opt text-center w-50">
+
+
+                                                            <button onClick={this.SubmitModal} disabled={this.props.enableStatementUpload.is_processing} className="border-btn">Decline</button>
+
+
+                                                            <button
+                                                                onClick={this.goToUploadStatement} disabled={this.props.enableStatementUpload.is_processing}
+                                                                className="btn-alat">{this.props.enableStatementUpload.is_processing ? "Please wait..." : "Proceed"}</button>
+                                                        </div>
+                                                       
+                                                    
                                             }
                                         </div>
                                    </div>
@@ -253,7 +264,7 @@ class SalaryEntry extends React.Component {
 function mapStateToProps(state) {
     return {
         alert: state.alert,
-
+        enableStatementUpload: state.loanReducerPile.enableStatementUpload,
         loan_bvn: state.loanOnboardingReducerPile.loanOnboardingBVN,
         loan_step3: state.loanOnboardingReducerPile.loanOnboardingStep3,
         //bankList: state.transferReducerPile.transfer_bankList,
