@@ -372,17 +372,18 @@ function sendOtpOrTokenForPinReset(payload, token){
         }
 
         // let consume = ApiService.request(routes.VERIFYRESETOTP, "POST", payload,  SystemConstant.HEADER);
-        let user_details = localStorage.getItem("user");
-        let user = JSON.parse(user_details)
-        dispatch(request(consume));
-        window.smartech('identify', user.email);
-        window.smartech('dispatch', 'alat_otp_verified',{
-            "Email": user.email,
-            "mobile": user.phoneNo
-        });
+        // let user_details = localStorage.getItem("user");
+        // let user = JSON.parse(user_details)
+        // dispatch(request(consume));
+        // window.smartech('identify', user.email);
+        // window.smartech('dispatch', 'alat_otp_verified',{
+        //     "Email": user.email,
+        //     "mobile": user.phoneNo
+        // });
 
         return consume
             .then(response =>{
+                console.log("----+++");
                 dispatch(success(response));
             }).catch(error =>{
                 dispatch(failure(modelStateErrorHandler(error)));
