@@ -6,6 +6,8 @@ import SelectDebitableAccounts from '../../../shared/components/selectDebitableA
 import AlatPinInput from '../../../shared/components/alatPinInput';
 import * as utils from '../../../shared/utils';
 import AmountInput from '../../../shared/components/amountInput';
+import { numberWithCommas } from '../../../shared/utils';
+
 
 
 // Component to select account number to bill and accepts PIN
@@ -20,8 +22,8 @@ class SelectAcount extends React.Component {
             isAccountInvalid: false,
             isSubmitted: false,
             AmountInvalid: false,
-            Amount:"",
-            formattedValue:""
+            Amount: "",
+            formattedValue: ""
 
         };
 
@@ -36,26 +38,27 @@ class SelectAcount extends React.Component {
         this.setState({ Pin: pin })
         if (this.state.isSubmitted) {
             if (pin.length != 4)
-           this.setState({isPinInvalid : false})
+                this.setState({ isPinInvalid: false })
         }
     }
 
     handleSelectDebitableAccounts(account) {
         this.setState({ selectedAccount: account })
-        if (this.state.isSubmitted) { 
-            if(account.length == 10)
-            this.setState({ isAccountInvalid: false })
-         }
+        if (this.state.isSubmitted) {
+            if (account.length == 10)
+                this.setState({ isAccountInvalid: false })
+        }
     }
 
     checkPin() {
         if (this.state.Pin.length != 4) {
             this.setState({ isPinInvalid: true })
-            return true;}
+            return true;
+        }
     }
     handleAmount = (e) => {
         // console.log(this.intValue);
-        this.setState({ "Amount": e });
+        this.setState({ "Amount": e.target.value });
         if (this.state.formsubmitted) {
             if (e != "")
                 this.setState({ AmountInvalid: false });
@@ -88,7 +91,7 @@ class SelectAcount extends React.Component {
     }
 
     render() {
-        const { formattedValue, Amount, AmountInvalid} =this.state
+        const { formattedValue, Amount, AmountInvalid } = this.state
 
         return (
             <div className="col-sm-12">
@@ -116,15 +119,25 @@ class SelectAcount extends React.Component {
                                             value={this.state.accountNumber}
                                             currency="NGN"
                                             accountInvalid={this.state.isAccountInvalid}
-                                            onChange={this.handleSelectDebitableAccounts} 
-                                            labelText={"Select an account to debit"}/>
+                                            onChange={this.handleSelectDebitableAccounts}
+                                            labelText={"Select an account to debit"} />
 
-                                        <AmountInput
+                                        {/* <AmountInput
                                             value={formattedValue}
                                             onChange={this.handleAmount}
                                             name="Amount"
                                             intValue={Amount}
-                                            AmountInvalid={AmountInvalid} />
+                                            AmountInvalid={AmountInvalid} /> */}
+                                        <div className="inputctn-wrap">                                  <label htmlFor="Amount">Amount</label>
+                                            <input type="text"
+                                                onChange={this.handleAmount}
+                                                onKeyUp={this.handleAmount}
+                                                autoComplete="off" name="Amount" value={numberWithCommas(Amount)} />
+                                            {AmountInvalid &&
+                                                <span className="limit-text">Enter a Valid Amount</span>
+                                            }
+                                        </div>
+
 
                                         <AlatPinInput
                                             value={this.state.Pin}
