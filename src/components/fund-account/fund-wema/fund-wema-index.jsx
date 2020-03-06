@@ -6,6 +6,8 @@ import AmountInput from '../../../shared/components/amountInput';
 import * as actions from '../../../redux/actions/fund-account/fund-acount.action';
 import { fundAccountConstants } from '../../../redux/constants/fund-account/fund-account.constant';
 import { alertActions } from '../../../redux/actions/alert.actions';
+import { numberWithCommas } from "../../../shared/utils";
+
 
 class FundWemaIndex extends React.Component {
     constructor(props) {
@@ -57,10 +59,11 @@ class FundWemaIndex extends React.Component {
         }
     };
 
-    handleAmount = (amount) => {
-        this.setState({ "Amount": amount });
+    handleAmount = (e) => {
+        console.log("======",e.target.value)
+        this.setState({ "Amount": e.target.value });
         if (this.state.isSubmit) {
-            if (amount != "")
+            if (e.target.value != "")
                 this.setState({ AmountInvalid: false });
         }
     };
@@ -98,6 +101,7 @@ class FundWemaIndex extends React.Component {
     }
 
     render() {
+        const { AmountInvalid, Amount} =this.state
         if (this.props.fundwema.fund_account_status === fundAccountConstants.FUND_ALAT_WEMA_SUCCESS)
             this.props.history.push("/fund/wema/success")
         return (
@@ -126,13 +130,26 @@ class FundWemaIndex extends React.Component {
                         <label>Amount</label>
                         <input type="tel" />
                     </div> */}
-                    <AmountInput
+                    {/* <AmountInput
                         value={this.state.formattedValue}
                         name="amount"
                         intValue={this.state.Amount}
                         onChange={this.handleAmount}
                         AmountInvalid={this.state.AmountInvalid}
-                    />
+                    /> */}
+                        <div className="inputctn-wrap">
+                            <label htmlFor="Amount">Amount</label>
+
+                            <input type="text"
+                                onChange={this.handleAmount}
+                                onKeyUp={this.handleAmount}
+                                autoComplete="off" name="amount" value={numberWithCommas(Amount)} />
+                            {AmountInvalid &&
+                                <span className="limit-text">Enter a valid Amount</span>
+                            }
+
+                        </div>
+
 
                     <div className="row">
                         <div className="col-sm-12">

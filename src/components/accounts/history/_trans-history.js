@@ -31,7 +31,7 @@ const transactionHistory = (props) => {
             {createheader()}
             <div className="text-center m-t-50">
                 <span style={{ fontSize: 50, color: "#ccc", marginLeft: -10 }} className="fa fa-history m-b-20"></span>
-                <p style={{ fontWeight: 600 }}>{props.accountsLoaded ? "Loading... If Available your transactions will displayed here." : "Loading all accounts..."}</p>
+                <p style={{ fontWeight: 600 }}>{props.accountsLoaded ? "No Transaction  data found." : "Loading all accounts..."}</p>
             </div>
         </div>
     );
