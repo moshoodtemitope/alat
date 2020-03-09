@@ -196,13 +196,13 @@ function sendForgotPwEmail(payload){
     return dispatch =>{
         let consume = ApiService.request(routes.EMAIL_FOR_FORGETPASSWORD, "POST", payload,  SystemConstant.HEADER);
         dispatch(request(consume));
-        let user_details = localStorage.getItem("user");
-        let user = JSON.parse(user_details)
-        window.smartech('identify', user.email);
-        window.smartech('dispatch', 'alat_onboarding_emailpwd_Success', {
-            "Email":user.email,
-            "mobile": user.email
-        });
+        // let user_details = localStorage.getItem("user");
+        // let user = JSON.parse(user_details)
+        // window.smartech('identify', user.email);
+        // window.smartech('dispatch', 'alat_onboarding_emailpwd_Success', {
+        //     "Email":user.email,
+        //     "mobile": user.email
+        // });
         return consume
             .then(response =>{
                 dispatch(success(response));
@@ -646,13 +646,7 @@ function bvnVerify (bvnDetails){
         //   };
         let consume = ApiService.request(routes.BVN_VERIFICATION, "POST", bvnDetails);
         dispatch(request(consume));
-        let user_details = localStorage.getItem("user");
-        let user = JSON.parse(user_details)
-        window.smartech('identify', user.email);
-        window.smartech('dispatch', 'alat_bvn_verified', {
-            "Email": user.email,
-            "mobile": user.phoneNo
-        });
+        
         return consume
             .then(response => {
                 dispatch(success(response.data));
