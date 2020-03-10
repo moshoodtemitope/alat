@@ -60,7 +60,6 @@ class FundWemaIndex extends React.Component {
     };
 
     handleAmount = (e) => {
-        console.log("======",e.target.value)
         this.setState({ "Amount": e.target.value });
         if (this.state.isSubmit) {
             if (e.target.value != "")
