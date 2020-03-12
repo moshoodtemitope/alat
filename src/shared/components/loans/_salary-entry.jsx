@@ -34,7 +34,9 @@ class SalaryEntry extends React.Component {
 
     init = () => {
         if (this.props.loan_reqStat) {
-            if (this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS) { this.props.dispatch(actions.salaryTransaction(this.state.user.token)); }
+            if (this.props.loan_reqStat.loan_reqStat_status == loanOnboardingConstants.LOAN_REQUEST_STATEMENT_SUCCESS) { 
+                this.props.dispatch(actions.salaryTransaction(this.state.user.token)); 
+            }
         }
         else{}
             // if (this.props.loan_status) {
@@ -45,7 +47,7 @@ class SalaryEntry extends React.Component {
             // else { 
             //     this.props.dispatch(actions.salaryTransaction(this.state.user.token)); 
             // }
-        this.props.dispatch(actions.salaryTransaction(this.state.user.token));
+        // this.props.dispatch(actions.salaryTransaction(this.state.user.token));
         // if(this.props.user_detail.loan_userdetails_data)
         // this.setState({ FirstName :this.props.user_detail.loan_userdetails_data.data.FirstName }); 
     }

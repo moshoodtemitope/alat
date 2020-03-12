@@ -9,6 +9,8 @@ import Modal from 'react-responsive-modal';
 import {alertActions} from "../../../redux/actions/alert.actions";
 import { formatAmountNoDecimal, formatAmount } from '../../../shared/utils';
 import { connect } from 'react-redux';
+import { numberWithCommas } from "../../../shared/utils";
+
 
 import * as actions from '../../../redux/actions/dataActions/export';
 
@@ -192,7 +194,7 @@ class ConfirmData extends Component {
                                                     <div class="trans-summary-card">
                                                         <div class="name-amount clearfix">
                                                             <p class="pl-name-email">{this.props.network} Data Plan<span>{this.props.dataInfo.PaymentItem}</span></p>
-                                                            <p class="pl-amount">₦{formatAmountNoDecimal(this.props.dataInfo.Amount)}</p>
+                                                            <p class="pl-amount">₦{numberWithCommas(this.props.dataInfo.Amount)}</p>
                                                         </div>
                                                     </div>
                                                 </div>

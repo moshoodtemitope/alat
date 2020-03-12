@@ -6,7 +6,7 @@ import AmountInput from '../../../shared/components/amountInput';
 import * as actions from '../../../redux/actions/fund-account/fund-acount.action';
 import { fundAccountConstants } from '../../../redux/constants/fund-account/fund-account.constant';
 import { alertActions } from '../../../redux/actions/alert.actions';
-import { numberWithCommas } from "../../../shared/utils";
+import { numberWithCommas } from '../../../shared/utils';
 
 
 class FundWemaIndex extends React.Component {
@@ -80,7 +80,7 @@ class FundWemaIndex extends React.Component {
         if (this.validateAccountNumber(this.state.accountToDebit, "accountToDebitInValid") ||
             this.validateAccountNumber(this.state.accountToCredit, "accountToCreditInValid") ||
             this.validateAmount(this.state.Amount)) {
-                //not valid
+            //not valid
         }
         else {
             if (this.state.accountToDebit === this.state.accountToCredit) {
@@ -100,36 +100,37 @@ class FundWemaIndex extends React.Component {
     }
 
     render() {
-        const { AmountInvalid, Amount} =this.state
+
+        const {AmountInvalid, Amount} =this.state
         if (this.props.fundwema.fund_account_status === fundAccountConstants.FUND_ALAT_WEMA_SUCCESS)
             this.props.history.push("/fund/wema/success")
         return (
             <div className="al-card no-pad">
-            <h4 className="m-b-10 center-text hd-underline">Fund Account</h4>
+                <h4 className="m-b-10 center-text hd-underline">Fund Account</h4>
 
-            <div className="transfer-ctn">
-                <form onSubmit={this.handleSubmit}>
-                    {this.props.alert && this.props.alert.message &&
-                        <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
-                    }
-                    <SelectDebitableAccounts
-                        labelText={"Transfer from"}
-                        value={this.state.accountObj1}
-                        accountInvalid={this.state.accountToDebitInValid}
-                        onChange={this.handleDebit}
-                    />
+                <div className="transfer-ctn">
+                    <form onSubmit={this.handleSubmit}>
+                        {this.props.alert && this.props.alert.message &&
+                            <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                        }
+                        <SelectDebitableAccounts
+                            labelText={"Transfer from"}
+                            value={this.state.accountObj1}
+                            accountInvalid={this.state.accountToDebitInValid}
+                            onChange={this.handleDebit}
+                        />
 
-                    <SelectDebitableAccounts
-                        value={this.state.accountObj2}
-                        accountInvalid={this.state.accountToCreditInValid}
-                        onChange={this.handleCredit}
-                        labelText={"Transfer to"} />
+                        <SelectDebitableAccounts
+                            value={this.state.accountObj2}
+                            accountInvalid={this.state.accountToCreditInValid}
+                            onChange={this.handleCredit}
+                            labelText={"Transfer to"} />
 
-                    {/* <div className="input-ctn">
+                        {/* <div className="input-ctn">
                         <label>Amount</label>
                         <input type="tel" />
                     </div> */}
-                    {/* <AmountInput
+                        {/* <AmountInput
                         value={this.state.formattedValue}
                         name="amount"
                         intValue={this.state.Amount}
@@ -144,24 +145,32 @@ class FundWemaIndex extends React.Component {
                                 onKeyUp={this.handleAmount}
                                 autoComplete="off" name="amount" value={numberWithCommas(Amount)} />
                             {AmountInvalid &&
-                                <span className="limit-text">Enter a valid Amount</span>
+                                <span className="limit-text">Enter a Valid Amount</span>
                             }
 
+                            {/* <AmountInput 
+                                                    value={formattedValue} 
+                                                    intValue={AmountToSend}  name="Amount" onKeyUp={this.handleAmount}  onChange={this.handleAmount}/>
+                                                            {isMorthanLimit===true &&
+                                                                <span className="limit-text">{this.state.amountError}</span>
+                                                            } */}
+
+
                         </div>
 
 
-                    <div className="row">
-                        <div className="col-sm-12">
-                            <center>
-                                <button type="submit" value="Fund Account" className="btn-alat m-t-10 m-b-20 text-center">
-                                    {this.props.fundwema.fund_account_status === fundAccountConstants.FUND_ALAT_WEMA_PENDING ? "Processing..." : "Fund Account"}
-                                </button>
-                            </center>
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <center>
+                                    <button type="submit" value="Fund Account" className="btn-alat m-t-10 m-b-20 text-center">
+                                        {this.props.fundwema.fund_account_status === fundAccountConstants.FUND_ALAT_WEMA_PENDING ? "Processing..." : "Fund Account"}
+                                    </button>
+                                </center>
+                            </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-        </div>)
+                    </form>
+                </div>
+            </div>)
     }
 }
 

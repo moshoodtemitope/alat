@@ -10,6 +10,8 @@ import * as actions from '../../../redux/actions/savings/goal/fixed-goal.actions
 import "react-datepicker/dist/react-datepicker.css";
 import * as util from '../../../shared/utils'
 import moment from 'moment';
+import { numberWithCommas } from "../../../shared/utils";
+
 
 
 const selectedTime = [
@@ -123,11 +125,10 @@ checkgoalFrequency = () => {
 handleAmount = (e) => {
 
         // console.log
-        var intVal = e.target.value.replace(/,/g, '');
-    console.log("========",intVal)
-        if (/^\d+(\.\d+)?$/g.test(intVal)) {
+        var intVal = e.target.value;
+    if (intVal) {
             // if (parseInt(intVal, 10) <= 2000000) {
-            this.setState({ targetAmount: intVal, targetAmount: this.toCurrency(intVal) },
+        this.setState({ targetAmount: intVal, targetAmount: intVal},
                 () => {
                     // console.log("=====", intVal)
                     this.setFregValue();
@@ -426,7 +427,7 @@ render() {
                                                     name="targetAmount"
                                                     onChange={this.handleAmount}
                                                     placeholder="E.g. ₦100,000"
-                                                    value={this.state.targetAmount}
+                                                    value={numberWithCommas(this.state.targetAmount)}
 
 
                                                 />

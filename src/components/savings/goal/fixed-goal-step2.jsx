@@ -9,6 +9,8 @@ import SelectDebitableAccounts from '../../../shared/components/selectDebitableA
 import moment from 'moment';
 import * as util from '../../../shared/utils'
 import "react-datepicker/dist/react-datepicker.css";
+import { numberWithCommas } from "../../../shared/utils";
+
 const selectedTime = [
 
     { "id": 3, value: 'monthly', label: "Monthly" },
@@ -253,7 +255,7 @@ class FixedGoal extends React.Component {
                                                 <div className="form-group col-md-6">
                                                     <label className="label-text">You will have to save</label>
                                                     <input type="text" style={{ height: '50px'}}
-                                                        value={this.state.showInterest}
+                                                        value={numberWithCommas(this.state.showInterest)}
                                                         onKeyUp={this.showInfo}
                                                         onChange={this.handleChange}
                                                         placeholder="E.g. ₦100,000" />

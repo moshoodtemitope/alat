@@ -12,14 +12,11 @@ class AmountInput extends React.Component {
             formartedValue: "",
         };
     }
-
-
     onChange(event) {
         var intVal = event.target.value.replace(/,/g, '');
         let testSequence = /^[0-9.,]+$/;
         if(testSequence.test(event.target.value)){
             if(/^\d+(\.\d+)?$/g.test(intVal)) {
-
                 if(this.props.onChange){
                     this.props.onChange(event.target.value);
                         this.setState({
@@ -58,7 +55,6 @@ class AmountInput extends React.Component {
             })
         }
     }
-
     toCurrency(number) {
         // console.log(number);
         const formatter = new Intl.NumberFormat('en-US', {
@@ -66,14 +62,11 @@ class AmountInput extends React.Component {
             currency: "NGN",
             maximumFractionDigits:2
         });
-
         return formatter.format(number);
     }
-
     toggleEditing() {
         this.setState({ isEditing: !this.state.isEditing });
     }
-
     render() {
         return (
             <div className={this.props.AmountInvalid ? "input-ctn form-error" : "input-ctn"}>
@@ -83,7 +76,7 @@ class AmountInput extends React.Component {
                 {!(this.props.label) &&
                     <label htmlFor={this.props.name}>Amount</label>
                 }
-                {this.props.onChange && 
+                {this.props.onChange &&
                     <input
                         type="text"
                         autoComplete="off"
@@ -93,8 +86,7 @@ class AmountInput extends React.Component {
                         onChange={this.onChange.bind(this)}
                     />
                 }
-
-                {!(this.props.onChange) && 
+                {!(this.props.onChange) &&
                     <input
                         type="text"
                         autoComplete="off"
@@ -103,7 +95,6 @@ class AmountInput extends React.Component {
                         onKeyUp={this.onChange.bind(this)}
                     />
                 }
-
                 {this.props.AmountInvalid &&
                                                 <div className="text-danger">Please supply an amount</div>
                                             }
@@ -111,7 +102,6 @@ class AmountInput extends React.Component {
         );
     }
 }
-
 AmountInput.propTypes = {
     name: PropTypes.string,
     value: PropTypes.string,
@@ -120,5 +110,6 @@ AmountInput.propTypes = {
     intValue: PropTypes.string,
     AmountInvalid: PropTypes.bool
 };
-
 export default AmountInput;
+
+

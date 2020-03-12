@@ -8,6 +8,9 @@ import * as actions from "../../../redux/actions/savings/goal/get-customer-trans
 import * as util from "../../../shared/utils";
 import { DebitableAccount } from '../../../redux/actions/lifestyle/movies-actions';
 import { listStyleConstants } from '../../../redux/constants/lifestyle/lifestyle-constants';
+import { numberWithCommas } from "../../../shared/utils";
+
+
 
 
 
@@ -153,10 +156,10 @@ class TopUPGoal extends Component {
 
     handleAmount = (event) => {
         // console.log
-        let intVal = event.target.value.replace(/,/g, '');
-        if (/^\d+(\.\d+)?$/g.test(intVal)) {
+        let intVal = event.target.value;
+        if (intVal) {
             // if (parseInt(intVal, 10) <= 2000000) {
-            this.setState({ Amount: intVal, Amount: this.toCurrency(intVal) },
+            this.setState({ Amount: intVal, Amount:intVal },
                 () => {
                     this.setFregValue();
                     if (parseInt(intVal) > parseInt(999999999)) {
@@ -293,7 +296,7 @@ class TopUPGoal extends Component {
                                                 name="Amount"
                                                 onChange={this.handleAmount}
                                                 placeholder="E.g. ₦100,000"
-                                                value={this.state.Amount}
+                                                value={numberWithCommas(this.state.Amount)}
                                             />
                                             {AmountInvalid &&
                                                 <div className="text-danger">Enter the amount you want to save</div>}

@@ -8,6 +8,8 @@ import DatePicker from "react-datepicker";
 import {flexGoalConstants} from '../../../redux/constants/goal/flex-goal.constant'
 import * as actions from '../../../redux/actions/savings/goal/flex-goal.actions'
 import "react-datepicker/dist/react-datepicker.css";
+import { numberWithCommas } from "../../../shared/utils";
+
 
 
 
@@ -109,10 +111,10 @@ class FlexGoal extends React.Component {
 
     handleAmount = (e) => {
         // console.log
-        var intVal = e.target.value.replace(/,/g, '');
-        if (/^\d+(\.\d+)?$/g.test(intVal)) {
+        var intVal = e.target.value;
+        if (intVal) {
             // if (parseInt(intVal, 10) <= 2000000) {
-            this.setState({ targetAmount: intVal, targetAmount: this.toCurrency(intVal) },
+            this.setState({ targetAmount: intVal, targetAmount: intVal },
                 () => {
                 this.calculationForTotalAmount();
                     this.calculateInterestRate();
@@ -446,7 +448,7 @@ class FlexGoal extends React.Component {
                                                                 name="targetAmount"
                                                                 onChange={this.handleAmount}
                                                                 placeholder="E.g. ₦100,000"
-                                                                value={this.state.targetAmount}
+                                                                value={numberWithCommas(this.state.targetAmount)}
 
 
                                                             />

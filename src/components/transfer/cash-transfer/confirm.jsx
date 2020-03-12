@@ -228,7 +228,6 @@ class ConFirmTransfer extends React.Component {
                                                 <center>
                                                     <button className="btn-alat m-t-10 m-b-20 text-center" onClick={(e) => {
                                                         e.preventDefault();
-                                                        this.props.dispatch(clearTransferStore());
                                                         this.props.history.push("/transfer/provide-details");
                                                     }} >back</button>
 

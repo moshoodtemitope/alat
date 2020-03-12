@@ -357,11 +357,15 @@ class ResetCustomerPin extends React.Component{
             <OnboardingContainer>
                 <div>
                     {send_answerforpinreset.fetch_status!==SEND_ANSWER_FORPINRESET_SUCCESS && this.renderSecurityQuestion()}
+
                     {(send_answerforpinreset.is_processing===false && 
                       send_answerforpinreset.fetch_status===SEND_ANSWER_FORPINRESET_SUCCESS &&
+
                       send_otportokenforpinreset.fetch_status!==SEND_OTP_OR_TOKEN_FORPINRESET_SUCCESS) && 
                         this.renderOTPToken(send_answerforpinreset.otpinfo_data.response.data.validatedWithWemaMobileToken)
                     }
+
+                    
                     {(send_otportokenforpinreset.is_processing===false && send_otportokenforpinreset.fetch_status===SEND_OTP_OR_TOKEN_FORPINRESET_SUCCESS ) && 
                         this.renderNewPin()
                     }

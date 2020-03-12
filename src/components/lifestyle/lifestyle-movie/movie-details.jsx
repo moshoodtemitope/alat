@@ -119,7 +119,7 @@ class Moviedetails extends React.Component {
     };
 
     checkCinemaLocationValidity = () => {
-        console.log("this is cinemalocation")
+        // console.log("this is cinemalocation")
         if (this.state.CinemaLocation === null || this.state.CinemaLocation === "" || this.state.CinemaLocation ==="Select Cinema Location"){
             this.setState({CinemaLocationValidity:true});
             return false;
@@ -129,7 +129,7 @@ class Moviedetails extends React.Component {
         }
     }
     checkShowTimeValidity =(event)=>{
-        console.log("this is showtimevalidation", this.state.showTime)
+        // console.log("this is showtimevalidation", this.state.showTime)
 
         if(this.state.showTime === null || this.state.showTime === "" ){
             this.setState({showTimeValidity:true});
@@ -141,14 +141,14 @@ class Moviedetails extends React.Component {
         }
     }
     checkQuantity =()=>{
-        console.log("this is out the statement")
+        // console.log("this is out the statement")
         if (this.state.adultNumber  >= 1|| this.state.studentNumber >= 1  || this.state.childNumber >= 1 ){
             this.setState({ QuantityInValidity:true})
-            console.log('this is if statement')
+            // console.log('this is if statement')
             return true
         }else{
             this.setState({ QuantityInValidity:true})
-            console.log("this thr else statement")
+            // console.log("this thr else statement")
          return true
         }
     }
@@ -254,7 +254,7 @@ class Moviedetails extends React.Component {
         let childrenAmount = amounts.split(" ")[2];
         let studentAmount = amounts.split(" ")[0];
         let showTimeId = amounts.split(" ")[3];
-        console.log("=======",showTimeId)
+        // console.log("=======",showTimeId)
         let ticketId = amounts.split(" ")[4];
         let fee = amounts.split(" ")[5];
         let ticketType = amounts.split(" ")[6];
@@ -289,7 +289,7 @@ class Moviedetails extends React.Component {
    
     UseSelectedItem = (event) => {
         let gottenValue = event.target.value.split("000");
-        console.log("=========",gottenValue)
+        // console.log("=========",gottenValue)
         let selectedItem = event.target.value;
         let name = event.target.name;        
         

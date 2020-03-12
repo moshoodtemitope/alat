@@ -8,6 +8,8 @@ import * as actions from '../../../redux/actions/savings/goal/create-stash-goal.
 import * as util from '../../../shared/utils'
 import moment from 'moment';
 import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
+import { numberWithCommas } from "../../../shared/utils";
+
 
 
 
@@ -81,10 +83,10 @@ class CreateStash extends React.Component {
     
     handleAmount = (e) => {
         // console.log
-         let intVal = e.target.value.replace(/,/g, '');
-         if (/^\d+(\.\d+)?$/g.test(intVal)) {
+         let intVal = e.target.value;
+         if (intVal) {
              // if (parseInt(intVal, 10) <= 2000000) {
-             this.setState({ targetAmount: intVal, targetAmount: this.toCurrency(intVal) },
+             this.setState({ targetAmount: intVal, targetAmount: intVal},
                  () => {
                      this.setFregValue();
                      if (parseInt(intVal) > parseInt(999999999)) {
@@ -264,7 +266,7 @@ class CreateStash extends React.Component {
                                                             name="targetAmount"
                                                             onChange={this.handleAmount}
                                                             placeholder="E.g. ₦100,000"
-                                                            value={this.state.targetAmount}
+                                                        value={numberWithCommas(this.state.targetAmount)}
 
                                                           
                                                          />
