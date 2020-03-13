@@ -556,16 +556,20 @@ class Index extends Component{
                                     {accountInfo.account_detail===GET_ACCOUNT_DETAILS_SUCCESS &&
                                         <div className="proceed-ctas">
                                             <div className="row">
+                                            {accountInfo.account_detail_data.response.Currency!=="NGN" &&
                                                 <div className="col-sm-6">
                                                     <center>
                                                         <button type="submit" onClick={(e)=>this.keepRecipientData(e, true)} className="btn-alat light-btn m-t-10 m-b-20 text-center">Save</button>
                                                     </center>
                                                 </div>
+                                                }
+                                            {accountInfo.account_detail_data.response.Currency !== "NGN" &&
                                                 <div className="col-sm-6">
                                                     <center>
                                                         <button type="submit" onClick={(e)=>this.keepRecipientData(e, false)} className="btn-alat m-t-10 m-b-20 text-center">Send</button>
                                                     </center>
                                                 </div>
+                                                }
                                                 <div className="col-sm-12">
                                                     <center> <a onClick={this.editTransfer} className="edit-cta">Edit details</a></center>
                                                     
