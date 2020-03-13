@@ -110,7 +110,7 @@ class SelectAcount extends React.Component {
                                             <div className="trans-summary-card">
                                                 <div className="name-amount clearfix">
                                                     <p className="pl-name-email">{this.props.bill.billCategory}<span>{this.props.bill.BillerName} - {this.props.bill.valueRecipent} </span></p>
-                                                    <p className="pl-amount">N{this.props.bill.Amount && utils.formatAmount(this.props.bill.Amount)}</p>
+                                                    <p className="pl-amount">N{this.props.bill.Amount && numberWithCommas(this.props.bill.Amount)}</p>
                                                 </div>
                                             </div>
                                         </div>

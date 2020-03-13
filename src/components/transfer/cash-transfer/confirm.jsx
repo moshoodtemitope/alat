@@ -1,17 +1,18 @@
 import React, { Component, Fragment } from 'react';
 import InnerContainer from "../../../shared/templates/inner-container";
 import TransferContainer from "../container";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import "./../transfer.scss";
 import {
     SENDER__BANK_DETAILS,
-    SENDBANK_TRANSFER_PENDING, 
-    SENDBANK_TRANSFER_SUCCESS, 
-    SENDBANK_TRANSFER_FAILURE,} from "../../../redux/constants/transfer.constants";
+    SENDBANK_TRANSFER_PENDING,
+    SENDBANK_TRANSFER_SUCCESS,
+    SENDBANK_TRANSFER_FAILURE,
+} from "../../../redux/constants/transfer.constants";
 import AlatPinInput from '../../../shared/components/alatPinInput';
-import {sendMoneyTransfer} from "../../../redux/actions/transfer/cash-transfer.actions";
-import {numberWithCommas} from "../../../shared/utils";
-class ConFirmTransfer extends React.Component{
+import { sendMoneyTransfer, clearTransferStore } from "../../../redux/actions/transfer/cash-transfer.actions";
+import { numberWithCommas } from "../../../shared/utils";
+class ConFirmTransfer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -20,30 +21,30 @@ class ConFirmTransfer extends React.Component{
             isPinInvalid: false,
             isSubmitted: false,
             transferCharges: '',
-            accountData:{}
+            accountData: {}
         };
-       
+
         this.handleAlatPinChange = this.handleAlatPinChange.bind(this);
         this.makeTransfer = this.makeTransfer.bind(this);
-        
+
     }
 
     componentDidMount() {
         this.verifyTransferStage();
-        this.props.dispatch(sendMoneyTransfer(null, null, null,null, "CLEAR"))
-        
+        this.props.dispatch(sendMoneyTransfer(null, null, null, null, "CLEAR"))
+
     }
     formatAmount(amount) {
         return amount.toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     };
-    verifyTransferStage(){
+    verifyTransferStage() {
         // console.log('charegs', this.props.transfer_charges);
         let props = this.props
         if (!props.transfersender.transfer_info && props.transfersender.transfer_info !== SENDER__BANK_DETAILS) {
             this.props.history.push("/transfer");
             return;
-        }else{
-            
+        } else {
+
             let transferDetails = {
                 AccountName: props.transfer_info.transfer_info_data.data.AccountName,
                 AccountNumber: props.transfer_info.transfer_info_data.data.AccountNumber,
@@ -52,183 +53,195 @@ class ConFirmTransfer extends React.Component{
                 SenderBankName: props.transfersender.transfer_info_data.data.SenderBankName,
                 SenderAccountName: props.transfersender.transfer_info_data.data.SenderAccountName,
                 SenderAccountBalance: props.transfersender.transfer_info_data.data.AccountBalance,
-                AmountToSend:props.transfersender.transfer_info_data.data.AmountToSend,
+                AmountToSend: props.transfersender.transfer_info_data.data.AmountToSend,
                 // BankCharge : props.transfer_charges.bank_charges_data.response.data[0].Charge,
                 SenderAccountNumber: props.transfersender.transfer_info_data.data.SenderAccountNumber
             };
-            if(transferDetails.BankCode === '035' || transferDetails.BankCode === '000017'){
+            if (transferDetails.BankCode === '035' || transferDetails.BankCode === '000017') {
                 transferDetails.BankCharge = '0';
-            }else{
+            } else {
                 let bankChargesData = props.transfer_charges.bank_charges_data.response.data,
-                    formattedAmount = parseFloat(transferDetails.AmountToSend.replace(',','',));
-                
-                for(var count=0; count<bankChargesData.length; count++){
-                   
+                    formattedAmount = parseFloat(transferDetails.AmountToSend.replace(',', ''));
 
-                    if((bankChargesData[count].LowerLimit <= formattedAmount) &&  (formattedAmount<=bankChargesData[count].UpperLimit)){
-                        transferDetails.BankCharge =bankChargesData[count].Charge;
+                for (var count = 0; count < bankChargesData.length; count++) {
+
+
+                    if ((bankChargesData[count].LowerLimit <= formattedAmount) && (formattedAmount <= bankChargesData[count].UpperLimit)) {
+                        transferDetails.BankCharge = bankChargesData[count].Charge;
                         break;
                     }
                 }
-                
-            }
-            
-            
 
-            this.state.accountData={
+            }
+
+
+
+            this.state.accountData = {
                 ...transferDetails
             }
-            this.setState({accountData:transferDetails}, ()=>{
+            this.setState({ accountData: transferDetails }, () => {
                 // console.log('state is', this.state.accountData);
             })
             // 
         }
     }
 
-    sendMoneyTransfer = async (token, transferPayload, resend, isFxTransfer)=>{
-        const {dispatch} = this.props;
+    sendMoneyTransfer = async (token, transferPayload, resend, isFxTransfer) => {
+        const { dispatch } = this.props;
 
         await dispatch(sendMoneyTransfer(token, transferPayload, resend, isFxTransfer));
     }
 
-    makeTransfer(e){
+    makeTransfer(e) {
         e.preventDefault();
-        const {dispatch} = this.props;
+        const { dispatch } = this.props;
         let payload = {
-                        BeneficiaryEmail:this.props.transfersender.transfer_info_data.data.RecipientEmail,
-                        SourceAccountName:this.state.accountData.SenderAccountName,
-                        SourceAccountNumber:this.state.accountData.SenderAccountNumber,
-                        DestinationAccountName:this.state.accountData.AccountName,
-                        DestinationBankName:this.state.accountData.BankName,
-                        DestinationAccountNumber:this.state.accountData.AccountNumber,
-                        DestinationBankCode:this.state.accountData.BankCode,
-                        Amount:this.state.accountData.AmountToSend,
-                        Charges:this.state.accountData.BankCharge,
-                        Narration:this.props.transfersender.transfer_info_data.data.TransferPurpose,
-                        TransactionPin:this.state.Pin
-                    }
-            this.sendMoneyTransfer(this.state.user.token,payload, false, false)
+            BeneficiaryEmail: this.props.transfersender.transfer_info_data.data.RecipientEmail,
+            SourceAccountName: this.state.accountData.SenderAccountName,
+            SourceAccountNumber: this.state.accountData.SenderAccountNumber,
+            DestinationAccountName: this.state.accountData.AccountName,
+            DestinationBankName: this.state.accountData.BankName,
+            DestinationAccountNumber: this.state.accountData.AccountNumber,
+            DestinationBankCode: this.state.accountData.BankCode,
+            Amount: this.state.accountData.AmountToSend,
+            Charges: this.state.accountData.BankCharge,
+            Narration: this.props.transfersender.transfer_info_data.data.TransferPurpose,
+            TransactionPin: this.state.Pin
+        }
+        this.sendMoneyTransfer(this.state.user.token, payload, false, false)
             .then(
                 () => {
                     // if(this.props.transfer_money.sendmoney_status === SENDBANK_TRANSFER_FAILURE){
-                        
+
                     //     setTimeout(() => {
-                            
+
                     //         this.props.dispatch(sendMoneyTransfer(null, null, null,null, "CLEAR"))
                     //     }, 1500);
                     // }
-                    
-                    
+
+
 
                 }
             )
             .catch(() => {
                 // if(this.props.transfer_money.sendmoney_status === SENDBANK_TRANSFER_FAILURE){
-                    
+
                 //     setTimeout(() => {
-                        
+
                 //         this.props.dispatch(sendMoneyTransfer(null, null, null,null, "CLEAR"))
                 //     }, 1500);
                 // }
-                
-                
+
+
 
             })
-            let transferStatus = this.props.transfer_money;
+        let transferStatus = this.props.transfer_money;
 
-            
-            
+
+
         // console.log('Payload for payment is', payload);
     }
     handleAlatPinChange(pin) {
         this.setState({ Pin: pin })
         if (this.state.isSubmitted) {
             if (pin.length != 4)
-           this.setState({isPinInvalid : false})
+                this.setState({ isPinInvalid: false })
         }
     }
-    
 
-    
 
-    render(){
+
+
+    render() {
         let props = this.props,
             transferStatus = props.transfer_money;
-        return(
+        return (
             <Fragment>
-                            <div className="col-sm-12">
-                                <div className="row">
-                                    <div className="col-sm-12">
-                                        <div className="max-600">
-                                            <div className="al-card no-pad">
-                                                <h4 className="m-b-10 center-text hd-underline">Transfer Summary</h4>
-                                                <div className="transfer-ctn">
-                                                    <div className="card-wrap">
-                                                        <p className="card-heading">Transfer from</p>
-                                                        <div className="al-card beneficiary-card">
-                                                            <div className="clearfix">
-                                                                <div className="all-info">
-                                                                    <p className="summary-info"> 
-                                                                        <span className="nickname-text">{this.state.accountData.SenderBankName}</span>
-                                                                        <span className="bank-name">₦{this.state.accountData.SenderAccountBalance}</span>
-                                                                    </p>
-                                                                    <p className="account-info">{this.state.accountData.SenderAccountNumber}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                <div className="col-sm-12">
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <div className="max-600">
+                                <div className="al-card no-pad">
+                                    <h4 className="m-b-10 center-text hd-underline">Transfer Summary</h4>
+                                    <div className="transfer-ctn">
+                                        <div className="card-wrap">
+                                            <p className="card-heading">Transfer from</p>
+                                            <div className="al-card beneficiary-card">
+                                                <div className="clearfix">
+                                                    <div className="all-info">
+                                                        <p className="summary-info">
+                                                            <span className="nickname-text">{this.state.accountData.SenderBankName}</span>
+                                                            <span className="bank-name">₦{this.state.accountData.SenderAccountBalance}</span>
+                                                        </p>
+                                                        <p className="account-info">{this.state.accountData.SenderAccountNumber}</p>
                                                     </div>
-                                                    <div className="card-wrap">
-                                                        <p className="card-heading">Transfer to</p>
-                                                        <div className="al-card no-pad">
-                                                            <div className="trans-summary-card">
-                                                                <div className="name-amount clearfix">
-                                                                    <div className="recipient-and-amount">
-                                                                        <p className="recipient-name">
-                                                                            <span className="recipientname">{this.state.accountData.AccountName}</span>
-                                                                <span className="amount-to-send">₦{numberWithCommas(this.state.accountData.AmountToSend)}</span>
-                                                                        </p>
-                                                                        <div className="bank-info">
-                                                                            <p className="bankname">{this.state.accountData.BankName}</p>
-                                                                            <p className="bankaccount">{this.state.accountData.AccountNumber}</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                        <form onSubmit={this.makeTransfer} >
-                                                            <div className="inputctn-wrap centered-input">
-                                                                <AlatPinInput
-                                                                    value={this.state.Pin}
-                                                                    onChange={this.handleAlatPinChange}
-                                                                    PinInvalid={this.state.isPinInvalid}
-                                                                    maxLength={4} />
-                                                            </div>
-                                                            {transferStatus.sendmoney_status===SENDBANK_TRANSFER_FAILURE &&
-                                                                <div className="error-msg text-center">{transferStatus.sendmoney_status_data.error} </div>
-                                                            }
-                                                            <div className="row">
-                                                                <div className="col-sm-12">
-                                                                    <center>
-                                                                        <span className="amount-charged"> You will be charged ₦{this.state.accountData.BankCharge} </span>
-                                                                        <button type="submit" 
-                                                                            disabled={(this.props.transfer_money.fetchStatus && this.props.transfer_money.fetchStatus===true)?true:false}
-                                                                            className="btn-alat m-t-10 m-b-20 text-center">
-                                                                            {transferStatus.fetchStatus===true ?"Processing...": "Proceed"}
-                                                                        </button>
-                                                                    </center>
-
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    
                                                 </div>
                                             </div>
                                         </div>
+                                        <div className="card-wrap">
+                                            <p className="card-heading">Transfer to</p>
+                                            <div className="al-card no-pad">
+                                                <div className="trans-summary-card">
+                                                    <div className="name-amount clearfix">
+                                                        <div className="recipient-and-amount">
+                                                            <p className="recipient-name">
+                                                                <span className="recipientname">{this.state.accountData.AccountName}</span>
+                                                                <span className="amount-to-send">₦{numberWithCommas(this.state.accountData.AmountToSend)}</span>
+                                                            </p>
+                                                            <div className="bank-info">
+                                                                <p className="bankname">{this.state.accountData.BankName}</p>
+                                                                <p className="bankaccount">{this.state.accountData.AccountNumber}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <form onSubmit={this.makeTransfer} >
+                                            <div className="inputctn-wrap centered-input">
+                                                <AlatPinInput
+                                                    value={this.state.Pin}
+                                                    onChange={this.handleAlatPinChange}
+                                                    PinInvalid={this.state.isPinInvalid}
+                                                    maxLength={4} />
+                                            </div>
+                                            {transferStatus.sendmoney_status === SENDBANK_TRANSFER_FAILURE &&
+                                                <div className="error-msg text-center">{transferStatus.sendmoney_status_data.error} </div>
+                                            }
+                                            <div className="row">
+                                                <div className="col-sm-12">
+                                                    <center>
+                                                        <span className="amount-charged"> You will be charged ₦{this.state.accountData.BankCharge} </span>
+                                                        <button type="submit"
+                                                            disabled={(this.props.transfer_money.fetchStatus && this.props.transfer_money.fetchStatus === true) ? true : false}
+                                                            className="btn-alat m-t-10 m-b-20 text-center">
+                                                            {transferStatus.fetchStatus === true ? "Processing..." : "Proceed"}
+                                                        </button>
+                                                    </center>
+
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div className="row">
+                                            <div className="col-sm-12">
+                                                <center>
+                                                    <button className="btn-alat m-t-10 m-b-20 text-center" onClick={(e) => {
+                                                        e.preventDefault();
+                                                        this.props.history.push("/transfer/provide-details");
+                                                    }} >back</button>
+
+                                                </center>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        
+                    </div>
+                </div>
             </Fragment>
         )
     }

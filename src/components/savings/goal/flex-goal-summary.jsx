@@ -5,6 +5,8 @@ import moment from 'moment';
 import {NavLink} from 'react-router-dom'
 import {flexGoalConstants} from '../../../redux/constants/goal/flex-goal.constant'
 import * as actions from '../../../redux/actions/savings/goal/flex-goal.actions'
+import { numberWithCommas } from "../../../shared/utils";
+
 
 
  
@@ -111,7 +113,7 @@ import * as actions from '../../../redux/actions/savings/goal/flex-goal.actions'
                                             </div>
                                             <div className="right">
                                                 <p className='GoalText'>Target Amount</p>
-                                                <p className='boldedText'>₦{this.state.targetAmount}</p>
+                                                    <p className='boldedText'>₦{this.state.targetAmount}</p>
                                             </div>
                                         </div>
                                         <div className="coverForSummary">

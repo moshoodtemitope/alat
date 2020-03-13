@@ -117,7 +117,8 @@ class ChangePassword extends Component {
             }
             if (inputIdentifier == "currentPassword") {
                 validation.required.currentEmpty = false
-                if (!passwordPattern.test(updatedFormElement.value)) {
+                 //removed not PasswordPattern
+                if (passwordPattern.test(updatedFormElement.value)) {
                     format.invalidCurrent = true
                 } else format.invalidCurrent = false;
             } else if (inputIdentifier == "newPassword") {
@@ -127,7 +128,8 @@ class ChangePassword extends Component {
                         validation.notSame = true;
                     } else validation.notSame = false;
                 }
-                if (!passwordPattern.test(updatedFormElement.value)) {
+                // removed not Passwordpattern
+                if (passwordPattern.test(updatedFormElement.value)) {
                     format.invalidNew = true;
                 } else format.invalidNew = false;
             } else if (inputIdentifier == "verifyNewPassword") {

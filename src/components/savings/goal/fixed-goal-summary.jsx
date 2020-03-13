@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import {fixedGoalConstants} from '../../../redux/constants/goal/fixed-goal.constant';
 import * as actions from '../../../redux/actions/savings/goal/fixed-goal.actions';
+import { numberWithCommas } from "../../../shared/utils";
+
 
  
 
@@ -120,7 +122,7 @@ import * as actions from '../../../redux/actions/savings/goal/fixed-goal.actions
                                             </div>
                                             <div className="right">
                                                 <p className='GoalText'>Target Amount</p>
-                                                <p className='boldedText'>₦{this.state.targetAmount}</p>
+                                                    <p className='boldedText'>₦{numberWithCommas(this.state.targetAmount)}</p>
                                             </div>
                                         </div> 
                                       <div className="coverForSummary">

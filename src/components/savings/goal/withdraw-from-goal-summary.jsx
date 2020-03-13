@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import * as actions from "../../../redux/actions/savings/goal/get-customer-transaction-history.actions";
 import {customerGoalConstants} from "../../../redux/constants/goal/get-customer-trans-history.constant";
 import {NavLink} from "react-router-dom";
+import { numberWithCommas } from "../../../shared/utils";
+
 
 
 class WithDrawFromGoalSummmary extends Component {
@@ -134,7 +136,7 @@ class WithDrawFromGoalSummmary extends Component {
                                                         </div>
                                                         <div className="right">
                                                             <p className='GoalText'>Amount</p>
-                                                            <p className='boldedText'>₦{this.state.Amount}</p>
+                                                    <p className='boldedText'>₦{numberWithCommas(this.state.Amount)}</p>
                                                         </div>
                                                     </div>
                                                     <div className="coverForSummary">

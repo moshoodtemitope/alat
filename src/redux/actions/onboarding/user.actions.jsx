@@ -133,14 +133,11 @@ function login(email, password) {
         let consume = ApiService.request(routes.LOGIN, "POST", data);
         return consume
             .then(function (response) {
-                // console.log(response.data);
                 localStorage.setItem("user", JSON.stringify(response.data));
-                let user_details = localStorage.getItem("user");
-                let user = JSON.parse(user_details)
-                window.smartech('identify', user.email);
+                window.smartech('identify', data.email);
                 window.smartech('dispatch', 'alat_Login_Success', {
-                    "Email": user.email,
-                    "mobile": user.phoneNo
+                    "Email": data.email,
+                    // "mobile": user.phoneNo
                 });
                 // console.log(user);
                 //     this.apiService.getEncrytionRule(encrytedData => {
@@ -193,16 +190,15 @@ function loginAfterOnboarding(loginData) {
 }
 
 function sendForgotPwEmail(payload){
+    console.log("sendforgotemail",payload)
     return dispatch =>{
         let consume = ApiService.request(routes.EMAIL_FOR_FORGETPASSWORD, "POST", payload,  SystemConstant.HEADER);
         dispatch(request(consume));
-        // let user_details = localStorage.getItem("user");
-        // let user = JSON.parse(user_details)
-        // window.smartech('identify', user.email);
-        // window.smartech('dispatch', 'alat_onboarding_emailpwd_Success', {
-        //     "Email":user.email,
-        //     "mobile": user.email
-        // });
+        window.smartech('identify', payload.email);
+        window.smartech('dispatch', 'alat_onboarding_emailpwd_Success', {
+            "Email": payload.email,
+            "mobile": payload.email
+        });
         return consume
             .then(response =>{
                 dispatch(success(response));

@@ -137,7 +137,6 @@ class FundWemaIndex extends React.Component {
                         onChange={this.handleAmount}
                         AmountInvalid={this.state.AmountInvalid}
                     /> */}
-
                         <div className="inputctn-wrap">
                             <label htmlFor="Amount">Amount</label>
 

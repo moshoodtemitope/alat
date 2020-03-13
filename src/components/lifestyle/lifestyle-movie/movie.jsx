@@ -69,6 +69,7 @@ class Movie extends React.Component {
         if(value!=="ShowResultBy") {
             this.setState({doFilter: true, genreType: value }, () => { 
                 this.renderFilter(this.state.genreType);
+                console.log("this is the genreType " , this.state.genreType)
                 this.setState({display: "none"})
             })
         }
@@ -397,14 +398,18 @@ class Movie extends React.Component {
             return ( 
                     <div>
                         {
-                        this.state.genreType || this.state.value? <h2 className="loadMore">No Movie Found</h2> :
-                                <span className="loadMore" onClick={() => this.handleLoadMore()} >Load More</span> 
+                        this.state.genreType === "SCI-FI" || this.state.genreType === "BIOGRAPHY" ||
+                            this.state.genreType === "NOLLYWOOD" || this.state.genreType === "NOW SHOWING" || this.state.genreType === "THRILLER" || this.state.genreType === "HISTORY" || this.state.genreType === "MYSTERY" || this.state.genreType === "FANTASY" || this.state.genreType === "COMING SOON" || this.state.genreType === "SLIDER" || this.state.genreType === "HINDI" || this.state.genreType === "ANIMATION"  ?
+                            <span className="loadMore">No Movies Found</span> :
+                            <span className="loadMore" onClick={() => this.handleLoadMore()}>
+                                Load More
+                            </span>
+
                         }
-                        
                     </div>
                     
                 )
-        } else if (this.props.SearchfetchMovieList.message === listStyleConstants.SEARCH_FETCH_EVENT_SUCCESS && this.props.getMovieList.data.response.length === 0 ){
+        } if (this.props.getMovieList.message === listStyleConstants.GET_MOVIE_LIST_SUCCESS && this.props.getMovieList.data.response.length === 0 ){
 
             return <h2>No Movie Found</h2>
 
@@ -450,6 +455,7 @@ class Movie extends React.Component {
                        !this.state.doFilter ? this.resultu() : this.renderFilter(this.state.genreType)
                    }
                    {
+    
                         this.loadMore()
                    }
 

@@ -9,6 +9,8 @@ import { Textbox } from "react-inputs-validation";
 import * as  utils from '../../../shared/utils'
 import * as  constants from '../../../shared/constants'
 import AmountInput from '../../../shared/components/amountInput';
+import { numberWithCommas } from '../../../shared/utils';
+
 
 var networkOperators = [
     { value: "2", label: "MTN" },
@@ -95,10 +97,11 @@ class BuyAirtime extends Component {
     }
 
     handleAmount = (e) => {
+        console.log("ttttttttttttttt",e)
         // console.log(this.intValue);
-        this.setState({ "Amount": e });
+        this.setState({ "Amount": e.target.value });
         if (this.state.formsubmitted) {
-            if (e != "")
+            if (e.target.value != "")
                 this.setState({ AmountInvalid: false });
         }
     }
@@ -144,12 +147,28 @@ class BuyAirtime extends Component {
                                             }
                                         </div>
 
-                                        <AmountInput 
+                                        {/* <AmountInput 
                                         value={formattedValue} 
                                         onChange={this.handleAmount} 
                                         name="Amount" 
                                         intValue={Amount} 
-                                        AmountInvalid={AmountInvalid} />
+                                        AmountInvalid={AmountInvalid} /> */}
+                                        <div className="inputctn-wrap">
+                                            <label htmlFor="Amount">Amount</label>
+
+                                            <input type="text"
+                                                onChange={this.handleAmount}
+                                                autoComplete="off" name="amount" value={numberWithCommas(Amount)} />
+                                            {AmountInvalid &&
+                                                <span className="limit-text">Enter a Valid Amount</span>
+                                            }
+
+                    
+
+
+                                        </div>
+
+                                        
 
                                         <div className="row">
                                             <div className="col-sm-12">

@@ -17,11 +17,9 @@ export const FetchMovie = (token, data) => {
         
         return consume
             .then(response => {
-                // console.log("=======",response);
                 dispatch(success(response.data, data));
                 let user_details = localStorage.getItem("user");
                 let user = JSON.parse(user_details)
-                console.log(user)
                 window.smartech('identify', user.email);
                 window.smartech('dispatch', 'alat_movies', {
                     "Email": user.email,
@@ -45,7 +43,6 @@ export const SearchFetchMovie = (token, data) => {
         dispatch(request(consume));
         return consume
             .then(response => {
-                console.log(response);
                 dispatch(success(response.data));
             })
             .catch(error => {
@@ -67,7 +64,6 @@ export const getCinemaList = (token, data) => {
         dispatch(request(consume));
         return consume
             .then(response => {
-                // console.log(response);
                 dispatch(success(response.data));
             })
             .catch(error => {
@@ -126,10 +122,8 @@ export const buyMovieTicket = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
         let consume = ApiService.request(routes.BUY_MOVIE_TICKET, "POST", data, SystemConstant.HEADER, false);
-        console.log("movie name",data)
         let user_details = localStorage.getItem("user");
         let user = JSON.parse(user_details)
-        console.log("+++++++", user)
         dispatch(request(consume));
         window.smartech('identify', user.email);
         window.smartech('dispatch', 'alat_movies_purchase success', {
@@ -164,7 +158,6 @@ export const getEvents = (token,data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
         let consume = ApiService.request(routes.GET_EVENTS + data, "GET", data, SystemConstant.HEADER, false);
-        console.log("===",data)
         dispatch(request(consume));
         let user_details = localStorage.getItem("user");
         let user = JSON.parse(user_details)
@@ -216,7 +209,6 @@ export const purchaseEventTicket = (token, data) => {
     SystemConstant.HEADER['alat-token'] = token;
     return (dispatch) => {
         let consume = ApiService.request(routes.BUY_EVENT_TICKETV2, "POST", data, SystemConstant.HEADER, false);
-        console.log(data)
         dispatch(request(consume));
         let user_details = localStorage.getItem("user");
         let user = JSON.parse(user_details)

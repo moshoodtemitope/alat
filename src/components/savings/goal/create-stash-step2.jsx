@@ -6,6 +6,8 @@ import {NavLink} from "react-router-dom";
 import * as util from '../../../shared/utils'
 import {createGoalConstants} from '../../../redux/constants/goal/create-stash.constant';
 import * as actions from '../../../redux/actions/savings/goal/create-stash-goal.actions'
+import { numberWithCommas } from "../../../shared/utils";
+
  
 
 class StashSummmary extends Component {
@@ -110,7 +112,7 @@ class StashSummmary extends Component {
                                             </div>
                                             <div className="right">
                                                 <p className='GoalText'>Target Amount</p>
-                                                <p className='boldedText'>₦{this.state.targetAmount}</p>
+                                                    <p className='boldedText'>₦{numberWithCommas(this.state.targetAmount)}</p>
                                             </div>
                                         </div>
                                         <div className="coverForSummary">

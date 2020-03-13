@@ -52,7 +52,6 @@ class BuyTicket extends Component {
 
 
     handleDebit = (account) => {
-        //console.log(account);
         this.setState({ accountToDebit: account });
         if (this.state.isSubmit) {
             if (account != "")
@@ -81,7 +80,7 @@ class BuyTicket extends Component {
             let data = {
                 ...this.props.SubmitTicketData.data.data
             };
-            console.log('tag', data);
+            // console.log('tag', data);
 
             this.setState({
                 adultAmount:data.adultAmount,

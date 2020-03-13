@@ -123,15 +123,15 @@ class TalkToUs extends Component {
                         <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
                     }
                     {
-                        success && (
-                            <div className="row">
-                                <div className="col-sm-6" style={{margin:'auto'}}>
-                                    <div className="alert alert-success">
+                        this.props.talk_to_us.message === talktoUsConstant.TALK_TO_US_SUCCESS &&
+                        <div className="row">
+                                 <div className="col-sm-6" style={{margin:'auto'}}>
+                                     <div className="alert alert-success">
                                         <h4 className="text-center">Message sent successfully</h4>
-                                    </div>
+                                     </div>
                                 </div>
                             </div>
-                        )
+
                     }
 
 
