@@ -120,19 +120,19 @@ class ProvideDetails extends React.Component {
         // console.log('limitis',   this.state.transferLimit, typeof this.state.transferLimit);
 
         if (this.state.selectedDebitableAccount) {
-            if (parseFloat(e.replace(/,/g, "")) <= this.state.transferLimit) {
+            if (parseFloat(e.target.value.replace(/,/g, "")) <= this.state.transferLimit) {
 
-                this.setState({ Amount: e, isMorthanLimit: false });
-                if (parseFloat(e.replace(",", "")) <= this.state.selectedDebitableAccount[0].AvailableBalance) {
+                this.setState({ Amount: e.target.value, isMorthanLimit: false });
+                if (parseFloat(e.target.value.replace(",", "")) <= this.state.selectedDebitableAccount[0].AvailableBalance) {
 
-                    this.setState({ Amount: e, isMorthanLimit: false });
+                    this.setState({ Amount: e.target.value, isMorthanLimit: false });
                 }
                 else {
-                    this.setState({ Amount: e, isMorthanLimit: true, amountError: "Amount exceeds account balance" });
+                    this.setState({ Amount: e.target.value, isMorthanLimit: true, amountError: "Amount exceeds account balance" });
                 }
 
                 if (this.state.formsubmitted) {
-                    if (e != "")
+                    if (e.target.value != "")
                         this.setState({ AmountInvalid: false });
                 }
             } else {
@@ -141,7 +141,7 @@ class ProvideDetails extends React.Component {
             }
 
         } else {
-            if (e.length > 0) {
+            if (e.target.value.length > 0) {
                 this.setState({ isMorthanLimit: true, amountError: "Please select account to debit" })
             }
             else {
