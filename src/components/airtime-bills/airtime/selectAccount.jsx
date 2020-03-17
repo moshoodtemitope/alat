@@ -42,7 +42,8 @@ class SelectAcount extends React.Component {
         }
     }
 
-    handleSelectDebitableAccounts(account) {
+    handleSelectDebitableAccounts(account){
+        console.log("this is the account",account);
         this.setState({ selectedAccount: account })
         if (this.state.isSubmitted) {
             if (account.length == 10)
@@ -128,7 +129,7 @@ class SelectAcount extends React.Component {
                                             name="Amount"
                                             intValue={Amount}
                                             AmountInvalid={AmountInvalid} /> */}
-                                        <div className="inputctn-wrap">                                  <label htmlFor="Amount">Amount</label>
+                                        {/* <div className="inputctn-wrap">                                  <label htmlFor="Amount">Amount</label>
                                             <input type="text"
                                                 onChange={this.handleAmount}
                                                 onKeyUp={this.handleAmount}
@@ -136,7 +137,7 @@ class SelectAcount extends React.Component {
                                             {AmountInvalid &&
                                                 <span className="limit-text">Enter a Valid Amount</span>
                                             }
-                                        </div>
+                                        </div> */}
 
 
                                         <AlatPinInput

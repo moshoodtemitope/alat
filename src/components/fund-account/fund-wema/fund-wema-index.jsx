@@ -66,6 +66,19 @@ class FundWemaIndex extends React.Component {
                 this.setState({ AmountInvalid: false });
         }
     };
+    // handleAmount = (e) => {
+    //     console.log(e)
+    //     // console.log("dsdsds", e)
+    //     let testSequence = /^[0-9.,]+$/;
+    //     if (testSequence.test(e)) {
+    //         this.setState({ Amount: e });
+    //         if (this.state.formSubmitted) {
+    //             if (e != "")
+    //                 this.setState({ AmountInvalid: false });
+    //         }
+    //     }
+
+    // }
 
     validateAccountNumber(account, state) {
         if (account.length != 10) {
@@ -88,7 +101,7 @@ class FundWemaIndex extends React.Component {
                 return;
             } else {
                 this.props.dispatch(actions.fundAlatWemaAccount(this.state.user.token, {
-                    'Amount': this.state.Amount,
+                    'Amount':this.state.Amount,
                     'DebitAccountNumber': this.state.accountToDebit,
                     'reason': "",
                     'CreditAccountNumber': this.state.accountToCredit
@@ -101,7 +114,7 @@ class FundWemaIndex extends React.Component {
 
     render() {
 
-        const {AmountInvalid, Amount} =this.state
+        const { AmountInvalid, Amount, formattedValue, AmountToSend } = this.state
         if (this.props.fundwema.fund_account_status === fundAccountConstants.FUND_ALAT_WEMA_SUCCESS)
             this.props.history.push("/fund/wema/success")
         return (
@@ -148,12 +161,7 @@ class FundWemaIndex extends React.Component {
                                 <span className="limit-text">Enter a Valid Amount</span>
                             }
 
-                            {/* <AmountInput 
-                                                    value={formattedValue} 
-                                                    intValue={AmountToSend}  name="Amount" onKeyUp={this.handleAmount}  onChange={this.handleAmount}/>
-                                                            {isMorthanLimit===true &&
-                                                                <span className="limit-text">{this.state.amountError}</span>
-                                                            } */}
+            
 
 
                         </div>

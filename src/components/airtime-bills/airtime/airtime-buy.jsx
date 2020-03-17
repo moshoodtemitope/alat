@@ -97,7 +97,6 @@ class BuyAirtime extends Component {
     }
 
     handleAmount = (e) => {
-        console.log("ttttttttttttttt",e)
         // console.log(this.intValue);
         this.setState({ "Amount": e.target.value });
         if (this.state.formsubmitted) {

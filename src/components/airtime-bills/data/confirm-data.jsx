@@ -10,6 +10,8 @@ import {alertActions} from "../../../redux/actions/alert.actions";
 import { formatAmountNoDecimal, formatAmount } from '../../../shared/utils';
 import { connect } from 'react-redux';
 import { numberWithCommas } from "../../../shared/utils";
+import SelectDebitableAccounts from "../../../shared/components/selectDebitableAccounts";
+
 
 
 import * as actions from '../../../redux/actions/dataActions/export';
@@ -20,6 +22,9 @@ class ConfirmData extends Component {
         super(props);
         this.state = {
             selectedAccounts: null,
+            accountToDebitInValid: false,
+            accountToDebit:null,
+
             validation: {
                 accountError: {
                     hasError: false,
@@ -62,6 +67,9 @@ class ConfirmData extends Component {
             formIsValid: false,
             user: JSON.parse(localStorage.getItem("user")),
         };
+
+        this.handleSelectDebitableAccounts = this.handleSelectDebitableAccounts.bind(this);
+
     }
 
 
@@ -69,6 +77,8 @@ class ConfirmData extends Component {
         this.props.fetchDebitableAccounts(this.state.user.token);
         // console.log(this.props.dataInfo)
     }
+
+    
 
     sortAccountsForSelect = () => {
         var arrayToDisplay = [];
@@ -91,10 +101,27 @@ class ConfirmData extends Component {
     }
 
     accountChangedHandler = (selectedAccount) => {
+        console.log("this is the account",selectedAccount)
         var validation = { ...this.state.validation };
         validation.accountError.hasError = false;
         this.setState({ selectedAccount, validation });
         // console.log(`Option selected:`, selectedAccount);
+    }
+
+    handleSelectDebitableAccounts = (account) => {
+        console.log("this is the account",account)
+        //console.log(account);
+        this.setState({ accountToDebit: account });
+        if (this.state.isSubmit) {
+            if (account != "")
+                this.setState({ accountToDebitInValid: false });
+        }
+    };
+    validateAccountNumber(account, state) {
+        if (account.length != 10) {
+            this.setState({ [state]: true });
+            return true;
+        }
     }
 
 
@@ -140,7 +167,7 @@ class ConfirmData extends Component {
         var validation = { ...this.state.validation };
         event.preventDefault();
         this.props.clearError();
-        if ((this.state.confirmDataForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedAccounts) || !this.pinInputValidation(this.state.confirmDataForm.pin.value)) {
+        if ((this.state.confirmDataForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedAccounts) || this.validateAccountNumber(this.state.accountToDebit, "accountToDebitInValid") || !this.pinInputValidation(this.state.confirmDataForm.pin.value)) {
             if (this.state.confirmDataForm.activeAccount.elementConfig.options[0].value == '' && !this.state.selectedAccounts) {
                 validation.accountError.hasError = true;
                 this.setState({ validation });
@@ -152,7 +179,8 @@ class ConfirmData extends Component {
         } else {
             const payload = {
                 ...this.props.dataInfo,
-                AccountNumber: (this.state.selectedAccounts ? this.state.selectedAccounts.value : this.state.confirmDataForm.activeAccount.elementConfig.options[0].value),
+                // AccountNumber: (this.state.selectedAccounts ? this.state.selectedAccounts.value : this.state.confirmDataForm.activeAccount.elementConfig.options[0].value),
+                AccountNumber: this.state.accountToDebit,
                 TransactionPin: this.state.confirmDataForm.pin.value
             }
             this.props.setDataToBuyDetails(payload,this.props.network, this.props.isFromBeneficiary);
@@ -204,16 +232,22 @@ class ConfirmData extends Component {
                                                 {formElementArray.map((formElement) => {
                                                     if (formElement.config.elementType !== "input") {
                                                         return (
-                                                            <div className="input-ctn" key={formElement.id}>
-                                                                <label>Select an account to debit</label>
-                                                                <Select key={formElement.id}
-                                                                    value={selectedAccount == null ? formElement.config.elementConfig.options : selectedAccount}
-                                                                    onChange={this.accountChangedHandler}
-                                                                    options={formElement.config.elementConfig.options}
-                                                                    placeholder={this.props.alert.message  ? "Failed. Please try again" : (this.props.accounts.length > 0 ? "Select..." : "Loading Account...")}
-                                                                />
-                                                                {this.state.validation.accountError.hasError ? <small className="text-danger">{this.state.validation.accountError.error}</small> : null}
-                                                            </div>
+                                                            <SelectDebitableAccounts
+                                                                accountInvalid={this.state.accountToDebitInValid}
+                                                                onChange={this.handleSelectDebitableAccounts}
+                                                                labelText={"Select Account to debit"}
+                                                            />
+                                                            // <div className="input-ctn"
+                                                            //  key={formElement.id}>
+                                                            //     <label>Select an account to debit</label>
+                                                            //     <Select key={formElement.id}
+                                                            //         value={selectedAccount == null ? formElement.config.elementConfig.options : selectedAccount}
+                                                            //         onChange={this.accountChangedHandler}
+                                                            //         options={formElement.config.elementConfig.options}
+                                                            //         placeholder={this.props.alert.message  ? "Failed. Please try again" : (this.props.accounts.length > 0 ? "Select..." : "Loading Account...")}
+                                                            //     />
+                                                            //     {this.state.validation.accountError.hasError ? <small className="text-danger">{this.state.validation.accountError.error}</small> : null}
+                                                            // </div>
                                                         )
                                                     };
                                                     return (

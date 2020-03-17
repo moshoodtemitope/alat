@@ -209,9 +209,7 @@ class StashCashout extends Component {
                             <div className="sub-tab-nav">
                                 <ul>
                                     <li>
-                                        <NavLink className="active" to='/savings/choose-goal-plan'>
-
-                                            >Goals
+                                        <NavLink className="active" to='/savings/choose-goal-plan'>Goals
                                         </NavLink>
 
                                     </li>

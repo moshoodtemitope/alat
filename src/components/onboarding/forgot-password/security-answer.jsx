@@ -115,8 +115,15 @@ class ProvideSecurityAnswer extends React.Component{
                                             maxLength="4"
                                             placeholder= "Enter your ALAT Pin"
                                             value={Pin}
+                                            autoComplete="off"
                                             onChange={(Pin, e) => {
                                                 this.setState({ Pin });
+                                            }}
+                                            onBlur={(e) => { }}
+                                            validationOption={{
+                                                name: 'password/Pin',
+                                                check: true,
+                                                required: true
                                             }}
                                         />
                                     </div>
