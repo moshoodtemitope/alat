@@ -62,9 +62,11 @@ const reducer = (state = initialState, action) => {
         case actionTypes.RESET_PAGE_STATE:
             return updateObject(state, { pageState: 2 });
         case actionTypes.IS_SENDING_RECEIPT:
-            return updateObject(state, { sendingReceipt: !state.sendingReceipt });
+            return updateObject(state, { sendingReceipt: !state.sendingReceipt, receiptResponse: 6 });
         case actionTypes.SEND_RECEIPT_SUCCESS:
             return updateObject(state, { sendingReceipt: false, receiptResponse: 0 });
+        case actionTypes.SEND_RECEIPT_FAILURE:
+            return updateObject(state, { sendingReceipt: false, receiptResponse: 7 });
         case actionTypes.CLEAR_RESPONSE:
             return updateObject(state, { receiptResponse: action.status });
         case actionTypes.CLEAR_LIMIT_DATA:

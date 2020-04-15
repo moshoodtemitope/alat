@@ -4,10 +4,11 @@ import emailCenter from '../../assets/img/email-contact.svg';
 import phoneContact from '../../assets/img/phone-contact.svg';
 import * as actions from "../../redux/actions/talk-to-us/talk-to-us-action";
 import * as actions1 from "../../redux/actions/profile/profile-action";
-
 import { connect } from 'react-redux';
 import { talktoUsConstant } from '../../redux/constants/talk-to-us/talk-to-us.constant';
 import { profile } from '../../redux/constants/profile/profile-constants';
+import { Textbox } from "react-inputs-validation";
+
 
 
 
@@ -25,6 +26,8 @@ class TalkToUs extends Component {
             EmailAddressInvalid: false,
             MessageInvalid: false,
             success: false,
+            error:"",
+            error:false
 
         }
         this.onSubmit = this.onSubmit.bind(this);
@@ -49,18 +52,35 @@ class TalkToUs extends Component {
     checkEmailAddress = () => {
         if (this.state.RecipientEmail == null) {
             this.setState({ EmailAddressInvalid: true });
+            return true
 
         } else {
             this.setState({ EmailAddressInvalid: false })
+            return false
         }
     };
+
+    validate = (e) => {
+        // console.log(e.target.value);
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if (reg.test(e.target.value) === false) {
+            console.log("Email is Not Correct");
+            this.setState({ RecipientEmail: e.target.value, error:"Enter a valid Email Address"})
+            return false;
+        } if (this.state.RecipientEmail == null) {
+            return this.checkEmailAddress()
+        }else{
+            this.setState({ RecipientEmail: e.target.value, error:"" })
+        }
+    }
 
     checkMessage = () => {
         if (this.state.Body == null) {
             this.setState({ MessageInvalid: true });
-            // return true;
+            return true;
         } else {
             this.setState({ MessageInvalid: false })
+            return false
         }
 
 
@@ -69,6 +89,7 @@ class TalkToUs extends Component {
     onSubmit(event) {
         event.preventDefault();
         if (this.checkEmailAddress() || this.checkMessage()) {
+           
 
         } else {
             this.props.dispatch(actions.TalkUsMessage({
@@ -80,6 +101,7 @@ class TalkToUs extends Component {
 
 
             }));
+           
 
             if (this.props.talk_to_us.message === talktoUsConstant.TALK_TO_US_SUCCESS) {
                 this.setState({ success: true })
@@ -88,11 +110,6 @@ class TalkToUs extends Component {
             }
 
         }
-
-
-
-
-
     }
 
     render() {
@@ -174,7 +191,7 @@ class TalkToUs extends Component {
 
 
                                             </div>
-                                            <div className={EmailAddressInvalid ? "form-group  form-error col-md-6" : 'form-group col-md-6'} >
+                                            <div className={this.state.error && EmailAddressInvalid ? "form-group  form-error col-md-6" : 'form-group col-md-6'} >
                                                 <label className="label-text">Email</label>
                                                 <input
                                                     type="text"
@@ -182,10 +199,28 @@ class TalkToUs extends Component {
                                                     className="form-control"
                                                     name="RecipientEmail"
                                                     value={this.state.RecipientEmail}
-                                                    onChange={this.handleChange} />
+                                                    onChange={(text) => this.validate(text)}/>
+                                                {
+                                                    this.state.error ?
+                                                        <div>
 
-                                                {EmailAddressInvalid &&
-                                                    <div className="text-danger">please enter email Address</div>}
+                                                            {this.state.error &&
+                                                                <div className="text-danger">{this.state.error}</div>}
+
+                                                        </div>:
+                                                        <div>
+                                                            {EmailAddressInvalid &&
+                                                                <div className="text-danger">Enter Email Address</div>}
+                                                        </div>
+
+
+                                                }
+                                                
+                                                
+
+                                                
+
+                                               
 
                                             </div>
 

@@ -171,7 +171,7 @@ class ConFirmTransfer extends React.Component {
                                                     <div className="all-info">
                                                         <p className="summary-info">
                                                             <span className="nickname-text">{this.state.accountData.SenderBankName}</span>
-                                                            <span className="bank-name">₦{this.state.accountData.SenderAccountBalance}</span>
+                                                            <span className="bank-name">₦{numberWithCommas(this.state.accountData.SenderAccountBalance)}</span>
                                                         </p>
                                                         <p className="account-info">{this.state.accountData.SenderAccountNumber}</p>
                                                     </div>
@@ -186,7 +186,7 @@ class ConFirmTransfer extends React.Component {
                                                         <div className="recipient-and-amount">
                                                             <p className="recipient-name">
                                                                 <span className="recipientname">{this.state.accountData.AccountName}</span>
-                                                                <span className="amount-to-send">₦{this.state.accountData.AmountToSend}</span>
+                                                                <span className="amount-to-send">₦{numberWithCommas(this.state.accountData.AmountToSend)}</span>
                                                             </p>
                                                             <div className="bank-info">
                                                                 <p className="bankname">{this.state.accountData.BankName}</p>

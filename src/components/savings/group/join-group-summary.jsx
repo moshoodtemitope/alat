@@ -10,6 +10,8 @@ import {history} from '../../../_helpers/history';
 import { Description } from './component';
 import moment from "moment";
 import { GROUPSAVINGSCONSTANT } from '../../../redux/constants/savings/group';
+import { numberWithCommas } from "../../../shared/utils";
+
 
 
 class JoinGroupSummary extends React.Component {
@@ -175,7 +177,7 @@ class JoinGroupSummary extends React.Component {
                                                            <Description 
                                                             leftHeader={this.props.findGroup.response.groupData.name}
                                                             leftDescription="Group Name"
-                                                            rightHeader={this.props.findGroup.response.groupData.targetAmount}
+                                                            rightHeader={numberWithCommas(this.props.findGroup.response.groupData.targetAmount)}
                                                             rightDiscription="Group Target"
                                                             />
                                                         </div>
@@ -183,7 +185,7 @@ class JoinGroupSummary extends React.Component {
                                             
                                                             <div className="form-group col-md-6 forReadOnlyInput">
                                                                 <label className="label-text">Monthly Contributions</label>
-                                                                <input type="Number" className="form-control"  placeholder={this.props.findGroup.response.groupData.mininumIndividualAmount} readOnly/>
+                                                            <input type="Number" className="form-control" placeholder={numberWithCommas(this.props.findGroup.response.groupData.mininumIndividualAmount)} readOnly/>
                                                             </div>
         
                                                             <div className="form-group col-md-6 forReadOnlyInput">
@@ -272,7 +274,7 @@ class JoinGroupSummary extends React.Component {
                                             
                                                             <div className="form-group col-md-6 forReadOnlyInput">
                                                                 <label className="label-text">Monthly Contributions</label>
-                                                                <input type="Number" className="form-control"  placeholder={this.props.findGroup.response.esusuData.monthlyContribution} readOnly/>
+                                                            <input type="Number" className="form-control" placeholder={numberWithCommas(this.props.findGroup.response.esusuData.monthlyContribution)} readOnly/>
                                                             </div>
         
                                                             <div className="form-group col-md-6 forReadOnlyInput">
@@ -416,7 +418,7 @@ class JoinGroupSummary extends React.Component {
                                                            <Description 
                                                             leftHeader={this.props.findGroup.response.groupData.name}
                                                             leftDescription="Group Name"
-                                                            rightHeader={this.props.findGroup.response.groupData.targetAmount}
+                                                            rightHeader={numberWithCommas(this.props.findGroup.response.groupData.targetAmount)}
                                                             rightDiscription="Group Target"
                                                             />
                                                         </div>

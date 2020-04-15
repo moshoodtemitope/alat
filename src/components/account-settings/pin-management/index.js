@@ -36,7 +36,8 @@ class Index extends Component {
 
     render() {
         let view;
-        if (this.props.isPinSet) {
+        if (this.state.user.isAlatPinSet == true) {
+            console.log('tag', '')
             view = (
                 <Fragment>
                     <div className="col-sm-12">

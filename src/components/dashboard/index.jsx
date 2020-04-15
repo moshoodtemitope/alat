@@ -105,7 +105,7 @@ class Dashboard extends React.Component{
     
                                 <div className="account-card m-b-50" key={key}>
                                     <div className="account-name">
-                                        <p>{acct.AccountType} <span>History</span></p>
+                                        <p>{acct.AccountType}<NavLink to="/account/account-history"><span> History </span></NavLink></p>
                                     </div>
                                     <div className="account-no-status clearfix">
                                         <p className="account-no">Acct No: {acct.AccountNumber}</p>

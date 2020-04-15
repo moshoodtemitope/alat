@@ -165,7 +165,7 @@ class RotatingGroupCreated extends React.Component {
                                                     </div>
                                                     <div className="form-row">
                                                         <div className="form-group col-md-6 butLeft">
-                                                            <button>Share Code</button>
+                                                        <button onClick={this.CopyCode}>Copy Code</button>
                                                         </div>
                                                         <div className="form-group col-md-6 butRight">
                                                             <NavLink to='/savings/group-analytics-mini'>
@@ -300,7 +300,7 @@ class RotatingGroupCreated extends React.Component {
                                                         </div>
                                                         <div className="form-row">
                                                             <div className="form-group col-md-6 butLeft">
-                                                                <button>Share Code</button>
+                                                            <button onClick={this.CopyCode}>Copy Code</button>
                                                             </div>
                                                             <div className="form-group col-md-6 butRight">
                                                                 <NavLink to='/savings/group-analytics-mini'>

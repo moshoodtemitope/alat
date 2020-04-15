@@ -9,6 +9,7 @@ import {connect} from "react-redux";
 import Select from 'react-select';
 import Modal from 'react-responsive-modal';
 import {Textbox} from "react-inputs-validation";
+import { numberWithCommas } from '../../../shared/utils';
 import "./../transfer.scss";
 import {senderTransferData, 
         getTransactionLimit,

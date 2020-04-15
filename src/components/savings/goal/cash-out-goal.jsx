@@ -10,6 +10,8 @@ import { connect } from 'react-redux'
 import { Description } from "../group/component";
 import { DebitableAccount } from '../../../redux/actions/lifestyle/movies-actions';
 import { listStyleConstants } from '../../../redux/constants/lifestyle/lifestyle-constants';
+import { numberWithCommas } from "../../../shared/utils";
+
 
 
 class StashCashout extends Component {
@@ -47,13 +49,13 @@ class StashCashout extends Component {
     };
     handleDebitableAccount = (event) => {
         let AccountNo = event.target.value.split("8888")[2];
-        console.log(AccountNo)
+        // console.log(AccountNo)
         let AccountName = event.target.value.split("8888")[1];
-        console.log(AccountName)
+        // console.log(AccountName)
         let AccountType = event.target.value.split("8888")[0];
-        console.log(AccountType)
+        // console.log(AccountType)
         let AvailableBalance = event.target.value.split("8888")[3];
-        console.log(AvailableBalance)
+        // console.log(AvailableBalance)
         this.setState({ AccountNo: AccountNo });
         this.setState({ AccountName: AccountName });
         this.setState({ AccountType: AccountType });
@@ -65,7 +67,7 @@ class StashCashout extends Component {
     };
     renderSelectableDebitabe = () => {
         if (this.props.debitable_account.message === listStyleConstants.DEBITABLE_ACCOUNT_PENDING) {
-            return <select><option>loading debitable Account...</option></select>
+            return <select><option>Loading Debitable Account...</option></select>
         } else if (this.props.debitable_account.message === listStyleConstants.DEBITABLE_ACCOUNT_FAILURE) {
             return <select><option>No debitable Account</option></select>
 
@@ -104,7 +106,7 @@ class StashCashout extends Component {
                 goalName: data.goalName,
                 goalId: data.id,
                 debitAccount: data.DebitAccount,
-                Amount: data.amountSaved,
+                Amount: numberWithCommas(data.amountSaved),
                 partialWithdrawal: true
             });
         }
@@ -181,12 +183,12 @@ class StashCashout extends Component {
 
         }
     };
-    gotoStep2 = () => {
-        if (this.props.stashGoal_step1)
-            if (this.props.stashGoal_step1.stashout_goal_status_step1 === customerGoalConstants.STASH_CASHOUT_STEP1_SUCCESS) {
-                return <Redirect to="/savings/cashout-goal-summary" />
-            }
-    };
+    // gotoStep2 = () => {
+    //     if (this.props.stashGoal_step1)
+    //         if (this.props.stashGoal_step1.stashout_goal_status_step1 === customerGoalConstants.STASH_CASHOUT_STEP1_SUCCESS) {
+    //             return <Redirect to="/savings/cashout-goal-summary" />
+    //         }
+    // };
     formatAmount(amount) {
         return amount.toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     };
@@ -202,7 +204,7 @@ class StashCashout extends Component {
                     <div className="col-sm-12">
                         <p className="page-title">Savings & Goals</p>
                     </div>
-                    {this.gotoStep2()}
+                    {/* {this.gotoStep2()} */}
 
                     <div className="col-sm-12">
                         <div className="tab-overflow">
@@ -231,14 +233,14 @@ class StashCashout extends Component {
                             <div className="max-600">
 
                                 <div className="al-card no-pad">
-                                    <h4 className="m-b-10 center-text hd-underline">Stash Cashout</h4>
+                                    <h4 className="m-b-10 center-text hd-underline">Cashout</h4>
 
                                     <form onSubmit={this.handleSubmit}>
                                         <div className="form-group">
                                             <Description
                                                 leftHeader={this.state.user.fullName}
                                                 leftDescription={this.state.user.email}
-                                                rightHeader={'₦' + this.state.Amount}
+                                                rightHeader={'₦' +this.state.Amount}
                                                 rightDiscription="Amount Saved" />
                                         </div>
 

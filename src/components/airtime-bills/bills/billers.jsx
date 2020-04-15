@@ -35,7 +35,7 @@ class Billers extends Component {
     sortBillerCategory = (billersData) => {
         var categoryArray = [];
         billersData.map((biller) => categoryArray.push({value: biller.Category, label: biller.Category}));
-        this.setState({billersCategory: categoryArray}, () => console.log(this.state.billersCategory));
+        this.setState({billersCategory: categoryArray});
     }
 
     sortBillerItems = (biller) => {

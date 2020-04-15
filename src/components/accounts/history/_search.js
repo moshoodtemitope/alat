@@ -42,7 +42,11 @@ const search = (props) => {
                                 maxDate={new Date()}
                             />
                         </div>
+                        {props.emptyKeyword ? <p className="text-center text-danger" style={{margin: "0px auto"}}>Please enter search keyword</p> : null}
+                        {props.twoDatesRequired ? <p className="text-center text-danger" style={{margin: "0px auto"}}>Start date and end date are required</p> : null}
                         {props.invalidDate ? <p className="text-center text-danger" style={{margin: "0px auto"}}>Start date cannot exceed end date</p> : null}
+                        
+                        
                 </div>
                 </form>
 

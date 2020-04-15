@@ -7,6 +7,8 @@ import SelectDebitableAccounts from "../../../shared/components/selectDebitableA
 import {customerGoalConstants} from "../../../redux/constants/goal/get-customer-trans-history.constant";
 import {connect} from "react-redux"
 import {Description} from '../group/component'
+import { numberWithCommas } from "../../../shared/utils";
+
 
 import * as actions from "../../../redux/actions/savings/goal/get-customer-transaction-history.actions";
 
@@ -46,7 +48,7 @@ class DeleteGoal extends Component {
                 goalName:data.goalName,
                 goalId:data.id,
                 debitAccount:data.DebitAccount,
-                amountSaved:data.amountSaved,
+                amountSaved: numberWithCommas(data.amountSaved),
                 goalTypeName:data.goalTypeName,
                 partialWithdrawal:true,
                 interestEarned:data.interestEarned
@@ -131,7 +133,7 @@ class DeleteGoal extends Component {
                                                             <Description 
                                                                     leftHeader={this.state.goalName}
                                                 leftDescription={'By deleting your goal, you will lose approximately ₦' + this.state.interestEarned+' in interest because you have not met your target amount'}
-                                                rightHeader={'₦' + this.state.amountSaved}
+                                                rightHeader={'₦' +this.state.amountSaved}
                                                                     rightDiscription="Amount Saved"
                                                                     />
                                                        {/* </div> */}

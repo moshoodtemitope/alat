@@ -96,6 +96,8 @@ class ResetPassword extends React.Component{
     }
 
     valConfirmPasswordValid(){
+        console.log("pw", this.state.newPassword)
+        console.log("confam pw", this.state.confirmPassword)
         if(this.state.newPassword === this.state.confirmPassword){
             this.setState({confirmPasswordValid : true});
             return true;
@@ -196,10 +198,11 @@ class ResetPassword extends React.Component{
                                         this.valConfirmPasswordValid()
                                     }}
                                     onChange={(confirmPassword, e) => {
-                                        this.setState({ confirmPassword });
+                                        this.setState({ confirmPassword },()=> this.valConfirmPasswordValid());
+                                        
                                     }}
                                 />
-                                {!confirmPasswordValid &&
+                                {confirmPasswordValid ===false &&
                                     <div className="text-danger">password mis-match</div>
                                 }
                             </div>

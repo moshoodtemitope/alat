@@ -37,7 +37,6 @@ class WithDrawFromGoalSummmary extends Component {
             let data = {
                 ...this.props.withdraw_from_goal_step1.withdraw_from_goal_data_step1.data
             };
-            // console.log('tag', data);
 
             this.setState({
                 Amount:data.amount,
@@ -45,7 +44,10 @@ class WithDrawFromGoalSummmary extends Component {
                 goalId:data.goalId,
                 debitAccount:data.accountNumber,
                 Amount:data.amount,
-                partialWithdrawal:true
+                partialWithdrawal:true,
+                AvailableBalance: data.AvailableBalance,
+                AccountType: data.AccountType
+
             });
         }
     };
@@ -142,7 +144,7 @@ class WithDrawFromGoalSummmary extends Component {
                                                     <div className="coverForSummary">
                                                         <div className="left">
                                                             <p className='GoalText'>Account Type</p>
-                                                            {/* <p className='boldedText'>{this.state.user.accounts[0].accountType}</p> */}
+                                                            <p className='boldedText'>{this.state.AccountType}</p>
                                                         </div>
 
                                                     </div>
@@ -150,7 +152,7 @@ class WithDrawFromGoalSummmary extends Component {
                                                     <div className="coverForSummary">
                                                         <div className="left">
                                                             <p className='GoalText'>Account Balance</p>
-                                                            {/* <p className='boldedText'>₦{this.state.user.accounts[0].availableBalance}</p> */}
+                                                    <p className='boldedText'>₦{numberWithCommas(this.state.AvailableBalance)}</p>
                                                         </div>
 
                                                         <div className="right">
@@ -177,8 +179,8 @@ class WithDrawFromGoalSummmary extends Component {
 
 
                                         </div>
-                                        <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
-                                                this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
+                                        <a style={{ cursor: "pointer" }} onClick={() => 
+                                    this.props.history.push('/savings/withdraw-from-goal_step1')} className="add-bene m-t-50">
                                                 Go back
                                         </a>
 

@@ -55,13 +55,13 @@ class TopUPGoal extends Component {
     };
     handleDebitableAccount = (event) => {
         let AccountNo = event.target.value.split("8888")[2];
-        console.log(AccountNo)
+        // console.log(AccountNo)
         let AccountName = event.target.value.split("8888")[1];
-        console.log(AccountName)
+        // console.log(AccountName)
         let AccountType = event.target.value.split("8888")[0];
-        console.log(AccountType)
+        // console.log(AccountType)
         let AvailableBalance = event.target.value.split("8888")[3];
-        console.log(AvailableBalance)
+        // console.log(AvailableBalance)
         this.setState({ AccountNo: AccountNo });
         this.setState({ AccountName: AccountName });
         this.setState({ AccountType: AccountType });
@@ -83,7 +83,7 @@ class TopUPGoal extends Component {
 
     renderSelectableDebitabe = () => {
         if (this.props.debitable_account.message === listStyleConstants.DEBITABLE_ACCOUNT_PENDING) {
-            return <select><option>loading debitable Account...</option></select>
+            return <select><option>Loading Debitable Account ...</option></select>
         } else if (this.props.debitable_account.message === listStyleConstants.DEBITABLE_ACCOUNT_FAILURE) {
             return <select><option>No debitable Account</option></select>
 
@@ -117,7 +117,7 @@ class TopUPGoal extends Component {
         else {
 
             let data = JSON.parse(this.props.submitDashboardData.data.data);
-            console.log(data)
+            // console.log(data)
 
 
             this.setState({
@@ -224,7 +224,7 @@ class TopUPGoal extends Component {
             this.props.dispatch(actions.TopUPGoalStep1({
                 'goalName': this.state.goalName,
                 'goalId': this.state.goalId,
-                'amount': this.state.Amount,
+                'amount': this.state.Amount.trim(),
                 'accountNumber': this.state.AccountNo,
                 "AvailableBalance": this.state.AvailableBalance,
                 "AccountType": this.state.AccountType
@@ -236,18 +236,18 @@ class TopUPGoal extends Component {
     showInterest = () => {
         this.setState({ showMessage: true })
     };
-    gotoStep2 = () => {
-        if (this.props.top_up_goal_step1)
-            if (this.props.top_up_goal_step1.top_up_goal_status_step1 === customerGoalConstants.TOP_UP_GOAL_SUCCESS_STEP1) {
-                return <Redirect to="/savings/top-up-goal-summary" />
-            }
-    };
+    // gotoStep2 = () => {
+    //     if (this.props.top_up_goal_step1)
+    //         if (this.props.top_up_goal_step1.top_up_goal_status_step1 === customerGoalConstants.TOP_UP_GOAL_SUCCESS_STEP1) {
+    //             return <Redirect to="/savings/top-up-goal-summary" />
+    //         }
+    // };
 
     render() {
         const { AmountInvalid, accountToDebitInValid } = this.state;
         return (
             <Fragment>
-                {this.gotoStep2()}
+                {/* {this.gotoStep2()} */}
 
                 <div className="row">
                     <div className="col-sm-12">

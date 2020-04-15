@@ -91,7 +91,7 @@ class FixedGoal extends React.Component {
             // console.log('tag', data);
 
             this.setState({
-                targetAmount: util.formatAmount(data.targetAmount),
+                targetAmount:numberWithCommas(data.targetAmount),
                 startDate: data.startDate,
                 endDate: data.endDate,
                 goalName: data.goalName,
@@ -179,7 +179,7 @@ class FixedGoal extends React.Component {
                 "goalName": this.state.goalName,
                 "startDate": this.state.startDate,
                 "endDate": this.state.endDate,
-                "targetAmount": this.state.targetAmount,
+                "targetAmount":this.state.targetAmount,
                 "showInterests": this.state.showInterests,
                 "debitAccount": this.state.debitAccount,
                 "goalFrequency": this.state.goalFrequency,
@@ -237,7 +237,7 @@ class FixedGoal extends React.Component {
                                 <div className="max-600">
                                     <div className="al-card no-pad">
                                         <h4 className="m-b-10 center-text hd-underline">Create a Fixed Goal</h4>
-                                        <p className="header-info">To achieve your target of <span style={{ color: '#AB2656' }}>N{this.state.targetAmount} <span style={{ color: '#444444' }}>by</span> {moment(this.state.endDate).format("DD, MMMM, YYYY")}</span></p>
+                                        <p className="header-info">To achieve your target of <span style={{ color: '#AB2656' }}>N {this.state.targetAmount} <span style={{ color: '#444444' }}>by</span> {moment(this.state.endDate).format("DD, MMMM, YYYY")}</span></p>
 
                                         <form onSubmit={this.onSubmit}>
 

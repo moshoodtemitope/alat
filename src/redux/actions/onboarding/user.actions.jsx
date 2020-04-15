@@ -74,7 +74,7 @@ export const userActions = {
     skipBvn,
     saveBvnInfo,
     saveBvnData,
-    getCustomerProfileImage,
+    // getCustomerProfileImage,
     loginAfterOnboarding,
     reissueToken,
     initStore,
@@ -174,7 +174,7 @@ function loginAfterOnboarding(loginData) {
         localStorage.setItem("user", JSON.stringify(loginData));
         let user_details = localStorage.getItem("user");
         let user = JSON.parse(user_details)
-        console.log("the user on boarding ",user)
+        // console.log("the user on boarding ",user)
         window.smartech('identify', user.email);
         window.smartech('dispatch', 'alat_onboarding_mobile_input', {
             "Email": user.email,
@@ -190,7 +190,7 @@ function loginAfterOnboarding(loginData) {
 }
 
 function sendForgotPwEmail(payload){
-    console.log("sendforgotemail",payload)
+    // console.log("sendforgotemail",payload)
     return dispatch =>{
         let consume = ApiService.request(routes.EMAIL_FOR_FORGETPASSWORD, "POST", payload,  SystemConstant.HEADER);
         dispatch(request(consume));
@@ -379,7 +379,7 @@ function sendOtpOrTokenForPinReset(payload, token){
 
         return consume
             .then(response =>{
-                console.log("----+++");
+                // console.log("----+++");
                 dispatch(success(response));
             }).catch(error =>{
                 dispatch(failure(modelStateErrorHandler(error)));
@@ -534,7 +534,7 @@ function updateCMDM(updatedfields, token){
             .then(response =>{
                 dispatch(success(response));
             }).catch(error =>{
-                console.log("====", error.response);
+                // console.log("====", error.response);
                 if(error.response.status===400 || error.response.status===500){
                     dispatch(failure("An error occured Please try again later"))
                 }else{
@@ -589,7 +589,7 @@ function offlineLoanGetCustomerData(keyId){
             .then(response =>{
                 dispatch(success(response));
             }).catch(error =>{
-                console.log("====",typeof error.response.data);
+                // console.log("====",typeof error.response.data);
                 let errorResponse = error.response.data;
                 if(typeof errorResponse ==="string"){
                     errorResponse = JSON.parse(errorResponse);
@@ -700,33 +700,33 @@ function saveBvnData(otpData, action) {
     function save(otpData) { return { type: SAVE_BVN_INFO, otpData } }
 }
 
-function getCustomerProfileImage(token, image){
-    SystemConstant.HEADER['alat-token'] = token; 
-    return dispatch =>{
-        let profileroute = `${routes.GET_USERPROFILE_IMAGE}${image}`;
-        let consume = ApiService.request(profileroute, "GET", null, SystemConstant.HEADER);
-        dispatch(request(consume));
-        let user_details = localStorage.getItem("user");
-        let user = JSON.parse(user_details)
-        window.smartech('identify', user.email);
-        window.smartech('dispatch', 'alat_onb_photo_sign_success',{
-            "Email": user.email,
-            "mobile": user.phoneNo
-        });
-        return consume
-            .then(response =>{
-                dispatch(success(response.data));
-            }).catch(error =>{
-                dispatch(failure(modelStateErrorHandler(error)));
-                dispatch(alertActions.error(modelStateErrorHandler(error)));
-            });
+// function getCustomerProfileImage(token, image){
+//     SystemConstant.HEADER['alat-token'] = token; 
+//     return dispatch =>{
+//         let profileroute = `${routes.GET_USERPROFILE_IMAGE}${image}`;
+//         let consume = ApiService.request(profileroute, "GET", null, SystemConstant.HEADER);
+//         dispatch(request(consume));
+//         let user_details = localStorage.getItem("user");
+//         let user = JSON.parse(user_details)
+//         window.smartech('identify', user.email);
+//         window.smartech('dispatch', 'alat_onb_photo_sign_success',{
+//             "Email": user.email,
+//             "mobile": user.phoneNo
+//         });
+//         return consume
+//             .then(response =>{
+//                 dispatch(success(response.data));
+//             }).catch(error =>{
+//                 dispatch(failure(modelStateErrorHandler(error)));
+//                 dispatch(alertActions.error(modelStateErrorHandler(error)));
+//             });
         
-    }
+//     }
 
-    function request(request) { return { type:GET_PROFILE_IMAGE_PENDING, request} }
-    function success(response) { return {type:GET_PROFILE_IMAGE_SUCCESS, response} }
-    function failure(error) { return {type:GET_PROFILE_IMAGE_FAILURE, error} }
-}
+//     function request(request) { return { type:GET_PROFILE_IMAGE_PENDING, request} }
+//     function success(response) { return {type:GET_PROFILE_IMAGE_SUCCESS, response} }
+//     function failure(error) { return {type:GET_PROFILE_IMAGE_FAILURE, error} }
+// }
 
 
 

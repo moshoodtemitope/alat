@@ -123,7 +123,7 @@ class ProvideDetails extends React.Component {
             if (parseFloat(e.target.value.replace(/,/g, "")) <= this.state.transferLimit) {
 
                 this.setState({ Amount: e.target.value, isMorthanLimit: false });
-                if (parseFloat(e.target.value.replace(",", "")) <= this.state.selectedDebitableAccount[0].AvailableBalance) {
+                if (parseFloat(e.target.value.replace(/,/g, "")) <= this.state.selectedDebitableAccount[0].AvailableBalance) {
 
                     this.setState({ Amount: e.target.value, isMorthanLimit: false });
                 }

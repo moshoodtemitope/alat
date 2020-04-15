@@ -39,7 +39,7 @@ class CashoutStashGoal extends Component {
             let data = {
                 ...this.props.stashGoal_step1.stashout_goal_data_step1.data
             };
-             console.log('tag', data);
+            //  console.log('tag', data);
 
             this.setState({
                 goalName:data.goalName,
@@ -86,7 +86,7 @@ class CashoutStashGoal extends Component {
         this.props.dispatch(actions.StashCashout({
             "goalId": this.state.goalId,
             "accountNumber": this.state.debitAccount.trim(),
-            "amount":this.state.Amount,
+            "amount":numberWithCommas(this.state.Amount),
             // "PartWithdrawal":true
 
         }));
@@ -156,7 +156,7 @@ class CashoutStashGoal extends Component {
                                                     <div className="coverForSummary">
                                                         <div className="left">
                                                             <p className='GoalText'>Account Balance</p>
-                                                            <p className='boldedText'>₦{this.state.AvailableBalance}</p>
+                                                    <p className='boldedText'>₦{numberWithCommas(this.state.AvailableBalance)}</p>
                                                         </div>
 
                                                         <div className="right">
@@ -181,9 +181,11 @@ class CashoutStashGoal extends Component {
 
 
                                         </div>
-                                        <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
-                                                this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
-                                                Go back
+
+                                        <a style={{ cursor: "pointer" }} onClick={() => {
+                                            this.props.history.push('/savings/stash-cashout')
+                                        }} className="add-bene m-t-50">
+                                            Go back
                                         </a>
 
 

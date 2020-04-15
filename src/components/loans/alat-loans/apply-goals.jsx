@@ -268,7 +268,7 @@ class ApplyGoals extends Component {
                                                     } else if (formElement.config.elementType !== "input") {
                                                         return (
                                                             <div className="input-ctn" key={formElement.id}>
-                                                                <label>Select an account to debit</label>
+                                                                <label>Select an account to credit</label>
                                                                 <Select key={formElement.id}
                                                                     value={selectedAccount == null ? formElement.config.elementConfig.options : selectedAccount}
                                                                     onChange={this.accountChangedHandler}

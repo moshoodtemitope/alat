@@ -10,6 +10,9 @@ import { connect } from "react-redux";
 import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import {history} from '../../../_helpers/history';
 import { GROUPSAVINGSCONSTANT } from "../../../redux/constants/savings/group";
+import { numberWithCommas } from "../../../shared/utils";
+import moment from 'moment'
+
 
 const quantityOfMembers = [
     { value: '1' ,label:"1" },
@@ -26,6 +29,7 @@ const quantityOfMembers = [
 
 class EditRotatingGroup extends React.Component {
     constructor(props){
+        console.log('this is the props', props.location.data)
         super(props);
         this.state={
             user: JSON.parse(localStorage.getItem("user")),
@@ -179,6 +183,7 @@ class EditRotatingGroup extends React.Component {
 
 
     handleGroupName = (event) => {
+        console.log("this is group name",event.target.value)
         this.setState({
             groupName: event.target.value
         })
@@ -191,8 +196,9 @@ class EditRotatingGroup extends React.Component {
     }
 
     handleMonthlContributions = (event) => {
+        console.log("this is monthly contribution",numberWithCommas(event.target.value))
         this.setState({
-            monthlyContribution: event.target.value
+            monthlyContribution: numberWithCommas(event.target.value)
         })
     }
 
@@ -276,13 +282,13 @@ class EditRotatingGroup extends React.Component {
                                                     <div className="form-row">
                                                         <div className={groupNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Give your group a name</label>
-                                                            <input type="text" placeholder="Dubai Goal" onChange={this.handleGroupName}/>
+                                                        <input defaultValue={this.props.rotatingGroupDetails.message === GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS_SUCCESS && this.props.location.data.name} type="text" placeholder="Dubai Goal" onChange={this.handleGroupName}/>
                                                         </div>
                                                     </div>
                                                     <div className="form-row">
                                                         <div className={monthlyContributionValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                 <label className="label-text">Monthly Contributions</label>
-                                                                <input type="number" placeholder="N 100,000" onChange={this.handleMonthlContributions}/>
+                                                        <input className="form-control" style={{height:"50px"}} defaultValue={numberWithCommas(this.props.location.data.monthlyContribution)} placeholder="N 100,000" onChange={this.handleMonthlContributions}/>
                                                         </div>
                                                         <div className={howMuchValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">Number of members?</label>
@@ -302,8 +308,10 @@ class EditRotatingGroup extends React.Component {
                                                                 dateFormat=" MMMM d, yyyy"
                                                                 showMonthDropdown
                                                                 onChange={this.handleSelectedDate}
+                                                                minDate={new Date()}
+                                                            placeholderText={moment(this.props.location.data.startDate).format("LL")}
                                                                 showYearDropdown
-                                                                value={this.state.startDate}
+                                                            defaultValue={this.props.location.data.startDate}
                                                                 dropdownMode="select"
                                                             />
                                                         </div>
@@ -324,7 +332,11 @@ class EditRotatingGroup extends React.Component {
                                                         <div className="col-sm-12">
                                                             <center>
                                                                 
-                                                                        <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Create Group</button>
+                                                                        <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">
+                                        
+                                                                            Create Group
+                                                                        
+                                                                        </button>
                                                                 
                                                             </center>
                                                         </div>
@@ -457,7 +469,8 @@ class EditRotatingGroup extends React.Component {
                                                     <div className="row">
                                                         <div className="col-sm-12">
                                                             <center>
-                                                                <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">Create Group</button>    
+                                                                <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">
+                                                                    Create Group</button>    
                                                             </center>
                                                         </div>
                                                     </div>

@@ -13,6 +13,9 @@ import * as actions from '../../../redux/actions/savings/group-savings/rotating-
 import {history} from '../../../_helpers/history';
 import moment from 'moment';
 import { GROUPSAVINGSCONSTANT } from '../../../redux/constants/savings/group';
+import EditRotationSaving from '../group/edit-rotating-savings-group';
+import { numberWithCommas } from "../../../shared/utils";
+
 
 
 
@@ -55,7 +58,9 @@ class GroupAnalyticsMini extends React.Component {
     GetSmallNavs = () => {
         return <div className='miniNav'>
                     <div className='left'>
-                     <p style={{cursor:"pointer"}} onClick={this.MoveToEditGroupEsusu}>Edit</p>
+                <p style={{ cursor: "pointer" }} onClick={this.MoveToEditGroupEsusu}>Edit
+                    
+                </p>
                     </div>
                     <div className='right'>
                         <p style={{cursor:"pointer"}} onClick={this.DeleteGroup}>Delete</p>
@@ -116,9 +121,14 @@ class GroupAnalyticsMini extends React.Component {
        history.push('/savings/rotating-confirm-delete');
     };
 
-    MoveToEditGroupEsusu = () => {
-        history.push('/savings/group-savings/edit-rotating');
+    MoveToEditGroupEsusu = (data) => {
+        console.log("this is the data",data)
+        history.push({ 
+            pathname:'/savings/group-savings/edit-rotating',
+            data: this.props.groupDetails.response
+        });
     }
+   
 
 
     NavigateToGroupSavings = () => {
@@ -216,7 +226,7 @@ class GroupAnalyticsMini extends React.Component {
                                                         discTopRight={this.GetStatusOfGroupMessage()}
                                                         percentage={this.GetStatusOfGroup()}
                                                         
-                                                        discSpan={this.PotContribution()}
+                                                        discSpan={numberWithCommas(this.PotContribution())}
                                                         discBottomSib="Pot Total"
                                                         />                
                                                         <p id="firstPoint">Payment</p>
@@ -225,10 +235,15 @@ class GroupAnalyticsMini extends React.Component {
                                                         
                                                         <MoreDetails 
                                                           lefthead={this.GetStartDate()}
-                                                          leftBottom="Target Date"
+                                                          leftBottom="Start Date"
                                                           rightContent={this.GetReferalCode()}
                                                           rightContentBottom="Group Code"
                                                          />
+                                                        {this.props.alert && this.props.alert.message &&
+                                                            <div style={{width: "100%", marginLeft:"1px" }} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                                                        }
+                                                    
+
     
                                                         <Buttons
                                                             buttonType={this.state.buttonType}
@@ -391,6 +406,7 @@ class GroupAnalyticsMini extends React.Component {
                                                     <div class='firstSubHead'>
                                                         <p>ROTATING SAVING GROUP</p>
                                                         <p>{this.props.groupDetails.response.name}</p>
+                                                        
                                                     </div>
                                                         <SubHead 
                                                             type={this.state.type}
@@ -419,6 +435,8 @@ class GroupAnalyticsMini extends React.Component {
                                                             rightContent={this.GetReferalCode()}
                                                             rightContentBottom="Group Code"
                                                             />
+                                                              
+                                                            
                                        
                                                             <Buttons
                                                                 buttonType={this.state.buttonType}
@@ -456,6 +474,7 @@ function mapStateToProps(state){
         groupDetails: state.rotatingGroupDetails.data,
         groupSavingsEsusu: state.getGroupSavingsEsusu.data,
         groups: state.customerGroup.data,
+        alert: state.alert,
         rotatingGroupDetails: state.rotatingGroupDetails
     }
  }

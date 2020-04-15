@@ -9,6 +9,8 @@ import {connect} from 'react-redux';
 import {Description} from '../group/component'
 import { DebitableAccount } from '../../../redux/actions/lifestyle/movies-actions';
 import { listStyleConstants } from '../../../redux/constants/lifestyle/lifestyle-constants';
+import { numberWithCommas } from "../../../shared/utils";
+
 
 
 
@@ -36,8 +38,6 @@ class WithdrawFromGoal extends Component {
 
 
         };
-        this.handleDebit = this.handleDebit.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.fetchDebitableAccount()
 
 
@@ -58,7 +58,7 @@ class WithdrawFromGoal extends Component {
     }
     renderSelectableDebitabe = () => {
         if (this.props.debitable_account.message === listStyleConstants.DEBITABLE_ACCOUNT_PENDING) {
-            return <select><option>loading... debitable Account</option></select>
+            return <select><option>Loading Debitable Account ...</option></select>
         } else if (this.props.debitable_account.message === listStyleConstants.DEBITABLE_ACCOUNT_FAILURE) {
             return <select><option>No debitable Account</option></select>
 
@@ -67,7 +67,7 @@ class WithdrawFromGoal extends Component {
             let account = this.props.debitable_account.data.response
             return (
                 <select onChange={this.handleDebitableAccount}>
-                    <option>Select Account to debit</option>
+                    <option>Select Account to Credit</option>
                     {
                         account.map(select_debitable => {
                             return (<option key={select_debitable.BranchCode} value={select_debitable.AccountType + "8888" + " " + select_debitable.AccountName + " " + "8888" + " " + select_debitable.AccountNumber + "8888" + " " + select_debitable.AvailableBalance}>
@@ -100,7 +100,7 @@ class WithdrawFromGoal extends Component {
                 goalName:data.goalName,
                 goalId:data.id,
                 debitAccount:data.DebitAccount,
-                amountSaved:data.amountSaved,
+                amountSaved: numberWithCommas(data.amountSaved),
                 goalTypeName:data.goalTypeName,
                 partialWithdrawal:true
             });
@@ -183,14 +183,14 @@ class WithdrawFromGoal extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({isSubmit: true});
-        if (this.validateAmount() || this.validateAccountNumber()) {
+        if (this.validateAmount()) {
             //not valid
         }else {
             this.props.dispatch(actions.WithDrawFromGoalStep1( {
                     'goalName':this.state.goalName,
                     'goalId':parseInt(this.state.goalId),
-                    "amount":this.state.amountSaved,
-                    'accountNumber': this.state.AccountNo,
+                    "amount":this.state.Amount,
+                    'accountNumber': this.state.AccountNo.trim(),
                     "AvailableBalance": this.state.AvailableBalance,
                     "AccountType": this.state.AccountType
                 
@@ -200,12 +200,12 @@ class WithdrawFromGoal extends Component {
 
         }
     };
-    gotoStep2 = () => {
-        if (this.props.withdraw_from_goal_step1)
-            if (this.props.withdraw_from_goal_step1.withdraw_from_goal_status_step1 === customerGoalConstants.WITHDRAW_FROM_GOAL_SUCCESS_STEP1) {
-                return <Redirect to="/savings/withdraw-from-goal_summary"/>
-            }
-    };
+    // gotoStep2 = () => {
+    //     if (this.props.withdraw_from_goal_step1)
+    //         if (this.props.withdraw_from_goal_step1.withdraw_from_goal_status_step1 === customerGoalConstants.WITHDRAW_FROM_GOAL_SUCCESS_STEP1) {
+    //             return <Redirect to="/savings/withdraw-from-goal_summary"/>
+    //         }
+    // };
 
 
     render() {
@@ -213,7 +213,7 @@ class WithdrawFromGoal extends Component {
         return (
             <Fragment>
                 
-                        {this.gotoStep2()}
+                        {/* {this.gotoStep2()} */}
                         <div className="row">
                             <div className="col-sm-12">
                                 <p className="page-title">Savings & Goals</p>

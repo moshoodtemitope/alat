@@ -16,7 +16,7 @@ export const TalkUsMessage =(data)=>{
         dispatch(request(consume));
         let user_details = localStorage.getItem("user");
         let user = JSON.parse(user_details)
-        console.log(user)
+        // console.log(user)
         window.smartech('identify', user.email);
         window.smartech('dispatch', 'alat_talk_to_us', {
             "Email": user.email,

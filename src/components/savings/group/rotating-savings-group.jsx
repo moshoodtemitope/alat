@@ -10,6 +10,8 @@ import { connect } from "react-redux";
 import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import {history} from '../../../_helpers/history';
 import {GROUPSAVINGSCONSTANT} from "../../../redux/constants/savings/group/index";
+import { numberWithCommas } from "../../../shared/utils";
+
 
 
 const quantityOfMembers = [
@@ -95,11 +97,11 @@ class RotatingGroup extends React.Component {
 
     
     handleSelectedDate = (startDate) => {
-        this.setState({
-            startDate: startDate
-        });
+        startDate.setHours(startDate.getHours() + 1);
+        this.setState({startDate: startDate});
         // this.props.dispatch(actions.setAutomateSavingsStartDate(startDate));
     }
+
 
     //1
     validateStartDate=()=>{
@@ -158,6 +160,8 @@ class RotatingGroup extends React.Component {
             this.setState({ isAccountInvalid: false })
          }
     }
+
+    
     
     checkAccountNumber = () => {
         if (this.state.selectedAccount.length != 10) {
@@ -192,14 +196,14 @@ class RotatingGroup extends React.Component {
 
     handleMonthlContributions = (event) => {
         this.setState({
-            monthlyContribution: event.target.value
+            monthlyContribution: numberWithCommas(event.target.value)
         })
     }
 
     SubmitAutomatedGroupSavings = () => {
         const data = {
             Name: this.state.groupName,
-            MonthlyContribution: parseFloat(this.state.monthlyContribution),
+            MonthlyContribution:this.state.monthlyContribution,
             NumberOfMembers: parseInt(this.state.numberOfMembers),
             StartDate: this.state.startDate,
             DebitAccount: this.state.selectedAccount
@@ -282,7 +286,7 @@ class RotatingGroup extends React.Component {
                                                 <div className="form-row">
                                                     <div className={monthlyContributionValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                          <label className="label-text">Monthly Contributions</label>
-                                                         <input type="number" placeholder="N 100,000" onChange={this.handleMonthlContributions}/>
+                                                    <input className='form-control' style={{height:"50px"}} value={numberWithCommas(this.state.monthlyContribution)} placeholder="N 100,000" onChange={this.handleMonthlContributions}/>
                                                     </div>
                                                     <div className={NoOfMembers ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                         <label className="label-text">Number of members?</label>
@@ -300,11 +304,14 @@ class RotatingGroup extends React.Component {
                                                         <DatePicker className="form-control" selected={this.state.startDate}
                                                             placeholder="October 31, 2017"
                                                             dateFormat=" MMMM d, yyyy"
+                                                            minDate={new Date()}
                                                             showMonthDropdown
                                                             onChange={this.handleSelectedDate}
                                                             showYearDropdown
                                                             value={this.state.startDate}
                                                             dropdownMode="select"
+                                                            placeholderText="start Date"
+
                                                             minDate={new Date()}
                                                         />   
                                                     </div>

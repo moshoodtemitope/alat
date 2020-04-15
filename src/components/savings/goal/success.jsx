@@ -6,6 +6,8 @@ import Members from '../group/list-item';
 import { connect } from "react-redux";
 import * as actions from '../../../redux/actions/savings/goal/create-stash-goal.actions'
 import {createGoalConstants} from '../../../redux/constants/goal/create-stash.constant'
+import { numberWithCommas } from "../../../shared/utils";
+
 
 
 class SuccessMessage extends React.Component {
@@ -70,7 +72,7 @@ class SuccessMessage extends React.Component {
                                                    userType="admin"
                                                    name={details.goalTypeName}
                                                    position="Status: Completed"
-                                                    amount={"₦"+details.amountSaved}
+                                                    amount={"₦" + numberWithCommas(details.amountSaved)}
                                                    intent="Amount Saved"
                                                    id="autoSummary"/>
                                                 </div>

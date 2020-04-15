@@ -6,6 +6,8 @@ import {NavLink} from 'react-router-dom'
 import {flexGoalConstants} from '../../../redux/constants/goal/flex-goal.constant'
 import * as actions from '../../../redux/actions/savings/goal/flex-goal.actions'
 import { numberWithCommas } from "../../../shared/utils";
+import { formatAmount, mapCurrency } from '../../../shared/utils';
+
 
 
 
@@ -36,6 +38,9 @@ import { numberWithCommas } from "../../../shared/utils";
     componentDidMount = () => {
         this.init();
     };
+    //  formatAmount(amount) {
+    //      return amount.toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    //  }
 
     init = () => {
         if (this.props.flex_goal_step2.flex_step2_status !== flexGoalConstants.FETCH_FLEX_GOAL_SUCCESS_STEP2)
@@ -47,12 +52,12 @@ import { numberWithCommas } from "../../../shared/utils";
             // console.log('tag', data);
 
             this.setState({
-                targetAmount:data.targetAmount,
+                targetAmount:numberWithCommas(data.targetAmount),
                 startDate:data.startDate,
                 goalName:data.goalName,
                 goalFrequency:data.goalFrequency,
                 debitAccount:data.debitAccount,
-                debitAmount:data.debitAmount,
+                debitAmount:numberWithCommas(data.debitAmount),
                 goalFrequencyValue:data.goalFrequencyValue
 
             });
@@ -130,7 +135,7 @@ import { numberWithCommas } from "../../../shared/utils";
                                         <div className="coverForSummary">
                                             <div className="left">
                                                 <p className='GoalText'>Contributions</p>
-                                                <p className='boldedText'>₦{this.state.debitAmount}/{this.state.goalFrequency}-{this.state.goalFrequencyValue}</p>
+                                                    <p className='boldedText'>₦{this.state.debitAmount}/{this.state.goalFrequency}-{this.state.goalFrequencyValue}</p>
                                             </div>
                                             <div className="right">
                                                 <p className='GoalText'>Account to Debit</p>
@@ -157,15 +162,12 @@ import { numberWithCommas } from "../../../shared/utils";
                                 </div>
                                 <center>
                                     <a onClick={() => { this.props.dispatch(actions.ClearAction(flexGoalConstants.FLEX_GOAL_REDUCER_CLEAR));
-                                        this.props.history.push('/savings/flex-goal') }} className="add-bene m-t-50">Go to Back</a>
+                                        this.props.history.push('/savings/flex-goal') }} className="add-bene m-t-50">Go  Back</a>
                                 </center>
 
                             
                             </div>
-                            <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(flexGoalConstants.FLEX_GOAL_REDUCER_CLEAR));
-                                                this.props.history.push('/savings/flex-goal-step2') }} className="add-bene m-t-50">
-                                                Go back
-                            </a>
+                          
 
                         
                         

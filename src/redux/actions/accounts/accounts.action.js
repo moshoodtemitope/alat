@@ -190,6 +190,8 @@ export const sendTransactionReceipt = (token, data) => {
             })
             .catch(error => {
                 // dispatch(isSendingReceipt());
+                dispatch(failure())
+                dispatchClearResponse(2);
                 dispatch(alertActions.error(modelStateErrorHandler(error)));
             });
 
@@ -203,6 +205,12 @@ export const sendTransactionReceipt = (token, data) => {
     function success() {
         return {
             type: actionTypes.SEND_RECEIPT_SUCCESS,
+        }
+    }
+
+    function failure() {
+        return {
+            type: actionTypes.SEND_RECEIPT_FAILURE,
         }
     }
 

@@ -69,6 +69,7 @@ export const GoalType = (token, data) => {
 export const TopUPGoalStep1 = (data) =>{
     return(dispatch)=>{
         dispatch(success(data))
+        history.push("/savings/top-up-goal-summary")
     };
     function success(data){
         return{
@@ -120,6 +121,7 @@ export const TopUPGoal =(data)=>{
 export const WithDrawFromGoalStep1 = (data) =>{
     return(dispatch)=>{
         dispatch(success(data))
+        history.push("/savings/withdraw-from-goal_summary")
     };
     function success(data){
         return{
@@ -131,6 +133,7 @@ export const WithDrawFromGoalStep1 = (data) =>{
 export const StashCashoutStep1 = (data) =>{
     return(dispatch)=>{
         dispatch(success(data))
+        history.push("/savings/cashout-goal-summary")
     };
     function success(data){
         return{
@@ -144,10 +147,12 @@ export const Cashout = (data) =>{
         dispatch(success(data))
     };
     function success(data){
+
         return{
             type:customerGoalConstants.CASH_OUT_SUCCESS,
             data:data
         }
+        
     }
 };
 

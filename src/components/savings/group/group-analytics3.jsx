@@ -163,7 +163,7 @@ class GroupAnalytics3 extends React.Component {
                                             {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                 <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
                                             {/* </NavLink> */}
-                                                <li><a href="#">Investments</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
     
                                             </ul>
                                         </div>
@@ -196,7 +196,7 @@ class GroupAnalytics3 extends React.Component {
                                             {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                 <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
                                             {/* </NavLink> */}
-                                                <li><a href="#">Investments</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
     
                                             </ul>
                                         </div>
@@ -270,7 +270,7 @@ class GroupAnalytics3 extends React.Component {
                                                 {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                     <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
                                                 {/* </NavLink> */}
-                                                    <li><a href="#">Investments</a></li>
+                                                    {/* <li><a href="#">Investments</a></li> */}
         
                                                 </ul>
                                             </div>

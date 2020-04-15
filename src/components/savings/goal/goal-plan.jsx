@@ -23,14 +23,15 @@ class GoalPlan extends React.Component {
             visible: true
 
         };
-        this.fetchCustomerTransHistoryGoals();
-        this.fetchGoalType();
-        this.fetchGoalFormular();
+       
     }
 
     componentDidMount = () => {
         this.CheckGroupSavingsAvailability();
         this.CheckRotatingSavingsAvailability();
+        this.fetchCustomerTransHistoryGoals();
+        this.fetchGoalType();
+        this.fetchGoalFormular();
     }
 
     CheckRotatingSavingsAvailability = () => {
@@ -46,19 +47,19 @@ class GoalPlan extends React.Component {
     }
 
 
-    fetchCustomerTransHistoryGoals(){
+    fetchCustomerTransHistoryGoals=()=>{
         const { dispatch } = this.props;
-        dispatch(getCustomerGoalTransHistory());
+        dispatch(getCustomerGoalTransHistory(this.state.user.token));
     };
 
-    fetchGoalType(){
+    fetchGoalType=()=>{
         const {dispatch}= this.props;
-        dispatch(GoalType())
+        dispatch(GoalType(this.state.user.token))
     }
 
-    fetchGoalFormular(){
+    fetchGoalFormular=()=>{
         const {dispatch}=this.props;
-        dispatch(GoalFormula)
+        dispatch(GoalFormula(this.state.user.token))
     }
 
     toCurrency(number) {

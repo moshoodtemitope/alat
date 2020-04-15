@@ -121,7 +121,10 @@ const transactionHistory = (props) => {
                 {createheader()}
                 <div className="text-center m-t-50">
                     {props.response == 0 ? <span style={{ fontSize: 50, color: "#5BB746", marginLeft: -10 }} className="fa fa-check-circle m-b-20"></span> : <span style={{ fontSize: 50, color: "#ccc", marginLeft: -10 }} className="fa fa-history m-b-20"></span>}
-                    <p style={{ fontWeight: 600 }}>{props.response == 0 ? "Redirecting... Receipt has been sent to your e-mail" : "Sending transaction receipt"}</p>
+                    <p style={{ fontWeight: 600 }}>{props.response == 0 && <span>Redirecting... Receipt has been sent to your e-mail</span>}</p>
+                    <p style={{ fontWeight: 600 }}>{props.response == 6 && <span>Sending transaction receipt</span>}</p>
+                    <p style={{ fontWeight: 600 }}>{props.response == 7 && <span>Unable to send receipt at the moment</span>}</p>
+                    {/* <p style={{ fontWeight: 600 }}>{props.response == 0 ? "Redirecting... Receipt has been sent to your e-mail" : "Sending transaction receipt"}</p> */}
                 </div>
             </div>
         );

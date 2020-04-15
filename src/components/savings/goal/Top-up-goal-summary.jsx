@@ -38,10 +38,10 @@ class TopUPGoalSummmary extends Component {
             let data = {
                 ...this.props.top_up_goal_step1.top_up_goal_data_step1.data
             };
-            console.log('tag', data);
+            // console.log('tag', data);
 
             this.setState({
-                Amount:data.amount,
+                Amount:numberWithCommas(data.amount),
                 goalName:data.goalName,
                 goalId:data.goalId,
                 debitAccount:data.accountNumber,
@@ -55,7 +55,7 @@ class TopUPGoalSummmary extends Component {
         this.props.dispatch(actions.TopUPGoal({
             "goalId":this.state.goalId,
             "amount":this.state.Amount,
-            "amountNumber":this.state.debitAccount
+            "amountNumber":this.state.debitAccount.trim()
         }));
 
     };
@@ -122,7 +122,7 @@ class TopUPGoalSummmary extends Component {
                                                     <div className="coverForSummary">
                                                         <div className="left">
                                                             <p className='GoalText'>Account Balance</p>
-                                                    <p className='boldedText'>₦{this.state.AvailableBalance}</p>
+                                                    <p className='boldedText'>₦{numberWithCommas(this.state.AvailableBalance)}</p>
                                                         </div>
 
                                                         <div className="right">
@@ -147,8 +147,7 @@ class TopUPGoalSummmary extends Component {
 
 
                                         </div>
-                                        <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(customerGoalConstants.CUSTOMER_GOAL_REDUCER_CLEAR));
-                                                this.props.history.push('/savings/choose-goal-plan') }} className="add-bene m-t-50">
+                                        <a style={{ cursor: "pointer" }} onClick={()=>this.props.history.push('/savings/top-up-goal-step1') }className="add-bene m-t-50">
                                                 Go back
                                         </a>
 

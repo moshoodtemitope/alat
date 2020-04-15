@@ -122,7 +122,7 @@ class ChangeQuestion extends Component {
         };
         updatedSelectElement.selectedOption = selectedOption;
         updatedQuestionDataForm[selectIndentifier] = updatedSelectElement;
-        this.setState({ changeQuestionForm: updatedQuestionDataForm, repeatQuestion : false });
+        this.setState({ changeQuestionForm: updatedQuestionDataForm, repeatQuestion : false })
     }
 
 
@@ -182,16 +182,19 @@ class ChangeQuestion extends Component {
             this.setState({ hasError: true })
             return;
         }
-        if(data.length > 1){
-            let arr;
-            for(var selected in data){
-                arr = data.filter(x => selected.value == x.value );
-                if (arr.length > 1){
-                    this.setState({repeatQuestion: true});
-                    return;
-                }
-            }
-        }
+        // if(data.length > 1){
+        //     let arr;
+        //     for(var selected in data){
+        //         arr = data.filter(x => selected.value == x.value);
+             
+
+        //         if (arr.length > 1){
+        //             console.log('tag', arr.length)
+        //             // this.setState({repeatQuestion: true});
+        //             return;
+        //         }
+        //     }
+        // }
 
         let payload = {
             securityQuestion: data
@@ -269,12 +272,19 @@ class ChangeQuestion extends Component {
 
                                                 <div className="row">
                                                     <div className="col-sm-12">
-                                                        <center>
+                                                        {this.props.questionsData.answeredQuestions.length >= 1 ? <center>
                                                             {this.state.hasError ? <span className="text-danger">Please pick and answer atleast one security question</span> : null}
-                                                            
+
                                                             {this.state.repeatQuestion ? <span className="text-danger">You can't select a question twice</span> : null}
-                                                            <button disabled={this.props.fetching} onClick={this.onSubmitForm} style={{ width: "100%" }} className="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Confirm"}</button>
-                                                        </center>
+                                                            <button disabled={this.props.fetching} onClick={this.onSubmitForm} style={{ width: "100%" }} className="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Change"}</button>
+                                                        </center>:
+                                                            <center>
+                                                                {this.state.hasError ? <span className="text-danger">Please pick and answer atleast one security question</span> : null}
+
+                                                                {this.state.repeatQuestion ? <span className="text-danger">You can't select a question twice</span> : null}
+                                                                <button disabled={this.props.fetching} onClick={this.onSubmitForm} style={{ width: "100%" }} className="btn-alat m-t-10 m-b-20 text-center">{this.props.fetching ? "Processing..." : "Confirm"}</button>
+                                                            </center>}
+                                                        
                                                     </div>
                                                 </div>
                                             </form>

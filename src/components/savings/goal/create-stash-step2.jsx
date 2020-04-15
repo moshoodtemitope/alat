@@ -42,7 +42,7 @@ class StashSummmary extends Component {
             // console.log('tag', data);
 
             this.setState({
-                targetAmount:data.targetAmount,
+                targetAmount: data.targetAmount,
                 startDate: data.startDate,
                 goalName:data.goalName,
                 payOutInterest:data.payOutInterest,
@@ -55,7 +55,7 @@ class StashSummmary extends Component {
         this.props.dispatch(actions.CreateStashGoal({
             "goalName":this.state.goalName,
             // "startDate":this.state.startDate,
-            "targetAmount":this.state.targetAmount,
+            "targetAmount":numberWithCommas(this.state.targetAmount),
             "debitAccount":this.state.debitAccount,
             "debitAmount":this.state.payOutInterest,  
             "FrequencyId":this.state.FrequencyId,

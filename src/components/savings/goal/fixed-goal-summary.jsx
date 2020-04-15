@@ -62,7 +62,7 @@ import { numberWithCommas } from "../../../shared/utils";
             "goalName":this.state.goalName,
             "startDate":this.state.startDate,
             "targetDate":this.state.endDate,
-            "targetAmount":this.state.targetAmount,
+            "targetAmount":numberWithCommas(this.state.targetAmount),
             "debitAccount":this.state.debitAccount,
             "debitAmount":parseFloat(this.state.showInterests),
             "goalTypeId":parseInt(this.state.GoalTypeId),
@@ -138,7 +138,7 @@ import { numberWithCommas } from "../../../shared/utils";
 
                                         <div className="coverForSummary">
                                             <div className="left">
-                                                <p className='GoalText'>Interest Accrued</p>
+                                                <p className='GoalText'>Interest</p>
                                                 <p className='boldedText'>₦{this.state.showInterests}/{this.goalFrequencyLabel()} </p>
                                             </div>
                                             <div className="right">

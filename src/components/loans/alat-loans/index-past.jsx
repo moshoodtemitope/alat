@@ -40,7 +40,7 @@ class IndexPast extends Component {
     }
 
     onShowModal = (event) => {
-        console.log("dot here")
+        // console.log("dot here")
         event.preventDefault();
         this.props.clearError();
         this.setState({ showModal: true });
@@ -61,14 +61,14 @@ class IndexPast extends Component {
     handleStartDatePicker = (startDate) => {
         this.checkInfoState();
         startDate.setHours(startDate.getHours() + 1);
-        console.log(startDate)
+        // console.log(startDate)
         this.setState({ startDate });
     }
 
     handleEndDatePicker = (endDate) => {
         this.checkInfoState();
         endDate.setHours(endDate.getHours() + 1);
-        console.log(endDate)
+        // console.log(endDate)
         this.setState({ endDate });
     }
 
@@ -133,7 +133,9 @@ class IndexPast extends Component {
                             <img src={taxLogo} className="m-b-30" style={{ marginTop: 60 }} alt="loans Logo" />
                             <p className="grey-text no-paylink">{this.props.fetching ? "Loading past loans..." : (this.props.alert.message ? <p><span style={{ color: "red" }}>{this.props.alert.message}</span><span onClick={() => { this.props.getPastLoans(this.state.user.token, payload) }} style={{ textDecoration: "underline", cursor: "pointer" }}> Click here to try again</span></p> : "You currently have no past loans")}</p>
                             <button onClick={this.onShowModal} className="btn-alat">Apply for Loan</button>
+                        
                         </center>
+                      
                     </div>
                 </div>
             </AlatLoanContainer>);

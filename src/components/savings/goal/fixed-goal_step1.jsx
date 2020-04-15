@@ -384,7 +384,6 @@ render() {
                                                 {startDateInvalid &&
                                                     <div className="text-danger">select a valid date</div>
                                                 }
-                                                <div className="text-danger">{this.state.error}</div>
 
                                             </div>
                                             
@@ -413,7 +412,8 @@ render() {
                                                 {endDateInvalid &&
                                                     <div className="text-danger">select a valid date</div>
                                                 }
-                                                {/* <div className="text-danger">{this.state.error}</div> */}
+                                                <div className="text-danger">{this.state.error}</div>
+
 
                                             </div>
                                         </div>

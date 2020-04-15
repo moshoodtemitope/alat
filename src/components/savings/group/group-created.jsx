@@ -7,7 +7,6 @@ import * as actions from '../../../redux/actions/savings/group-savings/group-sav
 import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import {history} from '../../../_helpers/history';
 import { GROUPSAVINGSCONSTANT } from '../../../redux/constants/savings/group';
-import { iif } from "rxjs";
 
 // var groupDetailsId = null;
 // var groupDetailsStore = null;
@@ -81,6 +80,9 @@ class GroupCreated extends React.Component {
     }
 
     render() {
+
+        const{payload}=this.props
+        console.log("this is the payload",payload)
         
         
         // for pending detials
@@ -151,7 +153,7 @@ class GroupCreated extends React.Component {
                                             {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                                 <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
                                             {/* </NavLink> */}
-                                                <li><a href="#">Investments</a></li>
+                                                {/* <li><a href="#">Investments</a></li> */}
                                             </ul>
                                         </div>
                                     </div>
@@ -161,7 +163,7 @@ class GroupCreated extends React.Component {
                                         <div className="col-sm-12">
                                           <div className="max-600">
                                            <div className="al-card no-pad">
-                                           <h4 className="m-b-10 center-text hd-underline">Group Created</h4>
+                            <h4 className="m-b-10 center-text hd-underline">Group {this.props.payload.response.name} Created</h4>
                                                 <form onSubmit={this.handleSubmit}>
                                                     <input type="text" id='hiddenReferralCode' ref={ele => this.textInputHidden = ele} value={this.props.groupDetails.data.response.referralCode}/>
                                                     <div className="form-group instruction">
@@ -179,7 +181,7 @@ class GroupCreated extends React.Component {
                                                     </div>
                                                     <div className="form-row">
                                                         <div className="form-group col-md-6 butLeft">
-                                                            <button>Share Code</button>
+                                                        <button onClick={this.CopyCode}>Copy Code</button>
                                                         </div>
                                                         <div className="form-group col-md-6 butRight">
                                                             <NavLink to='/savings/group/group-analytics'>
@@ -225,7 +227,7 @@ class GroupCreated extends React.Component {
                                         {/* <NavLink to="/savings/goal/group-savings-selection"> */}
                                             <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
                                         {/* </NavLink> */}
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
                                         </ul>
                                     </div>
                                 </div>
@@ -282,7 +284,7 @@ class GroupCreated extends React.Component {
                                         <div className="col-sm-12">
                                           <div className="max-600">
                                            <div className="al-card no-pad">
-                                           <h4 className="m-b-10 center-text hd-underline">Group HH Created</h4>
+                                            <h4 className="m-b-10 center-text hd-underline">Group {this.props.payload.response.name} Created</h4>
                                                 <form onSubmit={this.handleSubmit}>
                                                     <input type="text" id='hiddenReferralCode' ref={ele => this.textInputHidden = ele} value={this.props.payload.response.referralCode}/>
                                                     <div className="form-group instruction">
@@ -300,7 +302,7 @@ class GroupCreated extends React.Component {
                                                     </div>
                                                     <div className="form-row">
                                                         <div className="form-group col-md-6 butLeft">
-                                                            <button>Share Code</button>
+                                                        <button onClick={this.CopyCode}>Copy Code</button>
                                                         </div>
                                                         <div className="form-group col-md-6 butRight">
                                                             <NavLink to='/savings/group/group-analytics'>
@@ -344,7 +346,7 @@ class GroupCreated extends React.Component {
                                             <li><a href="#">Goals</a></li>
                                         </NavLink>
                                             <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                            <li><a href="#">Investments</a></li>
+                                            {/* <li><a href="#">Investments</a></li> */}
                                         </ul>
                                     </div>
                                 </div>
@@ -391,7 +393,7 @@ class GroupCreated extends React.Component {
                                            <li><a href="#">Goals</a></li>
                                        </NavLink>
                                            <li onClick={this.NavigateToGroupSavings}><a className="active">Group Savings</a></li>
-                                           <li><a href="#">Investments</a></li>
+                                           {/* <li><a href="#">Investments</a></li> */}
                                        </ul>
                                    </div>
                                </div>

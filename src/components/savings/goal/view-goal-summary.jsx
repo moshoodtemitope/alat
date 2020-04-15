@@ -180,6 +180,7 @@ class ViewGroupSummary extends React.Component {
 
 
     render() {
+        console.log("this is goal type",this.state.goalTypeName)
 
 
         return (
@@ -308,12 +309,21 @@ class ViewGroupSummary extends React.Component {
                                                         rightContent={moment(this.state.nextstandingDate).format("L")}
                                                         rightContentBottom="Next Payment" />
                                                     <div className="btn-position">
+                                                        {
+                                                            this.state.percentageCompleted >= 100 ? null :
+                                                            <div>
+                                                                    {
 
-                                                        {/* {
-                                                            this.state.percentageCompleted < 100 ? <NavLink to="/savings/withdraw-from-goal_step1">
-                                                                <span href="#" className="btn-withdraw-goal btn-sm border-btn">Withdraw</span>
-                                                            </NavLink> : null
-                                                        } */}
+                                                                        this.state.goalTypeName == "Flexi Goal" ? <NavLink to="/savings/withdraw-from-goal_step1">
+                                                                            <span href="#" className="btn-withdraw-goal btn-sm border-btn">Withdraw</span>
+                                                                        </NavLink> : null
+                                                                    }
+
+                                                            </div>
+                                                                
+
+                                                        }
+                                                        
 
                                                         {
                                                             this.state.percentageCompleted < 100 ?

@@ -17,7 +17,7 @@ class TalkToUsIndex extends Component{
                         <div className="container">
 
                                 {this.props.children}
-                                <Route path={'/talk-to-us'} exact component={TalkToUs} />
+                                <Route exact path={'/talk-to-us'} exact component={TalkToUs} />
                                 <Route path={'/talk-to-us/atm-locator'} exact component={AtmLocator} />
                                 <Route path={'/talk-to-us/report-error'} component={reportError} />
                                 

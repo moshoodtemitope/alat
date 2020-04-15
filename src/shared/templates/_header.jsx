@@ -187,23 +187,23 @@ class HeaderContainer extends React.Component{
         // console.log(this.props);
         // this.props.dispatch(userActions.getAll());
         if((history.location.pathname.indexOf('i-msg')===-1)){
-            this.getProfileImage();
+            // this.getProfileImage();
             this.getNDPRStatus();
             // this.getCMDMPriority();
         }
         // console.log('name is dssd');
     }
 
-    getProfileImage(){
+    // getProfileImage(){
         
         
-        // this.setState({currentroute})
-        const user = JSON.parse(localStorage.getItem("user"));
+    //     // this.setState({currentroute})
+    //     const user = JSON.parse(localStorage.getItem("user"));
 
-        const { dispatch } = this.props;
-        dispatch(userActions.getCustomerProfileImage(user.token, user.profilePicPath));
+    //     const { dispatch } = this.props;
+    //     dispatch(userActions.getCustomerProfileImage(user.token, user.profilePicPath));
         
-    }
+    // }
 
     getNDPRStatus(){
         const user = JSON.parse(localStorage.getItem("user"));

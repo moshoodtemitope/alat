@@ -27,6 +27,7 @@ import * as utils from '../../../shared/utils';
 import AlatPinInput from '../../../shared/components/alatPinInput';
 import AmountInput from '../../../shared/components/amountInput';
 import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
+import { numberWithCommas } from "../../../shared/utils";
 const options = [
 ];
 
@@ -68,6 +69,9 @@ class VirtualCards extends React.Component {
             this.setState({stage2Error: true, stage2ErrorMsg:'Enter a Valid ALAT Pin'});
         }
     }
+    formatAmount(amount) {
+        return amount.toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
 
     postNewVirtualCardDInfo(newVirtualCardData){
         const {dispatch} = this.props;
@@ -88,7 +92,7 @@ class VirtualCards extends React.Component {
 
     renderCreateNewCard(virtualCardsList){
         let {nameOnCard,
-            amountInNaira,
+           amountInNaira,
             amountInUsd,
             computedDollarAmount,
             amountFormatted,
@@ -118,7 +122,7 @@ class VirtualCards extends React.Component {
                 <div className="input-ctn inputWrap">
                     <label>Amount in Naira (Maximum  &#8358;2,000,000)</label>
                     
-                    <Textbox
+                    <Textbox 
                         tabIndex="2"
                         id={'amountInNaira'}
                         name="amountInNaira"
@@ -152,6 +156,7 @@ class VirtualCards extends React.Component {
                         name="amountInUsd"
                         value={amountInUsd}
                         onChange= {(amountInUsd, e)=>{ 
+
                         
                             let nairaConversion =  utils.formatAmount(amountInUsd * virtualCardsList.ngnAmountOfOneUsd);
                             
@@ -210,7 +215,7 @@ class VirtualCards extends React.Component {
                         onChange={this.handleSelectDebitableAccounts} />
 
                         {isSelectChanged===true &&
-                            <span className="limit-text">Your daily transaction limit for the selected account is ₦{transferLimit} </span>
+                        <span className="limit-text">Your daily transaction limit for the selected account is ₦{numberWithCommas(transferLimit)} </span>
                         }
                 </div>
                 <div className="input-ctn inputWrap">

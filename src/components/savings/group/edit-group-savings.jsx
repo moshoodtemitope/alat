@@ -15,6 +15,7 @@ import {history} from '../../../_helpers/history';
     
 class EditGroupSavings extends React.Component {
     constructor(props){
+        console.log("this is the props", props.location.data.response)
         super(props);
         this.state= {
             user: JSON.parse(localStorage.getItem("user")),
@@ -380,13 +381,13 @@ class EditGroupSavings extends React.Component {
                                                     <div className={theGroupName ? "form-group form-error" : "form-group"}>
                                                         
                                                            <label>Give your group a name</label>
-                                                           <input type="text" className="form-control" onChange={this.SetName} placeholder="Dubai Goal"/>
+                                                    <input defaultValue={this.props.location.data.response.name} type="text" className="form-control" onChange={this.SetName} placeholder="Dubai Goal"/>
                                                        
                                                     </div>
                                                     <div className="form-row">
                                                         <div className={Purpose ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">What is the purpose of this group?</label>
-                                                            <input type="text" className="form-control" onChange={this.SetPurpose} placeholder="Raise Money"/>
+                                                        <input defaultValue={this.props.location.data.response.purpose} type="text" className="form-control" onChange={this.SetPurpose} placeholder="Raise Money"/>
                                                         </div>  
                                                         <div className={howMuchValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">How much is the group raising?</label>
@@ -523,17 +524,17 @@ class EditGroupSavings extends React.Component {
                                                     <div className={theGroupName ? "form-group form-error" : "form-group"}>
                                                         
                                                            <label>Give your group a name</label>
-                                                           <input type="text" className="form-control" onChange={this.SetName} placeholder="Dubai Goal"/>
+                                                    <input defaultValue={this.props.location.data.response.name} type="text" className="form-control" onChange={this.SetName} placeholder="Dubai Goal"/>
                                                        
                                                     </div>
                                                     <div className="form-row">
                                                         <div className={Purpose ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">What is the purpose of this group?</label>
-                                                            <input type="text" className="form-control" onChange={this.SetPurpose} placeholder="Raise Money"/>
+                                                        <input defaultValue={this.props.location.data.response.purpose} type="text" className="form-control" onChange={this.SetPurpose} placeholder="Raise Money"/>
                                                         </div>
                                                         <div className={howMuchValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">How much is the group raising?</label>
-                                                            <input type="Number" className="form-control" onChange={this.SetTargetAmount} placeholder="N100, 0000"/>
+                                                        <input defaultValue={this.props.location.data.response.targetAmount} className="form-control" onChange={this.SetTargetAmount} placeholder="N100, 0000"/>
                                                         </div>
                                                     </div>
                                                     <div className="form-row">
@@ -552,7 +553,7 @@ class EditGroupSavings extends React.Component {
                                                         </div>
                                                         <div className={AmountToContribute ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">Amount to contribute per person (optional)</label>
-                                                            <input type="Number" className="form-control" onChange={this.SetAmountToContributeIndividually} placeholder="E.g. ₦100,000"/>
+                                                        <input defaultValue={this.props.location.data.response.mininumIndividualAmount} className="form-control" onChange={this.SetAmountToContributeIndividually} placeholder="E.g. ₦100,000"/>
                                                         </div>
                                                     </div>
                                                     

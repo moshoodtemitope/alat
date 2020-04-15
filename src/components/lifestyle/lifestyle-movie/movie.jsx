@@ -69,7 +69,7 @@ class Movie extends React.Component {
         if(value!=="ShowResultBy") {
             this.setState({doFilter: true, genreType: value }, () => { 
                 this.renderFilter(this.state.genreType);
-                console.log("this is the genreType " , this.state.genreType)
+                // console.log("this is the genreType " , this.state.genreType)
                 this.setState({display: "none"})
             })
         }
@@ -123,48 +123,97 @@ class Movie extends React.Component {
             let userMovies = getMovieList.data.response;
 
             return(
-                <div className="eventTrays col-sm-12">
+            <div>
+                {
+                 this.props.getMovieList.data.response.length == 0 ? <h6 className="text-center">No Movie Found</h6>:
+                            <div className="eventTrays col-sm-12">
 
-                    {Array.from(userMovies).map(function(film, index){
-                        return(
-                                <div  className="eventCards" key={index}>
-                                    <Link to={{
-                                        pathname:"/lifestyle/movie-details",
-                                    }}>
-                                        {
-                                            film.artworkThumbnail ?
-                                            <div id={JSON.stringify(film)} onClick={that.moviesDetails} className="picCard" style={{ backgroundImage: 'url("' + film.artworkThumbnail + '")', }}>
+                                {Array.from(userMovies).map(function (film, index) {
+                                    return (
+                                        <div className="eventCards" key={index}>
+                                            <Link to={{
+                                                pathname: "/lifestyle/movie-details",
+                                            }}>
+                                                {
+                                                    film.artworkThumbnail ?
+                                                        <div id={JSON.stringify(film)} onClick={that.moviesDetails} className="picCard" style={{ backgroundImage: 'url("' + film.artworkThumbnail + '")', }}>
 
-                                            </div> :
-                                            <div id={JSON.stringify(film)} onClick={that.moviesDetails} className="picCard">
-                                                <img alt="emptyImage" src={dummyImage}/>
+                                                        </div> :
+                                                        <div id={JSON.stringify(film)} onClick={that.moviesDetails} className="picCard">
+                                                            <img alt="emptyImage" src={dummyImage} />
+                                                        </div>
+                                                }
+
+
+
+                                            </Link>
+
+
+
+                                            <div className="boldHeader">{unescape(film.title.toString().length > 15 ? film.title.toString().substring(0, 15) + "..." : film.title.toString())}</div>
+                                            <div id="disc">{unescape(film.description.toString().length > 30 ? film.description.toString().substring(0, 30) + "..." : film.description.toString())}</div>
+                                            <div className="details">
+                                                <div className="left">
+                                                    <img
+
+                                                        src={clock} alt="" />
+                                                </div>
+                                                <div className="right">
+                                                    <div className="movie-duration">{film.duration}</div>
+                                                </div>
                                             </div>
-                                        }
+                                        </div>
+
+                                    );
+                                })}
+
+                            </div>
+
+                }
+            </div>
+                
+                // <div className="eventTrays col-sm-12">
+
+                //     {Array.from(userMovies).map(function(film, index){
+                //         return(
+                //                 <div  className="eventCards" key={index}>
+                //                     <Link to={{
+                //                         pathname:"/lifestyle/movie-details",
+                //                     }}>
+                //                         {
+                //                             film.artworkThumbnail ?
+                //                             <div id={JSON.stringify(film)} onClick={that.moviesDetails} className="picCard" style={{ backgroundImage: 'url("' + film.artworkThumbnail + '")', }}>
+
+                //                             </div> :
+                //                             <div id={JSON.stringify(film)} onClick={that.moviesDetails} className="picCard">
+                //                                 <img alt="emptyImage" src={dummyImage}/>
+                //                             </div>
+                //                         }
                                         
                                         
                                         
-                                    </Link>
+                //                     </Link>
                                    
 
 
-                                    <div className="boldHeader">{unescape(film.title.toString().length > 15 ? film.title.toString().substring(0, 15)+"...": film.title.toString())}</div>
-                                        <div id="disc">{unescape(film.description.toString().length > 30 ? film.description.toString().substring(0, 30)+"...": film.description.toString()) }</div>
-                                        <div className="details">
-                                            <div className="left">
-                                                <img
+                //                     <div className="boldHeader">{unescape(film.title.toString().length > 15 ? film.title.toString().substring(0, 15)+"...": film.title.toString())}</div>
+                //                         <div id="disc">{unescape(film.description.toString().length > 30 ? film.description.toString().substring(0, 30)+"...": film.description.toString()) }</div>
+                //                         <div className="details">
+                //                             <div className="left">
+                //                                 <img
                                                                                                 
-                                                src={clock} alt=""/> 
-                                            </div>
-                                            <div className="right">
-                                                <div className="movie-duration">{film.duration}</div>
-                                            </div>
-                                        </div>
-                                </div>
+                //                                 src={clock} alt=""/> 
+                //                             </div>
+                //                             <div className="right">
+                //                                 <div className="movie-duration">{film.duration}</div>
+                //                             </div>
+                //                         </div>
+                //                 </div>
 
-                        );
-                    })}
+                //         );
+                //     })}
 
-                </div>
+                // </div>
             );
         }
     }
@@ -182,7 +231,7 @@ class Movie extends React.Component {
             return  <h4 style={{marginTop:"60px"}} className="text-center">please wait...</h4>;
 
         }
-        else if(SearchfetchMovieList.message === listStyleConstants.SEARCH_FETCH_MOVIE_FAILURE){
+        else if(SearchfetchMovieList.message === listStyleConstants.SEARCH_FETCH_MOVIE_FAILURE ){
             return(
                 <h4 className="text-center" style={{ marginTop: '65px'}}>No Movie Found</h4>
             );
@@ -455,6 +504,8 @@ class Movie extends React.Component {
                        !this.state.doFilter ? this.resultu() : this.renderFilter(this.state.genreType)
                    }
                    {
+                        this.props.getMovieList.message === listStyleConstants.GET_MOVIE_LIST_SUCCESS &&this.props.getMovieList
+                            .data.response.length == 0 ? null :
     
                         this.loadMore()
                    }

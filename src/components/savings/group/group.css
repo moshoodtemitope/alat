@@ -761,6 +761,7 @@ font-weight: bold;
 
 .bottomDiscription span, .topDiscription span {
     color: #A90836;
+    font-size: 12px;
     /* text-transform: uppercase; */
 }
 
@@ -860,7 +861,7 @@ color: #4D4D4D;
 }
 
 .moreDetails .left p:last-child, .moreDetails .right p:last-child, .moreDetails .middle p:last-child {
-    font-size: 11px;
+    font-size: 12px;
     color: #878686;
     }
 

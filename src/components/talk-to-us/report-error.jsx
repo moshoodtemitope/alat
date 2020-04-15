@@ -6,7 +6,7 @@ import SelectDebitableAccounts from '../../shared/components/selectDebitableAcco
 import { connect } from 'react-redux';
 import {talktoUsConstant} from '../../redux/constants/talk-to-us/talk-to-us.constant';
 import * as actions from "../../redux/actions/talk-to-us/talk-to-us-action";
-
+import { numberWithCommas } from '../../shared/utils';
 
 
 
@@ -175,14 +175,21 @@ const selectedTime = [
      
     handleAmount = (e) => {
         // console.log
-         var intVal = e.target.value.replace(/,/g, '');
-         if (/^\d+(\.\d+)?$/g.test(intVal)) {
-             // if (parseInt(intVal, 10) <= 2000000) {
-             this.setState({ Amount: intVal, Amount: this.toCurrency(intVal) });
-             // }
-         } else if (e.target.value == "") {
-             this.setState({ Amount: "", Amount: "" });
-         }
+        //  var intVal = e.target.value.replace(/,/g, '');
+        //  if (/^\d+(\.\d+)?$/g.test(intVal)) {
+        //      // if (parseInt(intVal, 10) <= 2000000) {
+        //     //  this.setState({ Amount: intVal, Amount: numberWithCommas(intVal) });
+        //      this.setState({ Amount: numberWithCommas(intVal) });
+        //      // }
+        //  } else if (e.target.value == "") {
+        //      this.setState({ Amount: "", Amount: "" });
+        //  }
+        if(e.target.value !== ""){
+            this.setState({ Amount: numberWithCommas(e.target.value) });
+        }else{
+            this.setState({ Amount: "" });
+        }
+         
  
          if(this.state.isSubmitted == true)
          if (this.state.formsubmitted) {

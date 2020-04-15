@@ -17,6 +17,8 @@ import MoreDetails from './details';
 import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
 import {history} from '../../../_helpers/history';
 import { GROUPSAVINGSCONSTANT } from '../../../redux/constants/savings/group';
+import { numberWithCommas } from "../../../shared/utils";
+
 
 class GroupAnalytics extends React.Component {
     constructor(props){
@@ -167,7 +169,10 @@ class GroupAnalytics extends React.Component {
     };
 
     EditThisGroup = () => {
-        history.push('/savings/group-savings/edit-group');
+        history.push({
+            pathname:'/savings/group-savings/edit-group',
+            data: this.props.groupDetails.data
+        });
     };
 
     GoToContributionPage = () => {
@@ -396,7 +401,7 @@ class GroupAnalytics extends React.Component {
                                                         discTopRight={this.GetGroupStatus()}
                                                         percentage={this.GetGroupStatus2()}
                                                         discBottom={this.GetGroupSavedAmount()}
-                                                        discSpan={this.GetGroupTargetAmount()}
+                                                        discSpan={numberWithCommas(this.GetGroupTargetAmount())}
                                                         discBottomSib="Amount Saved"
                                                         discBottomRight={this.GetGroupInterest()}
                                                         discBottomSibRight="Group Interest"
@@ -407,7 +412,7 @@ class GroupAnalytics extends React.Component {
                                                         discTopRight=""
                                                         percentage="0"
                                                         discBottom={this.GetIndividualSavedAmount()}
-                                                        discSpan={this.GetGroupTargetAmount()}
+                                                    discSpan={numberWithCommas(this.GetGroupTargetAmount())}
                                                         discBottomSib="Amount Saved"
                                                         discBottomRight={this.GetYourInterest()}
                                                         discBottomSibRight="Group Interest"
@@ -548,13 +553,19 @@ class GroupAnalytics extends React.Component {
         
                                                         {adminValidity ? <div></div> : <div className={"setPadBottom"}></div> }
                                                      </div>
+                                                        <button type="submit" onClick={() => {
+                                                            this.props.history.push('/savings/group/group-created')
+                                                        }} className="btn-alat m-t-10 m-b-20 text-center goBackButMini">Go Back</button>
+
+                                             
         
                                                 </div>
         
                                                </div>
         
                                               </div>
-        
+                                                
+                    
                                         </div>
         
                                     </div>

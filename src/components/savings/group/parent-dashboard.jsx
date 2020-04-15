@@ -13,6 +13,8 @@ import ProgressBar from './progress-bar';
 import * as actions1 from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import {history} from '../../../_helpers/history';
 import {GROUPSAVINGSCONSTANT} from '../../../redux/constants/savings/group/index'
+import { numberWithCommas } from "../../../shared/utils";
+
 
 class ParentDashBoard extends React.Component {
     constructor(props){
@@ -50,7 +52,7 @@ class ParentDashBoard extends React.Component {
                             <ProgressBar 
                                 percentage={element.groupStatus}
                                 discBottom={"₦" + element.yourSavedAmount + ' ' + 'of'}
-                                discSpan={"  " + "₦" +element.targetAmount}
+                         discSpan={"  " + "₦" + numberWithCommas(element.targetAmount)}
                                 discBottomSib='Amount Saved'
                                 discBottomRight={element.groupStatus + '%' + ' ' + 'Completed'}
                             />
@@ -86,7 +88,7 @@ class ParentDashBoard extends React.Component {
                             <ProgressBar 
                             percentage={element.status}
                             // discBottom={"₦" + ' ' + '20,000'}
-                            discSpan={"₦" + element.potTotal}
+                            discSpan={"₦" + numberWithCommas(element.potTotal)}
                             discBottomSib='PotTotal'
                             discBottomRight={element.status + "%" + " " + 'Completed'}
                             />

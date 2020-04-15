@@ -8,7 +8,7 @@ import DatePicker from "react-datepicker";
 import {flexGoalConstants} from '../../../redux/constants/goal/flex-goal.constant'
 import * as actions from '../../../redux/actions/savings/goal/flex-goal.actions'
 import "react-datepicker/dist/react-datepicker.css";
-import { numberWithCommas } from "../../../shared/utils";
+import { numberWithCommas, formatAmount } from "../../../shared/utils";
 
 
 
@@ -302,6 +302,9 @@ class FlexGoal extends React.Component {
 
 
     }
+     formatAmount(amount) {
+         return amount.toLocaleString(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+     }
 
     gotoStep2 = () => {
         if (this.props.flex_goal_step1)
@@ -448,7 +451,7 @@ class FlexGoal extends React.Component {
                                                                 name="targetAmount"
                                                                 onChange={this.handleAmount}
                                                                 placeholder="E.g. ₦100,000"
-                                                                value={numberWithCommas(this.state.targetAmount)}
+                                                        value={numberWithCommas(this.state.targetAmount)}
 
 
                                                             />
@@ -456,7 +459,7 @@ class FlexGoal extends React.Component {
                                                             <div className="text-danger">Enter the amount you want to save ?</div>}
                                                             {
                                                                 this.state.showMessage ?
-                                                                    <div className="text-purple" style={{display: this.state.displayState}}><h3 className="text-purple"> You will have  saved ₦ {this.state.showTotalAmount} at the end of this goal.</h3></div>
+                                                            <div className="text-purple" style={{ display: this.state.displayState }}><h3 className="text-purple"> You will have  saved ₦ {numberWithCommas(this.state.showTotalAmount)} at the end of this goal.</h3></div>
                                                                     : null
 
                                                             }
@@ -523,7 +526,7 @@ class FlexGoal extends React.Component {
 
                                                         {
                                                             this.state.showMessage ?
-                                                                <div className="text-purple" style={{marginLeft: 0, paddingTop: 0, marginTop: 0, }}><h3 style={{width: "93%"}} className="text-purple"> You will earn approximately ₦ {this.state.interest} in interest.</h3></div>
+                                                                <div className="text-purple" style={{marginLeft: 0, paddingTop: 0, marginTop: 0, }}><h3 style={{width: "93%"}} className="text-purple"> You will earn approximately ₦ {numberWithCommas(this.state.interest)} in interest.</h3></div>
                                                                 : null
 
                                                         }

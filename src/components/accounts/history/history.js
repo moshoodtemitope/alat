@@ -25,6 +25,7 @@ class History extends Component {
             accounts: [],
             accountsLoaded: false,
             invalidInterval: false,
+            emptyKeyword: false,
             startDate: null,
             endDate: null,
             keyword: null,
@@ -88,7 +89,7 @@ class History extends Component {
                 AccountNumber: accountNumber,
                 From: this.state.isBackendSearch ? this.state.startDate : null,
                 To: this.state.isBackendSearch ? this.state.endDate : null,
-                KeyWord: this.state.isBackendSearch ? this.state.keyword : null,
+                KeyWord: this.state.isBackendSearch ? this.state.searchText : null,
             };
         }
         // console.log("payload", payload)
@@ -225,15 +226,25 @@ class History extends Component {
     searchFromBackend = (event) => {
         event.preventDefault();
         this.checkInfoState();
+
+        if(this.state.startDate===null|| this.state.endDate ===null){
+            this.setState({ twoDatesRequired: true });
+            return false;
+        }
+
         if(this.state.startDate != this.state.endDate){
             if (this.state.startDate && this.state.endDate) {
                 if (Date.parse(this.state.startDate) > Date.parse(this.state.endDate)) {
                     this.setState({ invalidInterval: true });
-                    return;
+                    return false;
                 }
             }
         }
-        this.setState({ invalidInterval: false }, () => this.props.clearHistory());
+        // if(this.state.searchText===""){
+        //     this.setState({ emptyKeyword: true });
+        //     return false;
+        // }
+        this.setState({ invalidInterval: false, twoDatesRequired:false, emptyKeyword:false }, () => this.props.clearHistory());
         let selected = this.state.selectedAccount ? this.state.selectedAccount.value : this.state.accounts[0].value;
         if (this.state.currentTransactions == "Receipts") {
             this.setState({ skip: 0, take: 10, isBackendSearch: true }, () => this.props.fetchReceiptTransaction(this.state.user.token, {
@@ -304,7 +315,7 @@ class History extends Component {
             this.sortAccountsForSelect();
         }
 
-        const { selectedAccount, c, accounts,startDate, endDate, isReceipt, invalidInterval, showDropOptions, currentTransactions, currency } = this.state;
+        const { selectedAccount, c, accounts,startDate, endDate, isReceipt, invalidInterval, twoDatesRequired, showDropOptions, currentTransactions, currency } = this.state;
         return (
             <Fragment>
                 <div class="col-sm-12 col-md-4">
@@ -338,6 +349,8 @@ class History extends Component {
                         changeEnd={this.handleEndDatePicker}
                         search={this.searchTransactions}
                         searchFilter={this.searchFromBackend}
+                        emptyKeyword={this.emptyKeyword}
+                        twoDatesRequired={twoDatesRequired}
                         invalidDate={invalidInterval}
                     />
                     <TransactionHistory

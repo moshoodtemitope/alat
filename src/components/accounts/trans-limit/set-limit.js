@@ -8,6 +8,8 @@ import { alertActions } from "../../../redux/actions/alert.actions";
 import { getAccounts } from "../../../redux/actions/dashboard/dashboard.actions";
 import * as actions from '../../../redux/actions/accounts/export';
 import Checkbox from '../../../shared/elements/_checkbox';
+import { numberWithCommas } from "../../../shared/utils";
+
 
 const pattern = /^\d+$/;
 class SetLimit extends Component {
@@ -114,10 +116,11 @@ class SetLimit extends Component {
             updatedFormElement.valueToDisplay = event.target.value;
             updatedFormElement.value = updatedFormElement.valueToDisplay.replace(/\,/g, '');
             if (updatedFormElement.valueToDisplay.length >= 1) {
-                if (!pattern.test(updatedFormElement.value)) {
-                    return;
-                }
-                updatedFormElement.valueToDisplay = formatAmountNoDecimal(parseInt(updatedFormElement.value));
+                // if (!pattern.test(updatedFormElement.value)) {
+                //     return;
+                // }
+                // updatedFormElement.valueToDisplay = formatAmountNoDecimal(parseInt(updatedFormElement.value));
+                updatedFormElement.valueToDisplay = updatedFormElement.value;
             }
             if (updatedFormElement.value > this.props.limits.LimitToCompare) {
                 validation.aboveLimit = true;
@@ -226,9 +229,16 @@ class SetLimit extends Component {
                                                             <Input
                                                                 elementType={formElement.config.elementType}
                                                                 elementConfig={formElement.config.elementConfig}
-                                                                value={formElement.id == "limit" ? formElement.config.valueToDisplay : formElement.config.value}
+                                                                value={formElement.id == "limit" ? numberWithCommas(formElement.config.valueToDisplay) : numberWithCommas(formElement.config.value)}
                                                                 changed={(event) => this.inputChangedHandler(event, formElement.id)}
                                                             />
+                                                            {/* <input type="text" 
+                                                                onChange={(event) => this.inputChangedHandler(event, formElement.id)} 
+                                                                onKeyUp={(event) => this.inputChangedHandler(event, formElement.id)}
+                                                                autoComplete="off" 
+                                                                name="Amount" 
+                                                                value={numberWithCommas(Amount)} 
+                                                            /> */}
                                                             {formElement.id == "limit" && validation.aboveLimit ? <span className="text-danger">Limit cannot exceed max limit</span> : null}
                                                             {formElement.id == "pin" && validation.pinDigit ? <span className="text-danger">Password must be four digits</span> : null}
                                                             {formElement.id == "pin" && validation.required.pinEmpty ? <span className="text-danger">Password is required</span> : null}

@@ -165,10 +165,15 @@ class GroupDelete extends React.Component {
                                         </div>
                                     </div>
                                 </div>
+                        
                                 <div className="col-sm-12">
+                            {this.props.alert && this.props.alert.message &&
+                                <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                            }
                                     <div className="row">
                                         <div className="col-sm-12">
                                           <div className="max-600">
+                                       
                                            <div className="al-card no-pad">
                                            <h4 className="m-b-10 center-text hd-underline">Confirm Delete!</h4>
     
@@ -179,7 +184,8 @@ class GroupDelete extends React.Component {
                                                             <select  onChange={this.ChangeState}>
                                                                 <option value="No" selected>No</option>
                                                                 <option value="Yes">Yes</option>
-                                                            </select>
+                                                                </select>
+                                                            {confirmDelete && <div className='text-danger'>Select Yes to delete</div>}
                                                        </div>
                                                     </div>
     
@@ -188,7 +194,7 @@ class GroupDelete extends React.Component {
                                                             <center>
     
                                                             <button type="submit" onClick={this.GoBackToGroupAnalytics} className="btn-alat m-t-10 m-b-20 text-center goBackButMini">Go Back</button>
-                                                                <button type="submit" onClick={this.SubmitForm} className="btn-alat m-t-10 m-b-20 text-center">Proceed</button>
+                                                            <button disabled={this.props.deleteGroupEsusu.message === GROUPSAVINGSCONSTANT.DELETEGROUP} type="submit" onClick={this.SubmitForm} className="btn-alat m-t-10 m-b-20 text-center">{this.props.deleteGroupEsusu.message === GROUPSAVINGSCONSTANT.DELETEGROUP ? "Processing":"Proceed"}</button>
                                                                 
                                                             </center>
                                                         </div>
@@ -260,10 +266,15 @@ class GroupDelete extends React.Component {
                                         </div>
                                     </div>
                                 </div>
+                        
                                 <div className="col-sm-12">
+                            {this.props.alert && this.props.alert.message &&
+                                <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                            }
                                     <div className="row">
                                         <div className="col-sm-12">
                                           <div className="max-600">
+                                       
                                            <div className="al-card no-pad">
                                            <h4 className="m-b-10 center-text hd-underline">Confirm Delete!</h4>
     
@@ -283,7 +294,7 @@ class GroupDelete extends React.Component {
                                                             <center>
     
                                                             <button type="submit" onClick={this.GoBackToGroupAnalytics} className="btn-alat m-t-10 m-b-20 text-center goBackButMini">Go Back</button>
-                                                                <button type="submit" onClick={this.SubmitForm} className="btn-alat m-t-10 m-b-20 text-center">Proceed</button>
+                                                            <button disabled={this.props.deleteGroupEsusu.message === GROUPSAVINGSCONSTANT.DELETEGROUP} type="submit" onClick={this.SubmitForm} className="btn-alat m-t-10 m-b-20 text-center">{this.props.deleteGroupEsusu.message === GROUPSAVINGSCONSTANT.DELETEGROUP ? "Processing" :"Proceed"}</button>
                                                                 
                                                             </center>
                                                         </div>
@@ -310,7 +321,9 @@ function mapStateToProps(state){
         groupSavingsEsusu: state.getGroupSavingsEsusu.data,
         groups: state.customerGroup.data,
         groupDetails: state.groupDetails.data,
-        groupDetailsReload: state.groupDetails
+        groupDetailsReload: state.groupDetails,
+        deleteGroupEsusu: state.deleteGroupEsusu,
+        alert:state.alert
     }
 }
 export default connect(mapStateToProps)(GroupDelete);

@@ -24,6 +24,8 @@ import {
 import {getWesternUnionCountries, 
     receiveWUMoney, 
     clearRemittanceStore} from "../../../redux/actions/remittance/remittance.actions";
+import { numberWithCommas } from "../../../shared/utils";
+
 
 // const options = [
 // ];
@@ -196,10 +198,9 @@ class WesternUnion extends React.Component {
                                                 <Textbox
                                                     id={'amountToReceive'}
                                                     name="amountToReceive"
-                                                    type="number"
                                                     autoComplete ="off"
                                                     placeholder= "Enter amount to receive"
-                                                    value={amountToReceive}
+                                                value={numberWithCommas(amountToReceive)}
                                                     onChange= {(amountToReceive, e)=>{
                                                         this.setState({ amountToReceive});
                                                     }}
