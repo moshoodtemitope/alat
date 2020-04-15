@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import {Fragment} from "react";
 import InnerContainer from "../../shared/templates/inner-container";
 import {routes} from "../../services/urls";
-import homebanner from "../../assets/img/homebanner.svg";
+import homebanner from "../../assets/img/alatbanner.svg";
 import emailCenter from '../../assets/img/email-contact.svg';
 import phoneContact from '../../assets/img/phone-contact.svg';
 import "./home.scss";
@@ -58,6 +58,8 @@ class LandingPage extends React.Component {
                             <div className="welcome-textwrap">
                                 <h3>Good {this.returnGreeting()}, <span>{this.state.user.fullName}</span></h3>
                                 <h5>What would you like to do today?</h5>
+
+                                <h5 className="m-t-20">Have you washed your hands in the last 60 minutes? #StaySafe</h5>
                             </div>
                             <div className="menuitem-links">
                                 <ul>
@@ -116,7 +118,7 @@ class LandingPage extends React.Component {
                     </div>
                     <div className="banner-wrap">
                     {/* <div className="banner-wrap" style={bannerStyle}> */}
-                            <img src={homebanner} alt=""/>
+                            <img src={homebanner} alt="Image"/>
                     </div>
                 </div>
             </div>
