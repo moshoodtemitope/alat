@@ -5,6 +5,7 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import * as actions from '../../../redux/actions/onboarding/loan.actions';
+import * as LoanActions from '../../../redux/actions/loans/loans.action';
 import { loanOnboardingConstants } from '../../../redux/constants/onboarding/loan.constants';
 import { alertActions } from '../../../redux/actions/alert.actions';
 import { LoanApplicationProgress } from '../../../shared/constants';
@@ -119,8 +120,15 @@ class SalaryEntry extends React.Component {
         this.props.gotoDashBoard();
     }
 
+    CancelLoan = () => {
+        this.props.dispatch(LoanActions.loanReject(this.state.user.token)); //What should be done after firing reject loan
+    }
+
     goToUploadStatement = ()=>{
         this.props.dispatch(actions.enableStatementUpload(this.state.user.token));
+        
+    }
+    goBackToFetchStatement =()=>{
         
     }
 
@@ -197,7 +205,7 @@ class SalaryEntry extends React.Component {
                                             <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message || this.props.alert.Message}</div>
                                             {
                                                ( this.props.alert.message !=="Your loan application was rejected. Please check your email for reasons."
-                                               && this.props.alert.message.indexOf('PROCEED')===-1) &&
+                                               && this.props.alert.message.indexOf('PROCEED')===-1 && this.props.alert.message.indexOf('error')===-1) &&
                                             
                                                 // <div className="row">
                                                 //     <div className="col-sm-12">
@@ -205,6 +213,26 @@ class SalaryEntry extends React.Component {
 
 
                                                             <button onClick={this.SubmitModal} disabled={this.props.enableStatementUpload.is_processing} className="border-btn">Decline</button>
+
+
+                                                            <button
+                                                                onClick={this.goToUploadStatement} disabled={this.props.enableStatementUpload.is_processing}
+                                                                className="btn-alat">{this.props.enableStatementUpload.is_processing ? "Please wait..." : "Proceed"}</button>
+                                                        </div>
+                                                       
+                                                    
+                                            }
+
+
+                                            {
+                                               (  this.props.alert.message.indexOf('error') >-1) &&
+                                            
+                                                // <div className="row">
+                                                //     <div className="col-sm-12">
+                                                        <div className="btn-opt text-center w-50">
+
+
+                                                            <button onClick={this.CancelLoan} disabled={this.props.enableStatementUpload.is_processing} className="border-btn">Decline</button>
 
 
                                                             <button

@@ -310,40 +310,44 @@ class SetCardPin extends React.Component {
             
            return(
                 <div>
-                    <div className="input-ctn inputWrap">
-                        <label>{randomQuestion.random_question.response.data.message}</label>
-                        <Textbox
-                            tabIndex="2"
-                            id={'securityAnswer'}
-                            name="securityAnswer"
-                            type="password"
-                            value={securityAnswer}
-                            onChange= {(securityAnswer, e)=>{ 
-                                this.setState({securityAnswer});
-                            }}
-                            
-                        />
-                    </div>
-                    <div className="input-ctn inputWrap">
-                        <center>
-                            {showError===true && <div className="error-msg"> Please provide answer</div>}
+                    {randomQuestion.fetch_status === GETRANDOM_SECURITYQUESTION_SUCCESS &&
+                        <div>
+                            <div className="input-ctn inputWrap">
+                                <label>{randomQuestion.random_question.response.data.message}</label>
+                                <Textbox
+                                    tabIndex="2"
+                                    id={'securityAnswer'}
+                                    name="securityAnswer"
+                                    type="password"
+                                    value={securityAnswer}
+                                    onChange= {(securityAnswer, e)=>{ 
+                                        this.setState({securityAnswer});
+                                    }}
+                                    
+                                />
+                            </div>
+                            <div className="input-ctn inputWrap">
+                                <center>
+                                    {showError===true && <div className="error-msg"> Please provide answer</div>}
 
-                            {(randomQuestionAnswer.is_processing===false && randomQuestionAnswer.fetch_status===VALIDATE_SECURITYQUESTION_WITHOUTOTP_FAILURE)&&
-                                    <div className="error-msg">{randomQuestionAnswer.answer_question.error}</div>
-                            }
-                            <button type="button"  className="btn-alat m-t-10 m-b-20 text-center"
-                                                        onClick={()=>{
-                                                            if(this.state.securityAnswer!==''){
-                                                                this.setState({showError: false});
-                                                                this.submitAnswerToQuestion();
-                                                            }else{
-                                                                this.setState({showError: true})
-                                                            }
-                                                        }}
-                                                        disabled={randomQuestionAnswer.is_processing}>{randomQuestionAnswer.is_processing?'Submitting answer...':'Submit answer'} </button>
-                             <div>{(randomQuestionAnswer.is_processing ===false || randomQuestionAnswer.is_processing==undefined ) && <a className="back-cta" onClick={()=>this.setState({showAcceptTerms:true})}>Back</a> } </div>
-                        </center>
-                    </div>
+                                    {(randomQuestionAnswer.is_processing===false && randomQuestionAnswer.fetch_status===VALIDATE_SECURITYQUESTION_WITHOUTOTP_FAILURE)&&
+                                            <div className="error-msg">{randomQuestionAnswer.answer_question.error}</div>
+                                    }
+                                    <button type="button"  className="btn-alat m-t-10 m-b-20 text-center"
+                                                                onClick={()=>{
+                                                                    if(this.state.securityAnswer!==''){
+                                                                        this.setState({showError: false});
+                                                                        this.submitAnswerToQuestion();
+                                                                    }else{
+                                                                        this.setState({showError: true})
+                                                                    }
+                                                                }}
+                                                                disabled={randomQuestionAnswer.is_processing}>{randomQuestionAnswer.is_processing?'Submitting answer...':'Submit answer'} </button>
+                                    <div>{(randomQuestionAnswer.is_processing ===false || randomQuestionAnswer.is_processing==undefined ) && <a className="back-cta" onClick={()=>this.setState({showAcceptTerms:true})}>Back</a> } </div>
+                                </center>
+                            </div>
+                        </div>
+                    }
                 </div>
         )
     }
@@ -387,15 +391,15 @@ class SetCardPin extends React.Component {
                                     }
 
                                     {/* If Loading Current ATM Card and/or Fails */}
-                                    {(currentCardRequest.is_processing === false &&
+                                    {((randomQuestion.is_processing === false && currentCardRequest.is_processing === false) &&
                                             randomQuestion.fetch_status === GETRANDOM_SECURITYQUESTION_FAILURE) &&
                                                 <center>
-                                                    An error occured
+                                                    {randomQuestion.random_question.error}
                                                     <a className="cta-link tobottom text-center" onClick={this.makeInitialRequest}>Try again</a>
                                                 </center>
                                     }
 
-                                    {(currentCardRequest.is_processing === false &&
+                                    {((randomQuestion.is_processing === false && currentCardRequest.is_processing === false) &&
                                             currentCardRequest.fetch_status === GETCURRENT_ATMCARD_FAILURE) &&
                                                 <center>
                                                     {currentCardRequest.atmcards_info.error}

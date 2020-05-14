@@ -105,15 +105,15 @@ class SelectDebitableAccounts extends React.Component {
                     this.props.accounts.debitable_accounts ==
                     airtimeConstants.GET_DEBTABLE_ACCOUNTS_SUCCESS
                     &&
-                    <div className={this.props.accountInvalid ? "input-ctn form-error" : "input-ctn"}>
+                    <div className={this.props.accountInvalid===true ? "input-ctn form-error" : "input-ctn"}>
                         <label>{this.props.labelText}</label>
                         <Select placeholder="Select Account"
                             onChange={this.handleSelectAccount}
                             options={this.state.debitableAccounts}
                             value={this.props.value}
                         />
-                        {this.props.accountInvalid &&
-                            <div className={this.props.accountInvalid ? "input-ctn form-error" : "input-ctn"}>an account is required</div>}
+                        {this.props.accountInvalid===true &&
+                            <div className={this.props.accountInvalid===true ? "input-ctn form-error" : "input-ctn"}>an account is required</div>}
                     </div>
                 }
 
@@ -121,7 +121,7 @@ class SelectDebitableAccounts extends React.Component {
                     this.props.accounts.debitable_accounts ==
                     airtimeConstants.GET_DEBTABLE_ACCOUNTS_PENDING
                     &&
-                    <div className={this.props.accountInvalid ? "input-ctn form-error" : "input-ctn"}>
+                    <div className={this.props.accountInvalid=== true ? "input-ctn form-error" : "input-ctn"}>
                         <label>{this.props.labelText}</label>
                         <Select placeholder="Loading accounts..."
                             disabled={true}
@@ -133,7 +133,7 @@ class SelectDebitableAccounts extends React.Component {
                     this.props.accounts.debitable_accounts ==
                     airtimeConstants.GET_DEBTABLE_ACCOUNTS_FAILURE
                     &&
-                    <div className={this.props.accountInvalid ? "input-ctn form-error" : "input-ctn"}>
+                    <div className={this.props.accountInvalid===true ? "input-ctn form-error" : "input-ctn"}>
                         <label>{this.props.labelText}</label>
                         <Select placeholder="Failed to load accounts..."
                             disabled="true"

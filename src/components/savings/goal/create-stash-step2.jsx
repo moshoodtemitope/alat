@@ -80,13 +80,20 @@ class StashSummmary extends Component {
                     <div className="col-sm-12">
                         <div className="tab-overflow">
                             <div className="sub-tab-nav">
-                                <ul>
-                                    <li><a href="accounts.html" className="active">Goals</a></li>
-                                    <NavLink to="/savings/activityDashBoard">
-                                    <li><a href="/savings/activityDashBoard">Group Savings</a></li>
+                            <ul>
+                                             
+                                    <li>
+                                    <NavLink to='/savings/choose-goal-plan'>
+                                        Goals
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                    <NavLink to='/savings/activityDashBoard'>
+                                        Group Savings
                                     </NavLink>
+                                    </li>
                                     {/* <li><a href="#">Investments</a></li> */}
-                                
+
                                 </ul>
                             </div>
                         </div>
@@ -129,7 +136,7 @@ class StashSummmary extends Component {
 
                                         <div className="coverForSummary">
                                             <div className="left">
-                                                <p className='GoalText'>Contributions</p>
+                                                <p className='GoalText'>Interest (daily)</p>
                                                 <p className='boldedText'>₦{this.state.payOutInterest}</p>
                                             </div>
                                             <div className="right">

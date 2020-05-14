@@ -101,6 +101,10 @@ class ProvideSecurityAnswer extends React.Component{
                             <div className="info-label error">{sendanswerrequest.sendanswer_status.error}</div>
                         }
 
+                            { this.state.showPinLengthError===true &&
+                                <div className="info-label error">Enter your 4-digits PIN</div>
+                            }
+
                             {(!showAnswer 
                                 && Object.keys(this.props.sendemailfor_forgotpw).length>1  
                                 && this.props.sendemailfor_forgotpw.sendmail_status.response.data.hasFinacialTrans===true)&&
@@ -118,6 +122,11 @@ class ProvideSecurityAnswer extends React.Component{
                                             autoComplete="off"
                                             onChange={(Pin, e) => {
                                                 this.setState({ Pin });
+                                                if(e.target.value!=='' && e.target.value.length===4){
+                                                    this.setState({showPinLengthError: false})
+                                                }else{
+                                                    this.setState({showPinLengthError: true})
+                                                }
                                             }}
                                             onBlur={(e) => { }}
                                             validationOption={{
@@ -132,7 +141,9 @@ class ProvideSecurityAnswer extends React.Component{
                                                 onClick={(e)=>{
                                                     e.preventDefault();
                                                     if(this.state.Pin!=='' && this.state.Pin.length===4){
-                                                        this.setState({showAnswer:true})
+                                                        this.setState({showAnswer:true, showPinLengthError: false})
+                                                    }else{
+                                                        this.setState({showPinLengthError: true})
                                                     }
                                                 }}
                                                     >Proceed</button>

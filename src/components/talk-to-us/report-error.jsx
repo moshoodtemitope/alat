@@ -47,6 +47,7 @@ const selectedTime = [
             BankName:null,
             TransactionType:null,
             SourceType:null,
+            // SourceTypeId:null
             
 
          }
@@ -81,7 +82,7 @@ const selectedTime = [
     };
     handleDateError = (TransactionDate) => {
         TransactionDate.setHours(TransactionDate.getHours() + 1);
-        this.setState({ TransactionDate: TransactionDate });
+        this.setState({ TransactionDate: TransactionDate, DateErrorInvalid:false });
     };
     checkAmount = () => {
         if (this.state.Amount == null || this.state.Amount == "") {
@@ -91,28 +92,28 @@ const selectedTime = [
         }
     };
     checkChannelValidity = () => {
-        if(this.state.channelFrequency == null || this.state.channelFrequency == ""){
+        if(this.state.ChannelId == null || this.state.ChannelId == ""){
             this.setState({channelInvalid: true});
         }else{
             this.setState({channelInvalid: false});
         }
     }
     checkTransactionTypeValidity =()=>{
-        if(this.state.TransactionType ==null || this.state.TransactionType == ""){
+        if(this.state.TransactionTypeId ==null || this.state.TransactionTypeId == ""){
             this.setState({transactiontypeInvalid:true});
         }else{
             this.setState({transactiontypeInvalid:false})
         }
     }
     checkBankValidity =()=>{
-        if(this.state.BankName == null || this.state.BankName == ""){
+        if((this.state.Bank == null || this.state.Bank == "") && this.state.ChannelId==="1"){
             this.setState({bankInvalid:true});
         }else{
             this.setState({bankInvalid:false})
         }
     }
     checkSourceValidity =()=>{
-        if(this.state.SourceType ==null || this.state.SourceType == ""){
+        if(this.state.SourceTypeId ==null || this.state.SourceTypeId == ""){
             this.setState({sourceTypeInvalid:true});
         }else{
             this.setState({sourceTypeInvalid:false})
@@ -123,26 +124,29 @@ const selectedTime = [
         for(let x in this.state){
              switch(x){
                  
-                 case 'channelFrequency':
-                         if(this.state[x] == null || this.state[x] == ""){
+                 case 'ChannelId':
+                         if(this.state.ChannelId== null || this.state.ChannelId== ""){
                             //  console.log(x)
                              result = null;
                              break;
                          }
-                case 'TransactionType':
-                        if(this.state[x] == null || this.state[x] ==""){
+                case 'TransactionTypeId':
+                    // console.log("+++++", x)
+                        if(this.state.TransactionTypeId == null || this.state.TransactionTypeId ==""){
                                 //  console.log(x)
                                  result =null;
                                  break;
                              }
-                 case 'BankName':
-                        if(this.state[x] == null || this.state[x] ==""){
+                 case 'Bank':
+                        if((this.state.Bank == null || this.state.Bank =="") && this.state.ChannelId==="1"){
+                            // console.log("++++", this.state.TransactionTypeId);
                                 // console.log(x)
                                 result =null;
                                 break;
-                             }
-                case 'SourceType':
-                        if(this.state[x] == null || this.state[x] ==""){
+                        }
+                case 'SourceTypeId':
+
+                        if(this.state.SourceTypeId == null || this.state.SourceTypeId ==""){
                             //  console.log(x)
                             result =null;
                             break;
@@ -159,11 +163,17 @@ const selectedTime = [
 
     handleSelectDebitableAccounts(account) {
         // console.log('dss', account);
-        this.setState({ debitAccount: account })
-        if (this.state.isSubmitted) {
-            if(account.length == 10)
-            this.setState({ isAccountInvalid: false })
-         }
+        let allDebitableAccounts = this.props.debitable_accounts.debitable_accounts_data.data,
+            selectedDebitableAccount = allDebitableAccounts.filter(accountDetails => accountDetails.AccountNumber === account);
+        this.setState({ debitAccount: account, selectedAccount: account, selectedDebitableAccount })
+
+        this.setState({ isAccountInvalid: false })
+        // console.log("is submit", this.state.isSubmitted)
+        // console.log("is valid", this.state.isSubmitted)
+        // if (this.state.isSubmitted) {
+        //     if(account.length == 10)
+        //     this.setState({ isAccountInvalid: false })
+        //  }
     }
     checkAccountNumber() {
         if (this.state.debitAccount.length != 10) {
@@ -185,9 +195,9 @@ const selectedTime = [
         //      this.setState({ Amount: "", Amount: "" });
         //  }
         if(e.target.value !== ""){
-            this.setState({ Amount: numberWithCommas(e.target.value) });
+            this.setState({ Amount: numberWithCommas(e.target.value), AmountInvalid:false });
         }else{
-            this.setState({ Amount: "" });
+            this.setState({ Amount: "", AmountInvalid: true });
         }
          
  
@@ -213,8 +223,13 @@ const selectedTime = [
         let name = event.target.name;
 
         // console.log(channelId)
-        this.setState({ChannelId:channelId });
-        this.setState({[name] : event.target.value})
+        
+        if(event.target.value!==""){
+            this.setState({ChannelId:channelId, channelInvalid:false },()=> this.checkBankValidity());
+            this.setState({[name] : event.target.value})
+        }else{
+            this.setState({channelInvalid:true})
+        }
 
     };
 
@@ -224,8 +239,12 @@ const selectedTime = [
 
 
         // console.log(transactionTypeId)
-        this.setState({TransactionTypeId:transactionTypeId})
-        this.setState({[name] : event.target.value})
+        if(event.target.value!==""){
+            this.setState({TransactionTypeId:transactionTypeId, transactiontypeInvalid:false})
+            this.setState({[name] : event.target.value})
+        }else{
+            this.setState({transactiontypeInvalid: true})
+        }
 
     }
     handleChange = (e) => {
@@ -238,15 +257,24 @@ const selectedTime = [
         let name = event.target.name;
         // console.log(Bank)
 
-        this.setState({Bank:Bank})
-        this.setState({[name] : event.target.value})
+        if(event.target.value!==""){
+            this.setState({Bank:Bank, bankInvalid:false})
+            this.setState({[name] : event.target.value})
+        }else{
+            this.setState({bankInvalid: true})
+        }
 
     }
     handleSourceType =(event)=>{
         let sourceType = event.target.value;
         let name = event.target.name;
-         this.setState({SourceTypeId:sourceType})
-        this.setState({[name] : event.target.value})
+
+        if(event.target.value!==""){
+            this.setState({SourceTypeId:sourceType, sourceTypeInvalid:false})
+            this.setState({[name] : event.target.value})
+        }else{
+            this.setState({sourceTypeInvalid: true})
+        }
 
     }
     InitiateNetworkCall=()=>{
@@ -311,9 +339,7 @@ const selectedTime = [
                         
                 </center>
                 <div className="col-sm-12">
-                {this.props.alert && this.props.alert.message &&
-                        <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
-                    }
+                
                     <div className="row">
                         <div className="col-sm-12">
                             <div className="max-600">
@@ -326,22 +352,22 @@ const selectedTime = [
                                         <div className= {!DateErrorInvalid ? "form-group col-md-6 " : "form-group col-md-6 form-error"}>
                                                 <label className="label-text">Date of Error </label>
                                                 <DatePicker 
-                                                            className="form-control"
-                                                            selected={this.state.TransactionDate}
-                                                            autoComplete="off" 
-                                                            placeholderText="Date of Error"
-                                                            dateFormat=" MMMM d, yyyy"
-                                                            name="TransactionDate"
-                                                            peekNextMonth
-                                                            showMonthDropdown
-                                                            showYearDropdown
-                                                            dropdownMode="select"
-                                                            useShortMonthInDropdown
-                                                            dropdownMode="select"
-                                                            minDate={new Date()}
-                                                            showWeekNumbers
-                                                            onChange={this.handleDateError}
-                                                            value={this.state.TransactionDate}
+                                                    className="form-control"
+                                                    selected={this.state.TransactionDate}
+                                                    autoComplete="off" 
+                                                    placeholderText="Date of Error"
+                                                    dateFormat=" MMMM d, yyyy"
+                                                    name="TransactionDate"
+                                                    peekNextMonth
+                                                    showMonthDropdown
+                                                    showYearDropdown
+                                                    dropdownMode="select"
+                                                    useShortMonthInDropdown
+                                                    dropdownMode="select"
+                                                    maxDate={new Date()}
+                                                    // showWeekNumbers
+                                                    onChange={this.handleDateError}
+                                                    value={this.state.TransactionDate}
                                                             
                                                     />
                                                         
@@ -481,9 +507,13 @@ const selectedTime = [
 
                                                         </button>
                                                     </center>
+                                                    {this.props.alert && this.props.alert.message &&
+                                                        <div className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                                                    }
                                                 </div>
                                         
                                             </div>
+                                            
                                     </form>
 
                                 </div>
@@ -499,6 +529,7 @@ const mapStateToProps = state => ({
     alert:state.alert,
     talk_to_us:state.talk_to_us,
     reportError:state.reportError,
+    debitable_accounts: state.accounts,
     get_bank_branch:state.get_bank_branch,
     get_page_data:state.get_page_data,
     GetBankList:state.GetBankList

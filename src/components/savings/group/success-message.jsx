@@ -74,7 +74,8 @@ class SuccessMessage extends React.Component {
                                             <form className=''>
                                                 <img src="/src/assets/img/success.svg" className="succefullMessage" alt=""/>
                                                 <div className="form-group">
-                                                    <label id="sucMessage" className="sucMg">Scheduling was successfull</label>
+                                                    {/* <label id="sucMessage" className="sucMg">Scheduling was successfull</label> */}
+                                                    {/* <label id="sucMessage" className="sucMg">Successfull</label> */}
                                                 </div>
                                                 
                                             </form>

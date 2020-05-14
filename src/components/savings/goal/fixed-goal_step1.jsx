@@ -339,7 +339,7 @@ render() {
                             <div className="max-600">
                                 <div className="al-card no-pad">
                                     <h4 className="m-b-10 center-text hd-underline">Create a Fixed Goal</h4>
-                                    <p className="header-info">Save daily, weekly or monthly towards a target amount, earn <span style={{ color: "#AB2656" }}> 10% interest p.a ?</span> No withdrawal allowed and you will lose your interest if you don't meet your target</p>
+                                    <p className="header-info">Save daily, weekly or monthly towards a target amount, earn <span style={{ color: "#AB2656" }}> up to 10% interest p.a ?</span> No withdrawal allowed and you will lose your interest if you don't meet your target</p>
 
                                     <form onSubmit={this.onSubmit}>
                                         <div className={GoalNameInvalid ? "form-group form-error" : "form-group"}>

@@ -26,13 +26,17 @@ import {
     POSTINGDATA_FOR_CARDREQUEST_SUCCESS,
     POSTINGDATA_FOR_CARDREQUEST_PENDING,
     POSTINGDATA_FOR_CARDREQUEST_FAILURE,
+    GETALAT_CARDSETTINGS_SUCCESS,
+    GETALAT_CARDSETTINGS_PENDING,
+    GETALAT_CARDSETTINGS_FAILURE,
 } from "../../../redux/constants/cards/cards.constants";
 
 import {
     loadInfoForCardRequest,
     requestOtpForNewATMCard,
     postDataForNewATMCard,
-    clearCardsStore
+    clearCardsStore,
+    getALATCardSettings
 } from "../../../redux/actions/cards/cards.actions";
 
 // const options = [
@@ -75,12 +79,19 @@ class RequestCard extends React.Component {
         if(this.state.user.isWemaMobileUser===true){
             this.props.history.push("/cards-control");
         }
-        this.getCustomerATMCardsData()
+        this.getCustomerATMCardsData();
+        this.getCustomerAtmCardSettings();
     }
 
     getCustomerATMCardsData(){
         const { dispatch } = this.props;
         dispatch(loadInfoForCardRequest(this.state.user.token));
+    }
+
+    getCustomerAtmCardSettings(){
+        const { dispatch } = this.props;
+        dispatch(getALATCardSettings(this.state.user.token, null,this.state.user.isWemaMobileUser));
+
     }
 
     getCustomerOTP(){
@@ -231,10 +242,13 @@ class RequestCard extends React.Component {
     }
 
     renderChooseCardDesign(){
+
         let {isCardSelected, 
             selectedDesignId,
             isNameEmpty,
             nameOnCard} = this.state;
+
+            // console.log("=======", this.props.infoForCardRequest.atmcard_info);
         let props = this.props,
         loadCardsInfo = props.infoForCardRequest;
         let cardInfoFromRequest = loadCardsInfo.atmcard_info.response,
@@ -317,6 +331,7 @@ class RequestCard extends React.Component {
                 let statesList =[];
            
 
+                // console.log("dsds", loadCardsInfo);
             loadCardsInfo.statesData.map(state=>{
                 statesList.push({value:state.Id,
                             label: state.State
@@ -521,6 +536,86 @@ class RequestCard extends React.Component {
         let props = this.props,
             loadCardsInfo = props.infoForCardRequest;
 
+        let cardDetails = this.props.loadALATCardSetting;
+        // let cardDetails = this.props.loadALATCardSetting.alatcardsettings_info.response.allCards,
+
+            if(loadCardsInfo.fetch_status=== LOADING_INFOFOR_CARDREQUEST_PENDING
+                || cardDetails.fetch_status === GETALAT_CARDSETTINGS_PENDING){
+                
+                    return(
+                        <div className="transfer-ctn">
+                            <div className="text-center">
+                                Loading your card details...
+                            </div>
+                        </div>
+                    );
+            }
+
+            if(loadCardsInfo.fetch_status=== LOADING_INFOFOR_CARDREQUEST_SUCCESS
+                && cardDetails.fetch_status === GETALAT_CARDSETTINGS_SUCCESS){
+
+                    let cardDetails = this.props.loadALATCardSetting.alatcardsettings_info.response.allCards;
+                    let cardInfoFromRequest = loadCardsInfo.atmcard_info.response;
+                    if (cardDetails !== null && cardDetails !== undefined && typeof cardDetails === "object") {
+                        if (cardDetails.length >= 1 && cardInfoFromRequest.cardDesignId.length >=1) {
+                                this.renderExistingCard()
+                            // console.log('cards is', cardInfoFromRequest)
+                            // if(cardInfoFromRequest.cardsList.length===0){
+                            // if (cardInfoFromRequest.cardDesignId.length === 0) {
+                            //     return (
+                            //         <div>
+                            //             <h4 className="m-b-10 center-text hd-underline">Our debit cards make payments simpler. Request one now.</h4>
+                            //             {this.renderNoAlatCard()}
+                            //         </div>
+                            //     );
+                            // } else {
+                            //     return (
+                            //         <div className="">
+                            //             {this.renderExistingCard()}
+                            //         </div>
+                            //     );
+                            // }
+                        }else{
+                            return (
+                                <div>
+                                    <h4 className="m-b-10 center-text hd-underline">Our debit cards make payments simpler. Request one now.</h4>
+                                    {this.renderNoAlatCard()}
+                                </div>
+                            );
+                        }
+                    }
+            }
+
+
+            if(loadCardsInfo.fetch_status=== LOADING_INFOFOR_CARDREQUEST_FAILURE){
+                
+                let loadCardError = loadCardsInfo.atmcard_info.error;
+                return(
+                    <div className="transfer-ctn">
+                        <div className="text-center">
+                            <div>{loadCardError}</div>
+                            {(loadCardError!=='You currently have a pending card request' &&
+                            loadCardError!=='You already have an active card') &&
+                                <a className="cta-link" onClick={this.getCustomerATMCardsData}> Retry</a>
+                            }
+                            
+                        </div>
+                    </div>
+                );
+            }
+
+            if(cardDetails.fetch_status=== GETALAT_CARDSETTINGS_FAILURE){
+                
+                let loadCardError = cardDetails.alatcardsettings_info.error;
+                return(
+                    <div className="transfer-ctn">
+                        <div className="text-center">
+                            <div>{loadCardError}</div>
+                            <a className="cta-link" onClick={this.getCustomerAtmCardSettings}> Retry</a>
+                        </div>
+                    </div>
+                );
+            }
 
             switch(loadCardsInfo.fetch_status){
                 case LOADING_INFOFOR_CARDREQUEST_PENDING:
@@ -640,6 +735,7 @@ function mapStateToProps(state){
         infoForCardRequest   : state.alatCardReducersPile.infoForATMCardRequest,
         otpForCardRequest   : state.alatCardReducersPile.otpForATMCardRequest,
         postCardRequest   : state.alatCardReducersPile.postATMCardRequest,
+        loadALATCardSetting   : state.alatCardReducersPile.loadALATCardSettingsRequest,
     };
 }
 

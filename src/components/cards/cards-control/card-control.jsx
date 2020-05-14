@@ -526,6 +526,10 @@ class CardsControl extends React.Component {
                                                 {(updateCard.is_processing===false && updateCard.fetch_status===UPDATEALAT_CARDSETTINGS_FAILURE)&&
                                                     <div className="error-msg">{updateCard.updatealatcard_info.error}</div>
                                                 }
+
+                                                {(updateCard.is_processing===false && updateCard.fetch_status===UPDATEALAT_CARDSETTINGS_SUCCESS)&&
+                                                    <div className="info-label success">You have successfully updated your card settings</div>
+                                                }
                                                 
                                                 {this.state.showForeignError===true && <div className="error-msg">Select the country where you want to use your card and dates your card should be active</div> }
                                         </center>

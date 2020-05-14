@@ -217,16 +217,20 @@ class CreateStash extends React.Component {
                             <div className="col-sm-12">
                                 <div className="tab-overflow">
                                     <div className="sub-tab-nav">
-                                        <ul>
-                                            <NavLink to='/savings/choose-goal-plan'>
-                                            <li><a  className="active">Goals</a></li>
+                                    <ul>
+                                        <li>
+                                        <NavLink to='/savings/choose-goal-plan'>
+                                            Goals
                                             </NavLink>
-                                            <NavLink to="/savings/activityDashBoard">
-                                            <li><a>Group Savings</a></li>
-                                            </NavLink>
+                                        </li>
+                                        <li>
+                                        <NavLink to='/savings/activityDashBoard'>
+                                            Group Savings
+                                        </NavLink>
+                                        </li>
                                             {/* <li><a href="#">Investments</a></li> */}
-                                        
-                                        </ul>
+
+                                    </ul>
                                     </div>
                                 </div>
                             </div>

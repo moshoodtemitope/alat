@@ -25,7 +25,9 @@ export const fetchFixedGoalStep1 = (data) =>{
 export const fetchFixedGoalStep2 =(data) =>{
     return(dispatch)=>{
         dispatch(success(data))
-
+        history.push({
+            pathname:"/savings/fixed-goal-summary",
+        })
     };
     function success(data){
         return{

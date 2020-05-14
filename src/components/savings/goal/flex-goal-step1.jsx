@@ -327,18 +327,18 @@ class FlexGoal extends React.Component {
                     
                     }}>
 
-                    <option >1 Month</option>
-                    <option>2 Month</option>
-                    <option>3 Month</option>
-                    <option>4 Month</option>
-                    <option>5 Month</option>
-                    <option>6 Month</option>
-                    <option>7 Month</option>
-                    <option>8 Month</option>
-                    <option>9 Month</option>
-                    <option>10 Month</option>
-                    <option>11 Month</option>
-                    <option selected={true}>12 Month</option>
+                    <option value="1" >1 Month</option>
+                    <option value="2">2 Month</option>
+                    <option value="3">3 Month</option>
+                    <option value="4">4 Month</option>
+                    <option value="5">5 Month</option>
+                    <option value="6">6 Month</option>
+                    <option value="7">7 Month</option>
+                    <option value="8">8 Month</option>
+                    <option value="9">9 Month</option>
+                    <option value="10">10 Month</option>
+                    <option value="11">11 Month</option>
+                    <option value="12" selected={true}>12 Month</option>
                     <i class="fas fa-cloud"></i>
 
                 </select>
@@ -355,13 +355,13 @@ class FlexGoal extends React.Component {
                     this.calculationForTotalAmount();
                 })}>
 
-                    <option>2 Weeks</option>
-                    <option>4 Weeks</option>
-                    <option>6 Weeks</option>
-                    <option>8 Weeks</option>
-                    <option>12 Weeks</option>
-                    <option>24 Weeks</option>
-                    <option>48 Weeks</option>
+                    <option value="2">2 Weeks</option>
+                    <option value="4">4 Weeks</option>
+                    <option value="6">6 Weeks</option>
+                    <option value="8">8 Weeks</option>
+                    <option value="12">12 Weeks</option>
+                    <option value="24">24 Weeks</option>
+                    <option value="48">48 Weeks</option>
                     <option selected={true}>52 Weeks</option>
                 </select>
             )
@@ -373,13 +373,13 @@ class FlexGoal extends React.Component {
                     this.calculateInterestRate();
                     this.calculationForTotalAmount();
                 })}>
-                    <option>7 Days</option>
-                    <option>14 Days</option>
-                    <option>30 Days</option>
-                    <option>60 Days</option>
-                    <option>90 Days</option>
-                    <option>120 Days</option>
-                    <option>240 Days</option>
+                    <option value="7">7 Days</option>
+                    <option value="14">14 Days</option>
+                    <option value="30">30 Days</option>
+                    <option value="60">60 Days</option>
+                    <option value="90">90 Days</option>
+                    <option value="120">120 Days</option>
+                    <option value="240">240 Days</option>
                     <option selected={true}>360 Days</option>
                 </select>
             )

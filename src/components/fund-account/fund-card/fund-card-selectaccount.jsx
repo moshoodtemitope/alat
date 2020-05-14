@@ -202,7 +202,7 @@ class FundCardSelectAccount extends React.Component {
                                                 <div className="col-sm-6">
                                                     <AmountInput value={this.state.formattedValue}
                                                         onChange={this.handleAmount} name="Amount"
-                                                        intValue={this.state.Amount}
+                                                        intValue={utils.numberWithCommas(this.state.Amount)}
                                                         AmountInvalid={this.state.AmountInvalid} />
                                                 </div>
                                                 <div className="col-sm-6">

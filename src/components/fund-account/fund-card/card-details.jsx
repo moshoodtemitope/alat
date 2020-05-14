@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { Switch } from '../../../shared/elements/_toggle';
-import {cc_format, formatCardExpiryDate,validateCardExpiry, checkValue} from '../../../shared/utils';
+import {cc_format, formatCardExpiryDate,validateCardExpiry, checkValue, numberWithCommas} from '../../../shared/utils';
 
 import SelectDebitableAccounts from '../../../shared/components/selectDebitableAccounts';
 import AmountInput from '../../../shared/components/amountInput';
@@ -56,6 +56,10 @@ class FundCardDetails extends React.Component {
               this.props.dispatch(actions.fundCardDetails(payload));
          }
     }
+
+    componentDidMount = () => {
+        this.props.dispatch(actions.ClearAction(fundAccountConstants.SAVE_CARD_CLEAR));
+    };
 
     onSubmitSaveForm=()=>{
         this.setState({formSubmitted : true});

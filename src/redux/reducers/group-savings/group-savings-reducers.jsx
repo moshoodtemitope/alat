@@ -7,16 +7,45 @@ export function groupSavingsTargetGoal(state=[], action){
         case GROUPSAVINGSCONSTANT.CREATEGROUPSAINGSPENDING: 
            return {
                message: GROUPSAVINGSCONSTANT.CREATEGROUPSAINGSPENDING,
+               isrequesting: true,
                data: action
            }
         case GROUPSAVINGSCONSTANT.CREATEGROUPSAVINGS_SUCCESS:
            return {
-               message: GROUPSAVINGSCONSTANT.CREATEGROUPSAINGS_SUCCESS,
+               message: GROUPSAVINGSCONSTANT.CREATEGROUPSAVINGS_SUCCESS,
+               isrequesting: false,
                data: action
            }
-        case GROUPSAVINGSCONSTANT.CREATEGROUPSAINGS_ERROR:
+        case GROUPSAVINGSCONSTANT.CREATEGROUPSAVINGS_ERROR:
            return {
-               message: GROUPSAVINGSCONSTANT.CREATEGROUPSAINGS_ERROR,
+               message: GROUPSAVINGSCONSTANT.CREATEGROUPSAVINGS_ERROR,
+               isrequesting: false,
+               data: action
+           }
+        default: 
+           return {... state}
+    }
+}
+
+export function editRotatingSavings(state=[], action){
+    switch(action.type){
+        
+        case GROUPSAVINGSCONSTANT.EDIT_GROUP_ESUSU: 
+           return {
+               message: GROUPSAVINGSCONSTANT.EDIT_GROUP_ESUSU,
+               isrequesting: true,
+               data: action
+           }
+        case GROUPSAVINGSCONSTANT.EDIT_GROUP_ESUSU_SUCCESS:
+           return {
+               message: GROUPSAVINGSCONSTANT.EDIT_GROUP_ESUSU_SUCCESS,
+               isrequesting: false,
+               data: action
+           }
+        case GROUPSAVINGSCONSTANT.EDIT_GROUP_ESUSU_ERROR:
+           return {
+               message: GROUPSAVINGSCONSTANT.EDIT_GROUP_ESUSU_ERROR,
+               isrequesting: false,
                data: action
            }
         default: 

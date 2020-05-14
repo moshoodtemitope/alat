@@ -23,14 +23,18 @@ class EventDashBoard extends React.Component {
                             <div className="col-sm-12">
                                 <div className="tab-overflow">
                                     <div className="sub-tab-nav">
-                                        <ul>
-                                        <NavLink to='/savings/choose-goal-plan'>
-                                            <li><a href="#">Goals</a></li>
-                                        </NavLink>
-                                       
-                                            <li><a className="active">Group Savings</a></li>
-                                      
-                                            {/* <li><a href="#">Investments</a></li> */}
+                                    <ul>
+                                            <li>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                Goals
+                                                </NavLink>
+                                            </li>
+                                            <li>
+                                            <NavLink to='/savings/activityDashBoard'>
+                                                Group Savings
+                                            </NavLink>
+                                            </li>
+                                                {/* <li><a href="#">Investments</a></li> */}
 
                                         </ul>
                                     </div>

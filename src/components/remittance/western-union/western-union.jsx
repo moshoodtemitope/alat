@@ -183,9 +183,9 @@ class WesternUnion extends React.Component {
                                                 <Textbox
                                                     id={'mtcnNumber'}
                                                     name="mtcnNumber"
-                                                    type="number"
+                                                    type="text"
                                                     autoComplete ="off"
-                                                    value={mtcnNumber}
+                                                    value={utils.numberInputOnly(mtcnNumber)}
                                                     maxLength="16"
                                                     placeholder= "Enter MTCN number"
                                                     onChange= {(mtcnNumber, e)=>{

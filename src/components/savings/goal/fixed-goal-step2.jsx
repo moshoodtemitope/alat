@@ -185,6 +185,8 @@ class FixedGoal extends React.Component {
                 "goalFrequency": this.state.goalFrequency,
                 "goalFrequencyType": this.state.goalFrequencyType
             }));
+
+            // this.gotoStep3()
         }
 
     }
@@ -212,7 +214,7 @@ class FixedGoal extends React.Component {
 
         return (
             <Fragment>
-                {this.gotoStep3()}
+                {/* {this.gotoStep3()} */}
                 <div className="row">
                     <div className="col-sm-12">
                         <p className="page-title">Savings & Goals</p>
@@ -221,7 +223,9 @@ class FixedGoal extends React.Component {
                         <div className="tab-overflow">
                             <div className="sub-tab-nav">
                                 <ul>
-                                    <li><a href="accounts.html" className="active">Goals</a></li>
+                                    <NavLink to='/savings/choose-goal-plan'>
+                                            <li><a>Goals</a></li>
+                                        </NavLink>
                                     <NavLink to="/savings/activityDashBoard">
                                         <li><a href="/savings/activityDashBoard">Group Savings</a></li>
                                     </NavLink>

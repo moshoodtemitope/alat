@@ -68,6 +68,7 @@ class AirtimeOtp extends React.Component {
                 forwardLink={"bills/airtime/done"}
                 submitAction={this.onSubmit}
                 maxLength={6}
+                ActionText="Confirm"
                 busyAction={this.props.airtime_otp.airtime_buydata == airtimeConstants.AIRTIME_WEBPIN_OTP_PENDING}
                 retryAction={this.onReSubmit}
                 onResubmitBusyAction={this.props.airtime.airtime_buydata == airtimeConstants.AIRTIME_WEBPIN_PENDING}

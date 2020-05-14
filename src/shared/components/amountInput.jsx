@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { numberWithCommas } from '../../shared/utils';
 //import utils from
 //  The amount input on all Transaction pages
 //  Formarts text to currency as you type.
@@ -20,14 +21,14 @@ class AmountInput extends React.Component {
                 if(this.props.onChange){
                     this.props.onChange(event.target.value);
                         this.setState({
-                            formartedValue: this.toCurrency(intVal),
+                            formartedValue: numberWithCommas(intVal),
                             intValue: intVal
                         })
                 }else{
                     if(this.props.onKeyUp){
                         this.props.onKeyUp(event.target.value);
                         this.setState({
-                            formartedValue: this.toCurrency(intVal),
+                            formartedValue: numberWithCommas(intVal),
                             intValue: intVal
                         })
                     }

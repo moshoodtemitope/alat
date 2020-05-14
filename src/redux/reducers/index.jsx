@@ -425,6 +425,7 @@ const appReducer = combineReducers({
    
     //Group Savings Reducers (GROUP SAVINGS)
     groupSavings: groupSavings.groupSavingsTargetGoal,
+    editRotatingSavings: groupSavings.editRotatingSavings,
     groupDetails: groupSavings.groupDetails,
     deleteGroup: groupSavings.deleteGroup,
     contribute: groupSavings.contribute,

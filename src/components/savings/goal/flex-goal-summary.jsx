@@ -65,6 +65,10 @@ import { formatAmount, mapCurrency } from '../../../shared/utils';
     };
     handleSubmit=(event)=>{
         event.preventDefault();
+        // console.log('----===---', parseInt(this.state.goalFrequency))
+        // console.log('++++', parseInt(this.state.FrequencyDurationId))
+        // console.log('=====', parseInt(this.state.frequencyId))
+        // return false;
         this.props.dispatch(actions.addFlexGoal({
             "GoalName":this.state.goalName,
             "StartDate":this.state.startDate,
@@ -73,7 +77,8 @@ import { formatAmount, mapCurrency } from '../../../shared/utils';
             "DebitAmount":this.state.debitAmount,
             "GoalTypeId":this.state.GoalTypeId,
             "FrequencyId":this.state.frequencyId,
-            'FrequencyDurationId':this.state.FrequencyDurationId
+            'FrequencyDurationId':this.state.frequencyId
+            // 'FrequencyDurationId':this.state.FrequencyDurationId
         }));
 
     };
@@ -89,7 +94,9 @@ import { formatAmount, mapCurrency } from '../../../shared/utils';
                         <div className="tab-overflow">
                             <div className="sub-tab-nav">
                                 <ul>
-                                    <li><a href="accounts.html" className="active">Goals</a></li>
+                                    <NavLink to='/savings/choose-goal-plan'>
+                                            <li><a>Goals</a></li>
+                                        </NavLink>
                                     <NavLink to="/savings/goal/group-savings-selection">
                                     <li><a href="/savings/goal/group-savings-selection">Group Savings</a></li>
                                     </NavLink>                                    
@@ -161,8 +168,9 @@ import { formatAmount, mapCurrency } from '../../../shared/utils';
                                 
                                 </div>
                                 <center>
-                                    <a onClick={() => { this.props.dispatch(actions.ClearAction(flexGoalConstants.FLEX_GOAL_REDUCER_CLEAR));
-                                        this.props.history.push('/savings/flex-goal') }} className="add-bene m-t-50">Go  Back</a>
+                                    <a onClick={() => { 
+                                        // this.props.dispatch(actions.ClearAction(flexGoalConstants.FLEX_GOAL_REDUCER_CLEAR));
+                                        this.props.history.push('/savings/flex-goal-step2') }} className="add-bene m-t-50">Go  Back</a>
                                 </center>
 
                             

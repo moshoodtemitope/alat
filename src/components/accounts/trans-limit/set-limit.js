@@ -190,8 +190,10 @@ class SetLimit extends Component {
             this.sortAccountsForSelect();
         }
         const { selectedAccount, isChecked, validation } = this.state;
-
+        
+        console.log("limitgooten", this.props.limits);
         let transLimit = (
+            
             <Fragment>
 
                 <div className="col-sm-12">
@@ -204,68 +206,80 @@ class SetLimit extends Component {
                                 <div className="al-card no-pad">
 
                                     <div className="transfer-ctn" style={{ padding: "30px 30px" }}>
-                                        <h4 className="mb-3">Transaction Limit</h4>
-                                        <p className="s-info mb-4">Set your daily transaction limit. Your maximum transaction limit is <span style={{ color: "#AB2656", fontWeight: "600" }}>{this.props.limits.LimitToCompare > 1 ? `₦${formatAmountNoDecimal(this.props.limits.LimitToCompare)}` : this.props.limits.WemaBankMaxLimit}</span></p>
-                                        <form>
+                                        {(this.props.limits.LimitToCompare !== "--Limit not retreived") &&
+                                            <div>
+                                                <h4 className="mb-3">Transaction Limit</h4>
+                                                <p className="s-info mb-4">Set your daily transaction limit. Your maximum transaction limit is <span style={{ color: "#AB2656", fontWeight: "600" }}>{this.props.limits.LimitToCompare > 1 ? `₦${formatAmountNoDecimal(this.props.limits.LimitToCompare)}` : this.props.limits.WemaBankMaxLimit}</span></p>
+                                                <form>
 
-                                            <div className="row">
-                                                {formElementArray.map((formElement) => {
-                                                    if (formElement.config.elementType == "select") {
-                                                        return (
-                                                            <div className="input-ctn col-md-12" key={formElement.id}>
-                                                                <label>Select an account</label>
-                                                                <Select key={formElement.id}
-                                                                    value={selectedAccount == null ? formElement.config.elementConfig.options > 0 ? formElement.config.elementConfig.options[0] : formElement.config.elementConfig.options : selectedAccount}
-                                                                    onChange={this.accountChangedHandler}
-                                                                    options={formElement.config.elementConfig.options}
-                                                                    placeholder={this.props.alert.message ? "Failed. Please try again" : (this.props.accounts.length > 0 ? "Select..." : "Loading Account...")}
-                                                                />
-                                                            </div>
-                                                        )
-                                                    };
-                                                    return (
-                                                        <div className="input-ctn col-md-6" key={formElement.id}>
-                                                            <label>{formElement.config.label}</label>
-                                                            <Input
-                                                                elementType={formElement.config.elementType}
-                                                                elementConfig={formElement.config.elementConfig}
-                                                                value={formElement.id == "limit" ? numberWithCommas(formElement.config.valueToDisplay) : numberWithCommas(formElement.config.value)}
-                                                                changed={(event) => this.inputChangedHandler(event, formElement.id)}
-                                                            />
-                                                            {/* <input type="text" 
-                                                                onChange={(event) => this.inputChangedHandler(event, formElement.id)} 
-                                                                onKeyUp={(event) => this.inputChangedHandler(event, formElement.id)}
-                                                                autoComplete="off" 
-                                                                name="Amount" 
-                                                                value={numberWithCommas(Amount)} 
-                                                            /> */}
-                                                            {formElement.id == "limit" && validation.aboveLimit ? <span className="text-danger">Limit cannot exceed max limit</span> : null}
-                                                            {formElement.id == "pin" && validation.pinDigit ? <span className="text-danger">Password must be four digits</span> : null}
-                                                            {formElement.id == "pin" && validation.required.pinEmpty ? <span className="text-danger">Password is required</span> : null}
-                                                            {formElement.id == "limit" && validation.required.limitEmpty ? <span className="text-danger">Limit is required</span> : null}
+                                                    <div className="row">
+                                                        {formElementArray.map((formElement) => {
+                                                            if (formElement.config.elementType == "select") {
+                                                                return (
+                                                                    <div className="input-ctn col-md-12" key={formElement.id}>
+                                                                        <label>Select an account</label>
+                                                                        <Select key={formElement.id}
+                                                                            value={selectedAccount == null ? formElement.config.elementConfig.options > 0 ? formElement.config.elementConfig.options[0] : formElement.config.elementConfig.options : selectedAccount}
+                                                                            onChange={this.accountChangedHandler}
+                                                                            options={formElement.config.elementConfig.options}
+                                                                            placeholder={this.props.alert.message ? "Failed. Please try again" : (this.props.accounts.length > 0 ? "Select..." : "Loading Account...")}
+                                                                        />
+                                                                    </div>
+                                                                )
+                                                            };
+                                                            return (
+                                                                <div className="input-ctn col-md-6" key={formElement.id}>
+                                                                    <label>{formElement.config.label}</label>
+                                                                    <Input
+                                                                        elementType={formElement.config.elementType}
+                                                                        elementConfig={formElement.config.elementConfig}
+                                                                        value={formElement.id == "limit" ? numberWithCommas(formElement.config.valueToDisplay) : numberWithCommas(formElement.config.value)}
+                                                                        changed={(event) => this.inputChangedHandler(event, formElement.id)}
+                                                                    />
+                                                                    {/* <input type="text" 
+                                                                        onChange={(event) => this.inputChangedHandler(event, formElement.id)} 
+                                                                        onKeyUp={(event) => this.inputChangedHandler(event, formElement.id)}
+                                                                        autoComplete="off" 
+                                                                        name="Amount" 
+                                                                        value={numberWithCommas(Amount)} 
+                                                                    /> */}
+                                                                    {formElement.id == "limit" && validation.aboveLimit ? <span className="text-danger">Limit cannot exceed max limit</span> : null}
+                                                                    {formElement.id == "pin" && validation.pinDigit ? <span className="text-danger">Pin must be four digits</span> : null}
+                                                                    {formElement.id == "pin" && validation.required.pinEmpty ? <span className="text-danger">Pin is required</span> : null}
+                                                                    {formElement.id == "limit" && validation.required.limitEmpty ? <span className="text-danger">Limit is required</span> : null}
+                                                                </div>
+                                                            )
+
+                                                        })}
+                                                        <div className="col-md-12">
+                                                            <Checkbox
+                                                                id="checkbox3"
+                                                                value="random3"
+                                                                name="example"
+                                                                label={
+                                                                    <span><a rel="noopener noreferrer" href="https://api.alat.ng/registrationApi/indemnity.html" target="_blank">By clicking submit, you agree to indemnify the bank</a></span>
+                                                                }
+                                                                isChecked={isChecked}
+                                                                changed={this.handleClick} />
+                                                                {!isChecked && validation.unchecked ? <span className="text-center text-danger">Kindly accept to indemnify the bank to continue</span> : null}
                                                         </div>
-                                                    )
-
-                                                })}
-                                                <div className="col-md-12">
-                                                    <Checkbox
-                                                        id="checkbox3"
-                                                        value="random3"
-                                                        name="example"
-                                                        label={
-                                                            <span><a rel="noopener noreferrer" href="https://api.alat.ng/registrationApi/indemnity.html" target="_blank">By clicking submit, you agree to indemnify the bank</a></span>
-                                                        }
-                                                        isChecked={isChecked}
-                                                        changed={this.handleClick} />
-                                                        {!isChecked && validation.unchecked ? <span className="text-center text-danger">Kindly accept to indemnify the bank to continue</span> : null}
-                                                </div>
-                                                <div className="col-sm-12">
-                                                    <center>
-                                                        <button onClick={this.onSubmitData} disabled={this.state.disable} className="btn-alat m-t-10 m-b-20 text-center">{this.props.sending ? "Processing..." : "Set New Limit"}</button>
-                                                    </center>
+                                                        <div className="col-sm-12">
+                                                            <center>
+                                                                <button onClick={this.onSubmitData} disabled={this.state.disable} className="btn-alat m-t-10 m-b-20 text-center">{this.props.sending ? "Processing..." : "Set New Limit"}</button>
+                                                            </center>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        }
+                                         {(this.props.limits.LimitToCompare === "--Limit not retreived") &&
+                                            <div>
+                                                <div className={`info-label mb-3 error`}>
+                                                    Unable to load your current transaction Limit 
+                                                    <div> <span onClick={() =>  this.sortAccountsForSelect()}>Click here to try again</span></div>
                                                 </div>
                                             </div>
-                                        </form>
+                                         }
                                     </div>
                                 </div>
                             </div>

@@ -75,7 +75,9 @@ class TopUPGoalSummmary extends Component {
                                         <ul>
                                             <NavLink to='/savings/choose-goal-plan'>
 
-                                            <li><a href="accounts.html" className="active">Goals</a></li>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                            <li><a>Goals</a></li>
+                                        </NavLink>
                                             </NavLink>
                                             <NavLink to='/savings/activityDashBoard'>
                                                 <li><a href="/savings/activityDashBoard">Group Savings</a></li>

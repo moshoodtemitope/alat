@@ -34,7 +34,10 @@ export function NavButtons(props){
                             <p id={props.edit} onClick={props.EditGroup}>{props.leftName}</p>
                         </div>
                         <div className="col-xs-4 navMiddle">
-                            <p id={props.pause} onClick={props.PauseGroup}>{props.middleName}</p>
+                            {props.grouData.schedulePaymentIsRunning===true && 
+                                <p id={props.pause} onClick={props.PauseGroup}>{props.middleName}</p>
+                            }
+                            
                         </div>
                         <div className="col-xs-4 navRight">
                             <p id={props.delete} onClick={props.DeleteGroup}>{props.rightName}</p>

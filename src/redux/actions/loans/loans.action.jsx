@@ -7,6 +7,7 @@ import {alertActions} from "../alert.actions";
 import {SystemConstant} from "../../../shared/constants";
 import { modelStateErrorHandler } from "../../../shared/utils";
 import { loanConstants } from "../../constants/loans/loans.constants";
+import { history } from './../../../_helpers/history';
 
 export const loanCalcData =(token)=>{
     SystemConstant.HEADER['alat-token'] = token;
@@ -178,6 +179,7 @@ export const loanReject =(token) =>{
             .then(response => {
                 //TODO: edit localDB accounts object
                 dispatch(success(response.data));
+                history.push("/loans/salary/dashboard");
             })
             .catch(error => {
                // console.log("error in here");

@@ -118,12 +118,12 @@ import { numberWithCommas } from "../../../shared/utils";
          }
 
      }
-     gotoStep3 = () => {
-         if (this.props.flex_goal_step2)
-             if (this.props.flex_goal_step2.flex_step2_status == flexGoalConstants.FETCH_FLEX_GOAL_SUCCESS_STEP2) {
-                 return <Redirect to="/savings/flex-goal-summary" />
-             }
-     }
+    //  gotoStep3 = () => {
+    //      if (this.props.flex_goal_step2)
+    //          if (this.props.flex_goal_step2.flex_step2_status == flexGoalConstants.FETCH_FLEX_GOAL_SUCCESS_STEP2) {
+    //              return <Redirect to="/savings/flex-goal-summary" />
+    //          }
+    //  }
 
 
 
@@ -135,7 +135,7 @@ import { numberWithCommas } from "../../../shared/utils";
 
          return (
              <Fragment>
-                        {this.gotoStep3()}
+                        {/* {this.gotoStep3()} */}
 
                          <div className="row">
                              <div className="col-sm-12">
@@ -145,7 +145,9 @@ import { numberWithCommas } from "../../../shared/utils";
                                  <div className="tab-overflow">
                                      <div className="sub-tab-nav">
                                          <ul>
-                                             <li><a href="accounts.html" className="active">Goals</a></li>
+                                             <NavLink to='/savings/choose-goal-plan'>
+                                            <li><a>Goals</a></li>
+                                        </NavLink>
                                              <NavLink to="/savings/activityDashBoard">
                                              <li><a href="/savings/activityDashBoard">Group Savings</a></li>
                                              </NavLink>

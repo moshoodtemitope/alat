@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import InnerContainer from '../../../shared/templates/inner-container';
 import {Fragment} from "react";
+import {NavLink} from "react-router-dom";
 import { connect } from 'react-redux';
 import moment from 'moment';
 import {fixedGoalConstants} from '../../../redux/constants/goal/fixed-goal.constant';
@@ -58,6 +59,7 @@ import { numberWithCommas } from "../../../shared/utils";
 
     handleSubmit=(event)=>{
         event.preventDefault();
+        
         this.props.dispatch(actions.addFixedGoal({
             "goalName":this.state.goalName,
             "startDate":this.state.startDate,
@@ -93,8 +95,13 @@ import { numberWithCommas } from "../../../shared/utils";
                         <div className="tab-overflow">
                             <div className="sub-tab-nav">
                                 <ul>
-                                    <li><a href="accounts.html" className="active">Goals</a></li>
-                                    <li><a href="statement.html">Group Savings</a></li>
+                                    <NavLink to='/savings/choose-goal-plan'>
+                                            <li><a>Goals</a></li>
+                                        </NavLink>
+                                        <NavLink to='/savings/goal/group-savings-selection'>
+                                            <li><a>Group Savings</a></li>
+                                        </NavLink>
+                                    {/* <li><a href="statement.html">Group Savings</a></li> */}
                                     {/* <li><a href="#">Investments</a></li> */}
                                 
                                 </ul>
@@ -166,7 +173,8 @@ import { numberWithCommas } from "../../../shared/utils";
                                 
                                 </div>
                                 <center>
-                                    <a style={{ cursor: "pointer" }} onClick={() => { this.props.dispatch(actions.ClearAction(fixedGoalConstants.FIXED_GOAL_REDUCER_CLEAR));
+                                    <a style={{ cursor: "pointer" }} onClick={() => { 
+                                        // this.props.dispatch(actions.ClearAction(fixedGoalConstants.FIXED_GOAL_REDUCER_CLEAR));
                                         this.props.history.push('/savings/fixed-goal-complete') }} className="add-bene m-t-50">
                                         Go back
                                     </a>

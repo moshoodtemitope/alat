@@ -114,7 +114,8 @@ import {getWesternUnionCountries,receiveWesternUnion } from './remittance.reduce
      import {fixedGoalStep1Reducer,fixedGoalStep2Reducer,addGoalReducer} from './goal/fixed-goal.reducers';
      import {flexGoalStep1Reducer,flexGoalStep2Reducer,addFlexGoalReducer} from './goal/flex-goal.reducer';
      import {createStashGoalReducer,createStashGoalStep1Reducer} from './goal/create-stash.reducer'
-    import {groupSavingsTargetGoal, groupDetails, deleteGroup, contribute, editGroup, pauseGroup, findGroup, customerGroup, joinGroup, scheduleContribution, deleteMember, cashOut,
+    import {groupSavingsTargetGoal,
+        editRotatingSavings, groupDetails, deleteGroup, contribute, editGroup, pauseGroup, findGroup, customerGroup, joinGroup, scheduleContribution, deleteMember, cashOut,
     continueScheduleGroupPayment, setAutomateSavingsEndDate, setAutomateSavingsStartDate, setAmountToWithDraw, setFrequency} from './group-savings/group-savings-reducers';
      import {getCustomerGoalTransHistoryReducer,GET_FORMULAR,GET_GOAL_TYPE,TopUPGoalStep1,TopUPGoal,WithDrawFromGoalStep1,Cashout,
          WithDrawFromGoal,PauseCustomerGoal,unPauseCustomerGoal,EditCustomerGoal,DeleteCustomerGoal,StashCashout,StashCashoutStep1,submitDashboardData} from './goal/get-customer-goal-trans-history-reducers';
@@ -299,6 +300,7 @@ export const fixedGoal ={
  }
  export const groupSavings = {
     groupSavingsTargetGoal,
+    editRotatingSavings,
     groupDetails,
     deleteGroup, 
     contribute, 

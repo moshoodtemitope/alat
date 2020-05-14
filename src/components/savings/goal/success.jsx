@@ -71,7 +71,7 @@ class SuccessMessage extends React.Component {
                                                 <Members 
                                                    userType="admin"
                                                    name={details.goalTypeName}
-                                                   position="Status: Completed"
+                                                   position={`Status: ${details.goalStatus}`}
                                                     amount={"₦" + numberWithCommas(details.amountSaved)}
                                                    intent="Amount Saved"
                                                    id="autoSummary"/>

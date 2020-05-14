@@ -101,16 +101,20 @@ class DeleteGoal extends Component {
                             <div className="col-sm-12">
                                 <div className="tab-overflow">
                                     <div className="sub-tab-nav">
-                                        <ul>
-                                            <NavLink to='/savings/choose-goal-plan'>
-                                                <li><a href="accounts.html" className="active">Goals</a></li>
+                                    <ul>
+                                        <li>
+                                        <NavLink to='/savings/choose-goal-plan'>
+                                            Goals
                                             </NavLink>
-                                            <NavLink to='/savings/activityDashBoard'>
-                                                <li><a href="/savings/activityDashBoard">Group Savings</a></li>
-                                            </NavLink>
+                                        </li>
+                                        <li>
+                                        <NavLink to='/savings/activityDashBoard'>
+                                            Group Savings
+                                        </NavLink>
+                                        </li>
                                             {/* <li><a href="#">Investments</a></li> */}
 
-                                        </ul>
+                                    </ul>
                                     </div>
                                 </div>
                             </div>
@@ -151,7 +155,10 @@ class DeleteGoal extends Component {
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <center>
-                                                            <button  type="submit" value="Fund Account" className="btn-alat m-t-10 m-b-20 text-center">
+                                                            <button  type="submit" value="Fund Account"
+                                                             className="btn-alat m-t-10 m-b-20 text-center"
+                                                             disabled={this.props.delete_goal.delete_customer_goal_status === customerGoalConstants.DELETE_CUSTOMER_GOAL_PENDING}
+                                                            >
                                                                 {this.props.delete_goal.delete_customer_goal_status === customerGoalConstants.DELETE_CUSTOMER_GOAL_PENDING ? "Processing..." : "Delete Goal"}
                                                             </button>
                                                         </center>

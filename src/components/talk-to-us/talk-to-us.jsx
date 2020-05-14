@@ -177,7 +177,7 @@ class TalkToUs extends Component {
 
                                         <div className="form-row">
                                             <div className="form-group col-md-6">
-                                                <label className="label-text">Full Name </label>
+                                                <label className="label-text"> Your Name </label>
                                                 <input
                                                     type="text"
                                                     autoComplete="off"

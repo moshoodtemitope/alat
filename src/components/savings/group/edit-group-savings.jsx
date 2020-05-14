@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import * as actions from '../../../redux/actions/savings/group-savings/group-savings-actions';
 import {GROUPSAVINGSCONSTANT} from "../../../redux/constants/savings/group/index";
 import {history} from '../../../_helpers/history';
+import { numberWithCommas, getDateFromISO } from "../../../shared/utils";
 
 
     
@@ -24,9 +25,9 @@ class EditGroupSavings extends React.Component {
             selectedAccount: null,
             groupName: null,
             groupPurpose: null,
-            targetAmount: null,
+            targetAmount: numberWithCommas(this.props.location.data.response.targetAmount) || null,
             minimumIndividualAmount: null,
-            targetDate: null,
+            targetDate: getDateFromISO(this.props.location.data.response.targetDate) ||null,
             howMuchValidity: false,
             GroupEndDate: false,
             AmountToContribute: false,
@@ -115,7 +116,7 @@ class EditGroupSavings extends React.Component {
     }
 
     SetTargetAmount = (event) => {
-        this.setState({targetAmount: event.target.value})
+        this.setState({targetAmount: numberWithCommas(event.target.value)})
     }
 
     SetPurpose = (event) => {
@@ -129,7 +130,7 @@ class EditGroupSavings extends React.Component {
     }
 
     SetAmountToContributeIndividually = (event) => {
-        this.setState({minimumIndividualAmount: event.target.value});
+        this.setState({minimumIndividualAmount: numberWithCommas(event.target.value)});
     }
 
     checkGroupName = () => {
@@ -391,13 +392,18 @@ class EditGroupSavings extends React.Component {
                                                         </div>  
                                                         <div className={howMuchValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">How much is the group raising?</label>
-                                                            <input type="Number" className="form-control" onChange={this.SetTargetAmount} placeholder="N100, 0000"/>
+                                                            <input type="Number" className="form-control" 
+                                                                value={this.state.targetAmount}
+                                                                onChange={this.SetTargetAmount} placeholder="N100, 0000"/>
                                                         </div>
                                                     </div>
                                                     <div className="form-row">
                                                         <div className={GroupEndDate ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">when does the group want to meet this goal</label>
-                                                            <DatePicker className="form-control" selected={targetDate} 
+                                                            <DatePicker 
+                                                            className="form-control" 
+                                                            // selected={targetDate} 
+                                                            value={targetDate}
                                                             placeholder="June 31, 2019"
                                                             dateFormat=" MMMM d, yyyy"
                                                             showMonthDropdown
@@ -410,7 +416,9 @@ class EditGroupSavings extends React.Component {
                                                         </div>
                                                         <div className={AmountToContribute ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">Amount to contribute per person (optional)</label>
-                                                            <input type="Number" className="form-control" onChange={this.SetAmountToContributeIndividually} placeholder="E.g. ₦100,000"/>
+                                                            <input type="Number" className="form-control" 
+                                                                value={this.state.minimumIndividualAmount}
+                                                                onChange={this.SetAmountToContributeIndividually} placeholder="E.g. ₦100,000"/>
                                                         </div>
                                                     </div>
                                                     
@@ -491,6 +499,7 @@ class EditGroupSavings extends React.Component {
         }
 
         if(this.props.theGroupDetails != undefined){
+            let defaultAmount = numberWithCommas(this.props.location.data.response.targetAmount);
             return (
                 <Fragment>
                             <div className="row">
@@ -534,14 +543,19 @@ class EditGroupSavings extends React.Component {
                                                         </div>
                                                         <div className={howMuchValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">How much is the group raising?</label>
-                                                        <input defaultValue={this.props.location.data.response.targetAmount} className="form-control" onChange={this.SetTargetAmount} placeholder="N100, 0000"/>
+                                                        <input 
+                                                            // defaultValue={numberWithCommas(defaultAmount)} 
+                                                            value={this.state.targetAmount}
+                                                            className="form-control" onChange={this.SetTargetAmount} placeholder="N100, 0000"/>
                                                         </div>
                                                     </div>
                                                     <div className="form-row">
                                                         <div className={GroupEndDate ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">when does the group want to meet this goal</label>
-                                                            <DatePicker className="form-control" selected={targetDate} 
+                                                            <DatePicker className="form-control" 
+                                                            // selected={targetDate} 
                                                             placeholder="June 31, 2019"
+                                                            value={targetDate}
                                                             dateFormat=" MMMM d, yyyy"
                                                             showMonthDropdown
                                                             showYearDropdown
@@ -553,7 +567,9 @@ class EditGroupSavings extends React.Component {
                                                         </div>
                                                         <div className={AmountToContribute ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">Amount to contribute per person (optional)</label>
-                                                        <input defaultValue={this.props.location.data.response.mininumIndividualAmount} className="form-control" onChange={this.SetAmountToContributeIndividually} placeholder="E.g. ₦100,000"/>
+                                                        <input defaultValue={numberWithCommas(this.props.location.data.response.mininumIndividualAmount)} className="form-control" 
+                                                            value={this.state.minimumIndividualAmount}
+                                                            onChange={this.SetAmountToContributeIndividually} placeholder="E.g. ₦100,000"/>
                                                         </div>
                                                     </div>
                                                     

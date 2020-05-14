@@ -27,7 +27,10 @@ export const fetchFlexGoalStep1 = (data) =>{
 export const fetchFlexGoalStep2 =(data) =>{
     return(dispatch)=>{
         dispatch(success(data))
+        history.push({
+            pathname:"/savings/flex-goal-summary"
 
+        })
     };
     function success(data){
         return{
@@ -38,6 +41,7 @@ export const fetchFlexGoalStep2 =(data) =>{
 };
 export const addFlexGoal =(data)=>{
     return (dispatch) => {
+        // console.log("data to post", data);
         let consume = ApiService.request(routes.ADDFLEXIGOAL,
              "POST", data);
         dispatch(request(consume));

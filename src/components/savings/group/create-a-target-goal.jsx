@@ -40,7 +40,7 @@ class CreateATargetGoal extends React.Component {
     }
 
     componentDidMount = () => {
-        this.InitialPropertyCheck();
+        // this.InitialPropertyCheck();
     }
 
     handleSelectDebitableAccounts = (account) => {
@@ -77,12 +77,12 @@ class CreateATargetGoal extends React.Component {
                       result = null;
                       break;
                    }
-                case 'minimumIndividualAmount':
-                   if(this.state[x] == null || this.state[x] == ""){
-                    //   console.log(x)
-                      result = null;
-                      break;
-                   }
+                // case 'minimumIndividualAmount':
+                //    if(this.state[x] == null || this.state[x] == ""){
+                //     //   console.log(x)
+                //       result = null;
+                //       break;
+                //    }
                 case 'targetDate':
                    if(this.state[x] == null || this.state[x] == ""){
                     //   console.log(x)
@@ -106,7 +106,7 @@ class CreateATargetGoal extends React.Component {
     }
 
     SetTargetAmount = (event) => {
-        console.log("=====",numberWithCommas(event.target.value))
+       
         this.setState({ targetAmount: numberWithCommas (event.target.value)})
     }
 
@@ -122,7 +122,7 @@ class CreateATargetGoal extends React.Component {
     }
 
     SetAmountToContributeIndividually = (event) => {
-        console.log("====",numberWithCommas(event.target.value))
+        
         this.setState({ minimumIndividualAmount: numberWithCommas(event.target.value)});
     }
 
@@ -215,7 +215,17 @@ class CreateATargetGoal extends React.Component {
     handleSubmit = (event) => {
         event.preventDefault();
         // console.log("handleSubmit was triggered");
-        if(this.checkMinimumAccountToContribute() || this.checkTheSelectedAccount()||this.checkTheEndDate()||this.checkGroupPurpose()||this.checkGroupName()||this.checkTheTargetAmount()){
+
+        if(parseFloat(this.state.targetAmount.replace(/,/g, ''))<= parseFloat(this.state.minimumIndividualAmount.replace(/,/g, ''))){
+           
+            this.setState({invalidMiniMumAmount: true})
+            return false
+        }else{
+            this.setState({invalidMiniMumAmount: false})
+        }
+
+        if( this.checkTheSelectedAccount()||this.checkTheEndDate()||this.checkGroupPurpose()||this.checkGroupName()||this.checkTheTargetAmount()){
+        // if(this.checkMinimumAccountToContribute() || this.checkTheSelectedAccount()||this.checkTheEndDate()||this.checkGroupPurpose()||this.checkGroupName()||this.checkTheTargetAmount()){
             // console.log(this.checkMinimumAccountToContribute())
         } 
         //this.SubmitTargetGoal();
@@ -239,7 +249,14 @@ class CreateATargetGoal extends React.Component {
 
 
     render() {
-        const {targetDate, theGroupName, Purpose, howMuchValidity, GroupEndDate, AmountToContribute, NoAccountSelectionWasDon, selectedAccount} = this.state;
+        const {targetDate, 
+                theGroupName, 
+                Purpose, 
+                howMuchValidity, 
+                GroupEndDate, 
+                AmountToContribute, 
+                NoAccountSelectionWasDon, 
+                selectedAccount, invalidMiniMumAmount} = this.state;
         return (
             <Fragment>
                         <div className="row">
@@ -259,9 +276,7 @@ class CreateATargetGoal extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                             {this.props.alert && this.props.alert.message &&
-                            <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
-                            } 
+                             
                             <div className="col-sm-12">
                                 <div className="row">
                                     <div className="col-sm-12">
@@ -273,17 +288,17 @@ class CreateATargetGoal extends React.Component {
                                                 <div className={theGroupName ? "form-group form-error" : "form-group"}>
                                                     
                                                        <label>Give your group a name</label>
-                                                       <input type="text" className="form-control" onChange={this.SetName} placeholder="Dubai Goal"/>
+                                                       <input type="text" className="form-control" onChange={this.SetName} placeholder="e.g Dubai Trip"/>
                                                    
                                                 </div>
                                                 <div className="form-row">
                                                     <div className={Purpose ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                         <label className="label-text">What is the purpose of this group?</label>
-                                                        <input type="text" className="form-control" onChange={this.SetPurpose} placeholder="Raise Money"/>
+                                                        <input type="text" className="form-control" onChange={this.SetPurpose} placeholder="E.g. Raise Money"/>
                                                     </div>
                                                     <div className={howMuchValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                         <label className="label-text">How much is the group raising?</label>
-                                                    <input className="form-control" style={{ height: '40px'}} value={numberWithCommas(this.state.targetAmount)} onChange={this.SetTargetAmount} placeholder="N100, 000"/>
+                                                    <input className="form-control" style={{ height: '40px'}} value={numberWithCommas(this.state.targetAmount)} onChange={this.SetTargetAmount} placeholder="e.g 100, 000"/>
                                                     </div>
                                                 </div>
                                                 <div className="form-row">
@@ -303,7 +318,7 @@ class CreateATargetGoal extends React.Component {
                                                     </div>
                                                     <div className={AmountToContribute ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                         <label className="label-text" style={{height:'40px'}}>Amount to contribute per person (optional)</label>
-                                                    <input value={numberWithCommas(this.state.minimumIndividualAmount)} className="form-control" onChange={this.SetAmountToContributeIndividually} placeholder="E.g. ₦100,000"/>
+                                                    <input value={numberWithCommas(this.state.minimumIndividualAmount)} className="form-control" onChange={this.SetAmountToContributeIndividually} placeholder="e.g. 100,000"/>
                                                     </div>
                                                 </div>
                                                 
@@ -322,14 +337,26 @@ class CreateATargetGoal extends React.Component {
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <center>
+                                                            {
+                                                                invalidMiniMumAmount===true &&
+                                                                <div className="info-label error">Minimum individual amount must be less than target amount</div>
+                                                            }
+                                                            
                                                         <button
-                                                             className="btn-alat" id="subButtonGroupT" type="submit">
+                                                             className="btn-alat" 
+                                                             id="subButtonGroupT" 
+                                                             disabled ={this.props.data.isrequesting}
+                                                             type="submit">
                                                             {this.props.data.message === GROUPSAVINGSCONSTANT.CREATEGROUPSAINGSPENDING ? "Processing..." :"Create Target Goal"}
 
                                                              </button>
                                                         </center>
                                                     </div>
+                                                    {this.props.alert && this.props.alert.message &&
+                                                        <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                                                    } 
                                                 </div>
+                                                
                                             </form>
                                         </div>
                                        </div>

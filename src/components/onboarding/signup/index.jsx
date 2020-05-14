@@ -70,7 +70,7 @@ class Signup extends React.Component{
 
     formatPhone(phone){
         let {numPrefix} = this.state;
-        // console.log('phone is', phone);
+        
         let tempPhone = phone.replace(/-/g,'');
         if(tempPhone.indexOf('(')>-1){
             tempPhone = tempPhone.replace(/\(/g,'');
@@ -78,7 +78,13 @@ class Signup extends React.Component{
         }
         // console.log('unformatted phone is', tempPhone);
         var slashFrom = tempPhone.length - 10;
-        return numPrefix + tempPhone.substring(slashFrom);
+        if(numPrefix!==undefined && numPrefix!==null){
+            return numPrefix + tempPhone.substring(slashFrom);
+        }
+        else{
+            return tempPhone;
+        } 
+        
     }
 
     handleSubmit(e) {
@@ -160,6 +166,7 @@ class Signup extends React.Component{
         //     selectedCountry
         // );
         let tempNum, numPrefix, phoneNum;
+        // console.log("dsdsd",telNumber);
         if(telNumber.indexOf('-')>-1){
             tempNum = telNumber.split(/-(.+)/)[1];
             numPrefix = telNumber.split(/-(.+)/)[0];
@@ -169,6 +176,8 @@ class Signup extends React.Component{
             
             // phoneNum = numPrefix+tempNum;
             // console.log('temp num is', phoneNum);
+        }else{
+            tempNum = telNumber;
         }
 
         // let tempNum = telNumber.split()

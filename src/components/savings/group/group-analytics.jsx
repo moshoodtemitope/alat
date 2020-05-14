@@ -437,6 +437,7 @@ class GroupAnalytics extends React.Component {
                                                                     edit={this.props.groupDetails.data.response.id}
                                                                     pause={this.props.groupDetails.data.response.id}
                                                                     delete={this.props.groupDetails.data.response.id}
+                                                                    grouData={this.props.groupDetails.data.response}
                                                                     DeleteGroup={this.GoToConfirmDelete}
                                                                     PauseGroup={this.PauseThisGroup}
                                                                     EditGroup={this.EditThisGroup}
@@ -546,6 +547,7 @@ class GroupAnalytics extends React.Component {
                                                                         edit={this.props.groupDetails.data.response.id}
                                                                         pause={this.props.groupDetails.data.response.id}
                                                                         delete={this.props.groupDetails.data.response.id}
+                                                                        grouData={this.props.groupDetails.data.response}
                                                                         DeleteGroup={this.GoToConfirmDelete}
                                                                         PauseGroup={this.PauseThisGroup}
                                                                         EditGroup={this.EditThisGroup}

@@ -150,9 +150,10 @@ class ParentDashBoard extends React.Component {
                                 <div className="tab-overflow">
                                     <div className="sub-tab-nav">
                                         <ul>
-                                        <NavLink to='/savings/choose-goal-plan'>
-                                            <li><a id='parentGoal'>Goals</a></li>
+                                        <li> <NavLink id='parentGoal' to='/savings/choose-goal-plan'>
+                                            Goals
                                         </NavLink>
+                                        </li>
                                             <li><a className="active">Group Savings</a></li>
                                         {/* <li><a>Investments</a></li> */}
 
@@ -161,10 +162,10 @@ class ParentDashBoard extends React.Component {
                                 </div>
                             </div>
                            
-                                <div className="row">
+                                <div className="row center-text" style={{width:"100%",     display: "block"}}>
                                 <h4 className="m-b-10 center-text hd-underline">Automate Group Savings</h4>
 
-                                    <div className="bodyDetails">
+                                    <div className="bodyDetails" style={{width:"0 auto"}} >
                                           
                                             <div className="loadingData">
                                                 <p style={{justifyContent:'center', alignItems:"center"}}>Loading data...</p>
@@ -190,9 +191,11 @@ class ParentDashBoard extends React.Component {
                                 <div className="tab-overflow">
                                     <div className="sub-tab-nav">
                                         <ul>
-                                        <NavLink to='/savings/choose-goal-plan'>
-                                            <li><a id='parentGoal'>Goals</a></li>
+                                        <li>
+                                        <NavLink id='parentGoal' to='/savings/choose-goal-plan'>
+                                            Goals
                                         </NavLink>
+                                        </li>
                                             <li><a className="active">Group Savings</a></li>
                                         {/* <li><a>Investments</a></li> */}
 
@@ -201,14 +204,14 @@ class ParentDashBoard extends React.Component {
                                 </div>
                             </div>
                             
-                                <div className="row">
-                                    
-                                    <div className="bodyDetails">
-                                    <h4 className="m-b-10 text-center hd-underline">Automate Group Savings</h4>
-                                    <div className="loadingData" style={{textAlign: "center", width: "100%"}}>
-                                        <p >Loading group savings ...</p>
-                                    </div>
+                            <div className="row center-text" style={{width:"100%",     display: "block"}}>
+                                <h4 className="m-b-10 center-text hd-underline">Automate Group Savings</h4>
+
+                                    <div className="bodyDetails" style={{width:"0 auto"}} >
                                           
+                                            <div className="loadingData">
+                                                <p style={{justifyContent:'center', alignItems:"center"}}>Loading data...</p>
+                                            </div>
                                     </div>
                                </div>
                         </div>
@@ -231,11 +234,12 @@ class ParentDashBoard extends React.Component {
                             </div>
                             <div className="col-sm-12">
                                 <div className="tab-overflow">
-                                    <div className="sub-tab-nav">
+                                <div className="sub-tab-nav">
                                         <ul>
-                                        <NavLink to='/savings/choose-goal-plan'>
-                                            <li><a id='parentGoal'>Goals</a></li>
+                                        <li> <NavLink id='parentGoal' to='/savings/choose-goal-plan'>
+                                            Goals
                                         </NavLink>
+                                        </li>
                                             <li><a className="active">Group Savings</a></li>
                                         {/* <li><a>Investments</a></li> */}
 
@@ -280,11 +284,12 @@ class ParentDashBoard extends React.Component {
                             </div>
                             <div className="col-sm-12">
                                 <div className="tab-overflow">
-                                    <div className="sub-tab-nav">
+                                <div className="sub-tab-nav">
                                         <ul>
-                                        <NavLink to='/savings/choose-goal-plan'>
-                                            <li><a id='parentGoal'>Goals</a></li>
+                                        <li> <NavLink id='parentGoal' to='/savings/choose-goal-plan'>
+                                            Goals
                                         </NavLink>
+                                        </li>
                                             <li><a className="active">Group Savings</a></li>
                                         {/* <li><a>Investments</a></li> */}
 
@@ -332,11 +337,12 @@ class ParentDashBoard extends React.Component {
                             </div>
                             <div className="col-sm-12">
                                 <div className="tab-overflow">
-                                    <div className="sub-tab-nav">
+                                <div className="sub-tab-nav">
                                         <ul>
-                                        <NavLink to='/savings/choose-goal-plan'>
-                                            <li><a id='parentGoal'>Goals</a></li>
+                                        <li> <NavLink id='parentGoal' to='/savings/choose-goal-plan'>
+                                            Goals
                                         </NavLink>
+                                        </li>
                                             <li><a className="active">Group Savings</a></li>
                                         {/* <li><a>Investments</a></li> */}
 

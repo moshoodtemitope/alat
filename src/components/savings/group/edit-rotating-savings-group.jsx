@@ -10,12 +10,12 @@ import { connect } from "react-redux";
 import * as actions from '../../../redux/actions/savings/group-savings/rotating-group-saving-action';
 import {history} from '../../../_helpers/history';
 import { GROUPSAVINGSCONSTANT } from "../../../redux/constants/savings/group";
-import { numberWithCommas } from "../../../shared/utils";
+import { numberWithCommas, getDateFromISO } from "../../../shared/utils";
 import moment from 'moment'
 
 
 const quantityOfMembers = [
-    { value: '1' ,label:"1" },
+    // { value: '1' ,label:"1" },
     {  value: '2' , label:"2" },
     {  value: '3' , label:"3" },
     {  value: '4', label: "4"},
@@ -29,7 +29,7 @@ const quantityOfMembers = [
 
 class EditRotatingGroup extends React.Component {
     constructor(props){
-        console.log('this is the props', props.location.data)
+        // console.log('this is the props', props.location.data)
         super(props);
         this.state={
             user: JSON.parse(localStorage.getItem("user")),
@@ -47,13 +47,14 @@ class EditRotatingGroup extends React.Component {
             startDate: "",
             howOftenDoYouWantToSave: null,
             groupName: "",
-            monthlyContribution: "",
-            numberOfMembers: "",
+            monthlyContribution: numberWithCommas(this.props.location.data.monthlyContribution) ||null,
+            
         }
     }
 
     validateStartDate=()=>{
-        if(this.state.startDate == null || this.state.startDate == ""){
+        if((this.state.startDate == null || this.state.startDate == "")
+            && this.props.location.data.startDate==""){
             this.setState({startDateValidity: true});
             return true;
         }else {this.setState({startDateValidity : false});
@@ -65,6 +66,8 @@ class EditRotatingGroup extends React.Component {
         if(this.props.rotatingGroupDetails != undefined){
             window.localStorage.setItem('rotatingGroupId', this.props.rotatingGroupDetails.response.id);
         }
+
+
     }
 
     FetchRotatingGroupDetails = () => {
@@ -76,7 +79,8 @@ class EditRotatingGroup extends React.Component {
     }
 
     validateFrequencyOfWithdrawals=()=>{
-        if(this.state.numberOfMembers == null || this.state.numberOfMembers == ""){
+        if((this.state.numberOfMembers == null || this.state.numberOfMembers == "")
+            && document.getElementById("numberOfMembers").value==""){
             this.setState({howMuchValidity: true});
             return true;
         }else {this.setState({howMuchValidity : false});
@@ -85,7 +89,8 @@ class EditRotatingGroup extends React.Component {
     }
 
     validateGroupName=()=>{
-        if(this.state.groupName == null || this.state.groupName == ""){
+        if((this.state.groupName == null || this.state.groupName == "" ) &&
+             document.getElementById("groupName").value=="" ){
             this.setState({groupNameValidity: true});
             return true;
         }else {this.setState({groupNameValidity : false});
@@ -94,7 +99,8 @@ class EditRotatingGroup extends React.Component {
     }
 
     validateMonthlyContributions = () => {
-        if(this.state.monthlyContribution == null || this.state.monthlyContribution == ""){
+        if((this.state.monthlyContribution == null || this.state.monthlyContribution == "")
+            && document.getElementById("monthlyContribution").value==""){
             this.setState({monthlyContributionValidity: true});
             return true;
         }else {this.setState({monthlyContributionValidity : false});
@@ -114,6 +120,7 @@ class EditRotatingGroup extends React.Component {
     handleSelectDebitableAccounts = (account) => {
         // console.log('dss', account);
         this.setState({ selectedAccount: account });
+        // console.log("dsdsdsds", account);
         if (this.state.isSubmitted) { 
             if(account.length == 10)
             this.setState({ isAccountInvalid: false })
@@ -122,7 +129,7 @@ class EditRotatingGroup extends React.Component {
     
 
     checkAccountNumber = () => {
-        if (this.state.selectedAccount.length != 10) {
+        if (this.state.selectedAccount.toString().length != 10) {
             this.setState({ isAccountInvalid: true })
             return true;
         }
@@ -142,48 +149,52 @@ class EditRotatingGroup extends React.Component {
 
     checkingUserInputs = () => {
         var result = "valid";
+        // console.log("d=======", this.state)
         for(var x in this.state){
             switch(x){
                 case 'groupName':
-                   if(this.state[x] == new Date() || this.state[x] == ""){
-                    //   console.log(x)
+                   if((this.state.groupName == new Date() || this.state.groupName == "")
+                        && document.getElementById("groupName").value==""){
+                      
                       result = null;
                       break;
                    }    
                 case 'startDate':
-                   if(this.state[x] == null || this.state[x] == ""){
-                    //   console.log(x)
+                   if((this.state.startDate== null || this.state.startDate== "")
+                        && this.props.location.data.startDate==""){
+                        
                       result = null;
                       break;
                    }     
                 case 'monthlyContribution':
-                   if(this.state[x] == null || this.state[x] == ""){
-                    //    console.log(x)
+                   if((this.state.monthlyContribution == null || this.state.monthlyContribution == ""
+                        && document.getElementById("monthlyContribution").value=="")){
+                            
                        result = null;
                        break;
                    }
                 case 'numberOfMembers':
-                   if(this.state[x] == null || this.state[x] == ""){
-                    //   console.log(x)
+                   if((this.state.numberOfMembers == null || this.state.numberOfMembers == "")
+                        && document.getElementById("numberOfMembers").value==""){
+                            
                       result = null;
                       break;
                    }
                 case 'selectedAccount':
-                   if(this.state[x] == null || this.state[x] == ""){
-                    //   console.log(x)
+                    
+                   if(this.state.selectedAccount == null || this.state.selectedAccount == ""){
+                        
                       result = null;
                       break;
                    }
             }
         }
 
-        // console.log(result);
         return result;
     }
 
 
     handleGroupName = (event) => {
-        console.log("this is group name",event.target.value)
         this.setState({
             groupName: event.target.value
         })
@@ -196,7 +207,7 @@ class EditRotatingGroup extends React.Component {
     }
 
     handleMonthlContributions = (event) => {
-        console.log("this is monthly contribution",numberWithCommas(event.target.value))
+        // console.log("this is monthly contribution",numberWithCommas(event.target.value))
         this.setState({
             monthlyContribution: numberWithCommas(event.target.value)
         })
@@ -211,10 +222,10 @@ class EditRotatingGroup extends React.Component {
     SubmitAutomatedGroupSavings = () => {
         const data = {
             GroupId: parseInt(this.props.rotatingGroupDetails.response.id),
-            Name: this.state.groupName,
-            MonthlyContribution: parseFloat(this.state.monthlyContribution),
-            NumberOfMembers: parseInt(this.state.numberOfMembers),
-            StartDate: this.state.startDate,
+            Name: (this.state.groupName!==null && this.state.groupName!=="")? this.state.groupName: document.getElementById("groupName").value,
+            MonthlyContribution: (this.state.monthlyContribution!==null && this.state.monthlyContribution!=="") ? parseFloat(this.state.monthlyContribution): parseFloat(document.getElementById("monthlyContribution").value),
+            NumberOfMembers: (this.state.numberOfMembers !==null && this.state.numberOfMembers !=="") ? parseInt(this.state.numberOfMembers): parseInt(this.props.location.data.memberCount),
+            StartDate: (this.state.startDate!==null && this.state.startDate!=="") ? this.state.startDate: new Date(this.props.location.data.startDate),
         }
 
         this.props.dispatch(actions.editGroupEsusu(this.state.user.token, data));
@@ -259,15 +270,20 @@ class EditRotatingGroup extends React.Component {
                                 <div className="col-sm-12">
                                     <div className="tab-overflow">
                                         <div className="sub-tab-nav">
-                                            <ul>
+                                        <ul>
+                                            <li>
                                             <NavLink to='/savings/choose-goal-plan'>
-                                                <li><a href="#">Goals</a></li>
+                                                Goals
+                                                </NavLink>
+                                            </li>
+                                            <li>
+                                            <NavLink to='/savings/activityDashBoard'>
+                                                Group Savings
                                             </NavLink>
-                                                <li onClick={this.NavigateToGroupSavings}><a href="#">Group Savings</a></li>
-                                                
-                                            {/* <li><a href="#">Investments</a></li> */}
-    
-                                            </ul>
+                                            </li>
+                                                {/* <li><a href="#">Investments</a></li> */}
+
+                                        </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -282,65 +298,85 @@ class EditRotatingGroup extends React.Component {
                                                     <div className="form-row">
                                                         <div className={groupNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Give your group a name</label>
-                                                        <input defaultValue={this.props.rotatingGroupDetails.message === GROUPSAVINGSCONSTANT.ROTATING_GROUP_DETAILS_SUCCESS && this.props.location.data.name} type="text" placeholder="Dubai Goal" onChange={this.handleGroupName}/>
+                                                        <input defaultValue={this.props.location.data.name} 
+                                                                type="text" 
+                                                                id="groupName"
+                                                                placeholder="Dubai Goal" onChange={this.handleGroupName}/>
                                                         </div>
                                                     </div>
                                                     <div className="form-row">
                                                         <div className={monthlyContributionValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                                 <label className="label-text">Monthly Contributions</label>
-                                                        <input className="form-control" style={{height:"50px"}} defaultValue={numberWithCommas(this.props.location.data.monthlyContribution)} placeholder="N 100,000" onChange={this.handleMonthlContributions}/>
+                                                        <input className="form-control" style={{height:"50px"}} defaultValue={numberWithCommas(this.props.location.data.monthlyContribution)} 
+                                                                placeholder="N 100,000" 
+                                                                id="monthlyContribution"
+                                                                value={this.state.monthlyContribution}
+                                                                onChange={this.handleMonthlContributions}/>
                                                         </div>
                                                         <div className={howMuchValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">Number of members?</label>
-                                                                <Select type="text" 
+                                                                <Select type="text"
+                                                                defaultValue={{label:this.props.location.data.expectedNumberOfMemebrs, value: this.props.location.data.expectedNumberOfMemebrs}}
                                                                 options={quantityOfMembers}
                                                                 name="numberOfMembers"
+                                                                id="numberOfMembers"
                                                                 onChange={this.handleSelectChange}
                                                                 value={numberOfMembers.label}
                                                                 />
                                                         </div>
                                                     </div>
-                                                    <div className="form-row">
+                                                    {/* <div className="form-row">
                                                         <div className={startDateValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">when does the group wants to meet this goal?</label>
-                                                            <DatePicker className="form-control" selected={this.state.startDate}
+                                                            <label className="label-text">When does the group wants to meet this goal?</label>
+                                                            <DatePicker className="form-control" 
+                                                                selected={this.state.startDate}
                                                                 placeholder="October 31, 2017"
-                                                                dateFormat=" MMMM d, yyyy"
+                                                                // dateFormat=" MMMM d, yyyy"
                                                                 showMonthDropdown
                                                                 onChange={this.handleSelectedDate}
                                                                 minDate={new Date()}
-                                                            placeholderText={moment(this.props.location.data.startDate).format("LL")}
+                                                                id="startDate"
+                                                                data-propsValue= {getDateFromISO(this.props.location.data.startDate)}
+                                                                placeholderText={moment(this.props.location.data.startDate).format("LL")}
                                                                 showYearDropdown
-                                                            defaultValue={this.props.location.data.startDate}
+                                                                // value={this.state.startDate}
+                                                                defaultValue={new Date(this.props.location.data.startDate)}
                                                                 dropdownMode="select"
                                                             />
                                                         </div>
                                                         
-                                                    </div>
+                                                    </div> */}
     
-                                                    <div className="form-row">
+                                                    {/* <div className="form-row">
                                                         <div className={isAccountInvalid ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <SelectDebitableAccounts
                                                                 accountInvalid={this.state.isAccountInvalid}
                                                                 onChange={this.handleSelectDebitableAccounts}
-                                                                labelText="Select Account to debit" 
+                                                                labelText="Select Account to debit"
+                                                                // value={this.state.accountNumber} 
                                                                 options={selectedAccount}/>
                                                             </div>
-                                                    </div>
+                                                    </div> */}
     
                                                     <div className="row">
                                                         <div className="col-sm-12">
                                                             <center>
                                                                 
-                                                                        <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">
-                                        
-                                                                            Create Group
+                                                                        <button type="submit" 
+                                                                        disabled={this.props.editRotatingSavings.isrequesting}
+                                                                        className="btn-alat m-t-10 m-b-20 text-center">
+                                                                            
+                                                                            {this.props.editRotatingSavings.isrequesting? "Updating group...": "Update Group"}
                                                                         
                                                                         </button>
                                                                 
                                                             </center>
                                                         </div>
+                                                        {this.props.alert && this.props.alert.message &&
+                                                            <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                                                        } 
                                                     </div>
+                                                    
                                                 </form>
     
     
@@ -373,12 +409,26 @@ class EditRotatingGroup extends React.Component {
                                 <div className="col-sm-12">
                                     <div className="tab-overflow">
                                         <div className="sub-tab-nav">
-                                            <ul>
+                                        <ul>
+                                            <li>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                Goals
+                                                </NavLink>
+                                            </li>
+                                            <li>
+                                            <NavLink to='/savings/activityDashBoard'>
+                                                Group Savings
+                                            </NavLink>
+                                            </li>
+                                                {/* <li><a href="#">Investments</a></li> */}
+
+                                        </ul>
+                                            {/* <ul>
                                                 <NavLink to='/savings/choose-goal-plan'>
-                                                    <li><a href="#">Goals</a></li>
+                                                    <li>Goals</li>
                                                 </NavLink>     
                                                 <li onClick={this.NavigateToGroupSavings}><a href="#">Group Savings</a></li>
-                                            </ul>
+                                            </ul> */}
                                         </div>
                                     </div>
                                 </div>
@@ -399,15 +449,20 @@ class EditRotatingGroup extends React.Component {
                                 <div className="col-sm-12">
                                     <div className="tab-overflow">
                                         <div className="sub-tab-nav">
-                                            <ul>
+                                        <ul>
+                                            <li>
                                             <NavLink to='/savings/choose-goal-plan'>
-                                                <li><a href="#">Goals</a></li>
+                                                Goals
+                                                </NavLink>
+                                            </li>
+                                            <li>
+                                            <NavLink to='/savings/activityDashBoard'>
+                                                Group Savings
                                             </NavLink>
-                                                <li onClick={this.NavigateToGroupSavings}><a href="#">Group Savings</a></li>
-                                                
-                                           
-    
-                                            </ul>
+                                            </li>
+                                                {/* <li><a href="#">Investments</a></li> */}
+
+                                        </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -422,58 +477,72 @@ class EditRotatingGroup extends React.Component {
                                                     <div className="form-row">
                                                         <div className={groupNameValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <label className="label-text">Give your group a name</label>
-                                                            <input type="text" placeholder="Dubai Goal" onChange={this.handleGroupName}/>
+                                                            <input type="text" id="groupName" placeholder="Dubai Goal" onChange={this.handleGroupName}/>
                                                        </div>
                                                     </div>
                                                     <div className="form-row">
                                                         <div className={monthlyContributionValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                              <label className="label-text">Monthly Contributions</label>
-                                                             <input type="number" placeholder="N 100,000" onChange={this.handleMonthlContributions}/>
+                                                             <input type="number" 
+                                                                id="monthlyContribution"
+                                                                value={this.state.monthlyContribution}
+                                                                placeholder="N 100,000" onChange={this.handleMonthlContributions}/>
                                                         </div>
                                                         <div className={howMuchValidity ? "form-group form-error col-md-6" : "form-group col-md-6"}>
                                                             <label className="label-text">Number of members?</label>
                                                              <Select type="text" 
                                                                 options={quantityOfMembers}
                                                                 name="numberOfMembers"
+                                                                id="numberOfMembers"
                                                                 onChange={this.handleSelectChange}
                                                                 value={numberOfMembers.label}
                                                               />
                                                         </div>
                                                     </div>
-                                                    <div className="form-row">
+                                                    {/* <div className="form-row">
                                                         <div className={startDateValidity ? "form-group form-error col-md-12" : "form-group col-md-12"}>
-                                                            <label className="label-text">when does the group wants to meet this goal?</label>
-                                                            <DatePicker className="form-control" selected={this.state.startDate}
+                                                            <label className="label-text">When does the group wants to meet this goal?</label>
+                                                            <DatePicker className="form-control" 
+                                                                selected={this.state.startDate}
                                                                 placeholder="October 31, 2017"
                                                                 dateFormat=" MMMM d, yyyy"
                                                                 showMonthDropdown
                                                                 onChange={this.handleSelectedDate}
                                                                 showYearDropdown
-                                                                value={this.state.startDate}
+                                                                id="startDate"
+                                                                // value={this.state.startDate}
+                                                                defaultValue={new Date(this.props.location.data.startDate)}
                                                                 dropdownMode="select"
                                                             />
                                                         </div>
                                                         
                                                     </div>
-    
-                                                    <div className="form-row">
+     */}
+                                                    {/* <div className="form-row">
                                                         <div className={isAccountInvalid ? "form-group form-error col-md-12" : "form-group col-md-12"}>
                                                             <SelectDebitableAccounts
                                                                 accountInvalid={this.state.isAccountInvalid}
                                                                 onChange={this.handleSelectDebitableAccounts}
-                                                                labelText="Select Account to debit" 
+                                                                labelText="Select Account to debit"
+                                                                // value={this.state.accountNumber} 
                                                                 options={selectedAccount}/>
                                                             </div>
-                                                    </div>
+                                                    </div> */}
     
                                                     <div className="row">
                                                         <div className="col-sm-12">
                                                             <center>
-                                                                <button type="submit" className="btn-alat m-t-10 m-b-20 text-center">
-                                                                    Create Group</button>    
+                                                                <button type="submit" 
+                                                                    disabled={this.props.editRotatingSavings.isrequesting}
+                                                                    className="btn-alat m-t-10 m-b-20 text-center">
+                                                                    {this.props.editRotatingSavings.isrequesting? "Updating group...": "Update Group"}</button>    
                                                             </center>
                                                         </div>
+                                                        {this.props.alert && this.props.alert.message &&
+                                                            <div style={{width: "100%"}} className={`info-label ${this.props.alert.type}`}>{this.props.alert.message}</div>
+                                                        }
                                                     </div>
+                                                     
                                                 </form>
     
     
@@ -506,15 +575,29 @@ class EditRotatingGroup extends React.Component {
                                 <div className="col-sm-12">
                                     <div className="tab-overflow">
                                         <div className="sub-tab-nav">
-                                            <ul>
+                                        <ul>
+                                            <li>
                                             <NavLink to='/savings/choose-goal-plan'>
-                                                <li><a href="#">Goals</a></li>
+                                                Goals
+                                                </NavLink>
+                                            </li>
+                                            <li>
+                                            <NavLink to='/savings/activityDashBoard'>
+                                                Group Savings
+                                            </NavLink>
+                                            </li>
+                                                {/* <li><a href="#">Investments</a></li> */}
+
+                                        </ul>
+                                            {/* <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li>Goals</li>
                                             </NavLink>
                                                 <li onClick={this.NavigateToGroupSavings}><a href="#">Group Savings</a></li>
                                                 
                                         
     
-                                            </ul>
+                                            </ul> */}
                                         </div>
                                     </div>
                                 </div>
@@ -536,15 +619,29 @@ class EditRotatingGroup extends React.Component {
                                 <div className="col-sm-12">
                                     <div className="tab-overflow">
                                         <div className="sub-tab-nav">
-                                            <ul>
+                                        <ul>
+                                            <li>
                                             <NavLink to='/savings/choose-goal-plan'>
-                                                <li><a href="#">Goals</a></li>
+                                                Goals
+                                                </NavLink>
+                                            </li>
+                                            <li>
+                                            <NavLink to='/savings/activityDashBoard'>
+                                                Group Savings
+                                            </NavLink>
+                                            </li>
+                                                {/* <li><a href="#">Investments</a></li> */}
+
+                                        </ul>
+                                            {/* <ul>
+                                            <NavLink to='/savings/choose-goal-plan'>
+                                                <li>Goals</li>
                                             </NavLink>
                                                 <li onClick={this.NavigateToGroupSavings}><a href="#">Group Savings</a></li>
                                                 
                                         
     
-                                            </ul>
+                                            </ul> */}
                                         </div>
                                     </div>
                                 </div>
@@ -562,8 +659,10 @@ function mapStateToProps(state){
         createGroupSavings: state.createRotatingGroupSavings.data,
         rotatingGroupDetails: state.rotatingGroupDetails.data,
         groupSavingsEsusu: state.getGroupSavingsEsusu.data,
+        editRotatingSavings: state.editRotatingSavings,
         groups: state.customerGroup.data,
-        rotatingGroupDetailsData: state.rotatingGroupDetails
+        rotatingGroupDetailsData: state.rotatingGroupDetails,
+        alert:state.alert,
     }
 }
 export default connect(mapStateToProps)(EditRotatingGroup);

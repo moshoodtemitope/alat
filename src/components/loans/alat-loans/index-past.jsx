@@ -127,6 +127,24 @@ class IndexPast extends Component {
         )
         let index = (
             <AlatLoanContainer>
+                <Modal open={this.state.showModal} onClose={this.onCloseModal} center>
+                    <div className="disclaimer text-center">
+                        <h4 className="hd-underline" style={{ width: "100%", color: "#AB2656" }}>Disclaimer</h4>
+                        {(this.props.alert.message) ?
+                            <div className="info-label error">{this.props.alert.message} </div> : null
+                        }
+                        <ul className="disclaimer-list">
+                            <li>This loan is offered through us by our partners. Said partners may get in touch with you from time to time.</li>
+                            <li>Our partners' loan recovery methods are entirely theirs and we have no control over them.</li>
+                            <li>Please, read the terms and conditions carefully before applying for a loan.</li>
+                            <li>Clicking ‘Okay, I understand” below absolves ALAT of any liability relating to your loan.</li>
+                        </ul>
+                        <div className="btn-">
+                            <button onClick={this.goToApplyPage} style={{ width: "80%" }} className="btn-alat"><b>{this.props.fetching ? "Checking loan options..." : "Okay, I understand"}</b></button><br /><br />
+                            <button disabled={this.props.fetching} onClick={this.onCloseModal} className="disclaimer-btn"><b>{this.props.fetching ? "" : "Cancel"}</b></button>
+                        </div>
+                    </div>
+                </Modal>
                 <div className="col-sm-12">
                     <div className="max-600 m-t-40">
                         <center>

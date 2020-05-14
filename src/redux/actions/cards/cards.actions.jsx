@@ -734,7 +734,14 @@ export const getALATCardSettings = (token, pan, isWemaCustomer)=>{
             dispatch(request(consume));
             return consume
                 .then(response=>{
+                    let allCards =[];
+
                     if(response.data.cardList.length>=1){
+                        allCards = response.data.cardList.filter(eachCard=>(eachCard.pan!=="" && eachCard.pan!==undefined && eachCard.pan!==null));
+                    }
+                    // console.log("++++++", allCards)
+                    if(allCards.length>=1){
+                    // if(response.data.cardList.length>=1){
 
                         // let panNum;
                             if(pan===null){
@@ -790,10 +797,24 @@ export const getALATCardSettings = (token, pan, isWemaCustomer)=>{
                         //     panDetails : null
                         // }
                         // dispatch(success(bulkResponse));
+                        
                         if(isWemaCustomer===true){
                             dispatch(failure('You are currently have no ATM card'));
                         }else{
-                            history.push("/cards");
+                            
+                            if(history.location.pathname!=="/cards"){
+                                
+                                history.push("/cards");
+                            }else{
+                                let bulkResponse;
+                                    bulkResponse={
+                                            allCards : [],
+                                    }
+                                
+                                dispatch(success(bulkResponse));
+                                // dispatch(failure('You are currently have no ATM card'));
+                            }
+                            
                         }
                         
                     }
@@ -960,7 +981,7 @@ export const loadInfoForCardRequest = (token)=>{
                                 dispatch(request(consume2));
                                 return consume2
                                     .then(response2=>{
-                                        if(response.data.customerCardIds.length===0){
+                                        // if(response.data.customerCardIds.length===0){
                                             // if(response5.data.cardList.length===0){
                                         // if(response.data.customerCardIds.length===0){
                                         // if(response.data.customerCardIds.length!==0){ //To be removed
@@ -1033,19 +1054,19 @@ export const loadInfoForCardRequest = (token)=>{
                                                     }
                                                 })
                                                 
-                                        }else{
-                                            let existingcardDetails;
+                                        // }else{
+                                        //     let existingcardDetails;
 
-                                            existingcardDetails = {
+                                        //     existingcardDetails = {
                                                 
-                                                cardDesignId    : response.data.customerCardIds,
-                                                allCardDesigns  : response2.data,
-                                            }
-                                            dispatch(success(existingcardDetails));
+                                        //         cardDesignId    : response.data.customerCardIds,
+                                        //         allCardDesigns  : response2.data,
+                                        //     }
+                                        //     dispatch(success(existingcardDetails));
                                            
 
                                                 
-                                        }
+                                        // }
                                     })
                                     .catch(error=>{
                                         if(error.response && typeof(error.response.message) !=="undefined"){
